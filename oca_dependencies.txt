@@ -1,1 +1,2 @@
 sale-workflow https://github.com/OCA/sale-workflow.git
+adhoc_account_financial_tools https://github.com/ingadhoc/account-financial-tools.git
