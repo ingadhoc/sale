@@ -12,19 +12,18 @@ class sale_order(models.Model):
     @api.multi
     def add_products_to_quotation(self):
         self.ensure_one()
+        action_read = False
         view_id = self.env['ir.model.data'].xmlid_to_res_id(
             'sale_quotation_products.product_product_tree_view')
-        res = {
-            'type': 'ir.actions.act_window',
-            'res_model': 'product.product',
-            'view_type': 'form',
-            'view_mode': 'tree,form',
-            'views': [(view_id, 'tree'), (False, 'form')],
-            # 'view_id': view_id,
-            'target': 'current',
-            'name': _('Quotation Products'),
-        }
-        return res
+        actions = self.env.ref(
+            'product.product_normal_action_sell')
+        if actions:
+            action_read = actions.read()[0]
+            action_read['view_mode'] = 'tree,form'
+            action_read['views'] = [(view_id, 'tree'), (False, 'form')]
+            action_read['target'] = 'current'
+            action_read['name'] = _('Quotation Products')
+        return action_read
 
     @api.multi
     def add_products(self, product_ids, qty):

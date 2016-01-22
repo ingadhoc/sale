@@ -10,6 +10,7 @@
             <field name="arch" type="xml">
                 <tree position="attributes">
                     <attribute name="editable">top</attribute>
+                    <attribute name="create">false</attribute>
                 </tree>
                 <field name="default_code" position="attributes">
                     <attribute name="readonly">True</attribute>
