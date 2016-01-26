@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Sale Exception Credit Limit',
-    'version': '8.0.0.0.0',
+    'version': '8.0.0.1.0',
     'description': """
 Sale Exception Credit Limit
 ===========================
