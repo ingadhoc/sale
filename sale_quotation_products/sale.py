@@ -4,6 +4,7 @@
 # directory
 ##############################################################################
 from openerp import models, api, _
+from ast import literal_eval
 
 
 class sale_order(models.Model):
@@ -15,13 +16,21 @@ class sale_order(models.Model):
         action_read = False
         view_id = self.env['ir.model.data'].xmlid_to_res_id(
             'sale_quotation_products.product_product_tree_view')
+        search_view_id = self.env['ir.model.data'].xmlid_to_res_id(
+            'sale_quotation_products.product_product_search_view')
         actions = self.env.ref(
             'product.product_normal_action_sell')
         if actions:
             action_read = actions.read()[0]
+            context = literal_eval(action_read['context'])
+            context['pricelist'] = self.pricelist_id.display_name
+            action_read['context'] = context
+            # this search view removes pricelist
+            action_read.pop("search_view", None)
+            action_read['search_view_id'] = (search_view_id, False)
             action_read['view_mode'] = 'tree,form'
-            action_read['views'] = [(view_id, 'tree'), (False, 'form')]
-            action_read['target'] = 'current'
+            action_read['views'] = [
+                (view_id, 'tree'), (False, 'form')]
             action_read['name'] = _('Quotation Products')
         return action_read
 
