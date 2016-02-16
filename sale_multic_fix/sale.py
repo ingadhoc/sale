@@ -30,6 +30,8 @@ class sale_order_line(models.Model):
                                                              uos=uos, name=name, partner_id=partner_id, lang=lang,
                                                              update_tax=update_tax, date_order=date_order, packaging=packaging, 
                                                              fiscal_position=fiscal_position, flag=flag, context=context)
+        if not context:
+            context = {}
         if not 'value' in res:
             res['value'] = {}
         # tomamos la company del contexto porque no tenemos otra forma de saberla (ni sale order, ni warehouse)
