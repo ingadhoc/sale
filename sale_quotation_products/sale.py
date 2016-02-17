@@ -24,6 +24,8 @@ class sale_order(models.Model):
             action_read = actions.read()[0]
             context = literal_eval(action_read['context'])
             context['pricelist'] = self.pricelist_id.display_name
+            # we send company in context so it filters taxes
+            context['company_id'] = self.company_id.id
             action_read['context'] = context
             # this search view removes pricelist
             action_read.pop("search_view", None)
