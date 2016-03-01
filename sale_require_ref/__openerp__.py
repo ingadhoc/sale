@@ -19,14 +19,14 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Order Require Contract on Confirmation',
-    'version': '8.0.1.0.0',
+    'name': 'Sale Order Require Reference on Confirmation',
+    'version': '8.0.1.1.0',
     'category': 'Projects & Services',
     'sequence': 14,
     'summary': '',
     'description': """
-Sale Order Require Contract on Confirmation
-===========================================
+Sale Order Require Reference on Confirmation
+============================================
     """,
     'author':  'ADHOC SA',
     'website': 'www.adhoc.com.ar',
@@ -34,9 +34,10 @@ Sale Order Require Contract on Confirmation
     'images': [
     ],
     'depends': [
-        'sale',
+        'sale_exceptions',
     ],
     'data': [
+        'data/data.xml',
     ],
     'demo': [
         'sale_demo.xml',
