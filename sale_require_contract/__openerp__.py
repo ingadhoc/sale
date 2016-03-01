@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Sale Order Require Contract on Confirmation',
-    'version': '8.0.1.0.0',
+    'version': '8.0.1.1.0',
     'category': 'Projects & Services',
     'sequence': 14,
     'summary': '',
@@ -34,9 +34,10 @@ Sale Order Require Contract on Confirmation
     'images': [
     ],
     'depends': [
-        'sale',
+        'sale_exceptions',
     ],
     'data': [
+        'data/data.xml',
     ],
     'demo': [
         'sale_demo.xml',

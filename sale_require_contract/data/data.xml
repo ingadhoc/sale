@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data noupdate="1">
+
+    <record id="require_ref" model="sale.exception">
+      <field name="name">Contract Required</field>
+      <field name="description">You must set a contract.</field>
+      <field name="sequence">10</field>
+      <field name="model">sale.order</field>
+      <field name="code">if not object.project_id:
+    failed = True</field>
+      <field name="active" eval="True"/>
+    </record>
+
+  </data>
+</openerp>
