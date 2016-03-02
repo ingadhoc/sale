@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data noupdate="1">
+
+        <!-- because test create a sale_order_service without reference, we can not force this check -->
+        <!-- <record id="base.main_company" model="res.company">
+            <field name="client_order_ref">Reference 1</field>
+        </record> -->
     
         <!-- add contracts to sale orders that are going to be confirmed -->
         
+
         <record id="sale.sale_order_1" model="sale.order">
             <field name="client_order_ref">Reference 1</field>
         </record>
@@ -18,6 +24,10 @@
 
         <record id="sale.sale_order_7" model="sale.order">
             <field name="client_order_ref">Reference 4</field>
+        </record>
+
+        <record id="sale.sale_order_8" model="sale.order">
+            <field name="client_order_ref">Reference 8</field>
         </record>
         
 
