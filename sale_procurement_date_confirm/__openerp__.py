@@ -32,7 +32,9 @@ Make Sale Procurement Date based on Sale Confirm Date
 =====================================================
     """,
     "depends": [
-        "sale",
+        # with sale it enought but it breaks sale_stock tests, as we wont it
+        # only if stock installed, we can add this dependency
+        "sale_stock",
     ],
     'external_dependencies': {
     },
