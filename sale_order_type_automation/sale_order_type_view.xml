@@ -10,14 +10,17 @@
                 <field name="journal_id" position="replace"/>
                 <field name="sequence_id" position="replace"/>
                 <field name="warehouse_id" position="after">
-                    <field name="journal_id"/>
-                    <field name="payment_journal_id" attrs="{'invisible' : [('order_policy', '!=', 'manual')]}"/>
+                    <field name="journal_id" domain="[('company_id', '=', company_id)]"/>
+                    <field name="payment_journal_id" attrs="{'invisible' : [('order_policy', '!=', 'manual')]}" domain="[('company_id', '=', company_id)]"/>
                     <field name="validate_automatically_picking" attrs="{'invisible' : [('order_policy', '!=', 'manual')]}"/>
                     <field name="validate_automatically_invoice" attrs="{'invisible' : ['|',('order_policy', '!=', 'manual'),('journal_id','=', False)]}"/>
                     <field name="validate_automatically_voucher" attrs="{'invisible' : ['|',('order_policy', '!=', 'manual'),('payment_journal_id','=', False)]}"/>
                 </field>
                 <field name="refund_journal_id" position="before">
-                    <field name="sequence_id"/>
+                    <field name="sequence_id" domain="[('company_id', '=', company_id)]"/>
+                </field>
+                <field name="refund_journal_id" position="attributes">
+                    <attribute name="domain">"[('company_id', '=', company_id)]"</attribute>
                 </field>
             </field>
         </record>
