@@ -9,7 +9,7 @@ from openerp import models, fields, api
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    invoice_operation_ids = fields.One2many(
+    operation_ids = fields.One2many(
         'sale.invoice.operation',
         'order_id',
         'Invoice Operations',
@@ -26,5 +26,16 @@ class SaleOrder(models.Model):
         vals['operation_ids'] = [
             (0, 0, x.with_context(
                 invoice_line_ids=lines).get_operations_vals()) for x
-            in order.invoice_operation_ids]
+            in order.operation_ids]
         return vals
+
+    # def onchange_partner_id(self, cr, uid, ids, part, context=None):
+    @api.multi
+    def onchange_partner_id(self, partner_id):
+        result = super(SaleOrder, self).onchange_partner_id(partner_id)
+        if partner_id:
+            partner = self.env['res.partner'].browse(partner_id)
+            if partner.default_sale_invoice_plan:
+                plan_vals = partner.default_sale_invoice_plan.get_plan_vals()
+                result['value']['operation_ids'] = plan_vals
+        return result

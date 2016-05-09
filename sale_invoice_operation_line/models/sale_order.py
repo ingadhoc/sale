@@ -11,7 +11,7 @@ class SaleOrder(models.Model):
 
     @api.multi
     def update_operations_lines(self):
-        return self.invoice_operation_ids.update_operations_lines(
+        return self.operation_ids.update_operations_lines(
             self.order_line)
 
 

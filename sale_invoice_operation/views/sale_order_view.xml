@@ -7,9 +7,9 @@
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
                 <field name="client_order_ref" position="after">
-                    <label for="invoice_operation_ids"/>
+                    <label for="operation_ids"/>
                     <div name="operations_lines">
-                        <field name="invoice_operation_ids" widget="one2many_tags" context="{'journal_type': 'sale'}"/>
+                        <field name="operation_ids" widget="one2many_tags" context="{'journal_type': 'sale'}"/>
                         <button name="%(account_invoice_operation.action_invoice_operation_wizard)d" type="action" string="⇒ Load Plan" class="oe_link oe_line" states="draft,sent"/>
                     </div>
                 </field>
