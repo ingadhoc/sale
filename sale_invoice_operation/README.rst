@@ -1,0 +1,1 @@
+ADD posibility to predefine invoice operations on sales orders
