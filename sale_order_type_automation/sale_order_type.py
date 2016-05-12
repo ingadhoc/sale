@@ -3,7 +3,8 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from openerp import models, fields, api
+from openerp import models, fields, api, _
+from openerp.exceptions import Warning
 
 
 class SaleOrderTypology(models.Model):
@@ -35,3 +36,23 @@ class SaleOrderTypology(models.Model):
             self.validate_automatically_voucher = False
             self.payment_journal_id = False
             self.journal_id = False
+
+    @api.model
+    @api.constrains(
+        'journal_id',
+        'payment_journal_id',
+        'refund_journal_id',
+        'sequence_id')
+    def validate_company_id(self):
+        text = _(
+            'The Journal "%s" company must be the same than sale order type')
+        if self.journal_id.company_id != self.company_id:
+            raise Warning(text % self.journal_id.name)
+        if self.payment_journal_id.company_id != self.company_id:
+            raise Warning(text % self.payment_journal_id.name)
+        if self.refund_journal_id.company_id != self.company_id:
+            raise Warning(text % self.refund_journal_id.name)
+        if self.sequence_id.company_id != self.company_id:
+            raise Warning(_(
+                'The Sequence "%s" company must be the same than'
+                ' sale order type') % self.sequence_id.name)
