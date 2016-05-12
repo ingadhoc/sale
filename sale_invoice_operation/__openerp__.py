@@ -30,7 +30,7 @@
     'images': [
     ],
     'depends': [
-        'sale',
+        'sale_stock',
         'account_invoice_operation',
         'base_suspend_security',
     ],
