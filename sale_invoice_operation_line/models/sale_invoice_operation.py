@@ -10,8 +10,11 @@ import openerp.addons.decimal_precision as dp
 
 class SaleOrderLineOperation(models.Model):
     _name = 'sale.order.line.operation'
-    _rec_name = 'percentage'
+    # _rec_name = 'percentage'
 
+    display_name = fields.Char(
+        compute='get_display_name'
+    )
     operation_id = fields.Many2one(
         'sale.invoice.operation',
         'Operation',
@@ -33,8 +36,20 @@ class SaleOrderLineOperation(models.Model):
     )
 
     @api.one
+    @api.depends('operation_id.number', 'percentage')
+    def get_display_name(self):
+        self.display_name = "%s) %s%%" % (
+            self.operation_id.number, self.percentage)
+
+    @api.one
     @api.constrains('operation_id', 'percentage')
     def check_percetantage(self):
+        amount_type = self.operation_id.amount_type
+        if amount_type != 'percentage':
+            raise Warning(_(
+                'You can not create operation line for operation '
+                'of amount type %s') % (amount_type))
+
         operation_lines = self.search([
             ('operation_id', '=', self.operation_id.id),
             ('sale_line_id', '=', self.sale_line_id.id)])
@@ -62,7 +77,9 @@ class SaleInvoiceOperation(models.Model):
     line_ids = fields.One2many(
         'sale.order.line.operation',
         'operation_id',
-        'Lines'
+        'Lines',
+        # we should do this in another way
+        # copy=True,
     )
 
     @api.multi
@@ -77,9 +94,13 @@ class SaleInvoiceOperation(models.Model):
                     ('operation_id', '=', self.id),
                 ])
             if len(so_operation_line) != 1:
-                raise Warning(_(
-                    'No operation line found on sale order %s for '
-                    'operation %s') % (self.order_id.name, self.display_name))
+                # TODO analizar si queremos lanzar error o permitimos que no
+                # haya operaciones sin operation line
+                continue
+                # raise Warning(_(
+                #     'No operation line found on sale order %s for '
+                #     'operation %s') % (
+                # self.order_id.name, self.display_name))
             line_vals.append((0, 0, {
                 'invoice_line_id': inv_line_id,
                 'percentage': so_operation_line.percentage,

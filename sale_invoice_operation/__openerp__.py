@@ -32,6 +32,7 @@
     'depends': [
         'sale',
         'account_invoice_operation',
+        'base_suspend_security',
     ],
     'data': [
         'security/ir.model.access.csv',
@@ -43,6 +44,6 @@
     'test': [
     ],
     'installable': True,
-    'auto_install': False,
+    'auto_install': True,
     'application': False,
 }

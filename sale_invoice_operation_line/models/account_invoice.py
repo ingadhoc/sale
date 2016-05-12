@@ -22,18 +22,22 @@ class AccountInvoiceLine(models.Model):
         'account.invoice.line.operation',
         'invoice_line_id',
         'Operations',
-        copy=True,
+        # copy=True,
     )
 
     @api.multi
     def _get_operation_percentage(self, operation):
         """For compatibility with sale invoice operation line"""
         self.ensure_one()
-        operation_line = self.operation_line_ids.search([
-            ('operation_id', '=', operation.id),
-            ('invoice_line_id', '=', self.id)], limit=1)
-        if not operation_line:
-            raise Warning(_(
-                'No operation line for invoice line %s and operation %s') % (
-                self.name, operation.display_name))
-        return operation_line.percentage
+        if operation.amount_type == 'percentage':
+            operation_line = self.operation_line_ids.search([
+                ('operation_id', '=', operation.id),
+                ('invoice_line_id', '=', self.id)], limit=1)
+            if not operation_line:
+                raise Warning(_(
+                    'No operation line for line %s and operation %s') % (
+                    self.name, operation.display_name))
+            return operation_line.percentage
+        else:
+            # we only have lines for once of type percentage
+            return 100.0 - sum(self.operation_line_ids.mapped('percentage'))

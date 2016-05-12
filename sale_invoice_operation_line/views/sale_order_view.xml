@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <div name="operations_lines">
                     <button name="update_operations_lines" type="object" string="⇒ Update" class="oe_link oe_line" attrs="{'invisible': ['|', ('operation_ids', '=', []), ('state', 'not in', ['draft', 'sent'])]}"/>
+                    <button name="%(action_sale_order_line_operation_wizard)d" type="action" string="⇒ Matrix" class="oe_link oe_line" attrs="{'invisible': ['|', ('operation_ids', '=', []), ('state', 'not in', ['draft', 'sent'])]}"/>
                 </div>
                 <xpath expr="//field[@name='order_line']/form//field[@name='address_allotment_id']" position="after">
                     <field name="operation_line_ids" widget="one2many_tags"/>

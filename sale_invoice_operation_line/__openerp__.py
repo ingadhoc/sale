@@ -31,12 +31,15 @@
     ],
     'depends': [
         'sale_invoice_operation',
+        'web_widget_x2many_2d_matrix',
     ],
     'data': [
         'security/ir.model.access.csv',
+        'wizards/sale_order_line_operation_wizard_view.xml',
         'views/account_invoice_view.xml',
         'views/sale_order_view.xml',
         'views/sale_invoice_operation_view.xml',
+        'views/product_template_view.xml',
     ],
     'demo': [
     ],

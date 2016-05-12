@@ -3,5 +3,4 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from . import models
-from . import wizards
+from . import sale_order_line_make_invoice

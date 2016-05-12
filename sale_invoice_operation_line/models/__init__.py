@@ -8,3 +8,4 @@ from . import account_invoice
 from . import sale_order
 from . import sale_invoice_operation
 from . import account_invoice_plan
+from . import product_invoice_operation_restriction
