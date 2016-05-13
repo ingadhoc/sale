@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="sale_invoice_operation_form" model="ir.ui.view">
+            <field name="name">sale.invoice.operation.form</field>
+            <field name="model">sale.invoice.operation</field>
+            <field name="inherit_id" ref="account_invoice_operation.account_invoice_operation_form"/>
+            <field name="priority" eval="5"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <sheet>
+                    <field name="line_ids" attrs="{'invisible': [('amount_type', '!=', 'percentage')]}">
+                        <tree create="false" unlink="false" editable="bottom">
+                            <field name="sale_line_id"/>
+                            <field name="percentage"/>
+                        </tree>
+                    </field>
+                </sheet>
+            </field>
+        </record>
+    </data>
+</openerp>

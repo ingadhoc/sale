@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="sale_order_form" model="ir.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <field name="client_order_ref" position="after">
+                    <label for="operation_ids"/>
+                    <div name="operations_lines">
+                        <field name="operation_ids" widget="one2many_tags" context="{'journal_type': 'sale'}"/>
+                        <button name="%(account_invoice_operation.action_invoice_operation_wizard)d" type="action" string="⇒ Load Plan" class="oe_link oe_line" states="draft,sent"/>
+                    </div>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>

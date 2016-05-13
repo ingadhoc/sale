@@ -1,0 +1,1 @@
+ADD posibility to define invoice operations percentage on lines of invoices and sale orders
