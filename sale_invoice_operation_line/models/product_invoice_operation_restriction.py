@@ -48,9 +48,9 @@ class ProductInvoiceOperationRestriction(models.Model):
 
     @api.constrains('min_percentage', 'max_percentage')
     def check_percentages(self):
-        if self.min_percentage >= self.max_percentage:
+        if self.min_percentage > self.max_percentage:
             raise Warning(_(
-                'Max percentage must be major than min percentage'))
+                'Minn percentage can not be greater than max percentage'))
 
 
 class ProductTemplate(models.Model):
