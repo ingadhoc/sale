@@ -30,9 +30,9 @@
     'images': [
     ],
     'depends': [
-        'sale_stock',
+        'sale',
         'account_invoice_operation',
-        'base_suspend_security',
+        # 'base_suspend_security',
     ],
     'data': [
         'security/ir.model.access.csv',

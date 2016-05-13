@@ -1,5 +1,4 @@
 oca_sale_workflow https://github.com/OCA/sale-workflow.git
-oca_server_tools https://github.com/OCA/server-tools.git
 adhoc_account_financial_tools https://github.com/ingadhoc/account-financial-tools.git
 adhoc_partner https://github.com/ingadhoc/partner.git
 adhoc_product https://github.com/ingadhoc/product.git

@@ -63,13 +63,23 @@ class SaleOrder(models.Model):
                 result['value']['operation_ids'] = plan_vals
         return result
 
+    @api.model
+    def check_suspend_security_available(self):
+        suspend_security = getattr(self, "suspend_security", None)
+        if callable(suspend_security):
+            return True
+        return False
+
     @api.multi
     def action_done(self):
         """
         if we, for eg, pay an invoice and close sale order form a child
         company, then it would raise an error, we use suspend security
         """
-        return super(SaleOrder, self.suspend_security()).action_done()
+        if self.check_suspend_security_available():
+            return super(
+                SaleOrder, self.suspend_security()).action_done()
+        return super(SaleOrder, self.sudo()).action_done()
 
     @api.multi
     def action_invoice_end(self):
@@ -77,4 +87,7 @@ class SaleOrder(models.Model):
         if we, for eg, pay an invoice and close sale order form a child
         company, then it would raise an error, we use suspend security
         """
-        return super(SaleOrder, self.suspend_security()).action_invoice_end()
+        if self.check_suspend_security_available():
+            return super(
+                SaleOrder, self.suspend_security()).action_invoice_end()
+        return super(SaleOrder, self.sudo()).action_invoice_end()
