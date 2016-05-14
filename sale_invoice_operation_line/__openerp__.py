@@ -36,6 +36,7 @@
     'data': [
         'security/ir.model.access.csv',
         'wizards/sale_order_line_operation_wizard_view.xml',
+        'wizards/account_invoice_line_operation_wizard_view.xml',
         'views/account_invoice_view.xml',
         'views/sale_order_view.xml',
         'views/sale_invoice_operation_view.xml',

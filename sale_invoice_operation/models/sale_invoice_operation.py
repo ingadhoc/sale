@@ -35,11 +35,11 @@ class SaleInvoiceOperation(models.Model):
                 'than sale order currency. Operation "%s"') % (
                     self.display_name))
 
-    @api.one
-    @api.constrains('order_id', 'percentage')
-    def check_percetantage(self):
-        orders = self.search(
-            [('order_id', '=', self.order_id.id)])
-        if sum(orders.mapped('percentage')) > 100.0:
-            raise Warning(_(
-                'Sum of percentage could not be greater than 100%'))
+    # @api.one
+    # @api.constrains('order_id', 'percentage')
+    # def check_percetantage(self):
+    #     orders = self.search(
+    #         [('order_id', '=', self.order_id.id)])
+    #     if sum(orders.mapped('percentage')) > 100.0:
+    #         raise Warning(_(
+    #             'Sum of percentage could not be greater than 100%'))

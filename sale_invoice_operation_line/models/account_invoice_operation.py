@@ -78,14 +78,20 @@ class AccountInvoiceOperation(models.Model):
         'Lines'
     )
 
+    @api.constrains('invoice_id', 'percentage', 'amount_type')
+    def change_operations(self):
+        self.update_operations_lines(
+            self.invoice_id.invoice_line)
+
     @api.multi
     def update_operations_lines(self, model_lines):
         if model_lines._name == 'sale.order.line':
             field = 'sale_line_id'
         elif model_lines._name == 'account.invoice.line':
             field = 'invoice_line_id'
-        # delete old model_lines operations
-        model_lines.mapped('operation_line_ids').unlink()
+        # delete old model_lines of self operations
+        model_lines.mapped('operation_line_ids').filtered(
+            lambda x: x.operation_id.id in self.ids).unlink()
         for operation in self:
             # only create lines for amount_type percentage
             if operation.amount_type != 'percentage':

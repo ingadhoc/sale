@@ -7,12 +7,15 @@
             <field name="inherit_id" ref="account_invoice_operation.invoice_form"/>
             <field name="groups_id" eval="[(4, ref('base.group_user'))]"/>
             <field name="arch" type="xml">
-                <div name="operations_lines">
+<!--                 <div name="operations_lines">
                     <button name="update_operations_lines" type="object" string="⇒ Update" class="oe_link oe_line" attrs="{'invisible': ['|', ('operation_ids', '=', []), ('state', '!=', 'draft')]}"/>
-                </div>                
+                </div>         -->        
                 <xpath expr="//field[@name='invoice_line']/tree//field[@name='price_subtotal']" position="after">
                     <field name="operation_line_ids" widget="one2many_tags"/>
                 </xpath>
+                <field name="invoice_line" position="before">
+                    <button name="%(action_account_invoice_line_operation_wizard)d" string="Matrix" type="action" attrs="{'invisible': ['|', ('operation_ids', '=', []), ('state', 'not in', ['draft'])]}"/>
+                </field>
             </field>
         </record>
 
@@ -22,12 +25,15 @@
             <field name="inherit_id" ref="account_invoice_operation.invoice_supplier_form"/>
             <field name="groups_id" eval="[(4, ref('base.group_user'))]"/>
             <field name="arch" type="xml">
-                <div name="operations_lines">
+<!--                 <div name="operations_lines">
                     <button name="update_operations_lines" type="object" string="⇒ Update" class="oe_link oe_line" attrs="{'invisible': ['|', ('operation_ids', '=', []), ('state', '!=', 'draft')]}"/>
-                </div>                
+                </div>     -->            
                 <xpath expr="//field[@name='invoice_line']/tree//field[@name='price_subtotal']" position="after">
                     <field name="operation_line_ids" widget="one2many_tags"/>
                 </xpath>
+                <field name="invoice_line" position="before">
+                    <button name="%(action_account_invoice_line_operation_wizard)d" string="Matrix" type="action" attrs="{'invisible': ['|', ('operation_ids', '=', []), ('state', 'not in', ['draft'])]}"/>
+                </field>
             </field>
         </record>
     </data>

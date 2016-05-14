@@ -109,3 +109,8 @@ class SaleInvoiceOperation(models.Model):
             'line_ids': line_vals,
         })
         return vals
+
+    @api.constrains('order_id', 'percentage', 'amount_type')
+    def change_operations(self):
+        self.update_operations_lines(
+            self.order_id.order_line)

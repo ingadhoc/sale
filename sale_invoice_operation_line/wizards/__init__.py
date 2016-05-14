@@ -4,3 +4,4 @@
 # directory
 ##############################################################################
 from . import sale_order_line_operation_wizard
+from . import account_invoice_line_operation_wizard
