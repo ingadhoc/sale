@@ -72,15 +72,6 @@ class SaleOrder(models.Model):
             in order.operation_ids]
         return vals
 
-    @api.one
-    @api.constrains('operation_ids')
-    def check_operation_percetantage(self):
-        # orders = self.search(
-        #     [('order_id', '=', self.order_id.id)])
-        if sum(self.operation_ids.mapped('percentage')) > 100.0:
-            raise Warning(_(
-                'Sum of operations percentage could not be greater than 100%'))
-
     @api.multi
     def onchange_partner_id(self, partner_id):
         result = super(SaleOrder, self).onchange_partner_id(partner_id)
@@ -89,23 +80,14 @@ class SaleOrder(models.Model):
                 partner_id).commercial_partner_id
             result['value'][
                 'plan_id'] = partner.default_sale_invoice_plan_id.id
-            # if partner.default_sale_plan_id:
-            #     plan_vals = partner.default_sale_invoice_plan_id.get_plan_vals()
-            #     result['value']['operation_ids'] = plan_vals
         return result
 
     @api.one
     @api.onchange('plan_id')
     def change_plan(self):
-        # self.operation_ids = []
         self.operation_ids = False
         if self.plan_id:
             self.operation_ids = self.plan_id.get_plan_vals()
-        # if self.plan_id:
-        #     operations_vals = self.plan_id.get_plan_vals()
-        # else:
-        #     operations_vals = False
-        # self.operation_ids = operations_vals
 
     @api.model
     def check_suspend_security_available(self):
