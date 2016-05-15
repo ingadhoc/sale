@@ -37,6 +37,11 @@ class SaleOrder(models.Model):
     )
 
     @api.one
+    @api.constrains('operation_ids')
+    def run_checks(self):
+        self.operation_ids._run_checks()
+
+    @api.one
     @api.constrains('invoice_ids')
     def add_operations_to_invoices(self):
         """
