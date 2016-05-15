@@ -41,6 +41,7 @@
         'views/sale_order_view.xml',
         'views/sale_invoice_operation_view.xml',
         'views/product_template_view.xml',
+        'views/product_invoice_operation_restriction_view.xml',
     ],
     'demo': [
     ],

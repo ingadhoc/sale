@@ -45,6 +45,12 @@ class ProductInvoiceOperationRestriction(models.Model):
         required=True,
         default=100.0,
     )
+    prod_template_ids = fields.Many2many(
+        'product.template',
+        'product_invoice_operation_resteriction_rel',
+        'restriction_id', 'template_id',
+        'Products',
+    )
 
     @api.constrains('min_percentage', 'max_percentage')
     def check_percentages(self):

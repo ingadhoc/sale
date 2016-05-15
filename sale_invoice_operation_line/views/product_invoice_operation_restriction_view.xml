@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_product_invoice_operation_restriction_tree" model="ir.ui.view">
+            <field name="name">product.invoice.operation.restriction.tree</field>
+            <field name="model">product.invoice.operation.restriction</field>
+            <field name="arch" type="xml">
+                <tree string="Product Restrictions">
+                    <field name="name"/>
+                    <field name="company_id"/>
+                    <field name="journal_id"/>
+                    <field name="min_percentage"/>
+                    <field name="max_percentage"/>
+                    <field name="prod_template_ids"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_product_invoice_operation_restriction_form" model="ir.ui.view">
+            <field name="name">product.invoice.operation.restriction.form</field>
+            <field name="model">product.invoice.operation.restriction</field>
+            <field name="arch" type="xml">
+                <form string="Product Restrictions">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="company_id"/>
+                                <field name="journal_id"/>
+                                <field name="min_percentage"/>
+                                <field name="max_percentage"/>
+                                <field name="prod_template_ids"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_product_invoice_operation_restriction" model="ir.actions.act_window">
+            <field name="name">Product Restrictions</field>
+            <field name="res_model">product.invoice.operation.restriction</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <!-- <field name="search_view_id" ref="view_invoice_plan_search"/> -->
+        </record>
+        
+        <menuitem action="action_product_invoice_operation_restriction"
+            id="menu_product_invoice_operation_restriction" parent="account_invoice_operation.menu_invoice_operations_config" sequence="20"/>
+
+    </data>
+</openerp>

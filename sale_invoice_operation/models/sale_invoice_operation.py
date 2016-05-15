@@ -43,3 +43,14 @@ class SaleInvoiceOperation(models.Model):
     #     if sum(orders.mapped('percentage')) > 100.0:
     #         raise Warning(_(
     #             'Sum of percentage could not be greater than 100%'))
+
+    @api.multi
+    @api.depends('sequence', 'order_id')
+    def get_number(self):
+        for order in self.mapped('order_id'):
+            number = 1
+            operations = order.operation_ids.search([
+                ('order_id', '=', order.id), ('id', 'in', self.ids)])
+            for operation in operations:
+                operation.number = number
+                number += 1
