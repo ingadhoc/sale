@@ -3,25 +3,18 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from openerp import models, fields, api, _
-from openerp.exceptions import Warning
-import openerp.addons.decimal_precision as dp
+from openerp import models, fields, api
 
 
 class SaleOrderLineOperation(models.Model):
+    _inherit = 'account.invoice.line.operation'
     _name = 'sale.order.line.operation'
-    # _rec_name = 'percentage'
 
-    display_name = fields.Char(
-        compute='get_display_name'
-    )
     operation_id = fields.Many2one(
         'sale.invoice.operation',
-        'Operation',
-        required=True,
-        ondelete='cascade',
-        readonly=True,
-        auto_join=True,
+    )
+    invoice_line_id = fields.Many2one(
+        required=False,
     )
     sale_line_id = fields.Many2one(
         'sale.order.line',
@@ -30,43 +23,11 @@ class SaleOrderLineOperation(models.Model):
         readonly=True,
         auto_join=True,
     )
-    percentage = fields.Float(
-        'Percentage',
-        digits=dp.get_precision('Discount'),
-    )
-
-    @api.one
-    @api.depends('operation_id.number', 'percentage')
-    def get_display_name(self):
-        self.display_name = "%s) %s%%" % (
-            self.operation_id.number, self.percentage)
 
     @api.one
     @api.constrains('operation_id', 'percentage')
     def check_percetantage(self):
-        amount_type = self.operation_id.amount_type
-        if amount_type != 'percentage':
-            raise Warning(_(
-                'You can not create operation line for operation '
-                'of amount type %s') % (amount_type))
-
-        operation_lines = self.search([
-            ('operation_id', '=', self.operation_id.id),
-            ('sale_line_id', '=', self.sale_line_id.id)])
-        msg = _('Sum of percentage could not be greater than 100%')
-        op_lines_percentage = sum(operation_lines.mapped('percentage'))
-        if op_lines_percentage > 100.0:
-            raise Warning(msg)
-
-        # TODO ver si incorporamos esta restriccion, da error al hacer load
-        # de una del 100%
-        # invoice_op_percentage = sum(
-        #     self.operation_id.invoice_id.operation_ids.mapped('percentage'))
-
-        # if invoice_op_percentage == 100.0 and op_lines_percentage != 100.0:
-        #     raise Warning(_(
-        #         'If Invoice Operations sum is 100%, then lines must also sum'
-        #         ' 100%'))
+        return self._check_percetantage('sale_line_id')
 
 
 class SaleInvoiceOperation(models.Model):

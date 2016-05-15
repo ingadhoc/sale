@@ -12,7 +12,7 @@
                 <!-- <xpath expr="//page[@string='Sales']"> -->
                 <xpath expr="//page[@string='Accounting']">
                     <group>
-                        <field name="invoice_operation_restriction_ids" />
+                        <field name="invoice_operation_restriction_ids" groups="account_invoice_operation.invoice_plan_edit"/>
                     </group>
                 </xpath>
             </field>

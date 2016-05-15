@@ -10,7 +10,6 @@ from openerp.exceptions import Warning
 
 class AccountInvoiceLineOperation(models.Model):
     _name = 'account.invoice.line.operation'
-    # _rec_name = 'percentage'
 
     display_name = fields.Char(
         compute='get_display_name'
@@ -44,29 +43,53 @@ class AccountInvoiceLineOperation(models.Model):
     @api.one
     @api.constrains('operation_id', 'percentage')
     def check_percetantage(self):
+        return self._check_percetantage('invoice_line_id')
+
+    @api.one
+    def _check_percetantage(self, line_field):
+        line_browse = getattr(self, line_field)
+        operation_lines = self.search([
+            ('operation_id', '=', self.operation_id.id),
+            (line_field, '=', line_browse.id)])
         amount_type = self.operation_id.amount_type
         if amount_type != 'percentage':
             raise Warning(_(
                 'You can not create operation line for operation '
                 'of amount type %s') % (amount_type))
 
-        operation_lines = self.search([
-            ('operation_id', '=', self.operation_id.id),
-            ('invoice_line_id', '=', self.invoice_line_id.id)])
         msg = _('Sum of percentage could not be greater than 100%')
         op_lines_percentage = sum(operation_lines.mapped('percentage'))
         if op_lines_percentage > 100.0:
             raise Warning(msg)
 
-        # TODO ver si incorporamos esta restriccion, da error al hacer load
-        # de una del 100%
-        # invoice_op_percentage = sum(
-        #     self.operation_id.invoice_id.operation_ids.mapped('percentage'))
-
-        # if invoice_op_percentage == 100.0 and op_lines_percentage != 100.0:
-        #     raise Warning(_(
-        #         'If Invoice Operations sum is 100%, then lines must also sum'
-        #         ' 100%'))
+        # disable this check for this group
+        if self.env.user.has_group(
+                'account_invoice_operation.invoice_plan_edit'):
+            return True
+        for restriction in (
+                line_browse.product_id.invoice_operation_restriction_ids):
+            # restringe si:
+            # - restriccion tiene journal y es igual al de oper.
+            # - restriccion tiene companya y es igual al de oper.
+            if (
+                    (restriction.journal_id and
+                        restriction.journal_id ==
+                        self.operation_id.journal_id) or
+                    (restriction.company_id and
+                        restriction.company_id ==
+                        self.operation_id.company_id)):
+                if self.percentage < restriction.min_percentage:
+                    raise Warning(_(
+                        'On product %s percentage can not be minor than %s%% '
+                        'because of a restriction') % (
+                        line_browse.product_id.name,
+                        restriction.min_percentage))
+                elif self.percentage > restriction.max_percentage:
+                    raise Warning(_(
+                        'On product %s percentage can not be greater than %s%%'
+                        ' because of a restriction') % (
+                        line_browse.product_id.name,
+                        restriction.max_percentage))
 
 
 class AccountInvoiceOperation(models.Model):
