@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Sale Pricelist Discount',
-    'version': '8.0.2.1.0',
+    'version': '8.0.2.1.1',
     'description': """
 Sale Pricelist Discount
 =======================
@@ -34,7 +34,7 @@ Sale Pricelist Discount
     ],
     'data': [
         'views/sale_view.xml',
-        ],
+    ],
     'demo_xml': [],
     'test': [],
     'installable': True,

@@ -24,7 +24,7 @@ class sale_order_line(models.Model):
             flag=flag)
         price_get = self.env['product.product'].browse(product).with_context(
             currency_id=self.env['product.pricelist'].browse(
-                pricelist).currency_id.id).price_get()
+                pricelist).currency_id.id, uom=uom).price_get()
         if 'value' not in res:
             res['value'] = {}
         res['value']['list_price'] = price_get and price_get[
@@ -32,14 +32,17 @@ class sale_order_line(models.Model):
         return res
 
     @api.one
-    @api.constrains('product_id')
+    @api.constrains('product_id', 'product_uom', 'order_id')
     def set_list_price(self):
+        """Because fill is readonly so onchange method does not save value and
+        also if we create it manually (without iterface)
+        """
         currency = self.order_id.pricelist_id.currency_id
         if self.product_id and currency:
             price_get = self.product_id.with_context(
-                currency_id=currency.id
-                ).price_get()
-
+                currency_id=currency.id,
+                uom=self.product_uom.id,
+            ).price_get()
             self.list_price = price_get and price_get[
                 self.product_id.id] or False
 
@@ -47,7 +50,7 @@ class sale_order_line(models.Model):
     @api.depends(
         'discount',
         'price_unit',
-        )
+    )
     def _get_discounts(self):
         list_price = self.list_price
         list_discount = list_price and (
@@ -74,13 +77,13 @@ class sale_order_line(models.Model):
         digits=dp.get_precision('Product Price'),
         string='List Price',
         readonly=True
-        )
+    )
     list_discount = fields.Float(
         compute='_get_discounts',
         string='List Discount'
-        )
+    )
     total_discount = fields.Float(
         compute='_get_discounts',
         inverse='_set_discount',
         string='Total Discount'
-        )
+    )
