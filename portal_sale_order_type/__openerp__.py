@@ -19,33 +19,27 @@
 #
 ##############################################################################
 {
-    "name": "Sale Global Three Discounts",
-    'version': '8.0.0.4.0',
-    'category': 'Sales Management',
-    'sequence': 14,
-    'author':  'ADHOC SA',
+    'name': 'Portal Sale Order Type',
+    'version': '8.0.0.0.0',
+    'category': 'Tools',
+    'complexity': 'easy',
+    'description': """
+Portal Sale Order Type
+======================
+    """,
+    'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
-    'summary': '',
-    "description": """
-Sale Global Three Discounts
-===========================
-
-    """,
-    "depends": [
-        'sale_global_discount',
-        'sale_three_discounts'
-    ],
-    'external_dependencies': {
-    },
-    "data": [
-        'wizard/sale_global_discount_wizard_view.xml',
+    'depends': [
+        'portal_sale',
+        'sale_order_type',
     ],
     'demo': [
     ],
-    'test': [
+    'data': [
+        'security/ir.model.access.csv',
     ],
     'installable': True,
     'auto_install': True,
-    'application': False,
+    'application': True,
 }

@@ -19,33 +19,31 @@
 #
 ##############################################################################
 {
-    "name": "Sale Global Three Discounts",
-    'version': '8.0.0.4.0',
-    'category': 'Sales Management',
+    'name': 'Sale Order Line Number',
+    'version': '8.0.0.0.0',
+    'category': 'Accounting',
     'sequence': 14,
-    'author':  'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'summary': '',
-    "description": """
-Sale Global Three Discounts
-===========================
+    'description': """
+Sale Order Line Number
+======================
 
     """,
-    "depends": [
-        'sale_global_discount',
-        'sale_three_discounts'
+    'author': 'ADHOC SA',
+    'website': 'www.adhoc.com.ar',
+    'license': 'AGPL-3',
+    'images': [
     ],
-    'external_dependencies': {
-    },
-    "data": [
-        'wizard/sale_global_discount_wizard_view.xml',
+    'depends': [
+        'sale',
+    ],
+    'data': [
+        'view/sale_order_view.xml'
     ],
     'demo': [
     ],
     'test': [
     ],
     'installable': True,
-    'auto_install': True,
+    'auto_install': False,
     'application': False,
 }
