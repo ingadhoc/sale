@@ -20,10 +20,10 @@
 ##############################################################################
 {
     "name": "Sale Three Discounts",
-    'version': '8.0.0.0.0',
+    'version': '8.0.0.1.0',
     'category': 'Sales Management',
     'sequence': 14,
-    'author':  'ADHOC SA',
+    'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'summary': '',
@@ -32,12 +32,14 @@ Sale Three Discounts
 ====================
     """,
     "depends": [
-        "sale",
+        'sale',
+        'account'
     ],
     'external_dependencies': {
     },
     "data": [
         'views/sale_order_view.xml',
+        'views/account_invoice_view.xml',
     ],
     'demo': [
     ],
