@@ -11,7 +11,7 @@
                     <field name="journal_id"/>
                     <field name="min_percentage"/>
                     <field name="max_percentage"/>
-                    <field name="prod_template_ids"/>
+                    <!-- <field name="prod_template_ids"/> -->
                 </tree>
             </field>
         </record>
