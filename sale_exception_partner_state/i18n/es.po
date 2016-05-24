@@ -3,14 +3,15 @@
 # * sale_exception_partner_state
 # 
 # Translators:
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: odoo-addons (8.0)\n"
+"Project-Id-Version: sale (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-05 15:23+0000\n"
-"PO-Revision-Date: 2015-10-22 14:31+0000\n"
-"Last-Translator: <>\n"
-"Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-addons-8-0/language/es/)\n"
+"POT-Creation-Date: 2016-05-20 22:53+0000\n"
+"PO-Revision-Date: 2016-05-24 23:01+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>\n"
+"Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-sale-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -20,7 +21,7 @@ msgstr ""
 #. module: sale_exception_partner_state
 #: model:sale.exception,name:sale_exception_partner_state.unapproved_partner_amount_restriction
 msgid "Amount Exceeded for Unapproved Partner"
-msgstr ""
+msgstr "Importe Excedido para un partner no aprobado"
 
 #. module: sale_exception_partner_state
 #: model:ir.model,name:sale_exception_partner_state.model_res_company
@@ -30,22 +31,22 @@ msgstr "Compañías"
 #. module: sale_exception_partner_state
 #: selection:res.company,restrict_sales:0
 msgid "Depends on the amount"
-msgstr ""
+msgstr "Depende en el importe"
 
 #. module: sale_exception_partner_state
 #: field:res.company,restrict_sales_amount:0
 msgid "Restrict Amounts Greater Than"
-msgstr ""
+msgstr "Restringir Importes Mayores A"
 
 #. module: sale_exception_partner_state
 #: help:res.company,restrict_sales:0
 msgid "Restrict Sales to Unapproved Partners?"
-msgstr ""
+msgstr "Restringir Ventas a Partners No Aprobados"
 
 #. module: sale_exception_partner_state
 #: field:res.company,restrict_sales:0
 msgid "Restrict Sales?"
-msgstr ""
+msgstr "Restringir Ventas?"
 
 #. module: sale_exception_partner_state
 #: model:ir.model,name:sale_exception_partner_state.model_sale_order
@@ -55,19 +56,19 @@ msgstr "Pedido de venta"
 #. module: sale_exception_partner_state
 #: model:sale.exception,name:sale_exception_partner_state.unapproved_partner_restriction
 msgid "Unapproved Partner"
-msgstr ""
+msgstr "Partner No Aprobado"
 
 #. module: sale_exception_partner_state
 #: selection:res.company,restrict_sales:0
 msgid "Yes"
-msgstr ""
+msgstr "Si"
 
 #. module: sale_exception_partner_state
 #: model:sale.exception,description:sale_exception_partner_state.unapproved_partner_restriction
 msgid "You can not sell to an Unapproved Partner on this company"
-msgstr ""
+msgstr "No puede vender a un Partner No aprobado en esta compañía"
 
 #. module: sale_exception_partner_state
 #: model:sale.exception,description:sale_exception_partner_state.unapproved_partner_amount_restriction
 msgid "You can not sell to an Unapproved Partner this amount on this company"
-msgstr ""
+msgstr "No puede vender este importe a un Partner No aprobado en esta compañía"

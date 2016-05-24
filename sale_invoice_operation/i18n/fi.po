@@ -1,0 +1,218 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * sale_invoice_operation
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: sale (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-05-20 22:53+0000\n"
+"PO-Revision-Date: 2016-05-15 16:20+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>\n"
+"Language-Team: Finnish (http://www.transifex.com/adhoc/ingadhoc-sale-8-0/language/fi/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: fi\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: sale_invoice_operation
+#: help:sale.invoice.operation,automatic_validation:0
+msgid "After running operations, invoice are going to be validated"
+msgstr ""
+
+#. module: sale_invoice_operation
+#: field:sale.invoice.operation,amount_type:0
+msgid "Amount Type"
+msgstr ""
+
+#. module: sale_invoice_operation
+#: field:sale.invoice.operation,automatic_validation:0
+msgid "Automatic validation"
+msgstr ""
+
+#. module: sale_invoice_operation
+#: selection:sale.invoice.operation,amount_type:0
+msgid "Balance"
+msgstr ""
+
+#. module: sale_invoice_operation
+#: field:sale.invoice.operation,company_id:0
+msgid "Company"
+msgstr ""
+
+#. module: sale_invoice_operation
+#: field:sale.invoice.operation,create_uid:0
+msgid "Created by"
+msgstr "Luonut"
+
+#. module: sale_invoice_operation
+#: field:sale.invoice.operation,create_date:0
+msgid "Created on"
+msgstr "Luotu"
+
+#. module: sale_invoice_operation
+#: field:sale.invoice.operation,date:0
+msgid "Date"
+msgstr ""
+
+#. module: sale_invoice_operation
+#: field:sale.invoice.operation,days2:0
+msgid "Day of the Month"
+msgstr ""
+
+#. module: sale_invoice_operation
+#: help:sale.invoice.operation,days2:0
+msgid ""
+"Day of the month, set -1 for the last day of the current month. If it's "
+"positive, it gives the day of the next month. Set 0 for net days (otherwise "
+"it's based on the beginning of the month)."
+msgstr ""
+
+#. module: sale_invoice_operation
+#: field:sale.invoice.operation,display_name:0
+msgid "Display name"
+msgstr ""
+
+#. module: sale_invoice_operation
+#: help:sale.invoice.operation,rounding:0
+msgid "For eg, if you set 0.1, quani will be round to 1 decimal"
+msgstr ""
+
+#. module: sale_invoice_operation
+#: field:sale.invoice.operation,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: sale_invoice_operation
+#: help:sale.invoice.operation,date:0
+msgid "If you set a date here, then this date will be used and not computed."
+msgstr ""
+
+#. module: sale_invoice_operation
+#: field:sale.invoice.operation,invoice_id:0
+msgid "Invoice"
+msgstr ""
+
+#. module: sale_invoice_operation
+#: view:sale.invoice.operation:sale_invoice_operation.sale_invoice_operation_form
+msgid "Invoice Operation"
+msgstr ""
+
+#. module: sale_invoice_operation
+#: field:sale.order,operation_ids:0 field:sale.order,readonly_operation_ids:0
+msgid "Invoice Operations"
+msgstr ""
+
+#. module: sale_invoice_operation
+#: field:sale.invoice.operation,reference:0
+msgid "Invoice Reference"
+msgstr ""
+
+#. module: sale_invoice_operation
+#: field:sale.order,plan_id:0 field:sale.order,readonly_plan_id:0
+msgid "Invoicing Plan"
+msgstr ""
+
+#. module: sale_invoice_operation
+#: field:sale.invoice.operation,journal_id:0
+msgid "Journal"
+msgstr ""
+
+#. module: sale_invoice_operation
+#: help:sale.invoice.operation,journal_id:0
+msgid "Journal can only be used if type is configured on plan"
+msgstr ""
+
+#. module: sale_invoice_operation
+#: field:sale.invoice.operation,__last_update:0
+msgid "Last Modified on"
+msgstr ""
+
+#. module: sale_invoice_operation
+#: field:sale.invoice.operation,write_uid:0
+msgid "Last Updated by"
+msgstr "Viimeksi päivittänyt"
+
+#. module: sale_invoice_operation
+#: field:sale.invoice.operation,write_date:0
+msgid "Last Updated on"
+msgstr "Viimeksi päivitetty"
+
+#. module: sale_invoice_operation
+#: field:sale.invoice.operation,number:0
+msgid "Number"
+msgstr ""
+
+#. module: sale_invoice_operation
+#: field:sale.invoice.operation,days:0
+msgid "Number of Days"
+msgstr ""
+
+#. module: sale_invoice_operation
+#: help:sale.invoice.operation,days:0
+msgid ""
+"Number of days to add before computation of the day of month.If Date=15/01, "
+"Number of Days=22, Day of Month=-1, then the due date is 28/02."
+msgstr ""
+
+#. module: sale_invoice_operation
+#: selection:sale.invoice.operation,amount_type:0
+#: field:sale.invoice.operation,percentage:0
+msgid "Percentage"
+msgstr ""
+
+#. module: sale_invoice_operation
+#: help:sale.invoice.operation,percentage:0
+msgid ""
+"Percentage of invoice lines quantities that will be used for this operation"
+msgstr ""
+
+#. module: sale_invoice_operation
+#: field:sale.invoice.operation,plan_id:0
+msgid "Plan"
+msgstr ""
+
+#. module: sale_invoice_operation
+#: field:sale.invoice.operation,rounding:0
+msgid "Rounding Factor"
+msgstr ""
+
+#. module: sale_invoice_operation
+#: field:sale.invoice.operation,order_id:0
+msgid "Sale Order"
+msgstr ""
+
+#. module: sale_invoice_operation
+#: model:ir.model,name:sale_invoice_operation.model_sale_order_line_make_invoice
+msgid "Sale OrderLine Make_invoice"
+msgstr ""
+
+#. module: sale_invoice_operation
+#: model:ir.model,name:sale_invoice_operation.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: sale_invoice_operation
+#: field:sale.invoice.operation,sequence:0
+msgid "Sequence"
+msgstr ""
+
+#. module: sale_invoice_operation
+#: help:sale.invoice.operation,reference:0
+msgid "This reference will be added to invoice reference."
+msgstr ""
+
+#. module: sale_invoice_operation
+#: field:sale.invoice.operation,type:0
+msgid "Type"
+msgstr ""
+
+#. module: sale_invoice_operation
+#: code:addons/sale_invoice_operation/models/sale_invoice_operation.py:33
+#, python-format
+msgid ""
+"You can not use a journal or company of different currency than sale order "
+"currency. Operation \"%s\""
+msgstr ""

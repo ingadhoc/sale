@@ -3,14 +3,16 @@
 # * sale_quotation_products
 # 
 # Translators:
+# Hotellook, 2014
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: odoo-addons (8.0)\n"
+"Project-Id-Version: sale (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-05 15:23+0000\n"
-"PO-Revision-Date: 2015-12-29 17:29+0000\n"
-"Last-Translator: Juan Jose Scarafia <scarafia.juanjose@gmail.com>\n"
-"Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-addons-8-0/language/es/)\n"
+"POT-Creation-Date: 2016-05-20 22:53+0000\n"
+"PO-Revision-Date: 2016-05-24 23:14+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>\n"
+"Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-sale-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -18,12 +20,29 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: sale_quotation_products
+#: field:product.product,can_modify_prices:0
+msgid "Can modify prices"
+msgstr "Puede modificar precios"
+
+#. module: sale_quotation_products
+#: field:product.product,qty:0
+msgid "Cantidad"
+msgstr "Cantidad"
+
+#. module: sale_quotation_products
+#: help:product.product,can_modify_prices:0
+msgid ""
+"If checked all users can modify the        price of this product in a sale "
+"order or invoice."
+msgstr "Si esta marcado todos los usuarios pueden modificar el precio de este producto en una orden de venta o factura."
+
+#. module: sale_quotation_products
 #: model:ir.model,name:sale_quotation_products.model_product_product
 msgid "Product"
 msgstr "Producto"
 
 #. module: sale_quotation_products
-#: code:addons/sale_quotation_products/sale.py:25
+#: code:addons/sale_quotation_products/sale.py:36
 #, python-format
 msgid "Quotation Products"
 msgstr "Productos del Presupuesto"
@@ -42,6 +61,11 @@ msgstr "Buscar Productos"
 #: view:product.product:sale_quotation_products.product_product_tree_view
 msgid "True"
 msgstr "True"
+
+#. module: sale_quotation_products
+#: view:product.product:sale_quotation_products.product_product_tree_view
+msgid "false"
+msgstr "falso"
 
 #. module: sale_quotation_products
 #: view:product.product:sale_quotation_products.product_product_tree_view
