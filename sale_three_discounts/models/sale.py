@@ -27,7 +27,8 @@ class sale_order_line(models.Model):
         compute='get_discount',
         store=True,
         readonly=True,
-        # states={}
+        # agregamos states vacio porque lo hereda de la definicion anterior
+        states={},
     )
 
     @api.one
