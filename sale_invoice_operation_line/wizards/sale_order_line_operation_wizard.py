@@ -27,7 +27,6 @@ class SaleOrderLineOperationWizard(models.TransientModel):
         'sale.order.line.operation',
         'sale_order_line_wizard_rel',
         'wizard_id', 'operation_line_id',
-        # default=_default_operation_lines,
     )
 
     @api.multi

@@ -39,8 +39,6 @@ class SaleInvoiceOperation(models.Model):
         'sale.order.line.operation',
         'operation_id',
         'Lines',
-        # we should do this in another way
-        # copy=True,
     )
 
     @api.multi

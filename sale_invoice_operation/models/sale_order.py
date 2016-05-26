@@ -3,8 +3,7 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from openerp import models, fields, api, _
-from openerp.exceptions import Warning
+from openerp import models, fields, api
 
 
 class SaleOrder(models.Model):
@@ -21,8 +20,6 @@ class SaleOrder(models.Model):
     plan_id = fields.Many2one(
         'account.invoice.plan',
         'Invoicing Plan',
-        # required=True,
-        # ondelete='cascade',
         readonly=True,
         states={'draft': [('readonly', False)], 'sent': [('readonly', False)]}
     )

@@ -7,14 +7,6 @@ from openerp import models, fields, api, _
 from openerp.exceptions import Warning
 
 
-# class AccountInvoice(models.Model):
-#     _inherit = 'account.invoice'
-
-#     @api.multi
-#     def update_operations_lines(self):
-#         return self.operation_ids.update_operations_lines(self.invoice_line)
-
-
 class AccountInvoiceLine(models.Model):
     _inherit = 'account.invoice.line'
 
@@ -22,7 +14,6 @@ class AccountInvoiceLine(models.Model):
         'account.invoice.line.operation',
         'invoice_line_id',
         'Operations',
-        # copy=True,
         readonly=True,
     )
 

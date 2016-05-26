@@ -27,7 +27,6 @@ class AccountInvoiceLineOperationWizard(models.TransientModel):
         'account.invoice.line.operation',
         'account_invoice_line_wizard_rel',
         'wizard_id', 'operation_line_id',
-        # default=_default_operation_lines,
     )
 
     @api.multi
