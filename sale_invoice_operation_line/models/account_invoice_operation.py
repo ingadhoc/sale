@@ -43,14 +43,16 @@ class AccountInvoiceLineOperation(models.Model):
     @api.one
     @api.constrains('operation_id', 'percentage')
     def check_percetantage(self):
-        return self._check_percetantage('invoice_line_id')
+        return self._check_percetantage(
+            'invoice_line_id', self.invoice_line_id.operation_line_ids, self.invoice_line_id.invoice_id.operation_ids)
 
     @api.one
-    def _check_percetantage(self, line_field):
+    def _check_percetantage(self, line_field, operation_lines, operations):
         line_browse = getattr(self, line_field)
-        operation_lines = self.search([
-            ('operation_id', '=', self.operation_id.id),
-            (line_field, '=', line_browse.id)])
+        # operation_lines = self.search([
+        #     ('operation_id', '=', self.operation_id.id),
+        #     (line_field, '=', line_browse.id)])
+        print 'operation_lines', operation_lines
         amount_type = self.operation_id.amount_type
         if amount_type != 'percentage':
             raise Warning(_(
@@ -62,12 +64,42 @@ class AccountInvoiceLineOperation(models.Model):
         if op_lines_percentage > 100.0:
             raise Warning(msg)
 
+        # usamos esto para chequear si el saldo cumple con las restricciones
+        # if line_field == 'invoice_line_id':
+            # domain
+        # balance_operation = self.operation_id.search([
+        #     ('invoice_id', '=', model_record.id),
+        #     ('amount_type', '=', 'balance')], limit=1)
+        balance_operation = operations.filtered(
+            lambda x: x.amount_type == 'balance')
+        line_balance = 100.0 - op_lines_percentage
+
+        # TODO we dont check it right now
         # disable this check for this group
-        if self.env.user.has_group(
-                'account_invoice_operation.invoice_plan_edit'):
-            return True
+        # if self.env.user.has_group(
+        #         'account_invoice_operation.invoice_plan_edit'):
+        #     return True
         for restriction in (
                 line_browse.product_id.invoice_operation_restriction_ids):
+            # check restriction over a balance operation
+            if (
+                    (restriction.journal_id and
+                        restriction.journal_id ==
+                        balance_operation.journal_id) or
+                    (restriction.company_id and
+                        restriction.company_id ==
+                        balance_operation.company_id)):
+                print 'aaaaaaaaa', restriction.max_percentage
+                if restriction.max_percentage < line_balance:
+                    raise Warning(_(
+                        'You can not use this percentages as balance operation'
+                        ' "%s" for line "%s" will get a balance of "%s%%" and '
+                        'it has a maximum restriction of %s%%') % (
+                        balance_operation.display_name,
+                        line_browse.product_id.name,
+                        line_balance,
+                        restriction.max_percentage))
+            # chequeamos si la linea que se crea o se modifica esta en el rango
             # restringe si:
             # - restriccion tiene journal y es igual al de oper.
             # - restriccion tiene companya y es igual al de oper.
@@ -78,17 +110,12 @@ class AccountInvoiceLineOperation(models.Model):
                     (restriction.company_id and
                         restriction.company_id ==
                         self.operation_id.company_id)):
-                if self.percentage < restriction.min_percentage:
+                if self.percentage > restriction.max_percentage:
                     raise Warning(_(
-                        'On product %s percentage can not be minor than %s%% '
-                        'because of a restriction') % (
+                        'On product "%s", operation "%s" percentage can not be'
+                        ' greater than %s%% because of a restriction') % (
                         line_browse.product_id.name,
-                        restriction.min_percentage))
-                elif self.percentage > restriction.max_percentage:
-                    raise Warning(_(
-                        'On product %s percentage can not be greater than %s%%'
-                        ' because of a restriction') % (
-                        line_browse.product_id.name,
+                        self.operation_id.display_name,
                         restriction.max_percentage))
 
 
@@ -135,8 +162,8 @@ class AccountInvoiceOperation(models.Model):
                                     restriction.company_id ==
                                     operation.company_id)):
                             # restriction min > perc, then rest min
-                            percentage = max(
-                                percentage, restriction.min_percentage)
+                            # percentage = max(
+                            #     percentage, restriction.min_percentage)
                             # restriction max < perc, then rest max
                             percentage = min(
                                 percentage, restriction.max_percentage)
@@ -146,11 +173,13 @@ class AccountInvoiceOperation(models.Model):
                     field: line.id,
                     'percentage': percentage,
                 }
-                operation_line = line.operation_line_ids.search([
-                    ('operation_id', '=', operation.id),
-                    (field, '=', line.id),
-                ], limit=1)
-                if operation_line:
-                    operation_line.write(vals)
-                else:
-                    operation_line.create(vals)
+                # no need to search as we are deleting them at the begin
+                line.operation_line_ids.create(vals)
+                # operation_line = line.operation_line_ids.search([
+                #     ('operation_id', '=', operation.id),
+                #     (field, '=', line.id),
+                # ], limit=1)
+                # if operation_line:
+                #     operation_line.write(vals)
+                # else:
+                #     operation_line.create(vals)

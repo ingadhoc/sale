@@ -33,12 +33,12 @@ class ProductInvoiceOperationRestriction(models.Model):
         # TODO implemet other types?
         domain="[('company_id', '=', company_id), ('type', '=', 'sale')]"
     )
-    min_percentage = fields.Float(
-        'Min Percentage',
-        digits=dp.get_precision('Discount'),
-        required=True,
-        default=0.0,
-    )
+    # min_percentage = fields.Float(
+    #     'Min Percentage',
+    #     digits=dp.get_precision('Discount'),
+    #     required=True,
+    #     default=0.0,
+    # )
     max_percentage = fields.Float(
         'Max Percentage',
         digits=dp.get_precision('Discount'),
@@ -52,11 +52,17 @@ class ProductInvoiceOperationRestriction(models.Model):
         'Products',
     )
 
-    @api.constrains('min_percentage', 'max_percentage')
-    def check_percentages(self):
-        if self.min_percentage > self.max_percentage:
+    @api.constrains('max_percentage')
+    def check_percentage(self):
+        if self.max_percentage > 100.0:
             raise Warning(_(
-                'Minn percentage can not be greater than max percentage'))
+                'Max percentage can not be greater than 100%%'))
+
+    # @api.constrains('min_percentage', 'max_percentage')
+    # def check_percentages(self):
+    #     if self.min_percentage > self.max_percentage:
+    #         raise Warning(_(
+    #             'Min percentage can not be greater than max percentage'))
 
 
 class ProductTemplate(models.Model):
@@ -67,5 +73,7 @@ class ProductTemplate(models.Model):
         'product_invoice_operation_resteriction_rel',
         'template_id', 'restriction_id',
         'Invoice Op. Restrictions',
-        help='Invoice Operation Restrictions',
+        help='Invoice Operation Restrictions. Restriction will apply if there '
+        'is a match between a journal or company of the restriction and a '
+        'journal or company of an operation on the invoice or sale order',
     )

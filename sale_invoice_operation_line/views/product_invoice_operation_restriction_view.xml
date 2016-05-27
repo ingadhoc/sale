@@ -9,7 +9,7 @@
                     <field name="name"/>
                     <field name="company_id"/>
                     <field name="journal_id"/>
-                    <field name="min_percentage"/>
+                    <!-- <field name="min_percentage"/> -->
                     <field name="max_percentage"/>
                     <!-- <field name="prod_template_ids"/> -->
                 </tree>
@@ -27,7 +27,7 @@
                                 <field name="name"/>
                                 <field name="company_id"/>
                                 <field name="journal_id"/>
-                                <field name="min_percentage"/>
+                                <!-- <field name="min_percentage"/> -->
                                 <field name="max_percentage"/>
                                 <field name="prod_template_ids"/>
                             </group>
