@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sale (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-20 22:53+0000\n"
+"POT-Creation-Date: 2016-05-26 19:42+0000\n"
 "PO-Revision-Date: 2016-05-24 23:09+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-sale-8-0/language/es/)\n"
@@ -170,7 +170,7 @@ msgid "Name"
 msgstr "Nombre"
 
 #. module: sale_invoice_operation_line
-#: code:addons/sale_invoice_operation_line/models/account_invoice.py:38
+#: code:addons/sale_invoice_operation_line/models/account_invoice.py:29
 #, python-format
 msgid "No operation line for line %s and operation %s"
 msgstr "No hay línea de operación para la línea %s en la operación %s"
