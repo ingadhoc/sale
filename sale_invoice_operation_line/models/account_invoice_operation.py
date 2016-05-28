@@ -44,7 +44,9 @@ class AccountInvoiceLineOperation(models.Model):
     @api.constrains('operation_id', 'percentage')
     def check_percetantage(self):
         return self._check_percetantage(
-            'invoice_line_id', self.invoice_line_id.operation_line_ids, self.invoice_line_id.invoice_id.operation_ids)
+            'invoice_line_id',
+            self.invoice_line_id.operation_line_ids,
+            self.invoice_line_id.invoice_id.operation_ids)
 
     @api.one
     def _check_percetantage(self, line_field, operation_lines, operations):
@@ -79,8 +81,9 @@ class AccountInvoiceLineOperation(models.Model):
         # if self.env.user.has_group(
         #         'account_invoice_operation.invoice_plan_edit'):
         #     return True
-        for restriction in (
-                line_browse.product_id.invoice_operation_restriction_ids):
+        restrictions = (
+            line_browse.product_id.invoice_operation_restriction_id.detail_ids)
+        for restriction in restrictions:
             # check restriction over a balance operation
             if (
                     (restriction.journal_id and
@@ -128,7 +131,9 @@ class AccountInvoiceOperation(models.Model):
         'Lines'
     )
 
-    @api.constrains('invoice_id', 'percentage', 'amount_type')
+    # we add journal and company for constrains
+    @api.constrains(
+        'invoice_id', 'percentage', 'amount_type', 'company_id', 'journal_id')
     def change_operations(self):
         self.update_operations_lines(
             self.invoice_id.invoice_line)
@@ -148,25 +153,25 @@ class AccountInvoiceOperation(models.Model):
                 continue
             for line in model_lines:
                 percentage = operation.percentage
-                if line.product_id:
-                    for restriction in (
-                            line.product_id.invoice_operation_restriction_ids):
-                        # restringe si:
-                        # - restriccion tiene journal y es igual al de oper.
-                        # - restriccion tiene companya y es igual al de oper.
-                        if (
-                                (restriction.journal_id and
-                                    restriction.journal_id ==
-                                    operation.journal_id) or
-                                (restriction.company_id and
-                                    restriction.company_id ==
-                                    operation.company_id)):
-                            # restriction min > perc, then rest min
-                            # percentage = max(
-                            #     percentage, restriction.min_percentage)
-                            # restriction max < perc, then rest max
-                            percentage = min(
-                                percentage, restriction.max_percentage)
+                restrictions = (
+                    line.product_id.invoice_operation_restriction_id.detail_ids)
+                for restriction in restrictions:
+                    # restringe si:
+                    # - restriccion tiene journal y es igual al de oper.
+                    # - restriccion tiene companya y es igual al de oper.
+                    if (
+                            (restriction.journal_id and
+                                restriction.journal_id ==
+                                operation.journal_id) or
+                            (restriction.company_id and
+                                restriction.company_id ==
+                                operation.company_id)):
+                        # restriction min > perc, then rest min
+                        # percentage = max(
+                        #     percentage, restriction.min_percentage)
+                        # restriction max < perc, then rest max
+                        percentage = min(
+                            percentage, restriction.max_percentage)
 
                 vals = {
                     'operation_id': operation.id,

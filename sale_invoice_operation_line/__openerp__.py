@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Sale Invoice Operation Line',
-    'version': '8.0.0.0.0',
+    'version': '8.0.0.1.0',
     'category': 'Accounting & Finance',
     'sequence': 14,
     'summary': '',

@@ -27,7 +27,10 @@ class SaleOrderLineOperation(models.Model):
     @api.one
     @api.constrains('operation_id', 'percentage')
     def check_percetantage(self):
-        return self._check_percetantage('sale_line_id')
+        return self._check_percetantage(
+            'sale_line_id',
+            self.sale_line_id.operation_line_ids,
+            self.sale_line_id.order_id.operation_ids)
 
 
 class SaleInvoiceOperation(models.Model):
