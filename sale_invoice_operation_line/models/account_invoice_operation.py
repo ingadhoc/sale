@@ -54,7 +54,6 @@ class AccountInvoiceLineOperation(models.Model):
         # operation_lines = self.search([
         #     ('operation_id', '=', self.operation_id.id),
         #     (line_field, '=', line_browse.id)])
-        print 'operation_lines', operation_lines
         amount_type = self.operation_id.amount_type
         if amount_type != 'percentage':
             raise Warning(_(
@@ -92,7 +91,6 @@ class AccountInvoiceLineOperation(models.Model):
                     (restriction.company_id and
                         restriction.company_id ==
                         balance_operation.company_id)):
-                print 'aaaaaaaaa', restriction.max_percentage
                 if restriction.max_percentage < line_balance:
                     raise Warning(_(
                         'You can not use this percentages as balance operation'
