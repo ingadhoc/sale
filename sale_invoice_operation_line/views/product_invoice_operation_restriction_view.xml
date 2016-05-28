@@ -34,7 +34,7 @@ Restriction will apply if there is a match between a journal or company of the r
                                 </field>
                             </page>
                             <page string="Products">
-                                <field name="prod_template_ids"/>
+                                <field name="prod_template_ids" widget="many2many"/>
                             </page>
                         </notebook>
                     </sheet>
