@@ -61,7 +61,12 @@ class AccountInvoiceLineOperation(models.Model):
                 'of amount type %s') % (amount_type))
 
         msg = _('Sum of percentage could not be greater than 100%')
+        print 'operation_lines', operation_lines
+        operation_lines.invalidate_cache()
         op_lines_percentage = sum(operation_lines.mapped('percentage'))
+        print 'op_lines_percentage', op_lines_percentage
+        print 'operations', operations
+        print 'self', self._context
         if op_lines_percentage > 100.0:
             raise Warning(msg)
 
@@ -129,12 +134,11 @@ class AccountInvoiceOperation(models.Model):
         'Lines'
     )
 
-    # we add journal and company for constrains
-    @api.constrains(
-        'invoice_id', 'percentage', 'amount_type', 'company_id', 'journal_id')
-    def change_operations(self):
+    @api.multi
+    def _run_checks(self):
         self.update_operations_lines(
-            self.invoice_id.invoice_line)
+            self.mapped('invoice_id.invoice_line'))
+        return super(AccountInvoiceOperation, self)._run_checks()
 
     @api.multi
     def update_operations_lines(self, model_lines):

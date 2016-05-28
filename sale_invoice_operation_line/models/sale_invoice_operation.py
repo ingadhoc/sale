@@ -72,7 +72,8 @@ class SaleInvoiceOperation(models.Model):
         })
         return vals
 
-    @api.constrains('order_id', 'percentage', 'amount_type')
-    def change_operations(self):
+    @api.multi
+    def _run_checks(self):
         self.update_operations_lines(
-            self.order_id.order_line)
+            self.mapped('order_id.order_line'))
+        return super(SaleInvoiceOperation, self)._run_checks()

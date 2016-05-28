@@ -23,7 +23,6 @@ class SaleOrder(models.Model):
         readonly=True,
         states={'draft': [('readonly', False)], 'sent': [('readonly', False)]}
     )
-    # we need to fields because on readonly view onchange is not saved
     readonly_operation_ids = fields.One2many(
         related='operation_ids',
         readonly=True,
