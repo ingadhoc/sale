@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sale (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-20 22:53+0000\n"
-"PO-Revision-Date: 2016-05-15 21:06+0000\n"
+"POT-Creation-Date: 2016-05-28 00:13+0000\n"
+"PO-Revision-Date: 2016-05-28 00:14+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>\n"
 "Language-Team: Finnish (http://www.transifex.com/adhoc/ingadhoc-sale-8-0/language/fi/)\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: sale_invoice_operation_line
-#: field:product.invoice.operation.restriction,company_id:0
+#: field:invoice.operation.restriction.detail,company_id:0
 msgid "Company"
 msgstr ""
 
@@ -31,7 +31,8 @@ msgstr ""
 #. module: sale_invoice_operation_line
 #: field:account.invoice.line.operation,create_uid:0
 #: field:account.invoice.line.operation.wizard,create_uid:0
-#: field:product.invoice.operation.restriction,create_uid:0
+#: field:invoice.operation.restriction,create_uid:0
+#: field:invoice.operation.restriction.detail,create_uid:0
 #: field:sale.order.line.operation,create_uid:0
 #: field:sale.order.line.operation.wizard,create_uid:0
 msgid "Created by"
@@ -40,15 +41,23 @@ msgstr "Luonut"
 #. module: sale_invoice_operation_line
 #: field:account.invoice.line.operation,create_date:0
 #: field:account.invoice.line.operation.wizard,create_date:0
-#: field:product.invoice.operation.restriction,create_date:0
+#: field:invoice.operation.restriction,create_date:0
+#: field:invoice.operation.restriction.detail,create_date:0
 #: field:sale.order.line.operation,create_date:0
 #: field:sale.order.line.operation.wizard,create_date:0
 msgid "Created on"
 msgstr "Luotu"
 
 #. module: sale_invoice_operation_line
+#: view:invoice.operation.restriction:sale_invoice_operation_line.view_invoice_operation_restriction_form
+#: field:invoice.operation.restriction,detail_ids:0
+msgid "Detail"
+msgstr ""
+
+#. module: sale_invoice_operation_line
 #: field:account.invoice.line.operation.wizard,display_name:0
-#: field:product.invoice.operation.restriction,display_name:0
+#: field:invoice.operation.restriction,display_name:0
+#: field:invoice.operation.restriction.detail,display_name:0
 #: field:sale.order.line.operation.wizard,display_name:0
 msgid "Display Name"
 msgstr ""
@@ -62,7 +71,8 @@ msgstr ""
 #. module: sale_invoice_operation_line
 #: field:account.invoice.line.operation,id:0
 #: field:account.invoice.line.operation.wizard,id:0
-#: field:product.invoice.operation.restriction,id:0
+#: field:invoice.operation.restriction,id:0
+#: field:invoice.operation.restriction.detail,id:0
 #: field:sale.order.line.operation,id:0
 #: field:sale.order.line.operation.wizard,id:0
 msgid "ID"
@@ -76,19 +86,27 @@ msgid "Invoice Line"
 msgstr ""
 
 #. module: sale_invoice_operation_line
-#: field:product.template,invoice_operation_restriction_ids:0
-msgid "Invoice Op. Restrictions"
-msgstr ""
-
-#. module: sale_invoice_operation_line
 #: view:account.invoice.line.operation.wizard:sale_invoice_operation_line.account_invoice_line_operation_wizard_form
 #: view:sale.order.line.operation.wizard:sale_invoice_operation_line.sale_order_line_operation_wizard_form
 msgid "Invoice Operation"
 msgstr ""
 
 #. module: sale_invoice_operation_line
-#: help:product.template,invoice_operation_restriction_ids:0
+#: view:invoice.operation.restriction:sale_invoice_operation_line.view_invoice_operation_restriction_form
+#: view:invoice.operation.restriction:sale_invoice_operation_line.view_invoice_operation_restriction_tree
+#: model:ir.actions.act_window,name:sale_invoice_operation_line.action_invoice_operation_restriction
+#: model:ir.ui.menu,name:sale_invoice_operation_line.menu_invoice_operation_restriction
+#: field:product.template,invoice_operation_restriction_id:0
 msgid "Invoice Operation Restrictions"
+msgstr ""
+
+#. module: sale_invoice_operation_line
+#: help:invoice.operation.restriction,detail_ids:0
+#: help:product.template,invoice_operation_restriction_id:0
+msgid ""
+"Invoice Operation Restrictions. Restriction will apply if there is a match "
+"between a journal or company of the restriction and a journal or company of "
+"an operation on the invoice or sale order"
 msgstr ""
 
 #. module: sale_invoice_operation_line
@@ -97,14 +115,15 @@ msgid "Invoice id"
 msgstr ""
 
 #. module: sale_invoice_operation_line
-#: field:product.invoice.operation.restriction,journal_id:0
+#: field:invoice.operation.restriction.detail,journal_id:0
 msgid "Journal"
 msgstr ""
 
 #. module: sale_invoice_operation_line
 #: field:account.invoice.line.operation,__last_update:0
 #: field:account.invoice.line.operation.wizard,__last_update:0
-#: field:product.invoice.operation.restriction,__last_update:0
+#: field:invoice.operation.restriction,__last_update:0
+#: field:invoice.operation.restriction.detail,__last_update:0
 #: field:sale.order.line.operation,__last_update:0
 #: field:sale.order.line.operation.wizard,__last_update:0
 msgid "Last Modified on"
@@ -113,7 +132,8 @@ msgstr ""
 #. module: sale_invoice_operation_line
 #: field:account.invoice.line.operation,write_uid:0
 #: field:account.invoice.line.operation.wizard,write_uid:0
-#: field:product.invoice.operation.restriction,write_uid:0
+#: field:invoice.operation.restriction,write_uid:0
+#: field:invoice.operation.restriction.detail,write_uid:0
 #: field:sale.order.line.operation,write_uid:0
 #: field:sale.order.line.operation.wizard,write_uid:0
 msgid "Last Updated by"
@@ -122,7 +142,8 @@ msgstr "Viimeksi päivittänyt"
 #. module: sale_invoice_operation_line
 #: field:account.invoice.line.operation,write_date:0
 #: field:account.invoice.line.operation.wizard,write_date:0
-#: field:product.invoice.operation.restriction,write_date:0
+#: field:invoice.operation.restriction,write_date:0
+#: field:invoice.operation.restriction.detail,write_date:0
 #: field:sale.order.line.operation,write_date:0
 #: field:sale.order.line.operation.wizard,write_date:0
 msgid "Last Updated on"
@@ -148,45 +169,27 @@ msgid "Matrix"
 msgstr ""
 
 #. module: sale_invoice_operation_line
-#: field:product.invoice.operation.restriction,max_percentage:0
+#: field:invoice.operation.restriction.detail,max_percentage:0
 msgid "Max Percentage"
 msgstr ""
 
 #. module: sale_invoice_operation_line
-#: field:product.invoice.operation.restriction,min_percentage:0
-msgid "Min Percentage"
-msgstr ""
-
-#. module: sale_invoice_operation_line
-#: code:addons/sale_invoice_operation_line/models/product_invoice_operation_restriction.py:58
-#, python-format
-msgid "Minn percentage can not be greater than max percentage"
-msgstr ""
-
-#. module: sale_invoice_operation_line
-#: field:product.invoice.operation.restriction,name:0
+#: field:invoice.operation.restriction,name:0
 msgid "Name"
 msgstr ""
 
 #. module: sale_invoice_operation_line
-#: code:addons/sale_invoice_operation_line/models/account_invoice.py:38
+#: code:addons/sale_invoice_operation_line/models/account_invoice.py:29
 #, python-format
 msgid "No operation line for line %s and operation %s"
 msgstr ""
 
 #. module: sale_invoice_operation_line
-#: code:addons/sale_invoice_operation_line/models/account_invoice_operation.py:88
+#: code:addons/sale_invoice_operation_line/models/account_invoice_operation.py:115
 #, python-format
 msgid ""
-"On product %s percentage can not be greater than %s%% because of a "
-"restriction"
-msgstr ""
-
-#. module: sale_invoice_operation_line
-#: code:addons/sale_invoice_operation_line/models/account_invoice_operation.py:82
-#, python-format
-msgid ""
-"On product %s percentage can not be minor than %s%% because of a restriction"
+"On product \"%s\", operation \"%s\" percentage can not be greater than %s%% "
+"because of a restriction"
 msgstr ""
 
 #. module: sale_invoice_operation_line
@@ -219,22 +222,28 @@ msgid "Percentage"
 msgstr ""
 
 #. module: sale_invoice_operation_line
-#: model:ir.actions.act_window,name:sale_invoice_operation_line.action_product_invoice_operation_restriction
-#: model:ir.ui.menu,name:sale_invoice_operation_line.menu_product_invoice_operation_restriction
-#: view:product.invoice.operation.restriction:sale_invoice_operation_line.view_product_invoice_operation_restriction_form
-#: view:product.invoice.operation.restriction:sale_invoice_operation_line.view_product_invoice_operation_restriction_tree
-msgid "Product Restrictions"
-msgstr ""
-
-#. module: sale_invoice_operation_line
 #: model:ir.model,name:sale_invoice_operation_line.model_product_template
 msgid "Product Template"
 msgstr ""
 
 #. module: sale_invoice_operation_line
-#: field:product.invoice.operation.restriction,prod_template_ids:0
+#: view:invoice.operation.restriction:sale_invoice_operation_line.view_invoice_operation_restriction_form
+#: field:invoice.operation.restriction,prod_template_ids:0
 msgid "Products"
 msgstr "Tuotteet"
+
+#. module: sale_invoice_operation_line
+#: field:invoice.operation.restriction.detail,restriction_id:0
+msgid "Restriction"
+msgstr ""
+
+#. module: sale_invoice_operation_line
+#: view:invoice.operation.restriction:sale_invoice_operation_line.view_invoice_operation_restriction_form
+msgid ""
+"Restriction will apply if there is a match between a journal or company of "
+"the restriction and a journal or company of an operation on the invoice or "
+"sale order"
+msgstr ""
 
 #. module: sale_invoice_operation_line
 #: field:sale.order.line.operation,sale_line_id:0
@@ -247,15 +256,23 @@ msgid "Sales Order Line"
 msgstr ""
 
 #. module: sale_invoice_operation_line
-#: code:addons/sale_invoice_operation_line/models/account_invoice_operation.py:60
+#: code:addons/sale_invoice_operation_line/models/account_invoice_operation.py:63
 #, python-format
 msgid "Sum of percentage could not be greater than 100%"
 msgstr ""
 
 #. module: sale_invoice_operation_line
-#: code:addons/sale_invoice_operation_line/models/account_invoice_operation.py:56
+#: code:addons/sale_invoice_operation_line/models/account_invoice_operation.py:59
 #, python-format
 msgid "You can not create operation line for operation of amount type %s"
+msgstr ""
+
+#. module: sale_invoice_operation_line
+#: code:addons/sale_invoice_operation_line/models/account_invoice_operation.py:95
+#, python-format
+msgid ""
+"You can not use this percentages as balance operation \"%s\" for line \"%s\""
+" will get a balance of \"%s%%\" and it has a maximum restriction of %s%%"
 msgstr ""
 
 #. module: sale_invoice_operation_line
