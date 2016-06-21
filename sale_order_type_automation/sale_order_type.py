@@ -37,7 +37,7 @@ class SaleOrderTypology(models.Model):
             self.payment_journal_id = False
             self.journal_id = False
 
-    @api.model
+    @api.one
     @api.constrains(
         'journal_id',
         'payment_journal_id',
@@ -46,13 +46,13 @@ class SaleOrderTypology(models.Model):
     def validate_company_id(self):
         text = _(
             'The Journal "%s" company must be the same than sale order type')
-        if self.journal_id.company_id != self.company_id:
+        if self.journal_id and self.journal_id.company_id != self.company_id:
             raise Warning(text % self.journal_id.name)
-        if self.payment_journal_id.company_id != self.company_id:
+        if self.payment_journal_id and self.payment_journal_id.company_id != self.company_id:
             raise Warning(text % self.payment_journal_id.name)
-        if self.refund_journal_id.company_id != self.company_id:
+        if self.refund_journal_id and self.refund_journal_id.company_id != self.company_id:
             raise Warning(text % self.refund_journal_id.name)
-        if self.sequence_id.company_id != self.company_id:
+        if self.sequence_id and self.sequence_id.company_id != self.company_id:
             raise Warning(_(
                 'The Sequence "%s" company must be the same than'
                 ' sale order type') % self.sequence_id.name)
