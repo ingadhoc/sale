@@ -52,7 +52,7 @@ class SaleOrderTypology(models.Model):
             raise Warning(text % self.payment_journal_id.name)
         if self.refund_journal_id and self.refund_journal_id.company_id != self.company_id:
             raise Warning(text % self.refund_journal_id.name)
-        if self.sequence_id.company_id and self.sequence_id.company_id != self.company_id:
+        if self.sequence_id and self.sequence_id.company_id != self.company_id:
             raise Warning(_(
                 'The Sequence "%s" company must be the same than'
                 ' sale order type') % self.sequence_id.name)
