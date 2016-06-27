@@ -16,6 +16,11 @@ class sale_order(models.Model):
     purchase_order_number = fields.Char(
         'Purchase Order Number')
 
+    _sql_constraints = [
+        ('purchase_order_number_uniq', 'unique (purchase_order_number)',
+         'The Purchase Order Number must be unique!')
+    ]
+
     def action_wait(self, cr, uid, ids, context=None):
         for o in self.browse(cr, uid, ids):
             if o.require_purchase_order_number:

@@ -17,6 +17,7 @@ class account_invoice(models.Model):
         'Purchase Order Number',
         readonly=True, states={'draft': [('readonly', False)]})
 
+
     @api.multi
     def invoice_validate(self):
         for o in self:
