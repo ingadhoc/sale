@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Sale Require Purchase Order Number',
-    'version': '8.0.0.1.1',
+    'version': '8.0.0.2.1',
     'category': 'Projects & Services',
     'sequence': 14,
     'summary': '',
