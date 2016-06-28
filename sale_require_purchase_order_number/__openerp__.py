@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Sale Require Purchase Order Number',
-    'version': '8.0.0.1.0',
+    'version': '8.0.0.2.1',
     'category': 'Projects & Services',
     'sequence': 14,
     'summary': '',
@@ -28,7 +28,7 @@
 Sale Require Purchase Order Number
 ==================================
     """,
-    'author':  'ADHOC SA',
+    'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'images': [
