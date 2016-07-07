@@ -24,16 +24,17 @@ class SaleInvoiceOperation(models.Model):
         required=True,
     )
 
-    @api.one
-    @api.constrains('order_id', 'journal_id', 'company_id')
-    def check_currencies(self):
-        other_currency = (
-            self.journal_id.currency or self.company_id.currency_id)
-        if other_currency and self.order_id.currency_id != other_currency:
-            raise Warning(_(
-                'You can not use a journal or company of different currency '
-                'than sale order currency. Operation "%s"') % (
-                    self.display_name))
+    # we dont need this check because we keep original currency
+    # @api.one
+    # @api.constrains('order_id', 'journal_id', 'company_id')
+    # def check_currencies(self):
+    #     other_currency = (
+    #         self.journal_id.currency or self.company_id.currency_id)
+    #     if other_currency and self.order_id.currency_id != other_currency:
+    #         raise Warning(_(
+    #             'You can not use a journal or company of different currency '
+    #             'than sale order currency. Operation "%s"') % (
+    #                 self.display_name))
 
     @api.multi
     @api.depends('sequence', 'order_id')
