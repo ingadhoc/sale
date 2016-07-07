@@ -26,6 +26,7 @@ class sale_order(models.Model):
             context['pricelist'] = self.pricelist_id.display_name
             # we send company in context so it filters taxes
             context['company_id'] = self.company_id.id
+            context['partner_id'] = self.partner_id.id
             action_read['context'] = context
             # this search view removes pricelist
             action_read.pop("search_view", None)
