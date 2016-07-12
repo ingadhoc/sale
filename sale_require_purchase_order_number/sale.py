@@ -17,7 +17,7 @@ class sale_order(models.Model):
         'Purchase Order Number')
 
     _sql_constraints = [
-        ('purchase_order_number_uniq', 'unique (purchase_order_number)',
+        ('purchase_order_number_uniq', 'unique (purchase_order_number, partner_id)',
          'The Purchase Order Number must be unique!')
     ]
 
