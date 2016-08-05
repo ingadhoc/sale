@@ -38,6 +38,7 @@ Portal Sale Order Type
     ],
     'data': [
         'security/ir.model.access.csv',
+        'views/sale_order_view.xml',
     ],
     'installable': True,
     'auto_install': True,
