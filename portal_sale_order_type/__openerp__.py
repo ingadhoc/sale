@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Portal Sale Order Type',
-    'version': '8.0.0.0.0',
+    'version': '8.0.0.1.0',
     'category': 'Tools',
     'complexity': 'easy',
     'description': """
