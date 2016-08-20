@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Sale Quotation Products',
-    'version': '8.0.0.3.1',
+    'version': '8.0.0.4.0',
     'category': 'Sales Management',
     'sequence': 14,
     'summary': '',
@@ -29,7 +29,7 @@ Sale Quotation Products
 =======================
 
     """,
-    'author':  'ADHOC SA',
+    'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'images': [
@@ -40,6 +40,10 @@ Sale Quotation Products
     'data': [
         'view/product_view.xml',
         'view/sale_order_view.xml',
+        # we add some access rights because user need to have permision
+        # to see and edit products
+        'security/ir.model.access.csv',
+        'security/security.xml',
     ],
     'demo': [
     ],
