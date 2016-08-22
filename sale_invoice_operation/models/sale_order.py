@@ -77,7 +77,8 @@ class SaleOrder(models.Model):
     def onchange_partner_id(self, partner_id):
         result = super(SaleOrder, self).onchange_partner_id(partner_id)
         if partner_id:
-            partner = self.env['res.partner'].browse(
+            partner = self.env['res.partner'].with_context(
+                force_company=self.company_id.id).browse(
                 partner_id).commercial_partner_id
             result['value'][
                 'plan_id'] = partner.default_sale_invoice_plan_id.id
