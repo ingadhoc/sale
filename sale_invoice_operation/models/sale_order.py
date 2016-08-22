@@ -76,9 +76,15 @@ class SaleOrder(models.Model):
     @api.multi
     def onchange_partner_id(self, partner_id):
         result = super(SaleOrder, self).onchange_partner_id(partner_id)
+        # usamos la cia del warehouse porque la otra no se actualiza bien
+        # a su vez, si se esta creadno, como es api vieja, no hay ninguna
+        # buscamos en el cotnexto o usamos la del usuario
+        company = (
+            self.warehouse_id.company_id or
+            self._context.get('company_id', self.env.user.company_id))
         if partner_id:
             partner = self.env['res.partner'].with_context(
-                force_company=self.company_id.id).browse(
+                force_company=company.id).browse(
                 partner_id).commercial_partner_id
             result['value'][
                 'plan_id'] = partner.default_sale_invoice_plan_id.id
