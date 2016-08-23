@@ -23,6 +23,7 @@ class sale_order(models.Model):
         if actions:
             action_read = actions.read()[0]
             context = literal_eval(action_read['context'])
+            context['force_product_edit'] = True
             context['pricelist'] = self.pricelist_id.display_name
             # we send company in context so it filters taxes
             context['company_id'] = self.company_id.id
