@@ -20,13 +20,13 @@
 ##############################################################################
 {
     'name': 'Sale Exception Credit Limit',
-    'version': '8.0.0.1.0',
-    'description': """
+    'version': '9.0.1.0.0',
+    'description': '''
 Sale Exception Credit Limit
 ===========================
 NOTE: this module replace partner_credit_limit that is going to be depreceated
 on v9.
-It adds a new group "can modify credit limit", only users with this group are
+It adds a new group 'can modify credit limit', only users with this group are
 allowed to change credit limit on partners.
 
 It also adds an exception to check that you can not aproove sale orders that
@@ -37,22 +37,22 @@ would exceed credit limit. It checks:
         * The amount of the Sale Order to be aproved
 and compares it with the credit limit of the partner. If the credit limit is
 less it does not allow to approve the Sale Order
-""",
+''',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'depends': [
         'sale_exceptions',
-        ],
+    ],
     'data': [
         'security/security.xml',
         'data/data.xml',
         'partner_view.xml',
-        ],
+    ],
     'demo': [
         'partner_demo.xml'
-        ],
+    ],
     'test': [],
-    'installable': True,
+    'installable': False,
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

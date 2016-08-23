@@ -20,24 +20,24 @@
 ##############################################################################
 {
     'name': 'Sale Exception Print',
-    'version': '8.0.0.0.0',
-    'description': """
+    'version': '9.0.1.0.0',
+    'description': '''
 Sale Exception Print
 ====================
 Add to quotation print the validity exception.
-""",
+''',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'depends': [
         'sale_exceptions',
-        ],
+    ],
     'data': [
-        ],
+    ],
     'demo': [
-        ],
+    ],
     'test': [],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'application': False,
 }

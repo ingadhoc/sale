@@ -19,33 +19,33 @@
 #
 ##############################################################################
 {
-    "name": "Sale Global Three Discounts",
-    'version': '8.0.0.4.0',
+    'name': 'Sale Global Three Discounts',
+    'version': '9.0.1.0.0',
     'category': 'Sales Management',
     'sequence': 14,
-    'author':  'ADHOC SA',
+    'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'summary': '',
-    "description": """
+    'description': '''
 Sale Global Three Discounts
 ===========================
 
-    """,
-    "depends": [
+    ''',
+    'depends': [
         'sale_global_discount',
         'sale_three_discounts'
     ],
     'external_dependencies': {
     },
-    "data": [
+    'data': [
         'wizard/sale_global_discount_wizard_view.xml',
     ],
     'demo': [
     ],
     'test': [
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': True,
     'application': False,
 }

@@ -20,26 +20,26 @@
 ##############################################################################
 {
     'name': 'Sales to Sale Order',
-    'version': '8.0.1.0.0',
+    'version': '9.0.1.0.0',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
-    'depends' : ["sale"],
-    'category' : 'Sale Management',
+    'depends': ['sale'],
+    'category': 'Sale Management',
     'description': '''
 Sales to Sale Order
 ===================
 This module create a wizard asociated to an action on Sale
 Orders. This wizard generates a Sale Order in another company for all sale orders items.
     ''',
-    'demo' : [
+    'demo': [
         'portal_demo.xml',
     ],
-    'data' : [
+    'data': [
         'security/sales_t_sale_order_security.xml',
         'wizard/sales_to_sale_order_wizard_view.xml',
         'res_users_view.xml',
         'sale_view.xml',
-        ],
-    'installable': True
+    ],
+    'installable': False
 }

@@ -20,17 +20,17 @@
 ##############################################################################
 {
     'name': 'Sale Restrict Partners',
-    'version': '8.0.1.1.0',
+    'version': '9.0.1.0.0',
     'category': 'Sales Management',
     'sequence': 14,
     'summary': 'Sales, Product, Category, Clasification',
-    'description': """
+    'description': '''
 Sale Restrict Partners
 ======================
-Users with group "Sale - Own Leads" can only see partners that are assigned to him or partners assigned to no one.
+Users with group 'Sale - Own Leads' can only see partners that are assigned to him or partners assigned to no one.
 It also add actual user as default salesman for new partners
-    """,
-    'author':  'ADHOC SA',
+    ''',
+    'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'images': [
@@ -45,7 +45,7 @@ It also add actual user as default salesman for new partners
     ],
     'test': [
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'application': False,
 }

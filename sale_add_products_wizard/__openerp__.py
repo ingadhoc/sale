@@ -20,16 +20,16 @@
 ##############################################################################
 {
     'name': 'Sale Add Products Wizard',
-    'version': '8.0.1.0.0',
+    'version': '9.0.1.0.0',
     'category': 'Sales & Purchases',
     'sequence': 14,
     'summary': '',
-    'description': """
+    'description': '''
 Sale Add Products Wizard
 ==========================
-This module adds a " multi Add " button on sales orders calling a wizard "sale order add multiple" 
-    """,
-    'author':  'ADHOC SA',
+This module adds a ' multi Add ' button on sales orders calling a wizard 'sale order add multiple' 
+    ''',
+    'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'images': [
@@ -45,7 +45,7 @@ This module adds a " multi Add " button on sales orders calling a wizard "sale o
     ],
     'test': [
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'application': False,
 }

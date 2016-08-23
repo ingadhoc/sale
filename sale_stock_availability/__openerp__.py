@@ -20,9 +20,9 @@
 ##############################################################################
 {
     'name': 'Stock availability in sales order line',
-    'version': '8.0.0.1.0',
+    'version': '9.0.1.0.0',
     'category': 'Tools',
-    'description': """
+    'description': '''
 Stock availability in sales order line
 ======================================
 * Add two groups. One for seeing stock on sale orders and other to see only if or not available
@@ -30,9 +30,9 @@ Stock availability in sales order line
 
 IMPORTANT:
 ----------
-    * This module could break some warnings as the ones implemented by "warning" module
-    * If you dont disable warning and give a user availbility to see only "true/false" on sale order stock, he can see stock if the warning is raised
-    """,
+    * This module could break some warnings as the ones implemented by 'warning' module
+    * If you dont disable warning and give a user availbility to see only 'true/false' on sale order stock, he can see stock if the warning is raised
+    ''',
     'author': 'Moldeo Interactive & ADHOC SA',
     'website': 'http://business.moldeo.coop http://adhoc.com.ar/',
     'license': 'AGPL-3',
@@ -47,7 +47,7 @@ IMPORTANT:
         'security/sale_order.xml',
         ],
     'test': [],
-    'installable': True,
+    'installable': False,
 }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

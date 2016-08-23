@@ -19,17 +19,17 @@
 #
 ##############################################################################
 {
-    "name": "Sale Contract Default",
-    'version': '8.0.1.0.0',
+    'name': 'Sale Contract Default',
+    'version': '9.0.1.0.0',
     'category': 'Accounting',
     'sequence': 14,
     'summary': 'Quotations, Sales Orders, Invoicing',
-    'description': """
+    'description': '''
 Sale Contract Default
 ====================
 
-    """,
-    'author':  'ADHOC SA',
+    ''',
+    'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'images': [
@@ -43,7 +43,7 @@ Sale Contract Default
     ],
     'test': [
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'application': True,
 }

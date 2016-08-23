@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Sale Order Type Automation',
-    'version': '8.0.0.1.0',
+    'version': '9.0.1.0.0',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
@@ -44,6 +44,6 @@ Add to kind of sales orders, options for when the sale is confirmed:
     'data': [
         'sale_order_type_view.xml',
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': True,
 }

@@ -20,13 +20,13 @@
 #######################################################s#######################
 {
     'name': 'Portal Distributor Stock',
-    'version': '8.0.0.1.0',
+    'version': '9.0.1.0.0',
     'category': 'Tools',
     'complexity': 'easy',
-    'description': """
+    'description': '''
 Portal Stock Distributor Sale
 =======================
-    """,
+    ''',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
