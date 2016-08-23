@@ -13,7 +13,7 @@ class account_analytic_account(models.Model):
         res = super(account_analytic_account, self)._get_one_full_name(
             elmt, level)
         if level == 6 and elmt.partner_id:
-            res = ('%s - %s') % (res, elmt.partner_id.name)
+            res = ('%s - %s') % (res, elmt.sudo().partner_id.name)
         return res
 
     def name_search(
