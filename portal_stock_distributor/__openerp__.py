@@ -33,7 +33,7 @@ Portal Stock Distributor Sale
     'depends': [
         'portal_sale_distributor',
         'portal_stock',
-        ],
+    ],
     'demo': [
     ],
     'data': [
@@ -41,6 +41,7 @@ Portal Stock Distributor Sale
         'security/ir.model.access.csv',
         'portal_sale_view.xml',
     ],
+    'installable': True,
     'auto_install': True,
     'category': 'Hidden',
 }
