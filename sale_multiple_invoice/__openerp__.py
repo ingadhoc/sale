@@ -48,4 +48,3 @@ On Invoicing from sale order, adds an option to make multiple invoices by once.
     'auto_install': False,
     'application': False,
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

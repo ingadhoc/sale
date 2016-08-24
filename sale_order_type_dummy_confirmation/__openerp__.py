@@ -27,7 +27,7 @@
     'depends': [
         'sale_dummy_confirmation',
         'sale_order_type',
-        ],
+    ],
     'category': 'Sale Management',
     'description': '''
 Sale Order Type Dummy Confirmation Integration

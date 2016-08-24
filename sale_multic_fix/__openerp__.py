@@ -37,3 +37,4 @@ Sale Multi Company Fixes
     'installable': False,
     'test': [],
     'version': '9.0.1.0.0',
+}

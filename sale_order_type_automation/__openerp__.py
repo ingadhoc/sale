@@ -28,7 +28,7 @@
         'sale_order_type',
         'account_voucher',
         'sale_stock',
-        ],
+    ],
     'category': 'Sale Management',
     'description': '''
 Sale Order Type Automation
