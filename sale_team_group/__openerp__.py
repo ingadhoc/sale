@@ -34,10 +34,9 @@ Adds a sales group called 'Sale Team'
     'depends': [
         'crm',
         'sale_restrict_partners',
-        ],
+    ],
     'data': [
         'security/security.xml',
     ],
     'installable': False,
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

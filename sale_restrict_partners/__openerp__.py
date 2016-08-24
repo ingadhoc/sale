@@ -49,4 +49,3 @@ It also add actual user as default salesman for new partners
     'auto_install': False,
     'application': False,
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
