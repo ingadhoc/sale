@@ -42,6 +42,7 @@ Portal Distributor Sale
         'security/ir.model.access.csv',
         'portal_sale_view.xml',
     ],
+    'installable': False,
     'auto_install': False,
     'application': True,
     'category': 'Hidden',
