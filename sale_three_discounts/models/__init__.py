@@ -6,3 +6,4 @@
 
 from . import sale
 from . import account_invoice
+from . import sale_stock
