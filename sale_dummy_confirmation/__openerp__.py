@@ -24,7 +24,7 @@
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
-    'depends': ['sale_stock'],
+    'depends': ['sale'],
     'category': 'Sale Management',
     'demo': [
     ],
