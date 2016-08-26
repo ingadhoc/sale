@@ -26,7 +26,7 @@
     'summary': '',
     'description': '''
 Sale Contract Editable
-=============================
+======================
     ''',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
@@ -42,7 +42,7 @@ Sale Contract Editable
     ],
     'test': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
