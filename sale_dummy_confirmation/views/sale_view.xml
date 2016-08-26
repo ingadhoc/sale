@@ -10,7 +10,7 @@
                     <field name="dummy_confirmation" invisible="1"/>
                 </form>
                 <button position="after">
-                    <button name="cancel" attrs="{'invisible':[('state','!=','done'),('dummy_confirmation','=',True)]}" string="Cancel Quotation" groups="base.group_user"/>
+                    <button name="action_cancel" type="object" attrs="{'invisible':[('state','!=','done'),('dummy_confirmation','=',True)]}" string="Cancel Quotation" groups="base.group_user"/>
                 </button>
             </field>
         </record>
