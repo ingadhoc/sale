@@ -10,8 +10,8 @@
             <field name="credit_limit" eval="60000.00"/>
         </record>
         
-        <!-- millenium -->
-        <record id="base.res_partner_11" model="res.partner">
+        <!-- China Export -->
+        <record id="base.res_partner_3" model="res.partner">
             <!-- 14981.00 de sale_order_7 -->
             <field name="credit_limit" eval="60000.00"/>
         </record>
