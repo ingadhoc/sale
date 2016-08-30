@@ -8,8 +8,9 @@ class sale_order(models.Model):
     @api.multi
     def check_credit_limit_ok(self):
         self.ensure_one()
-        if self.order_policy == 'prepaid':
-            return True
+        # no more prepaid option on v9
+        # if self.order_policy == 'prepaid':
+        #     return True
 
         # We sum from all the sale orders that are aproved, the sale order
         # lines that are not yet invoiced
