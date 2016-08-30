@@ -11,24 +11,15 @@ class sale_order_line(models.Model):
     _inherit = 'sale.order.line'
 
     @api.multi
-    def product_id_change(
-            self, pricelist, product, qty=0,
-            uom=False, qty_uos=0, uos=False, name='', partner_id=False,
-            lang=False, update_tax=True, date_order=False, packaging=False,
-            fiscal_position=False, flag=False):
-        res = super(sale_order_line, self).product_id_change(
-            pricelist, product, qty=qty, uom=uom,
-            qty_uos=qty_uos, uos=uos, name=name, partner_id=partner_id,
-            lang=lang, update_tax=update_tax, date_order=date_order,
-            packaging=packaging, fiscal_position=fiscal_position,
-            flag=flag)
-        price_get = self.env['product.product'].browse(product).with_context(
+    @api.onchange('product_id')
+    def product_id_change(self):
+        res = super(sale_order_line, self).product_id_change()
+        price_get = self.product_id.with_context(
             currency_id=self.env['product.pricelist'].browse(
-                pricelist).currency_id.id, uom=uom).price_get()
-        if 'value' not in res:
-            res['value'] = {}
-        res['value']['list_price'] = price_get and price_get[
-            product] or False
+                self.order_id.pricelist_id.id).currency_id.id, uom=self.product_uom.id).price_get()
+        self.list_price = price_get and price_get[
+            self.product_id.id] or False
+
         return res
 
     @api.one
