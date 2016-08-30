@@ -16,5 +16,17 @@
             <field name="credit_limit" eval="600000.00"/>
         </record>
 
+        <!-- Delta PC -->
+        <record id="base.res_partner_4" model="res.partner">
+            <!-- 14981.00 de sale_order_7 -->
+            <field name="credit_limit" eval="600000.00"/>
+        </record>
+
+        <!-- Think Big Systems -->
+        <record id="base.res_partner_18" model="res.partner">
+            <!-- 14981.00 de sale_order_7 -->
+            <field name="credit_limit" eval="600000.00"/>
+        </record>
+
     </data>
 </openerp>
