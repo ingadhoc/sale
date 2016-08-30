@@ -6,7 +6,7 @@
 from openerp import api, fields, models, _
 
 
-class sale_order(models.Model):
+class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     dummy_confirmation = fields.Boolean(
@@ -42,4 +42,4 @@ class sale_order(models.Model):
                 'nodestroy': True,
             }
         else:
-            return super(sale_order, self).action_button_confirm()
+            return super(SaleOrder, self).action_confirm()
