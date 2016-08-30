@@ -13,4 +13,4 @@ class res_company(models.Model):
         'Sale Orders Dummy Confirmation',
         help='If you set True then all orders of this company will be dummy '
         'confirmed'
-        )
+    )

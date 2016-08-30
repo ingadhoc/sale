@@ -6,14 +6,14 @@
 from openerp import api, fields, models, _
 
 
-class sale_order(models.Model):
+class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     dummy_confirmation = fields.Boolean(
         'Dummy Confirmation',
         help="If true, this sale order has been dummy confirmed and can go "
         "back to draft."
-        )
+    )
 
     @api.multi
     def get_use_dummy_confirm(self):
@@ -21,13 +21,13 @@ class sale_order(models.Model):
         return self.company_id.sale_order_dummy_confirm
 
     @api.multi
-    def action_button_confirm(self):
+    def action_confirm(self):
         self.ensure_one()
         if self.get_use_dummy_confirm():
             self.write({
                 'state': 'done',
                 'dummy_confirmation': True
-                })
+            })
             view_id = self.env['ir.model.data'].xmlid_to_res_id(
                 'sale.view_order_form')
             return {
@@ -42,4 +42,4 @@ class sale_order(models.Model):
                 'nodestroy': True,
             }
         else:
-            return super(sale_order, self).action_button_confirm()
+            return super(SaleOrder, self).action_confirm()
