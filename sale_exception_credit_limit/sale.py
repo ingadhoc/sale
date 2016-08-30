@@ -8,27 +8,28 @@ class sale_order(models.Model):
     @api.multi
     def check_credit_limit_ok(self):
         self.ensure_one()
-        # no more prepaid option on v9
-        # if self.order_policy == 'prepaid':
-        #     return True
 
-        # We sum from all the sale orders that are aproved, the sale order
-        # lines that are not yet invoiced
         domain = [('order_id.partner_id', '=', self.partner_id.id),
-                  ('invoiced', '=', False),
-                  ('order_id.state', 'not in', ['draft', 'cancel', 'sent'])]
+                  ('state', 'in', ['sale', 'done'])]
         order_lines = self.env['sale.order.line'].search(domain)
-        none_invoiced_amount = sum(order_lines.mapped('price_subtotal'))
 
-        # We sum from all the invoices that are in draft the total amount
-        domain = [
-            ('partner_id', '=', self.partner_id.id), ('state', '=', 'draft')]
-        draft_invoices = self.env['account.invoice'].search(domain)
-        draft_invoices_amount = sum(draft_invoices.mapped('amount_total'))
+        to_invoice_amount = 0.0
+        for line in order_lines:
+            # not_invoiced is different from native qty_to_invoice because
+            # the last one only consider to_invoice lines the ones
+            # that has been delivered or are ready to invoice regarding
+            # the invoicing policy. Not_invoiced consider all
+            not_invoiced = line.product_uom_qty - line.qty_invoiced
+            price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
+            taxes = line.tax_id.compute_all(
+                price, line.order_id.currency_id,
+                not_invoiced,
+                product=line.product_id, partner=line.order_id.partner_id)
+            to_invoice_amount += taxes['total_included']
 
         available_credit = self.partner_id.credit_limit - \
             self.partner_id.credit - \
-            none_invoiced_amount - draft_invoices_amount
+            to_invoice_amount
 
         if self.amount_total > available_credit:
             return False
