@@ -16,7 +16,8 @@ class sale_order_line(models.Model):
         res = super(sale_order_line, self).product_id_change()
         price_get = self.product_id.with_context(
             currency_id=self.env['product.pricelist'].browse(
-                self.order_id.pricelist_id.id).currency_id.id, uom=self.product_uom.id).price_get()
+                self.order_id.pricelist_id.id).currency_id.id,
+            uom=self.product_uom.id).price_get()
         self.list_price = price_get and price_get[
             self.product_id.id] or False
 
