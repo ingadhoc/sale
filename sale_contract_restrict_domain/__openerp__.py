@@ -24,10 +24,6 @@
     'category': 'Projects & Services',
     'sequence': 14,
     'summary': '',
-    'description': '''
-Sale Contract Restrict Domain
-=============================
-    ''',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
@@ -43,7 +39,7 @@ Sale Contract Restrict Domain
     ],
     'test': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
