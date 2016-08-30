@@ -14,17 +14,24 @@ Installation
 
 To install this module, you need to:
 
+* Just install this module
+
 
 Configuration
 =============
 
 To configure this module, you need to:
 
+* Set sale_order_dummy_confirm = True on the companies you want to
+
 
 Usage
 =====
 
 To use this module, you need to:
+
+* Just confirm any order as you would do. No invoice or picking order will be
+generated
 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas

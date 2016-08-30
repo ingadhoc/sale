@@ -11,8 +11,7 @@ class SaleOrder(models.Model):
 
     dummy_confirmation = fields.Boolean(
         'Dummy Confirmation',
-        help="If true, this sale order has been dummy confirmed and can go "
-        "back to draft."
+        help="If true, this sale order has been dummy confirmed"
     )
 
     @api.multi
