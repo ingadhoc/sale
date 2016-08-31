@@ -4,20 +4,36 @@
 # directory
 ##############################################################################
 from openerp import models, fields, api
+from datetime import datetime, timedelta
 import logging
 _logger = logging.getLogger(__name__)
 
 
-class sale_order(models.Model):
+class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    @api.model
-    def _prepare_order_line_procurement(self, order, line, group_id=False):
-        res = super(sale_order, self)._prepare_order_line_procurement(
-            order, line, group_id=group_id)
-        # because _get_date_planned receive a datetime string, we convert it
-        date_confirm = fields.Datetime.to_string(
-            fields.Datetime.from_string(order.date_confirm))
-        res['date_planned'] = self._get_date_planned(
-            order, line, date_confirm)
+    date_confirm = fields.Date(
+        'Confirmation Date',
+        readonly=True,
+        select=True,
+        help="Date on which sales order is confirmed.", copy=False)
+
+    @api.multi
+    def action_confirm(self):
+        self.write({'date_confirm': fields.Date.today()})
+        return super(SaleOrder, self).action_confirm()
+
+
+class SaleOrderLine(models.Model):
+    _inherit = "sale.order.line"
+
+    @api.multi
+    def _prepare_order_line_procurement(self, group_id=False):
+        res = super(SaleOrderLine, self)._prepare_order_line_procurement(
+            group_id=group_id)
+        if self.order_id.date_confirm:
+            res['date_planned'] = datetime.strptime(
+                self.order_id.date_confirm, "%Y-%m-%d")\
+                + timedelta(days=self.customer_lead or 0.0) - \
+                timedelta(days=self.order_id.company_id.security_lead)
         return res
