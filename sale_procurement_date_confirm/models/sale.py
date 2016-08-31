@@ -32,7 +32,8 @@ class SaleOrderLine(models.Model):
         res = super(SaleOrderLine, self)._prepare_order_line_procurement(
             group_id=group_id)
         if self.order_id.date_confirm:
-            res['date_planned'] = datetime.strptime(self.order_id.date_confirm, "%Y-%m-%d")\
+            res['date_planned'] = datetime.strptime(
+                self.order_id.date_confirm, "%Y-%m-%d")\
                 + timedelta(days=self.customer_lead or 0.0) - \
                 timedelta(days=self.order_id.company_id.security_lead)
         return res
