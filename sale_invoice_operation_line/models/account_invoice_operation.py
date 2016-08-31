@@ -61,12 +61,8 @@ class AccountInvoiceLineOperation(models.Model):
                 'of amount type %s') % (amount_type))
 
         msg = _('Sum of percentage could not be greater than 100%')
-        print 'operation_lines', operation_lines
         operation_lines.invalidate_cache()
         op_lines_percentage = sum(operation_lines.mapped('percentage'))
-        print 'op_lines_percentage', op_lines_percentage
-        print 'operations', operations
-        print 'self', self._context
         if op_lines_percentage > 100.0:
             raise Warning(msg)
 
