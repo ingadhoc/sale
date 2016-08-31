@@ -4,7 +4,6 @@
 # directory
 ##############################################################################
 from openerp import models, fields, api
-from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from datetime import datetime, timedelta
 import logging
 _logger = logging.getLogger(__name__)
