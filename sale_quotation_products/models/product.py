@@ -67,23 +67,16 @@ class product_product(models.Model):
                 ('product_id', '=', self.id)])
             if lines:
                 (lines - lines[0]).unlink()
-                line_data = self.env['sale.order.line'].product_id_change(
-                    lines[0].order_id.pricelist_id.id,
-                    self.id,
-                    qty=qty,
-                    partner_id=lines[0].order_id.partner_id.id)
                 lines[0].write({
                     'product_uom_qty': qty,
                     'product_uom': self.uom_id.id,
-                    'price_unit': line_data['value'].get('price_unit')
                 })
             else:
                 self.env['sale.order'].browse(
                     sale_order_id).add_products(self.id, qty)
 
     qty = fields.Integer(
-        # TODO poner en ingles cuando el bug de odoo este resuelto
-        'Cantidad',
+        'Quantity',
         compute='_get_qty',
         inverse='_set_qty')
 
