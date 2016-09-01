@@ -21,17 +21,18 @@ class sale_order(models.Model):
          'The Purchase Order Number must be unique!')
     ]
 
-    def action_wait(self, cr, uid, ids, context=None):
-        for o in self.browse(cr, uid, ids):
-            if o.require_purchase_order_number:
-                if not o.purchase_order_number:
-                    raise Warning(_(
-                        'You cannot confirm a sales order without a Purchase Order Number for this partner'))
-        return super(sale_order, self).action_wait(cr, uid, ids, context)
+    @api.multi
+    def action_confirm(self):
+        if self.require_purchase_order_number:
+            if not self.purchase_order_number:
+                raise Warning(_(
+                    'You cannot confirm a sales order without a'
+                    ' Purchase Order Number for this partner'))
+        return super(sale_order, self).action_confirm()
 
-    @api.model
-    def _prepare_invoice(self, order, lines):
-        invoice_vals = super(sale_order, self)._prepare_invoice(order, lines)
+    @api.multi
+    def _prepare_invoice(self):
+        invoice_vals = super(sale_order, self)._prepare_invoice()
         invoice_vals.update({
-            'purchase_order_number': order.purchase_order_number})
+            'purchase_order_number': self.purchase_order_number})
         return invoice_vals

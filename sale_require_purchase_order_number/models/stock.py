@@ -38,21 +38,13 @@ class stock_picking(models.Model):
     code = fields.Selection(
         related='picking_type_id.code',
         string='Operation Type',
-        readonly=True,)
+        readonly=True)
 
-    @api.model
-    def _get_invoice_vals(self, key, inv_type, journal_id, move):
-        invoice_vals = super(stock_picking, self)._get_invoice_vals(
-            key, inv_type, journal_id, move)
-        invoice_vals.update({
-            'purchase_order_number': move.picking_id.purchase_order_number})
-        return invoice_vals
-
-    @api.cr_uid_ids_context
-    def do_enter_transfer_details(self, cr, uid, picking, context=None):
-        for o in self.browse(cr, uid, picking):
-            if o.require_purchase_order_number and o.code == 'outgoing':
-                if not o.purchase_order_number:
-                    raise Warning(_(
-                        'You cannot transfer products without a Purchase Order Number for this partner'))
-        return super(stock_picking, self).do_enter_transfer_details(cr, uid, picking, context=None)
+    @api.multi
+    def do_new_transfer(self):
+        if self.require_purchase_order_number and self.code == 'outgoing':
+            if not self.purchase_order_number:
+                raise Warning(_(
+                    'You cannot transfer products without a Purchase'
+                    ' Order Number for this partner'))
+        return super(stock_picking, self).do_new_transfer()
