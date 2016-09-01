@@ -7,7 +7,7 @@ from openerp import models, fields, api, _
 from openerp.exceptions import Warning
 
 
-class stock_picking(models.Model):
+class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     @api.one
@@ -47,4 +47,4 @@ class stock_picking(models.Model):
                 raise Warning(_(
                     'You cannot transfer products without a Purchase'
                     ' Order Number for this partner'))
-        return super(stock_picking, self).do_new_transfer()
+        return super(StockPicking, self).do_new_transfer()

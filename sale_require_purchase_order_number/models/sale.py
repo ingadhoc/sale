@@ -7,7 +7,7 @@ from openerp import models, fields, api, _
 from openerp.exceptions import Warning
 
 
-class sale_order(models.Model):
+class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     require_purchase_order_number = fields.Boolean(
@@ -28,11 +28,11 @@ class sale_order(models.Model):
                 raise Warning(_(
                     'You cannot confirm a sales order without a'
                     ' Purchase Order Number for this partner'))
-        return super(sale_order, self).action_confirm()
+        return super(SaleOrder, self).action_confirm()
 
     @api.multi
     def _prepare_invoice(self):
-        invoice_vals = super(sale_order, self)._prepare_invoice()
+        invoice_vals = super(SaleOrder, self)._prepare_invoice()
         invoice_vals.update({
             'purchase_order_number': self.purchase_order_number})
         return invoice_vals
