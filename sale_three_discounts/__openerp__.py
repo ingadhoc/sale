@@ -20,17 +20,13 @@
 ##############################################################################
 {
     'name': 'Sale Three Discounts',
-    'version': '9.0.1.0.0',
+    'version': '9.0.1.1.0',
     'category': 'Sales Management',
     'sequence': 14,
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'summary': '',
-    'description': '''
-Sale Three Discounts
-====================
-    ''',
     'depends': [
         'sale',
         'account'
@@ -45,7 +41,7 @@ Sale Three Discounts
     ],
     'test': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
