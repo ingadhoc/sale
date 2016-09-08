@@ -13,7 +13,8 @@
         * Si es su propio partner (el partner del usuario)
         * Si el partner no tiene usuario pero no tiene padre o tiene permiso para ver al padre (es decir esta asignado al padre o el padre no tiene nadie asignado)
          -->
-        <field name="domain_force">['|','|','|',('user_id','=',user.id),('child_ids.user_id','=',user.id),('id','=',user.partner_id.id),'&amp;', ('user_id','=',False),'|',('parent_id.user_id','=',False),('parent_id.user_id','=',user.id)]</field>
+         <!-- TODO habria que ver si es necesario que si esta en un contacto vea a todos los contactos porque podria intentgar cargarlos en una orden de compra -->
+        <field name="domain_force">['|','|','|',('user_id','=',user.id),('child_ids.user_id','=',user.id),('id','=',user.partner_id.id),'&amp;', ('user_id','=',False),'|','|',('parent_id','=',False),('parent_id.user_id','=',False),('parent_id.user_id','=',user.id)]</field>
         <!-- <field name="domain_force">['|',('user_id','=',user.id),('user_id','=',False)]</field> -->
         <field name="groups" eval="[(4, ref('base.group_sale_salesman'))]"/>
     </record>
