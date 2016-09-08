@@ -6,7 +6,7 @@
 from openerp import models, fields
 
 
-class sale_order_line(models.Model):
+class ResPartner(models.Model):
     _inherit = "res.partner"
 
     user_id = fields.Many2one(
