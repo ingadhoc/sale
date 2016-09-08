@@ -13,7 +13,8 @@
         * Si es su propio partner (el partner del usuario)
         * Si el partner no tiene usuario pero no tiene padre o tiene permiso para ver al padre (es decir esta asignado al padre o el padre no tiene nadie asignado)
          -->
-        <field name="domain_force">['|','|','|',('user_id','=',user.id),('child_ids.user_id','=',user.id),('id','=',user.partner_id.id),'&amp;', ('user_id','=',False),'|',('parent_id.user_id','=',False),('parent_id.user_id','=',user.id)]</field>
+         <!-- TODO habria que ver si es necesario que si esta en un contacto vea a todos los contactos porque podria intentgar cargarlos en una orden de compra -->
+        <field name="domain_force">['|','|','|',('user_id','=',user.id),('child_ids.user_id','=',user.id),('id','=',user.partner_id.id),'&amp;', ('user_id','=',False),'|','|',('parent_id','=',False),('parent_id.user_id','=',False),('parent_id.user_id','=',user.id)]</field>
         <!-- <field name="domain_force">['|',('user_id','=',user.id),('user_id','=',False)]</field> -->
         <field name="groups" eval="[(4, ref('base.group_sale_salesman'))]"/>
     </record>
@@ -24,19 +25,20 @@
         <field name="groups" eval="[(4, ref('base.group_sale_salesman_all_leads'))]"/>
     </record>
 
-    <record id="account_analytic_account_personal_partners" model="ir.rule">
+<!-- TODO analizar si mantenemos logica de las reglas en lead y sale order (usa user) o cambiamos todas y nos fijamos en el partner, otra alternativas seria hacerlo por followers -->
+        <!-- ['|','|',('partner_id.child_ids','=',user.partner_id.id),('partner_id','=',False),('partner_id','=',user.partner_id.id)] -->
+<!--     <record id="account_analytic_account_personal_partners" model="ir.rule">
         <field name="name">Account Personal Partners</field>
         <field ref="analytic.model_account_analytic_account" name="model_id"/>
         <field name="domain_force">['|',('user_id','=',user.id),('user_id','=',False)]</field>
         <field name="groups" eval="[(4, ref('base.group_sale_salesman'))]"/>
     </record>
-
     <record id="account_analytic_account_all_partners" model="ir.rule">
         <field name="name">All Partners Account</field>
         <field ref="analytic.model_account_analytic_account" name="model_id"/>
         <field name="domain_force">[(1,'=',1)]</field>
         <field name="groups" eval="[(4, ref('base.group_sale_salesman_all_leads'))]"/>
     </record>
-
+ -->
 </data>
 </openerp>
