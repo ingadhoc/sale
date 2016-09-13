@@ -36,11 +36,11 @@
         'data/data.xml',
     ],
     'demo': [
-        'sale_demo.xml',
+        'demo/demo.xml',
     ],
     'test': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
