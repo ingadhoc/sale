@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
+"Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-29 13:41+0000\n"
-"PO-Revision-Date: 2015-12-29 13:41+0000\n"
+"POT-Creation-Date: 2016-08-31 15:06+0000\n"
+"PO-Revision-Date: 2016-08-31 15:06+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,22 +16,17 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: sale_quotation_products
-#: model:ir.actions.server,name:sale_quotation_products.action_add_to_last_quotation_wizard
-msgid "Add To Last Quotation"
-msgstr ""
-
-#. module: sale_quotation_products
 #: model:ir.model,name:sale_quotation_products.model_product_product
 msgid "Product"
 msgstr ""
 
 #. module: sale_quotation_products
-#: view:product.product:sale_quotation_products.product_product_tree_view
-msgid "Product Detail"
+#: model:ir.model.fields,field_description:sale_quotation_products.field_product_product_qty
+msgid "Quantity"
 msgstr ""
 
 #. module: sale_quotation_products
-#: code:addons/sale_quotation_products/sale.py:23
+#: code:addons/sale_quotation_products/sale.py:38
 #, python-format
 msgid "Quotation Products"
 msgstr ""
@@ -42,17 +37,7 @@ msgid "Sales Order"
 msgstr ""
 
 #. module: sale_quotation_products
-#: view:sale.order:sale_quotation_products.sale_order_form_view
+#: model:ir.ui.view,arch_db:sale_quotation_products.sale_order_form_view
 msgid "Search Products"
-msgstr ""
-
-#. module: sale_quotation_products
-#: view:product.product:sale_quotation_products.product_product_tree_view
-msgid "True"
-msgstr ""
-
-#. module: sale_quotation_products
-#: view:product.product:sale_quotation_products.product_product_tree_view
-msgid "top"
 msgstr ""
 
