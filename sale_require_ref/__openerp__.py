@@ -36,7 +36,7 @@
         'data/data.xml',
     ],
     'demo': [
-        'sale_demo.xml',
+        'demo/demo.xml',
     ],
     'test': [
     ],
