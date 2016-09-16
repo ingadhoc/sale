@@ -10,7 +10,7 @@
                     <field name="commercial_partner_id" invisible="1"/>
                 </field>
                 <field name="project_id" position="attributes">
-                    <attribute name="domain">[('type','in',['contract']),'|',('partner_id','=',False),('partner_id.commercial_partner_id','=',commercial_partner_id)]</attribute>
+                    <attribute name="domain">[('account_type', '=', 'normal'), '|',('partner_id','=',False),('partner_id.commercial_partner_id','=',commercial_partner_id)]</attribute>
                 </field>
             </field>
         </record>

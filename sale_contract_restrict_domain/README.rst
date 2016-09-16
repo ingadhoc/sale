@@ -6,12 +6,15 @@
 Sale Contract Restrict Domain
 =============================
 
-This module Set in sale order view to "analytics account" a domain to only see contract with the same commercial partner that the partner in the sale order.
+This module filters contracts on sales orders so you can only select the ones with same partner as the sales order.
+
 
 Installation
 ============
 
 To install this module, you need to:
+
+#. Just install this module
 
 
 Configuration
@@ -19,13 +22,7 @@ Configuration
 
 To configure this module, you need to:
 
-
-
-Usage
-=====
-
-To use this module, you need to:
-
+#. No configuration needed
 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
@@ -44,7 +41,7 @@ Bug Tracker
 ===========
 
 Bugs are tracked on `GitHub Issues
-<https://github.com/ingadhoc/{project_repo}/issues>`_. In case of trouble, please
+<https://github.com/ingadhoc/sale/issues>`_. In case of trouble, please
 check there if your issue has already been reported. If you spotted it first,
 help us smashing it by providing a detailed and welcomed feedback.
 

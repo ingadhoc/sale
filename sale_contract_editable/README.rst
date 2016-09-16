@@ -2,17 +2,19 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-======================
-Sale Contract Editable
-======================
+========================================
+Analytic Account Editable on Sale Orders
+========================================
 
-This module set the field "Analytic Account" editable always.
+By default, de "Analytic Account" on Quotations / Sales Orders is editable only in "Draft" state. This module, makes this field editable always.
+
 
 Installation
 ============
 
 To install this module, you need to:
 
+#. Just install this module
 
 
 Configuration
@@ -20,12 +22,15 @@ Configuration
 
 To configure this module, you need to:
 
+#. No configuration needed
 
 
 Usage
 =====
 
 To use this module, you need to:
+
+#. Just edit a sale order and change de related analytic account
 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
@@ -44,7 +49,7 @@ Bug Tracker
 ===========
 
 Bugs are tracked on `GitHub Issues
-<https://github.com/ingadhoc/{project_repo}/issues>`_. In case of trouble, please
+<https://github.com/ingadhoc/sale/issues>`_. In case of trouble, please
 check there if your issue has already been reported. If you spotted it first,
 help us smashing it by providing a detailed and welcomed feedback.
 
