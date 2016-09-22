@@ -27,11 +27,6 @@
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'summary': '',
-    'description': '''
-Sale Global Three Discounts
-===========================
-
-    ''',
     'depends': [
         'sale_global_discount',
         'sale_three_discounts'
@@ -45,7 +40,7 @@ Sale Global Three Discounts
     ],
     'test': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': True,
     'application': False,
 }
