@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Sale Exception - Partner State Integration',
-    'version': '8.0.0.0.0',
+    'version': '8.0.0.1.0',
     'description': """
 Sale Exception - Partner State Integration
 ===========================================
@@ -34,13 +34,13 @@ certain amount
     'depends': [
         'sale_exceptions',
         'partner_state',
-        ],
+    ],
     'data': [
         'data/data.xml',
         'company_view.xml',
-        ],
+    ],
     'demo': [
-        ],
+    ],
     'test': [],
     'installable': True,
     'auto_install': True,
