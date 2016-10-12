@@ -13,11 +13,14 @@ Installation
 
 To install this module, you need to:
 
+#. Just install this module
 
 Configuration
 =============
 
 To configure this module, you need to:
+
+#. No configuration needed
 
 
 Usage
@@ -25,10 +28,11 @@ Usage
 
 To use this module, you need to:
 
+#. You can see the list price and discount list price to each line in the sale order.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.adhoc.com.ar/runbot
+   :target: https://runbot.adhoc.com.ar/runbot/repo/git-github-com-ingadhoc-sale-git-27runbot
 
 .. repo_id is available in https://github.com/OCA/maintainer-tools/blob/master/tools/repos_with_ids.txt
 .. branch is "8.0" for example

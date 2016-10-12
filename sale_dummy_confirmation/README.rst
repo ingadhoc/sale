@@ -6,15 +6,15 @@
 Sale Dummy Confirmation
 =======================
 
-On a multi-company environment with stock and/or account, allow using only sale
-for some companies.
+This module simulates the confirmation of the sales order.
+
 
 Installation
 ============
 
 To install this module, you need to:
 
-* Just install this module
+# Just install this module
 
 
 Configuration
@@ -22,7 +22,7 @@ Configuration
 
 To configure this module, you need to:
 
-* Set sale_order_dummy_confirm = True on the companies you want to
+# Set sale_order_dummy_confirm = True on the companies you want to
 
 
 Usage
@@ -30,13 +30,13 @@ Usage
 
 To use this module, you need to:
 
-* Just confirm any order as you would do. No invoice or picking order will be
+# Just confirm any order as you would do. No invoice or picking order will be
 generated
 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.adhoc.com.ar/
+   :target: https://runbot.adhoc.com.ar/runbot/repo/git-github-com-ingadhoc-sale-git-27runbot/repo/git-github-com-ingadhoc-sale-git-27
 
 .. repo_id is available in https://github.com/OCA/maintainer-tools/blob/master/tools/repos_with_ids.txt
 .. branch is "8.0" for example

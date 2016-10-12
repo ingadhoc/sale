@@ -12,7 +12,8 @@ class SaleOrder(models.Model):
 
     require_purchase_order_number = fields.Boolean(
         string='Sale Require Origin',
-        related='partner_id.require_purchase_order_number')
+        related='partner_id.require_purchase_order_number',
+        help='If true, required purchase order numnber in sale order')
     purchase_order_number = fields.Char(
         'Purchase Order Number')
 

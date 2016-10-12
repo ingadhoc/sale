@@ -6,13 +6,14 @@
 Sale Exception Print
 ====================
 
-Add to quotation print the validity exception.
+Add an exception print if the credit limit is exceeded Partner
 
 Installation
 ============
 
 To install this module, you need to:
 
+#. No install needed
 
 
 Configuration
@@ -20,17 +21,21 @@ Configuration
 
 To configure this module, you need to:
 
+#. No configuration needed
+
 
 Usage
 =====
 
 To use this module, you need to:
 
+#. When you print an sale order, validate than the partner limit not overdo.
 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.adhoc.com.ar/
+   :target: https://runbot.adhoc.com.ar/runbot/repo/git-github-com-ingadhoc-sale-git-27runbot/repo/git-github-com-ingadhoc-sale-git-27
+
 
 .. repo_id is available in https://github.com/OCA/maintainer-tools/blob/master/tools/repos_with_ids.txt
 .. branch is "8.0" for example

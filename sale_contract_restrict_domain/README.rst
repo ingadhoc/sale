@@ -25,9 +25,17 @@ To configure this module, you need to:
 #. No configuration needed
 
 
+Usage
+=====
+
+To use this module, you need to:
+
+#. When you enter to sale order, the "project" field is filtered by projects who has the same partner than sale order.
+
+
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.adhoc.com.ar/
+   :target: https://runbot.adhoc.com.ar/runbot/repo/git-github-com-ingadhoc-sale-git-27runbot/repo/git-github-com-ingadhoc-sale-git-27
 
 .. repo_id is available in https://github.com/OCA/maintainer-tools/blob/master/tools/repos_with_ids.txt
 .. branch is "8.0" for example

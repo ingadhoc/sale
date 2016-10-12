@@ -5,11 +5,11 @@
     <record id="require_contract" model="sale.exception">
       <field name="name">Contract Required</field>
       <field name="description">You must set a contract.</field>
-      <field name="sequence">10</field>
+      <field name="active" eval="True"/>
+      <field name="sequence">15</field>
       <field name="model">sale.order</field>
       <field name="code">if not object.project_id:
     failed = True</field>
-      <field name="active" eval="True"/>
     </record>
 
   </data>
