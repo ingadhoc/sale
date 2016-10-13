@@ -23,11 +23,6 @@
     'version': '9.0.1.0.0',
     'category': 'Accounting',
     'sequence': 14,
-    'description': '''
-Sale Order Type User Default
-============================
-
-    ''',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
@@ -37,13 +32,13 @@ Sale Order Type User Default
         'sale_order_type',
     ],
     'data': [
-        'res_users_view.xml'
+        'views/res_users_view.xml'
     ],
     'demo': [
     ],
     'test': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
