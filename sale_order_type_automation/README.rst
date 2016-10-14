@@ -26,8 +26,8 @@ To configure this module, you need to:
 
 #. To configure got to sale order type for:
 Validate Picking: Choose the option "validate automatically picking".
-Validar Factura: Choose the option "validate automatically invoice".
-Validar Pago: Choose the option "validate automatically payment".
+Validate Invoice: Choose the option "validate automatically invoice".
+Validate Payment: Choose the option "validate automatically payment".
 
 
 Usage
