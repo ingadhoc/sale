@@ -132,6 +132,11 @@ class AccountInvoiceOperation(models.Model):
 
     @api.multi
     def _run_checks(self):
+        """
+        This checks are called from an invoice when operations change
+        We add checks that force product restrictions to be applied and then
+        we call super checks (like percentage not greater than 100)
+        """
         self.update_operations_lines(
             self.mapped('invoice_id.invoice_line'))
         return super(AccountInvoiceOperation, self)._run_checks()
