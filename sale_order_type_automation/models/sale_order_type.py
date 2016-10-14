@@ -20,8 +20,8 @@ class SaleOrderTypology(models.Model):
         'Payment Journal',
         domain="[('type','in', ['cash', 'bank'])]"
     )
-    validate_automatically_voucher = fields.Boolean(
-        'Validate automatically voucher')
+    validate_automatically_payment = fields.Boolean(
+        'Validate automatically payment')
 
     @api.onchange('payment_journal_id')
     def onchange_payment_journal_id(self):
@@ -33,26 +33,28 @@ class SaleOrderTypology(models.Model):
         if self.order_policy != 'manual':
             self.validate_automatically_invoice = False
             self.validate_automatically_picking = False
-            self.validate_automatically_voucher = False
+            self.validate_automatically_payment = False
             self.payment_journal_id = False
             self.journal_id = False
 
-    @api.one
+    @api.multi
     @api.constrains(
         'journal_id',
         'payment_journal_id',
-        'refund_journal_id',
         'sequence_id')
     def validate_company_id(self):
         text = _(
             'The Journal "%s" company must be the same than sale order type')
-        if self.journal_id and self.journal_id.company_id != self.company_id:
-            raise Warning(text % self.journal_id.name)
-        if self.payment_journal_id and self.payment_journal_id.company_id != self.company_id:
-            raise Warning(text % self.payment_journal_id.name)
-        if self.refund_journal_id and self.refund_journal_id.company_id != self.company_id:
-            raise Warning(text % self.refund_journal_id.name)
-        if self.sequence_id and self.sequence_id.company_id != self.company_id:
-            raise Warning(_(
-                'The Sequence "%s" company must be the same than'
-                ' sale order type') % self.sequence_id.name)
+        for sale_type in self:
+            if sale_type.journal_id and sale_type.journal_id.company_id\
+                    != sale_type.company_id:
+                raise Warning(text % sale_type.journal_id.name)
+            if sale_type.payment_journal_id and \
+                    sale_type.payment_journal_id.company_id != \
+                    sale_type.company_id:
+                raise Warning(text % sale_type.payment_journal_id.name)
+            if sale_type.sequence_id and sale_type.sequence_id.company_id \
+                    != sale_type.company_id:
+                raise Warning(_(
+                    'The Sequence "%s" company must be the same than'
+                    ' sale order type') % sale_type.sequence_id.name)
