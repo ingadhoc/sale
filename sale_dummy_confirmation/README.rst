@@ -6,15 +6,15 @@
 Sale Dummy Confirmation
 =======================
 
-On a multi-company environment with stock and/or account, allow using only sale
-for some companies.
+This module simulates the confirmation of the sales order.
+
 
 Installation
 ============
 
 To install this module, you need to:
 
-* Just install this module
+# Just install this module
 
 
 Configuration
@@ -22,7 +22,7 @@ Configuration
 
 To configure this module, you need to:
 
-* Set sale_order_dummy_confirm = True on the companies you want to
+# Set sale_order_dummy_confirm = True on the companies you want to
 
 
 Usage
@@ -30,7 +30,7 @@ Usage
 
 To use this module, you need to:
 
-* Just confirm any order as you would do. No invoice or picking order will be
+# Just confirm any order as you would do. No invoice or picking order will be
 generated
 
 

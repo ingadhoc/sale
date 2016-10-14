@@ -17,10 +17,13 @@ IMPORTANT:
 * If you dont disable warning and give a user availbility to see only
  'true/false' on sale order stock, he can see stock if the warning is raised
 
+
 Installation
 ============
 
 To install this module, you need to:
+
+#. Just install this module
 
 
 Configuration
@@ -28,11 +31,15 @@ Configuration
 
 To configure this module, you need to:
 
+#. No configuration needed
+
 
 Usage
 =====
 
 To use this module, you need to:
+
+#. If you want to add a product to the sales order line, the warning appears, if the stock of this product is less than the amount set.
 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas

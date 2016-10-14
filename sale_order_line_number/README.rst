@@ -13,17 +13,23 @@ Installation
 
 To install this module, you need to:
 
+#. Just install this module
+
 
 Configuration
 =============
 
 To configure this module, you need to:
 
+#. No configuration needed
+
 
 Usage
 =====
 
 To use this module, you need to:
+
+#. You can see the sequence in the lines of the sale order.
 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas

@@ -8,10 +8,13 @@ Sales Team Group
 
 Adds a sales group called 'Sale Team'
 
+
 Installation
 ============
 
 To install this module, you need to:
+
+#. Just install this module
 
 
 Configuration
@@ -19,9 +22,16 @@ Configuration
 
 To configure this module, you need to:
 
+#. No configuration needed
+
 
 Usage
 =====
+
+To use this module, you need to:
+
+#. No usage needed.
+
 
 To use this module, you need to:
 

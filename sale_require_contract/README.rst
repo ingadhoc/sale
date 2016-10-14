@@ -9,10 +9,13 @@ Sale Order Require Contract on Confirmation
 This module adds an exception to sales order. 
 It makes the "contract " field is required to validate a sales order.
 
+
 Installation
 ============
 
 To install this module, you need to:
+
+#. Just install this module
 
 
 Configuration
@@ -20,11 +23,15 @@ Configuration
 
 To configure this module, you need to:
 
+#. No configuration needed
+
 
 Usage
 =====
 
 To use this module, you need to:
+
+#. This module add an exception to sale order to required the contract to confirm the sale order.
 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas

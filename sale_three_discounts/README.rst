@@ -8,10 +8,13 @@ Sale Three Discounts
 
 This module add Three discount to sale order line and account invoice line.
 
+
 Installation
 ============
 
 To install this module, you need to:
+
+#. Just install this module
 
 
 Configuration
@@ -19,11 +22,15 @@ Configuration
 
 To configure this module, you need to:
 
+#. No configuration needed
+
 
 Usage
 =====
 
 To use this module, you need to:
+
+#. You can set three discount to sale order line.
 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas

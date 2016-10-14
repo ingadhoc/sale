@@ -9,10 +9,13 @@ Sale Order Validity
 * This module adds functionality that each sales order can be established day of validity.
 * By default the number of days of validity is chosen from the company.
 
+
 Installation
 ============
 
 To install this module, you need to:
+
+#. Just install this module
 
 
 Configuration
@@ -28,6 +31,8 @@ Usage
 =====
 
 To use this module, you need to:
+
+#. You can established the quantity of days to validty the sale order.
 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas

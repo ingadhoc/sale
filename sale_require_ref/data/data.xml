@@ -5,6 +5,7 @@
     <record id="require_ref" model="sale.exception">
       <field name="name">Reference Field Required</field>
       <field name="description">You must set a reference.</field>
+      <field name="active" eval="True"/>
       <field name="sequence">10</field>
       <field name="model">sale.order</field>
       <field name="code">if not object.client_order_ref:

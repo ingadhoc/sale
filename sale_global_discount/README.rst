@@ -7,12 +7,15 @@ Sale Global Discount
 ====================
 
 Add a wizard on sales orders that allow you to define global discounts to sale
-orders by percentage or fixed amount
+orders by percentage.
+
 
 Installation
 ============
 
 To install this module, you need to:
+
+#. Just install this module.
 
 
 Configuration
@@ -20,11 +23,18 @@ Configuration
 
 To configure this module, you need to:
 
+#. To configure this module, you need to:
+    * Go to Users.
+    * Select a users.
+    * Set permission "Discount in line"
+
 
 Usage
 =====
 
 To use this module, you need to:
+
+#. When you enter to Sale Order, you click on "Set Discount Global" Button then you set amount to the total discount and confirm.
 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas

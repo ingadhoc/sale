@@ -19,6 +19,7 @@ class sale_order(models.Model):
         'Validity Days',
         readonly=True,
         states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
+        help='Set days of validity for Sales Order',
     )
     validity_date = fields.Date(
         "Validity Date",

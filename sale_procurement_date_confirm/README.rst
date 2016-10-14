@@ -6,13 +6,15 @@
 Make Sale Procurement Date based on Sale Confirm Date
 =====================================================
 
-Add a wizard on sales orders that allow you to define 3 global discounts to sale
-orders by percentage or fixed amount
+Add fields date confirmation in Sale Order
+
 
 Installation
 ============
 
 To install this module, you need to:
+
+#. Just install this module
 
 
 Configuration
@@ -20,11 +22,15 @@ Configuration
 
 To configure this module, you need to:
 
+#. No configuration needed
+
 
 Usage
 =====
 
 To use this module, you need to:
+
+# By confirming the Sale Order set field confirmation date.
 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
