@@ -9,12 +9,14 @@ Sale Order Require Contract on Confirmation
 This module adds an exception to sales order. 
 It makes the "contract " field is required to validate a sales order.
 
+
 Installation
 ============
 
 To install this module, you need to:
 
 #. Just install this module
+
 
 Configuration
 =============

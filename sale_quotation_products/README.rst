@@ -9,6 +9,7 @@ Sale Quotation Products
 This module add button "Search Products" to sale order.
 You can see a list of products and change the quantity of each them.
 
+
 Installation
 ============
 
@@ -16,12 +17,14 @@ To install this module, you need to:
 
 #. Just install this module
 
+
 Configuration
 =============
 
 To configure this module, you need to:
 
 #. No configuration needed
+
 
 Usage
 =====

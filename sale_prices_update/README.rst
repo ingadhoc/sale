@@ -8,12 +8,14 @@ Sale Prices Update
 
 An update system for sale order lines' unit.
 
+
 Installation
 ============
 
 To install this module, you need to:
 
 #. Just install this module
+
 
 Configuration
 =============
@@ -33,7 +35,7 @@ To use this module, you need to:
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.adhoc.com.ar/runbot/repo/git-github-com-ingadhoc-sale-git-27runbot
+   :target: https://runbot.adhoc.com.ar/
 
 .. repo_id is available in https://github.com/OCA/maintainer-tools/blob/master/tools/repos_with_ids.txt
 .. branch is "8.0" for example

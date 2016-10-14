@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-    <button name="action_invoice_sent" type="object" string="Send by Email"
-        attrs="{'invisible':['|','|',('sent','=',False),('state', '=', 'cancel'),('state', '=', 'draft')]}"
-        class="oe_highlight"
-        groups="base.group_user"/>
-
         <record id="sale_order_form" model="ir.ui.view">
             <field name="name">sale.order.form</field>
             <field name="model">sale.order</field>
