@@ -17,8 +17,8 @@ class TestSaleOrderTypeAutomation(common.TransactionCase):
         self.sale_order_type.validate_automatically_picking = True
         self.sale_order_type.validate_automatically_invoice = True
         self.sale_order_type.validate_automatically_payment = True
-        self.sale_order_type.payment_journal_id = self.env['account.journal']\
-            .search([('type', '=', 'sale')], limit=1)
+        self.sale_order_type.payment_journal_id = self.env[
+            'account.journal'].search([('type', '=', 'sale')], limit=1)
 
     def test_sale_order_confirm(self):
         sale_line_dict = {
@@ -29,7 +29,7 @@ class TestSaleOrderTypeAutomation(common.TransactionCase):
         }
         vals = {
             'partner_id': self.partner.id,
-            'partner_id': self.partner.id,
+            'type_id': self.sale_order_type.id,
             'order_line': [(0, 0, sale_line_dict)]
         }
         sale_order = self.sale_order_model.create(vals)

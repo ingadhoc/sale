@@ -7,9 +7,9 @@ Sale Order Type Automation
 ==========================
 
 Add to kind of sales orders, options for when the sale is confirmed:
-*The invoice is validated
-*Payment of the invoice is validated and registrer
-*The products are tranfer
+    * The invoice is validated
+    * Payment of the invoice is validated and registrer
+    * The products are tranfer
 
 Installation
 ============
