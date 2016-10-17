@@ -14,4 +14,4 @@ class SaleOrderTypology(models.Model):
         help='If you set True then all orders of this type will be dummy '
         'confirmed. If company has dummy confirm set, then no matter what you '
         'choose here, orders will be dummy confirmed'
-        )
+    )
