@@ -47,6 +47,7 @@ class SaleOrder(models.Model):
                         })
                         if so.type_id.validate_automatically_payment:
                             payment.post()
-                            so.action_done()
+                            if so.type_id.validate_automatically_picking:
+                                so.action_done()
 
         return res

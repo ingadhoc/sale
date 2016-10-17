@@ -28,15 +28,6 @@ class SaleOrderTypology(models.Model):
         if self.payment_journal_id:
             self.validate_automatically_invoice = True
 
-    @api.onchange('order_policy')
-    def onchange_order_policy(self):
-        if self.order_policy != 'manual':
-            self.validate_automatically_invoice = False
-            self.validate_automatically_picking = False
-            self.validate_automatically_payment = False
-            self.payment_journal_id = False
-            self.journal_id = False
-
     @api.multi
     @api.constrains(
         'journal_id',
