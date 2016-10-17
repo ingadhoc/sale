@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Sale Exceptions Ingore Approve Directly',
-    'version': '9.0.1.0.0',
+    'version': '9.0.1.1.0',
     'category': 'Product',
     'sequence': 14,
     'author': 'ADHOC SA',
@@ -28,13 +28,8 @@
     'license': 'AGPL-3',
     'summary': 'Allow to define purchase prices on different currencies using'
     'replenishment cost field',
-    'description': '''
-Sale Exceptions Ingore Approve Directly
-=======================================
-When Ignoring a sale Exception, approve directly the sale order
-    ''',
     'depends': [
-        'sale_exceptions',
+        'sale_exception',
     ],
     'external_dependencies': {
     },
@@ -46,7 +41,7 @@ When Ignoring a sale Exception, approve directly the sale order
     ],
     'test': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }

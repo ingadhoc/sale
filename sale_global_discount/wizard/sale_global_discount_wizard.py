@@ -24,7 +24,7 @@ class sale_global_discount_wizard(models.TransientModel):
         # 'Amount',
         'Discount',
         required=True,
-        )
+    )
 
     @api.multi
     def confirm(self):

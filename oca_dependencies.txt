@@ -1,0 +1,1 @@
+oca_sale_workflow https://github.com/OCA/sale-workflow.git

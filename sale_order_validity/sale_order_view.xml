@@ -13,7 +13,6 @@
             </field>
             <field name="date_order" position="after">
                 <field name="validity_days"/>
-                <field name="validity_date"/>
             </field>
             <field name="order_line" position="before">
                 <button name="update_date_prices_and_validity" help="Update Date, Prices and Validity" string="Update Validity" type="object" attrs="{'invisible':[('state','not in',['draft','sent'])]}"/>

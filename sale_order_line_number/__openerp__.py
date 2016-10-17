@@ -20,14 +20,9 @@
 ##############################################################################
 {
     'name': 'Sale Order Line Number',
-    'version': '9.0.1.0.0',
+    'version': '9.0.1.1.0',
     'category': 'Accounting',
     'sequence': 14,
-    'description': '''
-Sale Order Line Number
-======================
-
-    ''',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
@@ -43,7 +38,7 @@ Sale Order Line Number
     ],
     'test': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }

@@ -22,12 +22,6 @@
     'name': 'Sales Team Group',
     'version': '9.0.1.0.0',
     'category': '',
-    'description':
-    '''
-Sales Team Group
-================
-Adds a sales group called 'Sale Team'
-     ''',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
@@ -36,7 +30,7 @@ Adds a sales group called 'Sale Team'
         'sale_restrict_partners',
     ],
     'data': [
-        'security/security.xml',
+        'security/security.xml'
     ],
-    'installable': False,
+    'installable': True,
 }

@@ -20,11 +20,7 @@
 ##############################################################################
 {
     'name': 'Sale Pricelist Discount',
-    'version': '9.0.1.0.0',
-    'description': '''
-Sale Pricelist Discount
-=======================
-''',
+    'version': '9.0.1.1.0',
     'category': 'Sales Management',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
@@ -37,5 +33,5 @@ Sale Pricelist Discount
     ],
     'demo_xml': [],
     'test': [],
-    'installable': False,
+    'installable': True,
 }

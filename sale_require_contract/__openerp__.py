@@ -20,31 +20,27 @@
 ##############################################################################
 {
     'name': 'Sale Order Require Contract on Confirmation',
-    'version': '9.0.1.0.0',
+    'version': '9.0.1.1.0',
     'category': 'Projects & Services',
     'sequence': 14,
     'summary': '',
-    'description': '''
-Sale Order Require Contract on Confirmation
-===========================================
-    ''',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'images': [
     ],
     'depends': [
-        'sale_exceptions',
+        'sale_exception',
     ],
     'data': [
         'data/data.xml',
     ],
     'demo': [
-        'sale_demo.xml',
+        'demo/demo.xml',
     ],
     'test': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }

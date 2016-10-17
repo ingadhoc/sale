@@ -2,7 +2,7 @@
 <openerp>
   <data noupdate="1">
 
-    <record id="require_ref" model="sale.exception">
+    <record id="require_contract" model="sale.exception">
       <field name="name">Contract Required</field>
       <field name="description">You must set a contract.</field>
       <field name="sequence">10</field>

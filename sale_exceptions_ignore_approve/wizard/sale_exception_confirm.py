@@ -14,5 +14,5 @@ class SaleExceptionConfirm(models.TransientModel):
     def action_confirm(self):
         res = super(SaleExceptionConfirm, self).action_confirm()
         if self.ignore:
-            return self.sale_id.action_button_confirm()
+            return self.sale_id.action_confirm()
         return res
