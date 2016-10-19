@@ -50,6 +50,12 @@ class SaleOrder(models.Model):
         if self.operation_ids:
             for invoice in self.invoice_ids.filtered(lambda x: (
                     x.state == 'draft' and x.company_id == self.company_id)):
+                # esto es parte de la solucion de alternativa 1 (o 2)
+                # se escribe este campo cada vez que se crea una linea
+                # pero solo queremos generar las operaciones al final, cuando
+                # todas las lineas fueron creadas
+                if len(invoice.invoice_line) != len(self.order_line):
+                    continue
                 if not invoice.operation_ids:
                     lines = invoice.invoice_line.ids
                     invoice.write({

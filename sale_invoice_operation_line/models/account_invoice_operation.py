@@ -143,19 +143,48 @@ class AccountInvoiceOperation(models.Model):
 
     @api.multi
     def update_operations_lines(self, model_lines):
+        """
+        Esta funcion se llama de muchos lugares pare recomputar las lineas y
+        generarlas si no existen.
+        Segun desde donde se crean nos trae algunos inconvenientes para
+        conservar el valor definido a mano en una sale order line
+        Hay dos alternativas:
+            Alternativa 1: pisamos las lineas (mantenemos perc si es posible)
+            y borarmos solo las sin perc (podemos llamar sin problema a esta
+            funcion)
+            Altertnativa 2: borramos todas y las regeneramos, en este caso
+            controlamos cuando se llama esta funcion
+        El codigo referente a cada uno lo dejamos marcado antes con el nombre
+        de la alternativa
+        """
         if model_lines._name == 'sale.order.line':
             field = 'sale_line_id'
         elif model_lines._name == 'account.invoice.line':
             field = 'invoice_line_id'
+        # Alternativa 2
         # delete old model_lines of self operations
-        model_lines.mapped('operation_line_ids').filtered(
-            lambda x: x.operation_id.id in self.ids).unlink()
+        # model_lines.mapped('operation_line_ids').filtered(
+        #     lambda x: x.operation_id.id in self.ids).unlink()
         for operation in self:
             # only create lines for amount_type percentage
             if operation.amount_type != 'percentage':
+                # Alternativa 1
+                # delete lines if they exist not percentage (if you change per
+                # for balance for eg.)
+                model_lines.mapped('operation_line_ids').filtered(
+                    lambda x: x.operation_id.id == self.id).unlink()
                 continue
             for line in model_lines:
-                percentage = operation.percentage
+                # Altertnativa 1
+                op_line = line.operation_line_ids.search([
+                    ('operation_id', '=', operation.id),
+                    (field, '=', line.id)], limit=1
+                )
+                if op_line:
+                    percentage = op_line.percentage
+                else:
+                    percentage = operation.percentage
+
                 restrictions = (
                     line.product_id.invoice_operation_restriction_id.detail_ids)
                 for restriction in restrictions:
@@ -181,13 +210,11 @@ class AccountInvoiceOperation(models.Model):
                     field: line.id,
                     'percentage': percentage,
                 }
-                # no need to search as we are deleting them at the begin
-                line.operation_line_ids.create(vals)
-                # operation_line = line.operation_line_ids.search([
-                #     ('operation_id', '=', operation.id),
-                #     (field, '=', line.id),
-                # ], limit=1)
-                # if operation_line:
-                #     operation_line.write(vals)
-                # else:
-                #     operation_line.create(vals)
+
+                # Altertnativa 1
+                if op_line:
+                    op_line.write(vals)
+                else:
+                    op_line.create(vals)
+                # Altertnativa 2
+                # line.operation_line_ids.create(vals)
