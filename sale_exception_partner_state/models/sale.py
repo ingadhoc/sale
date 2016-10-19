@@ -6,7 +6,7 @@
 from openerp import models, api
 
 
-class sale_order(models.Model):
+class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     @api.multi
@@ -23,7 +23,7 @@ class sale_order(models.Model):
         if self.company_id.restrict_sales == 'amount_depends':
             if (
                     self.partner_id.partner_state != 'approved' and
-                    self.amount_total >= self.company_id.restrict_sales_amount
-                    ):
+                    self.amount_total >= self.company_id.
+                    restrict_sales_amount):
                 return False
         return True
