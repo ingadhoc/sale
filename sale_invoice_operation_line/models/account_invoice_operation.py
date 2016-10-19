@@ -172,7 +172,7 @@ class AccountInvoiceOperation(models.Model):
                 # delete lines if they exist not percentage (if you change per
                 # for balance for eg.)
                 model_lines.mapped('operation_line_ids').filtered(
-                    lambda x: x.operation_id.id == self.id).unlink()
+                    lambda x: x.operation_id.id == operation.id).unlink()
                 continue
             for line in model_lines:
                 # Altertnativa 1
