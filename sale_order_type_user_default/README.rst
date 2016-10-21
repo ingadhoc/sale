@@ -6,8 +6,7 @@
 Sale Order Type User Default
 ============================
 
-This module filters contracts on sales orders so you can only select
- the ones with same partner as the sales order.
+This module filters contracts on sales orders so you can only select the ones with same partner as the sales order.
 
 
 Installation
