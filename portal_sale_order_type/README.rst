@@ -5,8 +5,9 @@
 ======================
 Portal Sale Order Type
 ======================
-This module add a rule to portal user and set sale order type invisible
- with portal user.
+Integration betweeen Portal and Sale Order Type module:
+#. New access record to sale type model for portal users
+#. Make invisible sale order type for portal users
 
 Installation
 ============
@@ -28,7 +29,6 @@ Usage
 
 To use this module, you need to:
 
-#. Just used.
 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
