@@ -23,10 +23,6 @@
     'version': '9.0.1.0.0',
     'category': 'Tools',
     'complexity': 'easy',
-    'description': '''
-Portal Sale Order Type
-======================
-    ''',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
@@ -40,7 +36,7 @@ Portal Sale Order Type
         'security/ir.model.access.csv',
         'views/sale_order_view.xml',
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': True,
     'application': True,
 }
