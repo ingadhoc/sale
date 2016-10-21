@@ -12,5 +12,9 @@
       <field name="active" eval="True"/>
     </record>
 
+    <record id="group_restrict_prices" model="res.groups">
+         <field name="users" eval="[(4, ref('base.user_root'))]"/>
+    </record>
+
   </data>
 </openerp>
