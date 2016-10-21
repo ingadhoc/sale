@@ -6,10 +6,10 @@
 Sale Order Type Automation
 ==========================
 
-Add to kind of sales orders, options for when the sale is confirmed:
-    * The invoice is validated
-    * Payment of the invoice is validated and registrer
-    * The products are tranfer
+Add to sale order type this options to be executed automatically on sale order confirmation:
+    * Validate Invoice
+    * Register and validate payment
+    * Confirm picking and products transfer
 
 Installation
 ============
@@ -22,12 +22,11 @@ To install this module, you need to:
 Configuration
 =============
 
-To configure this module, you need to:
+To configure this module, you need to set validation options on sale order type:
 
-#. To configure got to sale order type for:
-Validate Picking: Choose the option "validate automatically picking".
-Validate Invoice: Choose the option "validate automatically invoice".
-Validate Payment: Choose the option "validate automatically payment".
+#. Validate Picking: Choose the option "validate automatically picking".
+#. Validate Invoice: Choose the option "validate automatically invoice".
+#. Validate Payment: Choose the option "validate automatically payment".
 
 
 Usage
@@ -35,8 +34,7 @@ Usage
 
 To use this module, you need to:
 
-#.To use must be select an "sale order type" who has the configuration
- that you need, then clik in confirm sale.
+#.To use must be select an "sale order type" who has the configuration that you need, then clik in confirm sale.
 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
