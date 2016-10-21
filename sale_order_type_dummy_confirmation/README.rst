@@ -6,9 +6,7 @@
 Sale Order Type Dummy Confirmation Integration
 ==============================================
 
-We add dummy confirm option on sale types. If company has 'dummy confirm'
-then all orders will be 'dummy confirm', if not, then we will chec if
-sale type has 'dummy confirm' or not.
+We add dummy confirm option on sale types. If company has 'dummy confirm' then all orders will be 'dummy confirm', if not, then we will check if sale type has 'dummy confirm' or not.
 
 Installations
 =============
@@ -28,9 +26,6 @@ Usage
 =====
 
 To use this module, you need to:
-
-#.To use must be select an "sale order type" who has the configuration
- that you need, then clik in confirm sale.
 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
