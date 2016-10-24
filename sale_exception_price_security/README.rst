@@ -6,10 +6,8 @@
 Sale Exception - Price Security Integration
 ===========================================
 
-When using together price_security and sale_exceptions, it changes the
-constraint for the user that can not save a sales order with discounts greater
-than allowed to the sale exception constraint that don't allows user to confirm
-sale order.
+This module replaces the exceptions raised by price_security module for exceptions of the "Sale Exception" module. This gives better usability if you use Sale Exception module.
+For more information on how to use please refer to "price_security" and "sale_exception" modules.
 
 
 Installation
@@ -18,16 +16,6 @@ Installation
 To install this module, you need to:
 
 #. Just install this module.
-
-
-Configuration
-=============
-
-To configure this module, you need to:
-
-#. To configure this module:
-
-Established the limit discount in the user, page "Discount Permissions".
 
 
 Usage
