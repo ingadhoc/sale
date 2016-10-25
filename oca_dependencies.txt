@@ -1,2 +1,3 @@
 oca_sale_workflow https://github.com/OCA/sale-workflow.git
 ingadhoc_partner https://github.com/ingadhoc/partner.git
+ingadhoc_product https://github.com/ingadhoc/product.git

@@ -21,19 +21,11 @@
 {
     'name': 'Sale Exception - Price Security Integration',
     'version': '9.0.1.0.0',
-    'description': '''
-Sale Exception - Price Security Integration
-===========================================
-When using together price_security and sale_exceptions, it changes the
-constraint for the user that can not save a sales order with discounts greater
-than allowed to the sale exception constraint that don't allows user to confirm
-sale order
-''',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'depends': [
-        'sale_exceptions',
+        'sale_exception',
         'price_security',
     ],
     'data': [
@@ -42,6 +34,6 @@ sale order
     'demo': [
     ],
     'test': [],
-    'installable': False,
+    'installable': True,
     'auto_install': True,
 }
