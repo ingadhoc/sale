@@ -37,5 +37,9 @@ class AccountInvoiceLine(models.Model):
     @api.one
     @api.constrains('invoice_id')
     def update_operation_lines(self):
+        """
+        When creating a new line or when we link an invoice line to an invoice,
+        we force the invoice line operations update
+        """
         return self.invoice_id.operation_ids.update_operations_lines(
             self)
