@@ -15,7 +15,7 @@ For now it only adds some computed fields similar to account_document ones.
     """,
     'depends': [
         'sale',
-        'l10n_ar_account',
+        'account',
     ],
     'external_dependencies': {
     },
