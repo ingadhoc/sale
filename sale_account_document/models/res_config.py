@@ -11,4 +11,4 @@ class argentinian_base_configuration(models.Model):
 
     group_price_unit_with_tax = fields.Boolean(
         "Show Unit Price w/ Taxes On sale Order Lines",
-        implied_group='l10n_ar_sale.sale_price_unit_with_tax',)
+        implied_group='sale_account_document.sale_price_unit_with_tax',)

@@ -8,7 +8,7 @@
 			<field name="model">argentinian.base.config.settings</field>
 			<field name="inherit_id" ref="l10n_ar_base.view_argentinian_base_configuration"/>
 			<field name="arch" type="xml">
-				<div name='module_l10n_ar_sale' position="after">
+				<div name='module_sale_account_document' position="after">
 					<div name='group_price_unit_with_tax'>
 						<field name="group_price_unit_with_tax" class="oe_inline" />
 						<label for="group_price_unit_with_tax" />

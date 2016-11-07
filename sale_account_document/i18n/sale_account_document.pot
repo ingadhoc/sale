@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* l10n_ar_sale
+#	* sale_account_document
 #
 msgid ""
 msgstr ""
@@ -15,132 +15,132 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: l10n_ar_sale
+#. module: sale_account_document
 #: field:argentinian.base.config.settings,module_l10n_ar_account_vat_ledger:0
 msgid "Add Account VAT Ledger models and report."
 msgstr ""
 
-#. module: l10n_ar_sale
-#: field:argentinian.base.config.settings,module_l10n_ar_sale:0
+#. module: sale_account_document
+#: field:argentinian.base.config.settings,module_sale_account_document:0
 msgid "Add availabilty to use VAT included or not on sales"
 msgstr ""
 
-#. module: l10n_ar_sale
-#: model:ir.model,name:l10n_ar_sale.model_res_company
+#. module: sale_account_document
+#: model:ir.model,name:sale_account_document.model_res_company
 msgid "Companies"
 msgstr ""
 
-#. module: l10n_ar_sale
+#. module: sale_account_document
 #: help:res.company,sale_allow_vat_no_discrimination:0
 msgid "Definie behaviour on sales orders and quoatations reports. Discrimination or not will depend in partner and company responsability and AFIP letters setup:            * If False, then VAT will be discriminated like always in odoo            * If No Discriminate Default, if no match found it won't discriminate by default            * If Discriminate Default, if no match found it would discriminate by default            "
 msgstr ""
 
-#. module: l10n_ar_sale
+#. module: sale_account_document
 #: help:sale.order,vat_discriminated:0
 msgid "Discriminate VAT on Quotations and Sale Orders?"
 msgstr ""
 
-#. module: l10n_ar_sale
+#. module: sale_account_document
 #: field:sale.order,vat_discriminated:0
 msgid "Discriminate VAT?"
 msgstr ""
 
-#. module: l10n_ar_sale
+#. module: sale_account_document
 #: field:sale.order,exempt_amount:0
 #: field:sale.order.line,exempt_amount:0
 msgid "Exempt Amount"
 msgstr ""
 
-#. module: l10n_ar_sale
+#. module: sale_account_document
 #: help:argentinian.base.config.settings,module_l10n_ar_account_vat_ledger:0
 msgid "Installs the l10n_ar_account_vat_ledger module. "
 msgstr ""
 
-#. module: l10n_ar_sale
-#: help:argentinian.base.config.settings,module_l10n_ar_sale:0
-msgid "Installs the l10n_ar_sale module."
+#. module: sale_account_document
+#: help:argentinian.base.config.settings,module_sale_account_document:0
+msgid "Installs the sale_account_document module."
 msgstr ""
 
-#. module: l10n_ar_sale
+#. module: sale_account_document
 #: field:sale.order.line,printed_price_net:0
 msgid "Net Price"
 msgstr ""
 
-#. module: l10n_ar_sale
+#. module: sale_account_document
 #: field:sale.order,other_taxes_amount:0
 #: field:sale.order.line,other_taxes_amount:0
 msgid "Other Taxes Amount"
 msgstr ""
 
-#. module: l10n_ar_sale
+#. module: sale_account_document
 #: field:sale.order.line,price_reduce:0
 msgid "Price Reduce"
 msgstr ""
 
-#. module: l10n_ar_sale
+#. module: sale_account_document
 #: field:res.company,sale_allow_vat_no_discrimination:0
 msgid "Sale Allow VAT no discrimination?"
 msgstr ""
 
-#. module: l10n_ar_sale
-#: model:res.groups,name:l10n_ar_sale.sale_price_unit_with_tax
+#. module: sale_account_document
+#: model:res.groups,name:sale_account_document.sale_price_unit_with_tax
 msgid "Sale Unit Price w/ Taxes"
 msgstr ""
 
-#. module: l10n_ar_sale
-#: model:ir.model,name:l10n_ar_sale.model_sale_order
+#. module: sale_account_document
+#: model:ir.model,name:sale_account_document.model_sale_order
 msgid "Sales Order"
 msgstr ""
 
-#. module: l10n_ar_sale
-#: model:ir.model,name:l10n_ar_sale.model_sale_order_line
+#. module: sale_account_document
+#: model:ir.model,name:sale_account_document.model_sale_order_line
 msgid "Sales Order Line"
 msgstr ""
 
-#. module: l10n_ar_sale
+#. module: sale_account_document
 #: field:argentinian.base.config.settings,group_price_unit_with_tax:0
 msgid "Show Unit Price w/ Taxes On sale Order Lines"
 msgstr ""
 
-#. module: l10n_ar_sale
+#. module: sale_account_document
 #: field:sale.order,printed_amount_untaxed:0
 #: field:sale.order.line,printed_price_subtotal:0
 msgid "Subtotal"
 msgstr ""
 
-#. module: l10n_ar_sale
+#. module: sale_account_document
 #: field:sale.order,printed_amount_tax:0
 #: field:sale.order,printed_tax_ids:0
 msgid "Tax"
 msgstr ""
 
-#. module: l10n_ar_sale
+#. module: sale_account_document
 #: field:sale.order.line,printed_price_unit:0
 msgid "Unit Price"
 msgstr ""
 
-#. module: l10n_ar_sale
+#. module: sale_account_document
 #: field:sale.order.line,price_unit_with_tax:0
 msgid "Unit Price w/ Taxes"
 msgstr ""
 
-#. module: l10n_ar_sale
+#. module: sale_account_document
 #: field:sale.order,vat_tax_ids:0
 msgid "VAT Taxes"
 msgstr ""
 
-#. module: l10n_ar_sale
+#. module: sale_account_document
 #: field:sale.order,vat_amount:0
 #: field:sale.order.line,vat_amount:0
 msgid "Vat Amount"
 msgstr ""
 
-#. module: l10n_ar_sale
+#. module: sale_account_document
 #: selection:res.company,sale_allow_vat_no_discrimination:0
 msgid "Yes, Discrimnate Default"
 msgstr ""
 
-#. module: l10n_ar_sale
+#. module: sale_account_document
 #: selection:res.company,sale_allow_vat_no_discrimination:0
 msgid "Yes, No Discriminate Default"
 msgstr ""
