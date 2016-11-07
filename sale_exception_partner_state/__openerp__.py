@@ -20,24 +20,17 @@
 ##############################################################################
 {
     'name': 'Sale Exception - Partner State Integration',
-    'version': '8.0.0.1.0',
-    'description': """
-Sale Exception - Partner State Integration
-===========================================
-Integrate partner_state and sale_exceptions, it adds the option to restruct
-sale orders confirmation for not approved partners globaly or depending a
-certain amount
-""",
+    'version': '9.0.1.0.0',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'depends': [
-        'sale_exceptions',
+        'sale_exception',
         'partner_state',
     ],
     'data': [
         'data/data.xml',
-        'company_view.xml',
+        'view/company_view.xml',
     ],
     'demo': [
     ],
@@ -45,4 +38,3 @@ certain amount
     'installable': True,
     'auto_install': True,
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

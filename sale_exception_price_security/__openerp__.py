@@ -20,29 +20,20 @@
 ##############################################################################
 {
     'name': 'Sale Exception - Price Security Integration',
-    'version': '8.0.0.0.0',
-    'description': """
-Sale Exception - Price Security Integration
-===========================================
-When using together price_security and sale_exceptions, it changes the
-constraint for the user that can not save a sales order with discounts greater
-than allowed to the sale exception constraint that don't allows user to confirm
-sale order
-""",
+    'version': '9.0.1.0.0',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'depends': [
-        'sale_exceptions',
+        'sale_exception',
         'price_security',
-        ],
+    ],
     'data': [
         'data/data.xml',
-        ],
+    ],
     'demo': [
-        ],
+    ],
     'test': [],
     'installable': True,
     'auto_install': True,
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

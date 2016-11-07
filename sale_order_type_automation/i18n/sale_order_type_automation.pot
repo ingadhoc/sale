@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
+"Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-29 16:36+0000\n"
-"PO-Revision-Date: 2016-02-29 16:36+0000\n"
+"POT-Creation-Date: 2016-10-14 16:01+0000\n"
+"PO-Revision-Date: 2016-10-14 16:01+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,18 +16,13 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: sale_order_type_automation
-#: help:sale.order.type,validate_automatically_picking:0
+#: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type_validate_automatically_picking
 msgid "It will force availability"
 msgstr ""
 
 #. module: sale_order_type_automation
-#: field:sale.order.type,payment_journal_id:0
+#: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type_payment_journal_id
 msgid "Payment Journal"
-msgstr ""
-
-#. module: sale_order_type_automation
-#: model:ir.model,name:sale_order_type_automation.model_stock_picking
-msgid "Picking List"
 msgstr ""
 
 #. module: sale_order_type_automation
@@ -36,22 +31,39 @@ msgid "Sales Order"
 msgstr ""
 
 #. module: sale_order_type_automation
+#: code:addons/sale_order_type_automation/models/sale_order_type.py:46
+#, python-format
+msgid "The Journal \"%s\" company must be the same than sale order type"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: code:addons/sale_order_type_automation/models/sale_order_type.py:54
+#, python-format
+msgid "The Sequence \"%s\" company must be the same than sale order type"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: model:ir.model,name:sale_order_type_automation.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: sale_order_type_automation
 #: model:ir.model,name:sale_order_type_automation.model_sale_order_type
 msgid "Type of sale order"
 msgstr ""
 
 #. module: sale_order_type_automation
-#: field:sale.order.type,validate_automatically_invoice:0
+#: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type_validate_automatically_invoice
 msgid "Validate automatically invoice"
 msgstr ""
 
 #. module: sale_order_type_automation
-#: field:sale.order.type,validate_automatically_picking:0
-msgid "Validate automatically picking"
+#: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type_validate_automatically_payment
+msgid "Validate automatically payment"
 msgstr ""
 
 #. module: sale_order_type_automation
-#: field:sale.order.type,validate_automatically_voucher:0
-msgid "Validate automatically voucher"
+#: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type_validate_automatically_picking
+msgid "Validate automatically picking"
 msgstr ""
 

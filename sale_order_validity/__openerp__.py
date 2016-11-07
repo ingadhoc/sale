@@ -20,15 +20,10 @@
 ##############################################################################
 {
     'name': 'Sale Order Validity',
-    'version': '8.0.0.1.1',
+    'version': '9.0.1.1.0',
     'category': 'Sales & Purchases',
     'sequence': 14,
-    'summary': '',
-    'description': """
-Sale Order Validity
-===================
-    """,
-    'author':  'ADHOC SA',
+    'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'images': [
@@ -48,4 +43,3 @@ Sale Order Validity
     'auto_install': False,
     'application': False,
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

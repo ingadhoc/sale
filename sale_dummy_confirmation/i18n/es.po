@@ -48,7 +48,7 @@ msgstr "Si configura Verdadero entonces todas las ordenes de esta compañía van
 #. module: sale_dummy_confirmation
 #: field:res.company,sale_order_dummy_confirm:0
 msgid "Sale Orders Dummy Confirmation"
-msgstr "Sale Orders Dummy Confirmation"
+msgstr "Simular Confirmacion de Ordenes de Venta"
 
 #. module: sale_dummy_confirmation
 #: code:addons/sale_dummy_confirmation/sale.py:35

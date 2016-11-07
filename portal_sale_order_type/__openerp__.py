@@ -20,13 +20,9 @@
 ##############################################################################
 {
     'name': 'Portal Sale Order Type',
-    'version': '8.0.0.1.0',
+    'version': '9.0.1.0.0',
     'category': 'Tools',
     'complexity': 'easy',
-    'description': """
-Portal Sale Order Type
-======================
-    """,
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',

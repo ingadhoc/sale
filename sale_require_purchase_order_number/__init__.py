@@ -3,8 +3,4 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-from . import sale
-from . import partner
-from . import account
-from . import stock
+from . import models

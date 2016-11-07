@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Sale Invoice Operation',
-    'version': '8.0.0.1.0',
+    'version': '9.0.1.0.0',
     'category': 'Accounting & Finance',
     'sequence': 14,
     'summary': '',
@@ -43,7 +43,7 @@
     ],
     'test': [
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': True,
     'application': False,
 }

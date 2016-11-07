@@ -20,23 +20,16 @@
 ##############################################################################
 {
     'name': 'Sale Dummy Confirmation',
-    'version': '8.0.1.0.1',
+    'version': '9.0.1.1.0',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
-    'depends': ["sale_stock"],
+    'depends': ['sale'],
     'category': 'Sale Management',
-    'description': '''
-Sale Dummy Confirmation
-=======================
-On a multi-company environment with stock and/or account, allow using only sale
-for some companies.
-    ''',
     'demo': [
     ],
     'data': [
-        'company_view.xml',
-        'sale_view.xml',
+        'views/company_view.xml',
     ],
     'installable': True
 }

@@ -20,29 +20,19 @@
 ##############################################################################
 {
     'name': 'Sale Order Type Automation',
-    'version': '8.0.0.1.0',
+    'version': '9.0.1.0.0',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'depends': [
+        'account',
         'sale_order_type',
-        'account_voucher',
-        'sale_stock',
-        ],
+    ],
     'category': 'Sale Management',
-    'description': '''
-Sale Order Type Automation
-==========================
-Add to kind of sales orders, options for when the sale is confirmed:
-*The invoice is validated
-*Payment of the invoice is validated and registrer
-*The products are tranfer
-
-    ''',
     'demo': [
     ],
     'data': [
-        'sale_order_type_view.xml',
+        'view/sale_order_type_view.xml',
     ],
     'installable': True,
     'auto_install': True,

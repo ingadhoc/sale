@@ -20,24 +20,17 @@
 ##############################################################################
 {
     'name': 'Sales Team Group',
-    'version': '8.0.1.1.0',
+    'version': '9.0.1.0.0',
     'category': '',
-    'description':
-    """
-Sales Team Group
-================
-Adds a sales group called "Sale Team"
-     """,
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'depends': [
         'crm',
         'sale_restrict_partners',
-        ],
+    ],
     'data': [
-        'security/security.xml',
+        'security/security.xml'
     ],
     'installable': True,
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

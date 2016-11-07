@@ -20,13 +20,13 @@
 ##############################################################################
 {
     'name': 'Portal Distributor Sale',
-    'version': '8.0.0.2.0',
+    'version': '9.0.1.0.0',
     'category': 'Tools',
     'complexity': 'easy',
-    'description': """
+    'description': '''
 Portal Distributor Sale
 =======================
-    """,
+    ''',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
@@ -42,8 +42,8 @@ Portal Distributor Sale
         'security/ir.model.access.csv',
         'portal_sale_view.xml',
     ],
+    'installable': False,
     'auto_install': False,
     'application': True,
     'category': 'Hidden',
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

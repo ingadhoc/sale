@@ -19,26 +19,20 @@
 #
 ##############################################################################
 {
-    "name": "Sale Global Discount",
-    'version': '8.0.0.0.0',
+    'name': 'Sale Global Discount',
+    'version': '9.0.1.1.0',
     'category': 'Sales Management',
     'sequence': 14,
-    'author':  'ADHOC SA',
+    'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'summary': '',
-    "description": """
-Sale Global Discount
-====================
-Add a wizard on sales orders that allow you to define global discounts to sale
-orders by percentage or fixed amount
-    """,
-    "depends": [
-        "sale",
+    'depends': [
+        'sale',
     ],
     'external_dependencies': {
     },
-    "data": [
+    'data': [
         'wizard/sale_global_discount_wizard_view.xml',
         'views/sale_order_view.xml',
     ],

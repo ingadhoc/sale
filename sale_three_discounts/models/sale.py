@@ -39,14 +39,13 @@ class sale_order_line(models.Model):
             discount_factor = discount_factor * ((100.0 - discount) / 100.0)
         self.discount = 100.0 - (discount_factor * 100.0)
 
-    @api.model
-    def _prepare_order_line_invoice_line(self, line):
+    @api.multi
+    def _prepare_invoice_line(self, qty):
         res = super(sale_order_line,
-                    self)._prepare_order_line_invoice_line(line)
+                    self)._prepare_invoice_line(qty)
         res.update({
-            'discount1': line.discount1,
-            'discount2': line.discount2,
-            'discount3': line.discount3
+            'discount1': self.discount1,
+            'discount2': self.discount2,
+            'discount3': self.discount3
         })
-
         return res

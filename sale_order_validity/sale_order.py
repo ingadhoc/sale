@@ -19,13 +19,14 @@ class sale_order(models.Model):
         'Validity Days',
         readonly=True,
         states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
-        )
+        help='Set days of validity for Sales Order',
+    )
     validity_date = fields.Date(
         "Validity Date",
         help="Date until when quotation is valid",
         readonly=True,
         compute='get_validity_date',
-        )
+    )
 
     @api.onchange('company_id')
     def onchange_company(self):
@@ -44,12 +45,12 @@ class sale_order(models.Model):
             }
             return {'warning': warning}
 
-    @api.one
-    def action_wait(self):
+    @api.multi
+    def action_confirm(self):
         self.check_validity()
-        return super(sale_order, self).action_wait()
+        return super(sale_order, self).action_confirm()
 
-    @api.one
+    @api.multi
     def check_validity(self):
         if self.validity_date:
             validity_date = fields.Datetime.from_string(self.validity_date)

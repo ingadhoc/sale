@@ -21,7 +21,7 @@
 {
     'name': 'Sale Multi Company Fixes',
     'active': False,
-    'author':  'ADHOC SA',
+    'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'category': 'Accounting & Finance',
@@ -34,6 +34,7 @@
 Sale Multi Company Fixes
 ========================
 ''',
-    'installable': True,
+    'installable': False,
     'test': [],
-    'version': '8.0.1.2.1'}
+    'version': '9.0.1.0.0',
+}

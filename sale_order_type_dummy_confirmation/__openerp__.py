@@ -20,26 +20,19 @@
 ##############################################################################
 {
     'name': 'Sale Order Type Dummy Confirmation Integration',
-    'version': '8.0.1.0.0',
+    'version': '9.0.1.0.0',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'depends': [
         'sale_dummy_confirmation',
         'sale_order_type',
-        ],
+    ],
     'category': 'Sale Management',
-    'description': '''
-Sale Order Type Dummy Confirmation Integration
-==============================================
-We add dummy confirm option on sale types. If company has "dummy confirm"
-then all orders will be "dummy confirm", if not, then we will chec if
-sale type has "dummy confirm" or not.
-    ''',
     'demo': [
     ],
     'data': [
-        'sale_order_type_view.xml',
+        'view/sale_order_type_view.xml',
     ],
     'installable': True,
     'auto_install': True,

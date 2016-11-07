@@ -20,11 +20,7 @@
 ##############################################################################
 {
     'name': 'Sale Pricelist Discount',
-    'version': '8.0.2.1.1',
-    'description': """
-Sale Pricelist Discount
-=======================
-""",
+    'version': '9.0.1.1.0',
     'category': 'Sales Management',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
@@ -39,4 +35,3 @@ Sale Pricelist Discount
     'test': [],
     'installable': True,
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

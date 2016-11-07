@@ -20,20 +20,20 @@
 #######################################################s#######################
 {
     'name': 'Portal Distributor Stock',
-    'version': '8.0.0.1.0',
+    'version': '9.0.1.0.0',
     'category': 'Tools',
     'complexity': 'easy',
-    'description': """
+    'description': '''
 Portal Stock Distributor Sale
 =======================
-    """,
+    ''',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'depends': [
         'portal_sale_distributor',
         'portal_stock',
-        ],
+    ],
     'demo': [
     ],
     'data': [
@@ -41,6 +41,7 @@ Portal Stock Distributor Sale
         'security/ir.model.access.csv',
         'portal_sale_view.xml',
     ],
+    'installable': False,
     'auto_install': True,
     'category': 'Hidden',
 }

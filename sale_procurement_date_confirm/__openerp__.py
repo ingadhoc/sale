@@ -19,26 +19,23 @@
 #
 ##############################################################################
 {
-    "name": "Make Sale Procurement Date based on Sale Confirm Date",
-    'version': '8.0.1.0.0',
+    'name': 'Make Sale Procurement Date based on Sale Confirm Date',
+    'version': '9.0.1.1.0',
     'category': 'Sales Management',
     'sequence': 14,
-    'author':  'ADHOC SA',
+    'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'summary': '',
-    "description": """
-Make Sale Procurement Date based on Sale Confirm Date
-=====================================================
-    """,
-    "depends": [
+    'depends': [
         # with sale it enought but it breaks sale_stock tests, as we wont it
         # only if stock installed, we can add this dependency
-        "sale_stock",
+        'sale_stock',
     ],
     'external_dependencies': {
     },
-    "data": [
+    'data': [
+        'views/sale_order_view.xml'
     ],
     'demo': [
     ],
