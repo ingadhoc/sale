@@ -43,10 +43,13 @@ class SaleOrder(models.Model):
         """
         If any invoice is append to sale order then we add operations if needed
         We also need to inherit make_invoices (of wizard) and _prepare_invoice
-        because they originally write invoice_ids with sql
+        because they originally write invoice_ids with sql.
+        Only add operations if invoice is in draft and sale order company
+        is same as invoice company
         """
         if self.operation_ids:
-            for invoice in self.invoice_ids:
+            for invoice in self.invoice_ids.filtered(lambda x: (
+                    x.state == 'draft' and x.company_id == self.company_id)):
                 if not invoice.operation_ids:
                     lines = invoice.invoice_line.ids
                     invoice.write({

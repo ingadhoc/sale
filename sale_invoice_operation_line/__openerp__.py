@@ -30,6 +30,10 @@
     'images': [
     ],
     'depends': [
+        # esta dependencia es solo para que funcione llevando bien
+        # los valores de las lineas al facturar desde remitos y se podria
+        # borrar en v9
+        'sale_stock',
         'sale_invoice_operation',
         'web_widget_x2many_2d_matrix',
     ],
