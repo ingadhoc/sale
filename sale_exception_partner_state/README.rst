@@ -6,7 +6,7 @@
 Sale Exception - Partner State Integration
 ==========================================
 
-Integrate partner_state and sale_exceptions, it adds the option to restruct
+Integrate partner_state and sale_exceptions, it adds the option to restrict
 sale orders confirmation for not approved partners globaly or depending a
 certain amount
 
@@ -31,7 +31,7 @@ Usage
 
 To use this module, you need to:
 
-#. When the sales order is confirmed, validate that the partner is approved.
+#. Before a sales order is confirmed, it validates that the partner is approved.
 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas

@@ -6,7 +6,7 @@
 Sale Exception Print
 ====================
 
-Add an exception print if the credit limit is exceeded Partner
+It adds an exception for printing a quotation if the partner's credit limit es exceeded
 
 Installation
 ============
@@ -29,7 +29,7 @@ Usage
 
 To use this module, you need to:
 
-#. When you print an sale order, validate than the partner limit not overdo.
+#. Before printing a quotation, it checks that the partner limit not exceeded.
 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas

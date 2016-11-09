@@ -6,8 +6,9 @@
 Sale Quotation Products
 =======================
 
-This module add button "Search Products" to sale order.
-You can see a list of products and change the quantity of each them.
+This module adds a button "Search Products" in sale order that gets you to a product list view and lets you set the quantity you want to add to the sale order. Every time you set a quantity and press enter or tab (lose focus) a sale order line is added.
+When you return to the sale order form view, you can see all the sale order lines added from the product list view
+You can edit the sale order lines as you wish afterwards.
 
 
 Installation
@@ -29,7 +30,7 @@ To configure this module, you need to:
 Usage
 =====
 
-# Sign to Sale Order, click Product Search Button, set the quantity of each product you want to add to the line of the Sale Order.
+# From a Sale Order, click Product Search Button, set the quantity of each product you want to add to the line of the Sale Order.
 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas

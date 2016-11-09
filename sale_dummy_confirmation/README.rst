@@ -6,7 +6,7 @@
 Sale Dummy Confirmation
 =======================
 
-This module simulates the confirmation of the sales order.
+This module simulates the confirmation of the sales order without creating a Picking nor an Invoice.
 
 
 Installation
@@ -30,8 +30,7 @@ Usage
 
 To use this module, you need to:
 
-# Just confirm any order as you would do. No invoice or picking order will be
-generated
+# Just confirm any order. No invoice or picking order will be created.
 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
