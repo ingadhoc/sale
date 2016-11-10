@@ -18,8 +18,13 @@ class SaleOrder(models.Model):
                 picking = self.env['stock.picking'].search(
                     [('group_id', '=', so.procurement_group_id.id)], limit=1)
                 picking.force_assign()
+                for pack in picking.pack_operation_ids:
+                    if pack.product_qty > 0:
+                        pack.write({'qty_done': pack.product_qty})
+                    else:
+                        pack.unlink()
                 picking.do_transfer()
-            if so.type_id.journal_id:
+            if so.state == 'sale' and so.type_id.journal_id:
                 invoice_id = self.action_invoice_create()
                 if so.type_id.validate_automatically_invoice:
                     so.env['account.invoice'].browse(
