@@ -6,7 +6,7 @@
 Sale Order Type User Default
 ============================
 
-This module filters contracts on sales orders so you can only select the ones with same partner as the sales order.
+This module adds to the user a "type of sales order" field, when creating a sales order you get by default the "type of sales order" chosen in the user.
 
 
 Installation
