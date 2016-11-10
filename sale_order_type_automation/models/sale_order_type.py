@@ -18,7 +18,8 @@ class SaleOrderTypology(models.Model):
     payment_journal_id = fields.Many2one(
         'account.journal',
         'Payment Journal',
-        domain="[('type','in', ['cash', 'bank'])]"
+        domain="[('type','in', ['cash', 'bank']),\
+        ('company_id', '=', company_id)]"
     )
     validate_automatically_payment = fields.Boolean(
         'Validate automatically payment')
