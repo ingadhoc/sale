@@ -8,7 +8,7 @@ from openerp.osv.orm import setup_modifiers
 from lxml import etree
 
 
-class product_product(models.Model):
+class ProductProduct(models.Model):
     _inherit = "product.product"
 
     @api.model
@@ -18,7 +18,7 @@ class product_product(models.Model):
         If we came from sale order, we send in context 'force_product_edit'
         and we change tree view to make editable and also field qty
         """
-        res = super(product_product, self).fields_view_get(
+        res = super(ProductProduct, self).fields_view_get(
             view_id=view_id, view_type=view_type,
             toolbar=toolbar, submenu=submenu)
         force_product_edit = self._context.get('force_product_edit')
@@ -42,7 +42,7 @@ class product_product(models.Model):
         if len(vals) == 1 and vals.get('qty') and self._context.get(
                 'force_product_edit'):
             self = self.sudo()
-        return super(product_product, self).write(vals)
+        return super(ProductProduct, self).write(vals)
 
     @api.one
     def _get_qty(self):

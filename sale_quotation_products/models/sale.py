@@ -7,7 +7,7 @@ from openerp import models, api, _
 from ast import literal_eval
 
 
-class sale_order(models.Model):
+class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     @api.multi
