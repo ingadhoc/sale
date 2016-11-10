@@ -1,4 +1,4 @@
-.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
+85.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
@@ -6,8 +6,9 @@
 Sale Pricelist Discount
 =======================
 
-This module add "List Price" to sale order line and calculate "Total Discount" for each line.
-
+This module adds two columns in sale orders lines:
+ *"List Price": shows the original product price without the discount added by the pricelist
+ *"List Discount": shows the the discount added by the pricelist
 
 Installation
 ============

@@ -30,7 +30,7 @@ Usage
 
 To use this module, you need to:
 
-#. Just edit a sale order and change de related analytic account
+#. Just edit a sale order and change the related analytic account
 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas

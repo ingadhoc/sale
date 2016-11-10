@@ -9,6 +9,7 @@ Sale Require Purchase Order Number
 This module add "purchase order number" to sale order, picking and invoice. 
 Validate that the field is in these documents if the partner has the field "required number of PO"
 
+Purchase order number must be unique per partner
 
 Installation
 ============

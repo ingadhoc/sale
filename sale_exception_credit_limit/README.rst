@@ -11,12 +11,12 @@ allowed to change credit limit on partners.
 
 It also adds an exception to check that you can not aproove sale orders that
 would exceed credit limit. It checks:
-        * The credit the Partner has to paid
+        * The current due of the partner
         * The amount of Sale Orders aproved but not yet invoiced
-        * The invoices that are in draft state
+        * The invoices in draft state
         * The amount of the Sale Order to be aproved
 and compares it with the credit limit of the partner. If the credit limit is
-less it does not allow to approve the Sale Order
+below this, then it is not to approve the Sale Order
 
 
 Installation
@@ -32,7 +32,7 @@ Configuration
 
 To configure this module, you need to:
 
-#. No configuration needed
+#. Set 'can modify credit limit'=true or false, on user profile preferences.
 
 
 Usage
@@ -40,7 +40,7 @@ Usage
 
 To use this module, you need to:
 
-#. When you confirm an sale order, validate than the partner limit not overdo
+#. When you confirm a sale order, validate than the partner limit not overdo
 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas

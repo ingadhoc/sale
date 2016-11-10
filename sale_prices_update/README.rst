@@ -6,7 +6,7 @@
 Sale Prices Update
 ==================
 
-An update system for sale order lines' unit.
+It adds a button in sale quotations that allowes to update sale prices. It is useful if the pricelist is changed after adding sale order lines.
 
 
 Installation
@@ -30,7 +30,7 @@ Usage
 
 To use this module, you need to:
 
-#. You can update list price in the sale order.
+#. You can update list price in the sale order by clicking the Update Prices button.
 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas

@@ -24,9 +24,9 @@ Configuration
 
 To configure this module, you need to set validation options on sale order type:
 
-#. Validate Picking: Choose the option "validate automatically picking".
-#. Validate Invoice: Choose the option "validate automatically invoice".
-#. Validate Payment: Choose the option "validate automatically payment".
+#. Validate Picking: Set "validate automatically picking"= true.
+#. Validate Invoice: Set "validate automatically invoice"= true.
+#. Validate Payment: Set "validate automatically payment"= true.
 
 
 Usage
