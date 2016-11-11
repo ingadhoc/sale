@@ -6,8 +6,8 @@
 Sales Team Group
 ================
 
-Adds a sales group called 'Sale Team'
-
+This module adds group "TEAM", that allow see the sale orders, where is you a salesmen or member of the sales team.
+Also restrict view of sales teams of which you are not a member.
 
 Installation
 ============
