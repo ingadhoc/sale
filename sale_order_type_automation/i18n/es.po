@@ -1,20 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* sale_order_type_automation
-#
+# * sale_order_type_automation
+# 
+# Translators:
+# Javier Diez <jd@adhoc.com.ar>, 2016
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-14 16:02+0000\n"
-"PO-Revision-Date: 2016-10-14 13:03-0300\n"
-"Last-Translator: <>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2016-11-11 16:37+0000\n"
+"PO-Revision-Date: 2016-11-11 16:37+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
+"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-"X-Generator: Poedit 1.5.4\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: sale_order_type_automation
 #: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type_validate_automatically_picking
@@ -29,26 +32,23 @@ msgstr "Diario de pago"
 #. module: sale_order_type_automation
 #: model:ir.model,name:sale_order_type_automation.model_sale_order
 msgid "Sales Order"
-msgstr "Orden de Ventas"
+msgstr "Pedidos de Venta"
 
 #. module: sale_order_type_automation
-#: code:addons/sale_order_type_automation/models/sale_order_type.py:46
+#: code:addons/sale_order_type_automation/models/sale_order_type.py:38
 #, python-format
 msgid "The Journal \"%s\" company must be the same than sale order type"
 msgstr ""
-"El diario\"%s\" de la compania debe ser el mismo que en el tipo de orden de "
-"venta"
+"El diario\"%s\" de la compania debe ser el mismo que en el tipo del pedido "
+"de venta"
 
 #. module: sale_order_type_automation
-#: code:addons/sale_order_type_automation/models/sale_order_type.py:54
+#: code:addons/sale_order_type_automation/models/sale_order_type.py:50
 #, python-format
 msgid "The Sequence \"%s\" company must be the same than sale order type"
-msgstr "The Sequence \"%s\" company must be the same than sale order type"
-
-#. module: sale_order_type_automation
-#: model:ir.model,name:sale_order_type_automation.model_stock_picking
-msgid "Transfer"
-msgstr "Transferir"
+msgstr ""
+"La secuencia \"%s\" de la compañía debe ser la misma que la del pedido de "
+"venta"
 
 #. module: sale_order_type_automation
 #: model:ir.model,name:sale_order_type_automation.model_sale_order_type

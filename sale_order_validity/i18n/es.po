@@ -1,20 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* sale_order_validity
-#
+# * sale_order_validity
+# 
+# Translators:
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
+# Javier Diez <jd@adhoc.com.ar>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-05 15:56+0000\n"
-"PO-Revision-Date: 2016-09-05 12:56-0300\n"
-"Last-Translator: <>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2016-11-11 16:37+0000\n"
+"PO-Revision-Date: 2016-11-11 16:37+0000\n"
+"Last-Translator: Javier Diez <jd@adhoc.com.ar>, 2016\n"
+"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-"X-Generator: Poedit 1.5.4\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: sale_order_validity
 #: model:ir.model,name:sale_order_validity.model_res_company
@@ -24,12 +27,17 @@ msgstr "Compañías"
 #. module: sale_order_validity
 #: model:ir.model.fields,field_description:sale_order_validity.field_res_company_sale_order_validity_days
 msgid "Sale Order Validity Days"
-msgstr "Días de Validez de la Orden"
+msgstr "Días de validez del pedido de venta"
 
 #. module: sale_order_validity
 #: model:ir.model,name:sale_order_validity.model_sale_order
 msgid "Sales Order"
-msgstr "Orden de Ventas"
+msgstr "Pedidos de Venta"
+
+#. module: sale_order_validity
+#: model:ir.model.fields,help:sale_order_validity.field_sale_order_validity_days
+msgid "Set days of validity for Sales Order"
+msgstr "Establece los días de validez del pedido de venta"
 
 #. module: sale_order_validity
 #: model:ir.model.fields,help:sale_order_validity.field_res_company_sale_order_validity_days
@@ -56,13 +64,13 @@ msgid "Validity Days"
 msgstr "Días de validez"
 
 #. module: sale_order_validity
-#: code:addons/sale_order_validity/sale_order.py:40
+#: code:addons/sale_order_validity/sale_order.py:41
 #, python-format
 msgid "Warning!"
 msgstr "Cuidado!"
 
 #. module: sale_order_validity
-#: code:addons/sale_order_validity/sale_order.py:58
+#: code:addons/sale_order_validity/sale_order.py:59
 #, python-format
 msgid ""
 "You can not confirm this quoatation as it was valid until %s! Please Update "
@@ -72,11 +80,11 @@ msgstr ""
 "Actualice la Validez."
 
 #. module: sale_order_validity
-#: code:addons/sale_order_validity/sale_order.py:41
+#: code:addons/sale_order_validity/sale_order.py:42
 #, python-format
 msgid ""
 "You can not set more validity days than the configured on the company (%i "
 "days)."
 msgstr ""
-"No puede usar más días de validez que los que están configurados en la "
+"No puede definir más días de validez que los que están configurados en la "
 "compañía (%i days)."

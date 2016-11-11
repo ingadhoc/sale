@@ -1,0 +1,39 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * sale_pricelist_discount
+# 
+# Translators:
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-11 16:32+0000\n"
+"PO-Revision-Date: 2016-11-11 16:32+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
+"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: sale_pricelist_discount
+#: model:ir.model.fields,field_description:sale_pricelist_discount.field_sale_order_line_list_discount
+msgid "List Discount"
+msgstr "Descuento de Lista"
+
+#. module: sale_pricelist_discount
+#: model:ir.model.fields,field_description:sale_pricelist_discount.field_sale_order_line_list_price
+msgid "List Price"
+msgstr "Precio de Lista"
+
+#. module: sale_pricelist_discount
+#: model:ir.model,name:sale_pricelist_discount.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Línea pedido de venta"
+
+#. module: sale_pricelist_discount
+#: model:ir.model.fields,field_description:sale_pricelist_discount.field_sale_order_line_total_discount
+msgid "Total Discount"
+msgstr "Descuento Total"
