@@ -4,7 +4,7 @@
 # directory
 ##############################################################################
 from openerp import models, fields, api, _
-from openerp.exceptions import Warning
+from openerp.exceptions import UserError
 
 
 class StockPicking(models.Model):
@@ -44,7 +44,7 @@ class StockPicking(models.Model):
     def do_new_transfer(self):
         if self.require_purchase_order_number and self.code == 'outgoing':
             if not self.purchase_order_number:
-                raise Warning(_(
+                raise UserError(_(
                     'You cannot transfer products without a Purchase'
                     ' Order Number for this partner'))
         return super(StockPicking, self).do_new_transfer()

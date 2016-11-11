@@ -6,7 +6,7 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
-                <field name="origin" position="after">
+                <field name="client_order_ref" position="after">
                     <field name="purchase_order_number"/>
                 </field>
             </field>
