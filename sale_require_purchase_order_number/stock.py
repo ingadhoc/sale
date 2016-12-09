@@ -37,7 +37,8 @@ class stock_picking(models.Model):
                 'done': [('readonly', True)]})
     code = fields.Selection(
         related='picking_type_id.code',
-        string='Operation Type')
+        string='Operation Type',
+        readonly=True,)
 
     @api.model
     def _get_invoice_vals(self, key, inv_type, journal_id, move):

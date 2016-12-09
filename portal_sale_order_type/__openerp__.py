@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Portal Sale Order Type',
-    'version': '8.0.0.0.0',
+    'version': '8.0.0.1.0',
     'category': 'Tools',
     'complexity': 'easy',
     'description': """
@@ -38,6 +38,7 @@ Portal Sale Order Type
     ],
     'data': [
         'security/ir.model.access.csv',
+        'views/sale_order_view.xml',
     ],
     'installable': True,
     'auto_install': True,

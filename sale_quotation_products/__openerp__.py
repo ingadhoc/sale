@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Sale Quotation Products',
-    'version': '8.0.0.3.1',
+    'version': '8.0.0.5.0',
     'category': 'Sales Management',
     'sequence': 14,
     'summary': '',
@@ -29,7 +29,7 @@ Sale Quotation Products
 =======================
 
     """,
-    'author':  'ADHOC SA',
+    'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'images': [

@@ -4,10 +4,45 @@
 # directory
 ##############################################################################
 from openerp import models, fields, api
+from openerp.osv.orm import setup_modifiers
+from lxml import etree
 
 
 class product_product(models.Model):
     _inherit = "product.product"
+
+    @api.model
+    def fields_view_get(
+            self, view_id=None, view_type=False, toolbar=False, submenu=False):
+        """
+        If we came from sale order, we send in context 'force_product_edit'
+        and we change tree view to make editable and also field qty
+        """
+        res = super(product_product, self).fields_view_get(
+            view_id=view_id, view_type=view_type,
+            toolbar=toolbar, submenu=submenu)
+        force_product_edit = self._context.get('force_product_edit')
+        if force_product_edit:
+            doc = etree.XML(res['arch'])
+            for node in doc.xpath("/tree"):
+                node.set('edit', 'true')
+            for node in doc.xpath("//field[@name='qty']"):
+                node.set('readonly', '0')
+                setup_modifiers(node, res['fields']['qty'])
+            res['arch'] = etree.tostring(doc)
+
+        return res
+
+    @api.multi
+    def write(self, vals):
+        """
+        Si en vals solo viene qty y force_product_edit entonces es un dummy
+        write y lo hacemos con sudo
+        """
+        if len(vals) == 1 and vals.get('qty') and self._context.get(
+                'force_product_edit'):
+            self = self.sudo()
+        return super(product_product, self).write(vals)
 
     @api.one
     def _get_qty(self):

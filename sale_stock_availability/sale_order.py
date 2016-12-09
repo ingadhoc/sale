@@ -12,9 +12,9 @@ class sale_order_line(models.Model):
     def _fnct_line_stock(self):
         available = False
         if self.order_id.state == 'draft':
-            available = self.with_context(
+            available = self.product_id.with_context(
                 warehouse=self.order_id.warehouse_id.id
-            ).product_id.virtual_available - self.product_uom_qty
+            ).virtual_available - self.product_uom_qty
         self.virtual_available = available
         if available >= 0.0:
             available = True
@@ -33,14 +33,17 @@ class sale_order_line(models.Model):
             lang=False, update_tax=True, date_order=False, packaging=False,
             fiscal_position=False, flag=False, warehouse_id=False,
             context=None):
+        context = context or {}
+        ctx = context.copy()
+        ctx.update({'warehouse': warehouse_id})
         res = super(sale_order_line, self).product_id_change_with_wh(
             cr, uid, ids, pricelist, product, qty,
             uom, qty_uos, uos, name, partner_id,
             lang, update_tax, date_order, packaging, fiscal_position, flag,
-            warehouse_id=warehouse_id, context=context)
+            warehouse_id=warehouse_id, context=ctx)
 
         disable_warning = warehouse_id and self.pool['stock.warehouse'].browse(
-            cr, uid, warehouse_id, context).disable_sale_stock_warning or False
+            cr, uid, warehouse_id, ctx).disable_sale_stock_warning or False
 
         # if not stock warning set in company and warning in res...
         if res.get('warning', False) and disable_warning:
@@ -49,7 +52,7 @@ class sale_order_line(models.Model):
             # call sale_stock module other warning
             res_packing = self.product_packaging_change(
                 cr, uid, ids, pricelist, product, qty, uom, partner_id,
-                packaging, context=context)
+                packaging, context=ctx)
             res['value'].update(res_packing.get('value', {}))
             warning_msgs = res_packing.get(
                 'warning') and res_packing['warning']['message'] or ''
@@ -66,7 +69,7 @@ class sale_order_line(models.Model):
                     qty_uos=qty_uos, uos=uos, name=name, partner_id=partner_id,
                     lang=lang, update_tax=update_tax, date_order=date_order,
                     packaging=packaging, fiscal_position=fiscal_position,
-                    flag=flag, context=context)
+                    flag=flag, context=ctx)
                 warning = product_change_res.get('warning')
             res.update({'warning': warning})
         return res

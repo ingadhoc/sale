@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Portal Distributor Sale',
-    'version': '8.0.0.1.0',
+    'version': '8.0.0.2.0',
     'category': 'Tools',
     'complexity': 'easy',
     'description': """
@@ -32,8 +32,9 @@ Portal Distributor Sale
     'license': 'AGPL-3',
     'depends': [
         'portal_sale',
+        'sale_exceptions',
         'portal_account_distributor',
-        ],
+    ],
     'demo': [
     ],
     'data': [
