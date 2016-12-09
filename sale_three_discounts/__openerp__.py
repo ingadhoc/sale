@@ -20,7 +20,7 @@
 ##############################################################################
 {
     "name": "Sale Three Discounts",
-    'version': '8.0.0.1.0',
+    'version': '8.0.0.2.0',
     'category': 'Sales Management',
     'sequence': 14,
     'author': 'ADHOC SA',
@@ -32,7 +32,7 @@ Sale Three Discounts
 ====================
     """,
     "depends": [
-        'sale',
+        'sale_stock',
         'account'
     ],
     'external_dependencies': {
