@@ -8,7 +8,22 @@
                 <form string="Global Discount">
                     <!-- <field name="type"/> -->
                     <group>
-                        <field name="amount"/>
+                        <!-- <field name="amount"/> -->
+                        <field name="type"/>
+                        <field name="distributed_percentage"
+                            attrs="{'invisible': [('type', '!=', 'distributed_percentage')]}"/>
+                        <field name="distributed_amount"
+                            attrs="{'invisible': [('type', '!=', 'distributed_amount')]}"/>
+                        <field name="global_percentage"
+                            attrs="{'invisible': [('type', '!=', 'global_percentage')]}"/>
+                        <field name="global_amount"
+                            attrs="{'invisible': [('type', '!=', 'global_amount')]}"/>
+                        <field name="discount_product_id"
+                            attrs="{'invisible': [
+                                ('type', 'not in', ['global_percentage', 'global_amount'])]}"/>
+                        <field name="reason"
+                            attrs="{'invisible': [
+                                ('type', 'not in', ['global_percentage', 'global_amount'])]}"/>
                     </group>
                     <footer>
                         <button name="confirm" string="Confirm" type="object" class="oe_highlight"/>
