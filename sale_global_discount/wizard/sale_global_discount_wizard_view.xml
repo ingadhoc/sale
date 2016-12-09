@@ -17,10 +17,15 @@
                         <field name="global_percentage"
                             attrs="{'invisible': [('type', '!=', 'global_percentage')]}"/>
                         <field name="global_amount"
-                            attrs="{'invisible': [('type', '!=', 'global_amount')]}"/>
+                            attrs="{'invisible': [('type', '!=', 'global_amount')]}, {'required': [('type', '=', 'global_amount')]}"
+                            domain="[
+                                ('type', '=', 'global_amount'),
+                                ('global_amount', '>', 0)]"/>
                         <field name="discount_product_id"
                             attrs="{'invisible': [
-                                ('type', 'not in', ['global_percentage', 'global_amount'])]}"/>
+                                ('type', 'not in', ['global_percentage', 'global_amount'])]}"
+                            domain="[('default_code', 'in',
+                            ['discount', 'descuento', 'DISCOUNT', 'DESCUENTO'])]"/>
                         <field name="reason"
                             attrs="{'invisible': [
                                 ('type', 'not in', ['global_percentage', 'global_amount'])]}"/>
