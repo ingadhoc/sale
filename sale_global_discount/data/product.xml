@@ -6,7 +6,7 @@
             <field name="type">service</field>
             <field name="default_code">DISCOUNT</field>
             <field name="lst_price">0</field>
-            <field name="category_id" ref="product.product_category_all"/>
+            <field name="categ_id" ref="product.product_category_all"/>
         </record>
     </data>
 </openerp>
