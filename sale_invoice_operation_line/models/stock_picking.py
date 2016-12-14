@@ -19,6 +19,9 @@ class StockPicking(models.Model):
             journal_id, group=group, type=type)
         # si hay ov linkeada y tiene operaciones, borramos las operacione
         # actuales de la factura y forzamos recrearlas
+        # esto es necesario asi porque sale_stock y stock_account crean
+        # las lineas de a una, entonces en la primer corrida, el add_operations
+        # ya crea las operaciones y luego faltan otros productos/lineas crearse
         if self.sale_id and self.sale_id.operation_ids:
             self.env['account.invoice'].browse(
                 invoice_ids).operation_ids.unlink()
