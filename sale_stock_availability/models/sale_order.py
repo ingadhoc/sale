@@ -16,9 +16,9 @@ class SaleOrderLine(models.Model):
     def _fnct_line_stock(self):
         available = False
         if self.order_id.state == 'draft':
-            available = self.with_context(
+            available = self.product_id.with_context(
                 warehouse=self.order_id.warehouse_id.id
-            ).product_id.virtual_available - self.product_uom_qty
+            ).virtual_available - self.product_uom_qty
         self.virtual_available = available
         if available >= 0.0:
             available = True
