@@ -37,64 +37,73 @@ class SaleOrder(models.Model):
     def run_checks(self):
         self.operation_ids._run_checks()
 
-    @api.one
-    @api.constrains('invoice_ids')
-    def add_operations_to_invoices(self):
-        """
-        If any invoice is append to sale order then we add operations if needed
-        We also need to inherit make_invoices (of wizard) and _prepare_invoice
-        because they originally write invoice_ids with sql.
-        Only add operations if invoice is in draft and sale order company
-        is same as invoice company
-        """
-        if self.operation_ids:
-            for invoice in self.invoice_ids.filtered(lambda x: (
-                    x.state == 'draft' and x.company_id == self.company_id)):
-                if not invoice.operation_ids:
-                    lines = invoice.invoice_line.ids
-                    invoice.write({
-                        'plan_id': self.plan_id.id,
-                        'operation_ids': [(0, 0, x.with_context(
-                            invoice_line_ids=lines).get_operations_vals())
-                            for x in self.operation_ids]})
-
-    @api.model
-    def _prepare_invoice(self, order, lines):
-        """
-        Because some methods write invoice_ids by sql, we add this here.
-        This method is not enaught because there are lot of ways to create an
-        invoice linked to sale order and only a few call this method, we need
-        also "add_operations_to_invoices"
-        """
-        vals = super(SaleOrder, self)._prepare_invoice(
-            order, lines)
-        # we send invoice_line_ids for compatibility with operation line
-        vals['plan_id'] = order.plan_id.id
-        vals['operation_ids'] = [
-            (0, 0, x.with_context(
-                invoice_line_ids=lines).get_operations_vals()) for x
-            in order.operation_ids]
-        return vals
-
     @api.multi
-    def onchange_partner_id(self, partner_id):
-        result = super(SaleOrder, self).onchange_partner_id(partner_id)
+    def action_invoice_create(self, grouped=False, final=False):
+        res = super(SaleOrder, self).action_invoice_create(
+            grouped=grouped, final=final)
+        for invoice in self.env['account.invoice'].browse(res):
+            lines = invoice.invoice_line_ids.ids
+            invoice.write({
+                'plan_id': self.plan_id.id,
+                'operation_ids': [(0, 0, x.with_context(
+                    invoice_line_ids=lines).get_operations_vals())
+                    for x in self.operation_ids]})
+        return res
+
+    # como ahora el unico metodo deberia ser el action_invoice create para
+    # crear facturas, dejamos solo ese, ademas invoice_ids no se estorea
+    # entonces el cosntraint no anda
+    # @api.one
+    # @api.constrains('invoice_ids')
+    # def add_operations_to_invoices(self):
+    #     if self.operation_ids:
+    #         for invoice in self.invoice_ids.filtered(lambda x: (
+    #                 x.state == 'draft' and x.company_id == self.company_id)):
+    #             if not invoice.operation_ids:
+    #                 lines = invoice.invoice_line.ids
+    #                 invoice.write({
+    #                     'plan_id': self.plan_id.id,
+    #                     'operation_ids': [(0, 0, x.with_context(
+    #                         invoice_line_ids=lines).get_operations_vals())
+    #                         for x in self.operation_ids]})
+
+    # @api.model
+    # def _prepare_invoice(self, order, lines):
+    #     """
+    #     Because some methods write invoice_ids by sql, we add this here.
+    #     This method is not enaught because there are lot of ways to create an
+    #     invoice linked to sale order and only a few call this method, we need
+    #     also "add_operations_to_invoices"
+    #     """
+    #     vals = super(SaleOrder, self)._prepare_invoice(
+    #         order, lines)
+    #     # we send invoice_line_ids for compatibility with operation line
+    #     vals['plan_id'] = order.plan_id.id
+    #     vals['operation_ids'] = [
+    #         (0, 0, x.with_context(
+    #             invoice_line_ids=lines).get_operations_vals()) for x
+    #         in order.operation_ids]
+    #     return vals
+
+    @api.onchange('partner_id')
+    def change_partner_set_plan(self):
         # usamos la cia del warehouse porque la otra no se actualiza bien
         # a su vez, si se esta creadno, como es api vieja, no hay ninguna
         # buscamos en el cotnexto o usamos la del usuario
         company = (
             self.warehouse_id.company_id or
             self._context.get('company_id', self.env.user.company_id))
-        if partner_id:
-            partner = self.env['res.partner'].with_context(
-                force_company=company.id).browse(
-                partner_id).commercial_partner_id
-            result['value'][
-                'plan_id'] = partner.default_sale_invoice_plan_id.id
-        return result
+        if self.partner_id:
+            partner = self.partner_id.commercial_partner_id
+            self.plan_id = partner.with_context(
+                force_company=company.id).default_sale_invoice_plan_id.id
 
+    # TODO en la v9 no se soporta más el onchange sobr los o2m
+    # ver este issue https://github.com/odoo/odoo/issues/2693
+    # probamos de todo pero no lo pudimos hacer andar
     @api.one
-    @api.onchange('plan_id')
+    # @api.onchange('plan_id')
+    @api.constrains('plan_id')
     def change_plan(self):
         self.operation_ids = False
         if self.plan_id:
