@@ -109,31 +109,31 @@ class SaleOrder(models.Model):
         if self.plan_id:
             self.operation_ids = self.plan_id.get_plan_vals()
 
-    @api.model
-    def check_suspend_security_available(self):
-        suspend_security = getattr(self, "suspend_security", None)
-        if callable(suspend_security):
-            return True
-        return False
+    # @api.model
+    # def check_suspend_security_available(self):
+    #     suspend_security = getattr(self, "suspend_security", None)
+    #     if callable(suspend_security):
+    #         return True
+    #     return False
 
-    @api.multi
-    def action_done(self):
-        """
-        if we, for eg, pay an invoice and close sale order form a child
-        company, then it would raise an error, we use suspend security
-        """
-        if self.check_suspend_security_available():
-            return super(
-                SaleOrder, self.suspend_security()).action_done()
-        return super(SaleOrder, self.sudo()).action_done()
+    # @api.multi
+    # def action_done(self):
+    #     """
+    #     if we, for eg, pay an invoice and close sale order form a child
+    #     company, then it would raise an error, we use suspend security
+    #     """
+    #     if self.check_suspend_security_available():
+    #         return super(
+    #             SaleOrder, self.suspend_security()).action_done()
+    #     return super(SaleOrder, self.sudo()).action_done()
 
-    @api.multi
-    def action_invoice_end(self):
-        """
-        if we, for eg, pay an invoice and close sale order form a child
-        company, then it would raise an error, we use suspend security
-        """
-        if self.check_suspend_security_available():
-            return super(
-                SaleOrder, self.suspend_security()).action_invoice_end()
-        return super(SaleOrder, self.sudo()).action_invoice_end()
+    # @api.multi
+    # def action_invoice_end(self):
+    #     """
+    #     if we, for eg, pay an invoice and close sale order form a child
+    #     company, then it would raise an error, we use suspend security
+    #     """
+    #     if self.check_suspend_security_available():
+    #         return super(
+    #             SaleOrder, self.suspend_security()).action_invoice_end()
+    #     return super(SaleOrder, self.sudo()).action_invoice_end()
