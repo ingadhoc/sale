@@ -9,19 +9,19 @@ class sale_order_line(models.Model):
         'Discount 1 (%)',
         digits=dp.get_precision('Discount'),
         readonly=True,
-        states={'draft': [('readonly', False)]}
+        states={'draft': [('readonly', False)], 'sent': [('readonly', False)]}
     )
     discount2 = fields.Float(
         'Discount 2 (%)',
         digits=dp.get_precision('Discount'),
         readonly=True,
-        states={'draft': [('readonly', False)]}
+        states={'draft': [('readonly', False)], 'sent': [('readonly', False)]}
     )
     discount3 = fields.Float(
         'Discount 3 (%)',
         digits=dp.get_precision('Discount'),
         readonly=True,
-        states={'draft': [('readonly', False)]}
+        states={'draft': [('readonly', False)], 'sent': [('readonly', False)]}
     )
     discount = fields.Float(
         compute='get_discount',
