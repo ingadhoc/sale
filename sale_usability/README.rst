@@ -8,7 +8,7 @@ Sale Usability Improvements
 
 Several Improvements to sales:
 #. Add button "Re-Open" on sale orders to came back from "Done" to "Sale Order" state, only available to sale manager
-#. Make button print and send by email also available on done state on sales orders
+#. Make button print and send by email also available on done state on sale orders
 
 Installation
 ============
