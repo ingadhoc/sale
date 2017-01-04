@@ -7,6 +7,17 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
+                <!-- agregado de botones de enviar y de imprimir para estado done tmb -->
+                <xpath expr="//button[@name='action_quotation_send'][2]" position="attributes">
+                    <attribute name="states">sent,sale,done</attribute>
+                </xpath>
+                <xpath expr="//button[@name='print_quotation'][2]" position="attributes">
+                    <attribute name="states">sent,sale,done</attribute>
+                </xpath>
+                <!-- este ya esta -->
+                <!-- <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d'][1]" position="attributes">
+                    <attribute name="states">sent,sale,done</attribute>
+                </xpath> -->
                 <button name="action_done" position="after">
                     <button name="button_reopen" type="object" string="Re-Open" states="done" groups="base.group_sale_manager"/>
                 </button>
