@@ -2,26 +2,14 @@
 <openerp>
     <data>
 
-        <record id="view_order_form" model="ir.ui.view">
-            <field name="name">sale.order.form</field>
-            <field name="model">sale.order</field>
-            <field name="inherit_id" ref="sale.view_order_form"/>
-            <field name="arch" type="xml">
-                <!-- agregado de botones de enviar y de imprimir para estado done tmb -->
-                <xpath expr="//button[@name='action_quotation_send'][2]" position="attributes">
-                    <attribute name="states">sent,sale,done</attribute>
-                </xpath>
-                <xpath expr="//button[@name='print_quotation'][2]" position="attributes">
-                    <attribute name="states">sent,sale,done</attribute>
-                </xpath>
-                <!-- este ya esta -->
-                <!-- <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d'][1]" position="attributes">
-                    <attribute name="states">sent,sale,done</attribute>
-                </xpath> -->
-                <button name="action_done" position="after">
-                    <button name="button_reopen" type="object" string="Re-Open" states="done" groups="base.group_sale_manager"/>
-                </button>
-            </field>
+        <!--Make Quotations Menu only visible to tec features-->
+        <record model="ir.ui.menu" id="sale.menu_sale_quotations">
+            <field name="groups_id" eval="[(4, ref('base.group_no_one'))]"/>
+        </record>
+
+        <!-- make sales orders action show all sale.order records -->
+        <record id="sale.action_orders" model="ir.actions.act_window">
+            <field name="domain">[]</field>
         </record>
 
     </data>

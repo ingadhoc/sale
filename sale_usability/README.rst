@@ -9,6 +9,9 @@ Sale Usability Improvements
 Several Improvements to sales:
 #. Add button "Re-Open" on sale orders to came back from "Done" to "Sale Order" state, only available to sale manager
 #. Make button print and send by email also available on done state on sale orders
+#. Make sale quotations menu only visible with technical features
+#. Make sale orders menu show all sale records (quotations, and confirmed ones)
+#. Add delivery status on sales
 
 Installation
 ============

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_order_form" model="ir.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <!-- agregado de botones de enviar y de imprimir para estado done tmb -->
+                <xpath expr="//button[@name='action_quotation_send'][2]" position="attributes">
+                    <attribute name="states">sent,sale,done</attribute>
+                </xpath>
+                <xpath expr="//button[@name='print_quotation'][2]" position="attributes">
+                    <attribute name="states">sent,sale,done</attribute>
+                </xpath>
+
+                <button name="action_done" position="after">
+                    <button name="button_reopen" type="object" string="Re-Open" states="done" groups="base.group_sale_manager"/>
+                </button>
+            </field>
+        </record>
+
+        <record id="view_order_tree" model="ir.ui.view">
+            <field name="name">sale.order.tree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <!-- move state before invoice status and make it visible -->
+                <field name="state" position="replace"/>
+                <field name="invoice_status" position="before">
+                    <field name="state"/>
+                    <field name="delivery_status"/>
+                </field>
+
+            </field>
+        </record>
+
+        <record id="view_sales_order_filter" model="ir.ui.view">
+            <field name="name">sale.order.filter</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+            <field name="arch" type="xml">
+                <filter domain="[('invoice_status','=','to invoice')]" position="before">
+                    <filter name="to_deliver" string="To Deliver" domain="[('delivery_status','=', 'to deliver')]" help="Sale orders that include lines not delivered."/>
+                    <filter name="delivered" string="Delivered" domain="[('delivery_status','=', 'delivered')]" help="Sale orders with all lines delivered."/>
+                    <separator/>
+                </filter>
+            </field>
+        </record>
+
+    </data>
+</openerp>
