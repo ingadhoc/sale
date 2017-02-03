@@ -21,8 +21,8 @@ class ProductProduct(models.Model):
         res = super(ProductProduct, self).fields_view_get(
             view_id=view_id, view_type=view_type,
             toolbar=toolbar, submenu=submenu)
-        force_product_edit = self._context.get('force_product_edit')
-        if force_product_edit:
+        sale_quotation_products = self._context.get('sale_quotation_products')
+        if sale_quotation_products:
             doc = etree.XML(res['arch'])
 
             # make all fields not editable
