@@ -24,13 +24,28 @@ class ProductProduct(models.Model):
         force_product_edit = self._context.get('force_product_edit')
         if force_product_edit:
             doc = etree.XML(res['arch'])
+
+            # make all fields not editable
+            for node in doc.xpath("//field"):
+                node.set('readonly', '1')
+                setup_modifiers(node, res['fields'], in_tree_view=True)
+
+            # add qty field
+            placeholder = doc.xpath("//field[1]")[0]
+            placeholder.addprevious(
+                etree.Element('field', {
+                    'name': 'qty',
+                    # we force editable no matter user rights
+                    'readonly': '0',
+                }))
+            res['fields'].update(self.fields_get(['qty']))
+
+            # make tree view editable
             for node in doc.xpath("/tree"):
                 node.set('edit', 'true')
-            for node in doc.xpath("//field[@name='qty']"):
-                node.set('readonly', '0')
-                setup_modifiers(node, res['fields']['qty'])
+                node.set('create', 'false')
+                node.set('editable', 'top')
             res['arch'] = etree.tostring(doc)
-
         return res
 
     @api.multi

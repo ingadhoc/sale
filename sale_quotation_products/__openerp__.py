@@ -33,7 +33,6 @@
         'sale',
     ],
     'data': [
-        'view/product_view.xml',
         'view/sale_order_view.xml',
     ],
     'demo': [
