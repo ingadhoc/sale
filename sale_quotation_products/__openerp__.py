@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Sale Quotation Products',
-    'version': '9.0.1.1.0',
+    'version': '9.0.1.2.0',
     'category': 'Sales Management',
     'sequence': 14,
     'summary': '',
