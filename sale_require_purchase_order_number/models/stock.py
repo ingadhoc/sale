@@ -24,7 +24,8 @@ class StockPicking(models.Model):
 
     require_purchase_order_number = fields.Boolean(
         string='Sale Require Origin',
-        related='partner_id.require_purchase_order_number')
+        related='partner_id.require_purchase_order_number',
+        readonly=True,)
     manual_purchase_order_number = fields.Char(
         'Purchase Order Number',
         states={'cancel': [('readonly', True)],
