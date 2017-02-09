@@ -31,5 +31,6 @@
     'data': [
         'views/company_view.xml',
     ],
-    'installable': True
+    # No seria mas necesario
+    'installable': False
 }
