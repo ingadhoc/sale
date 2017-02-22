@@ -19,8 +19,8 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Usability Improvements',
-    'version': '9.0.1.2.0',
+    'name': 'Sale Usability interatction with Refund management',
+    'version': '9.0.1.1.0',
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -30,10 +30,10 @@
     'images': [
     ],
     'depends': [
-        'sale',
+        'sale_usability',
+        'sale_stock_picking_return_invoicing',
     ],
     'data': [
-        'views/sale_view.xml',
         'views/sale_order_view.xml',
     ],
     'demo': [
@@ -41,6 +41,6 @@
     'test': [
     ],
     'installable': True,
-    'auto_install': False,
+    'auto_install': True,
     'application': False,
 }

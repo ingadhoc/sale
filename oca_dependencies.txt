@@ -1,4 +1,5 @@
 sale-workflow
+account-invoicing
 ingadhoc-partner https://github.com/ingadhoc/partner.git
 ingadhoc-product https://github.com/ingadhoc/product.git
 ingadhoc-account-invoicing https://github.com/ingadhoc/account-invoicing.git
