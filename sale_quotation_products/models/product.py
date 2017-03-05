@@ -12,8 +12,8 @@ class ProductProduct(models.Model):
     _inherit = "product.product"
 
     @api.model
-    def fields_view_get(
-            self, view_id=None, view_type=False, toolbar=False, submenu=False):
+    def fields_view_get(self, view_id=None, view_type='form',
+                        toolbar=False, submenu=False):
         """
         If we came from sale order, we send in context 'force_product_edit'
         and we change tree view to make editable and also field qty
