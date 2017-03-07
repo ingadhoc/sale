@@ -19,8 +19,8 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Usability Improvements',
-    'version': '9.0.1.2.0',
+    'name': 'Sale Usability Improvements integration with delivery',
+    'version': '9.0.1.0.0',
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
