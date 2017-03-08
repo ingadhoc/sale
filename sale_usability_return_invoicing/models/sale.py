@@ -18,6 +18,7 @@ class SaleOrderLine(models.Model):
     )
 
     @api.multi
+    @api.depends('qty_delivered', 'qty_returned')
     def _compute_all_qty_delivered(self):
         for rec in self:
             rec.all_qty_delivered = rec.qty_delivered + rec.qty_returned
