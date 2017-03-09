@@ -9,7 +9,6 @@
             <field name="priority" eval="99"/>
             <field name="arch" type="xml">
                 <tree string="Purchase Order Lines" create="false" delte="false" edit="false">
-                    <field name="delivery_status" invisible="0"/>
                     <field name="order_id"/>
                     <field name="name"/>
                     <field name="order_partner_id"/>
