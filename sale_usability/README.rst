@@ -12,6 +12,7 @@ Several Improvements to sales:
 #. Make sale quotations menu only visible with technical features
 #. Make sale orders menu show all sale records (quotations, and confirmed ones)
 #. Add delivery status on sales
+#. Add a menu item on sales for 'sale lines' and improove views with more fields.
 
 Installation
 ============

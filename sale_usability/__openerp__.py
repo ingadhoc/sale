@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Sale Usability Improvements',
-    'version': '9.0.1.2.0',
+    'version': '9.0.1.3.0',
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -35,6 +35,7 @@
     'data': [
         'views/sale_view.xml',
         'views/sale_order_view.xml',
+        'views/sale_order_line_view.xml',
     ],
     'demo': [
     ],

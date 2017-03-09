@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- creamos nueva vista porque la original es usada para informes desde los productos, mangenemos mismo orden y criterio de la purchase line -->
+        <record id="sale_order_line_usability_tree" model="ir.ui.view">
+            <field name="name">sale.order.line.usability.tree</field>
+            <field name="model">sale.order.line</field>
+            <field name="priority" eval="99"/>
+            <field name="arch" type="xml">
+                <tree string="Purchase Order Lines" create="false" delte="false" edit="false">
+                    <field name="delivery_status" invisible="0"/>
+                    <field name="order_id"/>
+                    <field name="name"/>
+                    <field name="order_partner_id"/>
+                    <field name="salesman_id"/>
+                    <field name="product_id"/>
+                    <field name="price_unit"/>
+                    <field name="product_uom_qty" string="Qty"/>
+                    <field name="qty_delivered"/>
+                    <field name="qty_invoiced"/>
+                    <field name="product_uom" string="Unit of Measure" groups="product.group_uom"/>
+                    <field name="price_subtotal" sum="Total" widget="monetary"/>
+                    <!-- <field name="date_planned"  widget="date"/> -->
+                </tree>
+            </field>
+        </record>
+
+
+        <!-- very important because user can delete or edit confirmed lines -->
+        <!-- <record id="purchase_order_line_form2" model="ir.ui.view">
+            <field name="name">purchase.order.line.form</field>
+            <field name="model">purchase.order.line</field>
+            <field name="inherit_id" ref="purchase.purchase_order_line_form2"/>
+            <field name="arch" type="xml">
+                <form position="attributes">
+                    <attribute name="edit">false</attribute>
+                    <attribute name="delete">false</attribute>
+                </form>
+            </field>
+        </record> -->
+
+
+        <record id="view_sales_order_line_filter" model="ir.ui.view">
+            <field name="name">sale.order.line.search</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id" ref="sale.view_sales_order_line_filter"/>
+            <field name="arch" type="xml">
+                <separator position="after">
+                    <filter name="hide_cancelled" string="Hide cancelled lines" domain="[('state', '!=', 'cancel')]"/>
+                    <separator/>
+                </separator>
+                <filter position="before">
+                    <filter name="draft" string="Quotations" domain="[('state','in',('draft','sent'))]"/>
+                    <filter name="approved" string="Sale Orders" domain="[('state','in',('sale','done'))]"/>
+                    <separator/>
+                    <filter name="to_deliver" string="To Deliver" domain="[('delivery_status','=', 'to deliver')]"/>
+                    <filter name="received" string="Delivered" domain="[('delivery_status','=', 'delivered')]"/>
+                    <separator/>
+                    <!-- to invoice already exists -->
+                    <!-- <filter name="not_invoiced" string="Not Invoiced" domain="[('invoice_status','=', 'to invoice')]"/> -->
+                    <filter name="invoiced" string="Invoiced" domain="[('invoice_status','=', 'invoiced')]"/>
+                </filter>
+                <group>
+                    <filter string="Customer" domain="[]" context="{'group_by' : 'order_partner_id'}" />
+                    <filter string="Status" domain="[]" context="{'group_by' : 'state'}" />
+                </group>
+            </field>
+        </record>
+
+        <!-- add new menu for purchase lines -->
+        <record model="ir.actions.act_window" id="action_sale_order_line_usability_tree">
+            <field name="context">{'search_default_confirmed': 1}</field>
+            <field name="name">Sale Lines</field>
+            <field name="view_mode">tree</field>
+            <field name="res_model">sale.order.line</field>
+            <field name="view_id" ref="sale_order_line_usability_tree"/>
+        </record>
+
+        <menuitem action="action_sale_order_line_usability_tree"
+            id="menu_sale_order" parent="base.menu_sales"
+            sequence="13" groups="base.group_sale_salesman,base.group_sale_manager"/>
+    </data>
+</openerp>
