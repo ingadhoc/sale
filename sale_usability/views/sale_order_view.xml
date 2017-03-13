@@ -45,6 +45,7 @@
                     <filter name="to_deliver" string="To Deliver" domain="[('delivery_status','=', 'to deliver')]" help="Sale orders that include lines not delivered."/>
                     <filter name="delivered" string="Delivered" domain="[('delivery_status','=', 'delivered')]" help="Sale orders with all lines delivered."/>
                     <separator/>
+                    <filter name="invoiced" string="Invoiced" domain="[('invoice_status','=', 'invoiced')]"/>
                 </filter>
             </field>
         </record>
