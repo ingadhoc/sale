@@ -39,5 +39,5 @@
         'data/sale_order_type_data.xml',
     ],
     'installable': True,
-    'auto_install': True,
+    'auto_install': False,
 }
