@@ -1,0 +1,61 @@
+<odoo>
+
+    <record id="sale_order_prepaid" model="sale.order">
+        <field name="type_id" ref="prepaid_sale_type"/>
+        <field name="partner_id" ref="res_partner_prepaid_customer"/>
+        <field name="partner_invoice_id" ref="res_partner_prepaid_customer"/>
+        <field name="partner_shipping_id" ref="res_partner_prepaid_customer"/>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="pricelist_id" ref="product.list0"/>
+        <field name="team_id" ref="sales_team.team_sales_department"/>
+        <field name="date_order" eval="(DateTime.today() - relativedelta(months=1)).strftime('%Y-%m-%d %H:%M')"/>
+    </record>
+
+    <record id="sale_order_line_prepaid_1" model="sale.order.line">
+        <field name="order_id" ref="sale_order_prepaid"/>
+        <field name="name">Service on demand</field>
+        <field name="product_id" ref="product.product_product_1"/>
+        <field name="product_uom_qty">24</field>
+        <field name="product_uom" ref="product.product_uom_hour"/>
+        <field name="price_unit">75.00</field>
+    </record>
+
+    <record id="sale_order_line_prepaid_2" model="sale.order.line">
+        <field name="order_id" ref="sale_order_prepaid"/>
+        <field name="name">On Site Assistance</field>
+        <field name="product_id" ref="product.product_product_2"/>
+        <field name="product_uom_qty">30</field>
+        <field name="product_uom" ref="product.product_uom_hour"/>
+        <field name="price_unit">38.25</field>
+    </record>
+
+    <record id="sale_order_ordered" model="sale.order">
+        <field name="type_id" ref="ordered_sale_type"/>
+        <field name="partner_id" ref="res_partner_ordered_customer"/>
+        <field name="partner_invoice_id" ref="res_partner_ordered_customer"/>
+        <field name="partner_shipping_id" ref="res_partner_ordered_customer"/>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="pricelist_id" ref="product.list0"/>
+        <field name="team_id" ref="sales_team.team_sales_department"/>
+        <field name="date_order" eval="(DateTime.today() - relativedelta(months=1)).strftime('%Y-%m-%d %H:%M')"/>
+    </record>
+
+    <record id="sale_order_line_ordered_1" model="sale.order.line">
+        <field name="order_id" ref="sale_order_ordered"/>
+        <field name="name">Service on demand</field>
+        <field name="product_id" ref="product.product_product_1"/>
+        <field name="product_uom_qty">24</field>
+        <field name="product_uom" ref="product.product_uom_hour"/>
+        <field name="price_unit">75.00</field>
+    </record>
+
+    <record id="sale_order_line_ordered_2" model="sale.order.line">
+        <field name="order_id" ref="sale_order_ordered"/>
+        <field name="name">On Site Assistance</field>
+        <field name="product_id" ref="product.product_product_2"/>
+        <field name="product_uom_qty">30</field>
+        <field name="product_uom" ref="product.product_uom_hour"/>
+        <field name="price_unit">38.25</field>
+    </record>
+
+</odoo>
