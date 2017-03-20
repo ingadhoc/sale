@@ -1,0 +1,29 @@
+<odoo>
+
+    <record id="res_partner_prepaid_customer" model="res.partner">
+        <field name="name">Pre Paid Customer</field>
+        <field eval="[(6, 0, [ref('base.res_partner_category_13'), ref('base.res_partner_category_12')])]" name="category_id"/>
+        <field eval="1" name="customer"/>
+        <field eval="0" name="supplier"/>
+        <field name="is_company">1</field>
+        <field name="city">Rosario</field>
+        <field name="zip">94538</field>
+        <field name="country_id" ref="base.ar"/>
+        <field name="sale_type" ref="prepaid_sale_type"/>
+        <field name="street">Calle Falsa 123</field>
+    </record>
+
+    <record id="res_partner_ordered_customer" model="res.partner">
+        <field name="name">Ordered Quantities Customer</field>
+        <field eval="[(6, 0, [ref('base.res_partner_category_13'), ref('base.res_partner_category_12')])]" name="category_id"/>
+        <field eval="1" name="customer"/>
+        <field eval="0" name="supplier"/>
+        <field name="is_company">1</field>
+        <field name="city">Rosario</field>
+        <field name="zip">94538</field>
+        <field name="country_id" ref="base.ar"/>
+        <field name="sale_type" ref="prepaid_sale_type"/>
+        <field name="street">Calle Falsa 123</field>
+    </record>
+
+</odoo>
