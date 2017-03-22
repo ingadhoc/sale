@@ -3,7 +3,7 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from openerp import models, fields, api
+from openerp import models, fields, api, _
 from openerp.osv.orm import setup_modifiers
 from lxml import etree
 
@@ -39,6 +39,16 @@ class ProductProduct(models.Model):
                     'readonly': '0',
                 }))
             res['fields'].update(self.fields_get(['qty']))
+
+            # add button tu open form
+            placeholder = doc.xpath("//tree")[0]
+            placeholder.append(
+                etree.Element('button', {
+                    'name': 'action_product_form',
+                    'type': 'object',
+                    'icon': 'fa-external-link',
+                    'string': _('Open Product Form View'),
+                }))
 
             # make tree view editable
             for node in doc.xpath("/tree"):
@@ -95,13 +105,18 @@ class ProductProduct(models.Model):
         compute='_get_qty',
         inverse='_set_qty')
 
-    # TODO Borrar si no necesitamos
-    # @api.multi
-    # def get_product_description(self):
-    #     return {
-    #         'type': 'ir.actions.act_window',
-    #         'res_model': 'product.product',
-    #         'view_mode': 'form',
-    #         'res_id': self.id,
-    #         'target': 'current'
-    #     }
+    @api.multi
+    def action_product_form(self):
+        self.ensure_one()
+        view_id = self.env['ir.model.data'].xmlid_to_res_id(
+            'product.product_normal_form_view')
+        return {
+            'name': _('Product'),
+            'view_type': 'form',
+            "view_mode": 'form',
+            'res_model': 'product.product',
+            'type': 'ir.actions.act_window',
+            # 'domain': [('id', 'in', self.apps_product_ids.ids)],
+            'res_id': self.id,
+            'view_id': view_id,
+        }
