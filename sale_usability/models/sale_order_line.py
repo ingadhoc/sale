@@ -32,7 +32,7 @@ class SaleOrderLine(models.Model):
         ('delivered', 'Delivered'),
     ],
         string='Delivery Status',
-        compute='_get_received',
+        compute='_compute_delivery_status',
         store=True,
         readonly=True,
         copy=False,
@@ -40,7 +40,7 @@ class SaleOrderLine(models.Model):
     )
 
     @api.depends('order_id.state', 'qty_delivered', 'product_uom_qty')
-    def _get_received(self):
+    def _compute_delivery_status(self):
         precision = self.env['decimal.precision'].precision_get(
             'Product Unit of Measure')
         for line in self:
@@ -49,11 +49,13 @@ class SaleOrderLine(models.Model):
                 continue
 
             if float_compare(
-                    line.qty_delivered, line.product_uom_qty,
+                    line.all_qty_delivered, line.product_uom_qty,
+                    # line.qty_delivered, line.product_uom_qty,
                     precision_digits=precision) == -1:
                 line.delivery_status = 'to deliver'
             elif float_compare(
-                    line.qty_delivered, line.product_uom_qty,
+                    line.all_qty_delivered, line.product_uom_qty,
+                    # line.qty_delivered, line.product_uom_qty,
                     precision_digits=precision) >= 0:
                 line.delivery_status = 'delivered'
             else:
