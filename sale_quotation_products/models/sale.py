@@ -24,6 +24,9 @@ class SaleOrder(models.Model):
             # we send company in context so it filters taxes
             context['company_id'] = self.company_id.id
             context['partner_id'] = self.partner_id.id
+            # context['search_default_location_id'] = (
+            #     self.warehouse_id.lot_stock_id.id)
+            context['search_default_warehouse_id'] = self.warehouse_id.id
             action_read['context'] = context
             # action_read['view_mode'] = 'tree,form'
             action_read['name'] = _('Quotation Products')
