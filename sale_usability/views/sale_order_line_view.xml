@@ -8,7 +8,7 @@
             <field name="model">sale.order.line</field>
             <field name="priority" eval="99"/>
             <field name="arch" type="xml">
-                <form string="Purchase Order Line" create="false" delte="false" edit="false">
+                <form string="Sale Order Line" create="false" delte="false" edit="false">
                     <sheet>
                         <field name="currency_id" invisible="1"/>
                         <group>
@@ -38,7 +38,7 @@
             <field name="model">sale.order.line</field>
             <field name="priority" eval="99"/>
             <field name="arch" type="xml">
-                <tree string="Purchase Order Lines" create="false" delte="false" edit="false">
+                <tree string="Sale Order Lines" create="false" delte="false" edit="false">
                     <field name="order_id"/>
                     <field name="name"/>
                     <field name="order_partner_id"/>
@@ -55,21 +55,6 @@
                 </tree>
             </field>
         </record>
-
-
-        <!-- very important because user can delete or edit confirmed lines -->
-        <!-- <record id="purchase_order_line_form2" model="ir.ui.view">
-            <field name="name">purchase.order.line.form</field>
-            <field name="model">purchase.order.line</field>
-            <field name="inherit_id" ref="purchase.purchase_order_line_form2"/>
-            <field name="arch" type="xml">
-                <form position="attributes">
-                    <attribute name="edit">false</attribute>
-                    <attribute name="delete">false</attribute>
-                </form>
-            </field>
-        </record> -->
-
 
         <record id="view_sales_order_line_filter" model="ir.ui.view">
             <field name="name">sale.order.line.search</field>
@@ -98,7 +83,7 @@
             </field>
         </record>
 
-        <!-- add new menu for purchase lines -->
+        <!-- add new menu for sale lines -->
         <record model="ir.actions.act_window" id="action_sale_order_line_usability_tree">
             <field name="context">{'search_default_confirmed': 1}</field>
             <field name="name">Sale Lines</field>
