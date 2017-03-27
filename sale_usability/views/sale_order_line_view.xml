@@ -6,7 +6,7 @@
         <record id="sale_order_line_usability_form" model="ir.ui.view">
             <field name="name">sale.order.line.usability.form</field>
             <field name="model">sale.order.line</field>
-            <field name="priority" eval="99"/>
+            <field name="priority" eval="90"/>
             <field name="arch" type="xml">
                 <form string="Sale Order Line" create="false" delte="false" edit="false">
                     <sheet>
@@ -36,7 +36,7 @@
         <record id="sale_order_line_usability_tree" model="ir.ui.view">
             <field name="name">sale.order.line.usability.tree</field>
             <field name="model">sale.order.line</field>
-            <field name="priority" eval="99"/>
+            <field name="priority" eval="90"/>
             <field name="arch" type="xml">
                 <tree string="Sale Order Lines" create="false" delte="false" edit="false">
                     <field name="order_id"/>
