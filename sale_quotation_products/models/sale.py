@@ -36,9 +36,14 @@ class SaleOrder(models.Model):
     def add_products(self, product_ids, qty):
         self.ensure_one()
         for product in self.env['product.product'].browse(product_ids):
+            sol = self.env['sale.order.line']
+            last_sol = sol.search(
+                [('order_id', '=', self.id)], order='sequence desc', limit=1)
+            sequence = last_sol and last_sol.sequence + 1 or 10
             val = {
                 'product_uom_qty': qty,
                 'order_id': self.id,
                 'product_id': product.id or False,
+                'sequence': sequence,
             }
-            self.env['sale.order.line'].create(val)
+            sol.create(val)
