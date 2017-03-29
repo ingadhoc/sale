@@ -4,7 +4,7 @@
         <field name="model">sale.order.type</field>
         <field name="inherit_id" ref="sale_order_type.sot_sale_order_type_form_view"/>
         <field name="arch" type="xml">
-            <field name="warehouse_id" position="after">
+            <field name="picking_policy" position="before">
                 <field name="invoice_policy"/>
             </field>
         </field>

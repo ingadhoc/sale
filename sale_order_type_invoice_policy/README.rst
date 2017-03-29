@@ -2,9 +2,9 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-==============================
-Sale Order Type Invoice Policy
-==============================
+================================
+Sale Order Type Invoicing Policy
+================================
 
 Add to sale order type invoice policy field with possible values:
 #. Defined by Product: default odoo behaviour, invoice qty will be computed considering product configuration

@@ -14,6 +14,7 @@ class SaleOrderTypology(models.Model):
         ('prepaid', 'Before Delivery'),
         ('order', 'Ordered quantities')
     ],
+        string='Invoicing Policy',
         required=True,
         default='by_product',
         help='If you choose prepaid you...'

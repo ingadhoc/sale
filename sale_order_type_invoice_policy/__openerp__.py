@@ -19,8 +19,8 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Order Type Automation',
-    'version': '9.0.1.0.0',
+    'name': 'Sale Order Type Invoicing Policy',
+    'version': '9.0.1.1.0',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
