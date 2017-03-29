@@ -3,17 +3,56 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from openerp import api, models, fields
+from openerp import api, models
 
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     @api.multi
-    def action_confirm(self):
-        res = super(SaleOrder, self).action_confirm()
+    def run_invoicing_atomation(self):
         for so in self:
-            if so.type_id.validate_automatically_picking and\
+            invoicing_atomation = so.type_id.invoicing_atomation
+            if invoicing_atomation != 'none':
+                # a list is returned but only one invoice should be returned
+                invoices = so.env['account.invoice'].browse(
+                    self.action_invoice_create())
+                # for any different from none and create_invoice, validate
+                if invoices and invoicing_atomation != 'create_invoice':
+                    invoices.signal_workflow('invoice_open')
+                    # if different from validate, open and create, then
+                    # pay it
+                    if invoicing_atomation != 'validate_invoice':
+                        for inv in invoices:
+                            pay_context = {
+                                'to_pay_move_line_ids': (
+                                    inv.open_move_line_ids.ids),
+                                # 'pop_up': True,
+                                'default_company_id': inv.company_id.id,
+                            }
+                            payment_group = so.env[
+                                'account.payment.group'].with_context(
+                                pay_context).create({})
+                            payment_group.payment_ids.create({
+                                'payment_group_id': payment_group.id,
+                                'payment_type': 'inbound',
+                                'partner_type': 'customer',
+                                'company_id': inv.company_id.id,
+                                'partner_id': payment_group.partner_id.id,
+                                'amount': payment_group.payment_difference,
+                                'journal_id': so.type_id.payment_journal_id.id,
+                                'payment_method_id': self.env.ref(
+                                    'account.account_payment_method_manual_in'
+                                ).id,
+                            })
+                            # if invoice_payment then we validate payment
+                            if invoicing_atomation == 'invoice_payment':
+                                payment_group.post()
+
+    @api.multi
+    def run_picking_atomation(self):
+        for so in self:
+            if so.type_id.picking_atomation == 'validate' and\
                     so.procurement_group_id:
                 picking = self.env['stock.picking'].search(
                     [('group_id', '=', so.procurement_group_id.id)], limit=1)
@@ -24,35 +63,10 @@ class SaleOrder(models.Model):
                     else:
                         pack.unlink()
                 picking.do_transfer()
-            if so.state == 'sale' and so.type_id.journal_id:
-                invoice_id = self.action_invoice_create()
-                if so.type_id.validate_automatically_invoice:
-                    so.env['account.invoice'].browse(
-                        invoice_id).signal_workflow('invoice_open')
-                if so.type_id.payment_journal_id:
-                    inv = self.env['account.invoice'].browse(invoice_id)
-                    if inv:
-                        amount = inv.type in (
-                            'out_refund', 'in_refund') and -inv.residual or \
-                            inv.residual
-                        payment = self.env['account.payment'].create({
-                            'partner_type': 'customer',
-                            'amount': amount,
-                            'invoice_ids': [(6, 0, [inv.id])],
-                            'payment_date': fields.Date.context_today(self),
-                            'journal_id': so.type_id.payment_journal_id.id,
-                            'destination_account_id':
-                            inv.partner_id.property_account_receivable_id.id,
-                            'partner_id': self.env[
-                                'res.partner']._find_accounting_partner(
-                                inv.partner_id).id,
-                            'payment_method_id': self.env.ref(
-                                'account.account_payment_method_manual_in').id,
-                            'payment_type': 'inbound'
-                        })
-                        if so.type_id.validate_automatically_payment:
-                            payment.post()
-                            if so.type_id.validate_automatically_picking:
-                                so.action_done()
 
+    @api.multi
+    def action_confirm(self):
+        res = super(SaleOrder, self).action_confirm()
+        self.run_picking_atomation()
+        self.run_invoicing_atomation()
         return res

@@ -6,10 +6,10 @@
 Sale Order Type Automation
 ==========================
 
-Add to sale order type this options to be executed automatically on sale order confirmation:
-    * Validate Invoice
-    * Register and validate payment
-    * Confirm picking and products transfer
+Add to sale order type this options to be executed automatically on sale order confirmation and picking confimation:
+    * Create / Validate Invoice
+    * Create / Validate Payment
+    * Confirm picking and products transfer (only on sale order confirmation)
 
 Installation
 ============
@@ -22,11 +22,7 @@ To install this module, you need to:
 Configuration
 =============
 
-To configure this module, you need to set validation options on sale order type:
-
-#. Validate Picking: Set "validate automatically picking"= true.
-#. Validate Invoice: Set "validate automatically invoice"= true.
-#. Validate Payment: Set "validate automatically payment"= true.
+To configure this module, you need to set automation options on sale order type:
 
 
 Usage
