@@ -4,6 +4,9 @@
 # directory
 ##############################################################################
 from openerp import api, models
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class SaleOrder(models.Model):
@@ -14,6 +17,13 @@ class SaleOrder(models.Model):
         for so in self:
             invoicing_atomation = so.type_id.invoicing_atomation
             if invoicing_atomation != 'none':
+                # we add this check just because if we call
+                # action_invoice_create and nothing to invoice, it raise
+                # an error
+                if not any(
+                        line.qty_to_invoice for line in so.order_line):
+                    _logger.warning('Noting to invoice')
+                    return True
                 # a list is returned but only one invoice should be returned
                 invoices = so.env['account.invoice'].browse(
                     self.action_invoice_create())
