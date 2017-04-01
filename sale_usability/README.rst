@@ -13,6 +13,7 @@ Several Improvements to sales:
 #. Make sale orders menu show all sale records (quotations, and confirmed ones)
 #. Add delivery status on sales
 #. Add a menu item on sales for 'sale lines' and improove views with more fields.
+#. Make that, by default, links to sale orders you "sale" data and not only "quoatation"
 
 Installation
 ============

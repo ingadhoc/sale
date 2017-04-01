@@ -11,6 +11,10 @@ import openerp.addons.decimal_precision as dp
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
+    # add context so show sale data by default
+    order_id = fields.Many2one(
+        context={'show_sale': True}
+    )
     # agregamoe este campo para facilitar compatibilidad con
     # sale_usability_return_invoicing
     all_qty_delivered = fields.Float(
