@@ -25,8 +25,10 @@ class SaleOrder(models.Model):
                     _logger.warning('Noting to invoice')
                     return True
                 # a list is returned but only one invoice should be returned
+                # usamos final para que reste adelantos y tmb por ej
+                # por si se usa el modulo de facturar las returns
                 invoices = so.env['account.invoice'].browse(
-                    self.action_invoice_create())
+                    self.action_invoice_create(final=True))
                 # for any different from none and create_invoice, validate
                 if invoices and invoicing_atomation != 'create_invoice':
                     invoices.signal_workflow('invoice_open')
