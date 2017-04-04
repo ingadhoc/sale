@@ -1,6 +1,7 @@
-from openerp import fields, models, api, _
+from openerp import fields, models, api
 import openerp.addons.decimal_precision as dp
-from openerp.exceptions import ValidationError
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class account_invoice_line(models.Model):
@@ -29,12 +30,15 @@ class account_invoice_line(models.Model):
     def _inverse_discount(self):
         for rec in self:
             if rec.invoice_id.type not in ('in_invoice', 'in_refund'):
-                raise ValidationError(_(
-                    'Setting discount field is only allowed on purchase '
+                _logger.info(
+                    'Setting discount should only be used from purchase '
                     'invoices, on sale invoices you should use Discount 1, '
-                    '2 and 3.'))
+                    '2 and 3.')
+                continue
             # we only show discount field on purchase invoices
             rec.discount1 = rec.discount
+            rec.discount2 = False
+            rec.discount3 = False
 
     @api.one
     @api.depends('discount1', 'discount2', 'discount3')
