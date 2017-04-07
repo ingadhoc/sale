@@ -47,7 +47,12 @@ def migrate(env, version):
             so_type.invoicing_atomation = 'create_invoice'
             if validate_automatically_invoice:
                 so_type.invoicing_atomation = 'validate_invoice'
-                if so_type.payment_journal_id:
-                    so_type.invoicing_atomation = 'invoice_draft_payment'
-                    if validate_automatically_payment:
-                        so_type.invoicing_atomation = 'invoice_payment'
+                if (
+                        so_type.payment_journal_id and
+                        validate_automatically_payment):
+                    so_type.payment_atomation = 'validate_payment'
+                # DRAFT payment not implemented yet
+                # if so_type.payment_journal_id:
+                #     so_type.invoicing_atomation = 'invoice_draft_payment'
+                #     if validate_automatically_payment:
+                #         so_type.invoicing_atomation = 'invoice_payment'
