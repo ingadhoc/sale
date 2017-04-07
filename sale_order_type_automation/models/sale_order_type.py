@@ -21,13 +21,10 @@ class SaleOrderTypology(models.Model):
         'created automatically or manually. If no journal is set here, '
         'default journal will be used'
     )
-
     invoicing_atomation = fields.Selection([
         ('none', 'None'),
         ('create_invoice', 'Create Invoice'),
         ('validate_invoice', 'Validate Invoice'),
-        ('invoice_draft_payment', 'Invoice with Draft Payment'),
-        ('invoice_payment', 'Invoice with Payment'),
     ],
         default='none',
         required=True,
@@ -36,10 +33,20 @@ class SaleOrderTypology(models.Model):
         "*Create Invoice: create invoice for 'Invoiceable lines' (regarding "
         "product configuration and delivery status)\n"
         "*Validate Invoice: create invoice and validate it\n"
-        "*Invoice with Draft Payment: create invoice, validate it and create "
-        "payment (on draft)\n"
-        "*Invoice with Payment: create invoice, validate it, create payment "
-        "and validate it\n"
+    )
+    payment_atomation = fields.Selection([
+        ('none', 'None'),
+        # TODO ver si implementamos, por ahora solo con validacion
+        # porque asi lo implementamos en payment_group
+        # ('create_payment', 'Create Payment'),
+        ('validate_payment', 'Validate Payment'),
+    ],
+        default='none',
+        required=True,
+        help="On invoice validation, if:\n"
+        "*None: no payment is created\n"
+        # "*Create Payment: create payment with journal configured\n"
+        "*Validate Payment: create payment and validate it\n"
     )
     picking_atomation = fields.Selection([
         ('none', 'None'),
@@ -52,25 +59,22 @@ class SaleOrderTypology(models.Model):
     payment_journal_id = fields.Many2one(
         'account.journal',
         'Payment Journal',
-        domain="[('type','in', ['cash', 'bank']),\
-        ('company_id', '=', company_id)]",
-        help='This journal is only used if "Invoice automation" is set on '
-        '"Invoice with Draft Payment" or "Invoice with Payment"\n'
-        'IMPORTANT: manual payment method will be used'
+        domain="[('type','in', ['cash', 'bank']), "
+        "('company_id', '=', company_id), "
+        "('inbound_payment_method_ids.code', '=', 'manual')]",
+        help='Jouranl used only with payment_automation. As manual payment '
+        'method is used, only journals with manual method are shown.'
     )
 
     @api.multi
     @api.constrains(
-        'journal_id',
+        'payment_atomation',
         'payment_journal_id')
     def validate_invoicing_atomation(self):
         for rec in self:
-            if rec.invoicing_atomation in [
-                    'invoice_draft_payment', 'invoice_payment'] and not \
-                    rec.payment_journal_id:
+            if rec.payment_atomation != 'none' and not rec.payment_journal_id:
                 raise ValidationError(_(
-                    'If you choose Invoice automation as "Invoice with Draft'
-                    ' Payment" or "Invoice with Payment", Payment Journal '
+                    'If you choose a Payment automation, Payment Journal '
                     'is required'))
 
     @api.constrains(
