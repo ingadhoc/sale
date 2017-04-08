@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sale (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-28 00:13+0000\n"
-"PO-Revision-Date: 2016-05-28 00:33+0000\n"
+"POT-Creation-Date: 2016-12-12 19:47+0000\n"
+"PO-Revision-Date: 2016-10-19 23:13+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-sale-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -186,7 +186,7 @@ msgid "No operation line for line %s and operation %s"
 msgstr "No hay línea de operación para la línea %s en la operación %s"
 
 #. module: sale_invoice_operation_line
-#: code:addons/sale_invoice_operation_line/models/account_invoice_operation.py:115
+#: code:addons/sale_invoice_operation_line/models/account_invoice_operation.py:116
 #, python-format
 msgid ""
 "On product \"%s\", operation \"%s\" percentage can not be greater than %s%% "
@@ -221,6 +221,11 @@ msgstr "Id de Orden"
 #: field:sale.order.line.operation,percentage:0
 msgid "Percentage"
 msgstr "Porcentaje"
+
+#. module: sale_invoice_operation_line
+#: model:ir.model,name:sale_invoice_operation_line.model_stock_picking
+msgid "Picking List"
+msgstr "Lista de selección"
 
 #. module: sale_invoice_operation_line
 #: model:ir.model,name:sale_invoice_operation_line.model_product_template
@@ -269,7 +274,7 @@ msgid "You can not create operation line for operation of amount type %s"
 msgstr "No puede crearlíneas de operación de tipo de importe %s"
 
 #. module: sale_invoice_operation_line
-#: code:addons/sale_invoice_operation_line/models/account_invoice_operation.py:95
+#: code:addons/sale_invoice_operation_line/models/account_invoice_operation.py:96
 #, python-format
 msgid ""
 "You can not use this percentages as balance operation \"%s\" for line \"%s\""

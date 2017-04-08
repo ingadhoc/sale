@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sale (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-20 22:53+0000\n"
-"PO-Revision-Date: 2016-05-24 23:09+0000\n"
+"POT-Creation-Date: 2016-12-12 19:47+0000\n"
+"PO-Revision-Date: 2016-09-08 22:45+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-sale-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -37,6 +37,11 @@ msgstr "Validación Automática"
 #: selection:sale.invoice.operation,amount_type:0
 msgid "Balance"
 msgstr "Saldo"
+
+#. module: sale_invoice_operation
+#: field:sale.invoice.operation,change_date:0
+msgid "Change date"
+msgstr ""
 
 #. module: sale_invoice_operation
 #: field:sale.invoice.operation,company_id:0
@@ -209,11 +214,3 @@ msgstr "Esta referencia va a ser agregada a la referencia de la factura"
 #: field:sale.invoice.operation,type:0
 msgid "Type"
 msgstr "Tipo"
-
-#. module: sale_invoice_operation
-#: code:addons/sale_invoice_operation/models/sale_invoice_operation.py:33
-#, python-format
-msgid ""
-"You can not use a journal or company of different currency than sale order "
-"currency. Operation \"%s\""
-msgstr "No puede utilizar un diario o compañía con moneda diferente a la de la orden de venta. Operación \"%s\""
