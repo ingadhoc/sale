@@ -3,57 +3,53 @@
 # * sale_order_type_user_default
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
-# Lisandro Boggio <lboggio@ingenieriaboggio.com.ar>, 2017
-# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017
+# Rudolf Schnapka <rs@techno-flex.de>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-04-07 17:35+0000\n"
 "PO-Revision-Date: 2017-04-07 17:35+0000\n"
-"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017\n"
-"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2017\n"
+"Language-Team: German (https://www.transifex.com/adhoc/teams/46451/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
+"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: sale_order_type_user_default
 #: model:ir.model.fields,field_description:sale_order_type_user_default.field_res_users_default_sale_order_type_id
 msgid "Default Sale Order Type"
-msgstr "Tipo de Pedidos de Venta por Defecto"
+msgstr "Vorgabe-Verkaufsauftragsart"
 
 #. module: sale_order_type_user_default
 #: model:ir.model.fields,field_description:sale_order_type_user_default.field_res_users_property_delivery_carrier_id
 msgid "Delivery Method"
-msgstr "Método entrega"
+msgstr ""
 
 #. module: sale_order_type_user_default
 #: model:ir.model.fields,field_description:sale_order_type_user_default.field_res_users_require_purchase_order_number
 msgid "Require Purchase Order Number"
-msgstr "Requiere Pedido de Compra del Cliente"
+msgstr "Bestell-Auftragsnummer erforderlich"
 
 #. module: sale_order_type_user_default
 #: model:ir.model.fields,field_description:sale_order_type_user_default.field_res_users_sale_type
 #: model:ir.ui.view,arch_db:sale_order_type_user_default.view_users_form
 msgid "Sale Order Type"
-msgstr "Tipo de Pedidos de Venta"
+msgstr "Auftragsart"
 
 #. module: sale_order_type_user_default
 #: model:ir.model,name:sale_order_type_user_default.model_sale_order
 msgid "Sales Order"
-msgstr "Pedido de Ventas"
+msgstr "Verkaufsauftrag"
 
 #. module: sale_order_type_user_default
 #: model:ir.model.fields,help:sale_order_type_user_default.field_res_users_property_delivery_carrier_id
 msgid "This delivery method will be used when invoicing from picking."
 msgstr ""
-"Este método de entrega será utilizado cuando se facture a partir del "
-"albarán."
 
 #. module: sale_order_type_user_default
 #: model:ir.model,name:sale_order_type_user_default.model_res_users
 msgid "Users"
-msgstr "Usuarios"
+msgstr "Anwender"

@@ -1,0 +1,29 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * sale_require_ref
+# 
+# Translators:
+# Rudolf Schnapka <rs@techno-flex.de>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-04-07 17:36+0000\n"
+"PO-Revision-Date: 2017-04-07 17:36+0000\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2017\n"
+"Language-Team: German (https://www.transifex.com/adhoc/teams/46451/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: sale_require_ref
+#: model:sale.exception,name:sale_require_ref.require_ref
+msgid "Reference Field Required"
+msgstr "Referenzfeld erforderlich"
+
+#. module: sale_require_ref
+#: model:sale.exception,description:sale_require_ref.require_ref
+msgid "You must set a reference."
+msgstr "Sie müssen eine Referenz angeben."
