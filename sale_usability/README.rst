@@ -14,6 +14,7 @@ Several Improvements to sales:
 #. Add delivery status on sales
 #. Add a menu item on sales for 'sale lines' and improove views with more fields.
 #. Make that, by default, links to sale orders you "sale" data and not only "quoatation"
+#. Block cancelation of sale order if there are pickings in 'done' state or 'posted' invoices 
 
 Installation
 ============
