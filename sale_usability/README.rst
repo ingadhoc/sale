@@ -15,6 +15,7 @@ Several Improvements to sales:
 #. Add a menu item on sales for 'sale lines' and improove views with more fields.
 #. Make that, by default, links to sale orders you "sale" data and not only "quoatation"
 #. Block cancelation of sale order if there are pickings in 'done' state or 'posted' invoices (this is native on purchase orders)
+#. Add button on sale lines to allow cancelling of remaining qty to be delivered
 
 Installation
 ============
