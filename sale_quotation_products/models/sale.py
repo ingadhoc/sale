@@ -40,10 +40,18 @@ class SaleOrder(models.Model):
             last_sol = sol.search(
                 [('order_id', '=', self.id)], order='sequence desc', limit=1)
             sequence = last_sol and last_sol.sequence + 1 or 10
-            val = {
-                'product_uom_qty': qty,
+            vals = {
                 'order_id': self.id,
                 'product_id': product.id or False,
                 'sequence': sequence,
             }
-            sol.create(val)
+            sol = sol.new(vals)
+            # we call onchange product to get required fields
+            sol.product_id_change()
+            # we set qty (if we set it on create odoo overwrite it to 1)
+            sol.product_uom_qty = qty
+            # # we call onchange qty)
+            sol.product_uom_change()
+            # we convert to write
+            vals = sol._convert_to_write(sol._cache)
+            sol.create(vals)
