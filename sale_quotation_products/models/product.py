@@ -38,6 +38,14 @@ class ProductProduct(models.Model):
                     # we force editable no matter user rights
                     'readonly': '0',
                 }))
+            # add button add one
+            placeholder.addprevious(
+                etree.Element('button', {
+                    'name': 'action_product_add_one',
+                    'type': 'object',
+                    'icon': 'fa-plus',
+                    'string': _('Add one'),
+                }))
             res['fields'].update(self.fields_get(['qty']))
 
             # add button tu open form
@@ -120,3 +128,8 @@ class ProductProduct(models.Model):
             'res_id': self.id,
             'view_id': view_id,
         }
+
+    @api.multi
+    def action_product_add_one(self):
+        for rec in self:
+            rec.qty += 1
