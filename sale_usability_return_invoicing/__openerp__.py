@@ -30,7 +30,7 @@
     'images': [
     ],
     'depends': [
-        'sale_usability',
+        'sale_usability_stock',
         'sale_stock_picking_return_invoicing',
     ],
     'data': [

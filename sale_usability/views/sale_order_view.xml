@@ -19,11 +19,6 @@
                     <button name="button_reopen" type="object" string="Re-Open" states="done" groups="base.group_sale_manager"/>
                 </button>
 
-                <!-- agregamos boton de cancelar linea -->
-                <xpath expr="//field[@name='order_line']/tree/field[@name='qty_delivered']" position="after">
-                    <field name="delivery_status" invisible="1"/>
-                    <button name="button_cancel_remaining" type="object" string="Cancel remaining quanitity to be delivered. This will set line quantity equal to delivered qty and will cancel remaining moves" icon="fa-ban" confirm="This will set line quantity equal to delivery qty and will cancel remaining moves. This can not be undone. Are you sure you want to continue?" attrs="{'invisible': [('delivery_status', '!=', 'to deliver')]}" groups="base.group_sale_manager"/>
-                </xpath>
             </field>
         </record>
 
@@ -36,9 +31,7 @@
                 <field name="state" position="replace"/>
                 <field name="invoice_status" position="before">
                     <field name="state"/>
-                    <field name="delivery_status"/>
                 </field>
-
             </field>
         </record>
 
@@ -48,9 +41,6 @@
             <field name="inherit_id" ref="sale.view_sales_order_filter"/>
             <field name="arch" type="xml">
                 <filter domain="[('invoice_status','=','to invoice')]" position="before">
-                    <filter name="to_deliver" string="To Deliver" domain="[('delivery_status','=', 'to deliver')]" help="Sale orders that include lines not delivered."/>
-                    <filter name="delivered" string="Delivered" domain="[('delivery_status','=', 'delivered')]" help="Sale orders with all lines delivered."/>
-                    <separator/>
                     <filter name="invoiced" string="Invoiced" domain="[('invoice_status','=', 'invoiced')]"/>
                 </filter>
             </field>
