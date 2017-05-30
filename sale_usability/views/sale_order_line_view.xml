@@ -22,7 +22,6 @@
                                 <field name="product_id"/>
                                 <field name="price_unit" widget="monetary"/>
                                 <field name="product_uom_qty" string="Qty"/>
-                                <field name="qty_delivered"/>
                                 <field name="qty_invoiced"/>
                                 <field name="price_subtotal" sum="Total" widget="monetary"/>
                             </group>
@@ -46,7 +45,6 @@
                     <field name="product_id"/>
                     <field name="price_unit" widget="monetary"/>
                     <field name="product_uom_qty" string="Qty"/>
-                    <field name="qty_delivered"/>
                     <field name="qty_invoiced"/>
                     <field name="product_uom" string="Unit of Measure" groups="product.group_uom"/>
                     <field name="price_subtotal" sum="Total" widget="monetary"/>
@@ -68,9 +66,6 @@
                 <filter position="before">
                     <filter name="draft" string="Quotations" domain="[('state','in',('draft','sent'))]"/>
                     <filter name="approved" string="Sale Orders" domain="[('state','in',('sale','done'))]"/>
-                    <separator/>
-                    <filter name="to_deliver" string="To Deliver" domain="[('delivery_status','=', 'to deliver')]"/>
-                    <filter name="received" string="Delivered" domain="[('delivery_status','=', 'delivered')]"/>
                     <separator/>
                     <!-- to invoice already exists -->
                     <!-- <filter name="not_invoiced" string="Not Invoiced" domain="[('invoice_status','=', 'to invoice')]"/> -->

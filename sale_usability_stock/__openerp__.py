@@ -19,8 +19,8 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Usability Improvements',
-    'version': '9.0.1.8.0',
+    'name': 'Sale Usability interaction with Stock',
+    'version': '9.0.1.0.0',
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -30,10 +30,10 @@
     'images': [
     ],
     'depends': [
-        'sale',
+        'sale_stock',
+        'sale_usability',
     ],
     'data': [
-        'views/sale_view.xml',
         'views/sale_order_view.xml',
         'views/sale_order_line_view.xml',
     ],
@@ -42,6 +42,6 @@
     'test': [
     ],
     'installable': True,
-    'auto_install': False,
+    'auto_install': True,
     'application': False,
 }

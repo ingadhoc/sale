@@ -2,17 +2,14 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-===========================
-Sale Usability Improvements
-===========================
+=====================================
+Sale Usability interaction with Stock
+=====================================
 
 Several Improvements to sales:
-#. Add button "Re-Open" on sale orders to came back from "Done" to "Sale Order" state, only available to sale manager
-#. Make button print and send by email also available on done state on sale orders
-#. Make sale quotations menu only visible with technical features
-#. Make sale orders menu show all sale records (quotations, and confirmed ones)
-#. Add a menu item on sales for 'sale lines' and improove views with more fields.
-#. Make that, by default, links to sale orders shows "sale" data and not only "quoatation" data
+#. Add delivery status on sales
+#. Block cancelation of sale order if there are pickings in 'done' state or 'posted' invoices (this is native on purchase orders)
+#. Add button on sale lines to allow cancelling of remaining qty to be delivered
 
 Installation
 ============
