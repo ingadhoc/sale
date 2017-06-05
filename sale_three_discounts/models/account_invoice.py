@@ -19,31 +19,16 @@ class account_invoice_line(models.Model):
         'Discount 3 (%)',
         digits=dp.get_precision('Discount'),
     )
-    discount = fields.Float(
-        compute='get_discount',
-        inverse='_inverse_discount',
-        store=True,
-        readonly=True,
-    )
+    discount_readonly = fields.Float(
+        related="discount")
 
     @api.multi
-    def _inverse_discount(self):
+    @api.onchange('discount1', 'discount2', 'discount3')
+    @api.constrains('discount1', 'discount2', 'discount3')
+    def _set_discount(self):
         for rec in self:
-            if rec.invoice_id.type not in ('in_invoice', 'in_refund'):
-                _logger.info(
-                    'Setting discount should only be used from purchase '
-                    'invoices, on sale invoices you should use Discount 1, '
-                    '2 and 3.')
-                continue
-            # we only show discount field on purchase invoices
-            rec.discount1 = rec.discount
-            rec.discount2 = False
-            rec.discount3 = False
-
-    @api.one
-    @api.depends('discount1', 'discount2', 'discount3')
-    def get_discount(self):
-        discount_factor = 1.0
-        for discount in [self.discount1, self.discount2, self.discount3]:
-            discount_factor = discount_factor * ((100.0 - discount) / 100.0)
-        self.discount = 100.0 - (discount_factor * 100.0)
+            discount_factor = 1.0
+            for discount in [rec.discount1, rec.discount2, rec.discount3]:
+                discount_factor = discount_factor * (
+                    (100.0 - discount) / 100.0)
+            rec.discount = 100.0 - (discount_factor * 100.0)
