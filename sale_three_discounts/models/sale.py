@@ -23,6 +23,8 @@ class sale_order_line(models.Model):
         readonly=True,
         states={'draft': [('readonly', False)], 'sent': [('readonly', False)]}
     )
+    # TODO do like in invoice line? Make normal field with constraint and
+    # oncahnge?
     discount = fields.Float(
         compute='get_discount',
         store=True,
