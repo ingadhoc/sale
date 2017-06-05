@@ -13,6 +13,8 @@ class SaleOrderTypology(models.Model):
         ('by_product', 'Defined by Product'),
         ('prepaid', 'Before Delivery'),
         ('order', 'Ordered quantities')
+        # TODO habria que implementarlo
+        # ('delivery', 'Delivered quantities'),
     ],
         string='Invoicing Policy',
         required=True,

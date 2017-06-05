@@ -3,7 +3,8 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from openerp import api, models
+from openerp import api, models, _
+from openerp.exceptions import ValidationError
 
 
 class SaleOrderLine(models.Model):
@@ -17,10 +18,22 @@ class SaleOrderLine(models.Model):
         """
         super(SaleOrderLine, self)._get_to_invoice_qty()
         for line in self:
-            type_policy = line.order_id.type_id.invoice_policy
-            if type_policy == 'by_product' or line.order_id.state not in [
-                    'sale', 'done']:
+            # igual que por defecto, si no en estos estados, no hay a facturar
+            if line.order_id.state in ['sale', 'done']:
                 continue
+
+            type_policy = line.order_id.type_id.invoice_policy
+            # if by product, dont overwrite invoice qty
+            if type_policy == 'by_product':
+                continue
+            # elif type_policy == 'delivery':
+            # if order, we force ordered qty
             # por ahora las dos opciones que quedan son prepaid y order
             # y ambas funcionan como order una vez configramada
-            line.qty_to_invoice = line.product_uom_qty - line.qty_invoiced
+            elif type_policy in ['order', 'prepaid']:
+                line.qty_to_invoice = (
+                    line.product_uom_qty - line.qty_returned -
+                    line.qty_invoiced)
+            else:
+                raise ValidationError(_(
+                    'Invoicing Policy %s not implemented!' % type_policy))

@@ -6,7 +6,7 @@
 Sale Usability interatction with Refund management
 ==================================================
 
-#. Add new field on order lines "qty_returned"
+#. Add new field on order lines "qty_returned" and also implement refunds for products with invoicing type "ordered"
 #. Add filter for sale orders with returns
 #. Integrate delivery status with returns logic
 

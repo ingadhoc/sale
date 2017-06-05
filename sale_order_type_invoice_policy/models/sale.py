@@ -18,6 +18,10 @@ class SaleOrder(models.Model):
 
     @api.multi
     def action_invoice_create_force(self):
+        """
+        Forzamos cantidades a facturar igual a cantidades pedidas (menos las
+        ya facturadas)
+        """
         self.ensure_one()
         for line in self.order_line:
             line.qty_to_invoice = line.product_uom_qty - line.qty_invoiced

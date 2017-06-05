@@ -5,6 +5,7 @@
 ##############################################################################
 from openerp import models, api, fields
 import openerp.addons.decimal_precision as dp
+# from openerp.exceptions import ValidationError
 
 
 class SaleOrderLine(models.Model):
@@ -15,6 +16,7 @@ class SaleOrderLine(models.Model):
         copy=False,
         default=0.0,
         digits=dp.get_precision('Product Unit of Measure'),
+        readonly=True,
     )
 
     @api.multi
@@ -42,6 +44,26 @@ class SaleOrderLine(models.Model):
                 qty_returned += move.product_uom._compute_qty_obj(
                     move.product_uom, move.product_uom_qty, rec.product_uom)
             rec.qty_returned = qty_returned
+
+    @api.depends('qty_returned')
+    def _get_to_invoice_qty(self):
+        """
+        Modificamos la funcion original para que si el producto es segun lo
+        pedido, para que funcione el reembolo hacemos que la cantidad a
+        facturar reste la cantidad devuelta.
+        NOTA: solo lo hacemos si policy "order" porque en policy "delivered"
+        odoo ya lo descuenta a la cantidad entregada y automáticamente lo
+        termina facturando
+        """
+        super(SaleOrderLine, self)._get_to_invoice_qty()
+        for line in self:
+            # igual que por defecto, si no en estos estados, no hay a facturar
+            if line.order_id.state not in ['sale', 'done']:
+                continue
+            if line.product_id.invoice_policy == 'order':
+                line.qty_to_invoice = (
+                    line.product_uom_qty - line.qty_returned -
+                    line.qty_invoiced)
 
 
 class SaleOrder(models.Model):

@@ -10,6 +10,7 @@ Add to sale order type invoice policy field with possible values:
 #. Defined by Product: default odoo behaviour, invoice qty will be computed considering product configuration
 #. Ordered quantities: overwrites product behaviour so that all lines are considered as "ordered quantities" no matter product configuration, once order is confirmed all products should be invoiced.
 #. Before Delivery: similar than ordered quantities but it requires a pay invoice for every line before order confirmation 
+#. This module is also integrated with sale_usability_return_invoicing so that returns for "Before Delivery" or "Ordered quantities" can be returned
 
 Installation
 ============
