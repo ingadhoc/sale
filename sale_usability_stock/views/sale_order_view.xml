@@ -7,6 +7,10 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
+                <!-- agregamos boton de delivery status para que no de error -->
+                <xpath expr="//field[@name='order_line']/form//label[@for='qty_invoiced']" position="after">
+                    <field name="delivery_status" invisible="1"/>
+                </xpath>
                 <!-- agregamos boton de cancelar linea -->
                 <xpath expr="//field[@name='order_line']/tree/field[@name='qty_delivered']" position="after">
                     <field name="delivery_status" invisible="1"/>
