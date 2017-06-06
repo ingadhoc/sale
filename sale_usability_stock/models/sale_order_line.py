@@ -4,7 +4,7 @@
 # directory
 ##############################################################################
 from openerp import models, api, fields, _
-from openerp.exceptions import UserError
+from openerp.exceptions import ValidationError
 from openerp.tools.float_utils import float_compare
 import openerp.addons.decimal_precision as dp
 
@@ -67,22 +67,18 @@ class SaleOrderLine(models.Model):
         for rec in self:
             old_product_uom_qty = rec.product_uom_qty
             if rec.qty_invoiced > rec.qty_delivered:
-                raise UserError(_(
+                raise ValidationError(_(
                     'You can not cancel remianing qty to deliver because '
                     'there are more product invoiced than the delivered. '
                     'You should correct invoice or ask for a refund'))
             rec.product_uom_qty = rec.qty_delivered
-            # to_cancel_procurements = rec.procurement_ids.filtered(
-            #     lambda x: x.state != 'done')
-            to_cancel_moves = rec.mapped(
-                'procurement_ids.move_ids').filtered(
-                lambda x: x.state != 'done')
-            to_cancel_moves.action_cancel()
-            # to_cancel_procurements.cancel()
+            rec.procurement_ids.button_cancel_remaining()
+
+            # TODO borrar, ahora no seria necesario porque obligamos des
+            # reservar antes de borrar
             # because cancel dont update operations, we re asign
-            # to_cancel_procurements.mapped('move_ids.picking_id').filtered(
-            to_cancel_moves.mapped('picking_id').filtered(
-                lambda x: x.state not in ['draft', 'cancel']).action_assign()
+            # to_cancel_moves.mapped('picking_id').filtered(
+            #     lambda x: x.state not in ['draft', 'cancel']).action_assign()
             rec.order_id.message_post(
                 body=_(
                     'Cancel remaining call for line "%s" (id %s), line '
