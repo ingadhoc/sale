@@ -10,7 +10,9 @@ from openerp.exceptions import ValidationError
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-    @api.depends('order_id.type_id.invoice_policy')
+    # .invoice_policy (no hacemos depends en el .invoice_policy para que si
+    # lo cambiamos mas adelante no reprosese todas las ventas)
+    @api.depends('order_id.type_id')
     def _get_to_invoice_qty(self):
         """
         Modificamos la funcion original para sobre escribir con la policy
@@ -19,7 +21,7 @@ class SaleOrderLine(models.Model):
         super(SaleOrderLine, self)._get_to_invoice_qty()
         for line in self:
             # igual que por defecto, si no en estos estados, no hay a facturar
-            if line.order_id.state in ['sale', 'done']:
+            if line.order_id.state not in ['sale', 'done']:
                 continue
 
             type_policy = line.order_id.type_id.invoice_policy
