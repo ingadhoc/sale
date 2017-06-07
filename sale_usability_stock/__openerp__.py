@@ -31,6 +31,7 @@
     ],
     'depends': [
         'sale_stock',
+        'stock_usability',
         'sale_usability',
     ],
     'data': [
