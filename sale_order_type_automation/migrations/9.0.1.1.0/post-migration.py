@@ -27,17 +27,19 @@ from openupgradelib import openupgrade
 def migrate(env, version):
     cr = env.cr
     cr.execute(
-        "select id, %s, %s, %s FROM sale_order_type" % (
+        "select id, %s, %s FROM sale_order_type" % (
             openupgrade.get_legacy_name('validate_automatically_picking'),
             openupgrade.get_legacy_name('validate_automatically_invoice'),
-            openupgrade.get_legacy_name('validate_automatically_payment'),
+            # no existia en v8
+            # openupgrade.get_legacy_name('validate_automatically_payment'),
         ))
     for rec in cr.fetchall():
         (
             id,
             validate_automatically_picking,
-            validate_automatically_invoice,
-            validate_automatically_payment) = rec
+            validate_automatically_invoice
+            # validate_automatically_payment
+        ) = rec
         so_type = env['sale.order.type'].browse(id)
         if validate_automatically_picking:
             so_type.picking_atomation = 'validate'
@@ -48,8 +50,9 @@ def migrate(env, version):
             if validate_automatically_invoice:
                 so_type.invoicing_atomation = 'validate_invoice'
                 if (
-                        so_type.payment_journal_id and
-                        validate_automatically_payment):
+                        so_type.payment_journal_id
+                        # and validate_automatically_payment
+                ):
                     so_type.payment_atomation = 'validate_payment'
                 # DRAFT payment not implemented yet
                 # if so_type.payment_journal_id:
