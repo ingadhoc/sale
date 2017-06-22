@@ -13,6 +13,7 @@ Several Improvements to sales:
 #. Make sale orders menu show all sale records (quotations, and confirmed ones)
 #. Add a menu item on sales for 'sale lines' and improove views with more fields.
 #. Make that, by default, links to sale orders shows "sale" data and not only "quoatation" data
+#. Make cancel button also visible on done state so that if "Never allow to modify a confirmed sale order" is enable, sale users can still cancel a sale order that has not been delivered or invoiced yet
 
 Installation
 ============

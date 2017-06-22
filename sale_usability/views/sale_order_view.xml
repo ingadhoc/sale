@@ -19,6 +19,9 @@
                     <button name="button_reopen" type="object" string="Re-Open" states="done" groups="base.group_sale_manager"/>
                 </button>
 
+                <button name="action_cancel" position="attributes">
+                    <attribute name="states">draft,sent,sale,done</attribute>
+                </button>
             </field>
         </record>
 
