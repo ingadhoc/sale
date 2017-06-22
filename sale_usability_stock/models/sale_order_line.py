@@ -85,3 +85,25 @@ class SaleOrderLine(models.Model):
                     'qty updated from %s to %s') % (
                         rec.name, rec.id,
                         old_product_uom_qty, rec.product_uom_qty))
+
+    @api.onchange('product_uom_qty')
+    def _onchange_product_uom_qty(self):
+        """
+        Sobre escribimos este método para no permitir reducir cantidad
+        """
+        if (
+                self.state == 'sale' and
+                self.product_id.type in ['product', 'consu'] and
+                self.product_uom_qty < self._origin.product_uom_qty):
+            warning_mess = {
+                'title': _('Ordered quantity decreased!'),
+                'message': (
+                    '¡Está reduciendo la cantidad pedida! Esto no está '
+                    'permitido, le recomendamos que entregue los productos '
+                    'correspondientes y luego cancele el remanente utilzando '
+                    'el botón para tal fin. Se restableció la cantidad a la '
+                    'original'),
+            }
+            self.product_uom_qty = self._origin.product_uom_qty
+            return {'warning': warning_mess}
+        return {}
