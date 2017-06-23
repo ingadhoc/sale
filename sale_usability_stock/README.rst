@@ -10,6 +10,8 @@ Several Improvements to sales:
 #. Add delivery status on sales
 #. Block cancelation of sale order if there are pickings in 'done' state or 'posted' invoices (this is native on purchase orders)
 #. Add button on sale lines to allow cancelling of remaining qty to be delivered
+#. Block decreasing qty on sale lines when there is a delivery linked
+#. Add on stock moves button with link to related sale order
 
 Installation
 ============

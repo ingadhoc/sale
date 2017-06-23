@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Sale Usability interaction with Stock',
-    'version': '9.0.1.1.0',
+    'version': '9.0.1.2.0',
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -37,6 +37,7 @@
     'data': [
         'views/sale_order_view.xml',
         'views/sale_order_line_view.xml',
+        'views/stock_move_view.xml',
     ],
     'demo': [
     ],
