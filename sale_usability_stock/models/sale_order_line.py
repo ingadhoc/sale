@@ -74,11 +74,6 @@ class SaleOrderLine(models.Model):
             rec.product_uom_qty = rec.qty_delivered
             rec.procurement_ids.button_cancel_remaining()
 
-            # TODO borrar, ahora no seria necesario porque obligamos des
-            # reservar antes de borrar
-            # because cancel dont update operations, we re asign
-            # to_cancel_moves.mapped('picking_id').filtered(
-            #     lambda x: x.state not in ['draft', 'cancel']).action_assign()
             rec.order_id.message_post(
                 body=_(
                     'Cancel remaining call for line "%s" (id %s), line '

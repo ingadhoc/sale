@@ -8,7 +8,7 @@
                 <field name="sale_id" invisible="1"/>
                 <button name="action_view_linked_record"
                         class="oe_stat_button"
-                        icon="fa-credit-card"
+                        icon="fa-dollar"
                         string="Sale Order"
                         type="object"
                         context="{'res_id': sale_id, 'action_ref': 'sale.action_orders', 'form_view_ref': 'sale.view_order_form'}"
