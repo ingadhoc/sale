@@ -65,6 +65,10 @@ class SaleOrderTypology(models.Model):
         help='Jouranl used only with payment_automation. As manual payment '
         'method is used, only journals with manual method are shown.'
     )
+    book_id = fields.Many2one(
+        'stock.book',
+        'Voucher Book',
+    )
 
     @api.multi
     @api.constrains(
