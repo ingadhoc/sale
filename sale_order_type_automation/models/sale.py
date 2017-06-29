@@ -45,6 +45,8 @@ class SaleOrder(models.Model):
                         pack.write({'qty_done': pack.product_qty})
                     else:
                         pack.unlink()
+                if so.type_id.book_id:
+                    picking.book_id = so.type_id.book_id
                 picking.do_transfer()
 
     @api.multi
