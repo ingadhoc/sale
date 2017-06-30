@@ -30,7 +30,7 @@
         # dependemos de este para no generar modulos puente y porque nosotros
         # queremos que el pago creado sea un payment group
         'account_payment_group',
-        'account_voucher',
+        'stock_voucher',
     ],
     'category': 'Sale Management',
     'demo': [
