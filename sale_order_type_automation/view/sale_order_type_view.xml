@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="sale_order_type.sot_sale_order_type_form_view"/>
             <field name="arch" type="xml">
                 <field name="journal_id" position="after">
-                    <field name="book_id" attrs="{'invisible' : [('picking_atomation', '!=', 'validate')]}"/>
+                    <field name="book_id"/>
                     <field name="payment_journal_id" attrs="{'invisible' : [('payment_atomation', '=', 'none')], 'required' : [('payment_atomation', '!=', 'none')]}"/>
                 </field>
                 <field name="sequence_id" position="after">

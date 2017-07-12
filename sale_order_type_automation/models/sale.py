@@ -35,18 +35,18 @@ class SaleOrder(models.Model):
     @api.multi
     def run_picking_atomation(self):
         for so in self:
+            picking = self.env['stock.picking'].search(
+                [('group_id', '=', so.procurement_group_id.id)], limit=1)
+            if so.type_id.book_id:
+                picking.book_id = so.type_id.book_id
             if so.type_id.picking_atomation == 'validate' and\
                     so.procurement_group_id:
-                picking = self.env['stock.picking'].search(
-                    [('group_id', '=', so.procurement_group_id.id)], limit=1)
                 picking.force_assign()
                 for pack in picking.pack_operation_ids:
                     if pack.product_qty > 0:
                         pack.write({'qty_done': pack.product_qty})
                     else:
                         pack.unlink()
-                if so.type_id.book_id:
-                    picking.book_id = so.type_id.book_id
                 picking.do_transfer()
 
     @api.multi

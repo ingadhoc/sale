@@ -4,5 +4,4 @@ ingadhoc-partner https://github.com/ingadhoc/partner.git
 ingadhoc-stock https://github.com/ingadhoc/stock.git
 ingadhoc-product https://github.com/ingadhoc/product.git
 ingadhoc-account-invoicing https://github.com/ingadhoc/account-invoicing.git
-# para sale_order_type_automation
 ingadhoc-account-payment https://github.com/ingadhoc/account-payment.git
