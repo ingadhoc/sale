@@ -35,6 +35,8 @@ class SaleOrder(models.Model):
             if rec.type_invoice_policy == 'prepaid':
                 invoice_status = rec.mapped(
                     'order_line.invoice_lines.invoice_id.state')
+                self = self.with_context(
+                    by_pass_credit_limit=True)
                 if (set(invoice_status) - set(['paid'])) or any(
                         (float_compare(
                         line.product_uom_qty, line.qty_invoiced,
