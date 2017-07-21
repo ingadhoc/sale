@@ -38,12 +38,12 @@ class SaleOrder(models.Model):
         for so in self:
             picking = self.env['stock.picking'].search(
                 [('group_id', '=', so.procurement_group_id.id)], limit=1)
+            picking_atomation = so.type_id.picking_atomation
             if so.type_id.book_id:
                 picking.book_id = so.type_id.book_id
-            if so.type_id.picking_atomation == 'validate' and\
-                    so.procurement_group_id:
+            if picking_atomation == 'validate' and so.procurement_group_id:
                 picking.force_assign()
-            if so.type_id.picking_atomation == 'validate_no_force' and\
+            if picking_atomation == 'validate_no_force' and\
                     so.procurement_group_id:
                 products = []
                 for move in picking.move_lines:
@@ -54,9 +54,8 @@ class SaleOrder(models.Model):
                         'Products:\n%s\nAre not available, we suggest use'
                         ' another type of sale to generate a partial delivery.'
                     ) % ('\n'.join(x.name for x in products)))
-            if so.type_id.picking_atomation == 'validate' or so.type_id.\
-                    picking_atomation == 'validate_no_force'\
-                    and so.procurement_group_id:
+            if picking_atomation in ['validate', 'validate_no_force'] and\
+                    so.procurement_group_id:
                 for pack in picking.pack_operation_ids:
                     if pack.product_qty > 0:
                         pack.write({'qty_done': pack.product_qty})
