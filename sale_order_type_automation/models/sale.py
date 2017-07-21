@@ -3,7 +3,8 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from openerp import api, models
+from openerp import api, models, _
+from openerp.exceptions import ValidationError
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -42,6 +43,20 @@ class SaleOrder(models.Model):
             if so.type_id.picking_atomation == 'validate' and\
                     so.procurement_group_id:
                 picking.force_assign()
+            if so.type_id.picking_atomation == 'validate_no_force' and\
+                    so.procurement_group_id:
+                products = []
+                for move in picking.move_lines:
+                    if move.state != 'assigned':
+                        products.append(move.product_id)
+                if products:
+                    raise ValidationError(_(
+                        'Products:\n%s\nAre not available, we suggest use'
+                        ' another type of sale to generate a partial delivery.'
+                    ) % ('\n'.join(x.name for x in products)))
+            if so.type_id.picking_atomation == 'validate' or so.type_id.\
+                    picking_atomation == 'validate_no_force'\
+                    and so.procurement_group_id:
                 for pack in picking.pack_operation_ids:
                     if pack.product_qty > 0:
                         pack.write({'qty_done': pack.product_qty})
