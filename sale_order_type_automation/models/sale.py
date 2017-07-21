@@ -35,33 +35,34 @@ class SaleOrder(models.Model):
 
     @api.multi
     def run_picking_atomation(self):
-        for so in self:
-            procurement_group = so.procurement_group_id
-            picking_atomation = so.type_id.picking_atomation
-            picking = self.env['stock.picking'].search(
-                [('group_id', '=', procurement_group.id)], limit=1)
-            if so.type_id.book_id:
-                picking.book_id = so.type_id.book_id
-            if picking_atomation == 'validate' and procurement_group:
-                picking.force_assign()
-            if picking_atomation == 'validate_no_force' and procurement_group:
-                products = []
-                for move in picking.move_lines:
-                    if move.state != 'assigned':
-                        products.append(move.product_id)
-                if products:
-                    raise ValidationError(_(
-                        'Products:\n%s\nAre not available, we suggest use'
-                        ' another type of sale to generate a partial delivery.'
-                    ) % ('\n'.join(x.name for x in products)))
-            if picking_atomation in ['validate', 'validate_no_force'] and\
-                    procurement_group:
-                for pack in picking.pack_operation_ids:
+        for rec in self.filtered(lambda x: x.procurement_group_id):
+            pickings = self.env['stock.picking'].search(
+                [('group_id', '=', rec.procurement_group_id.id)])
+            if rec.type_id.book_id:
+                pickings.write({'book_id': rec.type_id.book_id})
+            picking_atomation = rec.type_id.picking_atomation
+            if picking_atomation:
+                if picking_atomation == 'validate':
+                    pickings.force_assign()
+                elif picking_atomation == 'validate_no_force':
+                    products = []
+                    for move in pickings.mapped('move_lines'):
+                        if move.state != 'assigned':
+                            products.append(move.product_id)
+                    if products:
+                        raise ValidationError(_(
+                            'Products:\n%s\nAre not available, we suggest use'
+                            ' another type of sale to generate a'
+                            ' partial delivery.'
+                        ) % ('\n'.join(x.name for x in products)))
+                for pack in pickings.mapped('pack_operation_ids'):
                     if pack.product_qty > 0:
                         pack.write({'qty_done': pack.product_qty})
                     else:
                         pack.unlink()
-                picking.do_transfer()
+                # because of ensure_one on delivery module
+                for pick in pickings:
+                    pick.do_transfer()
 
     @api.multi
     def action_confirm(self):
