@@ -36,15 +36,15 @@ class SaleOrder(models.Model):
     @api.multi
     def run_picking_atomation(self):
         for so in self:
-            picking = self.env['stock.picking'].search(
-                [('group_id', '=', so.procurement_group_id.id)], limit=1)
+            procurement_group = so.procurement_group_id
             picking_atomation = so.type_id.picking_atomation
+            picking = self.env['stock.picking'].search(
+                [('group_id', '=', procurement_group.id)], limit=1)
             if so.type_id.book_id:
                 picking.book_id = so.type_id.book_id
-            if picking_atomation == 'validate' and so.procurement_group_id:
+            if picking_atomation == 'validate' and procurement_group:
                 picking.force_assign()
-            if picking_atomation == 'validate_no_force' and\
-                    so.procurement_group_id:
+            if picking_atomation == 'validate_no_force' and procurement_group:
                 products = []
                 for move in picking.move_lines:
                     if move.state != 'assigned':
@@ -55,7 +55,7 @@ class SaleOrder(models.Model):
                         ' another type of sale to generate a partial delivery.'
                     ) % ('\n'.join(x.name for x in products)))
             if picking_atomation in ['validate', 'validate_no_force'] and\
-                    so.procurement_group_id:
+                    procurement_group:
                 for pack in picking.pack_operation_ids:
                     if pack.product_qty > 0:
                         pack.write({'qty_done': pack.product_qty})
