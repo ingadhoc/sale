@@ -50,11 +50,15 @@ class SaleOrderTypology(models.Model):
     )
     picking_atomation = fields.Selection([
         ('none', 'None'),
-        ('validate', 'Validate')],
+        ('validate', 'Validate'),
+        ('validate_no_force', 'Validate No Force')],
         default='none',
         required=True,
-        help='Pickings are generated automatically upon sale confirmation. '
-        'If you set "Validate", then they will be also confirmed automatically'
+        help='Pickings are generated automatically upon sale confirmation.\n'
+        'If you set "Validate", '
+        'then they will be also confirmed automatically.\n'
+        'If you set "Validate No Force", then'
+        ' Validate without forcing availabilty'
     )
     payment_journal_id = fields.Many2one(
         'account.journal',
