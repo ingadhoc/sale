@@ -39,9 +39,9 @@ class SaleOrder(models.Model):
             pickings = self.env['stock.picking'].search(
                 [('group_id', '=', rec.procurement_group_id.id)])
             if rec.type_id.book_id:
-                pickings.write({'book_id': rec.type_id.book_id})
+                pickings.write({'book_id': rec.type_id.book_id.id})
             picking_atomation = rec.type_id.picking_atomation
-            if picking_atomation:
+            if picking_atomation != 'none':
                 if picking_atomation == 'validate':
                     pickings.force_assign()
                 elif picking_atomation == 'validate_no_force':
