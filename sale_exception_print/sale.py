@@ -1,22 +1,50 @@
 # -*- coding: utf-8 -*-
-from openerp import models, api
+from openerp import models, api, fields
 
 
-class sale_order(models.Model):
+class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     @api.multi
     def print_quotation(self):
-        self.ensure_one()
-        if self.detect_exceptions():
+        if self.detect_print_exceptions():
             return self._popup_exceptions()
         else:
-            return super(sale_order, self).print_quotation()
+            return super(SaleOrder, self).print_quotation()
 
     @api.multi
     def action_quotation_send(self):
         self.ensure_one()
-        if self.detect_exceptions():
+        if self.detect_print_exceptions():
             return self._popup_exceptions()
         else:
-            return super(sale_order, self).action_quotation_send()
+            return super(SaleOrder, self).action_quotation_send()
+
+    @api.multi
+    def detect_print_exceptions(self):
+        """returns the list of exception_ids for all the considered sale orders
+
+        as a side effect, the sale order's exception_ids column is updated with
+        the list of exceptions related to the SO
+        """
+        exception_obj = self.env['sale.exception']
+        order_exceptions = exception_obj.search(
+            [('model', '=', 'sale.order'), ('block_print', '=', True)])
+        line_exceptions = exception_obj.search(
+            [('model', '=', 'sale.order.line'), ('block_print', '=', True)])
+
+        all_exception_ids = []
+        for order in self:
+            if order.ignore_exception:
+                continue
+            exception_ids = order._detect_exceptions(order_exceptions,
+                                                     line_exceptions)
+            order.exception_ids = [(6, 0, exception_ids)]
+            all_exception_ids += exception_ids
+        return all_exception_ids
+
+
+class SaleException(models.Model):
+    _inherit = "sale.exception"
+
+    block_print = fields.Boolean('Block Print')
