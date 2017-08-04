@@ -13,6 +13,6 @@ class SaleExceptionConfirm(models.TransientModel):
     @api.one
     def action_confirm(self):
         res = super(SaleExceptionConfirm, self).action_confirm()
-        if self.ignore:
+        if self.ignore and not self._context.get('print_exceptions', False):
             return self.sale_id.action_confirm()
         return res
