@@ -26,7 +26,9 @@ class SaleOrderLine(models.Model):
 
             type_policy = line.order_id.type_id.invoice_policy
             # if by product, dont overwrite invoice qty
-            if type_policy == 'by_product':
+            # si no hay type_policy puede ser por ordenes que antes de instalar
+            # sale_order_type que no tienen type
+            if not type_policy or type_policy == 'by_product':
                 continue
             # elif type_policy == 'delivery':
             # if order, we force ordered qty
