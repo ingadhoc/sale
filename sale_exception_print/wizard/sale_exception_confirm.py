@@ -14,6 +14,6 @@ class SaleExceptionConfirm(models.TransientModel):
     def action_confirm(self):
         if self.ignore and self._context.get('print_exceptions', False):
             self.sale_id.ignore_exception_print = True
-        elif self.ignore:
-            self.sale_id.ignore_exception = True
-        return {'type': 'ir.actions.act_window_close'}
+            # con esto limpiamos el ignore para que no super no ignore todo
+            self.ignore = False
+        return super(SaleExceptionConfirm, self).action_confirm()
