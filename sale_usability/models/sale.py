@@ -23,3 +23,13 @@ class SaleOrder(models.Model):
     @api.multi
     def button_reopen(self):
         self.write({'state': 'sale'})
+
+    @api.multi
+    def button_set_invoiced(self):
+        if not self.user_has_groups('base.group_system'):
+            group = self.env.ref('base.group_system').sudo()
+            raise UserError(_(
+                'Only users with "%s / %s" can Set Invoiced manually') % (
+                group.category_id.name, group.name))
+        self.order_line.write({'qty_to_invoice': 0.0})
+        self.message_post(body='Manually setted as invoiced')

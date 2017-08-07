@@ -14,6 +14,7 @@ Several Improvements to sales:
 #. Add a menu item on sales for 'sale lines' and improove views with more fields.
 #. Make that, by default, links to sale orders shows "sale" data and not only "quoatation" data
 #. Make cancel button also visible on done state so that if "Never allow to modify a confirmed sale order" is enable, sale users can still cancel a sale order that has not been delivered or invoiced yet
+#. Add button to force "invoiced" only for admin with tec features
 
 Installation
 ============

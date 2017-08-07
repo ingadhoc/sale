@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Sale Usability Improvements',
-    'version': '9.0.1.9.0',
+    'version': '9.0.1.10.0',
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
