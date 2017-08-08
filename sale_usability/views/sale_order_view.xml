@@ -18,8 +18,12 @@
                 <button name="action_done" position="after">
                     <button name="button_reopen" type="object" string="Re-Open" states="done" groups="base.group_sale_manager"/>
                     <!-- agregamos boton para forzar facturado, solo en estado done ya que si no al pasarlo a done se resetearia -->
-                    <button name="button_set_invoiced" type="object" string="Set Invoiced" attrs="{'invisible': ['|', ('state', '!=', 'done'), ('invoice_status', '!=', 'to invoice')]}" confirm="This order will be setted as invoiced. This operation can't be undone. Are you sure do you want to continue?" groups="base.group_no_one"/>
+                    <!-- <button name="button_set_invoiced" type="object" string="Set Invoiced" attrs="{'invisible': ['|', ('state', '!=', 'done'), ('invoice_status', '!=', 'to invoice')]}" confirm="This order will be setted as invoiced. This operation can't be undone. Are you sure do you want to continue?" groups="base.group_no_one"/> -->
                 </button>
+
+                <group name="sale_pay">
+                    <field name="manually_set_invoiced" groups="base.group_no_one"/>
+                </group>
 
                 <button name="action_cancel" position="attributes">
                     <attribute name="states">draft,sent,sale,done</attribute>
