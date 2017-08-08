@@ -14,6 +14,7 @@ class SaleOrder(models.Model):
         string='Manually Set Invoiced?',
         help='If you set this field to True, then all lines invoiceable lines'
         'will be set to invoiced?',
+        track_visibility='onchange',
     )
 
     @api.multi
