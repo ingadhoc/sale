@@ -22,6 +22,12 @@ class SaleOrder(models.Model):
         readonly=True,
         default='no'
     )
+    manually_set_delivered = fields.Boolean(
+        string='Manually Set Delivered?',
+        help='If you set this field to True, then all lines deliverable lines'
+        'will be set to delivered?',
+        track_visibility='onchange',
+    )
 
     @api.multi
     def action_cancel(self):
@@ -36,13 +42,18 @@ class SaleOrder(models.Model):
     # dejamos el depends a qty_delivered por mas que usamos all_qty_delivered
     # total son iguales pero qty_delivered es storeado
     @api.depends(
-        'state', 'order_line.qty_delivered', 'order_line.product_uom_qty')
+        'state', 'order_line.qty_delivered', 'order_line.product_uom_qty',
+        'manually_set_delivered')
     def _get_delivered(self):
         precision = self.env['decimal.precision'].precision_get(
             'Product Unit of Measure')
         for order in self:
             if order.state not in ('sale', 'done'):
                 order.delivery_status = 'no'
+                continue
+
+            if order.manually_set_delivered:
+                order.delivery_status = 'delivered'
                 continue
 
             if any(float_compare(
@@ -57,3 +68,12 @@ class SaleOrder(models.Model):
                 order.delivery_status = 'delivered'
             else:
                 order.delivery_status = 'no'
+
+    @api.multi
+    @api.constrains('manually_set_delivered')
+    def check_manually_set_invoiced(self):
+        if not self.user_has_groups('base.group_system'):
+            group = self.env.ref('base.group_system').sudo()
+            raise UserError(_(
+                'Only users with "%s / %s" can Set Delivered manually') % (
+                group.category_id.name, group.name))

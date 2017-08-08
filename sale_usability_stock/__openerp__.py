@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Sale Usability interaction with Stock',
-    'version': '9.0.1.2.0',
+    'version': '9.0.1.3.0',
     'category': 'Sales',
     'sequence': 14,
     'summary': '',

@@ -40,13 +40,19 @@ class SaleOrderLine(models.Model):
         default='no'
     )
 
-    @api.depends('order_id.state', 'qty_delivered', 'product_uom_qty')
+    @api.depends(
+        'order_id.state', 'qty_delivered', 'product_uom_qty',
+        'order_id.manually_set_delivered')
     def _compute_delivery_status(self):
         precision = self.env['decimal.precision'].precision_get(
             'Product Unit of Measure')
         for line in self:
             if line.state not in ('sale', 'done'):
                 line.delivery_status = 'no'
+                continue
+
+            if line.order_id.manually_set_delivered:
+                line.order_id.delivery_status = 'delivered'
                 continue
 
             if float_compare(

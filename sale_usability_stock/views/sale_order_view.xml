@@ -16,6 +16,9 @@
                     <field name="delivery_status" invisible="1"/>
                     <button name="button_cancel_remaining" type="object" string="Cancel remaining quanitity to be delivered. This will set line quantity equal to delivered qty and will cancel remaining moves" icon="fa-ban" confirm="This will set line quantity equal to delivery qty and will cancel remaining moves. This can not be undone. Are you sure you want to continue?" attrs="{'invisible': [('delivery_status', '!=', 'to deliver')]}" groups="base.group_sale_manager"/>
                 </xpath>
+                <group name="sale_pay">
+                    <field name="manually_set_delivered" groups="base.group_no_one"/>
+                </group>
             </field>
         </record>
 
