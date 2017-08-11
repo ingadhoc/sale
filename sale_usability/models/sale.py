@@ -32,9 +32,19 @@ class SaleOrder(models.Model):
         self.write({'state': 'sale'})
 
     @api.multi
-    @api.constrains('manually_set_invoiced')
-    def check_manually_set_invoiced(self):
-        if not self.user_has_groups('base.group_system'):
+    def write(self, vals):
+        self.check_manually_set_invoiced(vals)
+        return super(SaleOrder, self).write(vals)
+
+    @api.model
+    def create(self, vals):
+        self.check_manually_set_invoiced(vals)
+        return super(SaleOrder, self).create(vals)
+
+    @api.model
+    def check_manually_set_invoiced(self, vals):
+        if vals.get('manually_set_invoiced') and not self.user_has_groups(
+                'base.group_system'):
             group = self.env.ref('base.group_system').sudo()
             raise UserError(_(
                 'Only users with "%s / %s" can Set Invoiced manually') % (
