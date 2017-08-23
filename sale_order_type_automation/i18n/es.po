@@ -4,14 +4,13 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
-# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017
 # Javier Diez <jd@adhoc.com.ar>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-07 17:35+0000\n"
-"PO-Revision-Date: 2017-04-07 17:35+0000\n"
+"POT-Creation-Date: 2017-08-23 17:32+0000\n"
+"PO-Revision-Date: 2017-08-23 17:32+0000\n"
 "Last-Translator: Javier Diez <jd@adhoc.com.ar>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -21,12 +20,22 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: sale_order_type_automation
+#: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type_invoice_company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: sale_order_type_automation
+#: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type_invoice_company_id
+msgid "Company related to this journal"
+msgstr ""
+
+#. module: sale_order_type_automation
 #: selection:sale.order.type,invoicing_atomation:0
 msgid "Create Invoice"
 msgstr "Crear Factura"
 
 #. module: sale_order_type_automation
-#: code:addons/sale_order_type_automation/models/sale_order_type.py:76
+#: code:addons/sale_order_type_automation/models/sale_order_type.py:89
 #, python-format
 msgid "If you choose a Payment automation, Payment Journal is required"
 msgstr ""
@@ -35,6 +44,12 @@ msgstr ""
 #: model:ir.model,name:sale_order_type_automation.model_account_invoice
 msgid "Invoice"
 msgstr "Factura"
+
+#. module: sale_order_type_automation
+#: code:addons/sale_order_type_automation/models/sale_order_type.py:105
+#, python-format
+msgid "Invoice Journal and Payment Journal must be of the same company"
+msgstr ""
 
 #. module: sale_order_type_automation
 #: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type_invoicing_atomation
@@ -90,8 +105,18 @@ msgstr ""
 #. module: sale_order_type_automation
 #: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type_picking_atomation
 msgid ""
-"Pickings are generated automatically upon sale confirmation. If you set "
-"\"Validate\", then they will be also confirmed automatically"
+"Pickings are generated automatically upon sale confirmation.\n"
+"If you set \"Validate\", then they will be also confirmed automatically.\n"
+"If you set \"Validate No Force\", then Validate without forcing availabilty"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: code:addons/sale_order_type_automation/models/sale.py:53
+#, python-format
+msgid ""
+"Products:\n"
+"%s\n"
+"Are not available, we suggest use another type of sale to generate a partial delivery."
 msgstr ""
 
 #. module: sale_order_type_automation
@@ -100,15 +125,12 @@ msgid "Sales Order"
 msgstr "Pedidos de Venta"
 
 #. module: sale_order_type_automation
-#: code:addons/sale_order_type_automation/models/sale_order_type.py:85
-#, python-format
-msgid "The Journal \"%s\" company must be the same than sale order type"
-msgstr ""
-"El diario\"%s\" de la compania debe ser el mismo que en el tipo del pedido "
-"de venta"
+#: model:ir.model,name:sale_order_type_automation.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Línea de pedido de venta"
 
 #. module: sale_order_type_automation
-#: code:addons/sale_order_type_automation/models/sale_order_type.py:100
+#: code:addons/sale_order_type_automation/models/sale_order_type.py:124
 #, python-format
 msgid "The Sequence \"%s\" company must be the same than sale order type"
 msgstr ""
@@ -136,6 +158,16 @@ msgid "Validate Invoice"
 msgstr ""
 
 #. module: sale_order_type_automation
+#: selection:sale.order.type,picking_atomation:0
+msgid "Validate No Force"
+msgstr ""
+
+#. module: sale_order_type_automation
 #: selection:sale.order.type,payment_atomation:0
 msgid "Validate Payment"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type_book_id
+msgid "Voucher Book"
 msgstr ""
