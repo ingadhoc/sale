@@ -5,3 +5,4 @@ ingadhoc-stock https://github.com/ingadhoc/stock.git
 ingadhoc-product https://github.com/ingadhoc/product.git
 ingadhoc-account-invoicing https://github.com/ingadhoc/account-invoicing.git
 ingadhoc-account-payment https://github.com/ingadhoc/account-payment.git
+ingadhoc-multi-company https://github.com/ingadhoc/account-multi-company.git
