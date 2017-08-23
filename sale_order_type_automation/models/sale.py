@@ -73,9 +73,10 @@ class SaleOrder(models.Model):
 
     @api.multi
     def _prepare_invoice(self):
+        if self.type_id.journal_id:
+            self = self.with_context(
+                force_company=self.type_id.journal_id.company_id.id)
         res = super(SaleOrder, self)._prepare_invoice()
         if self.type_id.payment_atomation and self.type_id.payment_journal_id:
             res['pay_now_journal_id'] = self.type_id.payment_journal_id.id
-        if self.type_id:
-            res['sale_type_id'] = self.type_id.id
         return res

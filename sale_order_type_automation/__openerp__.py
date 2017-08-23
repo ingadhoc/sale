@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Sale Order Type Automation',
-    'version': '9.0.1.4.0',
+    'version': '9.0.1.5.0',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
@@ -31,6 +31,7 @@
         # queremos que el pago creado sea un payment group
         'account_payment_group',
         'stock_voucher',
+        'sale_multic_fix',
     ],
     'category': 'Sale Management',
     'demo': [
