@@ -22,10 +22,19 @@
                                 <field name="product_id"/>
                                 <field name="price_unit" widget="monetary"/>
                                 <field name="product_uom_qty" string="Qty"/>
+                                <field name="product_uom"/>
                                 <field name="qty_invoiced"/>
                                 <field name="price_subtotal" sum="Total" widget="monetary"/>
                             </group>
                         </group>
+                        <notebook>
+                            <page string="Invoice Lines">
+                                <field name="invoice_lines"/>
+                            </page>
+                            <page string="Procurements">
+                                <field name="procurement_ids"/>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>
