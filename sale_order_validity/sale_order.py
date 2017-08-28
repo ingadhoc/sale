@@ -7,13 +7,14 @@ from openerp.exceptions import Warning
 class sale_order(models.Model):
     _inherit = "sale.order"
 
-    @api.one
+    @api.multi
     @api.depends('validity_days', 'date_order')
     def get_validity_date(self):
-        date_order = fields.Datetime.from_string(self.date_order)
-        if self.validity_days:
-            self.validity_date = fields.Datetime.to_string(
-                date_order + relativedelta(days=self.validity_days))
+        for rec in self:
+            date_order = fields.Datetime.from_string(rec.date_order)
+            if rec.validity_days:
+                rec.validity_date = fields.Datetime.to_string(
+                    date_order + relativedelta(days=rec.validity_days))
 
     validity_days = fields.Integer(
         'Validity Days',
@@ -27,10 +28,14 @@ class sale_order(models.Model):
         readonly=True,
         compute='get_validity_date',
     )
+    date_order = fields.Datetime(copy=True)
 
+    @api.multi
     @api.onchange('company_id')
+    @api.constrains('company_id')
     def onchange_company(self):
-        self.validity_days = self.company_id.sale_order_validity_days
+        for rec in self:
+            rec.validity_days = rec.company_id.sale_order_validity_days
 
     @api.onchange('validity_days')
     def onchange_validity_days(self):
@@ -63,5 +68,6 @@ class sale_order(models.Model):
     @api.one
     def update_date_prices_and_validity(self):
         self.update_prices()
+        self.onchange_company()
         self.date_order = fields.Datetime.now()
         return True
