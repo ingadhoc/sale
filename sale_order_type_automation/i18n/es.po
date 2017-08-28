@@ -4,14 +4,13 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
-# Javier Diez <jd@adhoc.com.ar>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-23 17:32+0000\n"
-"PO-Revision-Date: 2017-08-23 17:32+0000\n"
-"Last-Translator: Javier Diez <jd@adhoc.com.ar>, 2017\n"
+"POT-Creation-Date: 2017-08-28 16:04+0000\n"
+"PO-Revision-Date: 2017-08-28 16:04+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,7 +26,7 @@ msgstr "Compañía"
 #. module: sale_order_type_automation
 #: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type_invoice_company_id
 msgid "Company related to this journal"
-msgstr ""
+msgstr "Compañía relacionada a este diario"
 
 #. module: sale_order_type_automation
 #: selection:sale.order.type,invoicing_atomation:0
@@ -38,7 +37,7 @@ msgstr "Crear Factura"
 #: code:addons/sale_order_type_automation/models/sale_order_type.py:89
 #, python-format
 msgid "If you choose a Payment automation, Payment Journal is required"
-msgstr ""
+msgstr "Si selecciona automatización de pagos el diario de pagos es requerido"
 
 #. module: sale_order_type_automation
 #: model:ir.model,name:sale_order_type_automation.model_account_invoice
@@ -49,12 +48,12 @@ msgstr "Factura"
 #: code:addons/sale_order_type_automation/models/sale_order_type.py:105
 #, python-format
 msgid "Invoice Journal and Payment Journal must be of the same company"
-msgstr ""
+msgstr "El diario de facturación y de pago deben ser de la misma compañía"
 
 #. module: sale_order_type_automation
 #: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type_invoicing_atomation
 msgid "Invoicing atomation"
-msgstr ""
+msgstr "Automatización de Facturación"
 
 #. module: sale_order_type_automation
 #: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type_payment_journal_id
@@ -62,6 +61,8 @@ msgid ""
 "Jouranl used only with payment_automation. As manual payment method is used,"
 " only journals with manual method are shown."
 msgstr ""
+"Diario utilizado solo con pagos automáticos. Como se utiliza por defecto "
+"método de pago manual, solo se muestran diarios con este método."
 
 #. module: sale_order_type_automation
 #: selection:sale.order.type,invoicing_atomation:0
@@ -95,12 +96,12 @@ msgstr "Diario de pago"
 #. module: sale_order_type_automation
 #: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type_payment_atomation
 msgid "Payment atomation"
-msgstr ""
+msgstr "Automatización de Pago"
 
 #. module: sale_order_type_automation
 #: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type_picking_atomation
 msgid "Picking atomation"
-msgstr ""
+msgstr "Automatización de Entrega"
 
 #. module: sale_order_type_automation
 #: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type_picking_atomation
@@ -150,12 +151,12 @@ msgstr "Tipo de pedido de venta"
 #. module: sale_order_type_automation
 #: selection:sale.order.type,picking_atomation:0
 msgid "Validate"
-msgstr ""
+msgstr "Validar"
 
 #. module: sale_order_type_automation
 #: selection:sale.order.type,invoicing_atomation:0
 msgid "Validate Invoice"
-msgstr ""
+msgstr "Validar Factura"
 
 #. module: sale_order_type_automation
 #: selection:sale.order.type,picking_atomation:0
@@ -165,9 +166,9 @@ msgstr ""
 #. module: sale_order_type_automation
 #: selection:sale.order.type,payment_atomation:0
 msgid "Validate Payment"
-msgstr ""
+msgstr "Validar Pago"
 
 #. module: sale_order_type_automation
 #: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type_book_id
 msgid "Voucher Book"
-msgstr ""
+msgstr "Talonario de Remitos"

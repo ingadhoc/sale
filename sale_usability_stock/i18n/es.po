@@ -3,15 +3,13 @@
 # * sale_usability_stock
 # 
 # Translators:
-# Lisandro Boggio <lboggio@ingenieriaboggio.com.ar>, 2017
-# Javier Diez <jd@adhoc.com.ar>, 2017
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-20 15:15+0000\n"
-"PO-Revision-Date: 2017-07-20 15:15+0000\n"
+"POT-Creation-Date: 2017-08-28 16:05+0000\n"
+"PO-Revision-Date: 2017-08-28 16:05+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -26,12 +24,14 @@ msgid "All Delivered"
 msgstr "Todo Entregado"
 
 #. module: sale_usability_stock
-#: code:addons/sale_usability_stock/models/sale_order_line.py:78
+#: code:addons/sale_usability_stock/models/sale_order_line.py:84
 #, python-format
 msgid ""
 "Cancel remaining call for line \"%s\" (id %s), line qty updated from %s to "
 "%s"
 msgstr ""
+"Se ejecutó Cancelar remanante para línea \"%s\" (id %s), cantidad "
+"actualizada de %s a %s"
 
 #. module: sale_usability_stock
 #: model:ir.ui.view,arch_db:sale_usability_stock.view_order_form
@@ -39,6 +39,9 @@ msgid ""
 "Cancel remaining quanitity to be delivered. This will set line quantity "
 "equal to delivered qty and will cancel remaining moves"
 msgstr ""
+"Cancelar cantidad pendiente a entregar. Esto va a setear todas las "
+"cantidades ordenadas iguales a la cantidad recibida y va a cancelar los "
+"movimientos pendientes"
 
 #. module: sale_usability_stock
 #: model:ir.ui.view,arch_db:sale_usability_stock.view_sales_order_filter
@@ -55,6 +58,20 @@ msgid "Delivery Status"
 msgstr "Estado de entrega"
 
 #. module: sale_usability_stock
+#: model:ir.model.fields,help:sale_usability_stock.field_sale_order_manually_set_delivered
+msgid ""
+"If you set this field to True, then all lines deliverable lineswill be set "
+"to delivered?"
+msgstr ""
+"Si marca este campo como Verdadero entonces todas las líneas a entregar van "
+"a ser marcadas como entregadas."
+
+#. module: sale_usability_stock
+#: model:ir.model.fields,field_description:sale_usability_stock.field_sale_order_manually_set_delivered
+msgid "Manually Set Delivered?"
+msgstr "Setear Entregado Manualmente?"
+
+#. module: sale_usability_stock
 #: selection:sale.order.line,delivery_status:0
 msgid "Not purchased"
 msgstr "No comprada"
@@ -65,15 +82,21 @@ msgid "Nothing to Deliver"
 msgstr "Nada para entregar"
 
 #. module: sale_usability_stock
-#: model:ir.model.fields,field_description:sale_usability_stock.field_stock_move_sale_id
-msgid "Order Reference"
-msgstr ""
+#: code:addons/sale_usability_stock/models/sale.py:87
+#, python-format
+msgid "Only users with \"%s / %s\" can Set Delivered manually"
+msgstr "Solo los usuarios con \"%s / %s\" pueden setear facturado entregado"
 
 #. module: sale_usability_stock
-#: code:addons/sale_usability_stock/models/sale_order_line.py:94
+#: model:ir.model.fields,field_description:sale_usability_stock.field_stock_move_sale_id
+msgid "Order Reference"
+msgstr "Referencia del Pedido"
+
+#. module: sale_usability_stock
+#: code:addons/sale_usability_stock/models/sale_order_line.py:100
 #, python-format
 msgid "Ordered quantity decreased!"
-msgstr ""
+msgstr "Cantidad pedida disminuida!"
 
 #. module: sale_usability_stock
 #: model:ir.ui.view,arch_db:sale_usability_stock.view_move_form
@@ -126,16 +149,19 @@ msgid "Todo lo entregado sin descontar las devoluciones"
 msgstr "Todo lo entregado sin descontar las devoluciones"
 
 #. module: sale_usability_stock
-#: code:addons/sale_usability_stock/models/sale.py:31
+#: code:addons/sale_usability_stock/models/sale.py:37
 #, python-format
 msgid ""
 "Unable to cancel sale order %s as some receptions have already been done."
 msgstr ""
 
 #. module: sale_usability_stock
-#: code:addons/sale_usability_stock/models/sale_order_line.py:70
+#: code:addons/sale_usability_stock/models/sale_order_line.py:76
 #, python-format
 msgid ""
 "You can not cancel remianing qty to deliver because there are more product "
 "invoiced than the delivered. You should correct invoice or ask for a refund"
 msgstr ""
+"No puede cancelar la cantidad pendiente a enviar porque hay más productos "
+"facturados que los entregados. Debe corregir la factura o realizar un "
+"reembolso."
