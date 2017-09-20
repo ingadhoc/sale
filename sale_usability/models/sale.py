@@ -10,6 +10,24 @@ from openerp.exceptions import UserError
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
+    @api.multi
+    def _amount_all(self):
+        """
+        Hacemos esto para disponer de fecha del pedido y cia para calcular
+        impuesto con código python (por ej. para ARBA).
+        Aparentemente no se puede cambiar el contexto a cosas que se llaman
+        desde un onchange (ver https://github.com/odoo/odoo/issues/7472)
+        entonces usamos este artilugio
+        TODO este cambio seria mas correcto que este en un repo de loc
+        argentina pero para no hacer un modulo con tan pocas cosas lo
+        hacemos acá, ademas que el repo de odoo-argentina da error en los tests
+        si se instala sale (entonces no podemos agregar dep a sale por ahora)
+        """
+        date_order = self.date_order or fields.Date.context_today(self)
+        self.env.context.date_invoice = date_order
+        self.env.context.invoice_company = self.company_id
+        return super(SaleOrder, self)._amount_all()
+
     manually_set_invoiced = fields.Boolean(
         string='Manually Set Invoiced?',
         help='If you set this field to True, then all lines invoiceable lines'
