@@ -18,6 +18,10 @@ class SaleOrder(models.Model):
         Aparentemente no se puede cambiar el contexto a cosas que se llaman
         desde un onchange (ver https://github.com/odoo/odoo/issues/7472)
         entonces usamos este artilugio
+        TODO este cambio seria mas correcto que este en un repo de loc
+        argentina pero para no hacer un modulo con tan pocas cosas lo
+        hacemos acá, ademas que el repo de odoo-argentina da error en los tests
+        si se instala sale (entonces no podemos agregar dep a sale por ahora)
         """
         date_order = self.date_order or fields.Date.context_today(self)
         self.env.context.date_invoice = date_order
