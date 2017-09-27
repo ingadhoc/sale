@@ -23,10 +23,13 @@ class SaleOrder(models.Model):
         hacemos acá, ademas que el repo de odoo-argentina da error en los tests
         si se instala sale (entonces no podemos agregar dep a sale por ahora)
         """
-        date_order = self.date_order or fields.Date.context_today(self)
-        self.env.context.date_invoice = date_order
-        self.env.context.invoice_company = self.company_id
-        return super(SaleOrder, self)._amount_all()
+        # no estoy seguro porque pero al mandar email template algunas veces
+        # llegan varias sale orders a esta funcion
+        for rec in self:
+            date_order = rec.date_order or fields.Date.context_today(rec)
+            rec.env.context.date_invoice = date_order
+            rec.env.context.invoice_company = rec.company_id
+            return super(SaleOrder, rec)._amount_all()
 
     manually_set_invoiced = fields.Boolean(
         string='Manually Set Invoiced?',
