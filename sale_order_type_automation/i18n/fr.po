@@ -1,0 +1,170 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * sale_order_type_automation
+# 
+# Translators:
+# Guillaume Masson <guillaume.masson@meta-it.fr>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-09-28 19:33+0000\n"
+"PO-Revision-Date: 2017-09-28 19:33+0000\n"
+"Last-Translator: Guillaume Masson <guillaume.masson@meta-it.fr>, 2017\n"
+"Language-Team: French (https://www.transifex.com/adhoc/teams/46451/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: sale_order_type_automation
+#: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type_invoice_company_id
+msgid "Company"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type_invoice_company_id
+msgid "Company related to this journal"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: selection:sale.order.type,invoicing_atomation:0
+msgid "Create Invoice"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: code:addons/sale_order_type_automation/models/sale_order_type.py:89
+#, python-format
+msgid "If you choose a Payment automation, Payment Journal is required"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: model:ir.model,name:sale_order_type_automation.model_account_invoice
+msgid "Invoice"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: code:addons/sale_order_type_automation/models/sale_order_type.py:105
+#, python-format
+msgid "Invoice Journal and Payment Journal must be of the same company"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type_invoicing_atomation
+msgid "Invoicing atomation"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type_payment_journal_id
+msgid ""
+"Jouranl used only with payment_automation. As manual payment method is used,"
+" only journals with manual method are shown."
+msgstr ""
+
+#. module: sale_order_type_automation
+#: selection:sale.order.type,invoicing_atomation:0
+#: selection:sale.order.type,payment_atomation:0
+#: selection:sale.order.type,picking_atomation:0
+msgid "None"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type_payment_atomation
+msgid ""
+"On invoice validation, if:\n"
+"*None: no payment is created\n"
+"*Validate Payment: create payment and validate it\n"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type_invoicing_atomation
+msgid ""
+"On sale order confirmation and on picking confirmation, if:\n"
+"*None: no invoice is created\n"
+"*Create Invoice: create invoice for 'Invoiceable lines' (regarding product configuration and delivery status)\n"
+"*Validate Invoice: create invoice and validate it\n"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type_payment_journal_id
+msgid "Payment Journal"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type_payment_atomation
+msgid "Payment atomation"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type_picking_atomation
+msgid "Picking atomation"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type_picking_atomation
+msgid ""
+"Pickings are generated automatically upon sale confirmation.\n"
+"If you set \"Validate\", then they will be also confirmed automatically.\n"
+"If you set \"Validate No Force\", then Validate without forcing availabilty"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: code:addons/sale_order_type_automation/models/sale.py:53
+#, python-format
+msgid ""
+"Products:\n"
+"%s\n"
+"Are not available, we suggest use another type of sale to generate a partial delivery."
+msgstr ""
+
+#. module: sale_order_type_automation
+#: model:ir.model,name:sale_order_type_automation.model_sale_order
+msgid "Sales Order"
+msgstr "Bon de commande"
+
+#. module: sale_order_type_automation
+#: model:ir.model,name:sale_order_type_automation.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: code:addons/sale_order_type_automation/models/sale_order_type.py:124
+#, python-format
+msgid "The Sequence \"%s\" company must be the same than sale order type"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: model:ir.model,name:sale_order_type_automation.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: model:ir.model,name:sale_order_type_automation.model_sale_order_type
+msgid "Type of sale order"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: selection:sale.order.type,picking_atomation:0
+msgid "Validate"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: selection:sale.order.type,invoicing_atomation:0
+msgid "Validate Invoice"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: selection:sale.order.type,picking_atomation:0
+msgid "Validate No Force"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: selection:sale.order.type,payment_atomation:0
+msgid "Validate Payment"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type_book_id
+msgid "Voucher Book"
+msgstr ""

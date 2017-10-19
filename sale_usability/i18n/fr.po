@@ -1,0 +1,134 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * sale_usability
+# 
+# Translators:
+# Guillaume Masson <guillaume.masson@meta-it.fr>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-09-28 19:34+0000\n"
+"PO-Revision-Date: 2017-09-28 19:34+0000\n"
+"Last-Translator: Guillaume Masson <guillaume.masson@meta-it.fr>, 2017\n"
+"Language-Team: French (https://www.transifex.com/adhoc/teams/46451/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: sale_usability
+#: model:ir.ui.view,arch_db:sale_usability.view_sales_order_line_filter
+msgid "Customer"
+msgstr ""
+
+#. module: sale_usability
+#: model:ir.ui.view,arch_db:sale_usability.view_sales_order_line_filter
+msgid "Hide cancelled lines"
+msgstr ""
+
+#. module: sale_usability
+#: model:ir.model.fields,help:sale_usability.field_sale_order_manually_set_invoiced
+msgid ""
+"If you set this field to True, then all lines invoiceable lineswill be set "
+"to invoiced?"
+msgstr ""
+
+#. module: sale_usability
+#: model:ir.ui.view,arch_db:sale_usability.sale_order_line_usability_form
+msgid "Invoice Lines"
+msgstr ""
+
+#. module: sale_usability
+#: model:ir.ui.view,arch_db:sale_usability.view_sales_order_filter
+#: model:ir.ui.view,arch_db:sale_usability.view_sales_order_line_filter
+msgid "Invoiced"
+msgstr ""
+
+#. module: sale_usability
+#: model:ir.model.fields,field_description:sale_usability.field_sale_order_manually_set_invoiced
+msgid "Manually Set Invoiced?"
+msgstr ""
+
+#. module: sale_usability
+#: code:addons/sale_usability/models/sale.py:70
+#, python-format
+msgid "Only users with \"%s / %s\" can Set Invoiced manually"
+msgstr ""
+
+#. module: sale_usability
+#: model:ir.ui.view,arch_db:sale_usability.sale_order_line_usability_form
+msgid "Procurements"
+msgstr ""
+
+#. module: sale_usability
+#: model:ir.ui.view,arch_db:sale_usability.sale_order_line_usability_form
+#: model:ir.ui.view,arch_db:sale_usability.sale_order_line_usability_tree
+msgid "Qty"
+msgstr ""
+
+#. module: sale_usability
+#: model:ir.ui.view,arch_db:sale_usability.view_sales_order_line_filter
+msgid "Quotations"
+msgstr ""
+
+#. module: sale_usability
+#: model:ir.ui.view,arch_db:sale_usability.view_order_form
+msgid "Re-Open"
+msgstr ""
+
+#. module: sale_usability
+#: model:ir.actions.act_window,name:sale_usability.action_sale_order_line_usability_tree
+#: model:ir.ui.menu,name:sale_usability.menu_sale_order
+msgid "Sale Lines"
+msgstr ""
+
+#. module: sale_usability
+#: model:ir.ui.view,arch_db:sale_usability.sale_order_line_usability_form
+msgid "Sale Order Line"
+msgstr ""
+
+#. module: sale_usability
+#: model:ir.ui.view,arch_db:sale_usability.sale_order_line_usability_tree
+msgid "Sale Order Lines"
+msgstr ""
+
+#. module: sale_usability
+#: model:ir.ui.view,arch_db:sale_usability.view_sales_order_line_filter
+msgid "Sale Orders"
+msgstr ""
+
+#. module: sale_usability
+#: model:ir.model,name:sale_usability.model_sale_order
+msgid "Sales Order"
+msgstr "Bon de commande"
+
+#. module: sale_usability
+#: model:ir.model,name:sale_usability.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""
+
+#. module: sale_usability
+#: model:ir.ui.view,arch_db:sale_usability.view_sales_order_line_filter
+msgid "Status"
+msgstr ""
+
+#. module: sale_usability
+#: model:ir.ui.view,arch_db:sale_usability.sale_order_line_usability_form
+#: model:ir.ui.view,arch_db:sale_usability.sale_order_line_usability_tree
+msgid "Total"
+msgstr ""
+
+#. module: sale_usability
+#: code:addons/sale_usability/models/sale.py:46
+#, python-format
+msgid ""
+"Unable to cancel this sale order. You must first cancel related bills and "
+"pickings."
+msgstr ""
+
+#. module: sale_usability
+#: model:ir.ui.view,arch_db:sale_usability.sale_order_line_usability_tree
+msgid "Unit of Measure"
+msgstr ""

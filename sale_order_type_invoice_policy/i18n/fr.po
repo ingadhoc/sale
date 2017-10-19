@@ -1,0 +1,86 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * sale_order_type_invoice_policy
+# 
+# Translators:
+# Guillaume Masson <guillaume.masson@meta-it.fr>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-09-28 19:33+0000\n"
+"PO-Revision-Date: 2017-09-28 19:33+0000\n"
+"Last-Translator: Guillaume Masson <guillaume.masson@meta-it.fr>, 2017\n"
+"Language-Team: French (https://www.transifex.com/adhoc/teams/46451/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: sale_order_type_invoice_policy
+#: selection:sale.order.type,invoice_policy:0
+msgid "Before Delivery"
+msgstr ""
+
+#. module: sale_order_type_invoice_policy
+#: model:ir.ui.view,arch_db:sale_order_type_invoice_policy.view_order_form
+msgid "Create Invoice"
+msgstr ""
+
+#. module: sale_order_type_invoice_policy
+#: selection:sale.order.type,invoice_policy:0
+msgid "Defined by Product"
+msgstr ""
+
+#. module: sale_order_type_invoice_policy
+#: model:ir.model.fields,help:sale_order_type_invoice_policy.field_sale_order_type_invoice_policy
+#: model:ir.model.fields,help:sale_order_type_invoice_policy.field_sale_order_type_invoice_policy_5022
+msgid "If you choose prepaid you..."
+msgstr ""
+
+#. module: sale_order_type_invoice_policy
+#: code:addons/sale_order_type_invoice_policy/models/sale.py:45
+#, python-format
+msgid ""
+"If you use a sale type with invoice policy \"Before Delivery\", then every "
+"sale line must be invoiced and paid before you can confirm the sale order"
+msgstr ""
+
+#. module: sale_order_type_invoice_policy
+#: model:ir.model.fields,field_description:sale_order_type_invoice_policy.field_sale_order_type_invoice_policy
+#: model:ir.model.fields,field_description:sale_order_type_invoice_policy.field_sale_order_type_invoice_policy_5022
+msgid "Invoicing Policy"
+msgstr ""
+
+#. module: sale_order_type_invoice_policy
+#: code:addons/sale_order_type_invoice_policy/models/sale_order_line.py:42
+#, python-format
+msgid "Invoicing Policy %s not implemented!"
+msgstr ""
+
+#. module: sale_order_type_invoice_policy
+#: selection:sale.order.type,invoice_policy:0
+#: model:sale.order.type,name:sale_order_type_invoice_policy.ordered_sale_type
+msgid "Ordered quantities"
+msgstr ""
+
+#. module: sale_order_type_invoice_policy
+#: model:sale.order.type,name:sale_order_type_invoice_policy.prepaid_sale_type
+msgid "Pre Paid"
+msgstr ""
+
+#. module: sale_order_type_invoice_policy
+#: model:ir.model,name:sale_order_type_invoice_policy.model_sale_order
+msgid "Sales Order"
+msgstr "Bon de commande"
+
+#. module: sale_order_type_invoice_policy
+#: model:ir.model,name:sale_order_type_invoice_policy.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""
+
+#. module: sale_order_type_invoice_policy
+#: model:ir.model,name:sale_order_type_invoice_policy.model_sale_order_type
+msgid "Type of sale order"
+msgstr ""
