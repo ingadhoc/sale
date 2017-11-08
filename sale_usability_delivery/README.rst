@@ -6,7 +6,9 @@
 Sale Usability Improvements integration with delivery
 =====================================================
 
-#. When you deliver products of a sale order that has delivery lines, those lines will be automatically set as delivered
+#. When you deliver products of a sale order that has delivery lines now you have two options regarding carrier price:
+    * if zero: we add with qty 0 so nothing is needed to be invoiced or sent
+    * if not zero: we keep qty so it is set to be invoiced but we set it as delivered so you dont need to set it manually
 
 Installation
 ============
