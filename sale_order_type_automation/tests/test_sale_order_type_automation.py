@@ -38,6 +38,7 @@ class TestSaleOrderTypeAutomation(common.TransactionCase):
             'product_id': self.product.id,
             'name': self.product.name,
             'product_uom_qty': 1.0,
+            'product_uom': self.product.uom_id.id,
             'price_unit': self.product.lst_price,
         }
         vals = {
