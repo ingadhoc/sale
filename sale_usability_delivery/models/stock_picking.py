@@ -36,7 +36,7 @@ class StockPicking(models.Model):
         if sale_order.invoice_shipping_on_delivery:
             sol = sale_order._create_delivery_line(
                 self.carrier_id, self.carrier_price)
-        if not self.carrier_price:
-            sol.product_uom_qty = 0.0
-        else:
-            sol.write({'qty_delivered': 1.0})
+            if not self.carrier_price:
+                sol.product_uom_qty = 0.0
+            else:
+                sol.write({'qty_delivered': 1.0})
