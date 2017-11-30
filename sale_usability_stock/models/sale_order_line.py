@@ -72,11 +72,15 @@ class SaleOrderLine(models.Model):
     def button_cancel_remaining(self):
         for rec in self:
             old_product_uom_qty = rec.product_uom_qty
-            if rec.qty_invoiced > rec.qty_delivered:
-                raise ValidationError(_(
-                    'You can not cancel remianing qty to deliver because '
-                    'there are more product invoiced than the delivered. '
-                    'You should correct invoice or ask for a refund'))
+            # Al final permitimos cancelar igual porque es necesario, por ej,
+            # si no se va a entregar y ya está facturado y se quiere hacer
+            # la nota de crédito. además se puede volver a subir la cantidad
+            # si se requiere
+            # if rec.qty_invoiced > rec.qty_delivered:
+            #     raise ValidationError(_(
+            #         'You can not cancel remianing qty to deliver because '
+            #         'there are more product invoiced than the delivered. '
+            #         'You should correct invoice or ask for a refund'))
             rec.product_uom_qty = rec.qty_delivered
             rec.procurement_ids.button_cancel_remaining()
 
