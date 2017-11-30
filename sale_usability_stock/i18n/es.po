@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-28 16:05+0000\n"
-"PO-Revision-Date: 2017-08-28 16:05+0000\n"
+"POT-Creation-Date: 2017-11-30 19:49+0000\n"
+"PO-Revision-Date: 2017-11-30 19:49+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgid "All Delivered"
 msgstr "Todo Entregado"
 
 #. module: sale_usability_stock
-#: code:addons/sale_usability_stock/models/sale_order_line.py:84
+#: code:addons/sale_usability_stock/models/sale_order_line.py:88
 #, python-format
 msgid ""
 "Cancel remaining call for line \"%s\" (id %s), line qty updated from %s to "
@@ -93,7 +93,7 @@ msgid "Order Reference"
 msgstr "Referencia del Pedido"
 
 #. module: sale_usability_stock
-#: code:addons/sale_usability_stock/models/sale_order_line.py:100
+#: code:addons/sale_usability_stock/models/sale_order_line.py:104
 #, python-format
 msgid "Ordered quantity decreased!"
 msgstr "Cantidad pedida disminuida!"
@@ -154,14 +154,3 @@ msgstr "Todo lo entregado sin descontar las devoluciones"
 msgid ""
 "Unable to cancel sale order %s as some receptions have already been done."
 msgstr ""
-
-#. module: sale_usability_stock
-#: code:addons/sale_usability_stock/models/sale_order_line.py:76
-#, python-format
-msgid ""
-"You can not cancel remianing qty to deliver because there are more product "
-"invoiced than the delivered. You should correct invoice or ask for a refund"
-msgstr ""
-"No puede cancelar la cantidad pendiente a enviar porque hay más productos "
-"facturados que los entregados. Debe corregir la factura o realizar un "
-"reembolso."
