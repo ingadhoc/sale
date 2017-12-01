@@ -13,7 +13,8 @@ class SaleOrder(models.Model):
     def check_unapproved_partner_ok(self):
         self.ensure_one()
         if self.company_id.restrict_sales == 'yes':
-            if self.partner_id.partner_state != 'approved':
+            if self.partner_id.commercial_partner_id.\
+                    partner_state != 'approved':
                 return False
         return True
 
@@ -22,7 +23,8 @@ class SaleOrder(models.Model):
         self.ensure_one()
         if self.company_id.restrict_sales == 'amount_depends':
             if (
-                    self.partner_id.partner_state != 'approved' and
+                    self.partner_id.commercial_partner_id.
+                    partner_state != 'approved' and
                     self.amount_total >= self.company_id.
                     restrict_sales_amount):
                 return False
