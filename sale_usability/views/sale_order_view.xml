@@ -41,6 +41,11 @@
                 <field name="invoice_status" position="before">
                     <field name="state"/>
                 </field>
+
+                <!-- como unificamos menus hacemos que sea mas visible cuales son las borrador -->
+                <tree position="attributes">
+                    <attribute name="decoration-info">state in ['draft', 'sent']</attribute>
+                </tree>
             </field>
         </record>
 
