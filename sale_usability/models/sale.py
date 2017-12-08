@@ -80,3 +80,20 @@ class SaleOrder(models.Model):
     #             group.category_id.name, group.name))
     #     self.order_line.write({'qty_to_invoice': 0.0})
     #     self.message_post(body='Manually setted as invoiced')
+
+    @api.multi
+    def action_confirm(self):
+        for rec in self:
+            # con esto arreglamos que odoo dejaria entregar varias veces el
+            # mismo picking si por alguna razon el boton esta presente
+            # en nuestro caso pasaba cuando la impresion da algun error
+            # lo que provoca que el picking se entregue pero la pantalla no
+            # se actualice
+            # antes lo haciamo en do_new_transfer, pero como algunas
+            # veces se llama este metodo sin pasar por do_new_transfer
+            if rec.state not in ['draft', 'sent']:
+                raise UserError(_(
+                    'No se puede validar una venta que no esté en estado '
+                    '"Presupuesto" o "Presupuesto Enviado" , probablemente ya '
+                    'ya fue validada, pruebe refrezcar la ventana!'))
+        return super(SaleOrder, self).action_confirm()
