@@ -7,6 +7,13 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
+                <!-- hacemos los procurements visibles para tec features -->
+                <field name="procurement_ids" position="replace"/>
+                <field name="invoice_lines" position="after">
+                    <label for="procurement_ids"/>
+                    <field name="procurement_ids"/>
+                </field>
+
                 <!-- agregamos boton de delivery status para que no de error -->
                 <xpath expr="//field[@name='order_line']/form//label[@for='qty_invoiced']" position="after">
                     <field name="delivery_status" invisible="1"/>

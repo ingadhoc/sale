@@ -12,6 +12,8 @@ Several Improvements to sales:
 #. Add button on sale lines to allow cancelling of remaining qty to be delivered
 #. Block decreasing qty on sale lines when there is a delivery linked
 #. Add on stock moves button with link to related sale order
+#. Add sale line on procurements
+#. Add procurements on sale order line form view (only for tec. features)
 
 Installation
 ============
