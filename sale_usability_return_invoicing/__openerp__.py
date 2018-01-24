@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Sale Usability interatction with Refund management',
-    'version': '9.0.1.1.0',
+    'version': '9.0.1.2.0',
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -35,6 +35,7 @@
     ],
     'data': [
         'views/sale_order_view.xml',
+        'wizard/stock_return_picking_line_view.xml',
     ],
     'demo': [
     ],
