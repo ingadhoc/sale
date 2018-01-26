@@ -5,6 +5,7 @@
 ##############################################################################
 from openerp import models, api, fields
 import openerp.addons.decimal_precision as dp
+from openerp.tools import float_compare
 # from openerp.exceptions import ValidationError
 
 
@@ -27,9 +28,59 @@ class SaleOrderLine(models.Model):
 
     @api.multi
     def _get_delivered_qty(self):
+        qty = super(SaleOrderLine, self)._get_delivered_qty()
+
+        # parcheamos las devoluciones para los kits, lo hacemos analogo
+        # a como hace odoo en la entrega, basicamente solo consideramos
+        # devuelto si se devolvió todo (odoo considera entregado si se entrego
+        # todo)
+        bom_enable = 'bom_ids' in self.env['product.template']._fields
+        if bom_enable:
+            bom_id = self.env['mrp.bom']._bom_find(
+                product_id=self.product_id.id,
+                properties=self.property_ids.ids)
+            bom = self.env['mrp.bom'].browse(bom_id)
+            if bom.type == 'phantom':
+                precision = self.env['decimal.precision'].precision_get(
+                    'Product Unit of Measure')
+                bom_returned = {}
+                bom_returned[bom.id] = False
+                product_uom_qty_bom = self.env['product.uom']._compute_qty_obj(
+                    self.product_uom, self.product_uom_qty, bom.product_uom)
+                bom_exploded = self.env['mrp.bom']._bom_explode(
+                    bom, self.product_id, product_uom_qty_bom)[0]
+
+                for bom_line in bom_exploded:
+                    returned_qty = 0.0
+                    for move in self.procurement_ids.mapped(
+                            'move_ids').filtered(
+                            lambda r: (
+                                r.product_id.id == bom_line.get(
+                                    'product_id', False) and
+                                r.state == 'done' and
+                                not r.scrapped and
+                                r.location_dest_id.usage != "customer" and
+                                r.to_refund_so)):
+                        returned_qty += self.env['product.uom']._compute_qty(
+                            move.product_uom.id, move.product_uom_qty,
+                            bom_line['product_uom'])
+                    if float_compare(
+                            returned_qty, bom_line['product_qty'],
+                            precision_digits=precision) < 0:
+                        bom_returned[bom.id] = False
+                        break
+                    else:
+                        bom_returned[bom.id] = True
+                # raise ValueError('asdas')
+                if bom_returned and any(bom_returned.values()):
+                    self.qty_returned = self.product_uom_qty
+                    return 0.0
+                elif bom_returned:
+                    return qty
+
         # every time delivered qty is updated, we update qty returned
         self._get_qty_returned()
-        return super(SaleOrderLine, self)._get_delivered_qty()
+        return qty
 
     @api.multi
     def _get_qty_returned(self):
