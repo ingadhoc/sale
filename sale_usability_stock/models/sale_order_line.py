@@ -70,7 +70,21 @@ class SaleOrderLine(models.Model):
 
     @api.multi
     def button_cancel_remaining(self):
+        # la cancelación de kits no está bien resuelta ya que odoo solo computa
+        # la cantidad entregada cuando todo el kit se entregó. Cuestión que,
+        # por ahora, desactivamos la cancelación de kits
+        bom_enable = 'bom_ids' in self.env['product.template']._fields
+
         for rec in self:
+            if bom_enable:
+                bom_id = self.env['mrp.bom']._bom_find(
+                    product_id=rec.product_id.id,
+                    properties=rec.property_ids.ids)
+                bom = self.env['mrp.bom'].browse(bom_id)
+                if bom.type == 'phantom':
+                    raise ValidationError(_(
+                        "Cancel remaining can't be called for Kit Products "
+                        "(products with a bom of type kit)."))
             old_product_uom_qty = rec.product_uom_qty
             # Al final permitimos cancelar igual porque es necesario, por ej,
             # si no se va a entregar y ya está facturado y se quiere hacer
