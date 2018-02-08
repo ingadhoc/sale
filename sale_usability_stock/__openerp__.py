@@ -33,6 +33,7 @@
         'sale_stock',
         'stock_usability',
         'sale_usability',
+        'stock_voucher',
     ],
     'data': [
         'views/sale_order_view.xml',
