@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Sale Usability interaction with Stock',
-    'version': '9.0.1.3.0',
+    'version': '9.0.1.4.0',
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -33,6 +33,7 @@
         'sale_stock',
         'stock_usability',
         'sale_usability',
+        'stock_voucher',
     ],
     'data': [
         'views/sale_order_view.xml',
