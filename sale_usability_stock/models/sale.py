@@ -29,6 +29,19 @@ class SaleOrder(models.Model):
         track_visibility='onchange',
     )
 
+    picking_ids = fields.Many2many(
+        'stock.picking',
+        search='_search_picking_ids'
+    )
+
+    @api.model
+    def _search_picking_ids(self, operator, operand):
+        pickings = self.env['stock.picking'].search([
+            ('group_id', '!=', False),
+            '|', ('name', operator, operand),
+            ('voucher_ids.name', operator, operand)])
+        return [('name', 'in', pickings.mapped('origin'))]
+
     @api.multi
     def action_cancel(self):
         for order in self:
