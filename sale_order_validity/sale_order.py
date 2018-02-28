@@ -65,9 +65,9 @@ class sale_order(models.Model):
                     'You can not confirm this quoatation as it was valid until'
                     ' %s! Please Update Validity.') % (self.validity_date))
 
-    @api.one
+    @api.multi
     def update_date_prices_and_validity(self):
+        self.date_order = fields.Datetime.now()
         self.update_prices()
         self.onchange_company()
-        self.date_order = fields.Datetime.now()
         return True
