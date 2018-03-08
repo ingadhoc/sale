@@ -27,6 +27,7 @@ class SaleOrder(models.Model):
         help='If you set this field to True, then all lines deliverable lines'
         'will be set to delivered?',
         track_visibility='onchange',
+        copy=False,
     )
 
     picking_ids = fields.Many2many(

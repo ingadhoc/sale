@@ -36,6 +36,7 @@ class SaleOrder(models.Model):
         help='If you set this field to True, then all lines invoiceable lines'
         'will be set to invoiced?',
         track_visibility='onchange',
+        copy=False,
     )
 
     @api.multi
