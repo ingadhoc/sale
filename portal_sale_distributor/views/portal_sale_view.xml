@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="portal_sale.view_order_form_portal_sale" model="ir.ui.view">
+            <field name="active" eval='False'/>
+        </record>
+
+        <record id="view_order_form" model="ir.ui.view">
+            <field name="name">sale.order.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="groups_id" eval="[(4, ref('group_portal_distributor'))]"/>
+            <field name="arch" type="xml">
+                <header position="replace">
+                    <header>
+                        <button name="action_confirm" states="draft,sent" string="Confirm Sale" class="btn-primary" type="object" context="{'show_sale': True}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,sent,sale,done"/>
+                    </header>
+                </header>
+                <button name="action_view_invoice" position="replace"/>
+            </field>
+        </record>
+    </data>
+</odoo>

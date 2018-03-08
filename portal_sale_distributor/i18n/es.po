@@ -1,24 +1,62 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * portal_sale_distributor
-# 
-# Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
+# 	* portal_sale_distributor
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: sale (8.0)\n"
+"Project-Id-Version: Odoo Server 9.0e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-20 22:52+0000\n"
-"PO-Revision-Date: 2016-05-24 22:57+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>\n"
-"Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-sale-8-0/language/es/)\n"
+"POT-Creation-Date: 2018-03-08 13:57+0000\n"
+"PO-Revision-Date: 2018-03-08 10:58-0300\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
 "Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #. module: portal_sale_distributor
-#: view:sale.order:portal_sale_distributor.view_order_form
-msgid "base.group_user,base.group_portal_distributor"
-msgstr "base.group_user,base.group_portal_distributor"
+#: model:ir.ui.view,arch_db:portal_sale_distributor.view_order_form
+msgid "Confirm Sale"
+msgstr "Confirmar Venta"
+
+#. module: portal_sale_distributor
+#: model:ir.ui.view,arch_db:portal_sale_distributor.sale_order_link
+msgid "My Sale Orders"
+msgstr "Mis Pedidos"
+
+#. module: portal_sale_distributor
+#: model:res.groups,name:portal_sale_distributor.group_portal_distributor
+msgid "Portal - Distributor"
+msgstr "Portal - Distributor"
+
+#. module: portal_sale_distributor
+#: model:res.groups,comment:portal_sale_distributor.group_portal_distributor
+msgid ""
+"Portal Distributor members have specific access rights (such as record rules and restricted menus).\n"
+"                They usually do not belong to the usual odoo groups."
+msgstr ""
+"Portal Distributor members have specific access rights (such as record rules and restricted menus).\n"
+"                They usually do not belong to the usual odoo groups."
+
+#. module: portal_sale_distributor
+#: model:ir.model,name:portal_sale_distributor.model_product_product
+msgid "Product"
+msgstr "Producto"
+
+#. module: portal_sale_distributor
+#: model:ir.model,name:portal_sale_distributor.model_product_template
+msgid "Product Template"
+msgstr "Plantilla de Producto"
+
+#. module: portal_sale_distributor
+#: model:ir.ui.menu,name:portal_sale_distributor.sale_menu
+msgid "Sale"
+msgstr "Venta"
+
+#. module: portal_sale_distributor
+#: model:ir.ui.menu,name:portal_sale_distributor.sale_order
+msgid "Sales Order"
+msgstr "Ordenes de Venta"
