@@ -14,6 +14,7 @@ Several Improvements to sales:
 #. Add on stock moves button with link to related sale order
 #. Add sale line on procurements
 #. Add procurements on sale order line form view (only for tec. features)
+#. Add procurement group field on sale orders for technical features
 
 Installation
 ============

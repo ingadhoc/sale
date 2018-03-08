@@ -16,7 +16,7 @@
         <record id="view_order_form" model="ir.ui.view">
             <field name="name">sale.order.form</field>
             <field name="model">sale.order</field>
-            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="inherit_id" ref="sale_stock.view_order_form_inherit_sale_stock"/>
             <field name="arch" type="xml">
                 <!-- hacemos los procurements visibles para tec features -->
                 <field name="procurement_ids" position="replace"/>
@@ -37,6 +37,11 @@
                 <group name="sale_pay">
                     <field name="manually_set_delivered" groups="base.group_no_one"/>
                 </group>
+
+                <field name="picking_policy" position="after">
+                    <field name="procurement_group_id" groups="base.group_no_one"/>
+                </field>
+
             </field>
         </record>
 
