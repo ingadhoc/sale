@@ -1,0 +1,25 @@
+<openerp>
+    <data>
+    <menuitem
+    id="sale_menu"
+    name="Sale"
+    groups="group_portal_distributor"
+    />
+    <menuitem
+    id="sale_order"
+    name="Sales Order"
+    action="portal_sale.action_orders_portal"
+    parent="sale_menu"
+    />
+    <record id="website.menu_website" model="ir.ui.menu">
+        <field eval="[(4,ref('group_portal_distributor'))]" name="groups_id"/>
+    </record>
+
+    <template id="sale_order_link" name="Link to backend" inherit_id="website.layout">
+        <xpath expr="//li[@id='o_logout']" position="before">
+            <li><a href="/web" role="menuitem">My Sale Orders</a></li>
+        </xpath>
+    </template>
+   
+    </data>
+</openerp>

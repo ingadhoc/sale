@@ -1,0 +1,7 @@
+<odoo>
+    <record id="group_portal_distributor" model="res.groups">
+        <field name="name">Portal - Distributor</field>
+        <field name="is_portal" eval="True"/>
+        <field name="implied_ids" eval="[(4,ref('base.group_portal'))]"/>
+    </record>
+</odoo>

@@ -23,27 +23,23 @@
     'version': '9.0.1.0.0',
     'category': 'Tools',
     'complexity': 'easy',
-    'description': '''
-Portal Distributor Sale
-=======================
-    ''',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'depends': [
-        'portal_sale',
-        'sale_exceptions',
-        'portal_account_distributor',
+        'website_portal_sale',
+        'sale_exception',
     ],
     'demo': [
     ],
     'data': [
+        'security/portal_distributor_group.xml',
         'security/portal_security.xml',
         'security/ir.model.access.csv',
-        'portal_sale_view.xml',
+        'views/portal_sale_view.xml',
+        'views/portal_menu.xml',
     ],
-    'installable': False,
-    'auto_install': False,
-    'application': True,
+    'installable': True,
+    'auto_install': True,
     'category': 'Hidden',
 }
