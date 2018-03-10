@@ -72,12 +72,12 @@
                     <filter name="hide_cancelled" string="Hide cancelled lines" domain="[('state', '!=', 'cancel')]"/>
                     <separator/>
                 </separator>
-                <filter position="before">
+                <filter position="replace">
                     <filter name="draft" string="Quotations" domain="[('state','in',('draft','sent'))]"/>
                     <filter name="approved" string="Sale Orders" domain="[('state','in',('sale','done'))]"/>
                     <separator/>
-                    <!-- to invoice already exists -->
-                    <!-- <filter name="not_invoiced" string="Not Invoiced" domain="[('invoice_status','=', 'to invoice')]"/> -->
+                    <!-- to invoice already exists but it compares with quantity and we bypass state with set manually invoiced, so better use state (same as in PO, POL, and SO also)-->
+                    <filter name="not_invoiced" string="Not Invoiced" domain="[('invoice_status','=', 'to invoice')]"/>
                     <filter name="invoiced" string="Invoiced" domain="[('invoice_status','=', 'invoiced')]"/>
                 </filter>
                 <group>

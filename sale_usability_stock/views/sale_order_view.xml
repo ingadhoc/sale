@@ -61,7 +61,7 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale_usability.view_sales_order_filter"/>
             <field name="arch" type="xml">
-                <filter name="invoiced" position="before">
+                <filter domain="[('invoice_status','=','to invoice')]" position="before">
                     <filter name="to_deliver" string="To Deliver" domain="[('delivery_status','=', 'to deliver')]" help="Sale orders that include lines not delivered."/>
                     <filter name="delivered" string="Delivered" domain="[('delivery_status','=', 'delivered')]" help="Sale orders with all lines delivered."/>
                     <separator/>
