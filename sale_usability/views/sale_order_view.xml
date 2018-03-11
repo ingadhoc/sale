@@ -42,6 +42,11 @@
                     <field name="state"/>
                 </field>
 
+                <!-- for monetary field to display symbol -->
+                <tree>
+                    <field name="currency_id" invisible="1"/>
+                </tree>
+
                 <!-- como unificamos menus hacemos que sea mas visible cuales son las borrador -->
                 <tree position="attributes">
                     <attribute name="decoration-info">state in ['draft', 'sent']</attribute>
