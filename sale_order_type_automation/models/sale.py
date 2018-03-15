@@ -38,7 +38,10 @@ class SaleOrder(models.Model):
         packs_to_unlink = self.env['stock.pack.operation']
         for rec in self.filtered(lambda x: x.type_id.picking_atomation \
                 != 'none' and x.procurement_group_id):
-            pickings = self.picking_ids
+            # we add invalidate because on boggio we have add an option
+            # for tracking_disable and with that setup pickings where not seen 
+            rec.invalidate_cache()
+            pickings = rec.picking_ids
             if rec.type_id.book_id:
                 pickings.update({'book_id': rec.type_id.book_id.id})
             if rec.type_id.picking_atomation == 'validate':
