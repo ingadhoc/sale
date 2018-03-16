@@ -10,6 +10,9 @@ from openerp.exceptions import UserError
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
+    pricelist_id = fields.Many2one(track_visibility='onchange')
+    payment_term_id = fields.Many2one(track_visibility='onchange')
+
     @api.multi
     def _amount_all(self):
         """

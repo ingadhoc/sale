@@ -16,6 +16,7 @@ Several Improvements to sales:
 #. Make cancel button also visible on done state so that if "Never allow to modify a confirmed sale order" is enable, sale users can still cancel a sale order that has not been delivered or invoiced yet
 #. Add button to force "invoiced" only for admin with tec features
 #. Add currency field on SO lines to display monetary widget with currency symbol (TODO checkl and remove on v10)
+#. Add tracking to payment term and pricelist on sale orders
 
 Installation
 ============
