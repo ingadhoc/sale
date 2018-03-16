@@ -6,10 +6,12 @@
 Sale Order Type Automation
 ==========================
 
-Add to sale order type this options to be executed automatically on sale order confirmation and picking confimation:
+#. Add to sale order type this options to be executed automatically on sale order confirmation and picking confimation:
     * Create / Validate Invoice
     * Create / Validate Payment
     * Confirm picking and products transfer (only on sale order confirmation)
+
+#. We also make type field on sale orders readonly on states different from draft and sent. Also add tracking to same field. TODO we should move that to sale_oder_type module or sale_oder_type_usability module
 
 Installation
 ============

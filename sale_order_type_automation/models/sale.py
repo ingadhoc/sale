@@ -3,7 +3,7 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from openerp import api, models, _
+from openerp import api, models, fields, _
 from openerp.exceptions import ValidationError
 import logging
 
@@ -12,6 +12,13 @@ _logger = logging.getLogger(__name__)
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
+
+    # TODO move this to a usability module or sale_order_type module
+    type_id = fields.Many2one(
+        track_visibility='onchange',
+        readonly=True,
+        states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
+    )
 
     @api.multi
     def run_invoicing_atomation(self):
