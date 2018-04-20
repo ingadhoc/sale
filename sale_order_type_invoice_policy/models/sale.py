@@ -25,7 +25,8 @@ class SaleOrder(models.Model):
         self.ensure_one()
         for line in self.order_line:
             line.qty_to_invoice = line.product_uom_qty - line.qty_invoiced
-        self.action_invoice_create()
+        self.action_invoice_create(final=True)
+        return self.action_view_invoice()
 
     @api.multi
     def action_confirm(self):
