@@ -8,7 +8,7 @@
                 <field name="type_invoice_policy" invisible="1"/>
             </form>
             <button position="before">
-                <button name="action_invoice_create_force" string="Create Invoice" type="object" class="btn-primary" attrs="{'invisible': ['|', '|', ('type_invoice_policy', '!=', 'prepaid'), ('invoice_status', '=', 'invoiced'), ('state', '!=', 'draft')]}"/>
+                <button name="action_invoice_create_force" string="Create Invoice" type="object" class="btn-primary" attrs="{'invisible': ['|', '|', ('type_invoice_policy', '!=', 'prepaid'), ('invoice_status', '=', 'invoiced'), ('state', 'not in', ['draft', 'sent'])]}"/>
             </button>
         </field>
     </record>
