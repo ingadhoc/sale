@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data>
 
         <!-- creamos form que no existe -->
@@ -100,4 +100,4 @@
             id="menu_sale_order" parent="base.menu_sales"
             sequence="13" groups="base.group_sale_salesman,base.group_sale_manager"/>
     </data>
-</openerp>
+</odoo>

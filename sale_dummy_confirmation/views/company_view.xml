@@ -1,4 +1,4 @@
-<openerp>
+<odoo>
     <data>
         <record model="ir.ui.view" id="sale_order_validity">
             <field name="name">res.company.form.inherit</field>
@@ -14,4 +14,4 @@
             </field>
         </record>
     </data>
-</openerp>
+</odoo>

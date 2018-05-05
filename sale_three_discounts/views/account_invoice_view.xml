@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
+<odoo>
 	<data>
 
 		<!-- supplier invoice form view, make discount editable -->
@@ -35,4 +35,4 @@
 		</record>
 
 	</data>
-</openerp>
+</odoo>
