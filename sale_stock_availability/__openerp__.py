@@ -36,5 +36,5 @@
         'security/sale_order.xml',
     ],
     'test': [],
-    'installable': True,
+    'installable': False,
 }

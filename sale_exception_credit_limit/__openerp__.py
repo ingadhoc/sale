@@ -36,5 +36,5 @@
         'partner_demo.xml'
     ],
     'test': [],
-    'installable': True,
+    'installable': False,
 }
