@@ -43,8 +43,6 @@ Sale Require Purchase Order Number
     ],
     'demo': [
     ],
-    'test': [
-    ],
     'installable': False,
     'auto_install': False,
     'application': False,

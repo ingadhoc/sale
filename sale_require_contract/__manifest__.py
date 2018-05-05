@@ -37,8 +37,6 @@
     'demo': [
         'demo/demo.xml',
     ],
-    'test': [
-    ],
     'installable': False,
     'auto_install': False,
     'application': False,

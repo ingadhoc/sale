@@ -34,6 +34,5 @@
         'views/stock_view.xml',
         'security/sale_order.xml',
     ],
-    'test': [],
     'installable': False,
 }

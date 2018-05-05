@@ -14,7 +14,7 @@ class SaleOrder(models.Model):
     date_confirm = fields.Date(
         'Confirmation Date',
         readonly=True,
-        select=True,
+        index=True,
         help="Date on which sales order is confirmed.", copy=False)
 
     @api.multi
