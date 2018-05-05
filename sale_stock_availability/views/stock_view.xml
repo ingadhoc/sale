@@ -1,4 +1,4 @@
-<openerp>
+<odoo>
     <data>
         <record model="ir.ui.view" id="view_warehouse">
             <field name="name">stock.warehouse</field>
@@ -11,4 +11,4 @@
             </field>
         </record>
     </data>
-</openerp>
+</odoo>

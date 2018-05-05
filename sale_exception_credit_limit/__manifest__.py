@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Copyright (C) 2015  ADHOC SA  (http://www.adhoc.com.ar)
@@ -35,6 +34,5 @@
     'demo': [
         'partner_demo.xml'
     ],
-    'test': [],
     'installable': False,
 }

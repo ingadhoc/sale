@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Copyright (C) 2015  ADHOC SA  (http://www.adhoc.com.ar)
@@ -48,8 +47,6 @@
         'views/product_invoice_operation_restriction_view.xml',
     ],
     'demo': [
-    ],
-    'test': [
     ],
     'installable': False,
     'auto_install': False,

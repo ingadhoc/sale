@@ -1,7 +1,7 @@
-from openerp import fields, models, api, _
+from odoo import fields, models, api, _
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-from openerp.exceptions import Warning
+from odoo.exceptions import Warning
 
 
 class sale_order(models.Model):

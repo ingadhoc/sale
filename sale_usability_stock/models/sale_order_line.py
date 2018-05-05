@@ -1,12 +1,11 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
-# For copyright and license notices, see __openerp__.py file in module root
+# For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from openerp import models, api, fields, _
-from openerp.exceptions import ValidationError
-from openerp.tools.float_utils import float_compare
-import openerp.addons.decimal_precision as dp
+from odoo import models, api, fields, _
+from odoo.exceptions import ValidationError
+from odoo.tools.float_utils import float_compare
+import odoo.addons.decimal_precision as dp
 
 
 class SaleOrderLine(models.Model):

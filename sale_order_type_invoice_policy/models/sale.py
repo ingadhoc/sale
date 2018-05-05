@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
-# For copyright and license notices, see __openerp__.py file in module root
+# For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from openerp import api, models, fields, _
-from openerp.tools import float_compare
-from openerp.exceptions import UserError
+from odoo import api, models, fields, _
+from odoo.tools import float_compare
+from odoo.exceptions import UserError
 
 
 class SaleOrder(models.Model):

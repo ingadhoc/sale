@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
   <data>
 
     <!-- we disable this rule on demo data because of odoo tests -->
@@ -30,4 +30,4 @@
         <field name="client_order_ref">Reference 8</field>
     </record>
 </data>
-</openerp>
+</odoo>

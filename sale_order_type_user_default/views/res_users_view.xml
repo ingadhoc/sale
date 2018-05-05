@@ -1,4 +1,4 @@
-<openerp>
+<odoo>
     <data>
         <record model="ir.ui.view" id="view_users_form">
             <field name="name">res.users.form.inherit</field>
@@ -13,4 +13,4 @@
             </field>
         </record>
     </data>
-</openerp>
+</odoo>

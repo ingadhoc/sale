@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
-# For copyright and license notices, see __openerp__.py file in module root
+# For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from openerp import models, fields, api
+from odoo import models, fields, api
 from datetime import datetime, timedelta
 import logging
 _logger = logging.getLogger(__name__)
@@ -15,7 +14,7 @@ class SaleOrder(models.Model):
     date_confirm = fields.Date(
         'Confirmation Date',
         readonly=True,
-        select=True,
+        index=True,
         help="Date on which sales order is confirmed.", copy=False)
 
     @api.multi
