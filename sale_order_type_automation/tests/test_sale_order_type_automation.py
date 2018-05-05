@@ -3,7 +3,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-import openerp.tests.common as common
+import odoo.tests.common as common
 
 
 class TestSaleOrderTypeAutomation(common.TransactionCase):

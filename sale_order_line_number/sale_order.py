@@ -1,4 +1,4 @@
-from openerp import models, api, fields
+from odoo import models, api, fields
 
 
 class sale_order_line(models.Model):

@@ -3,8 +3,8 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from openerp import models, fields, api, _
-from openerp.osv.orm import setup_modifiers
+from odoo import models, fields, api, _
+from odoo.osv.orm import setup_modifiers
 from lxml import etree
 
 

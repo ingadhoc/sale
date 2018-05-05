@@ -3,10 +3,10 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from openerp import models, api, fields
-import openerp.addons.decimal_precision as dp
-from openerp.tools import float_compare
-# from openerp.exceptions import ValidationError
+from odoo import models, api, fields
+import odoo.addons.decimal_precision as dp
+from odoo.tools import float_compare
+# from odoo.exceptions import ValidationError
 
 
 class SaleOrderLine(models.Model):
