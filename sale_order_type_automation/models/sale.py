@@ -54,6 +54,7 @@ class SaleOrder(models.Model):
             if rec.type_id.picking_atomation == 'validate':
                 pickings.force_assign()
             elif rec.type_id.picking_atomation == 'validate_no_force':
+                pickings.action_assign()
                 products = []
                 for move in pickings.mapped('move_lines'):
                     if move.state != 'assigned':
