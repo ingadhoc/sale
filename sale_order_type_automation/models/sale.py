@@ -43,18 +43,22 @@ class SaleOrder(models.Model):
     @api.multi
     def run_picking_atomation(self):
         packs_to_unlink = self.env['stock.pack.operation']
-        for rec in self.filtered(lambda x: x.type_id.picking_atomation \
-                != 'none' and x.procurement_group_id):
+        is_jit_installed = self.env['ir.module.module'].search(
+            [('name', '=', 'procurement_jit'),
+             ('state', '=', 'installed')], limit=1)
+        for rec in self.filtered(lambda x: x.type_id.picking_atomation
+                                 != 'none' and x.procurement_group_id):
             # we add invalidate because on boggio we have add an option
-            # for tracking_disable and with that setup pickings where not seen 
+            # for tracking_disable and with that setup pickings where not seen
             rec.invalidate_cache()
             pickings = rec.picking_ids
+            if not is_jit_installed:
+                pickings.action_assign()
             if rec.type_id.book_id:
                 pickings.update({'book_id': rec.type_id.book_id.id})
             if rec.type_id.picking_atomation == 'validate':
                 pickings.force_assign()
             elif rec.type_id.picking_atomation == 'validate_no_force':
-                pickings.action_assign()
                 products = []
                 for move in pickings.mapped('move_lines'):
                     if move.state != 'assigned':
