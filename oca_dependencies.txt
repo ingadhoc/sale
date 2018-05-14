@@ -1,4 +1,4 @@
-# sale-workflow
+sale-workflow
 # account-invoicing
 # ingadhoc-partner https://github.com/ingadhoc/partner.git
 # ingadhoc-stock https://github.com/ingadhoc/stock.git
