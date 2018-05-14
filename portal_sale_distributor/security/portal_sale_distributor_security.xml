@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="group_portal_distributor" model="res.groups">
+        <field name="name">Portal - Distributor</field>
+        <field name="is_portal" eval="True"/>
+        <field name="category_id" ref="base.module_category_extra"/>
+        <field name="implied_ids" eval="[(4,ref('base.group_portal'))]"/>
+    </record>
+
+    <!-- Sale Portal Disrtibutor CRUD all orders -->
+    <record id="portal_sale_order_user_rule" model="ir.rule">
+        <field name="name">Portal Distributor same partner Quotations/Sales Orders</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="domain_force">[('partner_id.commercial_partner_id','=',user.commercial_partner_id.id)]</field>
+        <field name="groups" eval="[(4, ref('group_portal_distributor'))]"/>
+        <field eval="1" name="perm_unlink"/>
+        <field eval="1" name="perm_write"/>
+        <field eval="1" name="perm_read"/>
+        <field eval="1" name="perm_create"/>
+    </record>
+
+    <!-- Sale Portal Disrtibutor CRUD all orders -->
+    <record id="portal_sale_order_line_user_rule" model="ir.rule">
+        <field name="name">Portal Distributor same partner Quotations/Sales Orders</field>
+        <field name="model_id" ref="sale.model_sale_order_line"/>
+        <field name="domain_force">[('order_id.partner_id.commercial_partner_id','=',user.commercial_partner_id.id)]</field>
+        <field name="groups" eval="[(4, ref('group_portal_distributor'))]"/>
+        <field eval="1" name="perm_unlink"/>
+        <field eval="1" name="perm_write"/>
+        <field eval="1" name="perm_read"/>
+        <field eval="1" name="perm_create"/>
+    </record>
+
+    <record id="portal_product_template_public_rule" model="ir.rule">
+        <field name="name">Public product template (distribuidores) </field>
+        <field name="model_id" ref="product.model_product_template"/>
+        <field name="domain_force">[(1 ,'=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_portal_distributor'))]"/>
+        <field eval="1" name="perm_read"/>
+        <field eval="0" name="perm_write"/>
+        <field eval="0" name="perm_create"/>
+        <field eval="0" name="perm_unlink"/>
+    </record>
+
+</odoo>
