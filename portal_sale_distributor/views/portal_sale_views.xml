@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <menuitem
+        id="sale_menu"
+        name="Sales"
+        groups="group_portal_distributor"
+        />
+
+    <menuitem
+        id="quotations"
+        name="Quotations"
+        action="sale.action_quotations"
+        parent="sale_menu"
+        sequence="10"
+        />
+
+    <menuitem
+        id="sale_order"
+        name="Sales Order"
+        action="sale.action_orders"
+        parent="sale_menu"
+        sequence="20"
+        />
+
+    <record id="website.menu_website_configuration" model="ir.ui.menu">
+        <field eval="[(4,ref('group_portal_distributor'))]" name="groups_id"/>
+    </record>
+
+    <record id="view_order_form" model="ir.ui.view">
+        <field name="name">sale.order.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="groups_id" eval="[(4, ref('group_portal_distributor'))]"/>
+        <field name="priority">40</field>
+        <field name="arch" type="xml">
+            <header position="replace">
+                <header>
+                    <field name="invoice_count" invisible="1"/>
+                    <button name="action_confirm" states="draft,sent" string="Confirm Sale" class="btn-primary" type="object" context="{'show_sale': True}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,sale,done"/>
+                </header>
+            </header>
+            <button name="action_view_invoice" position="replace"/>
+            <field name="validity_date" position="attributes">
+                <attribute name="attrs">{'invisible':[('state', 'in', ('draft', 'sent'))]}</attribute>
+            </field>
+            <field name="payment_term_id" position="attributes">
+                <attribute name="attrs">{'invisible':[('state', 'in', ('draft', 'sent'))],'readonly':[('state','not in',('draft','sent'))]}</attribute>
+            </field>
+            <field name="carrier_id" position="attributes">
+                <attribute name="attrs">{'readonly':[('state','not in',('draft','sent'))]}</attribute>
+            </field>
+            <button name="get_delivery_price" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </button>
+            <button name="set_delivery_line" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </button>
+            <field name="delivery_price" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+        </field>
+    </record>
+
+</odoo>
