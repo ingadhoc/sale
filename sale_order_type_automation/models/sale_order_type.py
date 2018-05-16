@@ -78,6 +78,22 @@ class SaleOrderTypology(models.Model):
         'stock.book',
         'Voucher Book',
     )
+    set_done_on_confirmation = fields.Boolean(
+        'Set Done on Confirmation',
+        help="Upon confirmation set"
+        " sale order done instead of leaving it on"
+        " 'sale order' state that allows modifications")
+
+    auto_done_setting = fields.Selection([
+        (0, "Allow to edit sales order from the"
+         " 'Sales Order' menu (not from the Quotation menu)"),
+        (1, "Never allow to modify a confirmed sale order")],
+        compute='_compute_auto_done_setting')
+
+    @api.multi
+    def _compute_auto_done_setting(self):
+        self.auto_done_setting = self.env['ir.values'].get_default(
+            'sale.config.settings', 'auto_done_setting')
 
     @api.multi
     @api.constrains(

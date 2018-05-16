@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Sale Order Type Automation',
-    'version': '9.0.1.5.0',
+    'version': '9.0.1.6.0',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
