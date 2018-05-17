@@ -83,6 +83,8 @@ class SaleOrder(models.Model):
         res = super(SaleOrder, self).action_confirm()
         self.run_picking_atomation()
         self.run_invoicing_atomation()
+        if self.type_id.set_done_on_confirmation:
+            self.action_done()
         return res
 
     @api.multi
