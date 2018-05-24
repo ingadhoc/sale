@@ -37,7 +37,7 @@ class SaleOrder(models.Model):
                 self.action_invoice_create(final=True))
             if invoices and \
                     rec.type_id.invoicing_atomation == 'validate_invoice':
-                invoices.signal_workflow('invoice_open')
+                invoices.action_invoice_open()
 
     @api.multi
     def run_picking_atomation(self):
