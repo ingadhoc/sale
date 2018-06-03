@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Usability Improvements',
-    'version': '9.0.1.14.0',
+    'version': '9.0.1.15.0',
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -32,6 +32,7 @@
         'sale',
     ],
     'data': [
+        'security/sale_usability_security.xml',
         'views/sale_view.xml',
         'views/sale_order_view.xml',
         'views/sale_order_line_view.xml',
