@@ -17,6 +17,7 @@ Several Improvements to sales:
 #. Add button to force "invoiced" only for admin with tec features
 #. Add currency field on SO lines to display monetary widget with currency symbol (TODO checkl and remove on v10)
 #. Add tracking to payment term and pricelist on sale orders
+#. Add option to show SO reference field on tree view and on main section of form view
 
 Installation
 ============

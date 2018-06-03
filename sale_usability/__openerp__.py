@@ -33,6 +33,7 @@
         'sale',
     ],
     'data': [
+        'security/sale_usability_security.xml',
         'views/sale_view.xml',
         'views/sale_order_view.xml',
         'views/sale_order_line_view.xml',
