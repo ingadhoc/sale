@@ -45,9 +45,6 @@
             <field name="validity_date" position="attributes">
                 <attribute name="attrs">{'invisible':[('state', 'in', ('draft', 'sent'))]}</attribute>
             </field>
-            <field name="payment_term_id" position="attributes">
-                <attribute name="attrs">{'invisible':[('state', 'in', ('draft', 'sent'))],'readonly':[('state','not in',('draft','sent'))]}</attribute>
-            </field>
             <field name="carrier_id" position="attributes">
                 <attribute name="attrs">{'readonly':[('state','not in',('draft','sent'))]}</attribute>
             </field>
@@ -58,6 +55,12 @@
                 <attribute name="invisible">1</attribute>
             </button>
             <field name="delivery_price" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="pricelist_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="payment_term_id" position="attributes">
                 <attribute name="invisible">1</attribute>
             </field>
         </field>

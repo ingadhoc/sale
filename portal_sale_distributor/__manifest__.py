@@ -28,6 +28,7 @@
     'depends': [
         'website_sale',
         'sale_exception',
+        'price_security',
         'delivery',
     ],
     'demo': [
@@ -37,6 +38,7 @@
         'security/ir.model.access.csv',
         'views/portal_sale_views.xml',
         'views/portal_templates.xml',
+        'views/product_product_views.xml',
     ],
     'installable': True,
     'auto_install': False,
