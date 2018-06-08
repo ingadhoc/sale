@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_quote_template_subcription,sale.quote.template.distributor,website_quote.model_sale_quote_template,portal_sale_distributor.group_portal_distributor,1,0,0,0
+access_sale_quote_line_subcription,sale.quote.line.distributor,website_quote.model_sale_quote_line,portal_sale_distributor.group_portal_distributor,1,0,0,0
+access_sale_quote_option_subcription,sale.quote.option.distributor,website_quote.model_sale_quote_option,portal_sale_distributor.group_portal_distributor,1,0,0,0
