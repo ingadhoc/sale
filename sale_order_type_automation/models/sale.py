@@ -37,7 +37,7 @@ class SaleOrder(models.Model):
                 self.action_invoice_create(final=True))
             if invoices and \
                     rec.type_id.invoicing_atomation == 'validate_invoice':
-                invoices.signal_workflow('invoice_open')
+                invoices.action_invoice_open()
 
     @api.multi
     def run_picking_atomation(self):
@@ -83,6 +83,8 @@ class SaleOrder(models.Model):
         res = super(SaleOrder, self).action_confirm()
         self.run_picking_atomation()
         self.run_invoicing_atomation()
+        if self.type_id.set_done_on_confirmation:
+            self.action_done()
         return res
 
     @api.multi
@@ -94,3 +96,18 @@ class SaleOrder(models.Model):
         if self.type_id.payment_atomation and self.type_id.payment_journal_id:
             res['pay_now_journal_id'] = self.type_id.payment_journal_id.id
         return res
+
+
+class SaleAdvancePaymentInv(models.TransientModel):
+    _inherit = "sale.advance.payment.inv"
+
+    @api.multi
+    def _create_invoice(self, order, so_line, amount):
+        if order.type_id.journal_id:
+            self = self.with_context(
+                default_sale_type_id=order.type_id.id,
+                default_journal_id=order.type_id.journal_id.id,
+            )
+            invoice = super(SaleAdvancePaymentInv, self)._create_invoice(
+                order=order, so_line=so_line, amount=amount)
+        return invoice
