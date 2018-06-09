@@ -10,11 +10,11 @@
    :target: https://www.gnu.org/licenses/agpl
    :alt: License: AGPL-3
 
-=======================
-Portal Distributor Sale
-=======================
+=====================================
+Portal Distributor Sale Website Quote
+=====================================
+This module extend portal distributor for wesbite Quotes.
 
-This module add an new group to use portal with only sale orders in backend.
 
 Installation
 ============
@@ -22,6 +22,7 @@ Installation
 To install this module, you need to:
 
 #. Just install this module.
+
 
 Configuration
 =============

@@ -18,7 +18,7 @@
 #
 ##############################################################################
 {
-    'name': 'Portal Distributor Sale',
+    'name': 'Portal Distributor Website Quote',
     'version': '11.0.1.0.0',
     'category': 'Tools',
     'complexity': 'easy',
@@ -26,20 +26,15 @@
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'depends': [
-        'website_sale',
-        'sale_exception',
-        'price_security',
-        'delivery',
+        'portal_sale_distributor',
+        'website_quote',
     ],
     'demo': [
     ],
     'data': [
-        'security/portal_sale_distributor_security.xml',
+        'views/sale_order_views.xml',
         'security/ir.model.access.csv',
-        'views/portal_sale_views.xml',
-        'views/portal_templates.xml',
-        'views/product_product_views.xml',
     ],
     'installable': True,
-    'auto_install': False,
+    'auto_install': True,
 }

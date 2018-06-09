@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="view_order_form" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="portal_sale_distributor.view_order_form"/>
+        <field name="arch" type="xml">
+            <label for="template_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </label>
+            <field name="template_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>
