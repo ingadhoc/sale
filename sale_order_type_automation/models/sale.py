@@ -82,10 +82,12 @@ class SaleOrder(models.Model):
     @api.multi
     def action_confirm(self):
         res = super(SaleOrder, self).action_confirm()
-        self.run_picking_atomation()
-        self.run_invoicing_atomation()
-        if self.type_id.set_done_on_confirmation:
-            self.action_done()
+        # we use this because compatibility with sale exception module
+        if isinstance(res, bool) and res:
+            self.run_picking_atomation()
+            self.run_invoicing_atomation()
+            if self.type_id.set_done_on_confirmation:
+                self.action_done()
         return res
 
     @api.multi
