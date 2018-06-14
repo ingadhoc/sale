@@ -36,9 +36,31 @@ class SaleOrder(models.Model):
             # por si se usa el modulo de facturar las returns
             invoices = rec.env['account.invoice'].browse(
                 self.action_invoice_create(final=True))
-            if invoices and \
-                    rec.type_id.invoicing_atomation == 'validate_invoice':
-                invoices.signal_workflow('invoice_open')
+            if invoices:
+                if rec.type_id.invoicing_atomation == 'validate_invoice':
+                    invoices.signal_workflow('invoice_open')
+                elif rec.type_id.invoicing_atomation == 'try_validate_invoice':
+                    # TODO en v11 no haria falta el savepoint porque al no usar
+                    # workflow la factura deberia igual hacer el rollback
+                    # TODO we should improve this because if more than one
+                    # invoice is created and just one invoice has the error,
+                    # all of them are rolled back, perhaps a new cursor can
+                    # help on this
+                    try:
+                        self.env.cr.execute('SAVEPOINT try_validate_invoice')
+                        invoices.signal_workflow('invoice_open')
+                        self.env.cr.execute(
+                            'RELEASE SAVEPOINT try_validate_invoice')
+                    except Exception, e:
+                        self.env.cr.execute(
+                            'ROLLBACK TO SAVEPOINT try_validate_invoice')
+                        message = _(
+                            "We couldn't validate the automatically created "
+                            "invoices (ids %s), you will need to validate them"
+                            " manually. This is what we get: %s") % (
+                                invoices.ids, e)
+                        invoices.message_post(message)
+                        rec.message_post(message)
 
     @api.multi
     def run_picking_atomation(self):
