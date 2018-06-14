@@ -26,6 +26,8 @@ class SaleOrderLine(models.Model):
         """
         self.ensure_one()
         template = self.product_id.create_from_project_id
+        if not template:
+            return
 
         # create analytic account
         self.order_id._create_analytic_account(
