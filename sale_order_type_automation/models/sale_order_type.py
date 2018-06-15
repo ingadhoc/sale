@@ -28,6 +28,7 @@ class SaleOrderTypology(models.Model):
         ('none', 'None'),
         ('create_invoice', 'Create Invoice'),
         ('validate_invoice', 'Validate Invoice'),
+        ('try_validate_invoice', 'Try to Validate Invoice (Not recommended)'),
     ],
         default='none',
         required=True,
@@ -36,6 +37,12 @@ class SaleOrderTypology(models.Model):
         "*Create Invoice: create invoice for 'Invoiceable lines' (regarding "
         "product configuration and delivery status)\n"
         "*Validate Invoice: create invoice and validate it\n"
+        "*Try to Validate Invoice: create invoice and try to validate it, if "
+        "there is a validation error, do not raise it, just log it on SO and "
+        "Invoice chatter (invoice will be in draft state till someone validate"
+        " it. This option is not recommended because it is less intuiteve for "
+        "user. Should only be use if it is common that you are facing errors "
+        "on invoice validation."
     )
     payment_atomation = fields.Selection([
         ('none', 'None'),
