@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- make sales orders action show all sale.order records -->
+    <record id="sale.action_orders" model="ir.actions.act_window">
+        <field name="domain">[]</field>
+    </record>
+
+</odoo>
