@@ -7,7 +7,7 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <!-- add buttons to send and print for state done too -->
-            <xpath expr="//button[@name='action_quotation_send'][2]" position="attributes">
+            <xpath expr="//button[@name='action_quotation_send'][4]" position="attributes">
                 <attribute name="states">sent,sale,done</attribute>
             </xpath>
             <xpath expr="//button[@name='print_quotation'][2]" position="attributes">

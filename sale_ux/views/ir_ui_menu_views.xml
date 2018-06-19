@@ -3,7 +3,7 @@
 
     <!--Make Quotations Menu only visible to tec features-->
     <record model="ir.ui.menu" id="sale.menu_sale_quotations">
-        <field name="groups_id" eval="[(4, ref('base.group_no_one'))]"/>
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_no_one')])]"/>
     </record>
 
 </odoo>
