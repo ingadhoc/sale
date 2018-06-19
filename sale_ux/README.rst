@@ -45,7 +45,7 @@ Usage
 
 To use this module, you need to:
 
-#. Just use the module.
+#. To view Sale Orders Lines, go to: Sales/Configurations/Sale orders/Sale Lines
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
