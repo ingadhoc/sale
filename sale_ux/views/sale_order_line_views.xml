@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="sale_order_line_usability_form" model="ir.ui.view">
+    <record id="sale_order_line_ux_form" model="ir.ui.view">
         <field name="name">sale.order.line.usability.form</field>
         <field name="model">sale.order.line</field>
         <field name="priority" eval="90"/>
         <field name="arch" type="xml">
-            <form string="Sale Order Line" create="false" delte="false" edit="false">
+            <form string="Sale Order Line" create="false" delete="false" edit="false">
                 <sheet>
                     <field name="currency_id" invisible="1"/>
                     <group>
@@ -83,13 +83,13 @@
     <!-- add new menu for sale lines -->
     <record model="ir.actions.act_window" id="action_sale_order_line_usability_tree">
         <field name="context">{'search_default_confirmed': 1}</field>
-        <field name="name">Sale Lines</field>
+        <field name="name">Sale Order Lines</field>
         <field name="view_mode">tree,form</field>
         <field name="res_model">sale.order.line</field>
         <field name="view_id" ref="sale_order_line_usability_tree"/>
     </record>
 
     <menuitem action="action_sale_order_line_usability_tree"
-        id="menu_sale_order" parent="sale.menu_sales_config"
-        sequence="13" groups="sales_team.group_sale_salesman,sales_team.group_sale_manager"/>
+        id="menu_sale_order" parent="sale.sale_order_menu"
+        sequence="20" groups="sales_team.group_sale_salesman,sales_team.group_sale_manager"/>
 </odoo>

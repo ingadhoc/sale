@@ -33,8 +33,6 @@
     ],
     'data': [
         'security/sale_ux_security.xml',
-        'views/ir_ui_menu_views.xml',
-        'views/ir_actions_act_window_views.xml',
         'views/sale_order_views.xml',
         'views/sale_order_line_views.xml',
         'wizards/res_config_settings_views.xml',
