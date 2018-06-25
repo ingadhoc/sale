@@ -10,7 +10,7 @@ class SaleOrderLine(models.Model):
 
     # add context so show sale data by default
     order_id = fields.Many2one(
-        context={'show_sale': True}
+        context={'show_sale': True},
     )
 
     @api.depends('order_id.manually_set_invoiced')

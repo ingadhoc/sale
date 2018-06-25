@@ -18,8 +18,8 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Usability Improvements',
-    'version': '9.0.1.15.0',
+    'name': 'Sale UX',
+    'version': '11.0.1.0.0',
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -32,14 +32,14 @@
         'sale',
     ],
     'data': [
-        'security/sale_usability_security.xml',
-        'views/sale_view.xml',
-        'views/sale_order_view.xml',
-        'views/sale_order_line_view.xml',
+        'security/sale_ux_security.xml',
+        'views/sale_order_views.xml',
+        'views/sale_order_line_views.xml',
+        'wizards/res_config_settings_views.xml',
     ],
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
