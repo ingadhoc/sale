@@ -55,6 +55,7 @@ class ProductProduct(models.Model):
                     'type': 'object',
                     'icon': 'fa-external-link',
                     'string': _('Open Product Form View'),
+                    'groups': 'base.group_user',
                 }))
 
             # make tree view editable
