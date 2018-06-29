@@ -1,0 +1,15 @@
+<odoo>
+    <record id="sale.view_order_form_editable_list" model="ir.ui.view">
+        <field name="groups_id" eval="[(3, ref('event.group_event_user'))]"/>
+    </record>
+    <record id="view_order_form" model="ir.ui.view">
+        <field name="name">sale.order.form.view.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree//field[@name='price_subtotal']" position="after">
+                <button name="open_sale_line_form" type="object" string="Open Document" icon="fa-calendar" attrs="{'invisible':[('event_ok', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
