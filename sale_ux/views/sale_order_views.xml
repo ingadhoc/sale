@@ -15,7 +15,7 @@
             </xpath>
 
             <group name="sale_pay">
-                <field name="manually_set_invoiced" groups="base.group_no_one"/>
+                <field name="force_invoiced_status" groups="base.group_no_one"/>
             </group>
 
             <button name="action_cancel" position="attributes">

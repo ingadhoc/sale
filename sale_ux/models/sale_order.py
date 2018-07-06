@@ -15,10 +15,9 @@ class SaleOrder(models.Model):
     payment_term_id = fields.Many2one(
         track_visibility='onchange',
     )
-    manually_set_invoiced = fields.Boolean(
-        string='Manually Set Invoiced?',
-        help='If you set this field to True, then all invoiceable lines'
-        ' will be set to invoiced?',
+    force_invoiced_status = fields.Selection([
+        ('no', 'Nothing to Invoice'),
+        ('invoiced', 'Fully Invoiced')],
         track_visibility='onchange',
         copy=False,
     )
@@ -61,10 +60,10 @@ class SaleOrder(models.Model):
                 "cancel related bills and pickings."))
         return super(SaleOrder, self).action_cancel()
 
-    @api.constrains('manually_set_invoiced')
-    def check_manually_set_invoiced(self):
+    @api.constrains('force_invoiced_status')
+    def check_force_invoiced_status(self):
         group = self.sudo().env.ref('base.group_system')
-        if self.manually_set_invoiced and not self.user_has_groups(
+        if self.force_invoiced_status and not self.user_has_groups(
                 'base.group_system'):
             raise ValidationError(_(
                 'Only users with "%s / %s" can Set Invoiced manually') % (
