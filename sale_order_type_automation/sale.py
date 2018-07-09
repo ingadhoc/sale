@@ -13,11 +13,9 @@ class sale_order(models.Model):
     def action_button_confirm(self):
         res = super(sale_order, self).action_button_confirm()
         account_voucher_obj = self.env['account.voucher']
-        if self.type_id.journal_id:
+        if self.type_id.journal_id and self.type_id.validate_automatically_invoice:
             invoice_id = self.action_invoice_create()
-            if self.type_id.validate_automatically_invoice:
-                self.env['account.invoice'].browse(
-                    invoice_id).signal_workflow('invoice_open')
+            self.env['account.invoice'].browse(invoice_id).signal_workflow('invoice_open')
             if self.type_id.payment_journal_id:
                 inv = self.env['account.invoice'].browse(invoice_id)
                 if inv:
