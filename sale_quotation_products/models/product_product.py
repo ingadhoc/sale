@@ -10,6 +10,12 @@ from lxml import etree
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
+    qty = fields.Float(
+        'Quantity',
+        compute='_compute_qty',
+        inverse='_inverse_qty',
+    )
+
     @api.model
     def fields_view_get(self, view_id=None, view_type='form',
                         toolbar=False, submenu=False):
@@ -77,41 +83,38 @@ class ProductProduct(models.Model):
             self = self.sudo()
         return super(ProductProduct, self).write(vals)
 
-    @api.one
-    def _get_qty(self):
-        self.qty = 0
+    @api.multi
+    def _compute_qty(self):
         sale_order_id = self._context.get('active_id', False)
-        if sale_order_id:
-            lines = self.env['sale.order.line'].search([
-                ('order_id', '=', sale_order_id),
-                ('product_id', '=', self.id)])
-            self.qty = sum([self.env['product.uom']._compute_qty_obj(
-                line.product_uom,
-                line.product_uom_qty,
-                self.uom_id) for line in lines])
+        for rec in self:
+            qty = 0
+            if sale_order_id:
+                lines = self.env['sale.order.line'].search([
+                    ('order_id', '=', sale_order_id),
+                    ('product_id', '=', rec.id)])
+                qty = sum([line.product_uom._compute_quantity(
+                    line.product_uom_qty,
+                    rec.uom_id) for line in lines])
+            rec.update({'qty': qty})
 
-    @api.one
-    def _set_qty(self):
+    @api.multi
+    def _inverse_qty(self):
         sale_order_id = self._context.get('active_id', False)
-        qty = self.qty
-        if sale_order_id:
-            lines = self.env['sale.order.line'].search([
-                ('order_id', '=', sale_order_id),
-                ('product_id', '=', self.id)])
-            if lines:
-                (lines - lines[0]).unlink()
-                lines[0].write({
-                    'product_uom_qty': qty,
-                    'product_uom': self.uom_id.id,
-                })
-            else:
-                self.env['sale.order'].browse(
-                    sale_order_id).add_products(self.id, qty)
-
-    qty = fields.Float(
-        'Quantity',
-        compute='_get_qty',
-        inverse='_set_qty')
+        for rec in self:
+            qty = rec.qty
+            if sale_order_id:
+                lines = self.env['sale.order.line'].search([
+                    ('order_id', '=', sale_order_id),
+                    ('product_id', '=', rec.id)])
+                if lines:
+                    (lines - lines[0]).unlink()
+                    lines[0].write({
+                        'product_uom_qty': qty,
+                        'product_uom': rec.uom_id.id,
+                    })
+                else:
+                    self.env['sale.order'].browse(
+                        sale_order_id).add_products(rec.id, qty)
 
     @api.multi
     def action_product_form(self):
