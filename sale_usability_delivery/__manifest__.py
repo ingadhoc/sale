@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Usability Improvements integration with delivery',
-    'version': '9.0.1.0.0',
+    'version': '11.0.1.0.0',
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -29,16 +29,14 @@
     'images': [
     ],
     'depends': [
-        'sale_usability',
+        'sale_ux',
         'delivery',
     ],
     'data': [
     ],
     'demo': [
     ],
-    'test': [
-    ],
-    'installable': False,
+    'installable': True,
     'auto_install': True,
     'application': False,
 }
