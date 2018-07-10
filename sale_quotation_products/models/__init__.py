@@ -2,5 +2,5 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from . import sale
-from . import product
+from . import sale_order
+from . import product_product
