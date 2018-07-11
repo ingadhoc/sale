@@ -3,9 +3,6 @@
 # directory
 ##############################################################################
 from odoo import api, models
-import logging
-
-_logger = logging.getLogger(__name__)
 
 
 class SaleOrderLine(models.Model):
@@ -29,6 +26,7 @@ class SaleOrderLine(models.Model):
         ya que ese se itera para cada linea y el with_context hace que se
         pierda cache y mata la performance
         """
+        # TODO K: need to manage multiple records here.
         if self.order_id.type_id.journal_id:
             self = self.with_context(
                 force_company=self.order_id.type_id.journal_id.company_id.id)

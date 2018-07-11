@@ -3,7 +3,7 @@
 # directory
 ##############################################################################
 from odoo import api, models, fields, _
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -21,6 +21,7 @@ class SaleOrder(models.Model):
 
     @api.multi
     def run_invoicing_atomation(self):
+        invoice = self.env['account.invoice']
         for rec in self.filtered(
                 lambda x: x.type_id.invoicing_atomation != 'none'):
             # we add this check just because if we call
@@ -29,37 +30,28 @@ class SaleOrder(models.Model):
             if not any(
                     line.qty_to_invoice for line in rec.order_line):
                 _logger.warning('Noting to invoice')
-                return True
+                continue
+
             # a list is returned but only one invoice should be returned
             # usamos final para que reste adelantos y tmb por ej
             # por si se usa el modulo de facturar las returns
-            invoices = rec.env['account.invoice'].browse(
-                self.action_invoice_create(final=True))
-            if invoices:
-                if rec.type_id.invoicing_atomation == 'validate_invoice':
+            invoices = invoice.browse(self.action_invoice_create(final=True))
+            if not invoices:
+                continue
+
+            if rec.type_id.invoicing_atomation == 'validate_invoice':
+                invoices.action_invoice_open()
+            elif rec.type_id.invoicing_atomation == 'try_validate_invoice':
+                try:
                     invoices.action_invoice_open()
-                elif rec.type_id.invoicing_atomation == 'try_validate_invoice':
-                    # TODO en v11 no haria falta el savepoint porque al no usar
-                    # workflow la factura deberia igual hacer el rollback
-                    # TODO we should improve this because if more than one
-                    # invoice is created and just one invoice has the error,
-                    # all of them are rolled back, perhaps a new cursor can
-                    # help on this
-                    try:
-                        self.env.cr.execute('SAVEPOINT try_validate_invoice')
-                        invoices.action_invoice_open()
-                        self.env.cr.execute(
-                            'RELEASE SAVEPOINT try_validate_invoice')
-                    except Exception, e:
-                        self.env.cr.execute(
-                            'ROLLBACK TO SAVEPOINT try_validate_invoice')
-                        message = _(
-                            "We couldn't validate the automatically created "
-                            "invoices (ids %s), you will need to validate them"
-                            " manually. This is what we get: %s") % (
-                                invoices.ids, e)
-                        invoices.message_post(message)
-                        rec.message_post(message)
+                except Exception as error:
+                    message = _(
+                        "We couldn't validate the automatically created "
+                        "invoices (ids %s), you will need to validate them"
+                        " manually. This is what we get: %s") % (
+                            invoices.ids, error)
+                    invoices.message_post(message)
+                    rec.message_post(message)
 
     @api.multi
     def run_picking_atomation(self):
@@ -85,7 +77,7 @@ class SaleOrder(models.Model):
                     if move.state != 'assigned':
                         products.append(move.product_id)
                 if products:
-                    raise ValidationError(_(
+                    raise UserError(_(
                         'Products:\n%s\nAre not available, we suggest use'
                         ' another type of sale to generate a'
                         ' partial delivery.'
@@ -120,18 +112,3 @@ class SaleOrder(models.Model):
         if self.type_id.payment_atomation and self.type_id.payment_journal_id:
             res['pay_now_journal_id'] = self.type_id.payment_journal_id.id
         return res
-
-
-class SaleAdvancePaymentInv(models.TransientModel):
-    _inherit = "sale.advance.payment.inv"
-
-    @api.multi
-    def _create_invoice(self, order, so_line, amount):
-        if order.type_id.journal_id:
-            self = self.with_context(
-                default_sale_type_id=order.type_id.id,
-                default_journal_id=order.type_id.journal_id.id,
-            )
-            invoice = super(SaleAdvancePaymentInv, self)._create_invoice(
-                order=order, so_line=so_line, amount=amount)
-        return invoice
