@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_product_tree_view" model="ir.ui.view">
+        <field name="name">product.product.form</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_product_tree_view"/>
+        <field name="mode">primary</field>
+        <field name="priority">50</field>
+        <field name="arch" type="xml">
+            <tree position="attributes">
+                <attribute name="edit">true</attribute>
+                <attribute name="create">false</attribute>
+                <attribute name="editable">top</attribute>
+            </tree>
+            <xpath expr="//tree">
+                <button name="action_product_form" type="object" icon="fa-external-link" string="Open Product Form View" groups="base.group_user"/>
+            </xpath>
+             <xpath expr="//tree//field[1]" position="before">
+                <field name="qty"/>
+                <button name="action_product_add_one" type="object" icon="fa-plus" string="Add one"/>
+            </xpath>
+            <field name="lst_price" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </field>
+            <field name="default_code" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </field>
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='attribute_value_ids']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='price']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='uom_id']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='barcode']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

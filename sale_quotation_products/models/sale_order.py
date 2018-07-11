@@ -3,7 +3,7 @@
 # directory
 ##############################################################################
 from odoo import models, api, _
-from ast import literal_eval
+from odoo.tools.safe_eval import safe_eval
 
 
 class SaleOrder(models.Model):
@@ -13,22 +13,27 @@ class SaleOrder(models.Model):
     def add_products_to_quotation(self):
         self.ensure_one()
         action_read = False
-        actions = self.env.ref(
-            'product.product_normal_action_sell')
+        actions = self.env.ref('product.product_normal_action_sell')
+        view_id = self.env.ref(
+            'sale_quotation_products.product_product_tree_view').id
         if actions:
             action_read = actions.read()[0]
-            context = literal_eval(action_read['context'])
-            context['sale_quotation_products'] = True
-            context['pricelist'] = self.pricelist_id.display_name
-            # we send company in context so it filters taxes
-            context['company_id'] = self.company_id.id
-            context['partner_id'] = self.partner_id.id
-            context['search_default_location_id'] = (
-                self.warehouse_id.lot_stock_id.id)
-            # context['search_default_warehouse_id'] = self.warehouse_id.id
-            action_read['context'] = context
-            # action_read['view_mode'] = 'tree,form'
-            action_read['name'] = _('Quotation Products')
+            context = safe_eval(action_read['context'])
+            context.update(dict(
+                sale_quotation_products=True,
+                pricelist=self.pricelist_id.display_name,
+                # we send company in context so it filters taxes
+                company_id=self.company_id.id,
+                partner_id=self.partner_id.id,
+                search_default_location_id=self.warehouse_id.lot_stock_id.id,
+                # search_default_warehouse_id=self.warehouse_id.id,
+            ))
+            action_read.update(
+                context=context,
+                # view_mode='tree,form'.
+                views=[[view_id, 'tree']],
+                name=_('Quotation Products'),
+            )
         return action_read
 
     @api.multi
@@ -45,12 +50,8 @@ class SaleOrder(models.Model):
                 'sequence': sequence,
             }
             sol = sol.new(vals)
-            # we call onchange product to get required fields
             sol.product_id_change()
-            # we set qty (if we set it on create odoo overwrite it to 1)
             sol.product_uom_qty = qty
-            # # we call onchange qty)
             sol.product_uom_change()
-            # we convert to write
             vals = sol._convert_to_write(sol._cache)
             sol.create(vals)
