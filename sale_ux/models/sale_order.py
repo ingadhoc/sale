@@ -22,6 +22,13 @@ class SaleOrder(models.Model):
         track_visibility='onchange',
         copy=False,
     )
+    commercial_partner_id = fields.Many2one(
+        'res.partner',
+        string='Commercial Entity',
+        related='partner_id.commercial_partner_id',
+        store=True,
+        readonly=True,
+    )
 
     @api.depends('order_line.price_total')
     def _amount_all(self):
