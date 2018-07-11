@@ -10,9 +10,9 @@
    :target: https://www.gnu.org/licenses/agpl
    :alt: License: AGPL-3
 
-=====================================================
-Sale Usability Improvements integration with delivery
-=====================================================
+===========
+Delivery UX
+===========
 
 #. When adding delivery lines on a sale order (on sale order of automatically from picking), now you have two options regarding carrier price:
 

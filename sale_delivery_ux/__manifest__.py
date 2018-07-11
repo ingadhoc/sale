@@ -18,7 +18,7 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Usability Improvements integration with delivery',
+    'name': 'Delivery UX',
     'version': '11.0.1.0.0',
     'category': 'Sales',
     'sequence': 14,
