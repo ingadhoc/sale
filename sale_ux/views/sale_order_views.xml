@@ -21,6 +21,12 @@
             <button name="action_cancel" position="attributes">
                 <attribute name="states">draft,sent,sale,done</attribute>
             </button>
+            <field name="partner_id" position="after">
+                <field name="commercial_partner_id" invisible="1"/>
+            </field>
+            <field name="analytic_account_id" position="attributes">
+                <attribute name="domain">['|',('partner_id','=',False), ('partner_id.commercial_partner_id','=',commercial_partner_id)]</attribute>
+            </field>
         </field>
     </record>
 
