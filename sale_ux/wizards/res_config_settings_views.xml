@@ -8,10 +8,10 @@
             <xpath expr="//div[@id='sale_config_online_confirmation']" position="after">
                 <div class="col-xs-12 col-md-6 o_setting_box">
                     <div class="o_setting_left_pane">
-                        <field name="group_reference_on_tree_and_main_form"/>
+                        <field name="group_sale_reference_on_tree_and_main_form"/>
                     </div>
                     <div class="o_setting_right_pane">
-                        <label for="group_reference_on_tree_and_main_form"/>
+                        <label for="group_sale_reference_on_tree_and_main_form"/>
                         <div class="text-muted">
                             Show client reference in list view and in main section of form view
                         </div>
