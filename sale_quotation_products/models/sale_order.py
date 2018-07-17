@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, api, _
+from odoo import models, api
 from odoo.tools.safe_eval import safe_eval
 
 
