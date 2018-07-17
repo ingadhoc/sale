@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, api
+from odoo import models, api, _
 from odoo.tools.safe_eval import safe_eval
 
 
@@ -26,6 +26,11 @@ class SaleOrder(models.Model):
                 search_default_location_id=self.warehouse_id.lot_stock_id.id,
                 # search_default_warehouse_id=self.warehouse_id.id,
             ))
+            action_read.update(
+                context=context,
+                # view_mode='tree,form'.
+                name=_('Quotation Products'),
+            )
             action_read['context'] = context
         return action_read
 
