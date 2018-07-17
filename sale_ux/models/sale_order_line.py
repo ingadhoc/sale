@@ -13,7 +13,7 @@ class SaleOrderLine(models.Model):
         context={'show_sale': True},
     )
 
-    @api.depends('order_id.manually_set_invoiced')
+    @api.depends('order_id.force_invoiced_status')
     def _compute_invoice_status(self):
         """
         Sobreescribimos directamente el invoice status y no el qty_to_invoice
@@ -26,5 +26,5 @@ class SaleOrderLine(models.Model):
             # solo seteamos facturado si en sale o done
             if line.order_id.state not in ['sale', 'done']:
                 continue
-            if line.order_id.manually_set_invoiced:
-                line.invoice_status = 'invoiced'
+            if line.order_id.force_invoiced_status:
+                line.invoice_status = line.order_id.force_invoiced_status
