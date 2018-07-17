@@ -77,7 +77,8 @@ class SaleOrder(models.Model):
             if not is_jit_installed:
                 pickings.action_assign()
             if rec.type_id.book_id:
-                pickings.update({'book_id': rec.type_id.book_id.id})
+                for picking in pickings:
+                    picking.update({'book_id': rec.type_id.book_id.id})
             if rec.type_id.picking_atomation == 'validate':
                 pickings.force_assign()
             elif rec.type_id.picking_atomation == 'validate_no_force':
