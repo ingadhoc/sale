@@ -33,7 +33,6 @@
     ],
     'data': [
         'views/sale_order_views.xml',
-        'views/product_product_views.xml',
     ],
     'demo': [
     ],
