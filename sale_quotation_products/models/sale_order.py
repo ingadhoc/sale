@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, api, _
+from odoo import models, api
 from odoo.tools.safe_eval import safe_eval
 
 
@@ -14,8 +14,6 @@ class SaleOrder(models.Model):
         self.ensure_one()
         action_read = False
         actions = self.env.ref('product.product_normal_action_sell')
-        view_id = self.env.ref(
-            'sale_quotation_products.product_product_tree_view').id
         if actions:
             action_read = actions.read()[0]
             context = safe_eval(action_read['context'])
@@ -28,12 +26,7 @@ class SaleOrder(models.Model):
                 search_default_location_id=self.warehouse_id.lot_stock_id.id,
                 # search_default_warehouse_id=self.warehouse_id.id,
             ))
-            action_read.update(
-                context=context,
-                # view_mode='tree,form'.
-                views=[[view_id, 'tree']],
-                name=_('Quotation Products'),
-            )
+            action_read['context'] = context
         return action_read
 
     @api.multi
