@@ -67,17 +67,6 @@ class ProductProduct(models.Model):
             res['arch'] = etree.tostring(doc)
         return res
 
-    @api.multi
-    def write(self, vals):
-        """
-        Si en vals solo viene qty y force_product_edit entonces es un dummy
-        write y lo hacemos con sudo
-        """
-        if len(vals) == 1 and vals.get('qty') and self._context.get(
-                'force_product_edit'):
-            self = self.sudo()
-        return super(ProductProduct, self).write(vals)
-
     @api.one
     def _get_qty(self):
         self.qty = 0
@@ -91,10 +80,9 @@ class ProductProduct(models.Model):
                 line.product_uom_qty,
                 self.uom_id) for line in lines])
 
-    @api.one
-    def _set_qty(self):
+    def _set_qty(self, qty):
+        self.ensure_one()
         sale_order_id = self._context.get('active_id', False)
-        qty = self.qty
         if sale_order_id:
             lines = self.env['sale.order.line'].search([
                 ('order_id', '=', sale_order_id),
@@ -112,7 +100,28 @@ class ProductProduct(models.Model):
     qty = fields.Float(
         'Quantity',
         compute='_get_qty',
-        inverse='_set_qty')
+    )
+
+    @api.multi
+    def write(self, vals):
+        """
+        Si en vals solo viene qty y sale_quotation_products entonces es un
+        dummy write y hacemos esto para que usuarios sin permiso de escribir
+        en productos puedan modificar la cantidad
+        """
+        # usamos 'qty' in vals y no vals.get('qty') porque se podria estar
+        # pasando qty = 0 y queremos que igal entre
+        if self._context.get('sale_quotation_products') and \
+                len(vals) == 1 and 'qty' in vals:
+            # en vez de hacerlo con sudo lo hacemos asi para que se guarde
+            # bien el usuario creador y ademas porque SUPERADMIN podria no
+            # tener el permiso de editar productos
+            # self = self.sudo()
+            qty = vals.get('qty')
+            for rec in self:
+                rec._set_qty(qty)
+            return True
+        return super(ProductProduct, self).write(vals)
 
     @api.multi
     def action_product_form(self):
