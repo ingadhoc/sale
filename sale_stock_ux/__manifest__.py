@@ -30,7 +30,6 @@
     ],
     'depends': [
         'sale_stock',
-        # 'stock_ux',
         'sale_ux',
         'stock_voucher',
     ],
