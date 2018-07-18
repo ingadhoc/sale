@@ -15,49 +15,34 @@ class SaleOrder(models.Model):
         ('to deliver', 'To Deliver'),
         ('delivered', 'Delivered'),
     ],
-        string='Delivery Status',
-        compute='_get_delivered',
+        compute='_compute_delivery_status',
         store=True,
         readonly=True,
         default='no'
     )
-    manually_set_delivered = fields.Boolean(
-        string='Manually Set Delivered?',
-        help='If you set this field to True, then all lines deliverable lines'
-        'will be set to delivered?',
+    force_delivery_status = fields.Selection([
+        ('no', 'Nothing to Deliver'),
+        ('delivered', 'Delivered'),
+    ],
         track_visibility='onchange',
         copy=False,
     )
 
-    picking_ids = fields.Many2many(
-        'stock.picking',
-        search='_search_picking_ids'
-    )
-
-    @api.model
-    def _search_picking_ids(self, operator, operand):
-        pickings = self.env['stock.picking'].search([
-            ('group_id', '!=', False),
-            '|', ('name', operator, operand),
-            ('voucher_ids.name', operator, operand)])
-        return [('name', 'in', pickings.mapped('origin'))]
-
     @api.multi
     def action_cancel(self):
-        for order in self:
-            for pick in order.picking_ids:
-                if pick.state == 'done':
-                    raise UserError(_(
-                        'Unable to cancel sale order %s as some receptions'
-                        ' have already been done.') % (order.name))
+        for order in self.filtered(lambda order: order.picking_ids.filtered(
+                lambda x: x.state == 'done')):
+            raise UserError(_(
+                'Unable to cancel sale order %s as some receptions'
+                ' have already been done.') % (order.name))
         return super(SaleOrder, self).action_cancel()
 
     # dejamos el depends a qty_delivered por mas que usamos all_qty_delivered
     # total son iguales pero qty_delivered es storeado
     @api.depends(
         'state', 'order_line.qty_delivered', 'order_line.product_uom_qty',
-        'manually_set_delivered')
-    def _get_delivered(self):
+        'force_delivery_status')
+    def _compute_delivery_status(self):
         precision = self.env['decimal.precision'].precision_get(
             'Product Unit of Measure')
         for order in self:
@@ -65,36 +50,37 @@ class SaleOrder(models.Model):
                 order.delivery_status = 'no'
                 continue
 
-            if order.manually_set_delivered:
-                order.delivery_status = 'delivered'
+            if order.force_delivery_status:
+                order.delivery_status = order.force_delivery_status
                 continue
 
             if any(float_compare(
                     line.all_qty_delivered, line.product_uom_qty,
                     precision_digits=precision) == -1
                     for line in order.order_line):
-                order.delivery_status = 'to deliver'
+                delivery_status = 'to deliver'
             elif all(float_compare(
                     line.all_qty_delivered, line.product_uom_qty,
                     precision_digits=precision) >= 0
                     for line in order.order_line):
-                order.delivery_status = 'delivered'
+                delivery_status = 'delivered'
             else:
-                order.delivery_status = 'no'
+                delivery_status = 'no'
+            order.update({'delivery_status': delivery_status})
 
     @api.multi
     def write(self, vals):
-        self.check_manually_set_delivered(vals)
+        self.check_force_delivery_status(vals)
         return super(SaleOrder, self).write(vals)
 
     @api.model
     def create(self, vals):
-        self.check_manually_set_delivered(vals)
+        self.check_force_delivery_status(vals)
         return super(SaleOrder, self).create(vals)
 
     @api.model
-    def check_manually_set_delivered(self, vals):
-        if vals.get('manually_set_delivered') and not self.user_has_groups(
+    def check_force_delivery_status(self, vals):
+        if vals.get('force_delivery_status') and not self.user_has_groups(
                 'base.group_system'):
             group = self.env.ref('base.group_system').sudo()
             raise UserError(_(
