@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<odoo>
+    <!-- no more need fot this sale orders changes -->
+    <!-- add contracts to sale orders that are going to be confirmed and do not have contracts -->
+
+    <record id="sale.sale_order_1" model="sale.order">
+        <field name="analytic_account_id" ref="analytic.analytic_agrolait"/>
+    </record>
+
+    <record id="sale.sale_order_5" model="sale.order">
+        <field name="analytic_account_id" ref="analytic.analytic_asustek"/>
+    </record>
+
+    <record id="sale.sale_order_7" model="sale.order">
+        <field name="analytic_account_id" ref="analytic.analytic_partners_camp_to_camp"/>
+    </record>
+</odoo>

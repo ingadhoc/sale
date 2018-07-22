@@ -1,16 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-  <data noupdate="1">
+<?xml version="1.0"?>
+<odoo noupdate="1">
 
-    <record id="require_contract" model="sale.exception">
+    <record id="require_contract" model="exception.rule">
       <field name="name">Contract Required</field>
       <field name="description">You must set a contract.</field>
       <field name="sequence">10</field>
       <field name="model">sale.order</field>
-      <field name="code">if not object.project_id:
+      <field name="rule_group">sale</field>
+      <field name="code">if not object.analytic_account_id:
     failed = True</field>
       <field name="active" eval="True"/>
     </record>
 
-  </data>
 </odoo>
