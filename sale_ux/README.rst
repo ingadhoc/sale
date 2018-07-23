@@ -27,6 +27,7 @@ Several Improvements to sales:
 #. Add option to show SO reference field on tree view and on main section of form view.
 #. Add filter to be able to select analytic account on sale orders with the same partner/commercial partner as the sale order.
 #. Add Commercial Partner is automatic set in the sale order taking into account the partner configuration
+#. It adds a button in sale quotations that allowes to update sale prices. It is useful if the pricelist is changed after adding sale order lines.
 
 Installation
 ============

@@ -85,3 +85,24 @@ class SaleOrder(models.Model):
                 '"Quotation" or "Quotation Sent", probably'
                 'has already been validated, try refreshing the window!'))
         return super(SaleOrder, self).action_confirm()
+
+    @api.multi
+    def update_prices(self):
+        # for compatibility with product_pack module
+        self.ensure_one()
+        pack_installed = 'pack_parent_line_id' in self.order_line._fields
+        for line in self.order_line:
+            if pack_installed and line.pack_parent_line_id.\
+                product_id.pack_price_type in [
+                    'fixed_price', 'totalice_price']:
+                price = 0.0
+            else:
+                price = self.pricelist_id.with_context(
+                    uom=line.product_uom.id,
+                    date=self.date_order).price_get(
+                    line.product_id.id,
+                    line.product_uom_qty or 1.0,
+                    self.partner_id.id
+                )[self.pricelist_id.id]
+            line.update({'price_unit': price})
+        return True
