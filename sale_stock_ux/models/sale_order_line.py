@@ -3,7 +3,7 @@
 # directory
 ##############################################################################
 from odoo import models, api, fields, _
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError
 from odoo.tools.float_utils import float_compare
 import odoo.addons.decimal_precision as dp
 
@@ -11,23 +11,22 @@ import odoo.addons.decimal_precision as dp
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-    # agregamoe este campo para facilitar compatibilidad con
+    # agregamos este campo para facilitar compatibilidad con
     # sale_usability_return_invoicing
     all_qty_delivered = fields.Float(
         string='All Delivered',
         compute='_compute_all_qty_delivered',
-        help='Todo lo entregado sin descontar las devoluciones',
+        help='Everything delivered without discounting the returns',
         digits=dp.get_precision('Product Unit of Measure'),
     )
 
-    @api.multi
     @api.depends('qty_delivered')
     def _compute_all_qty_delivered(self):
         for rec in self:
-            rec.all_qty_delivered = rec.qty_delivered
+            rec.update({'all_qty_delivered': rec.qty_delivered})
 
     delivery_status = fields.Selection([
-        ('no', 'Not purchased'),
+        ('no', 'Nothing to deliver'),
         ('to deliver', 'To Deliver'),
         ('delivered', 'Delivered'),
     ],
@@ -41,7 +40,7 @@ class SaleOrderLine(models.Model):
 
     @api.depends(
         'order_id.state', 'qty_delivered', 'product_uom_qty',
-        'order_id.manually_set_delivered')
+        'order_id.force_delivery_status')
     def _compute_delivery_status(self):
         precision = self.env['decimal.precision'].precision_get(
             'Product Unit of Measure')
@@ -50,22 +49,24 @@ class SaleOrderLine(models.Model):
                 line.delivery_status = 'no'
                 continue
 
-            if line.order_id.manually_set_delivered:
-                line.order_id.delivery_status = 'delivered'
+            if line.order_id.force_delivery_status:
+                line.order_id.update({
+                    'delivery_status': line.order_id.force_delivery_status})
                 continue
 
             if float_compare(
                     line.all_qty_delivered, line.product_uom_qty,
                     # line.qty_delivered, line.product_uom_qty,
                     precision_digits=precision) == -1:
-                line.delivery_status = 'to deliver'
+                delivery_status = 'to deliver'
             elif float_compare(
                     line.all_qty_delivered, line.product_uom_qty,
                     # line.qty_delivered, line.product_uom_qty,
                     precision_digits=precision) >= 0:
-                line.delivery_status = 'delivered'
+                delivery_status = 'delivered'
             else:
-                line.delivery_status = 'no'
+                delivery_status = 'no'
+            line.update({'delivery_status': delivery_status})
 
     @api.multi
     def button_cancel_remaining(self):
@@ -76,12 +77,10 @@ class SaleOrderLine(models.Model):
 
         for rec in self:
             if bom_enable:
-                bom_id = self.env['mrp.bom']._bom_find(
-                    product_id=rec.product_id.id,
-                    properties=rec.property_ids.ids)
-                bom = self.env['mrp.bom'].browse(bom_id)
+                bom = self.env['mrp.bom']._bom_find(
+                    product=rec.product_id)
                 if bom.type == 'phantom':
-                    raise ValidationError(_(
+                    raise UserError(_(
                         "Cancel remaining can't be called for Kit Products "
                         "(products with a bom of type kit)."))
             old_product_uom_qty = rec.product_uom_qty
@@ -95,8 +94,9 @@ class SaleOrderLine(models.Model):
             #         'there are more product invoiced than the delivered. '
             #         'You should correct invoice or ask for a refund'))
             rec.product_uom_qty = rec.qty_delivered
-            rec.procurement_ids.button_cancel_remaining()
-
+            to_cancel_moves = rec.move_ids.filtered(
+                lambda x: x.state != 'done')
+            to_cancel_moves._action_cancel()
             rec.order_id.message_post(
                 body=_(
                     'Cancel remaining call for line "%s" (id %s), line '
@@ -116,11 +116,9 @@ class SaleOrderLine(models.Model):
             warning_mess = {
                 'title': _('Ordered quantity decreased!'),
                 'message': (
-                    '¡Está reduciendo la cantidad pedida! Esto no está '
-                    'permitido, le recomendamos que entregue los productos '
-                    'correspondientes y luego cancele el remanente utilzando '
-                    'el botón para tal fin. Se restableció la cantidad a la '
-                    'original'),
+                    '¡Está reduciendo la cantidad pedida! Recomendamos usar'
+                    ' el botón para cancelar remanente y'
+                    ' luego setear la cantidad deseada.'),
             }
             self.product_uom_qty = self._origin.product_uom_qty
             return {'warning': warning_mess}
