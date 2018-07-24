@@ -1,12 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <odoo>
-  <data>
-
-    <!-- we disable this rule on demo data because of odoo tests -->
-    <record id="require_ref" model="sale.exception">
-      <field name="active" eval="False"/>
-    </record>
-
     <!-- no more need fot this sale orders changes -->
     <!-- add contracts to sale orders that are going to be confirmed -->
 
@@ -29,5 +22,4 @@
     <record id="sale.sale_order_8" model="sale.order">
         <field name="client_order_ref">Reference 8</field>
     </record>
-</data>
 </odoo>
