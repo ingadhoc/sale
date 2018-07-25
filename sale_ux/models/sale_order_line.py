@@ -8,10 +8,6 @@ from odoo import models, fields, api
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-    # add context so show sale data by default
-    order_id = fields.Many2one(
-        context={'show_sale': True},
-    )
 
     @api.depends('order_id.force_invoiced_status')
     def _compute_invoice_status(self):
