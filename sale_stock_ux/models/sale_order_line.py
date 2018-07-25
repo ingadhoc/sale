@@ -20,10 +20,14 @@ class SaleOrderLine(models.Model):
         digits=dp.get_precision('Product Unit of Measure'),
     )
 
-    @api.depends('qty_delivered')
-    def _compute_all_qty_delivered(self):
-        for rec in self:
-            rec.update({'all_qty_delivered': rec.qty_delivered})
+    # TODO This should be computed field
+    qty_returned = fields.Float(
+        string='Returned',
+        copy=False,
+        default=0.0,
+        digits=dp.get_precision('Product Unit of Measure'),
+        readonly=True,
+    )
 
     delivery_status = fields.Selection([
         ('no', 'Nothing to deliver'),
@@ -37,6 +41,11 @@ class SaleOrderLine(models.Model):
         copy=False,
         default='no'
     )
+
+    @api.depends('qty_delivered', 'qty_returned')
+    def _compute_all_qty_delivered(self):
+        for rec in self:
+            rec.all_qty_delivered = rec.qty_delivered + rec.qty_returned
 
     @api.depends(
         'order_id.state', 'qty_delivered', 'product_uom_qty',
@@ -123,3 +132,90 @@ class SaleOrderLine(models.Model):
             self.product_uom_qty = self._origin.product_uom_qty
             return {'warning': warning_mess}
         return {}
+
+    @api.multi
+    def _get_delivered_qty(self):
+        qty = super(SaleOrderLine, self)._get_delivered_qty()
+        # parcheamos las devoluciones para los kits, lo hacemos analogo
+        # a como hace odoo en la entrega, basicamente solo consideramos
+        # devuelto si se devolvió todo (odoo considera entregado si se entrego
+        # todo)
+        bom_enable = 'bom_ids' in self.env['product.template']._fields
+        if bom_enable:
+            bom = self.env['mrp.bom']._bom_find(
+                product=self.product_id)
+            if bom.type == 'phantom':
+                precision = self.env['decimal.precision'].precision_get(
+                    'Product Unit of Measure')
+                bom_returned = {}
+                bom_returned[bom.id] = False
+                product_uom_qty_bom = self.product_uom._compute_quantity(
+                    self.product_uom_qty, bom.product_uom_id)
+                bom_exploded = bom.explode(
+                    self.product_id, product_uom_qty_bom)
+                for bom_line in bom_exploded[1:][0]:
+                    returned_qty = 0.0
+                    for move in self.move_ids.filtered(
+                            lambda r: (
+                                r.product_id == bom_line[0].product_id and
+                                r.state == 'done' and
+                                not r.scrapped and
+                                r.location_dest_id.usage != "customer" and
+                                r.to_refund)):
+                        returned_qty += move.product_uom._compute_quantity(
+                            move.product_uom_qty,
+                            bom_line[0].product_uom_id)
+                    if float_compare(
+                            returned_qty, bom_line[1].get('qty', 0.0),
+                            precision_digits=precision) < 0:
+                        bom_returned[bom.id] = False
+                    else:
+                        bom_returned[bom.id] = True
+                if bom_returned and any(bom_returned.values()):
+                    self.qty_returned = self.product_uom_qty
+                    return 0.0
+                elif bom_returned:
+                    return qty
+
+        # every time delivered qty is updated, we update qty returned
+        self._get_qty_returned()
+        return qty
+
+    @api.multi
+    def _get_qty_returned(self):
+        """
+        This method is called in the '_get_delivered_qty' method
+        to update the 'qty returned' each time the 'qty
+         delivered' is updated.
+        """
+        for rec in self:
+            qty_returned = 0.0
+            # we use same method as in sale_stock_picking_return_invoicing
+            for move in rec.mapped('move_ids').filtered(
+                lambda r: (r.state == 'done' and
+                           not r.scrapped and
+                           r.location_dest_id.usage != "customer" and
+                           r.to_refund)):
+                qty_returned += move.product_uom._compute_quantity(
+                    move.product_uom_qty, rec.product_uom)
+            rec.qty_returned = qty_returned
+
+    @api.depends('qty_returned')
+    def _get_to_invoice_qty(self):
+        """
+        Modificamos la funcion original para que si el producto es segun lo
+        pedido, para que funcione el reembolo hacemos que la cantidad a
+        facturar reste la cantidad devuelta.
+        NOTA: solo lo hacemos si policy "order" porque en policy "delivered"
+        odoo ya lo descuenta a la cantidad entregada y automáticamente lo
+        termina facturando
+        """
+        super(SaleOrderLine, self)._get_to_invoice_qty()
+        for line in self:
+            # igual que por defecto, si no en estos estados, no hay a facturar
+            if line.order_id.state not in ['sale', 'done']:
+                continue
+            if line.product_id.invoice_policy == 'order':
+                line.qty_to_invoice = (
+                    line.product_uom_qty - line.qty_returned -
+                    line.qty_invoiced)
