@@ -1,17 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-  <data noupdate="1">
-
-    <record id="require_ref" model="sale.exception">
+<?xml version="1.0"?>
+<odoo noupdate="1">
+    <record id="require_ref" model="exception.rule">
       <field name="name">Reference Field Required</field>
       <field name="description">You must set a reference.</field>
-      <field name="active" eval="True"/>
       <field name="sequence">10</field>
       <field name="model">sale.order</field>
+      <field name="rule_group">sale</field>
       <field name="code">if not object.client_order_ref:
     failed = True</field>
       <field name="active" eval="True"/>
     </record>
-
-  </data>
 </odoo>

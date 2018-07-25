@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<odoo>
+    <!-- we disable this rule on demo data because of odoo tests -->
+    <record id="require_ref" model="exception.rule">
+      <field name="active" eval="False"/>
+    </record>
+</odoo>
