@@ -28,6 +28,17 @@ class SaleOrder(models.Model):
         copy=False,
     )
 
+    with_returns = fields.Boolean(
+        compute='_compute_with_returns',
+        store=True,
+    )
+
+    @api.depends('order_line.qty_returned')
+    def _compute_with_returns(self):
+        for order in self:
+            order.with_returns = any(line.qty_returned
+                                     for line in order.order_line)
+
     @api.multi
     def action_cancel(self):
         for order in self.filtered(lambda order: order.picking_ids.filtered(

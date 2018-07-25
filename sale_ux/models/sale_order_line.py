@@ -2,16 +2,11 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, fields, api
+from odoo import models, api
 
 
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
-
-    # add context so show sale data by default
-    order_id = fields.Many2one(
-        context={'show_sale': True},
-    )
 
     @api.depends('order_id.force_invoiced_status')
     def _compute_invoice_status(self):
