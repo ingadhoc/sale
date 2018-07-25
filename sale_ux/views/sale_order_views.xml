@@ -29,6 +29,7 @@
             </field>
             <field name="order_line" position="before">
                 <button name="update_prices" string="Update Prices" type="object" attrs="{'invisible':[('state','not in',['draft','sent'])]}" groups="product.group_sale_pricelist"/>
+                <button name="%(action_sale_global_discount_wizard_form)d" string="Set Global Discount" type="action" attrs="{'invisible':[('state','not in',['draft','sent'])]}" groups="sale.group_discount_per_so_line"/>
             </field>
         </field>
     </record>
@@ -97,17 +98,6 @@
     <!--Make Quotations Menu only visible to tec features-->
     <record model="ir.ui.menu" id="sale.menu_sale_quotations">
         <field name="groups_id" eval="[(6, 0, [ref('base.group_no_one')])]"/>
-    </record>
-
-    <record id="sale_order_pricelist_form_view_inh" model="ir.ui.view">
-        <field name="name">sale.order.pricelist.form.inh</field>
-        <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale.view_order_form" />
-        <field name="arch" type="xml">
-            <field name="order_line" position="before">
-                <button name="%(action_sale_global_discount_wizard_form)d" string="Set Global Discount" type="action" attrs="{'invisible':[('state','not in',['draft','sent'])]}" groups="sale.group_discount_per_so_line"/>
-            </field>
-        </field>
     </record>
 
 </odoo>
