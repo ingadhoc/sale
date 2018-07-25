@@ -28,6 +28,7 @@ Several Improvements to sales:
 #. Add filter to be able to select analytic account on sale orders with the same partner/commercial partner as the sale order.
 #. Add Commercial Partner is automatic set in the sale order taking into account the partner configuration
 #. It adds a button in sale quotations that allowes to update sale prices. It is useful if the pricelist is changed after adding sale order lines.
+#. Add a wizard on sales orders that allow you to define global discounts to sale orders by percentage.
 
 Installation
 ============

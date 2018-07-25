@@ -3,11 +3,9 @@
 # directory
 ##############################################################################
 from odoo import models, fields, api
-import logging
-_logger = logging.getLogger(__name__)
 
 
-class sale_global_discount_wizard(models.TransientModel):
+class SaleGlobalDiscountWizard(models.TransientModel):
     _name = "sale.order.global_discount.wizard"
 
     # todo implement fixed amount
@@ -20,7 +18,6 @@ class sale_global_discount_wizard(models.TransientModel):
     #     default='percentage',
     #     )
     amount = fields.Float(
-        # 'Amount',
         'Discount',
         required=True,
     )

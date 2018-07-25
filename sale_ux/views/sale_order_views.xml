@@ -29,6 +29,7 @@
             </field>
             <field name="order_line" position="before">
                 <button name="update_prices" string="Update Prices" type="object" attrs="{'invisible':[('state','not in',['draft','sent'])]}" groups="product.group_sale_pricelist"/>
+                <button name="%(action_sale_global_discount_wizard_form)d" string="Set Global Discount" type="action" attrs="{'invisible':[('state','not in',['draft','sent'])]}" groups="sale.group_discount_per_so_line"/>
             </field>
         </field>
     </record>

@@ -32,10 +32,11 @@
         'sale',
     ],
     'data': [
+        'wizards/res_config_settings_views.xml',
+        'wizards/sale_global_discount_wizard_views.xml',
         'security/sale_ux_security.xml',
         'views/sale_order_views.xml',
         'views/sale_order_line_views.xml',
-        'wizards/res_config_settings_views.xml',
     ],
     'demo': [
     ],
