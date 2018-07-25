@@ -7,5 +7,5 @@ class ResUsers(models.Model):
 
     default_sale_order_type_id = fields.Many2one(
         'sale.order.type',
-        'Default Sale Order Type'
+        'Default Sale Order Type',
     )
