@@ -9,4 +9,5 @@ class SaleOrderTypology(models.Model):
     sequence = fields.Integer(
         'Sequence',
         required=True,
-        default=10)
+        default=10,
+    )
