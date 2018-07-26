@@ -15,4 +15,5 @@ class SaleOrder(models.Model):
 
     type_id = fields.Many2one(
         'sale.order.type',
-        default=_get_order_type)
+        default=lambda so: so._get_order_type(),
+    )
