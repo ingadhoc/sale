@@ -14,5 +14,5 @@ class SaleOrder(models.Model):
         for line in self.order_line:
             purchase_price = line._compute_margin(
                 self, line.product_id, line.product_uom)
-            line.write({'purchase_price': purchase_price})
+            line.update({'purchase_price': purchase_price})
         return True
