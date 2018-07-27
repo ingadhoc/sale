@@ -18,8 +18,8 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Prices Update Margin',
-    'version': '9.0.1.0.0',
+    'name': 'Sale Margin Ux',
+    'version': '11.0.1.0.0',
     'category': 'Sales & Purchases',
     'sequence': 14,
     'summary': '',
@@ -29,14 +29,14 @@
     'images': [
     ],
     'depends': [
-        'sale_prices_update',
+        'sale_ux',
         'sale_margin',
     ],
     'data': [
     ],
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': True,
     'application': False,
 }
