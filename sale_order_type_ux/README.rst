@@ -14,8 +14,11 @@
 Sale Order Type Ux
 ===================
 
-This module adds in the list view of sale.order.type the field sequence to be able to sort by that field.
+* This module adds in the list view of sale.order.type the field sequence to be able to sort by that field.
+* Integration betweeen Portal and Sale Order Type module:
 
+ - New access record to sale type model for portal users
+ - Make invisible sale order type for portal users
 
 Installation
 ============
