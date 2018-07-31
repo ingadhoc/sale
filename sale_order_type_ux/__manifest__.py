@@ -31,7 +31,9 @@
         'sale_order_type',
     ],
     'data': [
-        'views/sale_order_type_views.xml'
+        'security/ir.model.access.csv',
+        'views/sale_order_type_views.xml',
+        'views/sale_order_views.xml',
     ],
     'demo': [
     ],
