@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Exception Print',
-    'version': '9.0.1.2.0',
+    'version': '11.0.1.0.0',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
@@ -27,11 +27,11 @@
         'sale_exception',
     ],
     'data': [
-        'view/sale_exception_view.xml'
+        'views/exception_rule_views.xml'
     ],
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
