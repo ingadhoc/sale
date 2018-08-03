@@ -10,7 +10,7 @@ class SaleOrder(models.Model):
 
     ignore_exception_print = fields.Boolean(
         'Ignore Exceptions Print',
-        copy=False
+        copy=False,
     )
 
     @api.multi
@@ -35,7 +35,7 @@ class SaleOrder(models.Model):
         as a side effect, the sale order's exception_ids column is updated with
         the list of exceptions related to the SO
         """
-        exception_obj = self.env['sale.exception']
+        exception_obj = self.env['exception.rule']
         order_exceptions = exception_obj.search(
             [('model', '=', 'sale.order'), ('block_print', '=', True)])
         line_exceptions = exception_obj.search(
@@ -66,9 +66,3 @@ class SaleOrder(models.Model):
             'context': ctx
         })
         return action
-
-
-class SaleException(models.Model):
-    _inherit = "sale.exception"
-
-    block_print = fields.Boolean('Block Print')
