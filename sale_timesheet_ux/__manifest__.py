@@ -1,5 +1,5 @@
 {
-    "name": "Timesheet UX",
+    "name": "Sales Timesheet UX",
     "summary": "",
     "version": "11.0.1.0.0",
     "website": "www.adhoc.com.ar",

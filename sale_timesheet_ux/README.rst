@@ -10,9 +10,9 @@
    :target: https://www.gnu.org/licenses/agpl
    :alt: License: AGPL-3
 
-=============
-Timesheet UX
-=============
+==================
+Sales Timesheet UX
+==================
 
 #. When we have a product in sale order that is type service and has been
    configured as `Create a task in a new project` or `Create a new project but
