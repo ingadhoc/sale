@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Restrict Partners',
-    'version': '9.0.1.1.0',
+    'version': '11.0.1.0.0',
     'category': 'Sales Management',
     'sequence': 14,
     'summary': 'Sales, Product, Category, Clasification',
@@ -32,11 +32,11 @@
         'sale',
     ],
     'data': [
-        'security/security.xml',
+        'security/sale_restrict_partners_security.xml',
     ],
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }

@@ -9,4 +9,6 @@ class ResPartner(models.Model):
     _inherit = "res.partner"
 
     user_id = fields.Many2one(
-        'res.users', default=lambda self: self._uid)
+        'res.users',
+        default=lambda self: self._uid,
+    )
