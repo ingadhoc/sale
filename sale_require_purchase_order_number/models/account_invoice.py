@@ -12,18 +12,21 @@ class AccountInvoice(models.Model):
     require_purchase_order_number = fields.Boolean(
         string='Sale Require Origin',
         related='partner_id.require_purchase_order_number',
-        readonly=True,)
+        readonly=True,
+    )
     purchase_order_number = fields.Char(
-        'Purchase Order Number',
-        readonly=True, states={'draft': [('readonly', False)]})
+        readonly=True,
+        states={'draft': [('readonly', False)]},
+    )
 
     @api.multi
     def invoice_validate(self):
-        for o in self:
-            if o.require_purchase_order_number and o.type in [
-                    'out_invoice', 'out_refund']:
-                if not o.purchase_order_number:
-                    raise UserError(_(
-                        'You cannot confirm invoice without a'
-                        ' Purchase Order Number for this partner'))
+        invoices_missing_po_number = self.filtered(
+            lambda inv: inv.require_purchase_order_number and inv.type
+            in ['out_invoice', 'out_refund']
+            and not inv.purchase_order_number)
+        if invoices_missing_po_number:
+            raise UserError(_(
+                'You cannot confirm invoice without a'
+                ' Purchase Order Number for this partner'))
         return super(AccountInvoice, self).invoice_validate()

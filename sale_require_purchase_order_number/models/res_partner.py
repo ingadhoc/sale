@@ -9,4 +9,4 @@ class ResPartner(models.Model):
     _inherit = "res.partner"
 
     require_purchase_order_number = fields.Boolean(
-        string='Require Purchase Order Number')
+    )

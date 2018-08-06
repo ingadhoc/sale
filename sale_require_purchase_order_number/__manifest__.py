@@ -19,14 +19,10 @@
 ##############################################################################
 {
     'name': 'Sale Require Purchase Order Number',
-    'version': '9.0.1.1.0',
-    'category': 'Projects & Services',
+    'version': '11.0.1.0.0',
+    'category': 'Sales',
     'sequence': 14,
     'summary': '',
-    'description': '''
-Sale Require Purchase Order Number
-==================================
-    ''',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
@@ -36,14 +32,14 @@ Sale Require Purchase Order Number
         'sale_stock'
     ],
     'data': [
-        'views/sale_view.xml',
-        'views/partner_view.xml',
-        'views/account_view.xml',
-        'views/stock_view.xml'
+        'views/sale_order_views.xml',
+        'views/res_partner_views.xml',
+        'views/account_invoice_views.xml',
+        'views/stock_picking_views.xml'
     ],
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
