@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="price_security.group_restrict_prices" model="res.groups">
+        <field name="users" eval="[(4, ref('base.user_root'))]"/>
+    </record>
+</odoo>
