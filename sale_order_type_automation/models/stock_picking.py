@@ -9,10 +9,10 @@ class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
     @api.multi
-    def do_transfer(self):
+    def action_done(self):
         """
         On picking confirmation we check if invoice should be created
         """
-        res = super(StockPicking, self).do_transfer()
+        res = super(StockPicking, self).action_done()
         self.mapped('sale_id').run_invoicing_atomation()
         return res

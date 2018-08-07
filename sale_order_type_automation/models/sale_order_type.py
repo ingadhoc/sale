@@ -119,9 +119,6 @@ class SaleOrderType(models.Model):
         'payment_journal_id',
         'sequence_id')
     def validate_company_id(self):
-        # text = _(
-        #     'The Journal "%s" company must be the same than sale order type')
-
         different_company = self.filtered(
             lambda x: x.invoice_company_id and
             x.invoice_company_id != x.payment_journal_id.company_id
@@ -130,17 +127,6 @@ class SaleOrderType(models.Model):
             raise ValidationError(_(
                 'Invoice Journal and Payment Journal must be of the same '
                 'company'))
-
-        # TODO ver si borramos, por ahora lo desactivamos porque queremos
-        # permitir que se facture en cias hijas del almacen del sale type
-        # if rec.journal_id and rec.journal_id.company_id\
-        #         != rec.company_id:
-        #     raise ValidationError(text % rec.journal_id.name)
-        # if rec.payment_journal_id and \
-        #         rec.payment_journal_id.company_id != \
-        #         rec.company_id:
-        #     raise ValidationError(
-        #         text % rec.payment_journal_id.name)
 
         # la cia es opcional en la secuencia, solo chequeamos si esta
         # seteada
@@ -154,4 +140,4 @@ class SaleOrderType(models.Model):
                 '\n'.join([_('The Sequence "%s" company must be the same than'
                              ' sale order type') % sot.sequence_id.name
                            for sot in sequence_diff_company])
-                )
+            )

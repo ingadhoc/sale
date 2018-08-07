@@ -55,7 +55,7 @@ class SaleOrder(models.Model):
 
     @api.multi
     def run_picking_atomation(self):
-        packs_to_unlink = self.env['stock.pack.operation']
+        op_to_unlink = self.env['stock.move.line']
         is_jit_installed = self.env['ir.module.module'].search(
             [('name', '=', 'procurement_jit'),
              ('state', '=', 'installed')], limit=1)
@@ -82,15 +82,15 @@ class SaleOrder(models.Model):
                         ' another type of sale to generate a'
                         ' partial delivery.'
                     ) % ('\n'.join(x.name for x in products)))
-            for pack in pickings.mapped('pack_operation_ids'):
-                if pack.product_qty > 0:
-                    pack.update({'qty_done': pack.product_qty})
+            for op in pickings.mapped('move_line_ids'):
+                if op.product_qty > 0:
+                    op.update({'qty_done': op.product_qty})
                 else:
-                    packs_to_unlink |= pack
+                    op_to_unlink |= op
             # because of ensure_one on delivery module
             for pick in pickings:
-                pick.do_transfer()
-        packs_to_unlink.unlink()
+                pick.action_done()
+        op_to_unlink.unlink()
 
     @api.multi
     def action_confirm(self):
