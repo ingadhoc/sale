@@ -37,6 +37,7 @@
         'security/sale_ux_security.xml',
         'views/sale_order_views.xml',
         'views/sale_order_line_views.xml',
+        'views/account_invoice_views.xml',
     ],
     'demo': [
     ],

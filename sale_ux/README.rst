@@ -29,6 +29,7 @@ Several Improvements to sales:
 #. Add Commercial Partner is automatic set in the sale order taking into account the partner configuration
 #. It adds a button in sale quotations that allowes to update sale prices. It is useful if the pricelist is changed after adding sale order lines.
 #. Add a wizard on sales orders that allow you to define global discounts to sale orders by percentage.
+#. Add a link from invoices to the sale orders that generate it.
 
 Installation
 ============
