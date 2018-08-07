@@ -19,26 +19,25 @@
 ##############################################################################
 {
     'name': 'Sale Exceptions Ingore Approve Directly',
-    'version': '9.0.1.1.0',
-    'category': 'Product',
+    'version': '11.0.1.0.0',
+    'category': 'Sale',
     'sequence': 14,
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
-    'summary': 'Allow to define purchase prices on different currencies using'
-    'replenishment cost field',
+    'summary': '',
     'depends': [
         'sale_exception',
     ],
     'external_dependencies': {
     },
     'data': [
-        'wizard/sale_exception_confirm_view.xml',
-        'views/sale_view.xml',
+        'wizards/sale_exception_confirm_views.xml',
+        'views/sale_order_views.xml',
     ],
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }

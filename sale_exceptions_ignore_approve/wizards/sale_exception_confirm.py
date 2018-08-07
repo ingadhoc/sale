@@ -6,12 +6,11 @@ from odoo import models, api
 
 
 class SaleExceptionConfirm(models.TransientModel):
-
     _inherit = 'sale.exception.confirm'
 
-    @api.one
+    @api.multi
     def action_confirm(self):
         res = super(SaleExceptionConfirm, self).action_confirm()
         if self.ignore:
-            return self.sale_id.action_confirm()
+            return self.related_model_id.action_confirm()
         return res

@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<odoo>
+    <!-- disable main excpetion on tree view -->
+    <record id="sale_exception.view_order_tree" model="ir.ui.view">
+        <field name="active" eval="False"/>
+    </record>
+</odoo>

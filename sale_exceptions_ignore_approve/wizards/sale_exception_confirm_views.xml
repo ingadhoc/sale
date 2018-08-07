@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="view_sale_exception_confirm" model="ir.ui.view">
+        <field name="name">Sale Exceptions Inherit</field>
+        <field name="model">sale.exception.confirm</field>
+        <field name="inherit_id" ref="sale_exception.view_sale_exception_confirm"/>
+        <field name="arch" type="xml">
+            <button name="action_confirm" position="attributes">
+                <attribute name="string">Confirm</attribute>
+            </button>
+        </field>
+    </record>
+</odoo>
