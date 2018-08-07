@@ -20,7 +20,6 @@ Sale Order Type Automation
     * Create / Validate Payment
     * Confirm picking and products transfer (only on sale order confirmation)
 
-#. We also make type field on sale orders readonly on states different from draft and sent. Also add tracking to same field. TODO we should move that to sale_oder_type module or sale_oder_type_usability module
 
 Installation
 ============
