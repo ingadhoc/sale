@@ -12,10 +12,11 @@ class SaleOrder(models.Model):
     require_purchase_order_number = fields.Boolean(
         string='Sale Require Origin',
         related='partner_id.require_purchase_order_number',
-        help='If true, required purchase order numnber in sale order',
-        readonly=True,)
+        help='If true, required purchase order number in sale order',
+        readonly=True,
+    )
     purchase_order_number = fields.Char(
-        'Purchase Order Number')
+    )
 
     _sql_constraints = [
         ('purchase_order_number_uniq',
@@ -25,11 +26,14 @@ class SaleOrder(models.Model):
 
     @api.multi
     def action_confirm(self):
-        if self.require_purchase_order_number:
-            if not self.purchase_order_number:
-                raise UserError(_(
-                    'You cannot confirm a sales order without a'
-                    ' Purchase Order Number for this partner'))
+        sale_order_missing_po_number = self.filtered(
+            lambda
+            so: so.require_purchase_order_number and
+            not so.purchase_order_number)
+        if sale_order_missing_po_number:
+            raise UserError(_(
+                'You cannot confirm a sales order without a'
+                ' Purchase Order Number for this partner'))
         return super(SaleOrder, self).action_confirm()
 
     @api.multi
