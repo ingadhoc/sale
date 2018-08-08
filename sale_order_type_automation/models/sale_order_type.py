@@ -6,7 +6,7 @@ from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 
 
-class SaleOrderTypology(models.Model):
+class SaleOrderType(models.Model):
     _inherit = 'sale.order.type'
 
     # TODO this should go in a pr to OCA
@@ -85,64 +85,59 @@ class SaleOrderTypology(models.Model):
         'Voucher Book',
     )
     set_done_on_confirmation = fields.Boolean(
-        'Set Done on Confirmation',
         help="Upon confirmation set"
         " sale order done instead of leaving it on"
-        " 'sale order' state that allows modifications")
-
+        " 'sale order' state that allows modifications"
+    )
     auto_done_setting = fields.Selection([
         (0, "Allow to edit sales order from the"
          " 'Sales Order' menu (not from the Quotation menu)"),
         (1, "Never allow to modify a confirmed sale order")],
-        compute='_compute_auto_done_setting')
+        compute='_compute_auto_done_setting',
+    )
 
-    @api.multi
+    @api.depends()
     def _compute_auto_done_setting(self):
-        self.auto_done_setting = self.env['ir.values'].get_default(
-            'sale.config.settings', 'auto_done_setting')
+        default = self.env['ir.config_parameter'].sudo().get_param(
+            'sale.auto_done_setting')
+        self.update({'auto_done_setting': default})
 
-    @api.multi
     @api.constrains(
         'payment_atomation',
         'payment_journal_id')
     def validate_invoicing_atomation(self):
-        for rec in self:
-            if rec.payment_atomation != 'none' and not rec.payment_journal_id:
-                raise ValidationError(_(
-                    'If you choose a Payment automation, Payment Journal '
-                    'is required'))
+        payment_journal_required = self.filtered(
+            lambda x: x.payment_atomation != 'none' and
+            not x.payment_journal_id)
+        if payment_journal_required:
+            raise ValidationError(_(
+                'If you choose a Payment automation, Payment Journal '
+                'is required'))
 
     @api.constrains(
         'journal_id',
         'payment_journal_id',
         'sequence_id')
     def validate_company_id(self):
-        # text = _(
-        #     'The Journal "%s" company must be the same than sale order type')
-        for rec in self:
-            invoice_company = rec.invoice_company_id
-            payment_company = rec.payment_journal_id.company_id
-            if invoice_company and payment_company and \
-                    invoice_company != payment_company:
-                raise ValidationError(_(
-                    'Invoice Journal and Payment Journal must be of the same '
-                    'company'))
-            # TODO ver si borramos, por ahora lo desactivamos porque queremos
-            # permitir que se facture en cias hijas del almacen del sale type
-            # if rec.journal_id and rec.journal_id.company_id\
-            #         != rec.company_id:
-            #     raise ValidationError(text % rec.journal_id.name)
-            # if rec.payment_journal_id and \
-            #         rec.payment_journal_id.company_id != \
-            #         rec.company_id:
-            #     raise ValidationError(
-            #         text % rec.payment_journal_id.name)
+        different_company = self.filtered(
+            lambda x: x.invoice_company_id and
+            x.invoice_company_id != x.payment_journal_id.company_id
+        )
+        if different_company:
+            raise ValidationError(_(
+                'Invoice Journal and Payment Journal must be of the same '
+                'company'))
 
-            # la cia es opcional en la secuencia, solo chequeamos si esta
-            # seteada
-            # TODO this should go in a pr to OCA sot module
-            if rec.sequence_id.company_id and (
-                    rec.sequence_id.company_id != rec.company_id):
-                raise ValidationError(_(
-                    'The Sequence "%s" company must be the same than'
-                    ' sale order type') % rec.sequence_id.name)
+        # la cia es opcional en la secuencia, solo chequeamos si esta
+        # seteada
+        # TODO this should go in a pr to OCA sot module
+        sequence_diff_company = self.filtered(
+            lambda x: x.sequence_id.company_id and
+            x.sequence_id.company_id != x.company_id
+        )
+        if sequence_diff_company:
+            raise ValidationError(
+                '\n'.join([_('The Sequence "%s" company must be the same than'
+                             ' sale order type') % sot.sequence_id.name
+                           for sot in sequence_diff_company])
+            )

@@ -15,6 +15,8 @@ Sale Order Type Ux
 ===================
 
 * This module adds in the list view of sale.order.type the field sequence to be able to sort by that field.
+* We also make type field on sale orders readonly on states different from draft and sent.
+* Also add tracking to same field.
 * Integration betweeen Portal and Sale Order Type module:
 
  - New access record to sale type model for portal users

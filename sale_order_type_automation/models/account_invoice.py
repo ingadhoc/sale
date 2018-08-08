@@ -3,9 +3,6 @@
 # directory
 ##############################################################################
 from odoo import api, models
-import logging
-
-_logger = logging.getLogger(__name__)
 
 
 class AccountInvoice(models.Model):
@@ -13,8 +10,7 @@ class AccountInvoice(models.Model):
 
     @api.onchange('sale_type_id')
     def onchange_sale_type_set_pay_now(self):
-        if (
-                self.sale_type_id.payment_atomation != 'none' and
+        if (self.sale_type_id.payment_atomation != 'none' and
                 self.sale_type_id.payment_journal_id):
             self.pay_now_journal_id = self.sale_type_id.payment_journal_id.id
         else:

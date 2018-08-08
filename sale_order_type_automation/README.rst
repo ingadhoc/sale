@@ -1,5 +1,13 @@
-.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
-   :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
+.. |company| replace:: ADHOC SA
+
+.. |company_logo| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-logo.png
+   :alt: ADHOC SA
+   :target: https://www.adhoc.com.ar
+
+.. |icon| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-icon.png
+
+.. image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+   :target: https://www.gnu.org/licenses/agpl
    :alt: License: AGPL-3
 
 ==========================
@@ -7,11 +15,11 @@ Sale Order Type Automation
 ==========================
 
 #. Add to sale order type this options to be executed automatically on sale order confirmation and picking confimation:
+
     * Create / Validate Invoice
     * Create / Validate Payment
     * Confirm picking and products transfer (only on sale order confirmation)
 
-#. We also make type field on sale orders readonly on states different from draft and sent. Also add tracking to same field. TODO we should move that to sale_oder_type module or sale_oder_type_usability module
 
 Installation
 ============
@@ -24,7 +32,7 @@ To install this module, you need to:
 Configuration
 =============
 
-To configure this module, you need to set automation options on sale order type:
+To configure this module, you need to set automation options on sale order type
 
 
 Usage
@@ -32,20 +40,11 @@ Usage
 
 To use this module, you need to:
 
-#.To use must be select an "sale order type" who has the configuration that you need, then clik in confirm sale.
-
+#. To use must be select an "sale order type" who has the configuration that you need, then clik in confirm sale.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.adhoc.com.ar/
-
-.. repo_id is available in https://github.com/OCA/maintainer-tools/blob/master/tools/repos_with_ids.txt
-.. branch is "8.0" for example
-
-Known issues / Roadmap
-======================
-
-* ...
+   :target: http://runbot.adhoc.com.ar/
 
 Bug Tracker
 ===========
@@ -61,19 +60,16 @@ Credits
 Images
 ------
 
-* ADHOC SA: `Icon <http://fotos.subefotos.com/83fed853c1e15a8023b86b2b22d6145bo.png>`_.
+* |company| |icon|
 
 Contributors
 ------------
 
-
 Maintainer
 ----------
 
-.. image:: http://fotos.subefotos.com/83fed853c1e15a8023b86b2b22d6145bo.png
-   :alt: Odoo Community Association
-   :target: https://www.adhoc.com.ar
+|company_logo|
 
-This module is maintained by the ADHOC SA.
+This module is maintained by the |company|.
 
 To contribute to this module, please visit https://www.adhoc.com.ar.
