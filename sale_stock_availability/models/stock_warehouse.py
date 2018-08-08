@@ -5,10 +5,9 @@
 from odoo import models, fields
 
 
-class stock_warehouse(models.Model):
+class StockWarehouse(models.Model):
     _inherit = 'stock.warehouse'
 
     disable_sale_stock_warning = fields.Boolean(
-        'Disable Sale Stock Warning',
-        help='If true, the warning "Stock availability" is disable'
+        help='If true, the warning "Stock availability" is disable',
     )
