@@ -8,7 +8,6 @@ from odoo import models, api
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
-    @api.one
     def check_discount(self):
         # disable price_security constraint
         return True
