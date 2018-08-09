@@ -8,27 +8,19 @@ from odoo import fields, models, api
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
-    @api.one
+    virtual_available = fields.Float(
+        compute="_compute_virtual_available",
+        string='Saldo Stock',
+    )
+
     @api.depends(
         'product_uom_qty',
         'product_id')
-    def _fnct_line_stock(self):
-        available = False
-        if self.order_id.state == 'draft':
-            available = self.product_id.with_context(
-                warehouse=self.order_id.warehouse_id.id
-            ).virtual_available - self.product_uom_qty
-        self.virtual_available = available
-        if available >= 0.0:
-            available = True
-        else:
-            available = False
-        self.virtual_available_boolean = available
-
-    virtual_available = fields.Float(
-        compute="_fnct_line_stock", string='Saldo Stock')
-    virtual_available_boolean = fields.Boolean(
-        compute="_fnct_line_stock", string='Saldo Stock')
+    def _compute_virtual_available(self):
+        for rec in self.filtered(lambda sol: sol.order_id.state == 'draft'):
+            rec.virtual_available = rec.product_id.with_context(
+                warehouse=rec.order_id.warehouse_id.id
+            ).virtual_available - rec.product_uom_qty
 
     @api.onchange('product_uom_qty', 'product_uom', 'route_id')
     def _onchange_product_id_check_availability(self):
