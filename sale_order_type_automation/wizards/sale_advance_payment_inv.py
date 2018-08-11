@@ -15,6 +15,5 @@ class SaleAdvancePaymentInv(models.TransientModel):
                 default_sale_type_id=order.type_id.id,
                 default_journal_id=order.type_id.journal_id.id,
             )
-            invoice = super(SaleAdvancePaymentInv, self)._create_invoice(
+        return super(SaleAdvancePaymentInv, self)._create_invoice(
                 order=order, so_line=so_line, amount=amount)
-        return invoice
