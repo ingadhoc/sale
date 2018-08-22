@@ -14,7 +14,8 @@
 Sale Margin Ux
 ==============
 
-This module adds to the "update prices" button the functionality of updating the cost prices in the SO lines.
+#. This module adds to the "update prices" button the functionality of updating the cost prices in the SO lines.
+#. Fix cost computation on sale order lines (by default odoo use user company currency instead of product currency)
 
 Installation
 ============
