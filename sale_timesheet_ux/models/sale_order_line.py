@@ -14,7 +14,8 @@ class SaleOrderLine(models.Model):
         so_lines = self.filtered(
             lambda x: x.is_service and x.product_id.service_tracking in
             ['task_new_project', 'project_only'] and
-            not x.order_id.analytic_account_id)
+            not x.order_id.analytic_account_id.project_ids)
+
         if so_lines:
             so_lines[0].generate_project_from_template()
         super(SaleOrderLine, self)._timesheet_service_generation()
@@ -30,8 +31,9 @@ class SaleOrderLine(models.Model):
             return
 
         # create analytic account
-        self.order_id._create_analytic_account(
-            prefix=self.product_id.default_code or None)
+        if not self.order_id.analytic_account_id:
+            self.order_id._create_analytic_account(
+                prefix=self.product_id.default_code or None)
         account = self.order_id.analytic_account_id
 
         # copy project from template
