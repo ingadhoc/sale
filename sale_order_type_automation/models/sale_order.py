@@ -16,7 +16,8 @@ class SaleOrder(models.Model):
     def run_invoicing_atomation(self):
         invoice = self.env['account.invoice']
         for rec in self.filtered(
-                lambda x: x.type_id.invoicing_atomation != 'none'):
+                lambda x: x.type_id.invoicing_atomation and
+                x.type_id.invoicing_atomation != 'none'):
             # we add this check just because if we call
             # action_invoice_create and nothing to invoice, it raise
             # an error
