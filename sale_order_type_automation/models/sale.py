@@ -47,13 +47,9 @@ class SaleOrder(models.Model):
                     # all of them are rolled back, perhaps a new cursor can
                     # help on this
                     try:
-                        self.env.cr.execute('SAVEPOINT try_validate_invoice')
-                        invoices.signal_workflow('invoice_open')
-                        self.env.cr.execute(
-                            'RELEASE SAVEPOINT try_validate_invoice')
+                        with self.env.cr.savepoint():
+                            invoices.signal_workflow('invoice_open')
                     except Exception, e:
-                        self.env.cr.execute(
-                            'ROLLBACK TO SAVEPOINT try_validate_invoice')
                         message = _(
                             "We couldn't validate the automatically created "
                             "invoices (ids %s), you will need to validate them"
