@@ -1,36 +1,36 @@
 from odoo import fields, models, api, _
-from datetime import datetime
 from dateutil.relativedelta import relativedelta
-from odoo.exceptions import Warning
+from odoo.exceptions import UserError
 
 
-class sale_order(models.Model):
+class SaleOrder(models.Model):
+
     _inherit = "sale.order"
 
-    @api.multi
-    @api.depends('validity_days', 'date_order')
-    def get_validity_date(self):
-        for rec in self:
-            date_order = fields.Datetime.from_string(rec.date_order)
-            if rec.validity_days:
-                rec.validity_date = fields.Datetime.to_string(
-                    date_order + relativedelta(days=rec.validity_days))
-
     validity_days = fields.Integer(
-        'Validity Days',
         readonly=True,
         states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
         help='Set days of validity for Sales Order',
     )
+
     validity_date = fields.Date(
-        "Validity Date",
         help="Date until when quotation is valid",
         readonly=True,
-        compute='get_validity_date',
+        track_visibility='onchange',
     )
-    date_order = fields.Datetime(copy=True)
 
-    @api.multi
+    date_order = fields.Datetime(
+        copy=True,
+    )
+
+    @api.onchange('date_order', 'validity_days')
+    @api.constrains('date_order', 'validity_days')
+    def get_validity_date(self):
+        for rec in self.filtered(lambda x: x.validity_days):
+            date_order = fields.Datetime.from_string(rec.date_order)
+            rec.validity_date = fields.Datetime.to_string(
+                date_order + relativedelta(days=rec.validity_days))
+
     @api.onchange('company_id')
     @api.constrains('company_id')
     def onchange_company(self):
@@ -52,16 +52,17 @@ class sale_order(models.Model):
 
     @api.multi
     def action_confirm(self):
+        self.ensure_one()
         self.check_validity()
-        return super(sale_order, self).action_confirm()
+        return super(SaleOrder, self).action_confirm()
 
     @api.multi
     def check_validity(self):
         if self.validity_date:
             validity_date = fields.Datetime.from_string(self.validity_date)
-            now = datetime.now()
+            now = fields.Datetime.now()
             if validity_date < now:
-                raise Warning(_(
+                raise UserError(_(
                     'You can not confirm this quoatation as it was valid until'
                     ' %s! Please Update Validity.') % (self.validity_date))
 

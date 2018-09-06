@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record model="ir.ui.view" id="res_config_settings_view_form">
+        <field name="name">res.config.form.inherit</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@data-key='sale_management']/h2[4]" position="before">
+                <div class="row mt16 o_settings_container">
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_right_pane">
+                            <label for="sale_order_validity_days"/>
+                            <div class="text-muted">
+                                Set validity days to a quotation
+                            </div>
+                            <div class="content-group">
+                                <div class="mt16">
+                                    <field name="sale_order_validity_days" class="o_light_label"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

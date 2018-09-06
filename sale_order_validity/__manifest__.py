@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Order Validity',
-    'version': '9.0.1.2.0',
+    'version': '11.0.1.0.0',
     'category': 'Sales & Purchases',
     'sequence': 14,
     'author': 'ADHOC SA',
@@ -28,15 +28,13 @@
     'images': [
     ],
     'depends': [
-        'sale_prices_update',
+        'sale_ux',
     ],
     'data': [
-        'sale_order_view.xml',
-        'company_view.xml',
+        'wizards/res_config_settings_view.xml',
+        'views/sale_order_view.xml',
     ],
-    'demo': [
-    ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
