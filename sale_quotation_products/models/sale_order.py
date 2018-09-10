@@ -46,6 +46,7 @@ class SaleOrder(models.Model):
                 'order_id': self.id,
                 'product_id': product.id or False,
                 'sequence': sequence,
+                'company_id': self.company_id.id,
             }
             sol = sol.new(vals)
             sol.product_id_change()
