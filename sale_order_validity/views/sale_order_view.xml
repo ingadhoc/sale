@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <odoo>
-<data>
 
     <record id="view_order_form_validity" model="ir.ui.view">
         <field name="name">sale.order.form.validity</field>
@@ -25,7 +24,7 @@
         <field name="model">sale.order</field>
         <field name="type">form</field>
         <field name="inherit_id" ref="view_order_form_validity"/>
-        <field name="groups_id" eval="[(4, ref('base.group_sale_manager'))]"/>
+        <field name="groups_id" eval="[(4, ref('sales_team.group_sale_manager'))]"/>
         <field name="arch" type="xml">
             <field name="date_order" position="attributes">
                 <attribute name="readonly">False</attribute>
@@ -33,5 +32,4 @@
         </field>
     </record>
 
-</data>
 </odoo>

@@ -5,10 +5,9 @@
 from odoo import fields, models
 
 
-class res_company(models.Model):
-    _inherit = "res.company"
+class ResConfigSettings(models.TransientModel):
+    _inherit = 'res.config.settings'
 
     sale_order_validity_days = fields.Integer(
-        'Sale Order Validity Days',
-        help='Set days of validity for Sales Order, if null, no validity date '
-        'will be filled')
+        related='company_id.sale_order_validity_days',
+    )
