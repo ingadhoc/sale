@@ -19,7 +19,8 @@
 ##############################################################################
 {
     'name': 'Sale Order Type Invoicing Policy',
-    'version': '9.0.1.3.0',
+    'version': '11.0.1.0.0',
+    'category': 'Sale Management',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
@@ -28,18 +29,17 @@
         'sale_order_type',
         # agregamos esta depenencia para permitir reembolsar las devoluciones
         # y para no tener que hacer modulos puente
-        'sale_usability_return_invoicing',
+        'sale_stock_ux',
     ],
-    'category': 'Sale Management',
     'demo': [
         'demo/res_partner_demo.xml',
         'demo/sale_order_demo.xml',
     ],
     'data': [
-        'view/sale_order_type_view.xml',
-        'view/sale_order_view.xml',
+        'views/sale_order_type_views.xml',
+        'views/sale_order_views.xml',
         'data/sale_order_type_data.xml',
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
 }
