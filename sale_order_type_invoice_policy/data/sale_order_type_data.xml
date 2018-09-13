@@ -1,13 +1,11 @@
-<odoo>
-    <data noupdate="1">
-         <record id="prepaid_sale_type" model="sale.order.type">
-            <field name="name">Pre Paid</field>
-            <field name="invoice_policy">prepaid</field>
-        </record>
+<odoo noupdate="1">
+    <record id="prepaid_sale_type" model="sale.order.type">
+        <field name="name">Pre Paid</field>
+        <field name="invoice_policy">prepaid</field>
+    </record>
 
-         <record id="ordered_sale_type" model="sale.order.type">
-            <field name="name">Ordered quantities</field>
-            <field name="invoice_policy">order</field>
-        </record>
-    </data>
+        <record id="ordered_sale_type" model="sale.order.type">
+        <field name="name">Ordered quantities</field>
+        <field name="invoice_policy">order</field>
+    </record>
 </odoo>
