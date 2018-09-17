@@ -94,10 +94,10 @@
     <record id="sale.action_orders" model="ir.actions.act_window">
         <field name="domain">[]</field>
     </record>
-    
-    <!--Make Quotations Menu only visible to tec features-->
+
+    <!--Hide Quotations Menu -->
     <record model="ir.ui.menu" id="sale.menu_sale_quotations">
-        <field name="groups_id" eval="[(6, 0, [ref('base.group_no_one')])]"/>
+        <field name="active" eval="False"/>
     </record>
 
 </odoo>
