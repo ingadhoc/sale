@@ -3,14 +3,15 @@
 # * sale_require_purchase_order_number
 # 
 # Translators:
-# Rudolf Schnapka <rs@techno-flex.de>, 2017
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018
+# Rudolf Schnapka <rs@techno-flex.de>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 9.0c\n"
+"Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-07 17:36+0000\n"
-"PO-Revision-Date: 2017-04-07 17:36+0000\n"
-"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2017\n"
+"POT-Creation-Date: 2018-09-17 13:18+0000\n"
+"PO-Revision-Date: 2018-09-17 13:18+0000\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2018\n"
 "Language-Team: German (https://www.transifex.com/adhoc/teams/46451/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,24 +20,19 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: sale_require_purchase_order_number
+#: model:ir.model,name:sale_require_purchase_order_number.model_res_partner
+msgid "Contact"
+msgstr "Kontakt"
+
+#. module: sale_require_purchase_order_number
 #: model:ir.model.fields,help:sale_require_purchase_order_number.field_sale_order_require_purchase_order_number
-msgid "If true, required purchase order numnber in sale order"
-msgstr "Wenn wahr, ist Bestell-Auftragsnummer im Verkaufsauftrag erforderlich"
+msgid "If true, required purchase order number in sale order"
+msgstr "Wenn wahr, ist Bestellnummer im Verkaufsauftrag erforderlich"
 
 #. module: sale_require_purchase_order_number
 #: model:ir.model,name:sale_require_purchase_order_number.model_account_invoice
 msgid "Invoice"
 msgstr "Rechnung"
-
-#. module: sale_require_purchase_order_number
-#: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_stock_picking_code
-msgid "Operation Type"
-msgstr "Vorgangsart"
-
-#. module: sale_require_purchase_order_number
-#: model:ir.model,name:sale_require_purchase_order_number.model_res_partner
-msgid "Partner"
-msgstr "PartnerPartner"
 
 #. module: sale_require_purchase_order_number
 #: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_account_invoice_purchase_order_number
@@ -47,7 +43,13 @@ msgid "Purchase Order Number"
 msgstr "Bestellnummer"
 
 #. module: sale_require_purchase_order_number
+#: model:ir.model,name:sale_require_purchase_order_number.model_sale_order
+msgid "Quotation"
+msgstr "Angebot"
+
+#. module: sale_require_purchase_order_number
 #: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_res_partner_require_purchase_order_number
+#: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_res_users_require_purchase_order_number
 msgid "Require Purchase Order Number"
 msgstr "Bestell-Auftragsnummer erforderlich"
 
@@ -57,11 +59,6 @@ msgstr "Bestell-Auftragsnummer erforderlich"
 #: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_stock_picking_require_purchase_order_number
 msgid "Sale Require Origin"
 msgstr "Auftrag erfordert Herkunft"
-
-#. module: sale_require_purchase_order_number
-#: model:ir.model,name:sale_require_purchase_order_number.model_sale_order
-msgid "Sales Order"
-msgstr "Verkaufsauftrag"
 
 #. module: sale_require_purchase_order_number
 #: sql_constraint:sale.order:0
@@ -74,7 +71,7 @@ msgid "Transfer"
 msgstr "Übertragen"
 
 #. module: sale_require_purchase_order_number
-#: code:addons/sale_require_purchase_order_number/models/sale.py:31
+#: code:addons/sale_require_purchase_order_number/models/sale_order.py:34
 #, python-format
 msgid ""
 "You cannot confirm a sales order without a Purchase Order Number for this "
@@ -83,7 +80,7 @@ msgstr ""
 "Für diesen Partner dürfen sie keinen Auftrag ohne Bestellnummer freigeben"
 
 #. module: sale_require_purchase_order_number
-#: code:addons/sale_require_purchase_order_number/models/account.py:27
+#: code:addons/sale_require_purchase_order_number/models/account_invoice.py:29
 #, python-format
 msgid ""
 "You cannot confirm invoice without a Purchase Order Number for this partner"
@@ -92,7 +89,7 @@ msgstr ""
 "freigeben"
 
 #. module: sale_require_purchase_order_number
-#: code:addons/sale_require_purchase_order_number/models/stock.py:48
+#: code:addons/sale_require_purchase_order_number/models/stock_picking.py:48
 #, python-format
 msgid ""
 "You cannot transfer products without a Purchase Order Number for this "

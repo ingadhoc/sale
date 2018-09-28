@@ -4,206 +4,207 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018
+# Rudolf Schnapka <rs@techno-flex.de>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-09-17 13:19+0000\n"
 "PO-Revision-Date: 2018-09-17 13:19+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018\n"
-"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2018\n"
+"Language-Team: German (https://www.transifex.com/adhoc/teams/46451/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
+"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_commercial_partner_id
 msgid "Commercial Entity"
-msgstr ""
+msgstr "Geschäftsbereich"
 
 #. module: sale_ux
 #: model:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
 msgid "Confirm"
-msgstr "Confirmar"
+msgstr "Freigeben"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard_create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Angelegt durch"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard_create_date
 msgid "Created on"
-msgstr ""
+msgstr "Angelegt am"
 
 #. module: sale_ux
 #: model:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
 msgid "Customer"
-msgstr "Cliente"
+msgstr "Kunde"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings_group_sale_reference_on_tree_and_main_form
 msgid "Customer reference in list view and form"
-msgstr "Customer reference in list view and form"
+msgstr "Kundenreferenz in Listen- und Detailsicht"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard_amount
 msgid "Discount"
-msgstr ""
+msgstr "Rabatt"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Anzeigebezeichung"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_force_invoiced_status
 msgid "Force Invoiced Status"
-msgstr ""
+msgstr "Überschreibe Rechnungsstatus"
 
 #. module: sale_ux
 #: selection:sale.order,force_invoiced_status:0
 msgid "Fully Invoiced"
-msgstr ""
+msgstr "Vollständig abgerechnet"
 
 #. module: sale_ux
 #: model:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
 msgid "Global Discount"
-msgstr ""
+msgstr "Globaler Rabatt"
 
 #. module: sale_ux
 #: model:ir.actions.act_window,name:sale_ux.action_sale_global_discount_wizard_form
 msgid "Global Discount Wizard"
-msgstr ""
+msgstr "Assistent für globalen Rabatt"
 
 #. module: sale_ux
 #: model:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
 msgid "Hide cancelled lines"
-msgstr "Ocultar líneas canceladas"
+msgstr "Verberge stornierte Positionen"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard_id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: sale_ux
 #: model:ir.model,name:sale_ux.model_account_invoice
 msgid "Invoice"
-msgstr "Factura"
+msgstr "Rechnung"
 
 #. module: sale_ux
 #: model:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
 msgid "Invoice Lines"
-msgstr "Líneas de la factura"
+msgstr "Rechnungspositionen"
 
 #. module: sale_ux
 #: model:ir.ui.view,arch_db:sale_ux.view_sales_order_filter
 #: model:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
 msgid "Invoiced"
-msgstr "Facturado"
+msgstr "Abgerechnet"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard___last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Zuletzt verändert am"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard_write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Zuletzt aktualisiert durch"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard_write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Zuletzt aktualisiert am"
 
 #. module: sale_ux
 #: model:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
 msgid "Not Invoiced"
-msgstr "Not Invoiced"
+msgstr "Nicht abgerechnet"
 
 #. module: sale_ux
 #: selection:sale.order,force_invoiced_status:0
 msgid "Nothing to Invoice"
-msgstr ""
+msgstr "Nichts abzurechnen"
 
 #. module: sale_ux
 #: code:addons/sale_ux/models/sale_order.py:68
 #, python-format
 msgid "Only users with \"%s / %s\" can Set Invoiced manually"
-msgstr "Only users with \"%s / %s\" can Set Invoiced manually"
+msgstr "Nur Nutzer mit \"%s / %s\" dürfen manuell abgerechnet setzen"
 
 #. module: sale_ux
 #: model:ir.ui.view,arch_db:sale_ux.sale_order_line_usability_tree
 #: model:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
 msgid "Qty"
-msgstr "Cant."
+msgstr "Menge"
 
 #. module: sale_ux
 #: model:ir.model,name:sale_ux.model_sale_order
 msgid "Quotation"
-msgstr "Presupuesto"
+msgstr "Angebot"
 
 #. module: sale_ux
 #: model:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
 msgid "Quotations"
-msgstr "Presupuestos"
+msgstr "Angebote"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_account_invoice_sale_order_ids
 msgid "Sale Order"
-msgstr ""
+msgstr "Verkaufsauftrag"
 
 #. module: sale_ux
 #: model:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
 msgid "Sale Order Line"
-msgstr "Sale Order Line"
+msgstr "Auftragsposition"
 
 #. module: sale_ux
 #: model:ir.actions.act_window,name:sale_ux.action_sale_order_line_usability_tree
 #: model:ir.ui.menu,name:sale_ux.menu_sale_order
 #: model:ir.ui.view,arch_db:sale_ux.sale_order_line_usability_tree
 msgid "Sale Order Lines"
-msgstr "Sale Order Lines"
+msgstr "Auftragspositionen"
 
 #. module: sale_ux
 #: model:ir.ui.view,arch_db:sale_ux.invoice_form
 #: model:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
 msgid "Sale Orders"
-msgstr "Pedidos de venta"
+msgstr "Verkaufsaufträge"
 
 #. module: sale_ux
 #: model:ir.model,name:sale_ux.model_sale_order_line
 msgid "Sales Order Line"
-msgstr "Línea de Pedido de Ventas"
+msgstr "Auftragsposition"
 
 #. module: sale_ux
 #: model:ir.ui.view,arch_db:sale_ux.view_order_form
 msgid "Set Global Discount"
-msgstr ""
+msgstr "Globalen Rabatt setzen"
 
 #. module: sale_ux
 #: model:res.groups,name:sale_ux.group_reference_on_tree_and_main_form
 msgid "Show SO reference field on tree and main form views"
-msgstr "Show SO reference field on tree and main form views"
+msgstr "Zeige Feld VA-Referenz in Listen- und Detailsichten"
 
 #. module: sale_ux
 #: model:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form
 msgid "Show client reference in list view and in main section of form view"
-msgstr "Show client reference in list view and in main section of form view"
+msgstr "Zeige Kunden-Referenz in Listen- und in Kopfdaten der Detailsicht"
 
 #. module: sale_ux
 #: model:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
 msgid "Status"
-msgstr "Estado"
+msgstr "Status"
 
 #. module: sale_ux
 #: model:ir.ui.view,arch_db:sale_ux.sale_order_line_usability_tree
 #: model:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
 msgid "Total"
-msgstr "Total"
+msgstr "Gesamt"
 
 #. module: sale_ux
 #: code:addons/sale_ux/models/sale_order.py:58
@@ -212,18 +213,18 @@ msgid ""
 "Unable to cancel this sale order. You must first cancel related bills and "
 "pickings."
 msgstr ""
-"Unable to cancel this sale order. You must first cancel related bills and "
-"pickings."
+"Kann diesen Verkaufsauftrag nicht stornieren. Sie müssen zuvor zugehörige "
+"Rechnungen und Lagerbuchungen stornieren."
 
 #. module: sale_ux
 #: model:ir.ui.view,arch_db:sale_ux.sale_order_line_usability_tree
 msgid "Unit of Measure"
-msgstr "Unidad de Medida"
+msgstr "Mengeneinheit"
 
 #. module: sale_ux
 #: model:ir.ui.view,arch_db:sale_ux.view_order_form
 msgid "Update Prices"
-msgstr ""
+msgstr "Preise aktualisieren"
 
 #. module: sale_ux
 #: code:addons/sale_ux/models/sale_order.py:83
@@ -233,16 +234,19 @@ msgid ""
 "\"Quotation Sent\", probablyhas already been validated, try refreshing the "
 "window!"
 msgstr ""
+"Sie können einen Verkaufsauftrag nur im Status \"Angebot\" oder \"Angebot "
+"versandt\" freigeben. Wahrscheinlich ist dieser bereits freigegeben, "
+"aktualisieren Sie die Ansicht mal."
 
 #. module: sale_ux
 #: model:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
 msgid "_Cancel"
-msgstr ""
+msgstr "Abbrechen"
 
 #. module: sale_ux
 #: model:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
 msgid "or"
-msgstr ""
+msgstr "oder"
 
 #. module: sale_ux
 #: model:ir.model,name:sale_ux.model_res_config_settings
@@ -252,4 +256,4 @@ msgstr "res.config.settings"
 #. module: sale_ux
 #: model:ir.model,name:sale_ux.model_sale_order_global_discount_wizard
 msgid "sale.order.global_discount.wizard"
-msgstr ""
+msgstr "sale.order.global_discount.wizard"

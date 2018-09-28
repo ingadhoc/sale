@@ -1,19 +1,22 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* sale_stock_ux
-#
+# * sale_stock_ux
+# 
+# Translators:
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0+e\n"
+"Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-25 14:36+0000\n"
-"PO-Revision-Date: 2018-07-25 14:36+0000\n"
-"Last-Translator: <>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2018-09-17 13:19+0000\n"
+"PO-Revision-Date: 2018-09-17 13:19+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018\n"
+"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: sale_stock_ux
 #: model:ir.model.fields,field_description:sale_stock_ux.field_sale_order_line_all_qty_delivered
@@ -23,19 +26,31 @@ msgstr "All Delivered"
 #. module: sale_stock_ux
 #: code:addons/sale_stock_ux/models/sale_order_line.py:110
 #, python-format
-msgid "Cancel remaining call for line \"%s\" (id %s), line qty updated from %s to %s"
-msgstr "Cancel remaining call for line \"%s\" (id %s), line qty updated from %s to %s"
+msgid ""
+"Cancel remaining call for line \"%s\" (id %s), line qty updated from %s to "
+"%s"
+msgstr ""
+"Cancel remaining call for line \"%s\" (id %s), line qty updated from %s to "
+"%s"
 
 #. module: sale_stock_ux
 #: code:addons/sale_stock_ux/models/sale_order_line.py:92
 #, python-format
-msgid "Cancel remaining can't be called for Kit Products (products with a bom of type kit)."
-msgstr "Cancel remaining can't be called for Kit Products (products with a bom of type kit)."
+msgid ""
+"Cancel remaining can't be called for Kit Products (products with a bom of "
+"type kit)."
+msgstr ""
+"Cancel remaining can't be called for Kit Products (products with a bom of "
+"type kit)."
 
 #. module: sale_stock_ux
 #: model:ir.ui.view,arch_db:sale_stock_ux.view_order_form
-msgid "Cancel remaining quanitity to be delivered. This will set line quantity equal to delivered qty and will cancel remaining moves"
-msgstr "Cancel remaining quanitity to be delivered. This will set line quantity equal to delivered qty and will cancel remaining moves"
+msgid ""
+"Cancel remaining quanitity to be delivered. This will set line quantity "
+"equal to delivered qty and will cancel remaining moves"
+msgstr ""
+"Cancel remaining quanitity to be delivered. This will set line quantity "
+"equal to delivered qty and will cancel remaining moves"
 
 #. module: sale_stock_ux
 #: model:ir.ui.view,arch_db:sale_stock_ux.view_sales_order_filter
@@ -101,11 +116,6 @@ msgid "Quotation"
 msgstr "Presupuesto"
 
 #. module: sale_stock_ux
-#: model:ir.model,name:sale_stock_ux.model_stock_return_picking
-msgid "Return Picking"
-msgstr "Devolver remito"
-
-#. module: sale_stock_ux
 #: model:ir.model.fields,field_description:sale_stock_ux.field_sale_order_line_qty_returned
 msgid "Returned"
 msgstr "Returned"
@@ -132,8 +142,12 @@ msgstr "Línea de Pedido de Ventas"
 
 #. module: sale_stock_ux
 #: model:ir.ui.view,arch_db:sale_stock_ux.view_order_form
-msgid "This will set line quantity equal to delivery qty and will cancel remaining moves. This can not be undone. Are you sure you want to continue?"
-msgstr "This will set line quantity equal to delivery qty and will cancel remaining moves. This can not be undone. Are you sure you want to continue?"
+msgid ""
+"This will set line quantity equal to delivery qty and will cancel remaining "
+"moves. This can not be undone. Are you sure you want to continue?"
+msgstr ""
+"This will set line quantity equal to delivery qty and will cancel remaining "
+"moves. This can not be undone. Are you sure you want to continue?"
 
 #. module: sale_stock_ux
 #: model:ir.ui.view,arch_db:sale_stock_ux.view_sales_order_filter
@@ -146,17 +160,13 @@ msgstr "A entregar"
 #. module: sale_stock_ux
 #: code:addons/sale_stock_ux/models/sale_order.py:46
 #, python-format
-msgid "Unable to cancel sale order %s as some receptions have already been done."
-msgstr "Unable to cancel sale order %s as some receptions have already been done."
+msgid ""
+"Unable to cancel sale order %s as some receptions have already been done."
+msgstr ""
+"Unable to cancel sale order %s as some receptions have already been done."
 
 #. module: sale_stock_ux
 #: model:ir.model.fields,field_description:sale_stock_ux.field_sale_order_with_returns
 #: model:ir.ui.view,arch_db:sale_stock_ux.view_sales_order_filter
 msgid "With Returns"
 msgstr "With Returns"
-
-#. module: sale_stock_ux
-#: model:ir.model,name:sale_stock_ux.model_stock_return_picking_line
-msgid "stock.return.picking.line"
-msgstr "stock.return.picking.line"
-

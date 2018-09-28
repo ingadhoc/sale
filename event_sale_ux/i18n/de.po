@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * sale_margin_ux
+# * event_sale_ux
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018
@@ -19,12 +19,19 @@ msgstr ""
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#. module: sale_margin_ux
-#: model:ir.model,name:sale_margin_ux.model_sale_order
-msgid "Quotation"
-msgstr "Angebot"
+#. module: event_sale_ux
+#: model:ir.ui.view,arch_db:event_sale_ux.view_order_form
+msgid "Open Document"
+msgstr "Dokument öffnen"
 
-#. module: sale_margin_ux
-#: model:ir.model,name:sale_margin_ux.model_sale_order_line
+#. module: event_sale_ux
+#: code:addons/event_sale_ux/models/sale_order_line.py:17
+#: model:ir.model,name:event_sale_ux.model_sale_order_line
+#, python-format
 msgid "Sales Order Line"
 msgstr "Auftragsposition"
+
+#. module: event_sale_ux
+#: model:ir.ui.view,arch_db:event_sale_ux.view_order_line_form
+msgid "Sales Order Lines"
+msgstr "Auftragspositionen"

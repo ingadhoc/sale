@@ -1,9 +1,8 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * sale_margin_ux
+# * sale_exceptions_timesheet
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018
 # Rudolf Schnapka <rs@techno-flex.de>, 2018
 msgid ""
 msgstr ""
@@ -19,12 +18,7 @@ msgstr ""
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#. module: sale_margin_ux
-#: model:ir.model,name:sale_margin_ux.model_sale_order
+#. module: sale_exceptions_timesheet
+#: model:ir.model,name:sale_exceptions_timesheet.model_sale_order
 msgid "Quotation"
 msgstr "Angebot"
-
-#. module: sale_margin_ux
-#: model:ir.model,name:sale_margin_ux.model_sale_order_line
-msgid "Sales Order Line"
-msgstr "Auftragsposition"

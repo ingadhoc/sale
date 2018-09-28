@@ -3,15 +3,15 @@
 # * sale_require_ref
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: sale (8.0)\n"
+"Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-20 22:53+0000\n"
-"PO-Revision-Date: 2016-05-24 23:15+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>\n"
-"Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-sale-8-0/language/es/)\n"
+"POT-Creation-Date: 2018-09-17 13:18+0000\n"
+"PO-Revision-Date: 2018-09-17 13:18+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018\n"
+"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -19,11 +19,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: sale_require_ref
-#: model:sale.exception,name:sale_require_ref.require_ref
+#: model:exception.rule,name:sale_require_ref.require_ref
 msgid "Reference Field Required"
 msgstr "Campo Referencia Requerido"
 
 #. module: sale_require_ref
-#: model:sale.exception,description:sale_require_ref.require_ref
+#: model:exception.rule,description:sale_require_ref.require_ref
 msgid "You must set a reference."
 msgstr "Debe setear una referencia."

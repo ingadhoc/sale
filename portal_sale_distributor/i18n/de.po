@@ -3,52 +3,52 @@
 # * portal_sale_distributor
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018
+# Rudolf Schnapka <rs@techno-flex.de>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-09-17 13:18+0000\n"
 "PO-Revision-Date: 2018-09-17 13:18+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018\n"
-"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2018\n"
+"Language-Team: German (https://www.transifex.com/adhoc/teams/46451/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
+"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: portal_sale_distributor
 #: model:ir.ui.view,arch_db:portal_sale_distributor.view_order_form
 msgid "Confirm Sale"
-msgstr "Confirmar Venta"
+msgstr "Auftrag bestätigen"
 
 #. module: portal_sale_distributor
 #: model:ir.ui.view,arch_db:portal_sale_distributor.sale_order_link
 msgid "My Sale Orders"
-msgstr "Mis Pedidos"
+msgstr "Meine Verkaufsaufträge"
 
 #. module: portal_sale_distributor
 #: model:res.groups,name:portal_sale_distributor.group_portal_distributor
 msgid "Portal - Distributor"
-msgstr "Portal - Distributor"
+msgstr "Portal - Wiederverkäufer"
 
 #. module: portal_sale_distributor
 #: model:ir.model,name:portal_sale_distributor.model_sale_order
 msgid "Quotation"
-msgstr "Presupuesto"
+msgstr "Angebot"
 
 #. module: portal_sale_distributor
 #: model:ir.ui.menu,name:portal_sale_distributor.quotations
 msgid "Quotations"
-msgstr "Presupuestos"
+msgstr "Angebote"
 
 #. module: portal_sale_distributor
 #: model:ir.ui.menu,name:portal_sale_distributor.sale_menu
 msgid "Sales"
-msgstr "Ventas"
+msgstr "Verkäufe"
 
 #. module: portal_sale_distributor
 #: model:ir.ui.menu,name:portal_sale_distributor.sale_order
 msgid "Sales Order"
-msgstr "Ordenes de Venta"
+msgstr "Verkaufsauftrag"
