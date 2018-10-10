@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_account_bank_journal_form_inherited_pos" model="ir.ui.view">
+        <field name="name">account.bank.journal.form.inherit.pos</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="point_of_sale.view_account_bank_journal_form_inherited_pos"/>
+        <field name="arch" type="xml">
+            <field name="journal_user" position="after">
+                <field name="pos_outstanding_payment"/>
+                <div class="alert alert-warning" attrs="{'invisible': [('pos_outstanding_payment', '=', False)]}" colspan="2">
+                    <p>
+                        <b>IMPORTANT:</b> We highly recommend that of you are going to use a payment method as POS Outstanding payment please do not select any inboud / outbound methods in order to not show this payment method in conventional receipts and payments.
+                    </p>
+                </div>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_account_journal_pos_user_form" model="ir.ui.view">
+        <field name="name">account.bank.journal.form.inherit.pos</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="point_of_sale.view_account_journal_pos_user_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount_authorized_diff']/.." position="after">
+                <group>
+                    <field name="pos_outstanding_payment"/>
+                </group>
+            </xpath>
+            <notebook position="before">
+                <group attrs="{'invisible': [
+                    ('pos_outstanding_payment', '=', False)]}">
+                    <div class="alert alert-warning" attrs="{'invisible': [
+                        ('inbound_payment_method_ids', '=', []),
+                        ('outbound_payment_method_ids', '=', []),
+                    ]}" colspan="2">
+                        <p>
+                            <b>WARNING:</b> We highly recommend you that if use this payment method as POS Outstanding payment please do not select any inboud / outbound methods in order to not show this payment method in conventional receipts and payments.
+                        </p>
+                    </div>
+                </group>
+            </notebook>
+        </field>
+    </record>
+
+</odoo>
