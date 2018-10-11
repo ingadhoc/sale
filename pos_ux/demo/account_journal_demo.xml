@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="current_account_journal" model="account.journal">
+        <field name="name">Current Account</field>
+        <field name="code">POSCA</field>
+        <field name="type">cash</field>
+        <field name="sequence">20</field>
+        <field name="journal_user" eval="True"/>
+        <field name="pos_outstanding_payment" eval="True"/>
+        <field name="inbound_payment_method_ids" eval="[(5, 0, 0)]"/>
+        <field name="outbound_payment_method_ids" eval="[(5, 0, 0)]"/>
+    </record>
+
+</odoo>
