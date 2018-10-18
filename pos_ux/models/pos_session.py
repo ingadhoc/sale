@@ -2,8 +2,9 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import fields, models, api
+from odoo import models, api, _
 from odoo.exceptions import UserError
+
 
 class PosSession(models.Model):
 
@@ -21,6 +22,6 @@ class PosSession(models.Model):
                 raise UserError(_(
                     'You can only use %s if the customer is defined') % (
                         ', '.join(st.mapped("journal_id"))
-            ))
+                ))
             st.unlink()
         return super(PosSession, self).action_pos_session_close()
