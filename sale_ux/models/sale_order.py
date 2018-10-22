@@ -4,6 +4,7 @@
 ##############################################################################
 from odoo import models, api, fields, _
 from odoo.exceptions import UserError, ValidationError
+from odoo.tools.safe_eval import safe_eval
 
 
 class SaleOrder(models.Model):
@@ -28,6 +29,14 @@ class SaleOrder(models.Model):
         store=True,
         readonly=True,
     )
+
+    @api.onchange('pricelist_id')
+    def _onchange_pricelist(self):
+        update_prices_automatically = safe_eval(
+            self.env['ir.config_parameter'].sudo().get_param(
+                'sale_ux.update_prices_automatically', 'False'))
+        if update_prices_automatically:
+            self.update_prices()
 
     @api.depends('order_line.price_total')
     def _amount_all(self):

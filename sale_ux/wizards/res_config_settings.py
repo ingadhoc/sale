@@ -14,3 +14,22 @@ class ResConfigSettings(models.TransientModel):
         'Customer reference in list view and form',
         implied_group='sale_ux.group_reference_on_tree_and_main_form',
     )
+
+    update_prices_automatically = fields.Boolean(
+        'Update Prices Automatically',
+    )
+
+    def get_values(self):
+        res = super(ResConfigSettings, self).get_values()
+        get_param = self.env['ir.config_parameter'].sudo().get_param
+        res.update(update_prices_automatically=get_param(
+            'sale_ux.update_prices_automatically',
+            'False').lower() == 'true'
+        )
+        return res
+
+    def set_values(self):
+        super(ResConfigSettings, self).set_values()
+        set_param = self.env['ir.config_parameter'].sudo().set_param
+        set_param('sale_ux.update_prices_automatically',
+                  repr(self.update_prices_automatically))
