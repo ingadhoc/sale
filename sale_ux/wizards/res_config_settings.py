@@ -16,9 +16,7 @@ class ResConfigSettings(models.TransientModel):
     )
 
     update_prices_automatically = fields.Boolean(
-        string="Actualizar precios automáticamente",
-        help="Actualizar precios automáticamente al cambiar de lista"
-        " de precios",
+        'Update Prices Automatically',
     )
 
     def get_values(self):
