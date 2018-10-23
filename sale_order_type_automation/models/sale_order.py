@@ -49,42 +49,38 @@ class SaleOrder(models.Model):
 
     @api.multi
     def run_picking_atomation(self):
-        op_to_unlink = self.env['stock.move.line']
-        is_jit_installed = self.env['ir.module.module'].search(
-            [('name', '=', 'procurement_jit'),
-             ('state', '=', 'installed')], limit=1)
-        for rec in self.filtered(lambda x: x.type_id.picking_atomation
-                                 != 'none' and x.procurement_group_id):
+        for rec in self.filtered(
+                lambda x: x.type_id.picking_atomation != 'none' and
+                x.procurement_group_id):
             # we add invalidate because on boggio we have add an option
             # for tracking_disable and with that setup pickings where not seen
             rec.invalidate_cache()
             pickings = rec.picking_ids
-            if not is_jit_installed:
-                pickings.action_assign()
             if rec.type_id.book_id:
                 pickings.update({'book_id': rec.type_id.book_id.id})
             if rec.type_id.picking_atomation == 'validate':
-                pickings.force_assign()
+                # this method already call action_assign
+                pickings.new_force_availability()
             elif rec.type_id.picking_atomation == 'validate_no_force':
+                if not self.env['ir.module.module'].search([
+                        ('name', '=', 'procurement_jit'),
+                        ('state', '=', 'installed')], limit=1):
+                    pickings.action_assign()
                 products = []
                 for move in pickings.mapped('move_lines'):
                     if move.state != 'assigned':
                         products.append(move.product_id)
                 if products:
                     raise UserError(_(
-                        'Products:\n%s\nAre not available, we suggest use'
-                        ' another type of sale to generate a'
-                        ' partial delivery.'
-                    ) % ('\n'.join(x.name for x in products)))
-            for op in pickings.mapped('move_line_ids'):
-                if op.product_qty > 0:
-                    op.update({'qty_done': op.product_qty})
-                else:
-                    op_to_unlink |= op
+                        'The following products are not available, we suggest '
+                        'to check stock or to use a sale type that force '
+                        'availability.\nProducts:\n* %s\n '
+                    ) % ('\n *'.join(x.name for x in products)))
+                for op in pickings.mapped('move_line_ids'):
+                    op.qty_done = op.product_uom_qty
             # because of ensure_one on delivery module
             for pick in pickings:
                 pick.action_done()
-        op_to_unlink.unlink()
 
     @api.multi
     def action_confirm(self):
