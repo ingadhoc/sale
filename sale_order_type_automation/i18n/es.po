@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-17 13:18+0000\n"
-"PO-Revision-Date: 2018-09-17 13:18+0000\n"
+"POT-Creation-Date: 2018-10-23 00:40+0000\n"
+"PO-Revision-Date: 2018-10-23 00:40+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -130,15 +130,6 @@ msgid ""
 msgstr ""
 
 #. module: sale_order_type_automation
-#: code:addons/sale_order_type_automation/models/sale_order.py:74
-#, python-format
-msgid ""
-"Products:\n"
-"%s\n"
-"Are not available, we suggest use another type of sale to generate a partial delivery."
-msgstr ""
-
-#. module: sale_order_type_automation
 #: model:ir.model,name:sale_order_type_automation.model_sale_order
 msgid "Quotation"
 msgstr "Presupuesto"
@@ -161,10 +152,18 @@ msgstr ""
 #. module: sale_order_type_automation
 #: code:addons/sale_order_type_automation/models/sale_order_type.py:140
 #, python-format
-msgid "The Sequence \"%s\" company must be the same than sale order type"
+msgid "The company of the sequence and the warehouse must be the same"
 msgstr ""
-"La secuencia \"%s\" de la compañía debe ser la misma que la del pedido de "
-"venta"
+
+#. module: sale_order_type_automation
+#: code:addons/sale_order_type_automation/models/sale_order.py:74
+#, python-format
+msgid ""
+"The following products are not available, we suggest to check stock or to use a sale type that force availability.\n"
+"Products:\n"
+"* %s\n"
+" "
+msgstr ""
 
 #. module: sale_order_type_automation
 #: model:ir.model,name:sale_order_type_automation.model_stock_picking
