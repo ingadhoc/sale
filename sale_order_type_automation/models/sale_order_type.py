@@ -133,11 +133,10 @@ class SaleOrderType(models.Model):
         # TODO this should go in a pr to OCA sot module
         sequence_diff_company = self.filtered(
             lambda x: x.sequence_id.company_id and
+            x.warehouse_id.company_id and
             x.sequence_id.company_id != x.company_id
         )
         if sequence_diff_company:
-            raise ValidationError(
-                '\n'.join([_('The Sequence "%s" company must be the same than'
-                             ' sale order type') % sot.sequence_id.name
-                           for sot in sequence_diff_company])
-            )
+            raise ValidationError(_(
+                    'The company of the sequence and the warehouse must be '
+                    'the same'))
