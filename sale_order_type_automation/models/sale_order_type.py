@@ -120,7 +120,7 @@ class SaleOrderType(models.Model):
         'sequence_id')
     def validate_company_id(self):
         different_company = self.filtered(
-            lambda x: x.invoice_company_id and
+            lambda x: x.invoice_company_id and x.payment_journal_id and
             x.invoice_company_id != x.payment_journal_id.company_id
         )
         if different_company:
