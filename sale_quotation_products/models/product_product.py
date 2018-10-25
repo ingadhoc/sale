@@ -51,7 +51,7 @@ class ProductProduct(models.Model):
             qty = sum([line.product_uom._compute_quantity(
                 line.product_uom_qty,
                 rec.uom_id) for line in lines])
-            rec.update({'qty': qty})
+            rec.qty = qty
 
     def _set_qty(self, qty):
         self.ensure_one()
@@ -78,8 +78,7 @@ class ProductProduct(models.Model):
     @api.multi
     def action_product_add_one(self):
         for rec in self:
-            rec.update({
-                'qty': rec.qty + 1})
+            rec.qty = rec.qty + 1
 
     @api.model
     def fields_view_get(self, view_id=None, view_type='form',

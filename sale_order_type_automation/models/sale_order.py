@@ -57,7 +57,7 @@ class SaleOrder(models.Model):
             rec.invalidate_cache()
             pickings = rec.picking_ids
             if rec.type_id.book_id:
-                pickings.update({'book_id': rec.type_id.book_id.id})
+                pickings.write({'book_id': rec.type_id.book_id.id})
             if rec.type_id.picking_atomation == 'validate':
                 # this method already call action_assign
                 pickings.new_force_availability()

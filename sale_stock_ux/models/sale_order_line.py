@@ -59,8 +59,8 @@ class SaleOrderLine(models.Model):
                 continue
 
             if line.order_id.force_delivery_status:
-                line.order_id.update({
-                    'delivery_status': line.order_id.force_delivery_status})
+                line.order_id.delivery_status = \
+                    line.order_id.force_delivery_status
                 continue
 
             if float_compare(
@@ -75,7 +75,7 @@ class SaleOrderLine(models.Model):
                 delivery_status = 'delivered'
             else:
                 delivery_status = 'no'
-            line.update({'delivery_status': delivery_status})
+            line.delivery_status = delivery_status
 
     @api.multi
     def button_cancel_remaining(self):

@@ -100,7 +100,7 @@ class SaleOrderType(models.Model):
     def _compute_auto_done_setting(self):
         default = self.env['ir.config_parameter'].sudo().get_param(
             'sale.auto_done_setting')
-        self.update({'auto_done_setting': default})
+        self.auto_done_setting = default
 
     @api.constrains(
         'payment_atomation',

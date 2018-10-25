@@ -77,7 +77,7 @@ class SaleOrder(models.Model):
                 delivery_status = 'delivered'
             else:
                 delivery_status = 'no'
-            order.update({'delivery_status': delivery_status})
+            order.delivery_status = delivery_status
 
     @api.multi
     def write(self, vals):

@@ -113,5 +113,5 @@ class SaleOrder(models.Model):
                     line.product_uom_qty or 1.0,
                     self.partner_id.id
                 )[self.pricelist_id.id]
-            line.update({'price_unit': price})
+            line.price_unit = price
         return True
