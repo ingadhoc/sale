@@ -2,7 +2,8 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import fields, models, api
+from odoo import fields, models, api, _
+from odoo.exceptions import ValidationError
 import odoo.addons.decimal_precision as dp
 
 
@@ -37,6 +38,21 @@ class sale_order_line(models.Model):
         # agregamos states vacio porque lo hereda de la definicion anterior
         states={},
     )
+
+    @api.constrains('discount1', 'discount2', 'discount3')
+    def check_discount_validity(self):
+        for rec in self:
+            error = []
+            if rec.discount1 > 100:
+                error.append('Discount 1')
+            if rec.discount2 > 100:
+                error.append('Discount 2')
+            if rec.discount3 > 100:
+                error.append('Discount 3')
+            if error:
+                raise ValidationError(_(
+                    ",".join(error) + " must be less or equal than 100"
+                ))
 
     @api.one
     @api.depends('discount1', 'discount2', 'discount3')
