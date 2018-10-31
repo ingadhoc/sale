@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_sale_global_discount_wizard_form" model="ir.ui.view">
+        <field name="name">Sale Order Global Discount Wizard</field>
+        <field name="model">sale.order.global_discount.wizard</field>
+        <field name="inherit_id" ref="sale_ux.view_sale_order_global_discount_wizard_form"/>
+        <field name="arch" type="xml">
+            <field name="amount" position="replace">
+                <group col="4">
+                        <field name="discount1"/>
+                        <field name="discount1_amount" attrs="{'readonly': [('discount1','!=',True)], 'required':[('discount1','=',True)]}"/>
+                        <field name="discount2"/>
+                        <field name="discount2_amount" attrs="{'readonly': [('discount2','!=',True)], 'required':[('discount2','=',True)]}"/>
+                        <field name="discount3"/>
+                        <field name="discount3_amount" attrs="{'readonly': [('discount3','!=',True)], 'required':[('discount3','=',True)]}"/>
+                </group>
+            </field>
+        </field>
+    </record>
+</odoo>

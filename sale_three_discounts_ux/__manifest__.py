@@ -18,8 +18,8 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Global Three Discounts',
-    'version': '9.0.1.0.0',
+    'name': 'Sale Three Discounts UX',
+    'version': '11.0.1.0.0',
     'category': 'Sales Management',
     'sequence': 14,
     'author': 'ADHOC SA',
@@ -27,17 +27,13 @@
     'license': 'AGPL-3',
     'summary': '',
     'depends': [
-        'sale_global_discount',
-        'sale_three_discounts'
+        'sale_ux',
+        'sale_three_discounts',
     ],
-    'external_dependencies': {
-    },
     'data': [
-        'wizard/sale_global_discount_wizard_view.xml',
+        'wizards/sale_order_global_discount_wizard_views.xml',
     ],
-    'demo': [
-    ],
-    'installable': False,
+    'installable': True,
     'auto_install': True,
     'application': False,
 }
