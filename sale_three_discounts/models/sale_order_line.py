@@ -1,27 +1,33 @@
-from odoo import fields, models, api
+##############################################################################
+# For copyright and license notices, see __manifest__.py file in module root
+# directory
+##############################################################################
+from odoo import fields, models, api, _
+from odoo.exceptions import ValidationError
 import odoo.addons.decimal_precision as dp
 
 
 class sale_order_line(models.Model):
+
     _inherit = "sale.order.line"
 
     discount1 = fields.Float(
         'Discount 1 (%)',
         digits=dp.get_precision('Discount'),
         readonly=True,
-        states={'draft': [('readonly', False)], 'sent': [('readonly', False)]}
+        states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
     )
     discount2 = fields.Float(
         'Discount 2 (%)',
         digits=dp.get_precision('Discount'),
         readonly=True,
-        states={'draft': [('readonly', False)], 'sent': [('readonly', False)]}
+        states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
     )
     discount3 = fields.Float(
         'Discount 3 (%)',
         digits=dp.get_precision('Discount'),
         readonly=True,
-        states={'draft': [('readonly', False)], 'sent': [('readonly', False)]}
+        states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
     )
     # TODO do like in invoice line? Make normal field with constraint and
     # oncahnge?
@@ -33,6 +39,21 @@ class sale_order_line(models.Model):
         states={},
     )
 
+    @api.constrains('discount1', 'discount2', 'discount3')
+    def check_discount_validity(self):
+        for rec in self:
+            error = []
+            if rec.discount1 > 100:
+                error.append('Discount 1')
+            if rec.discount2 > 100:
+                error.append('Discount 2')
+            if rec.discount3 > 100:
+                error.append('Discount 3')
+            if error:
+                raise ValidationError(_(
+                    ",".join(error) + " must be less or equal than 100"
+                ))
+
     @api.one
     @api.depends('discount1', 'discount2', 'discount3')
     def get_discount(self):
@@ -43,8 +64,7 @@ class sale_order_line(models.Model):
 
     @api.multi
     def _prepare_invoice_line(self, qty):
-        res = super(sale_order_line,
-                    self)._prepare_invoice_line(qty)
+        res = super(sale_order_line, self)._prepare_invoice_line(qty)
         res.update({
             'discount1': self.discount1,
             'discount2': self.discount2,

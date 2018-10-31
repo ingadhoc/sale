@@ -138,5 +138,5 @@ class SaleOrderType(models.Model):
         )
         if sequence_diff_company:
             raise ValidationError(_(
-                    'The company of the sequence and the warehouse must be '
-                    'the same'))
+                'The company of the sequence and the warehouse must be '
+                'the same'))

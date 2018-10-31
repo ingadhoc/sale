@@ -3,5 +3,5 @@
 # directory
 ##############################################################################
 
-from . import sale
-from . import account_invoice
+from . import sale_order_line
+from . import account_invoice_line
