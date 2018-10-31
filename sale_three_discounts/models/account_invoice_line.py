@@ -1,10 +1,13 @@
+##############################################################################
+# For copyright and license notices, see __manifest__.py file in module root
+# directory
+##############################################################################
 from odoo import fields, models, api
 import odoo.addons.decimal_precision as dp
-import logging
-_logger = logging.getLogger(__name__)
 
 
 class account_invoice_line(models.Model):
+
     _inherit = "account.invoice.line"
 
     discount1 = fields.Float(
@@ -20,9 +23,9 @@ class account_invoice_line(models.Model):
         digits=dp.get_precision('Discount'),
     )
     discount_readonly = fields.Float(
-        related="discount")
+        related="discount",
+    )
 
-    @api.multi
     @api.onchange('discount1', 'discount2', 'discount3')
     @api.constrains('discount1', 'discount2', 'discount3')
     def _set_discount(self):

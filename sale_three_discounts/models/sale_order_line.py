@@ -1,27 +1,32 @@
+##############################################################################
+# For copyright and license notices, see __manifest__.py file in module root
+# directory
+##############################################################################
 from odoo import fields, models, api
 import odoo.addons.decimal_precision as dp
 
 
 class sale_order_line(models.Model):
+
     _inherit = "sale.order.line"
 
     discount1 = fields.Float(
         'Discount 1 (%)',
         digits=dp.get_precision('Discount'),
         readonly=True,
-        states={'draft': [('readonly', False)], 'sent': [('readonly', False)]}
+        states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
     )
     discount2 = fields.Float(
         'Discount 2 (%)',
         digits=dp.get_precision('Discount'),
         readonly=True,
-        states={'draft': [('readonly', False)], 'sent': [('readonly', False)]}
+        states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
     )
     discount3 = fields.Float(
         'Discount 3 (%)',
         digits=dp.get_precision('Discount'),
         readonly=True,
-        states={'draft': [('readonly', False)], 'sent': [('readonly', False)]}
+        states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
     )
     # TODO do like in invoice line? Make normal field with constraint and
     # oncahnge?
@@ -43,8 +48,7 @@ class sale_order_line(models.Model):
 
     @api.multi
     def _prepare_invoice_line(self, qty):
-        res = super(sale_order_line,
-                    self)._prepare_invoice_line(qty)
+        res = super(sale_order_line, self)._prepare_invoice_line(qty)
         res.update({
             'discount1': self.discount1,
             'discount2': self.discount2,
