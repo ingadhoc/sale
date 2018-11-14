@@ -7,6 +7,8 @@
         <field name="arch" type="xml">
             <button name="action_confirm" position="attributes">
                 <attribute name="string">Confirm</attribute>
+                <!-- we also remove deprecated icon -->
+                <attribute name="icon"></attribute>
             </button>
         </field>
     </record>
