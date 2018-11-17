@@ -4,12 +4,13 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-17 13:19+0000\n"
-"PO-Revision-Date: 2018-09-17 13:19+0000\n"
+"POT-Creation-Date: 2018-11-16 13:14+0000\n"
+"PO-Revision-Date: 2018-08-23 20:28+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -17,6 +18,16 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard_amount
+msgid "Amount"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form
+msgid "Automatically update prices when change pricelist."
+msgstr ""
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_commercial_partner_id
@@ -47,11 +58,6 @@ msgstr "Cliente"
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings_group_sale_reference_on_tree_and_main_form
 msgid "Customer reference in list view and form"
 msgstr "Customer reference in list view and form"
-
-#. module: sale_ux
-#: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard_amount
-msgid "Discount"
-msgstr ""
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard_display_name
@@ -130,7 +136,7 @@ msgid "Nothing to Invoice"
 msgstr ""
 
 #. module: sale_ux
-#: code:addons/sale_ux/models/sale_order.py:68
+#: code:addons/sale_ux/models/sale_order.py:77
 #, python-format
 msgid "Only users with \"%s / %s\" can Set Invoiced manually"
 msgstr "Only users with \"%s / %s\" can Set Invoiced manually"
@@ -147,6 +153,7 @@ msgid "Quotation"
 msgstr "Presupuesto"
 
 #. module: sale_ux
+#: model:ir.ui.view,arch_db:sale_ux.view_sales_order_filter
 #: model:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
 msgid "Quotations"
 msgstr "Presupuestos"
@@ -180,6 +187,11 @@ msgid "Sales Order Line"
 msgstr "Línea de Pedido de Ventas"
 
 #. module: sale_ux
+#: model:ir.ui.view,arch_db:sale_ux.view_sales_order_filter
+msgid "Sales Order that haven't yet been confirmed"
+msgstr ""
+
+#. module: sale_ux
 #: model:ir.ui.view,arch_db:sale_ux.view_order_form
 msgid "Set Global Discount"
 msgstr ""
@@ -206,7 +218,7 @@ msgid "Total"
 msgstr "Total"
 
 #. module: sale_ux
-#: code:addons/sale_ux/models/sale_order.py:58
+#: code:addons/sale_ux/models/sale_order.py:67
 #, python-format
 msgid ""
 "Unable to cancel this sale order. You must first cancel related bills and "
@@ -226,7 +238,12 @@ msgid "Update Prices"
 msgstr ""
 
 #. module: sale_ux
-#: code:addons/sale_ux/models/sale_order.py:83
+#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings_update_prices_automatically
+msgid "Update Prices Automatically"
+msgstr ""
+
+#. module: sale_ux
+#: code:addons/sale_ux/models/sale_order.py:92
 #, python-format
 msgid ""
 "You can not validate a sale that is not in a state \"Quotation\" or "
