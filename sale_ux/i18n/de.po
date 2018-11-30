@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-16 13:14+0000\n"
+"POT-Creation-Date: 2018-11-29 12:55+0000\n"
 "PO-Revision-Date: 2018-08-23 20:28+0000\n"
 "Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2018\n"
 "Language-Team: German (https://www.transifex.com/adhoc/teams/46451/de/)\n"
@@ -64,6 +64,11 @@ msgstr "Kundenreferenz in Listen- und Detailsicht"
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard_display_name
 msgid "Display Name"
 msgstr "Anzeigebezeichung"
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_advance_payment_inv_amount_total
+msgid "Down Payment Amount With Taxes"
+msgstr ""
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_force_invoiced_status
@@ -183,6 +188,11 @@ msgid "Sale Orders"
 msgstr "Verkaufsaufträge"
 
 #. module: sale_ux
+#: model:ir.model,name:sale_ux.model_sale_advance_payment_inv
+msgid "Sales Advance Payment Invoice"
+msgstr "Anzahlungsrechnung"
+
+#. module: sale_ux
 #: model:ir.model,name:sale_ux.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Auftragsposition"
@@ -254,6 +264,12 @@ msgstr ""
 "Sie können einen Verkaufsauftrag nur im Status \"Angebot\" oder \"Angebot "
 "versandt\" freigeben. Wahrscheinlich ist dieser bereits freigegeben, "
 "aktualisieren Sie die Ansicht mal."
+
+#. module: sale_ux
+#: code:addons/sale_ux/wizards/sale_advance_payment_inv.py:24
+#, python-format
+msgid "You can only set amount total if taxes are of type percentage"
+msgstr ""
 
 #. module: sale_ux
 #: model:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
