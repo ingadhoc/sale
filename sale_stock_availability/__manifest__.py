@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Stock availability in sales order line',
-    'version': '11.0.1.0.0',
+    'version': '11.0.1.1.0',
     'category': 'Tools',
     'author': 'Moldeo Interactive, ADHOC SA',
     'website': 'http://business.moldeo.coop http://adhoc.com.ar/',
