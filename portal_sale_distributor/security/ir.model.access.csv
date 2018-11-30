@@ -28,3 +28,4 @@ access_sale_exception_distributor,sale.exception.distributor.portal.distributor,
 access_delivery_carrier_distributor,delivery.carrier.distributor,delivery.model_delivery_carrier,group_portal_distributor,1,0,0,0
 access_delivery_carrier_price_rule_distributor,delivery.carrier.price.rule.distributor,delivery.model_delivery_price_rule,group_portal_distributor,1,0,0,0
 access_tax_group_distributor,tax.group.portal_distributor,account.model_account_tax_group,group_portal_distributor,1,0,0,0
+access_stock_picking_type_portal_distributor,stock.picking.type portal,stock.model_stock_picking_type,group_portal_distributor,1,0,0,0
