@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo noupdate="1">
 
+
+    <record id="base.group_user" model="res.groups">
+        <field name="implied_ids" eval="[(4,ref('sale.group_discount_per_so_line'))]"/>
+    </record>
+
     <record id="group_portal_distributor" model="res.groups">
         <field name="name">Portal - Distributor</field>
         <field name="is_portal" eval="True"/>
         <field name="category_id" ref="base.module_category_extra"/>
-        <field name="implied_ids" eval="[(4,ref('base.group_portal'))]"/>
+        <field name="implied_ids" eval="[(4,ref('base.group_portal')),(4,ref('sale.group_discount_per_so_line'))]"/>
     </record>
 
     <!-- Sale Portal Disrtibutor CRUD all orders -->

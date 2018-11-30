@@ -2,5 +2,13 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from . import sale_order
-from . import sale_order_line
+from odoo import models, fields
+
+
+class SaleOrderLine(models.Model):
+    _inherit = 'sale.order.line'
+
+    discount_readonly = fields.Float(
+        related='discount',
+        readonly=True,
+    )

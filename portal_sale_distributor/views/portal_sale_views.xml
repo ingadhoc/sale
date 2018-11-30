@@ -63,6 +63,12 @@
             <field name="payment_term_id" position="attributes">
                 <attribute name="invisible">1</attribute>
             </field>
+            <xpath expr="//field[@name='order_line']/tree//field[@name='discount']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree//field[@name='discount']" name="discount" position="after">
+                <field name="discount_readonly"/>
+            </xpath>
         </field>
     </record>
 
