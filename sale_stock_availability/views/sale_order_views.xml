@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <xpath expr="//tree/field[@name='product_uom_qty']" position="after">
-                <field name="virtual_available" groups="sale_stock_availability.see_stock_value"/>
+                <field name="virtual_available" groups="sale_stock_availability.see_stock_value" attrs="{'column_invisible': [('parent.state', 'not in', ['draft', 'sent'])]}"/>
             </xpath>
             <xpath expr="//tree" position="attributes">
                 <attribute name="decoration-danger">state in ('draft', 'sent') and virtual_available &lt; 0</attribute>
