@@ -4,12 +4,13 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-17 13:18+0000\n"
-"PO-Revision-Date: 2018-09-17 13:18+0000\n"
+"POT-Creation-Date: 2018-11-30 21:30+0000\n"
+"PO-Revision-Date: 2018-05-14 17:49+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -22,6 +23,11 @@ msgstr ""
 #: model:ir.ui.view,arch_db:portal_sale_distributor.view_order_form
 msgid "Confirm Sale"
 msgstr "Confirmar Venta"
+
+#. module: portal_sale_distributor
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_sale_order_line_discount_readonly
+msgid "Discount (%)"
+msgstr "Descuento (%)"
 
 #. module: portal_sale_distributor
 #: model:ir.ui.view,arch_db:portal_sale_distributor.sale_order_link
@@ -52,3 +58,8 @@ msgstr "Ventas"
 #: model:ir.ui.menu,name:portal_sale_distributor.sale_order
 msgid "Sales Order"
 msgstr "Ordenes de Venta"
+
+#. module: portal_sale_distributor
+#: model:ir.model,name:portal_sale_distributor.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Línea de pedido de venta"
