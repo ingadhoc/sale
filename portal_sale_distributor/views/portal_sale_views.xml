@@ -83,6 +83,9 @@
             <field name="partner_shipping_id" position="attributes">
                 <attribute name="option">{'no_create': True, 'no_open': True}</attribute>
             </field>
+            <button name="%(sale_ux.action_sale_global_discount_wizard_form)d" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </button>
         </field>
     </record>
 
