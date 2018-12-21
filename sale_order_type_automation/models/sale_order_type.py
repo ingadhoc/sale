@@ -4,6 +4,7 @@
 ##############################################################################
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
+from odoo.tools.safe_eval import safe_eval
 
 
 class SaleOrderType(models.Model):
@@ -89,18 +90,15 @@ class SaleOrderType(models.Model):
         " sale order done instead of leaving it on"
         " 'sale order' state that allows modifications"
     )
-    auto_done_setting = fields.Selection([
-        (0, "Allow to edit sales order from the"
-         " 'Sales Order' menu (not from the Quotation menu)"),
-        (1, "Never allow to modify a confirmed sale order")],
+    auto_done_setting = fields.Boolean(
         compute='_compute_auto_done_setting',
     )
 
     @api.depends()
     def _compute_auto_done_setting(self):
         default = self.env['ir.config_parameter'].sudo().get_param(
-            'sale.auto_done_setting')
-        self.auto_done_setting = default
+            'sale.auto_done_setting', 'False')
+        self.auto_done_setting = safe_eval(default)
 
     @api.constrains(
         'payment_atomation',
