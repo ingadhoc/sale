@@ -117,11 +117,19 @@ class SaleOrderLine(models.Model):
     def _onchange_product_uom_qty(self):
         """
         Sobre escribimos este método para no permitir reducir cantidad
+        we do it this way for this reason:
+        https://github.com/odoo/odoo/commit/
+        8fe7229e1984811f3456dbf502cb03fba879e180
         """
+        if self._origin:
+            product_uom_qty_origin = self._origin.read(
+                ["product_uom_qty"])[0]["product_uom_qty"]
+        else:
+            product_uom_qty_origin = 0
         if (
                 self.state == 'sale' and
                 self.product_id.type in ['product', 'consu'] and
-                self.product_uom_qty < self._origin.product_uom_qty):
+                self.product_uom_qty < product_uom_qty_origin):
             warning_mess = {
                 'title': _('Ordered quantity decreased!'),
                 'message': (
