@@ -15,7 +15,7 @@
                 <field name="invoicing_atomation"/>
                 <field name="payment_atomation" attrs="{'invisible' : [('journal_id', '=', False)]}"/>
                 <field name="auto_done_setting" invisible="1"/>
-                <field name="set_done_on_confirmation" attrs="{'invisible' : [('auto_done_setting', '=', 1)]}"/>
+                <field name="set_done_on_confirmation" attrs="{'invisible' : [('auto_done_setting', '=', True)]}"/>
             </field>
         </field>
     </record>
