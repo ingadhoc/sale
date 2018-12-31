@@ -7,7 +7,7 @@ from odoo.exceptions import ValidationError
 import odoo.addons.decimal_precision as dp
 
 
-class sale_order_line(models.Model):
+class SaleOrderLine(models.Model):
 
     _inherit = "sale.order.line"
 
@@ -64,7 +64,7 @@ class sale_order_line(models.Model):
 
     @api.multi
     def _prepare_invoice_line(self, qty):
-        res = super(sale_order_line, self)._prepare_invoice_line(qty)
+        res = super(SaleOrderLine, self)._prepare_invoice_line(qty)
         res.update({
             'discount1': self.discount1,
             'discount2': self.discount2,

@@ -5,7 +5,7 @@
 from odoo import models, fields, api
 
 
-class sale_global_discount_wizard(models.TransientModel):
+class SaleGlobalDiscountWizard(models.TransientModel):
 
     _name = "sale.order.global_discount.wizard"
 
