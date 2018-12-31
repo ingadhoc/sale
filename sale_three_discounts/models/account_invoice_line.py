@@ -7,7 +7,7 @@ import odoo.addons.decimal_precision as dp
 from odoo.exceptions import ValidationError
 
 
-class account_invoice_line(models.Model):
+class AccountInvoiceLine(models.Model):
 
     _inherit = "account.invoice.line"
 
