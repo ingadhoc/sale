@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale UX',
-    'version': '11.0.1.4.0',
+    'version': '11.0.1.5.0',
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -39,6 +39,8 @@
         'views/sale_order_views.xml',
         'views/sale_order_line_views.xml',
         'views/account_invoice_views.xml',
+        'views/product_product_views.xml',
+        'views/product_template_views.xml',
     ],
     'demo': [
     ],
