@@ -1,9 +1,22 @@
 <?xml version="1.0"?>
 <odoo>
     <record id="sot_view_order_form" model="ir.ui.view">
-        <field name="name">portal sale.order.form</field>
+        <field name="name">sale.order.form</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale_order_type.sot_view_order_form"/>
+        <field name="arch" type="xml">
+            <!-- move sale type after date insteaf of currency -->
+            <field name="type_id" position="replace"/>
+            <field name="confirmation_date" position="after">
+                <field name="type_id" required="1"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="sot_view_order_portal_form" model="ir.ui.view">
+        <field name="name">portal sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sot_view_order_form"/>
         <field name="groups_id" eval="[(4, ref('base.group_portal'))]"/>
         <field name="arch" type="xml">
             <field name="type_id" position="attributes">

@@ -18,6 +18,7 @@ Sale Order Type Ux
 * We also make type field on sale orders readonly on states different from draft and sent.
 * Also add tracking to same field.
 * Auto-complete the same Analytic Tag setted on order type.
+* Move sale type field after date instead of after currency
 * Integration betweeen Portal and Sale Order Type module:
 
  - New access record to sale type model for portal users
