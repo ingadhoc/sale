@@ -3,6 +3,8 @@
 # directory
 ##############################################################################
 from odoo import models, fields, api, _
+from odoo.addons.report_aeroo.controllers.main import ReportController
+from odoo.http import request, content_disposition
 
 
 class SaleOrder(models.Model):
@@ -23,5 +25,11 @@ class SaleOrder(models.Model):
 
     @api.multi
     def print_quotation_distributor(self):
-        self = self.sudo()
-        return self.print_quotation()
+        """imprimiendo con sudo no funciona, es por un tema del controller
+        lo que hicimos por ahora es implementar en aeroo la posibilidad de
+        mandar la clave "print_with_sudo" para que aeroo lo imprima con sudo
+        TODO deberiamos implementar eso tmb en reportes nativos de odoo
+        TODO si esto esta implementado tal vez se puede simplificar el metodo
+        portal_order_report y el analogo en facturas
+        """
+        return self.with_context(print_with_sudo=True).print_quotation()
