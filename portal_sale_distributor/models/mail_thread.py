@@ -1,5 +1,6 @@
 from odoo import models, api
 
+
 class MailThread(models.AbstractModel):
     _inherit = 'mail.thread'
 

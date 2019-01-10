@@ -37,7 +37,7 @@ class SaleOrder(models.Model):
         """ desactivamos warning para portal distributor
         """
         if self.env.user.has_group(
-            'portal_sale_distributor.group_portal_distributor'):
+                'portal_sale_distributor.group_portal_distributor'):
             return {}
         else:
             return super(SaleOrder, self).onchange_partner_id_warning()
