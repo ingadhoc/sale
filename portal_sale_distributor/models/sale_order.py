@@ -33,3 +33,13 @@ class SaleOrder(models.Model):
         portal_order_report y el analogo en facturas
         """
         return self.with_context(print_with_sudo=True).print_quotation()
+
+    @api.onchange('partner_id')
+    def onchange_partner_id_warning(self):
+        """ desactivamos warning para portal distributor
+        """
+        if self.env.user.has_group(
+            'portal_sale_distributor.group_portal_distributor'):
+            return {}
+        else:
+            return super(SaleOrder, self).onchange_partner_id_warning()
