@@ -29,3 +29,4 @@ access_delivery_carrier_distributor,delivery.carrier.distributor,delivery.model_
 access_delivery_carrier_price_rule_distributor,delivery.carrier.price.rule.distributor,delivery.model_delivery_price_rule,group_portal_distributor,1,0,0,0
 access_tax_group_distributor,tax.group.portal_distributor,account.model_account_tax_group,group_portal_distributor,1,0,0,0
 access_stock_picking_type_portal_distributor,stock.picking.type portal,stock.model_stock_picking_type,group_portal_distributor,1,0,0,0
+ir_translation_portal_distributor,ir_translation portal distributor (para duplicar OV),base.model_ir_translation,group_portal_distributor,1,0,0,0
