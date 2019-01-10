@@ -3,8 +3,6 @@
 # directory
 ##############################################################################
 from odoo import models, fields, api, _
-from odoo.addons.report_aeroo.controllers.main import ReportController
-from odoo.http import request, content_disposition
 
 
 class SaleOrder(models.Model):
