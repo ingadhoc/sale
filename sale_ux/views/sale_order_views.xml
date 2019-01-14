@@ -87,6 +87,9 @@
             <filter name="sales" position="before">
                 <filter string="Quotations" name="draft" domain="[('state','in',('draft','sent'))]" help="Sales Order that haven't yet been confirmed"/>
             </filter>
+            <filter name="sales" position="attributes">
+                <attribute name="domain">[('state','in',('sale','sent'))]</attribute>
+            </filter>
             <filter domain="[('invoice_status','=','to invoice')]" position="after">
                 <filter name="invoiced" string="Invoiced" domain="[('invoice_status','=', 'invoiced')]"/>
             </filter>
