@@ -3,20 +3,29 @@
 # * sale_three_discounts
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018
+# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2019
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 9.0c\n"
+"Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-28 16:05+0000\n"
-"PO-Revision-Date: 2017-08-28 16:05+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
+"POT-Creation-Date: 2019-01-16 12:24+0000\n"
+"PO-Revision-Date: 2018-10-31 20:01+0000\n"
+"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2019\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: sale_three_discounts
+#: code:addons/sale_three_discounts/models/account_invoice_line.py:42
+#: code:addons/sale_three_discounts/models/sale_order_line.py:54
+#, python-format
+msgid ", must be less or equal than 100"
+msgstr ", debe ser menor o igual a 100"
 
 #. module: sale_three_discounts
 #: model:ir.model.fields,field_description:sale_three_discounts.field_account_invoice_line_discount_readonly

@@ -1,0 +1,61 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * pos_ux
+# 
+# Translators:
+# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2019
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-01-16 12:24+0000\n"
+"PO-Revision-Date: 2018-10-11 19:22+0000\n"
+"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2019\n"
+"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: pos_ux
+#: model:ir.ui.view,arch_db:pos_ux.view_account_bank_journal_form_inherited_pos
+msgid ""
+"<b>IMPORTANT:</b> We highly recommend that of you are going to use a payment"
+" method as POS Outstanding payment please do not select any inboud / "
+"outbound methods in order to not show this payment method in conventional "
+"receipts and payments."
+msgstr ""
+"<b>IMPORTANTE</b> Le recomendamos que utilice un método de pago como pago "
+"pendiente de TPV. No seleccione ningún método entrante / saliente para no "
+"mostrar este método de pago en recibos y pagos convencionales."
+
+#. module: pos_ux
+#: model:ir.ui.view,arch_db:pos_ux.view_account_journal_pos_user_form
+msgid ""
+"<b>WARNING:</b> We highly recommend you that if use this payment method as "
+"POS Outstanding payment please do not select any inboud / outbound methods "
+"in order to not show this payment method in conventional receipts and "
+"payments."
+msgstr ""
+"<b>ADVERTENCIA:</b> Le recomendamos encarecidamente que, si utiliza este "
+"método de pago como TPV Pago excepcional, no seleccione ningún método de "
+"ingreso / salida para no mostrar este método de pago en recibos y pagos "
+"convencionales."
+
+#. module: pos_ux
+#: model:ir.model,name:pos_ux.model_account_journal
+msgid "Journal"
+msgstr "Diario"
+
+#. module: pos_ux
+#: model:ir.model.fields,field_description:pos_ux.field_account_journal_pos_outstanding_payment
+msgid "Pos Outstanding Payment"
+msgstr "Pago pendiente de TPV"
+
+#. module: pos_ux
+#: code:addons/pos_ux/models/pos_session.py:22
+#, python-format
+msgid "You can only use %s if the customer is defined"
+msgstr "Solo puedes usar %s si el cliente esta definido"

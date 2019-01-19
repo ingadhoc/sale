@@ -3,15 +3,16 @@
 # * sale_order_type_ux
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018
 # Rudolf Schnapka <rs@techno-flex.de>, 2018
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-17 13:18+0000\n"
-"PO-Revision-Date: 2018-09-17 13:18+0000\n"
-"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2018\n"
+"POT-Creation-Date: 2019-01-16 12:24+0000\n"
+"PO-Revision-Date: 2018-08-23 20:27+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019\n"
 "Language-Team: German (https://www.transifex.com/adhoc/teams/46451/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,9 +21,29 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: sale_order_type_ux
+#: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type_analytic_tag_ids
+msgid "Analytic Tags"
+msgstr ""
+
+#. module: sale_order_type_ux
+#: model:ir.model.fields,help:sale_order_type_ux.field_sale_order_type_analytic_tag_ids
+msgid "Default analytic tags that will be used on new sale order lines"
+msgstr ""
+
+#. module: sale_order_type_ux
+#: model:ir.model,name:sale_order_type_ux.model_account_invoice
+msgid "Invoice"
+msgstr "Rechnung"
+
+#. module: sale_order_type_ux
 #: model:ir.model,name:sale_order_type_ux.model_sale_order
 msgid "Quotation"
 msgstr "Angebot"
+
+#. module: sale_order_type_ux
+#: model:ir.model,name:sale_order_type_ux.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Auftragsposition"
 
 #. module: sale_order_type_ux
 #: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type_sequence
