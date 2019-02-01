@@ -3,14 +3,15 @@
 # * event_sale_ux
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-17 13:18+0000\n"
-"PO-Revision-Date: 2018-09-17 13:18+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018\n"
+"POT-Creation-Date: 2019-01-16 12:24+0000\n"
+"PO-Revision-Date: 2018-08-23 20:27+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,7 +22,7 @@ msgstr ""
 #. module: event_sale_ux
 #: model:ir.ui.view,arch_db:event_sale_ux.view_order_form
 msgid "Open Document"
-msgstr ""
+msgstr "Abrir Documento"
 
 #. module: event_sale_ux
 #: code:addons/event_sale_ux/models/sale_order_line.py:17
@@ -33,4 +34,4 @@ msgstr "Línea de pedido de venta"
 #. module: event_sale_ux
 #: model:ir.ui.view,arch_db:event_sale_ux.view_order_line_form
 msgid "Sales Order Lines"
-msgstr ""
+msgstr "Líneas pedido de ventas"

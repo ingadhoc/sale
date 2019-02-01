@@ -1,0 +1,19 @@
+<odoo>
+
+    <!-- TODO This is required because a performance problem. Since it has been
+    already fixed in version 12 remove this view when migrate -->
+    <record id="product_form_view_sale_order_button" model="ir.ui.view">
+        <field name="name">product.product.sale.order</field>
+        <field name="model">product.product</field>
+        <!-- priority baja para que no de error porque sale_stock luego lo borra -->
+        <field name="priority">5</field>
+        <field name="groups_id" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+        <field name="inherit_id" ref="sale.product_form_view_sale_order_button"/>
+        <field name="arch" type="xml">
+            <field name="sales_count" position="replace">
+                <label string="Sales"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

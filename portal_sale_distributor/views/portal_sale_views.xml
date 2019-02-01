@@ -37,7 +37,8 @@
             <header position="replace">
                 <header>
                     <field name="invoice_count" invisible="1"/>
-                    <button name="action_confirm" states="draft,sent" string="Confirm Sale" class="btn-primary" type="object" context="{'show_sale': True}"/>
+                    <button name="print_quotation_distributor" string="Print" type="object" class="o_sale_print"/>
+                    <button name="action_confirm_distributor" states="draft,sent" string="Confirm Sale" class="btn-primary" type="object" context="{'show_sale': True}"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,sent,sale,done"/>
                 </header>
             </header>
@@ -68,6 +69,10 @@
             </xpath>
             <xpath expr="//field[@name='order_line']/tree//field[@name='discount']" position="after">
                 <field name="discount_readonly"/>
+            </xpath>
+            <!-- ocultamos pestaña otra información -->
+            <xpath expr="//group[@name='sales_person']/../.." position="attributes">
+                <attribute name="invisible">1</attribute>
             </xpath>
         </field>
     </record>

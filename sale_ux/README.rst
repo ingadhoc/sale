@@ -31,6 +31,7 @@ Several Improvements to sales:
 #. Add a wizard on sales orders that allow you to define global discounts to sale orders by percentage.
 #. Add a link from invoices to the sale orders that generate it.
 #. Add option in setting to update prices automatically.
+#. Fix the filter Sales in Sale orders to filter in states "sale" and "done".
 
 Installation
 ============

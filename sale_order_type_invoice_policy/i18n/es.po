@@ -4,14 +4,15 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018
+# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-30 21:30+0000\n"
+"POT-Creation-Date: 2019-01-20 10:23+0000\n"
 "PO-Revision-Date: 2018-09-13 21:09+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018\n"
+"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2019\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -37,11 +38,11 @@ msgstr "Definido por Producto"
 #. module: sale_order_type_invoice_policy
 #: selection:sale.order.type,invoice_policy:0
 msgid "Delivered quantities"
-msgstr ""
+msgstr "Cantidades entregadas"
 
 #. module: sale_order_type_invoice_policy
 #: model:ir.model.fields,help:sale_order_type_invoice_policy.field_sale_order_type_invoice_policy
-#: model:ir.model.fields,help:sale_order_type_invoice_policy.field_sale_order_type_invoice_policy_6978
+#: model:ir.model.fields,help:sale_order_type_invoice_policy.field_sale_order_type_invoice_policy_6996
 msgid "If you choose prepaid you..."
 msgstr "Si elige prepago usted ..."
 
@@ -58,7 +59,7 @@ msgstr ""
 
 #. module: sale_order_type_invoice_policy
 #: model:ir.model.fields,field_description:sale_order_type_invoice_policy.field_sale_order_type_invoice_policy
-#: model:ir.model.fields,field_description:sale_order_type_invoice_policy.field_sale_order_type_invoice_policy_6978
+#: model:ir.model.fields,field_description:sale_order_type_invoice_policy.field_sale_order_type_invoice_policy_6996
 msgid "Invoicing Policy"
 msgstr "Política de Facturación"
 

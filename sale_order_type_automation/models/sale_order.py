@@ -79,15 +79,28 @@ class SaleOrder(models.Model):
                 for op in pickings.mapped('move_line_ids'):
                     op.qty_done = op.product_uom_qty
             # because of ensure_one on delivery module
+            actions = []
             for pick in pickings:
                 pick.action_done()
+                # append action records to print the reports of the pickings
+                #  involves
+                if pick.book_required:
+                    actions.append(pick.do_print_voucher())
+            if actions:
+                return {
+                    'actions': actions,
+                    'type': 'ir.actions.act_multi',
+                }
+            else:
+                return True
 
     @api.multi
     def action_confirm(self):
         res = super(SaleOrder, self).action_confirm()
         # we use this because compatibility with sale exception module
         if isinstance(res, bool) and res:
-            self.run_picking_atomation()
+            # because it's needed to return actions if exists
+            res = self.run_picking_atomation()
             self.run_invoicing_atomation()
             if self.type_id.set_done_on_confirmation:
                 self.action_done()

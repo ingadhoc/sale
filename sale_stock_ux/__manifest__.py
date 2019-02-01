@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Stock UX',
-    'version': '11.0.1.2.0',
+    'version': '11.0.1.4.0',
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -32,10 +32,14 @@
         'sale_stock',
         'sale_ux',
         'stock_voucher',
+        # for use the user company currency for the standard price
+        'product_ux',
     ],
     'data': [
         'views/sale_order_views.xml',
         'views/sale_order_line_views.xml',
+        'views/product_template_views.xml',
+        'views/product_product_views.xml',
         'wizards/stock_return_picking_line_views.xml',
     ],
     'demo': [

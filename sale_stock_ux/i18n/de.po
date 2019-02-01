@@ -4,20 +4,46 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018
-# Rudolf Schnapka <rs@techno-flex.de>, 2018
+# Rudolf Schnapka <rs@techno-flex.de>, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-17 13:19+0000\n"
-"PO-Revision-Date: 2018-09-17 13:19+0000\n"
-"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2018\n"
+"POT-Creation-Date: 2019-01-16 12:24+0000\n"
+"PO-Revision-Date: 2018-08-23 20:28+0000\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2019\n"
 "Language-Team: German (https://www.transifex.com/adhoc/teams/46451/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: sale_stock_ux
+#: model:ir.ui.view,arch_db:sale_stock_ux.view_stock_return_picking_form
+msgid ""
+"<b>Está marcado</b>: entonces <b>se va</b> a actualizar la OC/OV "
+"considerando que los productos devueltos no se van a volver a entregar, y "
+"por ende, permitiendo hacer una nota de crédito si los items ya fueron "
+"facturados, o tener en cuenta esta devolución al hacer la factura."
+msgstr ""
+
+#. module: sale_stock_ux
+#: model:ir.ui.view,arch_db:sale_stock_ux.view_stock_return_picking_form
+msgid ""
+"<b>Importante</b>: si está haciendo un movimiento inverso relacionado a un "
+"Pedido de Venta o de Compra, entonces debe prestar atención al campo "
+"<b>\"Para Abonar (actualizar OC/OV)\"</b>, donde, si:"
+msgstr ""
+
+#. module: sale_stock_ux
+#: model:ir.ui.view,arch_db:sale_stock_ux.view_stock_return_picking_form
+msgid ""
+"<b>No está marcado</b>: entonces <b>no se va</b> a actualizar la OC/OV. Esto"
+" es común, por ejemplo, si se devuelve mercadería defectuosa y se pretende "
+"hacer una nueva entrega de la misma."
+msgstr ""
 
 #. module: sale_stock_ux
 #: model:ir.model.fields,field_description:sale_stock_ux.field_sale_order_line_all_qty_delivered
@@ -97,10 +123,15 @@ msgid "Only users with \"%s / %s\" can Set Delivered manually"
 msgstr "Nur Nutzer mit \"%s / %s\" dürfen manuell geliefert setzen"
 
 #. module: sale_stock_ux
-#: code:addons/sale_stock_ux/models/sale_order_line.py:126
+#: code:addons/sale_stock_ux/models/sale_order_line.py:134
 #, python-format
 msgid "Ordered quantity decreased!"
 msgstr "Beauftragte Menge wurde herabgesetzt!"
+
+#. module: sale_stock_ux
+#: model:ir.ui.view,arch_db:sale_stock_ux.view_stock_return_picking_form
+msgid "Para Abonar (actualizar OC/OV)"
+msgstr ""
 
 #. module: sale_stock_ux
 #: model:ir.ui.view,arch_db:sale_stock_ux.view_sales_order_filter
@@ -116,6 +147,11 @@ msgstr "Kommissionierungen"
 #: model:ir.model,name:sale_stock_ux.model_sale_order
 msgid "Quotation"
 msgstr "Angebot"
+
+#. module: sale_stock_ux
+#: model:ir.model,name:sale_stock_ux.model_stock_return_picking
+msgid "Return Picking"
+msgstr ""
 
 #. module: sale_stock_ux
 #: model:ir.model.fields,field_description:sale_stock_ux.field_sale_order_line_qty_returned
@@ -138,9 +174,21 @@ msgid "Sale orders with all lines delivered."
 msgstr "Vollständig ausgelieferte Aufträge."
 
 #. module: sale_stock_ux
+#: model:ir.ui.view,arch_db:sale_stock_ux.product_template_view_form_inherit_stock
+msgid "Sales"
+msgstr "Verkäufe"
+
+#. module: sale_stock_ux
 #: model:ir.model,name:sale_stock_ux.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Auftragsposition"
+
+#. module: sale_stock_ux
+#: model:ir.ui.view,arch_db:sale_stock_ux.view_stock_return_picking_form
+msgid ""
+"Si la devolución no está ligada a una OC/OV entonces este campo no repercute"
+" en nada."
+msgstr ""
 
 #. module: sale_stock_ux
 #: model:ir.ui.view,arch_db:sale_stock_ux.view_order_form
