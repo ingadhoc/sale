@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Margin Ux',
-    'version': '11.0.1.0.0',
+    'version': '11.0.1.1.0',
     'category': 'Sales & Purchases',
     'sequence': 14,
     'summary': '',
@@ -33,6 +33,7 @@
         'sale_margin',
     ],
     'data': [
+        'views/sale_order_line_views.xml',
     ],
     'demo': [
     ],
