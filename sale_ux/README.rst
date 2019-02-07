@@ -32,6 +32,7 @@ Several Improvements to sales:
 #. Add a link from invoices to the sale orders that generate it.
 #. Add option in setting to update prices automatically.
 #. Fix the filter Sales in Sale orders to filter in states "sale" and "done".
+#. Add column "date_order" in sale order tree view.
 
 Installation
 ============
