@@ -71,6 +71,9 @@
             <field name="invoice_status" position="before">
                 <field name="state"/>
             </field>
+            <field name="confirmation_date" position="before">
+                <field name="date_order" string="Quotation Date"/>
+            </field>
 
             <!-- As we unify menus we make the draft more visible -->
             <tree position="attributes">
