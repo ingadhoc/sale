@@ -106,12 +106,20 @@ class SaleOrder(models.Model):
                     'fixed_price', 'totalice_price']:
                 price = 0.0
             else:
-                price = self.pricelist_id.with_context(
+                product = line.product_id.with_context(
+                    lang=self.partner_id.lang,
+                    partner=self.partner_id.id,
+                    quantity=line.product_uom_qty,
+                    date=self.date_order,
+                    pricelist=self.pricelist_id.id,
                     uom=line.product_uom.id,
-                    date=self.date_order).price_get(
-                    line.product_id.id,
-                    line.product_uom_qty or 1.0,
-                    self.partner_id.id
-                )[self.pricelist_id.id]
+                    fiscal_position=self.env.context.get('fiscal_position')
+                )
+                price = line._get_display_price(product)
+                if self.pricelist_id and self.partner_id:
+                    price = self.env['account.tax']\
+                        ._fix_tax_included_price_company(
+                        price, product.taxes_id, line.tax_id, self.company_id)
             line.price_unit = price
+            line._onchange_discount()
         return True
