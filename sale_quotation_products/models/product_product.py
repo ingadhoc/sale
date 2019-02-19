@@ -62,9 +62,11 @@ class ProductProduct(models.Model):
                 ('product_id', '=', self.id)])
             if lines:
                 (lines - lines[0]).unlink()
+                if lines[0].product_uom != self.uom_id:
+                    qty = self.uom_id._compute_quantity(
+                        qty, lines[0].product_uom)
                 lines[0].write({
                     'product_uom_qty': qty,
-                    'product_uom': self.uom_id.id,
                 })
             else:
                 self.env['sale.order'].browse(
@@ -77,8 +79,20 @@ class ProductProduct(models.Model):
 
     @api.multi
     def action_product_add_one(self):
+        sale_order_id = self._context.get('active_id', False)
+        if not sale_order_id:
+            return True
         for rec in self:
-            rec.qty = rec.qty + 1
+            # we find a sol and if the uom of the sol and the product are
+            # different convert qty to sum an unit from sol uom to product uom
+            line = self.env['sale.order.line'].search([
+                ('order_id', '=', sale_order_id),
+                ('product_id', '=', rec.id)], limit=1)
+            qty = 1.0
+            if line.product_uom != rec.uom_id:
+                qty = line.product_uom._compute_quantity(
+                    qty, rec.uom_id)
+            rec.qty += qty
 
     @api.model
     def fields_view_get(self, view_id=None, view_type='form',
