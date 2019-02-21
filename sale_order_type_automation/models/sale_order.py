@@ -80,7 +80,11 @@ class SaleOrder(models.Model):
                     op.qty_done = op.product_uom_qty
             # because of ensure_one on delivery module
             actions = []
-            for pick in pickings:
+            # por ahora ordenamos por id para que primero se intente entregar
+            # el primer picking creado y luego los encadenados, TODO ver si
+            # deberiamos tener una lógica mas robusta y que contemple otros
+            # casos
+            for pick in pickings.sorted('id'):
                 pick.action_done()
                 # append action records to print the reports of the pickings
                 #  involves
