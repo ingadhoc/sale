@@ -122,4 +122,9 @@ class SaleOrder(models.Model):
                         price, product.taxes_id, line.tax_id, self.company_id)
             line.price_unit = price
             line._onchange_discount()
+            # si la nueva lista tiene descuentos incluidos en el precio,
+            # por las dudas de que vengamos de una lista que los discriminaba,
+            # seteamos los descuentos a cero
+            if self.pricelist_id.discount_policy == 'with_discount':
+                line.discount = False
         return True
