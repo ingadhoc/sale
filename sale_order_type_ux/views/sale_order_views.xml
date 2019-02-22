@@ -5,11 +5,9 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale_order_type.sot_view_order_form"/>
         <field name="arch" type="xml">
-            <!-- move sale type after date insteaf of currency -->
-            <field name="type_id" position="replace"/>
-            <field name="confirmation_date" position="after">
-                <field name="type_id" required="1"/>
-            </field>
+            <button name="match_order_type" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </button>
         </field>
     </record>
 
@@ -19,9 +17,12 @@
         <field name="inherit_id" ref="sot_view_order_form"/>
         <field name="groups_id" eval="[(4, ref('base.group_portal'))]"/>
         <field name="arch" type="xml">
-            <field name="type_id" position="attributes">
+            <label for="type_id" position="attributes">
                 <attribute name="invisible">1</attribute>
-            </field>
+            </label>
+            <div name="order_type" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </div>
         </field>
     </record>
 </odoo>
