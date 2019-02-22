@@ -104,8 +104,8 @@ class SaleOrderLine(models.Model):
             #         'You should correct invoice or ask for a refund'))
             rec.product_uom_qty = rec.qty_delivered
             to_cancel_moves = rec.move_ids.filtered(
-                lambda x: x.state != 'done')
-            to_cancel_moves._action_cancel()
+                lambda x: x.state not in ['done', 'cancel'])
+            to_cancel_moves._cancel_quantity()
             rec.order_id.message_post(
                 body=_(
                     'Cancel remaining call for line "%s" (id %s), line '
