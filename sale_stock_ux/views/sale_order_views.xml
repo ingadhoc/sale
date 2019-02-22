@@ -7,6 +7,10 @@
         <field name="inherit_id" ref="sale_stock.view_order_form_inherit_sale_stock"/>
         <field name="arch" type="xml">
             <!-- agregamos boton de delivery status para que no de error -->
+            <xpath expr="//field[@name='order_line']/form//field[@name='invoice_lines']" position="after">
+                <label for="move_ids" groups="base.group_no_one"/>
+                <field name="move_ids" readonly="True" groups="base.group_no_one"/>
+            </xpath>
             <xpath expr="//field[@name='order_line']/form//label[@for='qty_invoiced']" position="after">
                 <field name="qty_returned" string="Returned Quantity" attrs="{'invisible': [('qty_returned', '=', 0.0)]}"/>
                 <field name="delivery_status" invisible="1"/>
