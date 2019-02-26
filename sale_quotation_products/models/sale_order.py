@@ -52,5 +52,6 @@ class SaleOrder(models.Model):
             sol.product_id_change()
             sol.product_uom_qty = qty
             sol.product_uom_change()
+            sol._onchange_discount()
             vals = sol._convert_to_write(sol._cache)
             sol.create(vals)
