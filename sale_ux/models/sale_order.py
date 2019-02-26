@@ -28,6 +28,7 @@ class SaleOrder(models.Model):
         related='partner_id.commercial_partner_id',
         store=True,
         readonly=True,
+        compute_sudo=True,
     )
 
     @api.onchange('pricelist_id')
