@@ -47,6 +47,20 @@
         </field>
     </record>
 
+    <!-- si bien nosotros no usamos esta vista desde portal distributor u otros lugares puede llegar a usarse -->
+    <record id="view_reference_on_quotation_tree_view" model="ir.ui.view">
+        <field name="name">sale.quotation.reference.on_tree</field>
+        <field name="model">sale.order</field>
+        <field name="priority" eval="99"/>
+        <field name="groups_id" eval="[(4, ref('group_reference_on_tree_and_main_form'))]"/>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="client_order_ref"/>
+            </field>
+        </field>
+    </record>
+
     <record id="view_reference_on_main_form_view" model="ir.ui.view">
         <field name="name">sale.order.reference.on_main_form</field>
         <field name="model">sale.order</field>
