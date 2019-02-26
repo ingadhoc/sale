@@ -102,26 +102,12 @@ class SaleOrder(models.Model):
         self.ensure_one()
         pack_installed = 'pack_parent_line_id' in self.order_line._fields
         for line in self.order_line:
-            if pack_installed and line.pack_parent_line_id.\
-                product_id.pack_price_type in [
-                    'fixed_price', 'totalice_price']:
-                price = 0.0
-            else:
-                product = line.product_id.with_context(
-                    lang=self.partner_id.lang,
-                    partner=self.partner_id.id,
-                    quantity=line.product_uom_qty,
-                    date=self.date_order,
-                    pricelist=self.pricelist_id.id,
-                    uom=line.product_uom.id,
-                    fiscal_position=self.env.context.get('fiscal_position')
-                )
-                price = line._get_display_price(product)
-                if self.pricelist_id and self.partner_id:
-                    price = self.env['account.tax']\
-                        ._fix_tax_included_price_company(
-                        price, product.taxes_id, line.tax_id, self.company_id)
-            line.price_unit = price
+            if pack_installed:
+                if line.pack_parent_line_id:
+                    continue
+                elif line.pack_child_line_ids:
+                    line.expand_pack_line()
+            line.product_uom_change()
             line._onchange_discount()
             # si la nueva lista tiene descuentos incluidos en el precio,
             # por las dudas de que vengamos de una lista que los discriminaba,
