@@ -13,8 +13,8 @@ class ResConfigSettings(models.TransientModel):
     group_sale_reference_on_tree_and_main_form = fields.Boolean(
         'Customer reference in list view and form',
         implied_group='sale_ux.group_reference_on_tree_and_main_form',
-        group='base.group_user,\
-            portal_sale_distributor.group_portal_distributor',
+        # agregamos portal para portal distributor
+        group='base.group_user,base.group_portal',
     )
 
     update_prices_automatically = fields.Boolean(
