@@ -74,6 +74,15 @@
             <xpath expr="//group[@name='sales_person']/../.." position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
+            <field name="partner_id" position="attributes">
+                <attribute name="option">{'no_create': True, 'no_open': True}</attribute>
+            </field>
+            <field name="partner_invoice_id" position="attributes">
+                <attribute name="option">{'no_create': True, 'no_open': True}</attribute>
+            </field>
+            <field name="partner_shipping_id" position="attributes">
+                <attribute name="option">{'no_create': True, 'no_open': True}</attribute>
+            </field>
         </field>
     </record>
 
