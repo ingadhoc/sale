@@ -2,15 +2,15 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import http, tools
+from odoo import http
 from odoo.http import request
-from werkzeug.exceptions import Forbidden, NotFound
+from werkzeug.exceptions import Forbidden
 from odoo.addons.website_sale.controllers.main import WebsiteSale
 
 
 class WebsiteSalePortal(WebsiteSale):
 
-    @http.route(['/portal_address'], type='http', methods=['GET', 'POST'],
+    @http.route(['/portal/address'], type='http', methods=['GET', 'POST'],
                 auth="public", website=True)
     def portal_address(self, **kw):
         Partner = request.env[
@@ -51,7 +51,7 @@ class WebsiteSalePortal(WebsiteSale):
             elif partner_id == -1:
                 mode = ('new', 'shipping')
             else:  # no mode - refresh without post?
-                return request.redirect('/portal_addresses')
+                return request.redirect('/portal/addresses')
 
         # IF POSTED
         if 'submitted' in kw:
@@ -60,25 +60,23 @@ class WebsiteSalePortal(WebsiteSale):
                 mode, kw, pre_values)
             post, errors, error_msg = self.values_postprocess(
                 order, mode, pre_values, errors, error_msg)
-
             if errors:
                 errors['error_message'] = error_msg
                 values = kw
             else:
-                partner_id = self._checkout_form_save(mode, post, kw)
+                partner_id = self._portal_address_form_save(mode, post, kw)
+            if mode[1] == 'billing':
+                order.partner_id = partner_id
+                order.onchange_partner_id()
+            elif mode[1] == 'shipping':
+                order.partner_shipping_id = partner_id
 
-                if mode[1] == 'billing':
-                    order.partner_id = partner_id
-                    order.onchange_partner_id()
-                elif mode[1] == 'shipping':
-                    order.partner_shipping_id = partner_id
-
-                order.message_partner_ids = [
-                    (4, partner_id),
-                    (3, request.website.partner_id.id)]
-                if not errors:
-                    return request.redirect(
-                        kw.get('callback') or '/portal_addresses')
+            order.message_partner_ids = [
+                (4, partner_id),
+                (3, request.website.partner_id.id)]
+            if not errors:
+                return request.redirect(
+                    kw.get('callback') or '/portal/addresses')
 
         country = 'country_id' in values and values['country_id'] != '' \
             and request.env['res.country'].browse(int(values['country_id']))
@@ -113,7 +111,24 @@ class WebsiteSalePortal(WebsiteSale):
         return request.render("portal_sale_distributor.portal_address",
                               render_values)
 
-    @http.route(['/portal_addresses'],
+    def _portal_address_form_save(self, mode, checkout, all_values):
+        Partner = request.env['res.partner']
+        if mode[0] == 'new':
+            partner_id = Partner.sudo().create(checkout).id
+        elif mode[0] == 'edit':
+            partner_id = int(all_values.get('partner_id', 0))
+            if partner_id:
+                # double check
+                partner = request.env.user.partner_id
+                shippings = Partner.sudo().search(
+                    [("id", "child_of", partner.commercial_partner_id.ids)])
+                if partner_id not in shippings.mapped('id') and \
+                        partner_id != partner.id:
+                    return Forbidden()
+                Partner.browse(partner_id).sudo().write(checkout)
+        return partner_id
+
+    @http.route(['/portal/addresses'],
                 type='http', auth="public", website=True)
     def portal_addresses(self, **post):
         order = request.website.sale_get_order()

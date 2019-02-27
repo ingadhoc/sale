@@ -1,98 +1,34 @@
 <odoo>
-    <template id="addresses">
-        <t t-call="website.layout">
-            <t t-set="additional_title">Addresses</t>
-            <t t-set="no_footer">1</t>
-            <div id="wrap">
-                <div class="container oe_website_sale">
-                    <div class="row">
-                        <div class="col-md-8 col-md-offset-2 oe_cart">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <h2 class="page-header mt8">Billing Address</h2>
-                                </div>
-                                <div class="col-md-6 one_kanban">
-                                    <t t-call="portal_sale_distributor.portal_address_kanban">
-                                        <t t-set='contact' t-value="order.partner_id"/>
-                                        <t t-set='selected' t-value="1"/>
-                                        <t t-set='readonly' t-value="1"/>
-                                    </t>
-                                </div>
-                            </div>
-                            <t groups="sale.group_delivery_invoice_address">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h2 class="page-header mt16 mb4">Shipping Address
-                                        </h2>
-                                    </div>
-                                </div>
-                                <div class="row all_shipping">
-                                    <div class="col-md-12">
-                                        <div class="row mt8">
-                                            <div class="col-sm-12 col-md-12 one_kanban">
-                                                <form action="/portal_address" method="post" class=''>
-                                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
-                                                    <a class='a-submit btn btn-default mb16 btn-block'>
-                                                        <i class="fa fa-plus-square" aria-hidden="true"></i> Add an address
-                                                    </a>
-                                                </form>
-                                            </div>
-                                            <t t-foreach="shippings" t-as="ship">
-                                                <div class="col-sm-12 col-md-6 one_kanban">
-                                                    <t t-call="portal_sale_distributor.portal_address_kanban">
-                                                        <t t-set="actual_partner" t-value="order.partner_id" />
-                                                        <t t-set='contact' t-value="ship"/>
-                                                        <t t-set='selected' t-value="order.partner_shipping_id==ship"/>
-                                                        <t t-set='readonly' t-value="True"/>
-                                                        <t t-set='edit_billing' t-value="bool(ship==order.partner_id)"/>
-                                                    </t>
-                                                </div>
-                                            </t>
-                                        </div>
-                                    </div>
-                                </div>
-                            </t>
-                            <div class="clearfix" />
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <template id="addresses" inherit_id="website_sale.checkout" primary="True">
+        <t t-call="website_sale.wizard_checkout" position="replace"/>
+        <t t-call="website_sale.address_kanban" position="attributes">
+            <attribute name="t-call">portal_sale_distributor.portal_address_kanban</attribute>
         </t>
+        <form action="/shop/address" position="attributes">
+            <attribute name="action">/portal/address</attribute>
+        </form>
+        <t t-call="website_sale.address_kanban" position="attributes">
+            <attribute name="t-call">portal_sale_distributor.portal_address_kanban</attribute>
+        </t>
+        <t t-call="website.layout">
+            <t t-set="additional_title" position="attributes">Addresses</t>
+        </t>
+        <a class="btn btn-default mb32" position="replace"/>
+        <a href="/shop/confirm_order" position="replace"/>
+
     </template>
 
-    <template id="portal_address_kanban" name="Kanban address">
-        <form action="/shop/checkout" method="POST" class='hide'>
-            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
-            <input type="hidden" name="partner_id" t-att-value="contact.id" />
-            <t t-if='edit_billing'>
-                <input type="hidden" name="callback" value="/shop/checkout?use_billing" />
-            </t>
-            <input type='submit'/>
-        </form>
-        <a t-att-href="'/portal_address/?partner_id='+str(contact.id)" t-if="not actual_partner or (ship.id in actual_partner.child_ids.ids)" class='btn btn-link pull-right fa fa-edit no-decoration' title="Edit this address"></a>
-        <div t-att-class="'panel panel-default %s' % (selected and 'border_primary' or 'js_change_shipping')">
-            <div class='panel-body' style='min-height: 130px;'>
-                <t t-esc="contact" t-options="dict(widget='contact', fields=['name', 'address'], no_marker=True)"/>
-            </div>
-            <div class='panel-footer' t-if='not readonly'>
-                <span class='btn-ship' t-att-style="'' if selected else 'display:none;'">
-                    <a class="btn btn-block btn-primary">
-                        <i class='fa fa-check'></i> Ship to this address
-                    </a>
-                </span>
-                <span class='btn-ship' t-att-style="'' if not selected else 'display:none;'">
-                    <a class="btn btn-block btn-default">
-                        Select this address
-                    </a>
-                </span>
-            </div>
-        </div>
+    <template id="portal_address_kanban" inherit_id="website_sale.address_kanban" primary="True">
+        <div class="panel-footer" position="replace"/>
+        <a class="btn btn-link pull-right fa fa-edit js_edit_address no-decoration" position="replace">
+            <a t-att-href="'/portal/address/?partner_id='+str(contact.id)" t-if="not actual_partner or (ship.id in actual_partner.child_ids.ids)" class='btn btn-link pull-right fa fa-edit no-decoration' title="Edit this address"></a>
+        </a>
     </template>
 
     <template id="portal_address" inherit_id="website_sale.address" primary="True">
         <t t-call="website_sale.wizard_checkout" position="replace"/>
         <form name="/shop/checkout" position="attributes">
-            <attribute name="name">portal_address</attribute>
+            <attribute name="name">/portal/address</attribute>
         </form>
 
         <a class="btn btn-primary pull-right mb32 a-submit a-submit-disable a-submit-loading" position="replace">
@@ -101,13 +37,10 @@
             </a>
         </a>
         <a class="btn btn-default mb32" position="replace">
-            <a href="portal_addresses" class="btn btn-default mb32">
+            <a href="/portal/addresses" class="btn btn-default mb32">
                 <span class="fa fa-long-arrow-left" /> Cancelar
             </a>
         </a>
-        <!-- <a class="btn btn-default mb32" position="attributes">
-            <attribute name="t-att-href">'portal_addresses'</attribute>
-        </a> -->
     </template>
 
 </odoo>
