@@ -52,32 +52,15 @@ class SaleOrder(models.Model):
         for rec in self.filtered(
                 lambda x: x.type_id.picking_atomation != 'none' and
                 x.procurement_group_id):
+            jit_installed = self.env['ir.module.module'].search(
+                [('name', '=', 'procurement_jit'),
+                    ('state', '=', 'installed')], limit=1)
             # we add invalidate because on boggio we have add an option
             # for tracking_disable and with that setup pickings where not seen
-            rec.invalidate_cache()
+            # rec.invalidate_cache()
             pickings = rec.picking_ids
             if rec.type_id.book_id:
                 pickings.write({'book_id': rec.type_id.book_id.id})
-            if rec.type_id.picking_atomation == 'validate':
-                # this method already call action_assign
-                pickings.new_force_availability()
-            elif rec.type_id.picking_atomation == 'validate_no_force':
-                if not self.env['ir.module.module'].search([
-                        ('name', '=', 'procurement_jit'),
-                        ('state', '=', 'installed')], limit=1):
-                    pickings.action_assign()
-                products = []
-                for move in pickings.mapped('move_lines'):
-                    if move.state != 'assigned':
-                        products.append(move.product_id)
-                if products:
-                    raise UserError(_(
-                        'The following products are not available, we suggest '
-                        'to check stock or to use a sale type that force '
-                        'availability.\nProducts:\n* %s\n '
-                    ) % ('\n *'.join(x.name for x in products)))
-                for op in pickings.mapped('move_line_ids'):
-                    op.qty_done = op.product_uom_qty
             # because of ensure_one on delivery module
             actions = []
             # por ahora ordenamos por id para que primero se intente entregar
@@ -85,7 +68,25 @@ class SaleOrder(models.Model):
             # deberiamos tener una lógica mas robusta y que contemple otros
             # casos
             for pick in pickings.sorted('id'):
-                pick.action_done()
+                if rec.type_id.picking_atomation == 'validate':
+                    # this method already call action_assign
+                    pick.new_force_availability()
+                elif rec.type_id.picking_atomation == 'validate_no_force':
+                    if not jit_installed:
+                        pick.action_assign()
+                    products = []
+                    for move in pick.mapped('move_lines'):
+                        if move.state != 'assigned':
+                            products.append(move.product_id)
+                    if products:
+                        raise UserError(_(
+                            'The following products are not available, we '
+                            'suggest to check stock or to use a sale type that'
+                            ' force availability.\nProducts:\n* %s\n '
+                        ) % ('\n *'.join(x.name for x in products)))
+                    for op in pick.mapped('move_line_ids'):
+                        op.qty_done = op.product_uom_qty
+                pick.button_validate()
                 # append action records to print the reports of the pickings
                 #  involves
                 if pick.book_required:
