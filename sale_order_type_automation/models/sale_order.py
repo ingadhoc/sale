@@ -63,17 +63,17 @@ class SaleOrder(models.Model):
                 pickings.write({'book_id': rec.type_id.book_id.id})
             # because of ensure_one on delivery module
             actions = []
-            # por ahora ordenamos por id para que primero se intente entregar
-            # el primer picking creado y luego los encadenados, TODO ver si
-            # deberiamos tener una lógica mas robusta y que contemple otros
-            # casos
-            for pick in pickings.sorted('id'):
+            if not jit_installed:
+                pickings.action_assign()
+            # ordenamos primeros los pickings asignados y luego el resto
+            assigned_pickings = pickings.filtered(
+                lambda x: x.state == 'assigned')
+            pickings = assigned_pickings + (pickings - assigned_pickings)
+            for pick in pickings:
                 if rec.type_id.picking_atomation == 'validate':
                     # this method already call action_assign
                     pick.new_force_availability()
                 elif rec.type_id.picking_atomation == 'validate_no_force':
-                    if not jit_installed:
-                        pick.action_assign()
                     products = []
                     for move in pick.mapped('move_lines'):
                         if move.state != 'assigned':
