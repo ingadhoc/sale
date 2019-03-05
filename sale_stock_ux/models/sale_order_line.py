@@ -117,7 +117,7 @@ class SaleOrderLine(models.Model):
     def _get_protected_fields(self):
         if self._context.get('bypass_protecion'):
             return []
-        return super(SaleOrder, self)._get_protected_fields()
+        return super(SaleOrderLine, self)._get_protected_fields()
 
     @api.onchange('product_uom_qty')
     def _onchange_product_uom_qty(self):
