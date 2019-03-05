@@ -58,7 +58,8 @@ class SaleOrder(models.Model):
             # we add invalidate because on boggio we have add an option
             # for tracking_disable and with that setup pickings where not seen
             # rec.invalidate_cache()
-            pickings = rec.picking_ids
+            pickings = rec.picking_ids.filtered(
+                lambda x: x.state not in ('done', 'cancel'))
             if rec.type_id.book_id:
                 pickings.write({'book_id': rec.type_id.book_id.id})
             # because of ensure_one on delivery module
