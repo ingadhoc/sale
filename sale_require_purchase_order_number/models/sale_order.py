@@ -16,6 +16,7 @@ class SaleOrder(models.Model):
         readonly=True,
     )
     purchase_order_number = fields.Char(
+        copy=False
     )
 
     _sql_constraints = [
