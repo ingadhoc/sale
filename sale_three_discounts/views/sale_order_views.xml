@@ -8,7 +8,8 @@
         <field name="arch" type="xml">
             <!-- TODO modificar vista form tambien -->
             <xpath expr="//field[@name='order_line']//tree//field[@name='discount']" position="attributes">
-                <attribute name="readonly">True</attribute>
+                <attribute name="readonly">1</attribute>
+                <attribute name="force_save">1</attribute>
             </xpath>
             <xpath expr="//field[@name='order_line']//tree//field[@name='discount']" position="before">
                 <field name="discount1" groups="sale.group_discount_per_so_line"/>

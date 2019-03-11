@@ -32,7 +32,8 @@ class SaleOrderLine(models.Model):
     # TODO do like in invoice line? Make normal field with constraint and
     # oncahnge?
     discount = fields.Float(
-        compute='get_discount',
+        compute='_compute_discount',
+        inverse='_inverse_discount',
         store=True,
         readonly=True,
         # agregamos states vacio porque lo hereda de la definicion anterior
@@ -54,13 +55,23 @@ class SaleOrderLine(models.Model):
                     ",".join(error) + " must be less or equal than 100"
                 ))
 
-    @api.one
+    @api.multi
+    def _inverse_discount(self):
+        for rec in self:
+            rec.write({
+                'discount1': rec.discount,
+                'discount2': False,
+                'discount3': False,
+            })
+
+    @api.multi
     @api.depends('discount1', 'discount2', 'discount3')
-    def get_discount(self):
-        discount_factor = 1.0
-        for discount in [self.discount1, self.discount2, self.discount3]:
-            discount_factor = discount_factor * ((100.0 - discount) / 100.0)
-        self.discount = 100.0 - (discount_factor * 100.0)
+    def _compute_discount(self):
+        for rec in self:
+            discount_factor = 1.0
+            for discount in [rec.discount1, rec.discount2, rec.discount3]:
+                discount_factor = discount_factor * ((100.0 - discount) / 100.0)
+            rec.discount = 100.0 - (discount_factor * 100.0)
 
     @api.multi
     def _prepare_invoice_line(self, qty):
