@@ -101,7 +101,12 @@ class SaleOrder(models.Model):
         # for compatibility with product_pack module
         self.ensure_one()
         pack_installed = 'pack_parent_line_id' in self.order_line._fields
-        for line in self.order_line:
+        for line in self.order_line.with_context(update_prices=True):
+            # si la nueva lista tiene descuentos incluidos en el precio,
+            # por las dudas de que vengamos de una lista que los discriminaba,
+            # seteamos los descuentos a cero
+            if self.pricelist_id.discount_policy == 'with_discount':
+                line.discount = False
             if pack_installed:
                 if line.pack_parent_line_id:
                     continue
@@ -109,9 +114,4 @@ class SaleOrder(models.Model):
                     line.expand_pack_line()
             line.product_uom_change()
             line._onchange_discount()
-            # si la nueva lista tiene descuentos incluidos en el precio,
-            # por las dudas de que vengamos de una lista que los discriminaba,
-            # seteamos los descuentos a cero
-            if self.pricelist_id.discount_policy == 'with_discount':
-                line.discount = False
         return True
