@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Stock UX',
-    'version': '11.0.1.5.0',
+    'version': '11.0.1.6.0',
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -40,6 +40,7 @@
         'views/sale_order_line_views.xml',
         'views/product_template_views.xml',
         'views/product_product_views.xml',
+        'views/stock_warehouse_views.xml',
         'wizards/stock_return_picking_line_views.xml',
     ],
     'demo': [

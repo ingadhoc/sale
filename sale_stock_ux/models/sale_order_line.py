@@ -233,3 +233,11 @@ class SaleOrderLine(models.Model):
                 line.qty_to_invoice = (
                     line.product_uom_qty - line.qty_returned -
                     line.qty_invoiced)
+
+    @api.onchange('product_uom_qty', 'product_uom', 'route_id')
+    def _onchange_product_id_check_availability(self):
+        res = super(SaleOrderLine,
+                    self)._onchange_product_id_check_availability()
+        if self.order_id.warehouse_id.disable_sale_stock_warning or False:
+            res.update({'warning': {}})
+        return res
