@@ -26,6 +26,12 @@ Several Improvements to sales:
 #. Add filter for sale orders with returns
 #. Integrate delivery status with returns logic
 #. Add moves on sale order line form view (only for technical features)
+#. Add an option in warehouse to disable stock warning
+
+IMPORTANT:
+----------
+* This module could break some warnings as the ones implemented by 'warning' module
+* If you dont disable warning and give a user availbility to see only 'true/false' on sale order stock, he can see stock if the warning is raised
 
 Installation
 ============
@@ -46,7 +52,7 @@ Usage
 
 To use this module, you need to:
 
-#. Just use the module.
+#. If you want to add a product to the sales order line, the warning appears, if the stock of this product is less than the amount set.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
