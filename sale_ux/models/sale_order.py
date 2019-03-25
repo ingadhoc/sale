@@ -5,6 +5,7 @@
 from odoo import models, api, fields, _
 from odoo.exceptions import UserError, ValidationError
 from odoo.tools.safe_eval import safe_eval
+from odoo.tools import float_is_zero
 
 
 class SaleOrder(models.Model):
@@ -115,3 +116,25 @@ class SaleOrder(models.Model):
             line.product_uom_change()
             line._onchange_discount()
         return True
+
+    @api.multi
+    def action_invoice_create(self, grouped=False, final=False):
+        invoice_ids = super(SaleOrder, self).action_invoice_create(
+            grouped=grouped, final=final)
+        precision = self.env['decimal.precision'].precision_get(
+            'Product Unit of Measure')
+        for inv in self.env['account.invoice'].browse(invoice_ids).filtered(
+            lambda i: float_is_zero(
+                i.amount_total, precision_digits=precision) and all(
+                [line.quantity <= 0.0 for line in i.invoice_line_ids])):
+            inv.type = 'out_refund'
+            for line in inv.invoice_line_ids:
+                line.quantity = -line.quantity
+            # Use additional field helper function (for account extensions)
+            for line in inv.invoice_line_ids:
+                line._set_additional_fields(inv)
+            # Necessary to force computation of taxes.
+            # In account_invoice, they are triggered
+            # by onchanges, which are not triggered when doing a create.
+            inv.compute_taxes()
+        return invoice_ids
