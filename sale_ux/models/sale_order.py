@@ -102,7 +102,8 @@ class SaleOrder(models.Model):
         # for compatibility with product_pack module
         self.ensure_one()
         pack_installed = 'pack_parent_line_id' in self.order_line._fields
-        for line in self.order_line.with_context(update_prices=True):
+        for line in self.order_line.with_context(
+                update_prices=True, pricelist=self.pricelist_id.id):
             # si la nueva lista tiene descuentos incluidos en el precio,
             # por las dudas de que vengamos de una lista que los discriminaba,
             # seteamos los descuentos a cero
