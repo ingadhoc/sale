@@ -14,7 +14,7 @@
 Sale Stock Analytic
 ====================
 
-It adds functionality to Analytic Tags in sale orders and stock moves.
+It adds functionality to Analytic Tags in stock moves.
 
 Installation
 ============

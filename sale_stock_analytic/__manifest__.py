@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Stock Analytic',
-    'version': '11.0.1.0.0',
+    'version': '11.0.1.1.0',
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -29,10 +29,10 @@
     'images': [
     ],
     'depends': [
-        'sale_stock',
+        'sale',
+        'stock_analytic',
     ],
     'data': [
-        'views/stock_move_views.xml',
     ],
     'demo': [
     ],
