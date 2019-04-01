@@ -55,12 +55,12 @@ class SaleOrder(models.Model):
     # pop up of exceptions
     @api.multi
     def _popup_exceptions(self):
-        action = self.env.ref('sale_exception.action_sale_exception_confirm')
-        action = action.read()[0]
+        action = super(SaleOrder, self)._popup_exceptions()
         ctx = self._context.copy()
         ctx.update({
             'active_id': self.ids[0],
-            'active_ids': self.ids
+            'active_ids': self.ids,
+            'active_model': self._name,
         })
         action.update({
             'context': ctx
