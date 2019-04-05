@@ -238,6 +238,7 @@ class SaleOrderLine(models.Model):
     def _onchange_product_id_check_availability(self):
         res = super(SaleOrderLine,
                     self)._onchange_product_id_check_availability()
-        if self.order_id.warehouse_id.disable_sale_stock_warning or False:
-            res.update({'warning': {}})
+        if self.order_id.warehouse_id.disable_sale_stock_warning and res.get(
+                'warning', {}).get('title') == _('Not enough inventory!'):
+            res.pop('warning')
         return res
