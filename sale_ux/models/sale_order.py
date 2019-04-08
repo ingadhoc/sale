@@ -104,10 +104,18 @@ class SaleOrder(models.Model):
         pack_installed = 'pack_parent_line_id' in self.order_line._fields
         for line in self.order_line.with_context(
                 update_prices=True, pricelist=self.pricelist_id.id):
-            # si la nueva lista tiene descuentos incluidos en el precio,
-            # por las dudas de que vengamos de una lista que los discriminaba,
-            # seteamos los descuentos a cero
-            if self.pricelist_id.discount_policy == 'with_discount':
+            # ponemos descuento en cero por las dudas en dos casos:
+            # 1) si estamos cambiando de lista que discrimina descuento
+            #  a lista que los incluye
+            # 2) o estamos actualizando precios
+            # (no sabemos de que lista venimos) a una lista que no discrimina
+            #  descuentos y existen listas que discriminan los
+            if hasattr(self, '_origin') and self._origin.pricelist_id.\
+                discount_policy == 'with_discount' and self.\
+                pricelist_id.discount_policy != 'with_discount' or self.\
+                    pricelist_id.discount_policy == 'with_discount'\
+                    and self.env['product.pricelist'].search(
+                        [('discount_policy', '!=', 'with_discount')], limit=1):
                 line.discount = False
             if pack_installed:
                 if line.pack_parent_line_id:
