@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-14 19:28+0000\n"
+"POT-Creation-Date: 2019-04-10 14:09+0000\n"
 "PO-Revision-Date: 2018-08-23 20:28+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019\n"
 "Language-Team: German (https://www.transifex.com/adhoc/teams/46451/de/)\n"
@@ -96,6 +96,11 @@ msgid "Delivery Status"
 msgstr "Lieferstatus"
 
 #. module: sale_stock_ux
+#: model:ir.model.fields,field_description:sale_stock_ux.field_stock_warehouse_disable_sale_stock_warning
+msgid "Disable Sale Stock Warning"
+msgstr "Verkaufsbestandswarnung ausschalten"
+
+#. module: sale_stock_ux
 #: model:ir.model.fields,help:sale_stock_ux.field_sale_order_line_all_qty_delivered
 msgid "Everything delivered without discounting the returns"
 msgstr "Alles geliefert ohne Abzug von Rückläufen"
@@ -104,6 +109,11 @@ msgstr "Alles geliefert ohne Abzug von Rückläufen"
 #: model:ir.model.fields,field_description:sale_stock_ux.field_sale_order_force_delivery_status
 msgid "Force Delivery Status"
 msgstr "Lieferstatus erzwingen"
+
+#. module: sale_stock_ux
+#: model:ir.model.fields,help:sale_stock_ux.field_stock_warehouse_disable_sale_stock_warning
+msgid "If true, the warning \"Stock availability\" is disable"
+msgstr "Wenn gesetzt, ist die \"Bestandswarnung\" ausgeschaltet"
 
 #. module: sale_stock_ux
 #: selection:sale.order,delivery_status:0

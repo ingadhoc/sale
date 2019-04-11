@@ -4,12 +4,13 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-17 13:19+0000\n"
-"PO-Revision-Date: 2018-09-17 13:19+0000\n"
+"POT-Creation-Date: 2019-04-10 14:09+0000\n"
+"PO-Revision-Date: 2018-08-23 20:28+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -19,21 +20,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: sale_stock_availability
-#: model:ir.model.fields,field_description:sale_stock_availability.field_stock_warehouse_disable_sale_stock_warning
-msgid "Disable Sale Stock Warning"
-msgstr "Desactivar Advertencia de Stock en Ventas"
-
-#. module: sale_stock_availability
 #: model:ir.module.category,description:sale_stock_availability.module_category_sales_stock
 msgid "Helps you see stock on quotations."
 msgstr "Ayuda a ver el stock en los presupuestos."
-
-#. module: sale_stock_availability
-#: model:ir.model.fields,help:sale_stock_availability.field_stock_warehouse_disable_sale_stock_warning
-msgid "If true, the warning \"Stock availability\" is disable"
-msgstr ""
-"Si es verdadero, la advertencia de \"Disponibilidad de Stock\" está "
-"deshabilitada"
 
 #. module: sale_stock_availability
 #: model:res.groups,name:sale_stock_availability.see_stock_boolean
@@ -59,8 +48,3 @@ msgstr "Disponibilidad de Existencias en Ventas"
 #: model:res.groups,name:sale_stock_availability.see_stock_value
 msgid "Stock Value"
 msgstr "Stock"
-
-#. module: sale_stock_availability
-#: model:ir.model,name:sale_stock_availability.model_stock_warehouse
-msgid "Warehouse"
-msgstr "Depósito"
