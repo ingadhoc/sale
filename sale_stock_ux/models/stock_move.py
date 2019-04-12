@@ -2,7 +2,13 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from . import stock_move
-from . import sale_order
-from . import sale_order_line
-from . import stock_warehouse
+from odoo import models, fields
+
+
+class StockMove(models.Model):
+    _inherit = 'stock.move'
+
+    sale_id = fields.Many2one(
+        related='group_id.sale_id',
+        readonly=True,
+    )
