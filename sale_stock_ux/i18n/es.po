@@ -3,16 +3,16 @@
 # * sale_stock_ux
 # 
 # Translators:
-# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2019
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019
+# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-10 14:09+0000\n"
+"POT-Creation-Date: 2019-04-12 16:15+0000\n"
 "PO-Revision-Date: 2018-08-23 20:28+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019\n"
+"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2019\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -185,6 +185,12 @@ msgid "Returned Quantity"
 msgstr "Cantidad devuelta"
 
 #. module: sale_stock_ux
+#: model:ir.model.fields,field_description:sale_stock_ux.field_stock_move_sale_id
+#: model:ir.ui.view,arch_db:sale_stock_ux.view_move_form
+msgid "Sale Order"
+msgstr "Pedido de venta"
+
+#. module: sale_stock_ux
 #: model:ir.ui.view,arch_db:sale_stock_ux.view_sales_order_filter
 msgid "Sale orders that include lines not delivered."
 msgstr "Sale orders that include lines not delivered."
@@ -212,6 +218,11 @@ msgid ""
 msgstr ""
 "Si la devolución no está ligada a una OC/OV entonces este campo no repercute"
 " en nada."
+
+#. module: sale_stock_ux
+#: model:ir.model,name:sale_stock_ux.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento de Stock"
 
 #. module: sale_stock_ux
 #: model:ir.ui.view,arch_db:sale_stock_ux.view_order_form
