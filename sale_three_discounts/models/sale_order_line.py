@@ -53,6 +53,7 @@ class SaleOrderLine(models.Model):
                 raise ValidationError(_(
                     ",".join(error) + " must be less or equal than 100"
                 ))
+
     @api.model
     def create(self, vals):
         self.inverse_vals(vals)
