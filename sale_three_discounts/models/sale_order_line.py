@@ -33,7 +33,6 @@ class SaleOrderLine(models.Model):
     # oncahnge?
     discount = fields.Float(
         compute='_compute_discount',
-        inverse='_inverse_discount',
         store=True,
         readonly=True,
         # agregamos states vacio porque lo hereda de la definicion anterior
@@ -54,14 +53,27 @@ class SaleOrderLine(models.Model):
                 raise ValidationError(_(
                     ",".join(error) + " must be less or equal than 100"
                 ))
+    @api.model
+    def create(self, vals):
+        self.inverse_vals(vals)
+        return super(SaleOrderLine, self).create(vals)
 
     @api.multi
-    def _inverse_discount(self):
-        for rec in self:
-            rec.write({
-                'discount1': rec.discount,
-                'discount2': False,
-                'discount3': False,
+    def write(self, vals):
+        self.inverse_vals(vals)
+        return super(SaleOrderLine, self).write(vals)
+
+    def inverse_vals(self, vals):
+        """ No usamos metodo inverse porque en el create odoo termina llamando
+        a inverse y unificando los descuentos en la primer linea.
+        Además, solo actualizamos con el inverse el primer descuento
+        principalmente por compatibilidad con listas que discriminen descuento
+        y consideramos que las columnas 2 y 3 son descuentos adicionales y no
+        las pisamos
+        """
+        if 'discount' in vals and not vals.get('discount1'):
+            vals.update({
+                'discount1': vals.get('discount'),
             })
 
     @api.multi
