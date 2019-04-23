@@ -43,6 +43,6 @@
         'views/product_product_views.xml',
         'views/templates.xml',
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
 }
