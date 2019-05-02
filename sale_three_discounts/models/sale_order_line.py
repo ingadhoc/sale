@@ -72,7 +72,8 @@ class SaleOrderLine(models.Model):
         y consideramos que las columnas 2 y 3 son descuentos adicionales y no
         las pisamos
         """
-        if 'discount' in vals and not vals.get('discount1'):
+        if 'discount' in vals and not vals.get('discount1')\
+                and not vals.get('discount2') and not vals.get('discount3'):
             vals.update({
                 'discount1': vals.get('discount'),
             })
