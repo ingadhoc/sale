@@ -49,6 +49,14 @@ class SaleOrder(models.Model):
 
     @api.multi
     def run_picking_atomation(self):
+        # If there products are the type 'service' equals the
+        #  delivered qyt to order qty for this sale order line
+        for order_lines in self.mapped('order_line').filtered(
+            lambda x: x.order_id.type_id.picking_atomation !=
+            'none' and x.product_id.type ==
+            'service' and x.product_id.service_type ==
+                'manual' and x.product_id.expense_policy == 'no'):
+            order_lines.qty_delivered = order_lines.product_uom_qty
         for rec in self.filtered(
                 lambda x: x.type_id.picking_atomation != 'none' and
                 x.procurement_group_id):
