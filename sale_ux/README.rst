@@ -34,6 +34,7 @@ Several Improvements to sales:
 #. Fix the filter Sales in Sale orders to filter in states "sale" and "done".
 #. Add column "date_order" in sale order tree view.
 #. Fix in button "create invoice" in sale order, to create an refund invoice if the amount it's cero and the lines quantities are negative.
+#. Add to sale order lines action the form view, to access with the button "sales" in product template.
 
 Installation
 ============
