@@ -18,5 +18,5 @@ class SaleOrder(models.Model):
         """
         sol = super(SaleOrder, self)._create_delivery_line(carrier, price_unit)
         if not price_unit:
-            sol.product_uom_qty = 0.0
+            sol._write({'product_uom_qty': 0.0})
         return sol
