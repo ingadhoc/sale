@@ -1,0 +1,9 @@
+<odoo>
+
+    <template id="sale_order_website_link" name="Link to backend" inherit_id="website.layout">
+        <xpath expr="//li[@id='o_logout']" position="before">
+            <li><a href="/portal/addresses" groups="portal_sale_distributor.group_portal_distributor" role="menuitem">My Adresses</a></li>
+        </xpath>
+    </template>
+
+</odoo>
