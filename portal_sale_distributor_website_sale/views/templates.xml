@@ -2,13 +2,13 @@
     <template id="addresses" inherit_id="website_sale.checkout" primary="True">
         <t t-call="website_sale.wizard_checkout" position="replace"/>
         <t t-call="website_sale.address_kanban" position="attributes">
-            <attribute name="t-call">portal_sale_distributor.portal_address_kanban</attribute>
+            <attribute name="t-call">portal_sale_distributor_website_sale.portal_address_kanban</attribute>
         </t>
         <form action="/shop/address" position="attributes">
             <attribute name="action">/portal/address</attribute>
         </form>
         <t t-call="website_sale.address_kanban" position="attributes">
-            <attribute name="t-call">portal_sale_distributor.portal_address_kanban</attribute>
+            <attribute name="t-call">portal_sale_distributor_website_sale.portal_address_kanban</attribute>
         </t>
         <t t-call="website.layout">
             <t t-set="additional_title" position="attributes">Addresses</t>
