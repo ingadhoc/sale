@@ -4,7 +4,7 @@
     'name': 'Sale Report Last Sale',
     'summary': 'Adds a report view to show how many days '
                'have passed since a partner ordered a product',
-    'version': '11.0.1.1.0',
+    'version': '12.0.1.0.0',
     'depends': [
         'sale',
     ],

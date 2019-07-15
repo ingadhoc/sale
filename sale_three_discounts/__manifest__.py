@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Three Discounts',
-    'version': '11.0.1.1.0',
+    'version': '12.0.1.0.0',
     'category': 'Sales Management',
     'sequence': 14,
     'author': 'ADHOC SA',

@@ -18,20 +18,22 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Exception - Price Security Integration',
+    'name': 'Portal Distributor Website Sale',
     'version': '12.0.1.0.0',
-    'author': 'ADHOC SA',
+    'category': 'Tools',
+    'complexity': 'easy',
+    'author': 'ADHOC SA, Odoo Community Association (OCA)',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'depends': [
-        'sale_exception_print',
-        'price_security',
-    ],
-    'data': [
-        'data/exception_rule_data.xml',
-        'security/sale_exception_price_security_security.xml',
+        'website_sale',
+        'portal_sale_distributor',
     ],
     'demo': [
+    ],
+    'data': [
+        'views/portal_templates.xml',
+        'views/templates.xml',
     ],
     'installable': False,
     'auto_install': True,

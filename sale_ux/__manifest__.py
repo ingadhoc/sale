@@ -19,7 +19,11 @@
 ##############################################################################
 {
     'name': 'Sale UX',
+<<<<<<< Updated upstream
     'version': '11.0.1.12.1',
+=======
+    'version': '12.0.1.0.0',
+>>>>>>> Stashed changes
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
