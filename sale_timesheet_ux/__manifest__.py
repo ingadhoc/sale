@@ -16,9 +16,5 @@
     "demo": [
     ],
     "application": False,
-<<<<<<< Updated upstream
-    'installable': False,
-=======
     "installable": False,
->>>>>>> Stashed changes
 }
