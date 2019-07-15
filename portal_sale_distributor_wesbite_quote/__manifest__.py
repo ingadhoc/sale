@@ -19,11 +19,7 @@
 ##############################################################################
 {
     'name': 'Portal Distributor Website Quote',
-<<<<<<< Updated upstream
-    'version': '11.0.1.0.0',
-=======
     'version': '12.0.1.0.0',
->>>>>>> Stashed changes
     'category': 'Tools',
     'complexity': 'easy',
     'author': 'ADHOC SA, Odoo Community Association (OCA)',
