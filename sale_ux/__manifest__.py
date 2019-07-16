@@ -39,12 +39,10 @@
         'views/sale_order_views.xml',
         'views/sale_order_line_views.xml',
         'views/account_invoice_views.xml',
-        'views/product_product_views.xml',
-        'views/product_template_views.xml',
     ],
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
