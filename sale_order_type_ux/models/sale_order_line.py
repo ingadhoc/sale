@@ -13,4 +13,4 @@ class SaleOrderLine(models.Model):
     def product_id_change(self):
         if self.order_id.type_id.analytic_tag_ids:
             self.analytic_tag_ids = self.order_id.type_id.analytic_tag_ids
-        return super(SaleOrderLine, self).product_id_change()
+        return super().product_id_change()
