@@ -16,7 +16,7 @@ class SaleOrderLine(models.Model):
         Ademas no molesta dependencias con otros modulos que ya sobreescribian
         _get_to_invoice_qty
         """
-        super(SaleOrderLine, self)._compute_invoice_status()
+        super()._compute_invoice_status()
         for line in self:
             # solo seteamos facturado si en sale o done
             if line.order_id.state not in ['sale', 'done']:

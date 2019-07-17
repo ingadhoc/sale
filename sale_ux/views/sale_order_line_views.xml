@@ -87,8 +87,8 @@
                 <filter name="invoiced" string="Invoiced" domain="[('invoice_status','=', 'invoiced')]"/>
             </filter>
             <group>
-                <filter string="Customer" domain="[]" context="{'group_by' : 'order_partner_id'}" />
-                <filter string="Status" domain="[]" context="{'group_by' : 'state'}" />
+                <filter name="order_partner_id" string="Customer" domain="[]" context="{'group_by' : 'order_partner_id'}" />
+                <filter name="state" string="Status" domain="[]" context="{'group_by' : 'state'}" />
             </group>
             <search>
                 <field name="analytic_tag_ids"/>
