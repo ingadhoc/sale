@@ -16,6 +16,6 @@ class AccountInvoice(models.Model):
 
     @api.onchange('sale_type_id')
     def onchange_sale_type_id(self):
-        super(AccountInvoice, self).onchange_sale_type_id()
+        super().onchange_sale_type_id()
         if self.sale_type_id.journal_id:
             self.company_id = self.sale_type_id.journal_id.company_id.id
