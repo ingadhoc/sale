@@ -28,7 +28,6 @@ class SaleOrder(models.Model):
         string='Commercial Entity',
         related='partner_id.commercial_partner_id',
         store=True,
-        readonly=True,
         compute_sudo=True,
     )
 
@@ -59,7 +58,7 @@ class SaleOrder(models.Model):
             date_order = rec.date_order or fields.Date.context_today(rec)
             rec.env.context.date_invoice = date_order
             rec.env.context.invoice_company = rec.company_id
-        return super(SaleOrder, self)._amount_all()
+        return super()._amount_all()
 
     @api.multi
     def action_cancel(self):
@@ -69,7 +68,7 @@ class SaleOrder(models.Model):
             raise UserError(_(
                 "Unable to cancel this sale order. You must first "
                 "cancel related bills and pickings."))
-        return super(SaleOrder, self).action_cancel()
+        return super().action_cancel()
 
     @api.constrains('force_invoiced_status')
     def check_force_invoiced_status(self):
@@ -80,22 +79,11 @@ class SaleOrder(models.Model):
                 'Only users with "%s / %s" can Set Invoiced manually') % (
                 group.category_id.name, group.name))
 
-    @api.multi
-    def action_confirm(self):
-        # con esto arreglamos que odoo dejaria entregar varias veces el
-        # mismo picking si por alguna razon el boton esta presente
-        # en nuestro caso pasaba cuando la impresion da algun error
-        # lo que provoca que el picking se entregue pero la pantalla no
-        # se actualice
-        # antes lo haciamo en do_new_transfer, pero como algunas
-        # veces se llama este metodo sin pasar por do_new_transfer
-        invoices = self.filtered(lambda x: x.state not in ['draft', 'sent'])
-        if invoices:
-            raise UserError(_(
-                'You can not validate a sale that is not in a state '
-                '"Quotation" or "Quotation Sent", probably'
-                'has already been validated, try refreshing the window!'))
-        return super(SaleOrder, self).action_confirm()
+    def _get_forbidden_state_confirm(self):
+        # This is because some reason the button are present when you
+        # validate, this way the sale order only validate if the state are
+        # 'draft' or 'sent'
+        return super()._get_forbidden_state_confirm() | set({'sale'})
 
     @api.multi
     def update_prices(self):
@@ -128,7 +116,7 @@ class SaleOrder(models.Model):
 
     @api.multi
     def action_invoice_create(self, grouped=False, final=False):
-        invoice_ids = super(SaleOrder, self).action_invoice_create(
+        invoice_ids = super().action_invoice_create(
             grouped=grouped, final=final)
         precision = self.env['decimal.precision'].precision_get(
             'Product Unit of Measure')
