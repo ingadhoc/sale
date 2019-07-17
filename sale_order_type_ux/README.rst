@@ -21,7 +21,6 @@ Sale Order Type Ux
 * Move sale type field after date instead of after currency
 * Add new behaivor to the onchage sale type in invoice, to change the company.
 * Set in Invoice view form the field "Sale Type" readonly to states different than "draft".
-* Hide rules functionality (just for now, till we decide to use it or not)
 * Integration betweeen Portal and Sale Order Type module:
 
  - New access record to sale type model for portal users
