@@ -51,12 +51,12 @@ class SaleOrderLine(models.Model):
     @api.model
     def create(self, vals):
         self.inverse_vals(vals)
-        return super(SaleOrderLine, self).create(vals)
+        return super().create(vals)
 
     @api.multi
     def write(self, vals):
         self.inverse_vals(vals)
-        return super(SaleOrderLine, self).write(vals)
+        return super().write(vals)
 
     def inverse_vals(self, vals):
         """ No usamos metodo inverse porque en el create odoo termina llamando

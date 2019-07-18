@@ -23,9 +23,6 @@ class AccountInvoiceLine(models.Model):
         'Discount 3 (%)',
         digits=dp.get_precision('Discount'),
     )
-    discount_readonly = fields.Float(
-        related="discount",
-    )
 
     @api.constrains('discount1', 'discount2', 'discount3')
     def check_discount_validity(self):
