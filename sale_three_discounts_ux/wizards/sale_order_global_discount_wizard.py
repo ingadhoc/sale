@@ -9,15 +9,6 @@ class SaleGlobalDiscountWizard(models.TransientModel):
 
     _name = "sale.order.global_discount.wizard"
 
-    # todo implement fixed amount
-    # type = fields.Selection([
-    #     ('percentage', 'Percentage'),
-    #     ('fixed_amount', 'Fixed Amount'),
-    #     ],
-    #     'Type',
-    #     required=True,
-    #     default='percentage',
-    #     )
     discount1 = fields.Boolean(
         string='Discount 1',
     )
