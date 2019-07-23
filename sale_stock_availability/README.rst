@@ -14,7 +14,7 @@
 Stock availability in sales order line
 ======================================
 
-* Add two groups. One for seeing stock on sale orders and other to see only if or not available.
+* Add a group for seeing stock on sale orders.
 
 Installation
 ============
