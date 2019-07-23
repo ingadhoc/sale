@@ -33,5 +33,5 @@
         'security/sale_stock_availability_security.xml',
         'views/sale_order_views.xml',
     ],
-    'installable': False,
+    'installable': True,
 }
