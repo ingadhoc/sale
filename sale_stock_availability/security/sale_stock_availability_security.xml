@@ -7,12 +7,6 @@
         <field name="sequence">2</field>
     </record>
 
-    <!-- add applications to base groups -->
-    <record model="res.groups" id="see_stock_boolean">
-        <field name="category_id" ref="module_category_sales_stock"/>
-        <field name="name">Only yes/no</field>
-    </record>
-
     <record model="res.groups" id="see_stock_value">
         <field name="category_id" ref="module_category_sales_stock"/>
         <field name="name">Stock Value</field>
