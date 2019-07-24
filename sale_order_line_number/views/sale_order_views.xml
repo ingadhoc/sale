@@ -4,9 +4,9 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-                <field name="sequence" position="after">
-                <field name="number" string="nbr"/>
-            </field>
+            <xpath expr="//field[@name='order_line']/tree//field[@name='sequence']" position="after">
+                <field name="number" string="Nbr"/>
+            </xpath>
         </field>
     </record>
 </odoo>
