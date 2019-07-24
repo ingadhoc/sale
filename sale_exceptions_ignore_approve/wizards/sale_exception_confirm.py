@@ -10,7 +10,7 @@ class SaleExceptionConfirm(models.TransientModel):
 
     @api.multi
     def action_confirm(self):
-        res = super(SaleExceptionConfirm, self).action_confirm()
+        res = super().action_confirm()
         if self.ignore:
             return self.related_model_id.action_confirm()
         return res
