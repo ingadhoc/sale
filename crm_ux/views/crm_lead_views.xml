@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="crm_case_form_view_oppor" model="ir.ui.view">
+        <field name="name">crm.lead.form.opportunity</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+        <field name="arch" type="xml">
+            <field name="website" position="after">
+                <field name="company_id"/>
+            </field>
+        </field>
+    </record>
+</odoo>
