@@ -15,4 +15,4 @@ class SaleExceptionConfirm(models.TransientModel):
             self.related_model_id.ignore_exception_print = True
             # con esto limpiamos el ignore para que no super no ignore todo
             self.ignore = False
-        return super(SaleExceptionConfirm, self).action_confirm()
+        return super().action_confirm()
