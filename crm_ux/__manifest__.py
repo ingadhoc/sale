@@ -1,6 +1,6 @@
 ##############################################################################
 #
-#    Copyright (C) 2015  ADHOC SA  (http://www.adhoc.com.ar)
+#    Copyright (C) 2018  ADHOC SA  (http://www.adhoc.com.ar)
 #    All Rights Reserved.
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -18,30 +18,24 @@
 #
 ##############################################################################
 {
-    'name': 'Portal Distributor Sale',
+    'name': 'CRM UX',
     'version': '12.0.1.0.0',
-    'category': 'Tools',
-    'complexity': 'easy',
-    'author': 'ADHOC SA, Odoo Community Association (OCA)',
+    'sequence': 14,
+    'summary': '',
+    'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
+    'images': [
+    ],
     'depends': [
-        'sale_exception',
-        'price_security',
-        'delivery',
-        'partner_identification',
-        'sale_ux',
+        'crm',
+    ],
+    'data': [
+        'views/crm_lead_views.xml',
     ],
     'demo': [
     ],
-    'data': [
-        'security/portal_sale_distributor_security.xml',
-        'security/ir.model.access.csv',
-        'views/portal_sale_views.xml',
-        'views/portal_my_account_views.xml',
-        'views/product_product_views.xml',
-        'views/portal_templates.xml',
-    ],
     'installable': False,
     'auto_install': False,
+    'application': False,
 }

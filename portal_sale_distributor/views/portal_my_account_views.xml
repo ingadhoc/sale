@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<odoo>
+
+
+    <record id="action_my_account" model="ir.actions.act_url">
+        <field name="name">My Account</field>
+        <field name="url">/my/home</field>
+        <field name="target">self</field>
+    </record>
+
+    <menuitem
+        id="my_account"
+        name="My Account"
+        action="action_my_account"
+        groups="group_portal_distributor"
+        web_icon="account_invoicing,static/description/icon.png"
+        />
+
+</odoo>

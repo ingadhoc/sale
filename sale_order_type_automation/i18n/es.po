@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-16 12:24+0000\n"
+"POT-Creation-Date: 2019-05-23 02:12+0000\n"
 "PO-Revision-Date: 2018-08-23 20:27+0000\n"
 "Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2019\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
@@ -41,7 +41,7 @@ msgid "Create Invoice"
 msgstr "Crear Factura"
 
 #. module: sale_order_type_automation
-#: code:addons/sale_order_type_automation/models/sale_order_type.py:111
+#: code:addons/sale_order_type_automation/models/sale_order_type.py:113
 #, python-format
 msgid "If you choose a Payment automation, Payment Journal is required"
 msgstr "Si selecciona automatización de pagos el diario de pagos es requerido"
@@ -52,7 +52,7 @@ msgid "Invoice"
 msgstr "Factura"
 
 #. module: sale_order_type_automation
-#: code:addons/sale_order_type_automation/models/sale_order_type.py:125
+#: code:addons/sale_order_type_automation/models/sale_order_type.py:127
 #, python-format
 msgid "Invoice Journal and Payment Journal must be of the same company"
 msgstr "El diario de facturación y de pago deben ser de la misma compañía"
@@ -152,13 +152,13 @@ msgid "Set Done On Confirmation"
 msgstr "Establecer Hecho en la confirmación"
 
 #. module: sale_order_type_automation
-#: code:addons/sale_order_type_automation/models/sale_order_type.py:138
+#: code:addons/sale_order_type_automation/models/sale_order_type.py:140
 #, python-format
 msgid "The company of the sequence and the warehouse must be the same"
 msgstr "La compañía de la secuencia y de el almacén deben ser la misma."
 
 #. module: sale_order_type_automation
-#: code:addons/sale_order_type_automation/models/sale_order.py:74
+#: code:addons/sale_order_type_automation/models/sale_order.py:91
 #, python-format
 msgid ""
 "The following products are not available, we suggest to check stock or to use a sale type that force availability.\n"
@@ -175,11 +175,6 @@ msgstr ""
 #: model:ir.model,name:sale_order_type_automation.model_stock_picking
 msgid "Transfer"
 msgstr "Transferir"
-
-#. module: sale_order_type_automation
-#: selection:sale.order.type,invoicing_atomation:0
-msgid "Try to Validate Invoice (Not recommended)"
-msgstr "Intentar validar la factura (no recomendado)"
 
 #. module: sale_order_type_automation
 #: model:ir.model,name:sale_order_type_automation.model_sale_order_type

@@ -22,7 +22,6 @@ access_ir_ui_menu_portal_distributor,ir.ui.menu.portal.distributor,base.model_ir
 access_ir_model_portal_distributor,ir.model.portal.distributor,base.model_ir_model,group_portal_distributor,1,0,0,0
 access_ir_fields_portal_distributor,ir.model.fields.portal.distributor,base.model_ir_model_fields,group_portal_distributor,1,0,0,0
 access_ir_model_data_portal_distributor,ir.model.model.data.portal.distributor,base.model_ir_model_data,group_portal_distributor,1,0,1,0
-access_crm_portal_distributor,crm.portal.ditributor,website_sale.model_crm_team,group_portal_distributor,1,0,0,0
 access_stock_move_line_portal_distributor,account.stock.move.line.portal.ditributor,stock_account.model_stock_move_line,group_portal_distributor,1,0,1,0
 access_sale_exception_distributor,sale.exception.distributor.portal.distributor,sale_exception.model_exception_rule,group_portal_distributor,1,0,0,0
 access_delivery_carrier_distributor,delivery.carrier.distributor,delivery.model_delivery_carrier,group_portal_distributor,1,0,0,0
@@ -32,3 +31,5 @@ access_stock_picking_type_portal_distributor,stock.picking.type portal,stock.mod
 ir_translation_portal_distributor,ir_translation portal distributor (para duplicar OV),base.model_ir_translation,group_portal_distributor,1,0,0,0
 access_partner_id_number_portal_distributor,access_partner_id_number portal,partner_identification.model_res_partner_id_number,group_portal_distributor,1,0,0,0
 access_partner_id_category_portal_distributor,access_partner_id_category portal,partner_identification.model_res_partner_id_category,group_portal_distributor,1,0,0,0
+access_crm_portal_distributor,crm.portal.ditributor,sale.model_crm_team,group_portal_distributor,1,0,0,0
+access_product_pricelist,product.pricelist.portal.distributor,product.model_product_pricelist,group_portal_distributor,1,1,0,0
