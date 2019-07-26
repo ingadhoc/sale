@@ -20,12 +20,22 @@ class SaleAdvancePaymentInvWizard(models.TransientModel):
     @api.onchange('amount_total', 'deposit_taxes_id')
     def _inverse_amount_total(self):
         self.ensure_one()
-        if any(x.amount_type != 'percent' for x in self.deposit_taxes_id):
-            raise ValidationError(_(
-                'You can only set amount total if taxes are of type '
-                'percentage'))
-        tax_percent = sum(
-            [x.amount for x in self.deposit_taxes_id if not x.price_include])
+        sale_obj = self.env['sale.order']
+        order = sale_obj.browse(self._context.get('active_ids'))[0]
+        tax_percent = 0.0
+        for tax in self.deposit_taxes_id.filtered(
+                lambda x: not x.price_include):
+            if tax.amount_type == 'percent':
+                tax_percent += tax.amount
+            elif tax.amount_type == 'partner_tax':
+                # ugly compatibility with l10n_ar l10n_ar_account_withholding
+                tax_percent += tax.get_partner_alicuot(
+                    order.partner_id,
+                    fields.Date.context_today(self)).alicuota_percepcion
+            else:
+                raise ValidationError(_(
+                    'You can only set amount total if taxes are of type '
+                    'percentage'))
         total_percent = (1 + tax_percent / 100) or 1.0
         self.amount = self.amount_total / total_percent
 

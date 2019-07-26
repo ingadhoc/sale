@@ -29,7 +29,9 @@ class SaleOrderType(models.Model):
         ('none', 'None'),
         ('create_invoice', 'Create Invoice'),
         ('validate_invoice', 'Validate Invoice'),
-        ('try_validate_invoice', 'Try to Validate Invoice (Not recommended)'),
+        # no estaria funcionando bien, reportado en ticket 18273
+        # por ahora desactivamos esta opcion
+        # ('try_validate_invoice', 'Try to Validate Invoice (Not recommended)')
     ],
         default='none',
         required=True,

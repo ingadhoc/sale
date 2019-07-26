@@ -14,20 +14,14 @@ class SaleOrderLine(models.Model):
     discount1 = fields.Float(
         'Discount 1 (%)',
         digits=dp.get_precision('Discount'),
-        readonly=True,
-        states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
     )
     discount2 = fields.Float(
         'Discount 2 (%)',
         digits=dp.get_precision('Discount'),
-        readonly=True,
-        states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
     )
     discount3 = fields.Float(
         'Discount 3 (%)',
         digits=dp.get_precision('Discount'),
-        readonly=True,
-        states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
     )
     # TODO do like in invoice line? Make normal field with constraint and
     # oncahnge?
@@ -72,7 +66,8 @@ class SaleOrderLine(models.Model):
         y consideramos que las columnas 2 y 3 son descuentos adicionales y no
         las pisamos
         """
-        if 'discount' in vals and not vals.get('discount1'):
+        if 'discount' in vals and not vals.get('discount1')\
+                and not vals.get('discount2') and not vals.get('discount3'):
             vals.update({
                 'discount1': vals.get('discount'),
             })

@@ -108,8 +108,9 @@ class WebsiteSalePortal(WebsiteSale):
                 'afip_responsabilities': afip_responsabilities,
                 'partner': Partner,
             })
-        return request.render("portal_sale_distributor.portal_address",
-                              render_values)
+        return request.render(
+            "portal_sale_distributor_website_sale.portal_address",
+            render_values)
 
     def _portal_address_form_save(self, mode, checkout, all_values):
         Partner = request.env['res.partner']
@@ -145,4 +146,5 @@ class WebsiteSalePortal(WebsiteSale):
         # Avoid useless rendering if called in ajax
         if post.get('xhr'):
             return 'ok'
-        return request.render("portal_sale_distributor.addresses", values)
+        return request.render(
+            "portal_sale_distributor_website_sale.addresses", values)
