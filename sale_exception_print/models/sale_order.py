@@ -18,7 +18,7 @@ class SaleOrder(models.Model):
         if self.detect_print_exceptions():
             return self.with_context(print_exceptions=True)._popup_exceptions()
         else:
-            return super(SaleOrder, self).print_quotation()
+            return super().print_quotation()
 
     @api.multi
     def action_quotation_send(self):
@@ -26,7 +26,7 @@ class SaleOrder(models.Model):
         if self.detect_print_exceptions():
             return self.with_context(print_exceptions=True)._popup_exceptions()
         else:
-            return super(SaleOrder, self).action_quotation_send()
+            return super().action_quotation_send()
 
     @api.multi
     def detect_print_exceptions(self):
@@ -35,18 +35,12 @@ class SaleOrder(models.Model):
         as a side effect, the sale order's exception_ids column is updated with
         the list of exceptions related to the SO
         """
-        exception_obj = self.env['exception.rule']
-        order_exceptions = exception_obj.search(
-            [('model', '=', 'sale.order'), ('block_print', '=', True)])
-        line_exceptions = exception_obj.search(
-            [('model', '=', 'sale.order.line'), ('block_print', '=', True)])
 
         all_exception_ids = []
         for order in self:
             if order.ignore_exception or order.ignore_exception_print:
                 continue
-            exception_ids = order._detect_exceptions(order_exceptions,
-                                                     line_exceptions)
+            exception_ids = order.detect_exceptions()
             order.exception_ids = [(6, 0, exception_ids)]
             all_exception_ids += exception_ids
         return all_exception_ids
