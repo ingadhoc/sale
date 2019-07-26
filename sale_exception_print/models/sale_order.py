@@ -37,7 +37,7 @@ class SaleOrder(models.Model):
         """
 
         all_exception_ids = []
-        for order in self:
+        for order in self.with_context(print_exceptions=True):
             if order.ignore_exception or order.ignore_exception_print:
                 continue
             exception_ids = order.detect_exceptions()
