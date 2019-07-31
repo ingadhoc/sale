@@ -7,7 +7,7 @@ class SaleOrder(models.Model):
 
     @api.model
     def _get_order_type(self):
-        res = super(SaleOrder, self)._get_order_type()
+        res = super()._get_order_type()
         user = self.env.user
         if user.default_sale_order_type_id:
             res = user.default_sale_order_type_id
