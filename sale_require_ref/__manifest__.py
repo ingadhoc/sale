@@ -34,10 +34,6 @@
     'data': [
         'data/exception_rule_data.xml',
     ],
-    'demo': [
-        'demo/exception_rule_demo.xml',
-        'demo/sale_order_demo.xml',
-    ],
     'installable': True,
     'auto_install': False,
     'application': False,
