@@ -117,7 +117,7 @@ class SaleOrderLine(models.Model):
     def _get_protected_fields(self):
         if self._context.get('bypass_protecion'):
             return []
-        return super(SaleOrderLine, self)._get_protected_fields()
+        return super()._get_protected_fields()
 
     @api.onchange('product_uom_qty')
     def _onchange_product_uom_qty(self):
@@ -149,7 +149,7 @@ class SaleOrderLine(models.Model):
 
     @api.multi
     def _get_delivered_qty(self):
-        qty = super(SaleOrderLine, self)._get_delivered_qty()
+        qty = super()._get_delivered_qty()
         # parcheamos las devoluciones para los kits, lo hacemos analogo
         # a como hace odoo en la entrega, basicamente solo consideramos
         # devuelto si se devolvió todo (odoo considera entregado si se entrego
@@ -224,7 +224,7 @@ class SaleOrderLine(models.Model):
         odoo ya lo descuenta a la cantidad entregada y automáticamente lo
         termina facturando
         """
-        super(SaleOrderLine, self)._get_to_invoice_qty()
+        super()._get_to_invoice_qty()
         for line in self:
             # igual que por defecto, si no en estos estados, no hay a facturar
             if line.order_id.state not in ['sale', 'done']:
@@ -236,8 +236,7 @@ class SaleOrderLine(models.Model):
 
     @api.onchange('product_uom_qty', 'product_uom', 'route_id')
     def _onchange_product_id_check_availability(self):
-        res = super(SaleOrderLine,
-                    self)._onchange_product_id_check_availability()
+        res = super()._onchange_product_id_check_availability()
         if self.order_id.warehouse_id.disable_sale_stock_warning or False:
             res.update({'warning': {}})
         return res

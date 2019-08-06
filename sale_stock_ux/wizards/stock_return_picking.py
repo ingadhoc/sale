@@ -11,7 +11,7 @@ class StockReturnPicking(models.TransientModel):
     @api.model
     def default_get(self, fields):
         """Get sale order for lines."""
-        result = super(StockReturnPicking, self).default_get(fields)
+        result = super().default_get(fields)
         try:
             for line in result["product_return_moves"]:
                 assert line[0] == 0
