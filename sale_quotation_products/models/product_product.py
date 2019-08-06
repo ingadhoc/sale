@@ -101,7 +101,7 @@ class ProductProduct(models.Model):
         If we came from sale order, we send in context 'force_product_edit'
         and we change tree view to make editable and also field qty
         """
-        res = super(ProductProduct, self).fields_view_get(
+        res = super().fields_view_get(
             view_id=view_id, view_type=view_type,
             toolbar=toolbar, submenu=submenu)
         sale_quotation_products = self._context.get('sale_quotation_products')
