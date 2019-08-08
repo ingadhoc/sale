@@ -11,8 +11,6 @@ import odoo.addons.decimal_precision as dp
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-    # agregamos este campo para facilitar compatibilidad con
-    # sale_usability_return_invoicing
     all_qty_delivered = fields.Float(
         string='All Delivered',
         compute='_compute_all_qty_delivered',
@@ -20,13 +18,11 @@ class SaleOrderLine(models.Model):
         digits=dp.get_precision('Product Unit of Measure'),
     )
 
-    # TODO This should be computed field
     qty_returned = fields.Float(
         string='Returned',
         compute='_compute_qty_returned',
         copy=False,
         digits=dp.get_precision('Product Unit of Measure'),
-        readonly=True,
     )
 
     delivery_status = fields.Selection([
@@ -34,7 +30,6 @@ class SaleOrderLine(models.Model):
         ('to deliver', 'To Deliver'),
         ('delivered', 'Delivered'),
     ],
-        string='Delivery Status',
         compute='_compute_delivery_status',
         store=True,
         readonly=True,
@@ -65,12 +60,10 @@ class SaleOrderLine(models.Model):
 
             if float_compare(
                     line.all_qty_delivered, line.product_uom_qty,
-                    # line.qty_delivered, line.product_uom_qty,
                     precision_digits=precision) == -1:
                 delivery_status = 'to deliver'
             elif float_compare(
                     line.all_qty_delivered, line.product_uom_qty,
-                    # line.qty_delivered, line.product_uom_qty,
                     precision_digits=precision) >= 0:
                 delivery_status = 'delivered'
             else:
@@ -149,6 +142,10 @@ class SaleOrderLine(models.Model):
 
     @api.multi
     def compute_qty_with_bom_phantom(self):
+        # parcheamos las devoluciones para los kits, lo hacemos analogo
+        # a como hace odoo en la entrega, basicamente solo consideramos
+        # devuelto si se devolvió todo (odoo considera entregado si se entrego
+        # todo)
         self.ensure_one()
         precision = self.env['decimal.precision'].precision_get(
             'Product Unit of Measure')
@@ -188,10 +185,6 @@ class SaleOrderLine(models.Model):
 
     def _compute_qty_delivered(self):
         super()._compute_qty_delivered()
-        # parcheamos las devoluciones para los kits, lo hacemos analogo
-        # a como hace odoo en la entrega, basicamente solo consideramos
-        # devuelto si se devolvió todo (odoo considera entregado si se entrego
-        # todo)
         bom_enable = 'bom_ids' in self.env['product.template']._fields
         if bom_enable:
             for line in self.filtered(lambda l: self.env['mrp.bom']._bom_find(
@@ -201,11 +194,6 @@ class SaleOrderLine(models.Model):
     @api.depends('move_ids.state', 'move_ids.scrapped',
                  'move_ids.product_uom_qty', 'move_ids.product_uom')
     def _compute_qty_returned(self):
-        """
-        This method is called in the '_get_delivered_qty' method
-        to update the 'qty returned' each time the 'qty
-         delivered' is updated.
-        """
         for line in self:
             qty_returned = 0.0
             # we use same method as in sale_stock_picking_return_invoicing
