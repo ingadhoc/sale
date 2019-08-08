@@ -132,15 +132,15 @@ class ProductProduct(models.Model):
             res['fields'].update(self.fields_get(['qty']))
 
             # add button tu open form
-            placeholder = doc.xpath("//tree")[0]
-            placeholder.append(
-                etree.Element('button', {
-                    'name': 'action_product_form',
-                    'type': 'object',
-                    'icon': 'fa-external-link',
-                    'string': _('Open Product Form View'),
-                    'groups': 'base.group_user',
-                }))
+            if self.env.user.has_group('base.group_user'):
+                placeholder = doc.xpath("//tree")[0]
+                placeholder.append(
+                    etree.Element('button', {
+                        'name': 'action_product_form',
+                        'type': 'object',
+                        'icon': 'fa-external-link',
+                        'string': _('Open Product Form View'),
+                    }))
 
             # make tree view editable
             for node in doc.xpath("/tree"):
