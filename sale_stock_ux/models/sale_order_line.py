@@ -11,8 +11,6 @@ import odoo.addons.decimal_precision as dp
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-    # agregamos este campo para facilitar compatibilidad con
-    # sale_usability_return_invoicing
     all_qty_delivered = fields.Float(
         string='All Delivered',
         compute='_compute_all_qty_delivered',
@@ -20,13 +18,11 @@ class SaleOrderLine(models.Model):
         digits=dp.get_precision('Product Unit of Measure'),
     )
 
-    # TODO This should be computed field
     qty_returned = fields.Float(
         string='Returned',
+        compute='_compute_qty_returned',
         copy=False,
-        default=0.0,
         digits=dp.get_precision('Product Unit of Measure'),
-        readonly=True,
     )
 
     delivery_status = fields.Selection([
@@ -34,7 +30,6 @@ class SaleOrderLine(models.Model):
         ('to deliver', 'To Deliver'),
         ('delivered', 'Delivered'),
     ],
-        string='Delivery Status',
         compute='_compute_delivery_status',
         store=True,
         readonly=True,
@@ -65,12 +60,10 @@ class SaleOrderLine(models.Model):
 
             if float_compare(
                     line.all_qty_delivered, line.product_uom_qty,
-                    # line.qty_delivered, line.product_uom_qty,
                     precision_digits=precision) == -1:
                 delivery_status = 'to deliver'
             elif float_compare(
                     line.all_qty_delivered, line.product_uom_qty,
-                    # line.qty_delivered, line.product_uom_qty,
                     precision_digits=precision) >= 0:
                 delivery_status = 'delivered'
             else:
@@ -117,7 +110,7 @@ class SaleOrderLine(models.Model):
     def _get_protected_fields(self):
         if self._context.get('bypass_protecion'):
             return []
-        return super(SaleOrderLine, self)._get_protected_fields()
+        return super()._get_protected_fields()
 
     @api.onchange('product_uom_qty')
     def _onchange_product_uom_qty(self):
@@ -148,71 +141,75 @@ class SaleOrderLine(models.Model):
         return {}
 
     @api.multi
-    def _get_delivered_qty(self):
-        qty = super(SaleOrderLine, self)._get_delivered_qty()
+    def compute_qty_with_bom_phantom(self):
         # parcheamos las devoluciones para los kits, lo hacemos analogo
         # a como hace odoo en la entrega, basicamente solo consideramos
         # devuelto si se devolvió todo (odoo considera entregado si se entrego
         # todo)
-        bom_enable = 'bom_ids' in self.env['product.template']._fields
-        if bom_enable:
-            bom = self.env['mrp.bom']._bom_find(
-                product=self.product_id)
-            if bom.type == 'phantom':
-                precision = self.env['decimal.precision'].precision_get(
-                    'Product Unit of Measure')
-                bom_returned = {}
+        self.ensure_one()
+        precision = self.env['decimal.precision'].precision_get(
+            'Product Unit of Measure')
+        call_from_return = self._context.get('returned', False)
+        qty = self.qty_delivered if not call_from_return else 0.0
+        bom = self.env['mrp.bom']._bom_find(product=self.product_id)
+        bom_returned = {}
+        bom_returned[bom.id] = False
+        product_uom_qty_bom = self.product_uom._compute_quantity(
+            self.product_uom_qty, bom.product_uom_id)
+        bom_exploded = bom.explode(
+            self.product_id, product_uom_qty_bom)
+        for bom_line in bom_exploded[1:][0]:
+            returned_qty = 0.0
+            for move in self.move_ids.filtered(
+                    lambda r: (
+                        r.product_id == bom_line[0].product_id and
+                        r.state == 'done' and
+                        not r.scrapped and
+                        r.location_dest_id.usage != "customer" and
+                        r.to_refund)):
+                returned_qty += move.product_uom._compute_quantity(
+                    move.product_uom_qty,
+                    bom_line[0].product_uom_id)
+            if float_compare(
+                    returned_qty, bom_line[1].get('qty', 0.0),
+                    precision_digits=precision) < 0:
                 bom_returned[bom.id] = False
-                product_uom_qty_bom = self.product_uom._compute_quantity(
-                    self.product_uom_qty, bom.product_uom_id)
-                bom_exploded = bom.explode(
-                    self.product_id, product_uom_qty_bom)
-                for bom_line in bom_exploded[1:][0]:
-                    returned_qty = 0.0
-                    for move in self.move_ids.filtered(
-                            lambda r: (
-                                r.product_id == bom_line[0].product_id and
-                                r.state == 'done' and
-                                not r.scrapped and
-                                r.location_dest_id.usage != "customer" and
-                                r.to_refund)):
-                        returned_qty += move.product_uom._compute_quantity(
-                            move.product_uom_qty,
-                            bom_line[0].product_uom_id)
-                    if float_compare(
-                            returned_qty, bom_line[1].get('qty', 0.0),
-                            precision_digits=precision) < 0:
-                        bom_returned[bom.id] = False
-                    else:
-                        bom_returned[bom.id] = True
-                if bom_returned and any(bom_returned.values()):
-                    self.qty_returned = self.product_uom_qty
-                    return 0.0
-                elif bom_returned:
-                    return qty
-
-        # every time delivered qty is updated, we update qty returned
-        self._get_qty_returned()
+            else:
+                bom_returned[bom.id] = True
+        if bom_returned and any(
+                bom_returned.values()) and not call_from_return:
+            qty = 0.0
+        elif bom_returned and any(bom_returned.values()) and call_from_return:
+            qty = self.product_uom_qty
         return qty
 
-    @api.multi
-    def _get_qty_returned(self):
-        """
-        This method is called in the '_get_delivered_qty' method
-        to update the 'qty returned' each time the 'qty
-         delivered' is updated.
-        """
-        for rec in self:
+    def _compute_qty_delivered(self):
+        super()._compute_qty_delivered()
+        bom_enable = 'bom_ids' in self.env['product.template']._fields
+        if bom_enable:
+            for line in self.filtered(lambda l: self.env['mrp.bom']._bom_find(
+                    product=l.product_id).type == 'phantom'):
+                line.qty_delivered = line.compute_qty_with_bom_phantom()
+
+    @api.depends('move_ids.state', 'move_ids.scrapped',
+                 'move_ids.product_uom_qty', 'move_ids.product_uom')
+    def _compute_qty_returned(self):
+        for line in self:
             qty_returned = 0.0
             # we use same method as in sale_stock_picking_return_invoicing
-            for move in rec.mapped('move_ids').filtered(
+            for move in line.mapped('move_ids').filtered(
                 lambda r: (r.state == 'done' and
                            not r.scrapped and
                            r.location_dest_id.usage != "customer" and
                            r.to_refund)):
                 qty_returned += move.product_uom._compute_quantity(
-                    move.product_uom_qty, rec.product_uom)
-            rec.qty_returned = qty_returned
+                    move.product_uom_qty, line.product_uom)
+            bom_enable = 'bom_ids' in self.env['product.template']._fields
+            if bom_enable and self.env['mrp.bom']._bom_find(
+                    product=line.product_id).type == 'phantom':
+                qty_returned = line.with_context(
+                    returned=True).compute_qty_with_bom_phantom()
+            line.qty_returned = qty_returned
 
     @api.depends('qty_returned')
     def _get_to_invoice_qty(self):
@@ -224,7 +221,7 @@ class SaleOrderLine(models.Model):
         odoo ya lo descuenta a la cantidad entregada y automáticamente lo
         termina facturando
         """
-        super(SaleOrderLine, self)._get_to_invoice_qty()
+        super()._get_to_invoice_qty()
         for line in self:
             # igual que por defecto, si no en estos estados, no hay a facturar
             if line.order_id.state not in ['sale', 'done']:
@@ -236,8 +233,7 @@ class SaleOrderLine(models.Model):
 
     @api.onchange('product_uom_qty', 'product_uom', 'route_id')
     def _onchange_product_id_check_availability(self):
-        res = super(SaleOrderLine,
-                    self)._onchange_product_id_check_availability()
+        res = super()._onchange_product_id_check_availability()
         if self.order_id.warehouse_id.disable_sale_stock_warning or False:
             res.update({'warning': {}})
         return res
