@@ -1,0 +1,8 @@
+<odoo noupdate="1">
+     <record id="portal_sale_order_line_user_rule" model="ir.rule">
+        <field name="domain_force">[('order_id.partner_id','child_of',[user.commercial_partner_id.id])]</field>
+    </record>
+    <record id="portal_sale_order_user_rule" model="ir.rule">
+        <field name="domain_force">[('partner_id','child_of',[user.commercial_partner_id.id])]</field>
+    </record>
+</odoo>
