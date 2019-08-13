@@ -5,5 +5,12 @@
             <li><a href="/web" groups="portal_sale_distributor.group_portal_distributor" role="menuitem">My Sale Orders</a></li>
         </xpath>
     </template>
+    <template id="portal_my_summary" name="Portal My Summary : Partner Summary" inherit_id="portal.portal_my_home" priority="40">
+        <xpath expr="//ul[hasclass('o_portal_docs')]" position="inside">
+            <li class="list-group-item">
+                <a href="/my/summary">Summary</a>
+            </li>
+        </xpath>
+    </template>
 
 </odoo>
