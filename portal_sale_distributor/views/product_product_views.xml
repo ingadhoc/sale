@@ -1,5 +1,9 @@
 <?xml version="1.0"?>
 <odoo>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2525adc3... [ADD] portal_sale_distributor: Some changes in portal_sale_distributor
     <record id="view_stock_product_tree" model="ir.ui.view">
         <field name="name">product.product.inherit</field>
         <field name="model">product.product</field>

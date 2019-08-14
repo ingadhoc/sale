@@ -41,6 +41,7 @@
         'views/portal_sale_views.xml',
         'views/portal_my_account_views.xml',
         'views/product_product_views.xml',
+        'views/product_template_views.xml',
         'views/portal_account_templates.xml',
         'views/portal_templates.xml',
     ],
