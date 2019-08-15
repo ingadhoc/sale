@@ -3,16 +3,16 @@
 # * portal_sale_distributor
 # 
 # Translators:
-# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2019
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019
+# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-13 23:23+0000\n"
+"POT-Creation-Date: 2019-08-14 17:55+0000\n"
 "PO-Revision-Date: 2018-05-14 17:49+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019\n"
+"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2019\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,101 +21,14 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: portal_sale_distributor
-#: code:addons/portal_sale_distributor/controllers/portal_account.py:24
-#, python-format
-msgid "All"
-msgstr ""
-
-#. module: portal_sale_distributor
-#: model:ir.ui.view,arch_db:portal_sale_distributor.view_order_form
-msgid "Confirm Sale"
-msgstr "Confirmar Venta"
-
-#. module: portal_sale_distributor
-#: model:ir.model.fields,field_description:portal_sale_distributor.field_sale_order_line_discount_readonly
-msgid "Discount (%)"
-msgstr "Descuento (%)"
-
-#. module: portal_sale_distributor
-#: model:ir.ui.view,arch_db:portal_sale_distributor.portal_invoice_report
-msgid "Documento"
-msgstr ""
-
-#. module: portal_sale_distributor
-#: code:addons/portal_sale_distributor/controllers/portal_account.py:31
-#, python-format
-msgid "Due Date"
-msgstr ""
-
-#. module: portal_sale_distributor
 #: model:ir.model,name:portal_sale_distributor.model_mail_thread
 msgid "Email Thread"
 msgstr "Hilo de mensajes"
 
 #. module: portal_sale_distributor
-#: model:ir.ui.view,arch_db:portal_sale_distributor.portal_invoice_report
-msgid "Fecha"
-msgstr ""
-
-#. module: portal_sale_distributor
-#: model:ir.ui.view,arch_db:portal_sale_distributor.portal_invoice_report
-msgid "Importe"
-msgstr ""
-
-#. module: portal_sale_distributor
-#: code:addons/portal_sale_distributor/controllers/portal_account.py:30
-#, python-format
-msgid "Invoice Date"
-msgstr ""
-
-#. module: portal_sale_distributor
-#: model:ir.actions.act_url,name:portal_sale_distributor.action_my_account
-#: model:ir.ui.menu,name:portal_sale_distributor.my_account
-msgid "My Account"
-msgstr "Mi Cuenta"
-
-#. module: portal_sale_distributor
-#: model:ir.ui.view,arch_db:portal_sale_distributor.sale_order_link
-msgid "My Sale Orders"
-msgstr "Mis Pedidos"
-
-#. module: portal_sale_distributor
-#: code:addons/portal_sale_distributor/controllers/portal_account.py:25
-#, python-format
-msgid "Open"
-msgstr ""
-
-#. module: portal_sale_distributor
-#: model:ir.ui.view,arch_db:portal_sale_distributor.portal_invoice_report
-msgid "Pagos"
-msgstr ""
-
-#. module: portal_sale_distributor
-#: code:addons/portal_sale_distributor/models/sale_order.py:19
-#, python-format
-msgid "Pedido confirmado por %s"
-msgstr "Pedido confirmado por %s"
-
-#. module: portal_sale_distributor
-#: model:res.groups,name:portal_sale_distributor.group_portal_distributor
-msgid "Portal - Distributor"
-msgstr "Portal - Distributor"
-
-#. module: portal_sale_distributor
-#: model:ir.ui.view,arch_db:portal_sale_distributor.view_order_form
-msgid "Print"
-msgstr "Imprimir"
-
-#. module: portal_sale_distributor
-#: model:ir.model,name:portal_sale_distributor.model_product_product
-msgid "Product"
-msgstr "Producto"
-
-#. module: portal_sale_distributor
-#: model:ir.actions.act_window,name:portal_sale_distributor.action_products_portal_tree
-#: model:ir.ui.menu,name:portal_sale_distributor.products
-msgid "Products"
-msgstr "Productos"
+#: model:ir.model,name:portal_sale_distributor.model_product_template
+msgid "Product Template"
+msgstr "Plantilla de producto"
 
 #. module: portal_sale_distributor
 #: model:ir.model,name:portal_sale_distributor.model_sale_order
@@ -123,38 +36,6 @@ msgid "Quotation"
 msgstr "Presupuesto"
 
 #. module: portal_sale_distributor
-#: model:ir.ui.menu,name:portal_sale_distributor.quotations
-msgid "Quotations"
-msgstr "Presupuestos"
-
-#. module: portal_sale_distributor
-#: code:addons/portal_sale_distributor/controllers/portal_account.py:32
-#, python-format
-msgid "Reference"
-msgstr ""
-
-#. module: portal_sale_distributor
-#: model:ir.ui.menu,name:portal_sale_distributor.sale_menu
-msgid "Sales"
-msgstr "Ventas"
-
-#. module: portal_sale_distributor
-#: model:ir.ui.menu,name:portal_sale_distributor.sale_order
-msgid "Sales Order"
-msgstr "Ordenes de Venta"
-
-#. module: portal_sale_distributor
 #: model:ir.model,name:portal_sale_distributor.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Línea de pedido de venta"
-
-#. module: portal_sale_distributor
-#: code:addons/portal_sale_distributor/controllers/portal_account.py:33
-#, python-format
-msgid "Status"
-msgstr "Estado"
-
-#. module: portal_sale_distributor
-#: model:ir.ui.view,arch_db:portal_sale_distributor.portal_my_summary
-msgid "Summary"
-msgstr ""
