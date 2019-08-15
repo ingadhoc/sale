@@ -1,13 +1,6 @@
 <?xml version="1.0"?>
 <odoo>
 
-    <menuitem
-        id="catalog_menu"
-        name="Catalog"
-        groups="group_portal_distributor"
-        action="action_product_template_portal_tree"
-        web_icon="portal_sale_distributor,static/description/icon.png"
-        />
 
     <record model="ir.actions.act_window" id="action_product_template_portal_tree">
         <field name="name">Products</field>
@@ -16,6 +9,14 @@
         <field name="view_id" ref="product.product_template_kanban_view"/>
         <field name="context">{"portal_products":True}</field>
     </record>
+
+    <menuitem
+        id="catalog_menu"
+        name="Catalog"
+        groups="group_portal_distributor"
+        action="action_product_template_portal_tree"
+        web_icon="portal_sale_distributor,static/description/icon.png"
+        />
 
     <record id="view_stock_product_template_tree" model="ir.ui.view">
         <field name="name">product.template.inherit</field>
