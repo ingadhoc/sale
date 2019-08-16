@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <template id="so_template_public" name="SO Template Public" inherit_id="sale_quotation_builder.so_template" primary="True">
+        <xpath expr="//div[hasclass('alert', 'alert-info', 'alert-dismissable')]" position="replace"/>
+        <xpath expr="//t[@t-foreach='template.sale_order_template_line_ids']//div[hasclass('alert', 'alert-info', 'alert-dismissable')]" position="replace"/>
+        <xpath expr="//t[@t-foreach='template.sale_order_template_option_ids']//div[hasclass('alert', 'alert-info', 'alert-dismissable')]" position="replace"/>
+        <xpath expr="//div[hasclass('css_editable_mode_hidden')]" position="replace"/>
+    </template>
+
+</odoo>
