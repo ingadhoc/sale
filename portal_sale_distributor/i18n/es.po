@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-15 19:26+0000\n"
+"POT-Creation-Date: 2019-08-16 09:16+0000\n"
 "PO-Revision-Date: 2018-05-14 17:49+0000\n"
 "Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2019\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
@@ -24,12 +24,12 @@ msgstr ""
 #: code:addons/portal_sale_distributor/controllers/portal_account.py:24
 #, python-format
 msgid "All"
-msgstr ""
+msgstr "Todas"
 
 #. module: portal_sale_distributor
 #: model:ir.ui.menu,name:portal_sale_distributor.catalog_menu
 msgid "Catalog"
-msgstr ""
+msgstr "Catálogo"
 
 #. module: portal_sale_distributor
 #: model:ir.ui.view,arch_db:portal_sale_distributor.view_order_form
@@ -88,7 +88,7 @@ msgstr "Mis Pedidos"
 #: code:addons/portal_sale_distributor/controllers/portal_account.py:25
 #, python-format
 msgid "Open"
-msgstr ""
+msgstr "Impagas"
 
 #. module: portal_sale_distributor
 #: model:ir.ui.view,arch_db:portal_sale_distributor.portal_invoice_report
@@ -161,4 +161,4 @@ msgstr "Estado"
 #. module: portal_sale_distributor
 #: model:ir.ui.view,arch_db:portal_sale_distributor.portal_my_summary
 msgid "Summary"
-msgstr ""
+msgstr "Resumen de cuenta"
