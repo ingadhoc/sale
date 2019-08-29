@@ -7,8 +7,7 @@ from odoo import models, fields, api
 
 class SaleGlobalDiscountWizard(models.TransientModel):
 
-    _name = "sale.order.global_discount.wizard"
-    _description = "Sale Order Global Discount"
+    _inherit = "sale.order.global_discount.wizard"
 
     discount1 = fields.Boolean(
         string='Discount 1',
