@@ -135,3 +135,10 @@ class SaleOrder(models.Model):
             # by onchanges, which are not triggered when doing a create.
             inv.compute_taxes()
         return invoice_ids
+
+    @api.multi
+    def open_quotation(self):
+        """ Open sale Preview in a new Tab """
+        res = super(SaleOrder, self).open_quotation()
+        res.update({'target': 'new'})
+        return res
