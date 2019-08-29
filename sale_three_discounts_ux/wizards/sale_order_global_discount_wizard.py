@@ -8,6 +8,7 @@ from odoo import models, fields, api
 class SaleGlobalDiscountWizard(models.TransientModel):
 
     _name = "sale.order.global_discount.wizard"
+    _description = "Sale Order Global Discount"
 
     discount1 = fields.Boolean(
         string='Discount 1',
@@ -18,15 +19,9 @@ class SaleGlobalDiscountWizard(models.TransientModel):
     discount3 = fields.Boolean(
         string='Discount 3',
     )
-    discount1_amount = fields.Float(
-        '(%)',
-    )
-    discount2_amount = fields.Float(
-        '(%)',
-    )
-    discount3_amount = fields.Float(
-        '(%)',
-    )
+    discount1_amount = fields.Float()
+    discount2_amount = fields.Float()
+    discount3_amount = fields.Float()
     amount = fields.Float(
         required=False,
     )
