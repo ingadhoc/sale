@@ -8,11 +8,11 @@
             <field name="amount" position="replace">
                 <group col="4">
                         <field name="discount1"/>
-                        <field name="discount1_amount" attrs="{'readonly': [('discount1','!=',True)], 'required':[('discount1','=',True)]}"/>
+                        <field name="discount1_amount" string="(%)" attrs="{'readonly': [('discount1','!=',True)], 'required':[('discount1','=',True)]}"/>
                         <field name="discount2"/>
-                        <field name="discount2_amount" attrs="{'readonly': [('discount2','!=',True)], 'required':[('discount2','=',True)]}"/>
+                        <field name="discount2_amount" string="(%)" attrs="{'readonly': [('discount2','!=',True)], 'required':[('discount2','=',True)]}"/>
                         <field name="discount3"/>
-                        <field name="discount3_amount" attrs="{'readonly': [('discount3','!=',True)], 'required':[('discount3','=',True)]}"/>
+                        <field name="discount3_amount" string="(%)"  attrs="{'readonly': [('discount3','!=',True)], 'required':[('discount3','=',True)]}"/>
                 </group>
             </field>
         </field>

@@ -10,32 +10,32 @@
    :target: https://www.gnu.org/licenses/agpl
    :alt: License: AGPL-3
 
-==================
-Sales Timesheet UX
-==================
+==============================
+Online Quotes Templates Public
+==============================
 
-#. When we have a product in sale order that is type service and has been
-   configured as `Create a task in a new project` or `Create a new project but
-   no task`, instead of create a new empty project will create the project as
-   copy of one template product we set via product  in the new field "Create
-   from project"
+This module makes website quote templates public. You need to change in the quote url "template" for "public_template"
 
 Installation
 ============
 
 To install this module, you need to:
 
-#. Just install module.
+#. Just install.
 
 Configuration
 =============
 
 To configure this module, you need to:
 
-#. Nothing to configure
+#. Nothing to configure.
 
 Usage
 =====
+
+To use this module, you need to:
+
+#. Just use it.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
@@ -45,7 +45,7 @@ Bug Tracker
 ===========
 
 Bugs are tracked on `GitHub Issues
-<https://github.com/ingadhoc/sale/issues>`_. In case of trouble, please
+<https://github.com/ingadhoc/enterprise-extensions/issues>`_. In case of trouble, please
 check there if your issue has already been reported. If you spotted it first,
 help us smashing it by providing a detailed and welcomed feedback.
 

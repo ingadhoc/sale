@@ -46,7 +46,7 @@ class SaleOrder(models.Model):
             raise UserError(_(
                 'Unable to cancel sale order %s as some receptions'
                 ' have already been done.') % (order.name))
-        return super(SaleOrder, self).action_cancel()
+        return super().action_cancel()
 
     # dejamos el depends a qty_delivered por mas que usamos all_qty_delivered
     # total son iguales pero qty_delivered es storeado
@@ -82,12 +82,12 @@ class SaleOrder(models.Model):
     @api.multi
     def write(self, vals):
         self.check_force_delivery_status(vals)
-        return super(SaleOrder, self).write(vals)
+        return super().write(vals)
 
     @api.model
     def create(self, vals):
         self.check_force_delivery_status(vals)
-        return super(SaleOrder, self).create(vals)
+        return super().create(vals)
 
     @api.model
     def check_force_delivery_status(self, vals):

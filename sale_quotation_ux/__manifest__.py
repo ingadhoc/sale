@@ -18,26 +18,22 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Margin Ux',
+    'name': 'Online Quotes Templates Public',
     'version': '12.0.1.0.0',
-    'category': 'Sales & Purchases',
+    'author': 'ADHOC SA',
+    'category': 'Support',
     'sequence': 14,
     'summary': '',
-    'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
-    'images': [
-    ],
     'depends': [
-        'sale_ux',
-        'sale_margin',
+        'sale_quotation_builder',
     ],
     'data': [
-        'views/sale_order_line_views.xml',
-    ],
-    'demo': [
+        'views/website_quote_views.xml',
+        'security/ir.model.access.csv',
     ],
     'installable': True,
-    'auto_install': True,
+    'auto_install': False,
     'application': False,
 }

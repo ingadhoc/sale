@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_website_quote_tempate_all,access_website_quote_tempate_all,sale_quotation_builder.model_sale_order_template,,1,0,0,0
