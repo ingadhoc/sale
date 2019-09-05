@@ -5,16 +5,15 @@
 from odoo import models
 
 
-class ProcurementRule(models.Model):
-    _inherit = 'procurement.rule'
+class StockRule(models.Model):
+    _inherit = 'stock.rule'
 
     def _get_stock_move_values(
             self, product_id, product_qty, product_uom, location_id, name,
             origin, values, group_id):
-        result = super(
-            ProcurementRule, self)._get_stock_move_values(
-                product_id, product_qty, product_uom, location_id, name,
-                origin, values, group_id)
+        result = super()._get_stock_move_values(
+            product_id, product_qty, product_uom, location_id, name,
+            origin, values, group_id)
         sale_line_id = values.get('sale_line_id', False)
         if sale_line_id:
             result['analytic_tag_ids'] = [
