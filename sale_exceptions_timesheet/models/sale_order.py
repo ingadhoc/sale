@@ -13,4 +13,4 @@ class SaleOrder(models.Model):
     def action_confirm(self):
         if self.detect_exceptions():
             return self._popup_exceptions()
-        return super(SaleOrder, self).action_confirm()
+        return super().action_confirm()
