@@ -16,7 +16,7 @@ class SaleOrder(models.Model):
         * not zero: we keep qty so it is set to be invoiced but we set it
         as delivered so you dont need to set it manually
         """
-        sol = super(SaleOrder, self)._create_delivery_line(carrier, price_unit)
+        sol = super()._create_delivery_line(carrier, price_unit)
         if not price_unit:
             sol._write({'product_uom_qty': 0.0})
         return sol
