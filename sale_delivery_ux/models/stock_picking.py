@@ -20,7 +20,7 @@ class StockPicking(models.Model):
         button or automatically by the picking and that the user has not change
         for any reason
         """
-        super(StockPicking, self)._add_delivery_cost_to_so()
+        super()._add_delivery_cost_to_so()
         deliver_lines = self.sale_id.order_line.filtered(lambda x: (
             x.is_delivery and not x.qty_delivered and
             x.product_id.type == 'service' and x.product_uom_qty == 1.0))
