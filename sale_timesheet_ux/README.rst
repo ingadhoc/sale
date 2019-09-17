@@ -14,11 +14,7 @@
 Sales Timesheet UX
 ==================
 
-#. When we have a product in sale order that is type service and has been
-   configured as `Create a task in a new project` or `Create a new project but
-   no task`, instead of create a new empty project will create the project as
-   copy of one template product we set via product  in the new field "Create
-   from project"
+#. Replaces the 'Overview' string with an 'Info' icon on projects kanban view.
 
 Installation
 ============

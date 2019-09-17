@@ -10,7 +10,6 @@
         "sale_timesheet",
     ],
     "data": [
-        "views/product_template_views.xml",
         "views/project_project_views.xml",
     ],
     "demo": [
