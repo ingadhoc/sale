@@ -35,5 +35,5 @@ class PortalSummary(Controller):
             ('Content-Type', 'application/vnd.ms-excel'),
             ('Content-Length', len(xls)),
             ('Content-Disposition',
-             content_disposition('Resumen de Cuenta' + '.xlsx'))]
+             content_disposition('Resumen de Cuenta' + '.xls'))]
         return request.make_response(xls, headers=xlshttpheaders)
