@@ -11,7 +11,6 @@ class ProductProduct(models.Model):
     _inherit = "product.product"
 
     qty = fields.Float(
-        'Quantity',
         compute='_compute_qty',
     )
 
@@ -34,7 +33,7 @@ class ProductProduct(models.Model):
             for rec in self:
                 rec._set_qty(qty)
             return True
-        return super(ProductProduct, self).write(vals)
+        return super().write(vals)
 
     @api.multi
     def _compute_qty(self):
@@ -118,6 +117,7 @@ class ProductProduct(models.Model):
             placeholder.addprevious(
                 etree.Element('field', {
                     'name': 'qty',
+                    'string' : _('Quantity'),
                     # we force editable no matter user rights
                     'readonly': '0',
                 }))
