@@ -137,8 +137,8 @@ class SaleOrder(models.Model):
         return invoice_ids
 
     @api.multi
-    def open_quotation(self):
+    def preview_sale_order(self):
         """ Open sale Preview in a new Tab """
-        res = super(SaleOrder, self).open_quotation()
+        res = super().preview_sale_order()
         res.update({'target': 'new'})
         return res
