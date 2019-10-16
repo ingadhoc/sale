@@ -22,6 +22,7 @@ class SaleOrderType(models.Model):
         'default journal will be used'
     )
     invoice_company_id = fields.Many2one(
+        string="Invoice Company",
         related='journal_id.company_id',
     )
     invoicing_atomation = fields.Selection([
