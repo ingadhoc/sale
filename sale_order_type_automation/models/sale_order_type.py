@@ -23,7 +23,6 @@ class SaleOrderType(models.Model):
     )
     invoice_company_id = fields.Many2one(
         related='journal_id.company_id',
-        readonly=True
     )
     invoicing_atomation = fields.Selection([
         ('none', 'None'),

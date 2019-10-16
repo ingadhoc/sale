@@ -9,7 +9,7 @@ class TestSaleOrderTypeAutomation(common.TransactionCase):
 
     def setUp(self):
         # TODO mejorar los tests
-        super(TestSaleOrderTypeAutomation, self).setUp()
+        super().setUp()
         self.sale_order_model = self.env['sale.order']
         self.sale_order_type = self.env.ref('sale_order_type.normal_sale_type')
         self.sequence = self.env['ir.sequence'].create({
