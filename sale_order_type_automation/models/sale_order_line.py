@@ -20,4 +20,4 @@ class SaleOrderLine(models.Model):
         if self.order_id.type_id.journal_id:
             self = self.with_context(
                 force_company=self.order_id.type_id.journal_id.company_id.id)
-        return super(SaleOrderLine, self).invoice_line_create(invoice_id, qty)
+        return super().invoice_line_create(invoice_id, qty)

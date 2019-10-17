@@ -46,4 +46,4 @@ class SaleOrder(models.Model):
                         'If you use a sale type with invoice policy "Before '
                         'Delivery", then every sale line must be invoiced and '
                         'paid before you can confirm the sale order'))
-        return super(SaleOrder, self).action_confirm()
+        return super().action_confirm()

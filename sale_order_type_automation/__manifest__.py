@@ -38,6 +38,6 @@
     'data': [
         'views/sale_order_type_views.xml',
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': True,
 }
