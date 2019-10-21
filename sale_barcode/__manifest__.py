@@ -18,26 +18,28 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Order Type Automation',
+    'name': 'Sale Barcode',
     'version': '12.0.1.0.0',
+    'category': 'Sales',
+    'sequence': 14,
+    'summary': '',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
-    'depends': [
-        'account',
-        'sale_order_type',
-        # dependemos de este para no generar modulos puente y porque nosotros
-        # queremos que el pago creado sea un payment group
-        'account_payment_group',
-        'stock_ux',
-        'sale_multic_fix',
+    'images': [
     ],
-    'category': 'Sale Management',
-    'demo': [
+    'depends': [
+        'sale',
+        'barcodes',
     ],
     'data': [
-        'views/sale_order_type_views.xml',
+        'views/assets.xml',
+        'views/sale_order_view.xml',
+        'wizards/res_config_settings_view.xml',
+    ],
+    'demo': [
     ],
     'installable': True,
-    'auto_install': True,
+    'auto_install': False,
+    'application': False,
 }

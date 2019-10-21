@@ -10,19 +10,20 @@
    :target: https://www.gnu.org/licenses/agpl
    :alt: License: AGPL-3
 
-==================
-Sales Timesheet UX
-==================
+============
+Sale Barcode
+============
 
-#. Replaces the 'Overview' string with an 'Info' icon on projects kanban view.
-* Whe confirming a sale order with service products that creates new project, if the SO has an analytic account that is related to ONE project, then we don't create a project but instead link the new tasks to this project.
+Add the posibility to manage sale orders with barcode interface.
+Only need to create the sale order, set the partner and then start to scanning the products.
+You can use also the barcoders in order to save / edit / print / confirm order / cancel a sale order.
 
 Installation
 ============
 
 To install this module, you need to:
 
-#. Just install module.
+#. Only need to install the module
 
 Configuration
 =============
@@ -33,6 +34,10 @@ To configure this module, you need to:
 
 Usage
 =====
+
+To use this module, you need to:
+
+#. To view Sale Orders Lines, go to: Sales/Sales/Sale Lines
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
