@@ -25,17 +25,13 @@
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
-    'images': [
-    ],
     'depends': [
         'sale_order_lot_selection',
     ],
     'data': [
         'views/sale_order_views.xml',
     ],
-    'demo': [
-    ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
