@@ -12,13 +12,11 @@ class SaleOrder(models.Model):
         states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
         help='Set days of validity for Sales Order',
     )
-
     validity_date = fields.Date(
         help="Date until when quotation is valid",
         readonly=True,
         track_visibility='onchange',
     )
-
     date_order = fields.Datetime(
         copy=True,
     )
@@ -35,13 +33,13 @@ class SaleOrder(models.Model):
     @api.constrains('company_id')
     def onchange_company(self):
         for rec in self:
-            rec.validity_days = rec.company_id.sale_order_validity_days
+            rec.validity_days = rec.company_id.quotation_validity_days
 
     @api.onchange('validity_days')
     def onchange_validity_days(self):
-        company_validity_days = self.company_id.sale_order_validity_days
+        company_validity_days = self.company_id.quotation_validity_days
         if self.validity_days > company_validity_days:
-            self.validity_days = self.company_id.sale_order_validity_days
+            self.validity_days = self.company_id.quotation_validity_days
             warning = {
                 'title': _('Warning!'),
                 'message': _(
@@ -53,18 +51,11 @@ class SaleOrder(models.Model):
     @api.multi
     def action_confirm(self):
         self.ensure_one()
-        self.check_validity()
+        if self.is_expired:
+            raise UserError(_(
+                'You can not confirm this quotation as it was valid until'
+                ' %s! Please Update Validity.') % (self.validity_date))
         return super(SaleOrder, self).action_confirm()
-
-    @api.multi
-    def check_validity(self):
-        if self.validity_date:
-            validity_date = fields.Datetime.from_string(self.validity_date)
-            now = fields.Datetime.from_string(fields.Datetime.now())
-            if validity_date < now:
-                raise UserError(_(
-                    'You can not confirm this quoatation as it was valid until'
-                    ' %s! Please Update Validity.') % (self.validity_date))
 
     @api.multi
     def update_date_prices_and_validity(self):

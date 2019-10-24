@@ -14,12 +14,11 @@
 Sale Order Validity
 ===================
 
-* This module adds allowes to set how many days validity the quotation is.
-* By default the number of days of validity is chosen from the company.
-* It is posible to modify the numbers of days only if the new number is lower than the one set in the company
-* The validation date is calculated as the date the quotation was created + days validty
-* If the validaty date is in the past it is not posible to validate de quotation
-* A new buton is created to reset the validity date and resete the prices of every line.
+Exchange the odoo SO validity functionality:
+* Add validity days on the SO (computed from the company value) and allow the user to modify this value only if the new number is lower than the one set in the company
+* The validation date is calculated as the date the quotation was created + validty days
+* Block SO validation if it's expired (odoo do this only for portal customers, we also do this for backend)
+* A new buton is created to reset the validity date and reset the prices of every line.
 
 Installation
 ============
