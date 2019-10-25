@@ -22,7 +22,7 @@ class SaleOrderLine(models.Model):
             'sale', 'done'] and sol.order_id.type_id.invoice_policy !=
                 'by_product'):
             type_policy = line.order_id.type_id.invoice_policy
-            if type_policy in ['order', 'prepaid']:
+            if type_policy in ['order', 'prepaid', 'prepaid_block_delivery']:
                 line.qty_to_invoice = (
                     line.product_uom_qty - line.qty_returned -
                     line.qty_invoiced)

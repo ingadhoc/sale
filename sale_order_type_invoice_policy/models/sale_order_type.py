@@ -10,7 +10,8 @@ class SaleOrderType(models.Model):
 
     invoice_policy = fields.Selection([
         ('by_product', 'Defined by Product'),
-        ('prepaid', 'Before Delivery'),
+        ('prepaid', 'Prepaid - Block Reserve'),
+        ('prepaid_block_delivery', 'Prepaid - Block Delivery'),
         ('order', 'Ordered quantities'),
         ('delivery', 'Delivered quantities'),
     ],

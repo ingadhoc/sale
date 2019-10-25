@@ -1,0 +1,15 @@
+<odoo>
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="name">stock.picking.form.view</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock_ux.view_picking_form"/>
+        <field name="arch" type="xml">
+            <button name="action_assign" position="attributes">
+                <attribute name="context">{'prepaid_raise': True}</attribute>
+            </button>
+            <button name="new_force_availability" position="attributes">
+                <attribute name="context">{'prepaid_raise': True}</attribute>
+            </button>
+        </field>
+    </record>
+</odoo>
