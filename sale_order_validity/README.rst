@@ -15,10 +15,10 @@ Sale Order Validity
 ===================
 
 Exchange the odoo SO validity functionality:
-* Add validity days on the SO (computed from the company value) and allow the user to modify this value only if the new number is lower than the one set in the company
-* The validation date is calculated as the date the quotation was created + validty days
-* Block SO validation if it's expired (odoo do this only for portal customers, we also do this for backend)
-* A new buton is created to reset the validity date and reset the prices of every line.
+* Add validity days on the SO (computed from the company value) and allow the user to modify this value only if the new number is lower than the one set in the company.
+* The validation date is calculated as the date the quotation was created + validity days.
+* Block SO validation if it's expired (odoo do this only for portal customers, we also do this for backend).
+* A new button is created to reset the validity date and reset the prices of every line.
 
 Installation
 ============
