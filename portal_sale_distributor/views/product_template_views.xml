@@ -7,7 +7,7 @@
         <field name="view_mode">kanban,tree</field>
         <field name="res_model">product.template</field>
         <field name="view_id" ref="product.product_template_kanban_view"/>
-        <field name="context">{"portal_products":True}</field>
+        <field name="context">{"portal_products":True, 'create': False}</field>
     </record>
 
     <menuitem

@@ -11,12 +11,19 @@ from collections import OrderedDict
 
 class PortalDistributorAccount(PortalAccount):
 
+    def _get_account_invoice_domain(self):
+        partner = request.env.user.partner_id
+        domain = [('type', 'in', ['out_invoice', 'out_refund']),
+                  ('message_partner_ids', 'child_of',
+                   [partner.commercial_partner_id.id]),
+                  ('state', 'in', ['open', 'paid', 'cancel'])]
+        return domain
+
     @http.route()
     def portal_my_invoices(
             self, page=1, date_begin=None, date_end=None, sortby=None,
             filterby=None, **kw):
         values = self._prepare_portal_layout_values()
-        partner = request.env.user.partner_id
         AccountInvoice = request.env['account.invoice']
 
         domain = self._get_account_invoice_domain()

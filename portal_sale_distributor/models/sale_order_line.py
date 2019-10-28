@@ -10,5 +10,4 @@ class SaleOrderLine(models.Model):
 
     discount_readonly = fields.Float(
         related='discount',
-        readonly=True,
     )

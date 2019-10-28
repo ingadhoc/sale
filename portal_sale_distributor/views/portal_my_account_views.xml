@@ -13,7 +13,7 @@
         name="My Account"
         action="action_my_account"
         groups="group_portal_distributor"
-        web_icon="account_invoicing,static/description/icon.png"
+        web_icon="account,static/description/icon.png"
         />
 
 </odoo>
