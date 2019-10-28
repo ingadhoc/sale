@@ -32,6 +32,7 @@
         'partner_identification',
         'sale_ux',
         'account_debt_management',
+        'sale_management',
     ],
     'demo': [
     ],
