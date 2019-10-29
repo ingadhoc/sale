@@ -62,10 +62,8 @@
                 <attribute name="invisible">1</attribute>
             </field>
             <xpath expr="//field[@name='order_line']/tree//field[@name='discount']" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </xpath>
-            <xpath expr="//field[@name='order_line']/tree//field[@name='discount']" position="after">
-                <field name="discount_readonly"/>
+                <attribute name="readonly">1</attribute>
+                <attribute name="force_save">1</attribute>
             </xpath>
             <!-- ocultamos pestaña otra información -->
             <xpath expr="//group[@name='sales_person']/../.." position="attributes">
