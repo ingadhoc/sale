@@ -31,6 +31,8 @@
         'delivery',
         'partner_identification',
         'sale_ux',
+        'account_debt_management',
+        'sale_management',
     ],
     'demo': [
     ],
@@ -40,8 +42,9 @@
         'views/portal_sale_views.xml',
         'views/portal_my_account_views.xml',
         'views/product_product_views.xml',
+        'views/product_template_views.xml',
         'views/portal_templates.xml',
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
 }

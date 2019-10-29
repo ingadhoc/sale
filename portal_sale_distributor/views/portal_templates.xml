@@ -1,8 +1,15 @@
 <odoo>
 
     <template id="sale_order_link" name="Link to backend" inherit_id="portal.frontend_layout">
-        <xpath expr="//li[@id='o_logout']" position="before">
-            <li><a href="/web" groups="portal_sale_distributor.group_portal_distributor" role="menuitem">My Sale Orders</a></li>
+        <xpath expr="//a[@id='o_logout']" position="before">
+            <a href="/web" class="dropdown-item" groups="portal_sale_distributor.group_portal_distributor" role="menuitem">My Sale Orders</a>
+        </xpath>
+    </template>
+    <template id="portal_my_summary" name="Portal My Summary : Partner Summary" inherit_id="portal.portal_my_home" priority="40">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <div class="list-group-item">
+                <a href="/my/summary">Summary</a>
+            </div>
         </xpath>
     </template>
 

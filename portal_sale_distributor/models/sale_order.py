@@ -16,7 +16,7 @@ class SaleOrder(models.Model):
     @api.multi
     def action_confirm_distributor(self):
         self.message_post(
-            _("Pedido confirmado por %s") % self.env.user.name,
+            body=_("Pedido confirmado por %s") % self.env.user.name,
             subtype='mt_comment')
         self = self.sudo()
         return self.action_confirm()
@@ -40,4 +40,4 @@ class SaleOrder(models.Model):
                 'portal_sale_distributor.group_portal_distributor'):
             return {}
         else:
-            return super(SaleOrder, self).onchange_partner_id_warning()
+            return super().onchange_partner_id_warning()

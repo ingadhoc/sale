@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<odoo>
+
+
+    <record model="ir.actions.act_window" id="action_product_template_portal_tree">
+        <field name="name">Products</field>
+        <field name="view_mode">kanban,tree</field>
+        <field name="res_model">product.template</field>
+        <field name="view_id" ref="product.product_template_kanban_view"/>
+        <field name="context">{"portal_products":True, 'create': False}</field>
+    </record>
+
+    <menuitem
+        id="catalog_menu"
+        name="Catalog"
+        groups="group_portal_distributor"
+        action="action_product_template_portal_tree"
+        web_icon="portal_sale_distributor,static/description/icon.png"
+        />
+
+    <record id="view_stock_product_template_tree" model="ir.ui.view">
+        <field name="name">product.template.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="stock.view_stock_product_template_tree"/>
+        <field name="groups_id" eval="[(4, ref('group_portal_distributor'))]"/>
+        <field name="arch" type="xml">
+            <field name="qty_available" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="virtual_available" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="product_template_tree_view" model="ir.ui.view">
+        <field name="name">product.template.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view"/>
+        <field name="groups_id" eval="[(4, ref('group_portal_distributor'))]"/>
+        <field name="arch" type="xml">
+            <field name="sequence" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="list_price" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>

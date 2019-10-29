@@ -142,7 +142,11 @@ class WebsiteSalePortal(WebsiteSale):
              '|', ("type", "in", ["delivery", "other"]),
              ("id", "=", order.partner_id.commercial_partner_id.id)],
             order='id desc')
-        values = {'order': order, 'shippings': shippings}
+        values = {
+            'order': order,
+            'website_sale_order': order,
+            'shippings': shippings,
+        }
         # Avoid useless rendering if called in ajax
         if post.get('xhr'):
             return 'ok'

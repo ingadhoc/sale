@@ -13,31 +13,31 @@
         <t t-call="website.layout">
             <t t-set="additional_title" position="attributes">Addresses</t>
         </t>
-        <a class="btn btn-default mb32" position="replace"/>
+        <a class="btn btn-secondary mb32" position="replace"/>
         <a href="/shop/confirm_order" position="replace"/>
 
     </template>
 
     <template id="portal_address_kanban" inherit_id="website_sale.address_kanban" primary="True">
-        <div class="panel-footer" position="replace"/>
-        <a class="btn btn-link pull-right fa fa-edit js_edit_address no-decoration" position="replace">
+        <div class="card-footer" position="replace"/>
+        <a class="btn btn-link float-right p-0 js_edit_address no-decoration" position="replace">
             <a t-att-href="'/portal/address/?partner_id='+str(contact.id)" t-if="not actual_partner or (ship.id in actual_partner.child_ids.ids)" class='btn btn-link pull-right fa fa-edit no-decoration' title="Edit this address"></a>
         </a>
     </template>
 
     <template id="portal_address" inherit_id="website_sale.address" primary="True">
         <t t-call="website_sale.wizard_checkout" position="replace"/>
-        <form name="/shop/checkout" position="attributes">
-            <attribute name="name">/portal/address</attribute>
+        <form action="/shop/address" position="attributes">
+            <attribute name="action">/portal/address</attribute>
         </form>
 
-        <a class="btn btn-primary pull-right mb32 a-submit a-submit-disable a-submit-loading" position="replace">
-            <a class="btn btn-primary pull-right mb32 a-submit a-submit-disable a-submit-loading">
+        <a class="btn btn-primary mb32 a-submit a-submit-disable a-submit-loading" position="replace">
+            <a class="btn btn-primary mb32 a-submit a-submit-disable a-submit-loading">
                 <span>Guardar </span><span class="fa fa-long-arrow-right" />
             </a>
         </a>
-        <a class="btn btn-default mb32" position="replace">
-            <a href="/portal/addresses" class="btn btn-default mb32">
+        <a class="btn btn-secondary mb32" position="replace">
+            <a href="/portal/addresses" class="btn btn-secondary mb32">
                 <span class="fa fa-long-arrow-left" /> Cancelar
             </a>
         </a>
