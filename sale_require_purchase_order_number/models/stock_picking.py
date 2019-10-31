@@ -12,10 +12,9 @@ class StockPicking(models.Model):
     require_purchase_order_number = fields.Boolean(
         string='Sale Require Origin',
         related='partner_id.require_purchase_order_number',
-        readonly=True,
     )
     manual_purchase_order_number = fields.Char(
-        'Purchase Order Number',
+        'PO Number',
         states={'cancel': [('readonly', True)],
                 'done': [('readonly', True)]},
     )
@@ -48,4 +47,4 @@ class StockPicking(models.Model):
             raise UserError(_(
                 'You cannot transfer products without a Purchase'
                 ' Order Number for this partner'))
-        return super(StockPicking, self).action_done()
+        return super().action_done()
