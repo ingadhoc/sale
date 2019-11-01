@@ -12,7 +12,6 @@ class AccountInvoice(models.Model):
     require_purchase_order_number = fields.Boolean(
         string='Sale Require Origin',
         related='partner_id.require_purchase_order_number',
-        readonly=True,
     )
     purchase_order_number = fields.Char(
         readonly=True,
@@ -29,4 +28,4 @@ class AccountInvoice(models.Model):
             raise UserError(_(
                 'You cannot confirm invoice without a'
                 ' Purchase Order Number for this partner'))
-        return super(AccountInvoice, self).invoice_validate()
+        return super().invoice_validate()

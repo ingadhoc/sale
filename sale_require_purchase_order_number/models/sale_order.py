@@ -13,7 +13,6 @@ class SaleOrder(models.Model):
         string='Sale Require Origin',
         related='partner_id.require_purchase_order_number',
         help='If true, required purchase order number in sale order',
-        readonly=True,
     )
     purchase_order_number = fields.Char(
         copy=False
@@ -35,11 +34,11 @@ class SaleOrder(models.Model):
             raise UserError(_(
                 'You cannot confirm a sales order without a'
                 ' Purchase Order Number for this partner'))
-        return super(SaleOrder, self).action_confirm()
+        return super().action_confirm()
 
     @api.multi
     def _prepare_invoice(self):
-        invoice_vals = super(SaleOrder, self)._prepare_invoice()
+        invoice_vals = super()._prepare_invoice()
         invoice_vals.update({
             'purchase_order_number': self.purchase_order_number})
         return invoice_vals
