@@ -14,11 +14,11 @@
 Sale Require Purchase Order Number
 ==================================
 
-This module Incorporate this:
+This module incorporates the following features:
 
-* Field "purchase order number" to sale order, picking and invoice.
-* Validate that the field is in these documents if the partner has the field "required number of PO". 
-* Purchase order number must be unique per partner
+* Field "purchase order number" on sale order, picking and invoice.
+* Validate that the field is in these documents if the partner has the field "required number of PO".
+* Purchase order number must be unique per partner.
 
 Installation
 ============
@@ -32,7 +32,7 @@ Configuration
 
 To configure this module, you need to:
 
-#. Set in the partner the boolean to required the "Purchase Order Number".
+#. Set in the partner the boolean to require the "Purchase Order Number".
 
 Usage
 =====
