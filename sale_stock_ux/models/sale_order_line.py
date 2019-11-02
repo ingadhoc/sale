@@ -187,7 +187,7 @@ class SaleOrderLine(models.Model):
         super()._compute_qty_delivered()
         bom_enable = 'bom_ids' in self.env['product.template']._fields
         if bom_enable:
-            for line in self.filtered(lambda l: self.env['mrp.bom']._bom_find(
+            for line in self.filtered(lambda l: l.product_id and self.env['mrp.bom']._bom_find(
                     product=l.product_id).type == 'phantom'):
                 line.qty_delivered = line.compute_qty_with_bom_phantom()
 
