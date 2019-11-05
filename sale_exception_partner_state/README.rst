@@ -14,7 +14,7 @@
 Sale Exception - Partner State Integration
 ==========================================
 
-Integrate partner_state and sale_exceptions, it adds the option to restrict sale orders confirmation for not approved partners globaly or depending a certain amount
+Integrate partner_state and sale_exceptions. It adds the option to restrict sale orders confirmation for not approved partners globaly or depending a certain amount.
 
 Installation
 ============
@@ -29,7 +29,7 @@ Configuration
 
 To configure this module, you need to:
 
-#. In Company/Configuration you set to restring sales.
+#. Go to Sales / Configuration / Settings / Quotations & Orders and set "Restrict sales?" as per your needs.
 
 
 Usage
