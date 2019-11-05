@@ -6,7 +6,6 @@
     <field name="description">You can not sell to an Unapproved Partner on this company</field>
     <field name="sequence">10</field>
     <field name="model">sale.order</field>
-    <field name="rule_group">sale</field>
     <field name="code">if not object.check_unapproved_partner_ok():
     failed = True</field>
     <field name="active" eval="True"/>
@@ -17,7 +16,6 @@
     <field name="description">You can not sell to an Unapproved Partner this amount on this company</field>
     <field name="sequence">10</field>
     <field name="model">sale.order</field>
-    <field name="rule_group">sale</field>
     <field name="code">if not object.check_unapproved_partner_amount_ok():
     failed = True</field>
     <field name="active" eval="True"/>
