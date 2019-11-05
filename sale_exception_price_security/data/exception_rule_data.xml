@@ -5,7 +5,6 @@
       <field name="description">You can not give any discount greater than pricelist discounts or the applied discount is out of allowed range</field>
       <field name="sequence">10</field>
       <field name="model">sale.order.line</field>
-      <field name="rule_group">sale</field>
       <field name="code">if not object.check_discount_ok():
     failed = True</field>
       <field name="block_print" eval="True"/>
