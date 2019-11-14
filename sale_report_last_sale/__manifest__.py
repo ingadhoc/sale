@@ -9,7 +9,8 @@
         'sale',
     ],
     'author': 'Ivan Todorovich,'
-              'Odoo Community Association (OCA)',
+              'Odoo Community Association (OCA),'
+              'ADHOC SA',
     'license': 'AGPL-3',
     'data': [
         'reports/sale_last_sale_report.xml',
