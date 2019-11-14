@@ -17,5 +17,5 @@
         'security/ir_rule.xml',
     ],
     'category': 'Sale',
-    'installable': False,
+    'installable': True,
 }
