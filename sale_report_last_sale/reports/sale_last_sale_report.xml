@@ -39,24 +39,20 @@
                 <field name="product_category_id" filter_domain="[('product_category_id', 'child_of', self)]"/>
                 <field name="company_id"/>
 
-                <filter name="more_than_30_days" string="More than 30 days"
-                        domain="[('days_since', '&gt;=', 30)]"/>
-                <filter name="more_than_60_days" string="More than 60 days"
-                        domain="[('days_since', '&gt;=', 60)]"/>
-                <filter name="more_than_90_days" string="More than 90 days"
-                        domain="[('days_since', '&gt;=', 90)]"/>
+                <filter name="more_than_30_days" string="More than 30 days" domain="[('days_since', '&gt;=', 30)]"/>
+                <filter name="more_than_60_days" string="More than 60 days" domain="[('days_since', '&gt;=', 60)]"/>
+                <filter name="more_than_90_days" string="More than 90 days" domain="[('days_since', '&gt;=', 90)]"/>
 
                 <separator/>
-                
-                <filter name="this_year" string="This year"
-                        domain="[('date_order', '&gt;=', context_today().strftime('%Y-01-01'))]"/>
-                
+
+                <filter name="this_year" string="This year" domain="[('date_order', '&gt;=', context_today().strftime('%Y-01-01'))]"/>
+
                 <group expand="1" string="Group By...">
                     <filter string="Partner" name="partner" context="{'group_by':'partner_id'}"/>
-                    <filter string="Product" context="{'group_by':'product_id'}"/>
+                    <filter string="Product" name="product" context="{'group_by':'product_id'}"/>
                     <filter string="Product Category" name="category_product" context="{'group_by':'product_category_id'}"/>
-                    <filter string="Company" icon="terp-go-home" context="{'group_by':'company_id'}"/>
-                </group> 
+                    <filter string="Company" name="company" icon="terp-go-home" context="{'group_by':'company_id'}"/>
+                </group>
             </search>
         </field>
     </record>
@@ -67,12 +63,7 @@
         <field name="view_mode">pivot</field>
     </record>
 
-    <menuitem
-        id="menu_action_sale_last_sale_report"
-        action="action_sale_last_sale_report"
-        name="Last Sale Analysis"
-        parent="sale.menu_sale_report"
-        sequence="10" />
+    <menuitem id="menu_action_sale_last_sale_report" action="action_sale_last_sale_report" name="Last Sale Analysis" parent="sale.menu_sale_report" sequence="10" />
 
     <record id="action_sale_last_sale_report_partner" model="ir.actions.act_window">
         <field name="name">Last Sale Analysis</field>
