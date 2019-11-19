@@ -12,16 +12,19 @@ class PosSession(models.Model):
 
     @api.multi
     def action_pos_session_close(self):
-        """ Delete statements related to outstaning payment journals in order to
-        do not reconcile lines.
+        """ Delete statements related to outstanding payment journals in order
+        to not reconcile lines.
         """
         for session in self:
-            st = session.statement_ids.filtered(
+            statements = session.statement_ids.filtered(
                 "journal_id.pos_outstanding_payment")
-            if st.line_ids.filtered(lambda x: not x.partner_id):
-                raise UserError(_(
-                    'You can only use %s if the customer is defined') % (
-                        ', '.join(st.mapped("journal_id"))
-                ))
-            st.unlink()
+            for st in statements:
+                if st.line_ids.filtered(lambda x: not x.partner_id):
+                    raise UserError(
+                        _('You can only use %s if the customer is defined.') %
+                        (', '.join(
+                            [journal.name
+                             for journal in
+                             st.line_ids.mapped("journal_id")])))
+                st.unlink()
         return super(PosSession, self).action_pos_session_close()
