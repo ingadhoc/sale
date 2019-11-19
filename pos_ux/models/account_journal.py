@@ -9,5 +9,4 @@ class AccountJournal(models.Model):
 
     _inherit = 'account.journal'
 
-    pos_outstanding_payment = fields.Boolean(
-    )
+    pos_outstanding_payment = fields.Boolean()
