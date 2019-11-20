@@ -54,13 +54,13 @@ class SaleOrder(models.Model):
     def action_confirm(self):
         self.ensure_one()
         self.check_validity()
-        return super(SaleOrder, self).action_confirm()
+        return super().action_confirm()
 
     @api.multi
     def check_validity(self):
         if self.validity_date:
-            validity_date = fields.Datetime.from_string(self.validity_date)
-            now = fields.Datetime.from_string(fields.Datetime.now())
+            validity_date = self.validity_date
+            now = fields.Datetime.now()
             if validity_date < now:
                 raise UserError(_(
                     'You can not confirm this quoatation as it was valid until'
