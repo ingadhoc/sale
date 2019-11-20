@@ -8,9 +8,9 @@
         <field name="arch" type="xml">
             <field name="journal_user" position="after">
                 <field name="pos_outstanding_payment"/>
-                <div class="alert alert-warning" attrs="{'invisible': [('pos_outstanding_payment', '=', False)]}" colspan="2">
+                <div class="alert alert-warning" role="alert" attrs="{'invisible': [('pos_outstanding_payment', '=', False)]}" colspan="2">
                     <p>
-                        <b>IMPORTANT:</b> We highly recommend that of you are going to use a payment method as POS Outstanding payment please do not select any inboud / outbound methods in order to not show this payment method in conventional receipts and payments.
+                        <b>IMPORTANT:</b> We highly recommend that of you are going to use a payment method as POS Outstanding payment please do not select any inbound / outbound methods in order to not show this payment method in conventional receipts and payments.
                     </p>
                 </div>
             </field>
@@ -30,12 +30,12 @@
             <notebook position="before">
                 <group attrs="{'invisible': [
                     ('pos_outstanding_payment', '=', False)]}">
-                    <div class="alert alert-warning" attrs="{'invisible': [
+                    <div class="alert alert-warning" role="alert" attrs="{'invisible': [
                         ('inbound_payment_method_ids', '=', []),
                         ('outbound_payment_method_ids', '=', []),
                     ]}" colspan="2">
                         <p>
-                            <b>WARNING:</b> We highly recommend you that if use this payment method as POS Outstanding payment please do not select any inboud / outbound methods in order to not show this payment method in conventional receipts and payments.
+                            <b>WARNING:</b> We highly recommend you that if use this payment method as POS Outstanding payment please do not select any inbound / outbound methods in order to not show this payment method in conventional receipts and payments.
                         </p>
                     </div>
                 </group>

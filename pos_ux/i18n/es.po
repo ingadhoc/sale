@@ -57,5 +57,5 @@ msgstr "Pago pendiente de TPV"
 #. module: pos_ux
 #: code:addons/pos_ux/models/pos_session.py:22
 #, python-format
-msgid "You can only use %s if the customer is defined"
-msgstr "Solo puedes usar %s si el cliente esta definido"
+msgid "You can only use %s if the customer is defined."
+msgstr "Solo puedes usar %s si el cliente esta definido."

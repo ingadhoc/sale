@@ -37,7 +37,7 @@
     'demo': [
         'demo/account_journal_demo.xml',
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
