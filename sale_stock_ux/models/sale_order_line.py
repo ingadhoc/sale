@@ -77,7 +77,7 @@ class SaleOrderLine(models.Model):
         # por ahora, desactivamos la cancelación de kits
         bom_enable = 'bom_ids' in self.env['product.template']._fields
 
-        for rec in self:
+        for rec in self.filtered('product_id'):
             if bom_enable:
                 bom = self.env['mrp.bom']._bom_find(
                     product=rec.product_id)
@@ -205,7 +205,7 @@ class SaleOrderLine(models.Model):
                 qty_returned += move.product_uom._compute_quantity(
                     move.product_uom_qty, line.product_uom)
             bom_enable = 'bom_ids' in self.env['product.template']._fields
-            if bom_enable and self.env['mrp.bom']._bom_find(
+            if bom_enable and line.product_id and self.env['mrp.bom']._bom_find(
                     product=line.product_id).type == 'phantom':
                 qty_returned = line.with_context(
                     returned=True).compute_qty_with_bom_phantom()
