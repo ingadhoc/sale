@@ -1,5 +1,0 @@
-<odoo noupdate="1">
-    <record id="crm_rule_personal_partners" model="ir.rule">
-        <field name="domain_force">['|','|','|','|',('user_id','=',user.id),('child_ids.user_id','=',user.id),('id','=',user.partner_id.id),'&amp;', ('user_id','=',False),'|','|',('parent_id','=',False),('parent_id.user_id','=',False),('parent_id.user_id','=',user.id),'|', ('type', '!=', 'private'), ('type', '=', False)]</field>
-    </record>
-</odoo>
