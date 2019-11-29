@@ -18,7 +18,7 @@ Sale Order Validity
 * By default the number of days of validity is chosen from the company.
 * It is posible to modify the numbers of days only if the new number is lower than the one set in the company.
 * The validation date is calculated as the date the quotation was created + days validity.
-* If the validaty date is in the past it is not posible to validate de quotation.
+* If the validaty date is in the past it is not posible to validate the quotation.
 * A new button is created to reset the validity date and reset the prices of every line.
 
 Installation
