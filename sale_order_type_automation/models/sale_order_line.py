@@ -9,7 +9,7 @@ class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
     @api.multi
-    def invoice_line_create(self, invoice_id, qty):
+    def invoice_line_create_vals(self, invoice_id, qty):
         """
         Forzamos compania de diario de sale type
         IMPORTANTE: lo hacemos en este metodo y no en _prepare_invoice_line
@@ -18,6 +18,5 @@ class SaleOrderLine(models.Model):
         """
         # TODO K: need to manage multiple records here.
         if self.order_id.type_id.journal_id:
-            self = self.with_context(
-                force_company=self.order_id.type_id.journal_id.company_id.id)
-        return super().invoice_line_create(invoice_id, qty)
+            self = self.with_context(force_company=self.order_id.type_id.journal_id.company_id.id)
+        return super(SaleOrderLine, self).invoice_line_create_vals(invoice_id, qty)
