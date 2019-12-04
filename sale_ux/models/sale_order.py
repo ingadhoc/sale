@@ -56,8 +56,9 @@ class SaleOrder(models.Model):
         # llegan varias sale orders a esta funcion
         for rec in self:
             date_order = rec.date_order or fields.Date.context_today(rec)
-            rec.env.context["date_invoice"] = date_order
-            rec.env.context["invoice_company"] = rec.company_id
+            context = dict(rec.env.context).copy()
+            context.update({"date_invoice": date_order, "invoice_company": rec.company_id})
+            rec.env.context = context
         return super()._amount_all()
 
     @api.multi
