@@ -14,12 +14,12 @@ class StockPicking(models.Model):
     def button_validate(self):
         msg = (
             'If you use a sale type in the sale order related with invoice '
-            'policy "Prepaid - Block Delivery" , then every sale line must '
+            'policy "Block Reserve/Block Delivery", then every sale line must '
             'be invoiced and paid before you can validate picking')
         if any(
             self.filtered(
-                lambda x: x.sale_id.type_id.invoice_policy ==
-                'prepaid_block_delivery' and not x._check_sale_paid())):
+                lambda x: x.sale_id.type_id.invoice_policy in ['prepaid', 'prepaid_block_delivery']
+                and not x._check_sale_paid())):
             raise UserError(_(msg))
         return super().button_validate()
 
