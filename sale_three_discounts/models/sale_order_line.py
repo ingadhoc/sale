@@ -5,6 +5,7 @@
 from odoo import fields, models, api, _
 from odoo.exceptions import ValidationError
 import odoo.addons.decimal_precision as dp
+from odoo.tools import float_compare
 
 
 class SaleOrderLine(models.Model):
@@ -66,8 +67,10 @@ class SaleOrderLine(models.Model):
         y consideramos que las columnas 2 y 3 son descuentos adicionales y no
         las pisamos
         """
-        if 'discount' in vals and not vals.get('discount1')\
-                and not vals.get('discount2') and not vals.get('discount3'):
+        precision = self.env['decimal.precision'].precision_get('Discount')
+        if 'discount' in vals \
+                and float_compare(vals.get('discount'), self.discount, precision_digits=precision) != 0 \
+                and not vals.get('discount1') and not vals.get('discount2') and not vals.get('discount3'):
             vals.update({
                 'discount1': vals.get('discount'),
             })
