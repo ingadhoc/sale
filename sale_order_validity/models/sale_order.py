@@ -53,18 +53,11 @@ class SaleOrder(models.Model):
     @api.multi
     def action_confirm(self):
         self.ensure_one()
-        self.check_validity()
+        if self.is_expired:
+            raise UserError(_(
+                'You can not confirm this quotation as it was valid until'
+                ' %s! Please update validity.') % (self.validity_date))
         return super().action_confirm()
-
-    @api.multi
-    def check_validity(self):
-        if self.validity_date:
-            validity_date = self.validity_date
-            now = fields.Datetime.now()
-            if validity_date < now:
-                raise UserError(_(
-                    'You can not confirm this quoatation as it was valid until'
-                    ' %s! Please Update Validity.') % (self.validity_date))
 
     @api.multi
     def update_date_prices_and_validity(self):
