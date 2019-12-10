@@ -24,6 +24,8 @@ class SaleOrderLine(models.Model):
                 ('location_id', 'child_of', location.id),
                 ('quantity', '>', 0),
                 ('lot_id', '!=', False),
-            ], ['lot_id'], 'lot_id')
-            available_lot_ids = [quant['lot_id'][0] for quant in quants]
+            ], ['lot_id', 'reserved_quantity', 'quantity'], 'lot_id')
+            available_lot_ids = [
+                quant['lot_id'][0] for quant in quants
+                if quant['reserved_quantity'] < quant['quantity']]
             rec.available_lot_ids = available_lot_ids
