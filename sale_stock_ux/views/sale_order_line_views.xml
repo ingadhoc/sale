@@ -21,6 +21,8 @@
         <field name="arch" type="xml">
             <field name="product_uom_qty" position="after">
                 <field name="qty_delivered"/>
+                <field name="delivery_status" invisible="1"/>
+                <button name="button_cancel_remaining" type="object" string="Cancel remaining quanitity to be delivered. This will set line quantity equal to delivered qty and will cancel remaining moves" icon="fa-ban" attrs="{'invisible': [('delivery_status', '!=', 'to deliver')]}" groups="sales_team.group_sale_salesman"/>
             </field>
         </field>
     </record>
