@@ -3,7 +3,6 @@
 # directory
 ##############################################################################
 from odoo import models, api, fields
-from odoo.tools import float_is_zero
 
 
 class SaleOrderLine(models.Model):
