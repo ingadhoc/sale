@@ -40,8 +40,7 @@ class SaleOrder(models.Model):
         if update_prices_automatically:
             self.update_prices()
 
-    @api.depends('order_line.price_total')
-    def _amount_all(self):
+    def _amount_by_group(self):
         """
         Hacemos esto para disponer de fecha del pedido y cia para calcular
         impuesto con código python (por ej. para ARBA).
@@ -53,13 +52,11 @@ class SaleOrder(models.Model):
         hacemos acá, ademas que el repo de odoo-argentina da error en los tests
         si se instala sale (entonces no podemos agregar dep a sale por ahora)
         """
-        # no estoy seguro porque pero al mandar email template algunas veces
-        # llegan varias sale orders a esta funcion
-        for rec in self:
-            date_order = rec.date_order or fields.Date.context_today(rec)
-            rec.env.context.date_invoice = date_order
-            rec.env.context.invoice_company = rec.company_id
-        return super(SaleOrder, self)._amount_all()
+        for order in self:
+            date_order = order.date_order or fields.Date.context_today(order)
+            order.env.context.date_invoice = date_order
+            order.env.context.invoice_company = order.company_id
+            super(SaleOrder, order)._amount_by_group()
 
     @api.multi
     def action_cancel(self):
