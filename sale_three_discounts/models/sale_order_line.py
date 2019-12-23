@@ -70,7 +70,7 @@ class SaleOrderLine(models.Model):
         precision = self.env['decimal.precision'].precision_get('Discount')
         if 'discount' in vals \
                 and float_compare(vals.get('discount'), self.discount, precision_digits=precision) != 0 \
-                and not vals.get('discount1') and not vals.get('discount2') and not vals.get('discount3'):
+                and not {'discount1', 'discount2', 'discount3'} & set(vals.keys()):
             vals.update({
                 'discount1': vals.get('discount'),
             })
