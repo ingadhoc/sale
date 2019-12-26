@@ -1,0 +1,295 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * sale_ux
+# 
+# Translators:
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-12-26 01:03+0000\n"
+"PO-Revision-Date: 2019-07-17 13:21+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019\n"
+"Language-Team: German (https://www.transifex.com/adhoc/teams/46451/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form
+msgid "Automatically update prices when change pricelist."
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order__commercial_partner_id
+msgid "Commercial Entity"
+msgstr "Geschäftsbereich"
+
+#. module: sale_ux
+#: model:ir.model,name:sale_ux.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
+msgid "Confirm"
+msgstr "Freigeben"
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__create_uid
+msgid "Created by"
+msgstr "Angelegt durch"
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__create_date
+msgid "Created on"
+msgstr "Angelegt am"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
+msgid "Customer"
+msgstr "Kunde"
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__group_sale_reference_on_tree_and_main_form
+msgid "Customer reference in list view and form"
+msgstr "Kundenreferenz in Listen- und Detailsicht"
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__amount
+msgid "Discount"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__display_name
+msgid "Display Name"
+msgstr "Anzeigebezeichung"
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_advance_payment_inv__amount_total
+msgid "Down Payment Amount With Taxes"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order__force_invoiced_status
+msgid "Force Invoiced Status"
+msgstr "Überschreibe Rechnungsstatus"
+
+#. module: sale_ux
+#: selection:sale.order,force_invoiced_status:0
+msgid "Fully Invoiced"
+msgstr "Vollständig abgerechnet"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
+msgid "Global Discount"
+msgstr "Globaler Rabatt"
+
+#. module: sale_ux
+#: model:ir.actions.act_window,name:sale_ux.action_sale_global_discount_wizard_form
+msgid "Global Discount Wizard"
+msgstr "Assistent für globalen Rabatt"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
+msgid "Hide cancelled lines"
+msgstr "Verberge stornierte Positionen"
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__id
+msgid "ID"
+msgstr "ID"
+
+#. module: sale_ux
+#: model:ir.model,name:sale_ux.model_account_invoice
+msgid "Invoice"
+msgstr "Rechnung"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
+msgid "Invoice Lines"
+msgstr "Rechnungspositionen"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_filter
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
+msgid "Invoiced"
+msgstr "Abgerechnet"
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard____last_update
+msgid "Last Modified on"
+msgstr "Zuletzt verändert am"
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__write_uid
+msgid "Last Updated by"
+msgstr "Zuletzt aktualisiert durch"
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__write_date
+msgid "Last Updated on"
+msgstr "Zuletzt aktualisiert am"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
+msgid "Not Invoiced"
+msgstr "Nicht abgerechnet"
+
+#. module: sale_ux
+#: selection:sale.order,force_invoiced_status:0
+msgid "Nothing to Invoice"
+msgstr "Nichts abzurechnen"
+
+#. module: sale_ux
+#: code:addons/sale_ux/models/sale_order.py:75
+#, python-format
+msgid "Only users with \"%s / %s\" can Set Invoiced manually"
+msgstr "Nur Nutzer mit \"%s / %s\" dürfen manuell abgerechnet setzen"
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order__payment_term_id
+msgid "Payment Terms"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order__pricelist_id
+msgid "Pricelist"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,help:sale_ux.field_sale_order__pricelist_id
+msgid "Pricelist for current sales order."
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_usability_tree
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
+msgid "Qty"
+msgstr "Menge"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_order_tree
+msgid "Quotation Date"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_filter
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
+msgid "Quotations"
+msgstr "Angebote"
+
+#. module: sale_ux
+#: model:ir.model,name:sale_ux.model_sale_order
+#: model:ir.model.fields,field_description:sale_ux.field_account_invoice__sale_order_ids
+msgid "Sale Order"
+msgstr "Verkaufsauftrag"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
+msgid "Sale Order Line"
+msgstr "Auftragsposition"
+
+#. module: sale_ux
+#: model:ir.actions.act_window,name:sale_ux.action_sale_order_line_usability_tree
+#: model:ir.ui.menu,name:sale_ux.menu_sale_order
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_usability_tree
+msgid "Sale Order Lines"
+msgstr "Auftragspositionen"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.invoice_form
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
+msgid "Sale Orders"
+msgstr "Verkaufsaufträge"
+
+#. module: sale_ux
+#: model:ir.model,name:sale_ux.model_sale_order_global_discount_wizard
+msgid "Sale order Global Discount Wizard"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model,name:sale_ux.model_sale_advance_payment_inv
+msgid "Sales Advance Payment Invoice"
+msgstr "Anzahlungsrechnung"
+
+#. module: sale_ux
+#: model:ir.model,name:sale_ux.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Auftragsposition"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_filter
+msgid "Sales Orders"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_order_form
+msgid "Set Global Discount"
+msgstr "Globalen Rabatt setzen"
+
+#. module: sale_ux
+#: model:res.groups,name:sale_ux.group_reference_on_tree_and_main_form
+msgid "Show SO reference field on tree and main form views"
+msgstr "Zeige Feld VA-Referenz in Listen- und Detailsichten"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form
+msgid "Show client reference in list view and in main section of form view"
+msgstr "Zeige Kunden-Referenz in Listen- und in Kopfdaten der Detailsicht"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
+msgid "Status"
+msgstr "Status"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_usability_tree
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
+msgid "Total"
+msgstr "Gesamt"
+
+#. module: sale_ux
+#: code:addons/sale_ux/models/sale_order.py:65
+#, python-format
+msgid ""
+"Unable to cancel this sale order. You must first cancel related bills and "
+"pickings."
+msgstr ""
+"Kann diesen Verkaufsauftrag nicht stornieren. Sie müssen zuvor zugehörige "
+"Rechnungen und Lagerbuchungen stornieren."
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_usability_tree
+msgid "Unit of Measure"
+msgstr "Mengeneinheit"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_order_form
+msgid "Update Prices"
+msgstr "Preise aktualisieren"
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__update_prices_automatically
+msgid "Update Prices Automatically"
+msgstr ""
+
+#. module: sale_ux
+#: code:addons/sale_ux/wizards/sale_advance_payment_inv.py:36
+#, python-format
+msgid "You can only set amount total if taxes are of type percentage"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
+msgid "_Cancel"
+msgstr "Abbrechen"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
+msgid "or"
+msgstr "oder"

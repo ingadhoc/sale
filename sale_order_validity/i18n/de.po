@@ -3,15 +3,15 @@
 # * sale_order_validity
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018
-# Rudolf Schnapka <rs@techno-flex.de>, 2018
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0\n"
+"Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-17 13:18+0000\n"
-"PO-Revision-Date: 2018-09-17 13:18+0000\n"
-"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2018\n"
+"POT-Creation-Date: 2019-12-26 01:03+0000\n"
+"PO-Revision-Date: 2019-11-20 21:07+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019\n"
 "Language-Team: German (https://www.transifex.com/adhoc/teams/46451/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,24 +25,32 @@ msgid "Companies"
 msgstr "Unternehmen"
 
 #. module: sale_order_validity
-#: model:ir.model,name:sale_order_validity.model_sale_order
-msgid "Quotation"
-msgstr "Angebot"
+#: model:ir.model.fields,help:sale_order_validity.field_sale_order__validity_date
+msgid "Date until when quotation is valid"
+msgstr ""
 
 #. module: sale_order_validity
-#: model:ir.model.fields,field_description:sale_order_validity.field_res_company_sale_order_validity_days
-#: model:ir.model.fields,field_description:sale_order_validity.field_res_config_settings_sale_order_validity_days
+#: model:ir.model.fields,field_description:sale_order_validity.field_sale_order__date_order
+msgid "Order Date"
+msgstr ""
+
+#. module: sale_order_validity
+#: model:ir.model,name:sale_order_validity.model_sale_order
+msgid "Sale Order"
+msgstr "Verkaufsauftrag"
+
+#. module: sale_order_validity
+#: model:ir.model.fields,field_description:sale_order_validity.field_res_company__sale_order_validity_days
 msgid "Sale Order Validity Days"
 msgstr "Tage der Auftragsgültigkeit"
 
 #. module: sale_order_validity
-#: model:ir.model.fields,help:sale_order_validity.field_sale_order_validity_days
+#: model:ir.model.fields,help:sale_order_validity.field_sale_order__validity_days
 msgid "Set days of validity for Sales Order"
 msgstr "Gültigkeitstage des Auftrag pflegen"
 
 #. module: sale_order_validity
-#: model:ir.model.fields,help:sale_order_validity.field_res_company_sale_order_validity_days
-#: model:ir.model.fields,help:sale_order_validity.field_res_config_settings_sale_order_validity_days
+#: model:ir.model.fields,help:sale_order_validity.field_res_company__sale_order_validity_days
 msgid ""
 "Set days of validity for Sales Order, if null, no validity date will be "
 "filled"
@@ -51,22 +59,22 @@ msgstr ""
 "beschränkt"
 
 #. module: sale_order_validity
-#: model:ir.ui.view,arch_db:sale_order_validity.res_config_settings_view_form
-msgid "Set validity days to a quotation"
-msgstr ""
-
-#. module: sale_order_validity
-#: model:ir.ui.view,arch_db:sale_order_validity.view_order_form_validity
+#: model_terms:ir.ui.view,arch_db:sale_order_validity.view_order_form_validity
 msgid "Update Date, Prices and Validity"
 msgstr "Datum, Preis und Gültigkeit aktualisieren"
 
 #. module: sale_order_validity
-#: model:ir.ui.view,arch_db:sale_order_validity.view_order_form_validity
+#: model_terms:ir.ui.view,arch_db:sale_order_validity.view_order_form_validity
 msgid "Update Validity"
 msgstr "Freigabe aktualisieren"
 
 #. module: sale_order_validity
-#: model:ir.model.fields,field_description:sale_order_validity.field_sale_order_validity_days
+#: model:ir.model.fields,field_description:sale_order_validity.field_sale_order__validity_date
+msgid "Validity"
+msgstr ""
+
+#. module: sale_order_validity
+#: model:ir.model.fields,field_description:sale_order_validity.field_sale_order__validity_days
 msgid "Validity Days"
 msgstr "Gültigkeitstage"
 
@@ -77,14 +85,12 @@ msgid "Warning!"
 msgstr "Warnung."
 
 #. module: sale_order_validity
-#: code:addons/sale_order_validity/models/sale_order.py:65
+#: code:addons/sale_order_validity/models/sale_order.py:57
 #, python-format
 msgid ""
-"You can not confirm this quoatation as it was valid until %s! Please Update "
-"Validity."
+"You can not confirm this quotation as it was valid until %s! Please update "
+"validity."
 msgstr ""
-"Sie können dieses Angebot nicht freigeben, die Gültigkeit endete am %s. "
-"Bitte Gültigkeit anpassen."
 
 #. module: sale_order_validity
 #: code:addons/sale_order_validity/models/sale_order.py:47
@@ -95,8 +101,3 @@ msgid ""
 msgstr ""
 "Sie dürfen nicht mehr Gültigkeitstage angeben, als im Unternehmen "
 "eingestellt (%i Tage)."
-
-#. module: sale_order_validity
-#: model:ir.model,name:sale_order_validity.model_res_config_settings
-msgid "res.config.settings"
-msgstr "res.config.settings"

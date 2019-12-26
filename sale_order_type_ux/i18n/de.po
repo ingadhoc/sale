@@ -3,15 +3,14 @@
 # * sale_order_type_ux
 # 
 # Translators:
-# Rudolf Schnapka <rs@techno-flex.de>, 2018
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0\n"
+"Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-02 22:05+0000\n"
-"PO-Revision-Date: 2018-08-23 20:27+0000\n"
+"POT-Creation-Date: 2019-12-26 01:03+0000\n"
+"PO-Revision-Date: 2019-07-18 13:22+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019\n"
 "Language-Team: German (https://www.transifex.com/adhoc/teams/46451/de/)\n"
 "MIME-Version: 1.0\n"
@@ -21,12 +20,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: sale_order_type_ux
-#: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type_analytic_tag_ids
+#: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__analytic_tag_ids
 msgid "Analytic Tags"
 msgstr ""
 
 #. module: sale_order_type_ux
-#: model:ir.model.fields,help:sale_order_type_ux.field_sale_order_type_analytic_tag_ids
+#: model:ir.model.fields,help:sale_order_type_ux.field_sale_order_type__analytic_tag_ids
 msgid "Default analytic tags that will be used on new sale order lines"
 msgstr ""
 
@@ -37,13 +36,28 @@ msgstr "Rechnung"
 
 #. module: sale_order_type_ux
 #: model:ir.model,name:sale_order_type_ux.model_sale_order
-msgid "Quotation"
-msgstr "Angebot"
+msgid "Sale Order"
+msgstr "Verkaufsauftrag"
+
+#. module: sale_order_type_ux
+#: model:ir.model.fields,field_description:sale_order_type_ux.field_account_invoice__sale_type_id
+msgid "Sale Type"
+msgstr ""
 
 #. module: sale_order_type_ux
 #: model:ir.model,name:sale_order_type_ux.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Auftragsposition"
+
+#. module: sale_order_type_ux
+#: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: sale_order_type_ux
+#: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order__type_id
+msgid "Type"
+msgstr ""
 
 #. module: sale_order_type_ux
 #: model:ir.model,name:sale_order_type_ux.model_sale_order_type

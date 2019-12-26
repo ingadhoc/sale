@@ -3,14 +3,15 @@
 # * sale_quotation_products
 # 
 # Translators:
-# Rudolf Schnapka <rs@techno-flex.de>, 2018
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0\n"
+"Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-17 13:18+0000\n"
-"PO-Revision-Date: 2018-09-17 13:18+0000\n"
-"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2018\n"
+"POT-Creation-Date: 2019-12-26 01:03+0000\n"
+"PO-Revision-Date: 2019-08-06 20:05+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019\n"
 "Language-Team: German (https://www.transifex.com/adhoc/teams/46451/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,13 +20,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: sale_quotation_products
-#: code:addons/sale_quotation_products/models/product_product.py:117
+#: code:addons/sale_quotation_products/models/product_product.py:130
 #, python-format
 msgid "Add one"
 msgstr "Eins hinzufügen"
 
 #. module: sale_quotation_products
-#: code:addons/sale_quotation_products/models/product_product.py:128
+#: code:addons/sale_quotation_products/models/product_product.py:141
 #, python-format
 msgid "Open Product Form View"
 msgstr "Öffne Produkt-Detailsicht"
@@ -36,14 +37,15 @@ msgid "Product"
 msgstr "Produkt"
 
 #. module: sale_quotation_products
-#: model:ir.model.fields,field_description:sale_quotation_products.field_product_product_qty
-msgid "Quantity"
+#: model:ir.model.fields,field_description:sale_quotation_products.field_product_product__qty
+msgid "Qty"
 msgstr "Menge"
 
 #. module: sale_quotation_products
-#: model:ir.model,name:sale_quotation_products.model_sale_order
-msgid "Quotation"
-msgstr "Angebot"
+#: code:addons/sale_quotation_products/models/product_product.py:120
+#, python-format
+msgid "Quantity"
+msgstr "Menge"
 
 #. module: sale_quotation_products
 #: code:addons/sale_quotation_products/models/sale_order.py:32
@@ -52,6 +54,11 @@ msgid "Quotation Products"
 msgstr "Angebotsprodukte"
 
 #. module: sale_quotation_products
-#: model:ir.ui.view,arch_db:sale_quotation_products.sale_order_form_view
+#: model:ir.model,name:sale_quotation_products.model_sale_order
+msgid "Sale Order"
+msgstr "Verkaufsauftrag"
+
+#. module: sale_quotation_products
+#: model_terms:ir.ui.view,arch_db:sale_quotation_products.sale_order_form_view
 msgid "Search Products"
 msgstr "Produktsuche"
