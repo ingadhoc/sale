@@ -4,14 +4,15 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019
+# Nicolas Robles <nr@adhoc.com.ar>, 2020
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-26 01:03+0000\n"
+"POT-Creation-Date: 2019-12-26 01:42+0000\n"
 "PO-Revision-Date: 2019-10-29 13:50+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019\n"
+"Last-Translator: Nicolas Robles <nr@adhoc.com.ar>, 2020\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,12 +24,12 @@ msgstr ""
 #: code:addons/portal_sale_distributor/controllers/portal_account.py:31
 #, python-format
 msgid "All"
-msgstr ""
+msgstr "Todos"
 
 #. module: portal_sale_distributor
 #: model:ir.ui.menu,name:portal_sale_distributor.catalog_menu
 msgid "Catalog"
-msgstr ""
+msgstr "Catalogo"
 
 #. module: portal_sale_distributor
 #: model_terms:ir.ui.view,arch_db:portal_sale_distributor.view_order_form
@@ -39,7 +40,7 @@ msgstr "Confirmar Venta"
 #: code:addons/portal_sale_distributor/controllers/portal_account.py:38
 #, python-format
 msgid "Due Date"
-msgstr ""
+msgstr "Fecha de Vencimiento"
 
 #. module: portal_sale_distributor
 #: model:ir.model,name:portal_sale_distributor.model_mail_thread
@@ -50,13 +51,13 @@ msgstr "Hilo de mensajes"
 #: code:addons/portal_sale_distributor/controllers/portal_account.py:37
 #, python-format
 msgid "Invoice Date"
-msgstr ""
+msgstr "Fecha de la Factura"
 
 #. module: portal_sale_distributor
 #: model:ir.actions.act_url,name:portal_sale_distributor.action_my_account
 #: model:ir.ui.menu,name:portal_sale_distributor.my_account
 msgid "My Account"
-msgstr ""
+msgstr "Mi Cuenta"
 
 #. module: portal_sale_distributor
 #: model_terms:ir.ui.view,arch_db:portal_sale_distributor.sale_order_link
@@ -66,13 +67,13 @@ msgstr "Mis Pedidos"
 #. module: portal_sale_distributor
 #: model:ir.model.fields,field_description:portal_sale_distributor.field_sale_order__activity_date_deadline
 msgid "Next Activity Deadline"
-msgstr ""
+msgstr "Fecha límite de la siguiente actividad"
 
 #. module: portal_sale_distributor
 #: code:addons/portal_sale_distributor/controllers/portal_account.py:32
 #, python-format
 msgid "Open"
-msgstr ""
+msgstr "Abierto"
 
 #. module: portal_sale_distributor
 #: code:addons/portal_sale_distributor/models/sale_order.py:19
@@ -93,12 +94,12 @@ msgstr "Imprimir"
 #. module: portal_sale_distributor
 #: model:ir.model,name:portal_sale_distributor.model_product_template
 msgid "Product Template"
-msgstr ""
+msgstr "Plantilla del Producto"
 
 #. module: portal_sale_distributor
 #: model:ir.actions.act_window,name:portal_sale_distributor.action_product_template_portal_tree
 msgid "Products"
-msgstr ""
+msgstr "Productos"
 
 #. module: portal_sale_distributor
 #: model:ir.ui.menu,name:portal_sale_distributor.quotations
@@ -109,7 +110,7 @@ msgstr "Presupuestos"
 #: code:addons/portal_sale_distributor/controllers/portal_account.py:39
 #, python-format
 msgid "Reference"
-msgstr ""
+msgstr "Referencia"
 
 #. module: portal_sale_distributor
 #: model:ir.model,name:portal_sale_distributor.model_sale_order
@@ -135,7 +136,7 @@ msgstr "Estado"
 #. module: portal_sale_distributor
 #: model_terms:ir.ui.view,arch_db:portal_sale_distributor.portal_my_summary
 msgid "Summary"
-msgstr ""
+msgstr "Resumen"
 
 #. module: portal_sale_distributor
 #: model:ir.model,name:portal_sale_distributor.model_res_users
