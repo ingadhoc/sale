@@ -88,7 +88,7 @@ class SaleOrder(models.Model):
         self.ensure_one()
         pack_installed = 'pack_parent_line_id' in self.order_line._fields
         for line in self.order_line.with_context(
-                update_prices=True, pricelist=self.pricelist_id.id):
+                update_prices=True, pricelist=self.pricelist_id.id).filtered(lambda l: l.product_id.lst_price):
             # ponemos descuento en cero por las dudas en dos casos:
             # 1) si estamos cambiando de lista que discrimina descuento
             #  a lista que los incluye
