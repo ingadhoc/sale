@@ -40,6 +40,6 @@
         'views/stock_picking_views.xml',
         'data/sale_order_type_data.xml',
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
 }

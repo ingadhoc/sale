@@ -33,7 +33,7 @@
     'data': [
         'views/sale_order_view.xml',
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'application': False,
 }
