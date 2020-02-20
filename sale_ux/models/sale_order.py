@@ -12,15 +12,15 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     pricelist_id = fields.Many2one(
-        track_visibility='onchange',
+        tracking=True,
     )
     payment_term_id = fields.Many2one(
-        track_visibility='onchange',
+        tracking=True,
     )
     force_invoiced_status = fields.Selection([
         ('no', 'Nothing to Invoice'),
         ('invoiced', 'Fully Invoiced')],
-        track_visibility='onchange',
+        tracking=True,
         copy=False,
     )
     commercial_partner_id = fields.Many2one(
