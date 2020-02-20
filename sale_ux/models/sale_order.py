@@ -57,7 +57,6 @@ class SaleOrder(models.Model):
             order.env.context.invoice_company = order.company_id
             super(SaleOrder, order)._amount_by_group()
 
-    @api.multi
     def action_cancel(self):
         invoices = self.mapped('invoice_ids').filtered(
             lambda x: x.state not in ['cancel', 'draft'])
@@ -82,7 +81,6 @@ class SaleOrder(models.Model):
         # 'draft' or 'sent'
         return super()._get_forbidden_state_confirm() | set({'sale'})
 
-    @api.multi
     def update_prices(self):
         # for compatibility with product_pack module
         self.ensure_one()
@@ -111,7 +109,6 @@ class SaleOrder(models.Model):
             line._onchange_discount()
         return True
 
-    @api.multi
     def action_invoice_create(self, grouped=False, final=False):
         invoice_ids = super().action_invoice_create(
             grouped=grouped, final=final)
@@ -133,7 +130,6 @@ class SaleOrder(models.Model):
             inv.compute_taxes()
         return invoice_ids
 
-    @api.multi
     def preview_sale_order(self):
         """ Open sale Preview in a new Tab """
         res = super().preview_sale_order()

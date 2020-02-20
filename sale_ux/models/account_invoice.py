@@ -14,7 +14,6 @@ class AccountInvoice(models.Model):
         compute='_compute_sale_orders'
     )
 
-    @api.multi
     def _compute_sale_orders(self):
         for rec in self:
             rec.sale_order_ids = rec.invoice_line_ids.mapped(

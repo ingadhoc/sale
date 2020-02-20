@@ -14,7 +14,6 @@ class SaleGlobalDiscountWizard(models.TransientModel):
         required=True,
     )
 
-    @api.multi
     def confirm(self):
         self.ensure_one()
         order = self.env['sale.order'].browse(
