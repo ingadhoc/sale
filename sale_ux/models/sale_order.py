@@ -109,26 +109,18 @@ class SaleOrder(models.Model):
             line._onchange_discount()
         return True
 
-    def action_invoice_create(self, grouped=False, final=False):
-        invoice_ids = super().action_invoice_create(
+    def _create_invoices(self, grouped=False, final=False):
+        invoices = super()._create_invoices(
             grouped=grouped, final=final)
         precision = self.env['decimal.precision'].precision_get(
             'Product Unit of Measure')
-        for inv in self.env['account.invoice'].browse(invoice_ids).filtered(
-            lambda i: float_is_zero(
-                i.amount_total, precision_digits=precision) and all(
+        for inv in invoices.filtered(
+            lambda i: float_is_zero(i.amount_total, precision_digits=precision) and all(
                 [line.quantity <= 0.0 for line in i.invoice_line_ids])):
             inv.type = 'out_refund'
             for line in inv.invoice_line_ids:
                 line.quantity = -line.quantity
-            # Use additional field helper function (for account extensions)
-            for line in inv.invoice_line_ids:
-                line._set_additional_fields(inv)
-            # Necessary to force computation of taxes.
-            # In account_invoice, they are triggered
-            # by onchanges, which are not triggered when doing a create.
-            inv.compute_taxes()
-        return invoice_ids
+        return invoices
 
     def preview_sale_order(self):
         """ Open sale Preview in a new Tab """

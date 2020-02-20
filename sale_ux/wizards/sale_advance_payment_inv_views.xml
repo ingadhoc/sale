@@ -7,7 +7,7 @@
         <field name="inherit_id" ref="sale.view_sale_advance_payment_inv"/>
         <field name="arch" type="xml">
             <field name="deposit_account_id" position="before">
-                <field name="amount_total" attrs="{'invisible': [('advance_payment_method', 'not in', 'fixed')]}" class="oe_inline" widget="monetary" />
+                <field name="amount_total" attrs="{'invisible': [('advance_payment_method', 'not in', 'fixed')]}" class="oe_inline" widget="monetary" options="{'field_digits': True}"/>
             </field>
         </field>
     </record>

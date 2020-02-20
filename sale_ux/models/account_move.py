@@ -2,12 +2,12 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import fields, models, api
+from odoo import fields, models
 
 
-class AccountInvoice(models.Model):
+class AccountMove(models.Model):
 
-    _inherit = 'account.invoice'
+    _inherit = 'account.move'
 
     sale_order_ids = fields.Many2many(
         'sale.order',

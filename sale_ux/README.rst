@@ -16,7 +16,7 @@ Sale UX
 
 Several Improvements to sales:
 
-#. Make button print and send by email also available on done state on sale orders.
+#. Make button send by email also available on done state on sale orders.
 #. Make sale quotations menu only visible with technical features.
 #. Make sale orders menu show all sale records (quotations, and confirmed ones).
 #. Add a menu item on sales for 'sale lines' and improve views with more fields.
