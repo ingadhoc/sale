@@ -14,7 +14,6 @@ class ProductProduct(models.Model):
         compute='_compute_qty',
     )
 
-    @api.multi
     def write(self, vals):
         """
         Si en vals solo viene qty y sale_quotation_products entonces es un
@@ -35,7 +34,6 @@ class ProductProduct(models.Model):
             return True
         return super().write(vals)
 
-    @api.multi
     def _compute_qty(self):
         sale_order_id = self._context.get('active_id', False)
         if not sale_order_id:
@@ -71,12 +69,10 @@ class ProductProduct(models.Model):
                 self.env['sale.order'].browse(
                     sale_order_id).add_products(self.id, qty)
 
-    @api.multi
     def action_product_form(self):
         self.ensure_one()
         return self.get_formview_action()
 
-    @api.multi
     def action_product_add_one(self):
         sale_order_id = self._context.get('active_id', False)
         if not sale_order_id:
@@ -117,7 +113,7 @@ class ProductProduct(models.Model):
             placeholder.addprevious(
                 etree.Element('field', {
                     'name': 'qty',
-                    'string' : _('Quantity'),
+                    'string': _('Quantity'),
                     # we force editable no matter user rights
                     'readonly': '0',
                 }))
