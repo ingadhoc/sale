@@ -10,11 +10,7 @@
             <xpath expr="//button[@name='action_quotation_send'][4]" position="attributes">
                 <attribute name="states">sent,sale,done</attribute>
             </xpath>
-            <xpath expr="//button[@name='print_quotation'][2]" position="attributes">
-                <attribute name="states">sent,sale,done</attribute>
-            </xpath>
-
-            <group name="sale_pay">
+            <group name="sale_info">
                 <field name="force_invoiced_status" groups="base.group_no_one"/>
             </group>
 
@@ -29,7 +25,7 @@
             </field>
             <field name="order_line" position="before">
                 <button name="update_prices" string="Update Prices" type="object" attrs="{'invisible':[('state','not in',['draft','sent'])]}" groups="product.group_sale_pricelist"/>
-                <button name="%(action_sale_global_discount_wizard_form)d" string="Set Global Discount" type="action" attrs="{'invisible':[('state','not in',['draft','sent'])]}" groups="sale.group_discount_per_so_line"/>
+                <button name="%(action_sale_global_discount_wizard_form)d" string="Set Global Discount" type="action" attrs="{'invisible':[('state','not in',['draft','sent'])]}" groups="product.group_discount_per_so_line"/>
             </field>
         </field>
     </record>
@@ -84,9 +80,6 @@
             <field name="state" position="replace"/>
             <field name="invoice_status" position="before">
                 <field name="state"/>
-            </field>
-            <field name="confirmation_date" position="before">
-                <field name="date_order" string="Quotation Date"/>
             </field>
 
             <!-- As we unify menus we make the draft more visible -->

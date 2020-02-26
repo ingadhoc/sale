@@ -4,7 +4,6 @@
 ##############################################################################
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
-from odoo.addons import decimal_precision as dp
 
 
 class SaleAdvancePaymentInvWizard(models.TransientModel):
@@ -14,7 +13,7 @@ class SaleAdvancePaymentInvWizard(models.TransientModel):
         string='Down Payment Amount With Taxes',
         compute='_compute_amount_total',
         inverse='_inverse_amount_total',
-        digits=dp.get_precision('Account'),
+        digits='Account',
     )
 
     @api.onchange('amount_total', 'deposit_taxes_id')
