@@ -31,7 +31,6 @@ class SaleOrder(models.Model):
                 ))
             action_read.update(
                 context=context,
-                # view_mode='tree,form'.
                 name=_('Quotation Products'),
             )
             action_read['context'] = context

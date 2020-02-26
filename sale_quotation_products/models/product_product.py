@@ -6,6 +6,7 @@ import json
 from odoo import models, fields, api, _
 from lxml import etree
 
+
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
