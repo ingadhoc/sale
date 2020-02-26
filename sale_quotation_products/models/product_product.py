@@ -2,10 +2,9 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
+import json
 from odoo import models, fields, api, _
-from odoo.osv.orm import setup_modifiers
 from lxml import etree
-
 
 class ProductProduct(models.Model):
     _inherit = "product.product"
@@ -106,7 +105,9 @@ class ProductProduct(models.Model):
             # make all fields not editable
             for node in doc.xpath("//field"):
                 node.set('readonly', '1')
-                setup_modifiers(node, res['fields'], in_tree_view=True)
+                modifiers = json.loads(node.get("modifiers"))
+                modifiers['readonly'] = True
+                node.set("modifiers", json.dumps(modifiers))
 
             # add qty field
             placeholder = doc.xpath("//field[1]")[0]
