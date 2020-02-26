@@ -2,8 +2,8 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
+import json
 from odoo import models, fields, api, _
-from odoo.osv.orm import setup_modifiers
 from lxml import etree
 
 
@@ -14,7 +14,6 @@ class ProductProduct(models.Model):
         compute='_compute_qty',
     )
 
-    @api.multi
     def write(self, vals):
         """
         Si en vals solo viene qty y sale_quotation_products entonces es un
@@ -35,7 +34,6 @@ class ProductProduct(models.Model):
             return True
         return super().write(vals)
 
-    @api.multi
     def _compute_qty(self):
         sale_order_id = self._context.get('active_id', False)
         if not sale_order_id:
@@ -71,12 +69,10 @@ class ProductProduct(models.Model):
                 self.env['sale.order'].browse(
                     sale_order_id).add_products(self.id, qty)
 
-    @api.multi
     def action_product_form(self):
         self.ensure_one()
         return self.get_formview_action()
 
-    @api.multi
     def action_product_add_one(self):
         sale_order_id = self._context.get('active_id', False)
         if not sale_order_id:
@@ -110,14 +106,16 @@ class ProductProduct(models.Model):
             # make all fields not editable
             for node in doc.xpath("//field"):
                 node.set('readonly', '1')
-                setup_modifiers(node, res['fields'], in_tree_view=True)
+                modifiers = json.loads(node.get("modifiers"))
+                modifiers['readonly'] = True
+                node.set("modifiers", json.dumps(modifiers))
 
             # add qty field
             placeholder = doc.xpath("//field[1]")[0]
             placeholder.addprevious(
                 etree.Element('field', {
                     'name': 'qty',
-                    'string' : _('Quantity'),
+                    'string': _('Quantity'),
                     # we force editable no matter user rights
                     'readonly': '0',
                 }))
