@@ -1,5 +1,4 @@
 from odoo import models, fields
-import logging
 
 
 class SaleOrderLine(models.Model):
