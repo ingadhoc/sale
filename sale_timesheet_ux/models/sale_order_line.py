@@ -1,11 +1,10 @@
-from odoo import models, api
+from odoo import models
 
 
 class SaleOrderLine(models.Model):
 
     _inherit = 'sale.order.line'
 
-    @api.multi
     def _timesheet_create_project(self):
         self.ensure_one()
         account = self.order_id.analytic_account_id
