@@ -17,7 +17,8 @@ class SaleOrder(models.Model):
         else:
             return {'warning': {
                 'title': _('Wrong barcode'),
-                'message': _('The barcode "%(barcode)s" doesn\'t correspond to a proper product.') % {'barcode': barcode}
+                'message': _('The barcode "%(barcode)s" doesn\'t correspond to a proper product.') % {
+                    'barcode': barcode}
             }}
 
     def _add_product(self, product, qty=1.0):
