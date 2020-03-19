@@ -10,6 +10,9 @@
             <li class="list-group-item">
                 <a href="/my/summary">Summary</a>
             </li>
+            <li class="list-group-item">
+                <a href="/my/open_invoices">Open Invoices</a>
+            </li>
         </xpath>
     </template>
 

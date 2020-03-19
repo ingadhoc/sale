@@ -16,7 +16,6 @@ class PortalDistributorAccount(PortalAccount):
             self, page=1, date_begin=None, date_end=None, sortby=None,
             filterby=None, **kw):
         values = self._prepare_portal_layout_values()
-        partner = request.env.user.partner_id
         AccountInvoice = request.env['account.invoice']
 
         domain = self._get_account_invoice_domain()
