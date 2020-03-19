@@ -33,3 +33,4 @@ access_partner_id_number_portal_distributor,access_partner_id_number portal,part
 access_partner_id_category_portal_distributor,access_partner_id_category portal,partner_identification.model_res_partner_id_category,group_portal_distributor,1,0,0,0
 access_crm_portal_distributor,crm.portal.ditributor,sale.model_crm_team,group_portal_distributor,1,0,0,0
 access_product_pricelist,product.pricelist.portal.distributor,product.model_product_pricelist,group_portal_distributor,1,1,0,0
+access_sale_coupon,sale.coupon.portal.distributor,sale_coupon.model_sale_coupon,group_portal_distributor,1,0,0,0

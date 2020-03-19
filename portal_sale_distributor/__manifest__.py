@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Portal Distributor Sale',
-    'version': '11.0.1.15.0',
+    'version': '11.0.1.16.0',
     'category': 'Tools',
     'complexity': 'easy',
     'author': 'ADHOC SA, Odoo Community Association (OCA)',
@@ -28,6 +28,7 @@
     'depends': [
         'sale_exception',
         'price_security',
+        'sale_coupon',
         'delivery',
         'partner_identification',
         'sale_ux',
