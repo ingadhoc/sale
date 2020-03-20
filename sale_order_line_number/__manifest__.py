@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Order Line Number',
-    'version': '12.0.1.0.0',
+    'version': '13.0.1.0.0',
     'category': 'Accounting',
     'sequence': 14,
     'author': 'ADHOC SA',
@@ -33,9 +33,7 @@
     'data': [
         'views/sale_order_views.xml'
     ],
-    'demo': [
-    ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
