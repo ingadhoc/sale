@@ -19,24 +19,18 @@
 ##############################################################################
 {
     'name': 'Delivery UX',
-    'version': '12.0.1.0.0',
+    'version': '13.0.1.0.0',
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
-    'images': [
-    ],
     'depends': [
         'sale_ux',
         'delivery',
     ],
-    'data': [
-    ],
-    'demo': [
-    ],
-    'installable': False,
+    'installable': True,
     'auto_install': True,
     'application': False,
 }

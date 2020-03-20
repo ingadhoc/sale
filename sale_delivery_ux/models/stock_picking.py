@@ -2,13 +2,12 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, api
+from odoo import models
 
 
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
-    @api.multi
     def _add_delivery_cost_to_so(self):
         """
         We set qty delivered 1 for every sale order line that:
