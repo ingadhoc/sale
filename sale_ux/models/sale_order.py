@@ -106,7 +106,7 @@ class SaleOrder(models.Model):
                 if line.pack_parent_line_id:
                     continue
                 elif line.pack_child_line_ids:
-                    line.expand_pack_line()
+                    line.expand_pack_line(write=True)
             line.product_uom_change()
             line._onchange_discount()
         return True
