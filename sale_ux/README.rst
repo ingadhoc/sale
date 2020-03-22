@@ -16,6 +16,7 @@ Sale UX
 
 Several Improvements to sales:
 
+#. Hide sale invoicing menu (you can already filter on sales orders menu)
 #. Make button send by email also available on done state on sale orders.
 #. Make sale quotations menu only visible with technical features.
 #. Make sale orders menu show all sale records (quotations, and confirmed ones).

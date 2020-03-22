@@ -115,4 +115,14 @@
         <field name="active" eval="False"/>
     </record>
 
+    <!-- sequence 1 instead of to to orders menu so that it is before lines -->
+    <record model="ir.ui.menu" id="sale.menu_sale_order">
+        <field name="sequence">1</field>
+    </record>
+
+    <!--Hide Sale Invoicing Menu -->
+    <record model="ir.ui.menu" id="sale.menu_sale_invoicing">
+        <field name="active" eval="False"/>
+    </record>
+
 </odoo>
