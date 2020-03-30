@@ -50,7 +50,6 @@ class SaleOrder(models.Model):
             }
             return {'warning': warning}
 
-    @api.multi
     def action_confirm(self):
         self.ensure_one()
         if self.is_expired:
@@ -59,7 +58,6 @@ class SaleOrder(models.Model):
                 ' %s! Please update validity.') % (self.validity_date))
         return super().action_confirm()
 
-    @api.multi
     def update_date_prices_and_validity(self):
         self.date_order = fields.Datetime.now()
         self.update_prices()
