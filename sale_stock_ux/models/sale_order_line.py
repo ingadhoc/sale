@@ -70,7 +70,6 @@ class SaleOrderLine(models.Model):
                 delivery_status = 'no'
             line.delivery_status = delivery_status
 
-    @api.multi
     def button_cancel_remaining(self):
         # la cancelación de kits no está bien resuelta ya que odoo solo computa
         # la cantidad entregada cuando todo el kit se entregó. Cuestión que,
@@ -140,7 +139,6 @@ class SaleOrderLine(models.Model):
             return {'warning': warning_mess}
         return {}
 
-    @api.multi
     def compute_qty_with_bom_phantom(self):
         # parcheamos las devoluciones para los kits, lo hacemos analogo
         # a como hace odoo en la entrega, basicamente solo consideramos

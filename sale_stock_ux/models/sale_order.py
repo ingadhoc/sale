@@ -39,7 +39,6 @@ class SaleOrder(models.Model):
             order.with_returns = any(line.qty_returned
                                      for line in order.order_line)
 
-    @api.multi
     def action_cancel(self):
         for order in self.filtered(lambda order: order.picking_ids.filtered(
                 lambda x: x.state == 'done')):
@@ -79,7 +78,6 @@ class SaleOrder(models.Model):
                 delivery_status = 'no'
             order.delivery_status = delivery_status
 
-    @api.multi
     def write(self, vals):
         self.check_force_delivery_status(vals)
         return super().write(vals)
