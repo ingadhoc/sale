@@ -24,7 +24,7 @@ class SaleOrder(models.Model):
         ('no', 'Nothing to Deliver'),
         ('delivered', 'Delivered'),
     ],
-        track_visibility='onchange',
+        tracking=True,
         copy=False,
     )
 
