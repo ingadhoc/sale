@@ -32,13 +32,10 @@
         'sale_stock',
         'sale_ux',
         'stock_ux',
-        # for use the user company currency for the standard price
-        'product_ux',
     ],
     'data': [
         'views/sale_order_views.xml',
         'views/sale_order_line_views.xml',
-        'views/product_product_views.xml',
         'views/stock_warehouse_views.xml',
         'views/stock_move_views.xml',
         'wizards/stock_return_picking_views.xml',
