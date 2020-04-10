@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Stock UX',
-    'version': '12.0.1.0.0',
+    'version': '13.0.1.0.0',
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -32,20 +32,17 @@
         'sale_stock',
         'sale_ux',
         'stock_ux',
-        # for use the user company currency for the standard price
-        'product_ux',
     ],
     'data': [
         'views/sale_order_views.xml',
         'views/sale_order_line_views.xml',
-        'views/product_product_views.xml',
         'views/stock_warehouse_views.xml',
         'views/stock_move_views.xml',
         'wizards/stock_return_picking_views.xml',
     ],
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': True,
     'application': False,
 }
