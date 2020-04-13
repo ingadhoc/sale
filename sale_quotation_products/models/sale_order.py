@@ -23,9 +23,14 @@ class SaleOrder(models.Model):
                 # we send company in context so it filters taxes
                 company_id=self.company_id.id,
                 partner_id=self.partner_id.id,
-                search_default_location_id=self.warehouse_id.lot_stock_id.id,
                 # search_default_warehouse_id=self.warehouse_id.id,
             ))
+            # we do this apart because we need to ensure "warehouse_id" exists in datebase, if for the case that
+            # we don't have inventory installed yet
+            if 'warehouse_id' in self._fields:
+                context.update(dict(
+                    search_default_location_id=self.warehouse_id.lot_stock_id.id,
+                ))
             action_read.update(
                 context=context,
                 # view_mode='tree,form'.
