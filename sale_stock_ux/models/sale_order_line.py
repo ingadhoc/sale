@@ -5,7 +5,6 @@
 from odoo import models, api, fields, _
 from odoo.exceptions import UserError
 from odoo.tools.float_utils import float_compare
-import odoo.addons.decimal_precision as dp
 
 
 class SaleOrderLine(models.Model):
@@ -15,14 +14,14 @@ class SaleOrderLine(models.Model):
         string='All Delivered',
         compute='_compute_all_qty_delivered',
         help='Everything delivered without discounting the returns',
-        digits=dp.get_precision('Product Unit of Measure'),
+        digits='Product Unit of Measure',
     )
 
     qty_returned = fields.Float(
         string='Returned',
         compute='_compute_qty_returned',
         copy=False,
-        digits=dp.get_precision('Product Unit of Measure'),
+        digits='Product Unit of Measure',
     )
 
     delivery_status = fields.Selection([
@@ -54,8 +53,7 @@ class SaleOrderLine(models.Model):
                 continue
 
             if line.order_id.force_delivery_status:
-                line.order_id.delivery_status = \
-                    line.order_id.force_delivery_status
+                line.delivery_status = line.order_id.force_delivery_status
                 continue
 
             if float_compare(
@@ -70,7 +68,6 @@ class SaleOrderLine(models.Model):
                 delivery_status = 'no'
             line.delivery_status = delivery_status
 
-    @api.multi
     def button_cancel_remaining(self):
         # la cancelación de kits no está bien resuelta ya que odoo solo computa
         # la cantidad entregada cuando todo el kit se entregó. Cuestión que,
@@ -140,7 +137,7 @@ class SaleOrderLine(models.Model):
             return {'warning': warning_mess}
         return {}
 
-    @api.multi
+    @api.depends_context('returned')
     def compute_qty_with_bom_phantom(self):
         # parcheamos las devoluciones para los kits, lo hacemos analogo
         # a como hace odoo en la entrega, basicamente solo consideramos
@@ -187,12 +184,14 @@ class SaleOrderLine(models.Model):
         super()._compute_qty_delivered()
         bom_enable = 'bom_ids' in self.env['product.template']._fields
         if bom_enable:
-            for line in self.filtered(lambda l: l.product_id and self.env['mrp.bom']._bom_find(
+            for line in self.filtered(
+                lambda l: l.product_id and self.env['mrp.bom']._bom_find(
                     product=l.product_id).type == 'phantom'):
                 line.qty_delivered = line.compute_qty_with_bom_phantom()
 
     @api.depends('move_ids.state', 'move_ids.scrapped',
                  'move_ids.product_uom_qty', 'move_ids.product_uom')
+    @api.depends_context('returned')
     def _compute_qty_returned(self):
         for line in self:
             qty_returned = 0.0
