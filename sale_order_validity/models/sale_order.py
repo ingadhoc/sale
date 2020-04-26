@@ -35,13 +35,13 @@ class SaleOrder(models.Model):
     @api.constrains('company_id')
     def onchange_company(self):
         for rec in self:
-            rec.validity_days = rec.company_id.sale_order_validity_days
+            rec.validity_days = rec.company_id.quotation_validity_days
 
     @api.onchange('validity_days')
     def onchange_validity_days(self):
-        company_validity_days = self.company_id.sale_order_validity_days
+        company_validity_days = self.company_id.quotation_validity_days
         if self.validity_days > company_validity_days:
-            self.validity_days = self.company_id.sale_order_validity_days
+            self.validity_days = self.company_id.quotation_validity_days
             warning = {
                 'title': _('Warning!'),
                 'message': _(
@@ -50,7 +50,13 @@ class SaleOrder(models.Model):
             }
             return {'warning': warning}
 
-    @api.multi
+    def _compute_is_expired(self):
+        today = fields.Date.today()
+        for order in self:
+            order.is_expired = order.state == 'draft' and order.validity_date and order.validity_date < today
+        if not order.is_expired:
+            return super()._compute_is_expired()
+
     def action_confirm(self):
         self.ensure_one()
         if self.is_expired:
@@ -59,7 +65,6 @@ class SaleOrder(models.Model):
                 ' %s! Please update validity.') % (self.validity_date))
         return super().action_confirm()
 
-    @api.multi
     def update_date_prices_and_validity(self):
         self.date_order = fields.Datetime.now()
         self.update_prices()
