@@ -36,7 +36,6 @@
     'data': [
         'views/sale_order_views.xml',
         'views/sale_order_line_views.xml',
-        'views/stock_warehouse_views.xml',
         'views/stock_move_views.xml',
         'wizards/stock_return_picking_views.xml',
     ],
