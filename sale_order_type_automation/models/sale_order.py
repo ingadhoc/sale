@@ -13,12 +13,11 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     def run_invoicing_atomation(self):
-        invoice = self.env['account.invoice']
         for rec in self.filtered(
                 lambda x: x.type_id.invoicing_atomation and
                 x.type_id.invoicing_atomation != 'none'):
             # we add this check just because if we call
-            # action_invoice_create and nothing to invoice, it raise
+            # _create_invoices and nothing to invoice, it raise
             # an error
             if not any(
                     line.qty_to_invoice for line in rec.order_line):
@@ -28,15 +27,15 @@ class SaleOrder(models.Model):
             # a list is returned but only one invoice should be returned
             # usamos final para que reste adelantos y tmb por ej
             # por si se usa el modulo de facturar las returns
-            invoices = invoice.browse(self.action_invoice_create(final=True))
+            invoices = self._create_invoices(final=True)
             if not invoices:
                 continue
 
             if rec.type_id.invoicing_atomation == 'validate_invoice':
-                invoices.sudo().action_invoice_open()
+                invoices.sudo().post()
             elif rec.type_id.invoicing_atomation == 'try_validate_invoice':
                 try:
-                    invoices.sudo().action_invoice_open()
+                    invoices.sudo().post()
                 except Exception as error:
                     message = _(
                         "We couldn't validate the automatically created "
