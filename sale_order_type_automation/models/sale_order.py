@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import api, models, _
+from odoo import models, _
 from odoo.exceptions import UserError
 import logging
 
@@ -12,7 +12,6 @@ _logger = logging.getLogger(__name__)
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    @api.multi
     def run_invoicing_atomation(self):
         invoice = self.env['account.invoice']
         for rec in self.filtered(
@@ -44,10 +43,9 @@ class SaleOrder(models.Model):
                         "invoices (ids %s), you will need to validate them"
                         " manually. This is what we get: %s") % (
                             invoices.ids, error)
-                    invoices.message_post(message)
-                    rec.message_post(message)
+                    invoices.message_post(body=message)
+                    rec.message_post(body=message)
 
-    @api.multi
     def run_picking_atomation(self):
         # If there products are the type 'service' equals the
         #  delivered qyt to order qty for this sale order line
@@ -108,7 +106,6 @@ class SaleOrder(models.Model):
             else:
                 return True
 
-    @api.multi
     def action_confirm(self):
         res = super().action_confirm()
         # we use this because compatibility with sale exception module
@@ -120,11 +117,9 @@ class SaleOrder(models.Model):
                 self.action_done()
         return res
 
-    @api.multi
     def _prepare_invoice(self):
         if self.type_id.journal_id:
-            self = self.with_context(
-                force_company=self.type_id.journal_id.company_id.id)
+            self = self.with_context(force_company=self.type_id.journal_id.company_id.id)
         res = super()._prepare_invoice()
         if self.type_id.payment_atomation and self.type_id.payment_journal_id:
             res['pay_now_journal_id'] = self.type_id.payment_journal_id.id
