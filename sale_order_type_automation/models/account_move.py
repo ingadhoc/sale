@@ -5,8 +5,8 @@
 from odoo import api, models
 
 
-class AccountInvoice(models.Model):
-    _inherit = 'account.invoice'
+class AccountMove(models.Model):
+    _inherit = 'account.move'
 
     @api.onchange('sale_type_id')
     def onchange_sale_type_set_pay_now(self):
