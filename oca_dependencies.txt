@@ -4,3 +4,4 @@ ingadhoc-product https://github.com/ingadhoc/product.git
 ingadhoc-stock https://github.com/ingadhoc/stock.git
 ingadhoc-account-payment https://github.com/ingadhoc/account-payment.git
 ingadhoc-stock https://github.com/ingadhoc/stock.git
+ingadhoc-multi-company https://github.com/ingadhoc/multi-company.git
