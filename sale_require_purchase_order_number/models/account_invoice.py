@@ -18,7 +18,6 @@ class AccountInvoice(models.Model):
         states={'draft': [('readonly', False)]},
     )
 
-    @api.multi
     def invoice_validate(self):
         invoices_missing_po_number = self.filtered(
             lambda inv: inv.require_purchase_order_number and inv.type
