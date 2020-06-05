@@ -7,7 +7,7 @@ from odoo.exceptions import UserError
 
 
 class AccountInvoice(models.Model):
-    _inherit = "account.invoice"
+    _inherit = "account.move"
 
     require_purchase_order_number = fields.Boolean(
         string='Sale Require Origin',
