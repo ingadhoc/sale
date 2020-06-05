@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: sale_require_purchase_order_number
-#: model:ir.model.fields,help:sale_require_purchase_order_number.field_account_invoice__require_purchase_order_number
+#: model:ir.model.fields,help:sale_require_purchase_order_number.field_account_move__require_purchase_order_number
 #: model:ir.model.fields,help:sale_require_purchase_order_number.field_res_partner__require_purchase_order_number
 #: model:ir.model.fields,help:sale_require_purchase_order_number.field_res_users__require_purchase_order_number
 #: model:ir.model.fields,help:sale_require_purchase_order_number.field_stock_picking__require_purchase_order_number
@@ -39,7 +39,7 @@ msgstr ""
 "Si es verdadero, se requiere número de orden de compra en orden de venta"
 
 #. module: sale_require_purchase_order_number
-#: model:ir.model,name:sale_require_purchase_order_number.model_account_invoice
+#: model:ir.model,name:sale_require_purchase_order_number.model_account_move
 msgid "Invoice"
 msgstr "Factura"
 
@@ -49,7 +49,7 @@ msgid "PO Number"
 msgstr ""
 
 #. module: sale_require_purchase_order_number
-#: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_account_invoice__purchase_order_number
+#: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_account_move__purchase_order_number
 #: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_sale_order__purchase_order_number
 #: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_stock_picking__purchase_order_number
 msgid "Purchase Order Number"
@@ -61,7 +61,7 @@ msgid "Sale Order"
 msgstr "Pedido de venta"
 
 #. module: sale_require_purchase_order_number
-#: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_account_invoice__require_purchase_order_number
+#: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_account_move__require_purchase_order_number
 #: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_res_partner__require_purchase_order_number
 #: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_res_users__require_purchase_order_number
 #: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_sale_order__require_purchase_order_number
@@ -90,7 +90,7 @@ msgstr ""
 "para este cliente"
 
 #. module: sale_require_purchase_order_number
-#: code:addons/sale_require_purchase_order_number/models/account_invoice.py:28
+#: code:addons/sale_require_purchase_order_number/models/account_move.py:28
 #, python-format
 msgid ""
 "You cannot confirm invoice without a Purchase Order Number for this partner"

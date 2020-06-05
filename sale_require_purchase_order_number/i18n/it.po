@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: sale_require_purchase_order_number
-#: model:ir.model,name:sale_require_purchase_order_number.model_account_invoice
+#: model:ir.model,name:sale_require_purchase_order_number.model_account_move
 msgid "Invoice"
 msgstr ""
 
@@ -33,7 +33,7 @@ msgid "Picking List"
 msgstr ""
 
 #. module: sale_require_purchase_order_number
-#: field:account.invoice,purchase_order_number:0
+#: field:account.move,purchase_order_number:0
 #: field:sale.order,purchase_order_number:0
 #: field:stock.picking,manual_purchase_order_number:0
 msgid "Purchase Order Number"
