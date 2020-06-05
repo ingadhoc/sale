@@ -54,7 +54,6 @@ class SaleOrderLine(models.Model):
         self.inverse_vals(vals)
         return super().create(vals)
 
-    @api.multi
     def write(self, vals):
         self.inverse_vals(vals)
         return super().write(vals)
@@ -75,7 +74,6 @@ class SaleOrderLine(models.Model):
                 'discount1': vals.get('discount'),
             })
 
-    @api.multi
     @api.depends('discount1', 'discount2', 'discount3')
     def _compute_discount(self):
         for rec in self:
@@ -85,7 +83,6 @@ class SaleOrderLine(models.Model):
                     (100.0 - discount) / 100.0)
             rec.discount = 100.0 - (discount_factor * 100.0)
 
-    @api.multi
     def _prepare_invoice_line(self, qty):
         res = super(SaleOrderLine, self)._prepare_invoice_line(qty)
         res.update({
