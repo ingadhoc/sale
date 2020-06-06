@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<odoo noupdate="1">
+
+    <function model="ir.config_parameter" name="set_param" eval="('sale.propagate_internal_notes', True)"/>
+    <function model="ir.config_parameter" name="set_param" eval="('sale.propagate_note', True)"/>
+</odoo>

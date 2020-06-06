@@ -11,6 +11,7 @@ from odoo.tools import float_is_zero
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
+    internal_notes = fields.Text('Internal Notes')
     pricelist_id = fields.Many2one(
         tracking=True,
     )
@@ -30,6 +31,19 @@ class SaleOrder(models.Model):
         store=True,
         compute_sudo=True,
     )
+
+    def _prepare_invoice(self):
+        vals = super(SaleOrder, self)._prepare_invoice()
+        propagate_internal_notes = self.env['ir.config_parameter'].sudo(
+        ).get_param('sale.propagate_internal_notes') == 'True'
+        propagate_note = self.env['ir.config_parameter'].sudo(
+        ).get_param('sale.propagate_note') == 'True'
+        if propagate_internal_notes and self.internal_notes:
+            vals.update({
+                'internal_notes': self.internal_notes})
+        if 'comment' in vals and not propagate_note:
+            vals.pop('comment')
+        return vals
 
     @api.onchange('pricelist_id')
     def _onchange_pricelist(self):

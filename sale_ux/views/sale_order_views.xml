@@ -6,6 +6,11 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
+            <field name="note" position="after">
+                <newline/>
+                <field name="internal_notes" nolabel="1" placeholder="Internal Notes..." groups="base.group_user"/>
+            </field>
+
             <!-- add buttons to send and print for state done too -->
             <xpath expr="//button[@name='action_quotation_send'][4]" position="attributes">
                 <attribute name="states">sent,sale,done</attribute>
