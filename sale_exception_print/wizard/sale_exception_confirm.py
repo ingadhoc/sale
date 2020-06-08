@@ -9,7 +9,6 @@ class SaleExceptionConfirm(models.TransientModel):
 
     _inherit = 'sale.exception.confirm'
 
-    @api.multi
     def action_confirm(self):
         if self.ignore and self._context.get('print_exceptions', False):
             self.related_model_id.ignore_exception_print = True
