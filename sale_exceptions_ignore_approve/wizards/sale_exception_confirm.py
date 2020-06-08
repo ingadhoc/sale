@@ -8,7 +8,6 @@ from odoo import models, api
 class SaleExceptionConfirm(models.TransientModel):
     _inherit = 'sale.exception.confirm'
 
-    @api.multi
     def action_confirm(self):
         res = super().action_confirm()
         if self.ignore:
