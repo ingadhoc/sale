@@ -28,7 +28,6 @@ class SaleLastSaleReport(models.Model):
         group_operator='min',
         readonly=True)
 
-    @api.model_cr
     def init(self):
         tools.drop_view_if_exists(self.env.cr, 'sale_last_sale_report')
         self.env.cr.execute("""
