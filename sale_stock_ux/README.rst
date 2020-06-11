@@ -26,6 +26,7 @@ Several Improvements to sales:
 #. Add filter for sale orders with returns
 #. Integrate delivery status with returns logic
 #. Add moves on sale order line form view (only for technical features)
+#. Add observations on pickings
 #. Add an option in warehouse to disable stock warning
 
 IMPORTANT:
