@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import api, models, _
+from odoo import models, _
 from odoo.tools import float_compare
 from odoo.exceptions import UserError
 
@@ -10,7 +10,6 @@ from odoo.exceptions import UserError
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
-    @api.multi
     def button_validate(self):
         msg = (
             'If you use a sale type in the sale order related with invoice '
@@ -23,7 +22,6 @@ class StockPicking(models.Model):
             raise UserError(_(msg))
         return super().button_validate()
 
-    @api.multi
     def action_assign(self):
         msg = (
             'If you use a sale type in the sale order related with invoice'
@@ -45,7 +43,7 @@ class StockPicking(models.Model):
         precision = self.env['decimal.precision'].precision_get(
             'Product Unit of Measure')
         invoice_status = self.sale_id.mapped(
-            'order_line.invoice_lines.invoice_id.state')
+            'order_line.invoice_lines.move_id.invoice_payment_state')
         if (set(invoice_status) - set(['paid'])) or any(
                 (float_compare(line.product_uom_qty,
                                line.qty_invoiced,

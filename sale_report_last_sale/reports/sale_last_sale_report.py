@@ -1,6 +1,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import api, fields, models, tools
+from odoo import fields, models, tools
 
 
 class SaleLastSaleReport(models.Model):
@@ -28,7 +28,6 @@ class SaleLastSaleReport(models.Model):
         group_operator='min',
         readonly=True)
 
-    @api.model_cr
     def init(self):
         tools.drop_view_if_exists(self.env.cr, 'sale_last_sale_report')
         self.env.cr.execute("""

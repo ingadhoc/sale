@@ -17,7 +17,7 @@ class SaleOrderLine(models.Model):
         Modificamos la funcion original para sobre escribir con la policy
         del sale type si es que viene definida distinta de by product
         """
-        super(SaleOrderLine, self)._get_to_invoice_qty()
+        super()._get_to_invoice_qty()
         for line in self.filtered(lambda sol: sol.order_id.state in [
             'sale', 'done'] and sol.order_id.type_id.invoice_policy !=
                 'by_product'):
