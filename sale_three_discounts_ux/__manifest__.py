@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Three Discounts UX',
-    'version': '12.0.1.0.0',
+    'version': '13.0.1.0.0',
     'category': 'Sales Management',
     'sequence': 14,
     'author': 'ADHOC SA',
@@ -33,7 +33,7 @@
     'data': [
         'wizards/sale_order_global_discount_wizard_views.xml',
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': True,
     'application': False,
 }

@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, fields, api
+from odoo import models, fields
 
 
 class SaleGlobalDiscountWizard(models.TransientModel):
@@ -25,7 +25,6 @@ class SaleGlobalDiscountWizard(models.TransientModel):
         required=False,
     )
 
-    @api.multi
     def confirm(self):
         self.ensure_one()
         order = self.env['sale.order'].browse(
