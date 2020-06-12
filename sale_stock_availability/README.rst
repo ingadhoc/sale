@@ -29,8 +29,7 @@ Configuration
 
 To configure this module, you need to:
 
-#. No configuration needed
-
+   It's necessary to check Stock Value in User's permissons in order to use this feature.
 
 Usage
 =====
