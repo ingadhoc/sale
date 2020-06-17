@@ -184,10 +184,10 @@ class SaleOrderLine(models.Model):
         super()._compute_qty_delivered()
         bom_enable = 'bom_ids' in self.env['product.template']._fields
         if bom_enable:
-            for line in self.filtered(
-                lambda l: l.product_id and self.env['mrp.bom']._bom_find(
-                    product=l.product_id).type == 'phantom'):
-                line.qty_delivered = line.compute_qty_with_bom_phantom()
+            for line in self.filtered(lambda l: l.product_id):
+                bom = self.env['mrp.bom']._bom_find(product=line.product_id)
+                if bom and bom.type == 'phantom':
+                    line.qty_delivered = line.compute_qty_with_bom_phantom()
 
     @api.depends('move_ids.state', 'move_ids.scrapped',
                  'move_ids.product_uom_qty', 'move_ids.product_uom')
@@ -205,6 +205,7 @@ class SaleOrderLine(models.Model):
                     move.product_uom_qty, line.product_uom)
             bom_enable = 'bom_ids' in self.env['product.template']._fields
             if bom_enable and line.product_id and self.env['mrp.bom']._bom_find(
+                    product=line.product_id) and self.env['mrp.bom']._bom_find(
                     product=line.product_id).type == 'phantom':
                 qty_returned = line.with_context(
                     returned=True).compute_qty_with_bom_phantom()
