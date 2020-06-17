@@ -13,7 +13,6 @@ class SaleOrder(models.Model):
         "portal_sale_distributor.group_portal_distributor"
     )
 
-    @api.multi
     def action_confirm_distributor(self):
         self.message_post(
             body=_("Pedido confirmado por %s") % self.env.user.name,
@@ -21,7 +20,6 @@ class SaleOrder(models.Model):
         self = self.sudo()
         return self.action_confirm()
 
-    @api.multi
     def print_quotation_distributor(self):
         """imprimiendo con sudo no funciona, es por un tema del controller
         lo que hicimos por ahora es implementar en aeroo la posibilidad de
