@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Stock availability in sales order line',
-    'version': '12.0.1.1.0',
+    'version': '13.0.1.0.0',
     'category': 'Tools',
     'author': 'Moldeo Interactive, ADHOC SA',
     'website': 'http://business.moldeo.coop http://adhoc.com.ar/',
@@ -33,5 +33,5 @@
         'security/sale_stock_availability_security.xml',
         'views/sale_order_views.xml',
     ],
-    'installable': False,
+    'installable': True,
 }
