@@ -137,79 +137,70 @@ class SaleOrderLine(models.Model):
             return {'warning': warning_mess}
         return {}
 
-    @api.depends_context('returned')
-    def compute_qty_with_bom_phantom(self):
-        # parcheamos las devoluciones para los kits, lo hacemos analogo
-        # a como hace odoo en la entrega, basicamente solo consideramos
-        # devuelto si se devolvió todo (odoo considera entregado si se entrego
-        # todo)
-        self.ensure_one()
-        precision = self.env['decimal.precision'].precision_get(
-            'Product Unit of Measure')
-        call_from_return = self._context.get('returned', False)
-        qty = self.qty_delivered if not call_from_return else 0.0
-        bom = self.env['mrp.bom']._bom_find(product=self.product_id)
-        bom_returned = {}
-        bom_returned[bom.id] = False
-        product_uom_qty_bom = self.product_uom._compute_quantity(
-            self.product_uom_qty, bom.product_uom_id)
-        bom_exploded = bom.explode(
-            self.product_id, product_uom_qty_bom)
-        for bom_line in bom_exploded[1:][0]:
-            returned_qty = 0.0
-            for move in self.move_ids.filtered(
-                    lambda r: (
-                        r.product_id == bom_line[0].product_id and
-                        r.state == 'done' and
-                        not r.scrapped and
-                        r.location_dest_id.usage != "customer" and
-                        r.to_refund)):
-                returned_qty += move.product_uom._compute_quantity(
-                    move.product_uom_qty,
-                    bom_line[0].product_uom_id)
-            if float_compare(
-                    returned_qty, bom_line[1].get('qty', 0.0),
-                    precision_digits=precision) < 0:
-                bom_returned[bom.id] = False
-            else:
-                bom_returned[bom.id] = True
-        if bom_returned and any(
-                bom_returned.values()) and not call_from_return:
-            qty = 0.0
-        elif bom_returned and any(bom_returned.values()) and call_from_return:
-            qty = self.product_uom_qty
-        return qty
-
-    def _compute_qty_delivered(self):
-        super()._compute_qty_delivered()
-        bom_enable = 'bom_ids' in self.env['product.template']._fields
-        if bom_enable:
-            for line in self.filtered(lambda l: l.product_id):
-                bom = self.env['mrp.bom']._bom_find(product=line.product_id)
-                if bom and bom.type == 'phantom':
-                    line.qty_delivered = line.compute_qty_with_bom_phantom()
-
-    @api.depends('move_ids.state', 'move_ids.scrapped',
+    @api.depends('qty_delivered_method', 'move_ids.state', 'move_ids.scrapped',
                  'move_ids.product_uom_qty', 'move_ids.product_uom')
-    @api.depends_context('returned')
     def _compute_qty_returned(self):
-        for line in self:
+        for order_line in self:
             qty_returned = 0.0
-            # we use same method as in sale_stock_picking_return_invoicing
-            for move in line.mapped('move_ids').filtered(
-                lambda r: (r.state == 'done' and
-                           not r.scrapped and
-                           r.location_dest_id.usage != "customer" and
-                           r.to_refund)):
-                qty_returned += move.product_uom._compute_quantity(
-                    move.product_uom_qty, line.product_uom)
-            bom_enable = 'bom_ids' in self.env['product.template']._fields
-            if bom_enable and line.product_id and self.env['mrp.bom']._bom_find(
-                    product=line.product_id) and self.env['mrp.bom']._bom_find(
-                    product=line.product_id).type == 'phantom':
-                qty_returned = line.with_context(
-                    returned=True).compute_qty_with_bom_phantom()
-            line.qty_returned = qty_returned
+            # we use same method as in odoo use to delivery's
+            if order_line.qty_delivered_method == 'stock_move':
+                return_moves = order_line.mapped('move_ids').filtered(
+                    lambda r: (r.state == 'done' and
+                               not r.scrapped and
+                               r.location_dest_id.usage != "customer" and
+                               r.to_refund))
+                for move in return_moves:
+                    qty_returned += move.product_uom._compute_quantity(
+                        move.product_uom_qty, order_line.product_uom)
+                bom_enable = 'bom_ids' in self.env['product.template']._fields
+                if bom_enable:
+                    boms = return_moves.mapped('bom_line_id.bom_id')
+                    dropship = False
+                    if not boms and any([m._is_dropshipped()
+                                         for m in return_moves]):
+                        boms = boms._bom_find(
+                            product=order_line.product_id,
+                            company_id=order_line.company_id.id,
+                            bom_type='phantom')
+                        dropship = True
+                    # We fetch the BoMs of type kits linked to the order_line,
+                    # the we keep only the one related to the finished produst.
+                    # This bom shoud be the only one since bom_line_id was written on the moves
+                    relevant_bom = boms.filtered(
+                        lambda b: b.type == 'phantom' and (b.product_id == order_line.product_id or (
+                            b.product_tmpl_id == order_line.product_id.product_tmpl_id and not b.product_id)))
+                    if relevant_bom:
+                        # In case of dropship, we use a 'all or nothing' policy since 'bom_line_id' was
+                        # not written on a move coming from a PO.
+                        # FIXME: if the components of a kit have different suppliers, multiple PO
+                        # are generated. If one PO is confirmed and all the others are in draft, receiving
+                        # the products for this PO will set the qty_delivered. We might need to check the
+                        # state of all PO as well... but sale_mrp doesn't depend on purchase.
+                        if dropship:
+                            if order_line.move_ids and all(
+                                    [m.state == 'done' for m in return_moves]):
+                                qty_returned = order_line.product_uom_qty
+                            else:
+                                qty_returned = 0.0
+                            continue
+                        filters = {'outgoing_moves': lambda m: m.location_dest_id.usage == 'customer' and (
+                            not m.origin_returned_move_id or (
+                                m.origin_returned_move_id and m.to_refund)),
+                            'incoming_moves': lambda m: m.location_dest_id.usage != 'customer' and m.to_refund}
+                        order_qty = order_line.product_uom._compute_quantity(
+                            order_line.product_uom_qty, relevant_bom.product_uom_id)
+                        qty_returned = return_moves._compute_kit_quantities(
+                            order_line.product_id, order_qty, relevant_bom, filters)
+
+                    # If no relevant BOM is found, fall back on the all-or-nothing policy. This happens
+                    # when the product sold is made only of kits. In this case, the BOM of the stock moves
+                    # do not correspond to the product sold => no relevant BOM.
+                    elif boms:
+                        if all([m.state == 'done' for m in return_moves]):
+                            qty_returned = order_line.product_uom_qty
+                        else:
+                            qty_returned = 0.0
+            order_line.qty_returned = qty_returned
 
     @api.depends('qty_returned')
     def _get_to_invoice_qty(self):
