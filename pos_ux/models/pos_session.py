@@ -10,7 +10,6 @@ class PosSession(models.Model):
 
     _inherit = 'pos.session'
 
-    @api.multi
     def action_pos_session_close(self):
         """ Delete statements related to outstanding payment journals in order
         to not reconcile lines.

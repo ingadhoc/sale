@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'POS UX',
-    'version': '12.0.1.0.0',
+    'version': '13.0.1.0.0',
     'category': 'Point Of Sale',
     'sequence': 14,
     'summary': '',
@@ -37,7 +37,7 @@
     'demo': [
         'demo/account_journal_demo.xml',
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
