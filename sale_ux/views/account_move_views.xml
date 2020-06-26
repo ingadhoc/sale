@@ -8,8 +8,8 @@
         <field name="priority">20</field>
         <field name="arch" type="xml">
             <notebook>
-                <page string="Sale Orders" name="sale_orders">
-                    <field name="sale_order_ids" invisible="0"/>
+                <page string="Sale Orders" name="sale_orders" attrs="{'invisible':[('type','not in', ('out_invoice', 'out_refund'))]}">
+                    <field name="sale_order_ids"/>
                 </page>
             </notebook>
         </field>
