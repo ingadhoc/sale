@@ -25,7 +25,7 @@
                 <field name="commercial_partner_id" invisible="1"/>
             </field>
             <field name="analytic_account_id" position="attributes">
-                <attribute name="domain">['|',('partner_id','=',False), ('partner_id.commercial_partner_id','=',commercial_partner_id)]</attribute>
+                <attribute name="domain">['|',('partner_id','=',False), ('commercial_partner_id','=',commercial_partner_id)]</attribute>
             </field>
             <field name="order_line" position="before">
                 <button name="update_prices" string="Update Prices" type="object" attrs="{'invisible':[('state','not in',['draft','sent'])]}" groups="product.group_sale_pricelist"/>
