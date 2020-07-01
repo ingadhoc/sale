@@ -29,6 +29,9 @@ class SaleOrderLine(models.Model):
         """
         for line in self:
             date_order = line.order_id.date_order or fields.Date.context_today(line)
-            line.env.context.date_invoice = date_order
-            line.env.context.invoice_company = line.company_id
+            try:
+                line.env.context.date_invoice = date_order
+                line.env.context.invoice_company = line.company_id
+            except:
+                pass
             super(SaleOrderLine, line)._compute_amount()
