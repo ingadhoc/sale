@@ -6,3 +6,5 @@ from . import sale_order
 from . import mail_thread
 from . import product_template
 from . import res_users
+from . import ir_http
+from . import mail_activity_mixin
