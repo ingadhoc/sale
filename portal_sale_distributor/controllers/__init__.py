@@ -3,4 +3,5 @@
 # directory
 ##############################################################################
 from . import portal_account
-from . import portal
+# TODO related to thew account_debt_management module that was deprecated
+# from . import portal
