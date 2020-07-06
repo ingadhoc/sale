@@ -29,9 +29,7 @@
         'sale_exception',
         'price_security',
         'delivery',
-        'partner_identification',
         'sale_ux',
-        'account_debt_management',
         'sale_management',
     ],
     'demo': [

@@ -29,7 +29,7 @@ class PortalSummary(Controller):
             'lang': partner.lang,
         }
         xls = request.env.ref(
-            'account_debt_management.account_debt_report').with_user(
+            'account_debt_management.account_debt_report').sudo(
         ).with_context(report_data).render([partner.id], data=report_data)[0]
         xlshttpheaders = [
             ('Content-Type', 'application/vnd.ms-excel'),
@@ -54,7 +54,7 @@ class PortalSummary(Controller):
             'lang': partner.lang,
         }
         xls = request.env.ref(
-            'account_debt_management.account_debt_report').with_user(
+            'account_debt_management.account_debt_report').sudo(
         ).with_context(report_data).render([partner.id], data=report_data)[0]
         xlshttpheaders = [
             ('Content-Type', 'application/vnd.ms-excel'),
