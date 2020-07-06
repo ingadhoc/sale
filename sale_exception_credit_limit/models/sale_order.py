@@ -8,7 +8,6 @@ from odoo import models, api
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    @api.multi
     def check_credit_limit_ok(self):
         self.ensure_one()
         domain = [
@@ -41,17 +40,19 @@ class SaleOrder(models.Model):
         # We sum from all the invoices lines that are in draft and not linked
         # to a sale order
         domain = [
-            ('invoice_id.partner_id', '=', self.partner_id.id),
-            ('invoice_id.state', '=', 'draft'),
+            ('move_id.partner_id', '=', self.partner_id.id),
+            ('move_id.type', 'in', ['out_invoice', 'out_refund']),
+            ('move_id.state', '=', 'draft'),
+            ('exclude_from_invoice_tab', '=', False),
             ('sale_line_ids', '=', False)]
-        draft_invoice_lines = self.env['account.invoice.line'].search(domain)
+        draft_invoice_lines = self.env['account.move.line'].search(domain)
         draft_invoice_lines_amount = 0.0
         for line in draft_invoice_lines:
             price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
-            taxes = line.invoice_line_tax_ids.compute_all(
-                price, line.invoice_id.currency_id,
+            taxes = line.tax_ids.compute_all(
+                price, line.move_id.currency_id,
                 line.quantity,
-                product=line.product_id, partner=line.invoice_id.partner_id)
+                product=line.product_id, partner=line.move_id.partner_id)
             draft_invoice_lines_amount += taxes['total_included']
 
         available_credit = self.partner_id.credit_limit - \
