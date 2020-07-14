@@ -18,7 +18,7 @@
 #
 ##############################################################################
 {
-    'name': 'Delivery UX',
+    'name': 'Sale Delivery UX',
     'version': '13.0.1.0.0',
     'category': 'Sales',
     'sequence': 14,
