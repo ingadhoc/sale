@@ -27,7 +27,7 @@ class SaleOrder(models.Model):
             ))
             # we do this apart because we need to ensure "warehouse_id" exists in datebase, if for the case that
             # we don't have inventory installed yet
-            if 'warehouse_id' in self._fields:
+            if 'warehouse_id' in self._fields and not self._context.get('disable_location_filter'):
                 context.update(dict(
                     search_default_location_id=self.warehouse_id.lot_stock_id.id,
                 ))
