@@ -1,11 +1,8 @@
-from odoo import models, fields
+from odoo import models
 
 
 class MailThread(models.AbstractModel):
     _inherit = 'mail.thread'
-
-    message_attachment_count = fields.Integer(
-        groups="base.group_user, base.group_portal")
 
     def _message_auto_subscribe_notify(self, partner_ids, template):
         """ Cuando usuario portal crea OV se manda un mensjae de suscripcion

@@ -31,6 +31,7 @@
         'delivery',
         'sale_ux',
         'sale_management',
+        'portal_backend',
     ],
     'demo': [
     ],
