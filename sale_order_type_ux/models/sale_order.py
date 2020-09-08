@@ -13,3 +13,15 @@ class SaleOrder(models.Model):
         readonly=True,
         states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
     )
+
+    def _prepare_invoice(self):
+        if not self.type_id.journal_id:
+            return super()._prepare_invoice()
+        res = super()._prepare_invoice()
+        company = self.type_id.journal_id.company_id
+        self = self.with_context(force_company=company.id)
+        if company != self.company_id.id:
+            res['invoice_partner_bank_id'] = company.partner_id.bank_ids[:1].id
+            res['fiscal_position_id'] = self.fiscal_position_id.id or\
+                self.partner_invoice_id.property_account_position_id.id,
+        return res
