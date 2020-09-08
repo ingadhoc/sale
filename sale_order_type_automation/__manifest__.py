@@ -25,7 +25,7 @@
     'license': 'AGPL-3',
     'depends': [
         'account',
-        'sale_order_type',
+        'sale_order_type_ux',
         # dependemos de este para no generar modulos puente y porque nosotros
         # queremos que el pago creado sea un payment group
         'account_payment_group',

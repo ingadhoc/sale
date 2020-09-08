@@ -117,8 +117,6 @@ class SaleOrder(models.Model):
         return res
 
     def _prepare_invoice(self):
-        if self.type_id.journal_id:
-            self = self.with_context(force_company=self.type_id.journal_id.company_id.id)
         res = super()._prepare_invoice()
         if self.type_id.payment_atomation and self.type_id.payment_journal_id:
             res['pay_now_journal_id'] = self.type_id.payment_journal_id.id
