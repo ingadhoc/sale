@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models
+from odoo import api, models
 
 
 class UsersView(models.Model):
@@ -18,3 +18,13 @@ class UsersView(models.Model):
                 ('implied_ids.category_id', '=', user_types_category.id)])
             group_ids = list(set(group_ids) - set(internal_groups.ids))
         return super()._has_multiple_groups(group_ids)
+
+    @api.model
+    def systray_get_activities(self):
+        """ We did this to avoid errors when use portal user when the module "Note" is not a depends of this module.
+        Only apply this change if the user is portal.
+        """
+        if self.env.user.has_group('base.group_portal') and self.env['ir.module.module'].sudo().search(
+                [('name', '=', 'note')]).state == 'installed':
+            self = self.sudo()
+        return super().systray_get_activities()
