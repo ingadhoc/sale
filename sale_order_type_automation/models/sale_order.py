@@ -32,10 +32,10 @@ class SaleOrder(models.Model):
                 continue
 
             if rec.type_id.invoicing_atomation == 'validate_invoice':
-                invoices.sudo().post()
+                invoices.sudo().action_post()
             elif rec.type_id.invoicing_atomation == 'try_validate_invoice':
                 try:
-                    invoices.sudo().post()
+                    invoices.sudo().action_post()
                 except Exception as error:
                     message = _(
                         "We couldn't validate the automatically created "
