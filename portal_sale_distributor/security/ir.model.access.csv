@@ -17,7 +17,9 @@ access_product_uom,product.uom.portal.distributor,product.model_product_uom,grou
 access_product_pricelist_item,product.pricelist.item.portal.distributor,product.model_product_pricelist_item,group_portal_distributor,1,1,0,0
 access_ir_sequence,ir_sequence.distributor,base.model_ir_sequence,group_portal_distributor,1,0,0,0
 access_product_price_history_distributor,product.price.history.portal.distributor,product.model_product_price_history,group_portal_distributor,1,1,1,0
-access_fiscal_position_distributor,account.fiscal.position.distributor,account.model_account_fiscal_position_tax,group_portal_distributor,1,0,0,0
+access_account_tax_distributor,account.tax.distributor,account.model_account_tax,group_portal_distributor,1,0,0,0
+access_fiscal_position_distributor,account.fiscal.position.distributor,account.model_account_fiscal_position,group_portal_distributor,1,0,0,0
+access_fiscal_position_tax_distributor,account.fiscal.position.tax.distributor,account.model_account_fiscal_position_tax,group_portal_distributor,1,0,0,0
 access_ir_ui_menu_portal_distributor,ir.ui.menu.portal.distributor,base.model_ir_ui_menu,group_portal_distributor,1,0,0,0
 access_ir_model_portal_distributor,ir.model.portal.distributor,base.model_ir_model,group_portal_distributor,1,0,0,0
 access_ir_fields_portal_distributor,ir.model.fields.portal.distributor,base.model_ir_model_fields,group_portal_distributor,1,0,0,0
