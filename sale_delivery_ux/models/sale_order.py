@@ -19,4 +19,6 @@ class SaleOrder(models.Model):
         sol = super()._create_delivery_line(carrier, price_unit)
         if not price_unit:
             sol._write({'product_uom_qty': 0.0})
+            # we set qty_delivered to zero to force compute the delivery status
+            sol.write({'qty_delivered': 0.0})
         return sol

@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Delivery UX',
-    'version': '12.0.1.0.0',
+    'version': '12.0.1.1.0',
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -29,7 +29,7 @@
     'images': [
     ],
     'depends': [
-        'sale_ux',
+        'sale_stock_ux',
         'delivery',
     ],
     'data': [
