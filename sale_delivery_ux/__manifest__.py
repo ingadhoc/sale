@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Delivery UX',
-    'version': '13.0.1.0.0',
+    'version': '13.0.1.1.0',
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -27,7 +27,7 @@
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'depends': [
-        'sale_ux',
+        'sale_stock_ux',
         'delivery',
     ],
     'installable': True,
