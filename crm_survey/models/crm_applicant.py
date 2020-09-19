@@ -17,8 +17,11 @@ class Applicant(models.Model):
         self.ensure_one()
         # create a response and link it to this applicant
         if not self.response_id:
-            response = self.env['survey.user_input'].with_context(default_type="manually").create(
-                {'survey_id': self.survey_id.id, 'partner_id': self.partner_id.id})
+            # use link as type in order to avoid deletion of records
+            # that they wasn't started yet made by 'do_clean_emptys' method
+            response = self.env['survey.user_input'].with_context(default_type="link").create(
+                {'survey_id': self.survey_id.id,
+                 'partner_id': self.partner_id.id})
             self.response_id = response.id
         else:
             response = self.response_id
