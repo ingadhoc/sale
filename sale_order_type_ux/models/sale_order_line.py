@@ -37,3 +37,10 @@ class SaleOrderLine(models.Model):
             taxes = fpos.map_tax(taxes) if fpos else taxes
             res['tax_ids'] = [(6, 0, taxes.ids)]
         return res
+
+    @api.model
+    def create(self, vals):
+        res = super().create(vals)
+        if res.order_id.type_id and res.order_id.type_id.analytic_tag_ids and not res.analytic_tag_ids:
+            res.analytic_tag_ids = res.order_id.type_id.analytic_tag_ids
+        return res
