@@ -15,5 +15,20 @@ class SaleOrderTypology(models.Model):
     analytic_tag_ids = fields.Many2many(
         'account.analytic.tag',
         string='Analytic Tags',
+        domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]",
         help="Default analytic tags that will be used on new sale order lines",
     )
+
+    team_id = fields.Many2one(
+        'crm.team',
+        check_company=True,
+        domain="['|', ('company_id', '=', False), ('company_id', '=', company_id),]",
+    )
+
+    analytic_account_id = fields.Many2one(
+        'account.analytic.account',
+        copy=False,
+        check_company=True,
+        domain="['|' , ('company_id', '=', False), ('company_id', '=', company_id)]",
+        help="Default analytic account that will be used on new sale order"
+        )
