@@ -65,6 +65,15 @@ class SaleOrderLine(models.Model):
         y consideramos que las columnas 2 y 3 son descuentos adicionales y no
         las pisamos
         """
+        # we force to remove from vals the discount 1,2,3 when is call from the create method and
+        #  the all compute values are initialized. Because of that values the discount was cleaned wrongly
+        if not self:
+            if 'discount1' in vals and vals.get('discount1') == 0:
+                vals.pop('discount1')
+            if 'discount2' in vals and vals.get('discount2') == 0:
+                vals.pop('discount2')
+            if 'discount3' in vals and vals.get('discount3') == 0:
+                vals.pop('discount3')
         precision = self.env['decimal.precision'].precision_get('Discount')
         if 'discount' in vals \
                 and float_compare(vals.get('discount'), self.discount, precision_digits=precision) != 0 \
