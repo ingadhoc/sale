@@ -44,6 +44,9 @@ class SaleOrder(models.Model):
         self = self.with_context(force_company=company.id)
         if company != self.company_id.id:
             res['invoice_partner_bank_id'] = company.partner_id.bank_ids[:1].id
-            res['fiscal_position_id'] = self.fiscal_position_id.id or\
-                self.partner_invoice_id.property_account_position_id.id,
+            so_fiscal_position = self.env['account.fiscal.position'].browse(res['fiscal_position_id'])
+            if so_fiscal_position.company_id and so_fiscal_position.company_id != company:
+                res['fiscal_position_id'] = self.env['account.fiscal.position'].with_context(
+                    force_company=company.id).get_fiscal_position(
+                    self.partner_invoice_id.id, self.partner_shipping_id.id)
         return res
