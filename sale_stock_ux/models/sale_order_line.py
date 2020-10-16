@@ -17,9 +17,9 @@ class SaleOrderLine(models.Model):
         digits='Product Unit of Measure',
     )
 
-    qty_returned = fields.Float(
+    quantity_returned = fields.Float(
         string='Returned',
-        compute='_compute_qty_returned',
+        compute='_compute_quantity_returned',
         copy=False,
         digits='Product Unit of Measure',
     )
@@ -36,10 +36,10 @@ class SaleOrderLine(models.Model):
         default='no'
     )
 
-    @api.depends('qty_delivered', 'qty_returned')
+    @api.depends('qty_delivered', 'quantity_returned')
     def _compute_all_qty_delivered(self):
         for rec in self:
-            rec.all_qty_delivered = rec.qty_delivered + rec.qty_returned
+            rec.all_qty_delivered = rec.qty_delivered + rec.quantity_returned
 
     @api.depends(
         'order_id.state', 'qty_delivered', 'product_uom_qty',
@@ -139,9 +139,9 @@ class SaleOrderLine(models.Model):
 
     @api.depends('qty_delivered_method', 'move_ids.state', 'move_ids.scrapped',
                  'move_ids.product_uom_qty', 'move_ids.product_uom')
-    def _compute_qty_returned(self):
+    def _compute_quantity_returned(self):
         for order_line in self:
-            qty_returned = 0.0
+            quantity_returned = 0.0
             # we use same method as in odoo use to delivery's
             if order_line.qty_delivered_method == 'stock_move':
                 return_moves = order_line.mapped('move_ids').filtered(
@@ -150,7 +150,7 @@ class SaleOrderLine(models.Model):
                                r.location_dest_id.usage != "customer" and
                                r.to_refund))
                 for move in return_moves:
-                    qty_returned += move.product_uom._compute_quantity(
+                    quantity_returned += move.product_uom._compute_quantity(
                         move.product_uom_qty, order_line.product_uom)
                 bom_enable = 'bom_ids' in self.env['product.template']._fields
                 if bom_enable:
@@ -179,9 +179,9 @@ class SaleOrderLine(models.Model):
                         if dropship:
                             if order_line.move_ids and all(
                                     [m.state == 'done' for m in return_moves]):
-                                qty_returned = order_line.product_uom_qty
+                                quantity_returned = order_line.product_uom_qty
                             else:
-                                qty_returned = 0.0
+                                quantity_returned = 0.0
                             continue
                         filters = {'outgoing_moves': lambda m: m.location_dest_id.usage == 'customer' and (
                             not m.origin_returned_move_id or (
@@ -189,7 +189,7 @@ class SaleOrderLine(models.Model):
                             'incoming_moves': lambda m: m.location_dest_id.usage != 'customer' and m.to_refund}
                         order_qty = order_line.product_uom._compute_quantity(
                             order_line.product_uom_qty, relevant_bom.product_uom_id)
-                        qty_returned = return_moves._compute_kit_quantities(
+                        quantity_returned = return_moves._compute_kit_quantities(
                             order_line.product_id, order_qty, relevant_bom, filters)
 
                     # If no relevant BOM is found, fall back on the all-or-nothing policy. This happens
@@ -197,12 +197,12 @@ class SaleOrderLine(models.Model):
                     # do not correspond to the product sold => no relevant BOM.
                     elif boms:
                         if all([m.state == 'done' for m in return_moves]):
-                            qty_returned = order_line.product_uom_qty
+                            quantity_returned = order_line.product_uom_qty
                         else:
-                            qty_returned = 0.0
-            order_line.qty_returned = qty_returned
+                            quantity_returned = 0.0
+            order_line.quantity_returned = quantity_returned
 
-    @api.depends('qty_returned')
+    @api.depends('quantity_returned')
     def _get_to_invoice_qty(self):
         """
         Modificamos la funcion original para que si el producto es segun lo
@@ -219,5 +219,5 @@ class SaleOrderLine(models.Model):
                 continue
             if line.product_id.invoice_policy == 'order':
                 line.qty_to_invoice = (
-                    line.product_uom_qty - line.qty_returned -
+                    line.product_uom_qty - line.quantity_returned -
                     line.qty_invoiced)
