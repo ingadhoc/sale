@@ -158,7 +158,7 @@ msgid "Return Picking"
 msgstr ""
 
 #. module: sale_stock_ux
-#: model:ir.model.fields,field_description:sale_stock_ux.field_sale_order_line__qty_returned
+#: model:ir.model.fields,field_description:sale_stock_ux.field_sale_order_line__quantity_returned
 msgid "Returned"
 msgstr "Zurückgeschickt"
 
