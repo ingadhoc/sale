@@ -12,7 +12,6 @@ class SaleOrderLine(models.Model):
         # disable price_security constraint
         return True
 
-    @api.multi
     def check_discount_ok(self):
         self.ensure_one()
         # disable constrant
