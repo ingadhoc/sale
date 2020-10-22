@@ -18,6 +18,8 @@ class WebsiteSalePortal(WebsiteSale):
         order = request.env['sale.order'].new({
             'partner_id': request.env.user.partner_id.commercial_partner_id.id
         })
+        order.pricelist_id = order.partner_id.property_product_pricelist \
+            and order.partner_id.property_product_pricelist.id or False
         mode = (False, False)
         def_country_id = order.partner_id.country_id
         values, errors = {}, {}
@@ -97,9 +99,9 @@ class WebsiteSalePortal(WebsiteSale):
                 ('name', '=', 'l10n_ar_website_sale'),
                 ('state', '=', 'installed')], limit=1):
             document_categories = request.env[
-                'res.partner.id_category'].sudo().search([])
+                'l10n_latam.document.type'].sudo().search([])
             afip_responsabilities = request.env[
-                'afip.responsability.type'].sudo().search([])
+                'l10n_ar.afip.responsibility.type'].sudo().search([])
             uid = request.session.uid or request.env.ref('base.public_user').id
             Partner = request.env['res.users'].browse(uid).partner_id
             Partner = Partner.with_context(show_address=1).sudo()
@@ -136,6 +138,8 @@ class WebsiteSalePortal(WebsiteSale):
         order = request.env['sale.order'].new(
             {'partner_id':
              request.env.user.partner_id.commercial_partner_id.id})
+        order.pricelist_id = order.partner_id.property_product_pricelist \
+            and order.partner_id.property_product_pricelist.id or False
         Partner = order.partner_id.with_context(show_address=1).sudo()
         shippings = Partner.search(
             [("id", "child_of", order.partner_id.commercial_partner_id.ids),
