@@ -8,7 +8,6 @@ from odoo import models, api
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    @api.multi
     def check_unapproved_partner_ok(self):
         self.ensure_one()
         if self.company_id.restrict_sales == 'yes':
@@ -17,7 +16,6 @@ class SaleOrder(models.Model):
                 return False
         return True
 
-    @api.multi
     def check_unapproved_partner_amount_ok(self):
         self.ensure_one()
         if self.company_id.restrict_sales == 'amount_depends':
