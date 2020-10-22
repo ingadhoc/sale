@@ -13,14 +13,12 @@ class SaleOrder(models.Model):
         copy=False,
     )
 
-    @api.multi
     def print_quotation(self):
         if self.detect_print_exceptions():
             return self.with_context(print_exceptions=True)._popup_exceptions()
         else:
             return super().print_quotation()
 
-    @api.multi
     def action_quotation_send(self):
         self.ensure_one()
         if self.detect_print_exceptions():
@@ -28,7 +26,6 @@ class SaleOrder(models.Model):
         else:
             return super().action_quotation_send()
 
-    @api.multi
     def detect_print_exceptions(self):
         """returns the list of exception_ids for all the considered sale orders
 
@@ -47,7 +44,6 @@ class SaleOrder(models.Model):
 
     # Improvement to be able to send things by context to the
     # pop up of exceptions
-    @api.multi
     def _popup_exceptions(self):
         action = super(SaleOrder, self)._popup_exceptions()
         ctx = self._context.copy()
