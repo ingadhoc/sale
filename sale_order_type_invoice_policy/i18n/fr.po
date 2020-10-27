@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * sale_order_type_invoice_policy
-# 
+#
 # Translators:
 # Guillaume Masson <guillaume.masson@meta-it.fr>, 2017
 msgid ""
