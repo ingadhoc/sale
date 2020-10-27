@@ -1,10 +1,10 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * sale_stock_analytic
-# 
+#
 # Translators:
 # Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2019
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
