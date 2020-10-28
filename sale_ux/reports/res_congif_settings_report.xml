@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <template id="report_saleorder" inherit_id="sale.report_saleorder">
+        <xpath expr="//table//tr/th[1]" position="before">
+            <th t-if="request.env['ir.config_parameter'].sudo().get_param('sale_ux.show_product_image_on_report')" name="th_image" class="text-left">Image</th>
+        </xpath>
+        <xpath expr="//t[@t-foreach='doc.order_line']//td[@name='td_name']" position="before">
+            <td t-if="request.env['ir.config_parameter'].sudo().get_param('sale_ux.show_product_image_on_report')" name="td_image"  style="height:20px !important;width:20px !important;"><span t-field="line.product_id.image_1920" t-options='{"widget": "image"}'/></td>
+        </xpath>
+    </template>
+</odoo>
