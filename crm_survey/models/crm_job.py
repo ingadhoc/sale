@@ -1,4 +1,4 @@
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class Job(models.Model):
@@ -8,6 +8,5 @@ class Job(models.Model):
         'survey.survey', "Interview Form",
         help="Choose an interview form")
 
-    @api.multi
     def action_print_survey(self):
         return self.survey_id.action_print_survey()
