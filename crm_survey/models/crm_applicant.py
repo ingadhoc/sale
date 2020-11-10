@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class Applicant(models.Model):
@@ -12,7 +12,6 @@ class Applicant(models.Model):
     response_id = fields.Many2one(
         'survey.user_input', "Response", ondelete="set null")
 
-    @api.multi
     def action_start_survey(self):
         self.ensure_one()
         # create a response and link it to this applicant
@@ -29,7 +28,6 @@ class Applicant(models.Model):
         return self.survey_id.with_context(
             survey_token=response.token).action_start_survey()
 
-    @api.multi
     def action_print_survey(self):
         """ If response is available then print"""
         self.ensure_one()
