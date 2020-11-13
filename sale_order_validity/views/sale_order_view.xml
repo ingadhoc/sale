@@ -29,6 +29,10 @@
             <field name="date_order" position="attributes">
                 <attribute name="readonly">False</attribute>
             </field>
+            <field name="validity_date" position="attributes">
+                <attribute name="readonly">False</attribute>
+                <attribute name="attrs">{'invisible': [('state', 'in', ['sale', 'done'])], 'readonly': [('state', 'not in', ['draft','sent'])]}</attribute>
+            </field>
         </field>
     </record>
 
