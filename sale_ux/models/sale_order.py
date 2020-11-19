@@ -84,7 +84,7 @@ class SaleOrder(models.Model):
         for line in self.order_line.with_context(
                 update_prices=True, pricelist=self.pricelist_id.id).filtered(
                 lambda l: l.product_id.price
-                or (pack_installed and l.pack_child_line_ids)):
+                or (pack_installed and l.product_id.pack_ok and l.product_id.pack_component_price != 'ignored')):
             # ponemos descuento en cero por las dudas en dos casos:
             # 1) si estamos cambiando de lista que discrimina descuento
             #  a lista que los incluye
@@ -102,10 +102,50 @@ class SaleOrder(models.Model):
                 if line.pack_parent_line_id:
                     continue
                 elif line.pack_child_line_ids:
-                    line.expand_pack_line(write=True)
+                    if not isinstance(self.id, int):
+                        self._compute_pack_lines_prices(line)
+                    else:
+                        line.expand_pack_line(write=True)
+
             line.product_uom_change()
             line._onchange_discount()
         return True
+
+    def _compute_pack_lines_prices(self, line):
+        """ This method is for the case when came from an onchange and the original method
+        doesn't works with _origin and the values aren't change.
+        """
+        if line.product_id.pack_ok and line.pack_type == "detailed":
+            for subline in line.product_id.get_pack_lines():
+                quantity = subline.quantity * line.product_uom_qty
+                line_vals = {
+                    "order_id": self._origin.id,
+                    "product_id": subline.product_id.id or False,
+                    "pack_depth": line.pack_depth + 1,
+                    "company_id": self.company_id.id,
+                    "pack_modifiable": line.product_id.pack_modifiable,
+                }
+                sol = line.new(line_vals)
+                sol.order_id.pricelist_id = self.pricelist_id
+                sol.product_id_change()
+                sol.product_uom_qty = quantity
+                sol.product_uom_change()
+                sol._onchange_discount()
+                pack_price_types = {"totalized", "ignored"}
+                sale_discount = 0.0
+                price_unit = sol.price_unit
+                if line.product_id.pack_component_price == "detailed":
+                    sale_discount = 100.0 - ((100.0 - sol.discount) *
+                                             (100.0 - subline.sale_discount) /
+                                             100.0)
+                elif (
+                    line.product_id.pack_type == "detailed"
+                    and line.product_id.pack_component_price in pack_price_types
+                ):
+                    price_unit = 0.0
+                line.pack_child_line_ids.filtered(
+                    lambda x: x.product_id.id == subline.product_id.id).update(
+                    {'price_unit': price_unit, 'discount': sale_discount})
 
     def _create_invoices(self, grouped=False, final=False):
         invoices = super()._create_invoices(
