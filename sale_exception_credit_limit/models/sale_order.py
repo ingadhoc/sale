@@ -35,7 +35,10 @@ class SaleOrder(models.Model):
                 price, line.order_id.currency_id,
                 not_invoiced,
                 product=line.product_id, partner=line.order_id.partner_id)
-            to_invoice_amount += taxes['total_included']
+            total = taxes['total_included']
+            if line.order_id.currency_id != line.company_id.currency_id:
+                total = line.order_id.currency_id._convert(taxes['total_included'], line.company_id.currency_id, line.company_id, fields.Date.today())
+            to_invoice_amount += total
 
         # We sum from all the invoices lines that are in draft and not linked
         # to a sale order
@@ -53,11 +56,17 @@ class SaleOrder(models.Model):
                 price, line.move_id.currency_id,
                 line.quantity,
                 product=line.product_id, partner=line.move_id.partner_id)
-            draft_invoice_lines_amount += taxes['total_included']
+            total = taxes['total_included']
+            if line.move_id.currency_id != line.company_id.currency_id:
+                total = line.move_id.currency_id._convert(taxes['total_included'], line.company_id.currency_id, line.company_id, fields.Date.today())
+            draft_invoice_lines_amount += total
 
         available_credit = self.partner_id.credit_limit - \
             self.partner_id.credit - \
             to_invoice_amount - draft_invoice_lines_amount
-        if self.amount_total > available_credit:
+        amount_total = self.amount_total
+        if self.currency_id != self.company_id.currency_id:
+            amount_total = self.currency_id.compute(self.amount_total, self.company_id.currency_id)
+        if amount_total > available_credit:
             return False
         return True
