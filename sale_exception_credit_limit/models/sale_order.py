@@ -66,7 +66,7 @@ class SaleOrder(models.Model):
             to_invoice_amount - draft_invoice_lines_amount
         amount_total = self.amount_total
         if self.currency_id != self.company_id.currency_id:
-            amount_total = self.currency_id.compute(self.amount_total, self.company_id.currency_id)
+            amount_total = self.currency_id._convert(self.amount_total, self.company_id.currency_id, self.company_id, fields.Date.today())
         if amount_total > available_credit:
             return False
         return True
