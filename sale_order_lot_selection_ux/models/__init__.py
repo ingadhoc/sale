@@ -3,3 +3,4 @@
 # directory
 ##############################################################################
 from . import sale_order_line
+from . import stock_lot_production

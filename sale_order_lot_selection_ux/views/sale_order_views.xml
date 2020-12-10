@@ -12,9 +12,11 @@
             </xpath>
             <xpath expr="//field[@name='order_line']/tree/field[@name='lot_id']" position="attributes">
                 <attribute name="domain">[('id', 'in', available_lot_ids)]</attribute>
+                <attribute name="context">{'from_sale_line':True, 'warehouse_id':parent.warehouse_id}</attribute>
             </xpath>
             <xpath expr="//field[@name='order_line']/form/group/group/field[@name='lot_id']" position="attributes">
                 <attribute name="domain">[('id', 'in', available_lot_ids)]</attribute>
+                <attribute name="context">{'from_sale_line':True, 'warehouse_id':parent.warehouse_id}</attribute>
             </xpath>
         </field>
     </record>
