@@ -111,7 +111,7 @@ class SaleOrder(models.Model):
         if isinstance(res, bool) and res:
             # because it's needed to return actions if exists
             res = self.run_picking_atomation()
-            self.run_invoicing_atomation()
+            self.sudo().run_invoicing_atomation()
             if self.type_id.set_done_on_confirmation:
                 self.action_done()
         return res
