@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Order Lot Selection UX',
-    'version': '12.0.1.0.0',
+    'version': '12.0.1.1.0',
     'category': 'Sale',
     'sequence': 14,
     'author': 'ADHOC SA',
