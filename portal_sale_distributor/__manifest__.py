@@ -27,6 +27,7 @@
     'license': 'AGPL-3',
     'depends': [
         'sale_exception',
+        'price_security',
         'delivery',
         'sale_ux',
         'sale_management',
