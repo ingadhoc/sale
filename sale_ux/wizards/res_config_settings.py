@@ -9,6 +9,9 @@ class ResConfigSettings(models.TransientModel):
 
     _inherit = 'res.config.settings'
 
+    show_product_image_on_report = fields.Boolean(
+        string="Show Product Image", default=False, config_parameter='sale_ux.show_product_image_on_report')
+
     # agregamos sale para que no se llame igual al de account
     group_sale_reference_on_tree_and_main_form = fields.Boolean(
         'Customer reference in list view and form',
