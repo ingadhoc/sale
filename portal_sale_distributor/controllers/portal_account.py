@@ -30,7 +30,7 @@ class PortalDistributorAccount(PortalAccount):
         searchbar_filters = {
             'all': {'label': _('All'), 'domain': []},
             'open': {'label': _('Open'),
-                     'domain': [('state', '=', 'posted'),('invoice_payment_state', '=', 'not_paid')]},
+                     'domain': [('state', '=', 'posted'), ('invoice_payment_state', '=', 'not_paid')]},
         }
 
         searchbar_sortings = {
