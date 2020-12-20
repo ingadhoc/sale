@@ -16,7 +16,7 @@ class PortalDistributorAccount(PortalAccount):
         domain = [('type', 'in', ['out_invoice', 'out_refund']),
                   ('message_partner_ids', 'child_of',
                    [partner.commercial_partner_id.id]),
-                  ('state', 'in', ['open', 'paid', 'cancel'])]
+                  ('state', 'in', ['posted', 'cancel'])]
         return domain
 
     @http.route()
@@ -24,18 +24,18 @@ class PortalDistributorAccount(PortalAccount):
             self, page=1, date_begin=None, date_end=None, sortby=None,
             filterby=None, **kw):
         values = self._prepare_portal_layout_values()
-        AccountInvoice = request.env['account.invoice']
+        AccountInvoice = request.env['account.move']
 
         domain = self._get_account_invoice_domain()
         searchbar_filters = {
             'all': {'label': _('All'), 'domain': []},
             'open': {'label': _('Open'),
-                     'domain': [('state', '=', 'open')]},
+                     'domain': [('state', '=', 'posted'), ('invoice_payment_state', '=', 'not_paid')]},
         }
 
         searchbar_sortings = {
-            'date': {'label': _('Invoice Date'), 'order': 'date_invoice desc'},
-            'duedate': {'label': _('Due Date'), 'order': 'date_due desc'},
+            'date': {'label': _('Invoice Date'), 'order': 'invoice_date desc'},
+            'duedate': {'label': _('Due Date'), 'order': 'invoice_date_due desc'},
             'name': {'label': _('Reference'), 'order': 'name desc'},
             'state': {'label': _('Status'), 'order': 'state'},
         }
@@ -47,7 +47,7 @@ class PortalDistributorAccount(PortalAccount):
             filterby = 'all'
         domain += searchbar_filters[filterby]['domain']
 
-        archive_groups = self._get_archive_groups('account.invoice', domain)
+        archive_groups = self._get_archive_groups('account.move', domain)
         if date_begin and date_end:
             domain += [('create_date', '>', date_begin),
                        ('create_date', '<=', date_end)]
@@ -64,11 +64,6 @@ class PortalDistributorAccount(PortalAccount):
         invoices = AccountInvoice.search(
             domain, order=order, limit=self._items_per_page,
             offset=pager['offset'])
-        for inv in invoices:
-            searchbar_filters.update({
-                str(inv.id): {
-                    'label': inv.name, 'domain': [('id', '=', inv.id)]}
-            })
         values.update({
             'date': date_begin,
             'invoices': invoices,

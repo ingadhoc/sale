@@ -5,7 +5,7 @@
         id="sale_menu"
         name="Sales"
         groups="group_portal_distributor"
-        web_icon="sale,static/description/icon.png"
+        web_icon="sale_management,static/description/icon.png"
         />
 
     <menuitem
@@ -34,7 +34,6 @@
             <header position="replace">
                 <header>
                     <field name="invoice_count" invisible="1"/>
-                    <button name="print_quotation_distributor" string="Print" type="object" class="o_sale_print"/>
                     <button name="action_confirm_distributor" states="draft,sent" string="Confirm Sale" class="btn-primary" type="object" context="{'show_sale': True}"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,sent,sale,done"/>
                 </header>
@@ -43,18 +42,17 @@
             <field name="validity_date" position="attributes">
                 <attribute name="attrs">{'invisible':[('state', 'in', ('draft', 'sent'))]}</attribute>
             </field>
-            <field name="carrier_id" position="attributes">
+            <xpath expr="//button[@name='action_open_delivery_wizard']" position="attributes">
                 <attribute name="attrs">{'readonly':[('state','not in',('draft','sent'))]}</attribute>
-            </field>
-            <button name="get_delivery_price" position="attributes">
+            </xpath>
+            <xpath expr="//button[@name='action_open_delivery_wizard'][1]" position="attributes">
                 <attribute name="invisible">1</attribute>
-            </button>
-            <button name="set_delivery_line" position="attributes">
+            </xpath>
+            <xpath expr="//button[@name='action_open_delivery_wizard'][2]" position="attributes">
                 <attribute name="invisible">1</attribute>
-            </button>
-            <field name="delivery_price" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </field>
+            </xpath>
+
+            <widget name="qty_at_date_widget" position="replace"/>
             <field name="pricelist_id" position="attributes">
                 <attribute name="invisible">1</attribute>
             </field>
