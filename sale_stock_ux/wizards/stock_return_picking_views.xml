@@ -22,6 +22,8 @@
             <field name="to_refund" position="attributes">
                 <!-- porque lo queremos usar tmb en oc y esto lo hace no marcable -->
                 <attribute name="attrs"></attribute>
+                <!-- always show the button -->
+                <attribute name="groups"></attribute>
                 <!-- porque la traducción no se actualiza -->
                 <attribute name="string">Para Abonar (actualizar OC/OV)</attribute>
             </field>

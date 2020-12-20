@@ -1,6 +1,6 @@
 ##############################################################################
 #
-#    Copyright (C) 2015  ADHOC SA  (http://www.adhoc.com.ar)
+#    Copyright (C) 2018  ADHOC SA  (http://www.adhoc.com.ar)
 #    All Rights Reserved.
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -18,30 +18,19 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Stock UX',
-    'version': '13.0.1.6.0',
-    'category': 'Sales',
-    'sequence': 14,
-    'summary': '',
+    'name': "CRM SURVEY",
+    'version': '13.0.1.0.0',
+    'category': 'Human Resources Survey',
+    'license': 'AGPL-3',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'images': [
-    ],
-    'depends': [
-        'sale_stock',
-        'sale_ux',
-        'stock_ux',
-    ],
+    'summary': 'Surveys',
+    'depends': ['survey', 'crm'],
     'data': [
-        'views/sale_order_views.xml',
-        'views/sale_order_line_views.xml',
-        'views/stock_move_views.xml',
-        'wizards/stock_return_picking_views.xml',
-    ],
-    'demo': [
+        'views/crm_job_views.xml',
+        'views/crm_applicant_views.xml',
     ],
     'installable': True,
-    'auto_install': True,
+    'auto_install': False,
     'application': False,
 }
