@@ -26,9 +26,6 @@
             <xpath expr="//button[@name='action_cancel']" position="attributes">
                 <attribute name="barcode_trigger">cancel</attribute>
             </xpath>
-            <xpath expr="//button[@name='print_quotation']" position="attributes">
-                <attribute name="barcode_trigger">print-op</attribute>
-            </xpath>
         </field>
     </record>
 

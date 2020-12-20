@@ -14,7 +14,7 @@
 Sale Order Require Reference on Confirmation
 ============================================
 
-This module adds an exception to sales order. 
+This module adds an exception to sales order.
 It makes the "Client Reference" field is required to validate a sales order.
 
 Installation
