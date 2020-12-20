@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, api
+from odoo import models, fields
 
 
 class SaleOrder(models.Model):
@@ -37,7 +37,8 @@ class SaleOrder(models.Model):
                 product=line.product_id, partner=line.order_id.partner_id)
             total = taxes['total_included']
             if line.order_id.currency_id != line.company_id.currency_id:
-                total = line.order_id.currency_id._convert(taxes['total_included'], line.company_id.currency_id, line.company_id, fields.Date.today())
+                total = line.order_id.currency_id._convert(
+                    taxes['total_included'], line.company_id.currency_id, line.company_id, fields.Date.today())
             to_invoice_amount += total
 
         # We sum from all the invoices lines that are in draft and not linked
@@ -58,7 +59,8 @@ class SaleOrder(models.Model):
                 product=line.product_id, partner=line.move_id.partner_id)
             total = taxes['total_included']
             if line.move_id.currency_id != line.company_id.currency_id:
-                total = line.move_id.currency_id._convert(taxes['total_included'], line.company_id.currency_id, line.company_id, fields.Date.today())
+                total = line.move_id.currency_id._convert(
+                    taxes['total_included'], line.company_id.currency_id, line.company_id, fields.Date.today())
             draft_invoice_lines_amount += total
 
         available_credit = self.partner_id.credit_limit - \
@@ -66,7 +68,8 @@ class SaleOrder(models.Model):
             to_invoice_amount - draft_invoice_lines_amount
         amount_total = self.amount_total
         if self.currency_id != self.company_id.currency_id:
-            amount_total = self.currency_id._convert(self.amount_total, self.company_id.currency_id, self.company_id, fields.Date.today())
+            amount_total = self.currency_id._convert(
+                self.amount_total, self.company_id.currency_id, self.company_id, fields.Date.today())
         if amount_total > available_credit:
             return False
         return True
