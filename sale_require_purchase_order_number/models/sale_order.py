@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, fields, api, _
+from odoo import models, fields, _
 from odoo.exceptions import UserError
 
 
@@ -24,7 +24,6 @@ class SaleOrder(models.Model):
          'The Purchase Order Number must be unique!')
     ]
 
-    @api.multi
     def action_confirm(self):
         sale_order_missing_po_number = self.filtered(
             lambda
@@ -36,7 +35,6 @@ class SaleOrder(models.Model):
                 ' Purchase Order Number for this partner'))
         return super().action_confirm()
 
-    @api.multi
     def _prepare_invoice(self):
         invoice_vals = super()._prepare_invoice()
         invoice_vals.update({

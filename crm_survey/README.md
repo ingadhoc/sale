@@ -10,34 +10,31 @@
    :target: https://www.gnu.org/licenses/agpl
    :alt: License: AGPL-3
 
-======================================
-Stock availability in sales order line
-======================================
+======
+CRM UX
+======
 
-* Add a group for seeing stock on sale orders.
+This adds some features to CRM of odoo:
+
+#. Show the field "Company" in the oportunities view form.
 
 Installation
 ============
 
 To install this module, you need to:
 
-#. Just install this module
-
+#. Only need to install the module
 
 Configuration
 =============
 
-To configure this module, you need to:
-
-#. No configuration needed
+No Configuration needed.
 
 
 Usage
 =====
 
 To use this module, you need to:
-
-#. Just use the module.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot

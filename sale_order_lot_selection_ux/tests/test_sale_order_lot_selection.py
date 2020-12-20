@@ -1,7 +1,7 @@
 # © 2015 Agile Business Group
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-import openerp.tests.common as test_common
+import odoo.tests.common as test_common
 from odoo.exceptions import Warning
 
 
@@ -124,6 +124,7 @@ class TestSaleOrderLotSelection(test_common.SingleTransactionCase):
                     'name': '0000010',
                     'product_id': self.product_57.id,
                     'product_qty': ops.product_qty,
+                    'company_id': self.env.company.id,
                 })
                 ops.move_line_ids.write({
                     'lot_id': lot10.id,
@@ -134,16 +135,18 @@ class TestSaleOrderLotSelection(test_common.SingleTransactionCase):
                     'name': '0000011',
                     'product_id': self.product_46.id,
                     'product_qty': ops.product_qty,
+                    'company_id': self.env.company.id,
                 })
                 ops.move_line_ids.write({
                     'lot_id': lot11.id,
-                    'qty_done': ops.product_qty
+                    'qty_done': ops.product_qty,
                 })
             if ops.product_id == self.product_12:
                 lot12 = self.production_lot_model.create({
                     'name': '0000012',
                     'product_id': self.product_12.id,
                     'product_qty': ops.product_qty,
+                    'company_id': self.env.company.id,
                 })
                 ops.move_line_ids.write({
                     'lot_id': lot12.id,

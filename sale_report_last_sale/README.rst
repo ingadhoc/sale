@@ -23,7 +23,7 @@ Sale Report Last Sale
     :target: https://runbot.odoo-community.org/runbot/148/11.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 Adds a pivot report to analyze when was the last time a customer bougth a product.
 

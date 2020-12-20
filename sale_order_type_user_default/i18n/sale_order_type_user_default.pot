@@ -39,4 +39,3 @@ msgstr ""
 #: model:ir.model,name:sale_order_type_user_default.model_res_users
 msgid "Users"
 msgstr ""
-
