@@ -67,4 +67,3 @@ msgstr ""
 #, python-format
 msgid "You can not set more validity days than the configured on the company (%i days)."
 msgstr ""
-

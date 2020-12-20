@@ -1,6 +1,6 @@
 ##############################################################################
 #
-#    Copyright (C) 2015  ADHOC SA  (http://www.adhoc.com.ar)
+#    Copyright (C) 2018  ADHOC SA  (http://www.adhoc.com.ar)
 #    All Rights Reserved.
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -18,20 +18,19 @@
 #
 ##############################################################################
 {
-    'name': 'Stock availability in sales order line',
+    'name': "CRM SURVEY",
     'version': '13.0.1.0.0',
-    'category': 'Tools',
-    'author': 'Moldeo Interactive, ADHOC SA',
-    'website': 'http://business.moldeo.coop http://adhoc.com.ar/',
+    'category': 'Human Resources Survey',
     'license': 'AGPL-3',
-    'images': [],
-    'depends': [
-        'sale_stock'
-    ],
-    'demo': [],
+    'author': 'ADHOC SA',
+    'website': 'www.adhoc.com.ar',
+    'summary': 'Surveys',
+    'depends': ['survey', 'crm'],
     'data': [
-        'security/sale_stock_availability_security.xml',
-        'views/sale_order_views.xml',
+        'views/crm_job_views.xml',
+        'views/crm_applicant_views.xml',
     ],
     'installable': True,
+    'auto_install': False,
+    'application': False,
 }

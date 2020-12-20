@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * sale_order_validity
-# 
+#
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018
 msgid ""

@@ -16,7 +16,7 @@ class StockPicking(models.Model):
             'policy "Block Reserve/Block Delivery", then every sale line must '
             'be invoiced and paid before you can validate picking')
         if any(
-            self.filtered(
+            self.sudo().filtered(
                 lambda x: x.sale_id.type_id.invoice_policy in ['prepaid', 'prepaid_block_delivery']
                 and not x._check_sale_paid())):
             raise UserError(_(msg))
@@ -27,7 +27,7 @@ class StockPicking(models.Model):
             'If you use a sale type in the sale order related with invoice'
             ' policy "Prepaid - Block Reserve" , then every sale line must '
             'be invoiced and paid before you can reserve qty to this picking')
-        prepaid_unpaid = self.filtered(
+        prepaid_unpaid = self.sudo().filtered(
             lambda x: x.sale_id.type_id.invoice_policy ==
             'prepaid' and not x._check_sale_paid())
         if prepaid_unpaid and self._context.get('prepaid_raise'):
