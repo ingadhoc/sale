@@ -4,7 +4,6 @@
 ##############################################################################
 from odoo import fields, models, api, _
 from odoo.exceptions import ValidationError
-import odoo.addons.decimal_precision as dp
 from odoo.tools import float_compare
 
 
@@ -14,15 +13,15 @@ class SaleOrderLine(models.Model):
 
     discount1 = fields.Float(
         'Discount 1 (%)',
-        digits=dp.get_precision('Discount'),
+        digits='Discount',
     )
     discount2 = fields.Float(
         'Discount 2 (%)',
-        digits=dp.get_precision('Discount'),
+        digits='Discount',
     )
     discount3 = fields.Float(
         'Discount 3 (%)',
-        digits=dp.get_precision('Discount'),
+        digits='Discount',
     )
     # TODO do like in invoice line? Make normal field with constraint and
     # oncahnge?
@@ -54,7 +53,6 @@ class SaleOrderLine(models.Model):
         self.inverse_vals(vals)
         return super().create(vals)
 
-    @api.multi
     def write(self, vals):
         self.inverse_vals(vals)
         return super().write(vals)
@@ -67,6 +65,15 @@ class SaleOrderLine(models.Model):
         y consideramos que las columnas 2 y 3 son descuentos adicionales y no
         las pisamos
         """
+        # we force to remove from vals the discount 1,2,3 when is call from the create method and
+        #  the all compute values are initialized. Because of that values the discount was cleaned wrongly
+        if not self:
+            if 'discount1' in vals and vals.get('discount1') == 0:
+                vals.pop('discount1')
+            if 'discount2' in vals and vals.get('discount2') == 0:
+                vals.pop('discount2')
+            if 'discount3' in vals and vals.get('discount3') == 0:
+                vals.pop('discount3')
         precision = self.env['decimal.precision'].precision_get('Discount')
         if 'discount' in vals \
                 and float_compare(vals.get('discount'), self.discount, precision_digits=precision) != 0 \
@@ -75,7 +82,6 @@ class SaleOrderLine(models.Model):
                 'discount1': vals.get('discount'),
             })
 
-    @api.multi
     @api.depends('discount1', 'discount2', 'discount3')
     def _compute_discount(self):
         for rec in self:
@@ -85,9 +91,8 @@ class SaleOrderLine(models.Model):
                     (100.0 - discount) / 100.0)
             rec.discount = 100.0 - (discount_factor * 100.0)
 
-    @api.multi
-    def _prepare_invoice_line(self, qty):
-        res = super(SaleOrderLine, self)._prepare_invoice_line(qty)
+    def _prepare_invoice_line(self):
+        res = super()._prepare_invoice_line()
         res.update({
             'discount1': self.discount1,
             'discount2': self.discount2,

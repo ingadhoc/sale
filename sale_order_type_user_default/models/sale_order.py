@@ -1,11 +1,10 @@
-from odoo import models, fields
+from odoo import api, models
 
 
 class SaleOrder(models.Model):
 
     _inherit = 'sale.order'
 
-    type_id = fields.Many2one(
-        'sale.order.type',
-        default=lambda so: so.env.user.default_sale_order_type_id or False,
-    )
+    @api.model
+    def _default_type_id(self):
+        return self.env.user.default_sale_order_type_id or super()._default_type_id()

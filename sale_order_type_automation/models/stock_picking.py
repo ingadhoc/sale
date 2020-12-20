@@ -13,5 +13,5 @@ class StockPicking(models.Model):
         On picking confirmation we check if invoice should be created
         """
         res = super().action_done()
-        self.mapped('sale_id').run_invoicing_atomation()
+        self.sudo().mapped('sale_id').run_invoicing_atomation()
         return res

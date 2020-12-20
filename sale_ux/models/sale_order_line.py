@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, api, fields
+from odoo import models, api
 
 
 class SaleOrderLine(models.Model):
@@ -23,12 +23,3 @@ class SaleOrderLine(models.Model):
                 continue
             if line.order_id.force_invoiced_status:
                 line.invoice_status = line.order_id.force_invoiced_status
-
-    def _compute_amount(self):
-        """ Idem modificacion en sale.order._amount_by_group
-        """
-        for line in self:
-            date_order = line.order_id.date_order or fields.Date.context_today(line)
-            line.env.context.date_invoice = date_order
-            line.env.context.invoice_company = line.company_id
-            super(SaleOrderLine, line)._compute_amount()

@@ -33,10 +33,10 @@ class SaleOrder(models.Model):
         store=True,
     )
 
-    @api.depends('order_line.qty_returned')
+    @api.depends('order_line.quantity_returned')
     def _compute_with_returns(self):
         for order in self:
-            order.with_returns = any(line.qty_returned
+            order.with_returns = any(line.quantity_returned
                                      for line in order.order_line)
 
     def action_cancel(self):

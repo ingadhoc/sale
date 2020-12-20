@@ -22,11 +22,11 @@ Several Improvements to sales:
 #. Block decreasing qty on sale lines when there is a delivery linked
 #. Add procurement group field on sale orders for technical features
 #. Add a filter name "Pickings" in sale order to filter by voucher name.
-#. Add new field on order lines "qty_returned" and also implement refunds for products with invoicing type "ordered"
+#. Add new field on order lines "quantity_returned" and also implement refunds for products with invoicing type "ordered"
 #. Add filter for sale orders with returns
 #. Integrate delivery status with returns logic
+#. Propagate observations and notes from SO to pickings and invoices
 #. Add moves on sale order line form view (only for technical features)
-#. Add observations on pickings
 #. Add an option in warehouse to disable stock warning
 
 IMPORTANT:

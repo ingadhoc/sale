@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Require Purchase Order Number',
-    'version': '12.0.1.0.0',
+    'version': '13.0.1.0.0',
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -34,12 +34,12 @@
     'data': [
         'views/sale_order_views.xml',
         'views/res_partner_views.xml',
-        'views/account_invoice_views.xml',
+        'views/account_move_views.xml',
         'views/stock_picking_views.xml'
     ],
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }

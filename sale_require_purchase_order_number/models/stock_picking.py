@@ -32,12 +32,10 @@ class StockPicking(models.Model):
                 if rec.manual_purchase_order_number\
                 else rec.sale_id.purchase_order_number
 
-    @api.multi
     def _inverse_purchase_order_number(self):
         for rec in self:
             rec.manual_purchase_order_number = rec.purchase_order_number
 
-    @api.multi
     def action_done(self):
         picking_missing_po_number = self.filtered(
             lambda pick: pick.require_purchase_order_number

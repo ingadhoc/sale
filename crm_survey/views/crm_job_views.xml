@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="crm_team_survey_inherit" model="ir.ui.view">
+        <field name="name">crm.team.form.inherit</field>
+        <field name="model">crm.team</field>
+        <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
+        <field name="arch" type="xml">
+            <group name="right">
+                <label for="survey_id" groups="base.group_user"/>
+                <div groups="base.group_user" class="o_row">
+                    <field name="survey_id"/>
+                    <button string="Display Interview Form" name="action_print_survey" type="object" attrs="{'invisible':[('survey_id','=',False)]}" class="oe_link"/>
+                </div>
+            </group>
+        </field>
+    </record>
+</odoo>

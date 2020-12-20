@@ -32,10 +32,10 @@ class SaleOrder(models.Model):
                 continue
 
             if rec.type_id.invoicing_atomation == 'validate_invoice':
-                invoices.sudo().post()
+                invoices.sudo().action_post()
             elif rec.type_id.invoicing_atomation == 'try_validate_invoice':
                 try:
-                    invoices.sudo().post()
+                    invoices.sudo().action_post()
                 except Exception as error:
                     message = _(
                         "We couldn't validate the automatically created "
@@ -111,14 +111,12 @@ class SaleOrder(models.Model):
         if isinstance(res, bool) and res:
             # because it's needed to return actions if exists
             res = self.run_picking_atomation()
-            self.run_invoicing_atomation()
+            self.sudo().run_invoicing_atomation()
             if self.type_id.set_done_on_confirmation:
                 self.action_done()
         return res
 
     def _prepare_invoice(self):
-        if self.type_id.journal_id:
-            self = self.with_context(force_company=self.type_id.journal_id.company_id.id)
         res = super()._prepare_invoice()
         if self.type_id.payment_atomation and self.type_id.payment_journal_id:
             res['pay_now_journal_id'] = self.type_id.payment_journal_id.id

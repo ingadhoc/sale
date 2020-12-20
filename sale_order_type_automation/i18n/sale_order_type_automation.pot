@@ -66,4 +66,3 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type_validate_automatically_picking
 msgid "Validate automatically picking"
 msgstr ""
-

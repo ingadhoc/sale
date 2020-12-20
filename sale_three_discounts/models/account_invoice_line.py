@@ -3,25 +3,24 @@
 # directory
 ##############################################################################
 from odoo import fields, models, api, _
-import odoo.addons.decimal_precision as dp
 from odoo.exceptions import ValidationError
 
 
 class AccountInvoiceLine(models.Model):
 
-    _inherit = "account.invoice.line"
+    _inherit = "account.move.line"
 
     discount1 = fields.Float(
         'Discount 1 (%)',
-        digits=dp.get_precision('Discount'),
+        digits='Discount',
     )
     discount2 = fields.Float(
         'Discount 2 (%)',
-        digits=dp.get_precision('Discount'),
+        digits='Discount',
     )
     discount3 = fields.Float(
         'Discount 3 (%)',
-        digits=dp.get_precision('Discount'),
+        digits='Discount',
     )
 
     @api.constrains('discount1', 'discount2', 'discount3')
