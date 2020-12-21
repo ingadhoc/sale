@@ -1,4 +1,4 @@
-from odoo import api, fields, models, SUPERUSER_ID
+from odoo import fields, models, SUPERUSER_ID
 
 
 class Lead(models.Model):
@@ -10,7 +10,6 @@ class Lead(models.Model):
         domain="['|', ('team_ids', '=', False), ('team_ids', '=', team_id)]",
         group_expand='_read_group_stage_ids', default=lambda self: self._default_stage_id())
 
-    @api.model
     def _read_group_stage_ids(self, stages, domain, order):
         team_id = self._context.get('default_team_id')
         if team_id:
