@@ -6,6 +6,17 @@
         <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//div[@id='sale_config_online_confirmation_sign']" position="after">
+                <div class="col-12 col-lg-6 o_setting_box">
+                    <div class="o_setting_left_pane">
+                        <field name="group_allow_any_user_as_salesman"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="group_allow_any_user_as_salesman"/>
+                        <div class="text-muted">
+                            By default odoo only allows to choose users wich have sales pemission in sales orders and in the sales teams only internal users. This option make able to choose, in both places, users of any type (internal or portal)
+                        </div>
+                    </div>
+                </div>
                 <div class="col-xs-12 col-md-6 o_setting_box">
                     <div class="o_setting_left_pane">
                         <field name="group_sale_reference_on_tree_and_main_form"/>
