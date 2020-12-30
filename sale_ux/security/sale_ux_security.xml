@@ -3,4 +3,8 @@
         <field name="name">Show SO reference field on tree and main form views</field>
         <field name="category_id" ref="base.module_category_hidden"/>
     </record>
+    <record id="group_allow_any_user_as_salesman" model="res.groups">
+        <field name="name">Allow any user as salesman</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
 </odoo>

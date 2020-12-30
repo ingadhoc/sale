@@ -9,6 +9,8 @@ class ResConfigSettings(models.TransientModel):
 
     _inherit = 'res.config.settings'
 
+    group_allow_any_user_as_salesman = fields.Boolean(
+        "Allow any user as salesman", implied_group='sale_ux.group_allow_any_user_as_salesman')
     # agregamos sale para que no se llame igual al de account
     group_sale_reference_on_tree_and_main_form = fields.Boolean(
         'Customer reference in list view and form',
