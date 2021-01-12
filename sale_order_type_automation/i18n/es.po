@@ -1,17 +1,17 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * sale_order_type_automation
-#
+# 	* sale_order_type_automation
+# 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019
-#
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2021
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-26 01:03+0000\n"
-"PO-Revision-Date: 2019-10-17 01:20+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019\n"
+"POT-Creation-Date: 2021-01-11 13:02+0000\n"
+"PO-Revision-Date: 2020-05-14 21:09+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2021\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -43,7 +43,7 @@ msgid "Company related to this journal"
 msgstr "Compañía relacionada a este diario"
 
 #. module: sale_order_type_automation
-#: selection:sale.order.type,invoicing_atomation:0
+#: model:ir.model.fields.selection,name:sale_order_type_automation.selection__sale_order_type__invoicing_atomation__create_invoice
 msgid "Create Invoice"
 msgstr "Crear Factura"
 
@@ -53,15 +53,10 @@ msgid "Entry Sequence"
 msgstr ""
 
 #. module: sale_order_type_automation
-#: code:addons/sale_order_type_automation/models/sale_order_type.py:113
+#: code:addons/sale_order_type_automation/models/sale_order_type.py:0
 #, python-format
 msgid "If you choose a Payment automation, Payment Journal is required"
 msgstr "Si selecciona automatización de pagos el diario de pagos es requerido"
-
-#. module: sale_order_type_automation
-#: model:ir.model,name:sale_order_type_automation.model_account_invoice
-msgid "Invoice"
-msgstr "Factura"
 
 #. module: sale_order_type_automation
 #: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type__invoice_company_id
@@ -69,7 +64,7 @@ msgid "Invoice Company"
 msgstr ""
 
 #. module: sale_order_type_automation
-#: code:addons/sale_order_type_automation/models/sale_order_type.py:127
+#: code:addons/sale_order_type_automation/models/sale_order_type.py:0
 #, python-format
 msgid "Invoice Journal and Payment Journal must be of the same company"
 msgstr "El diario de facturación y de pago deben ser de la misma compañía"
@@ -89,9 +84,14 @@ msgstr ""
 "método de pago manual, solo se muestran diarios con este método."
 
 #. module: sale_order_type_automation
-#: selection:sale.order.type,invoicing_atomation:0
-#: selection:sale.order.type,payment_atomation:0
-#: selection:sale.order.type,picking_atomation:0
+#: model:ir.model,name:sale_order_type_automation.model_account_move
+msgid "Journal Entries"
+msgstr "Asientos Contables"
+
+#. module: sale_order_type_automation
+#: model:ir.model.fields.selection,name:sale_order_type_automation.selection__sale_order_type__invoicing_atomation__none
+#: model:ir.model.fields.selection,name:sale_order_type_automation.selection__sale_order_type__payment_atomation__none
+#: model:ir.model.fields.selection,name:sale_order_type_automation.selection__sale_order_type__picking_atomation__none
 msgid "None"
 msgstr "Ninguno"
 
@@ -149,19 +149,14 @@ msgstr ""
 "Si configura \"Validar sin forzar\", valide sin forzar la disponibilidad"
 
 #. module: sale_order_type_automation
-#: model:ir.model,name:sale_order_type_automation.model_sale_order
-msgid "Sale Order"
-msgstr "Pedido de venta"
-
-#. module: sale_order_type_automation
 #: model:ir.model,name:sale_order_type_automation.model_sale_advance_payment_inv
 msgid "Sales Advance Payment Invoice"
 msgstr "Ventas. Anticipo pago factura"
 
 #. module: sale_order_type_automation
-#: model:ir.model,name:sale_order_type_automation.model_sale_order_line
-msgid "Sales Order Line"
-msgstr "Línea de pedido de venta"
+#: model:ir.model,name:sale_order_type_automation.model_sale_order
+msgid "Sales Order"
+msgstr "Pedido de venta"
 
 #. module: sale_order_type_automation
 #: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type__set_done_on_confirmation
@@ -169,13 +164,13 @@ msgid "Set Done On Confirmation"
 msgstr "Establecer Hecho en la confirmación"
 
 #. module: sale_order_type_automation
-#: code:addons/sale_order_type_automation/models/sale_order_type.py:140
+#: code:addons/sale_order_type_automation/models/sale_order_type.py:0
 #, python-format
 msgid "The company of the sequence and the warehouse must be the same"
 msgstr "La compañía de la secuencia y de el almacén deben ser la misma."
 
 #. module: sale_order_type_automation
-#: code:addons/sale_order_type_automation/models/sale_order.py:91
+#: code:addons/sale_order_type_automation/models/sale_order.py:0
 #, python-format
 msgid ""
 "The following products are not available, we suggest to check stock or to use a sale type that force availability.\n"
@@ -208,22 +203,22 @@ msgstr ""
 "el estado de 'orden de venta' que permite modificaciones"
 
 #. module: sale_order_type_automation
-#: selection:sale.order.type,picking_atomation:0
+#: model:ir.model.fields.selection,name:sale_order_type_automation.selection__sale_order_type__picking_atomation__validate
 msgid "Validate"
 msgstr "Validar"
 
 #. module: sale_order_type_automation
-#: selection:sale.order.type,invoicing_atomation:0
+#: model:ir.model.fields.selection,name:sale_order_type_automation.selection__sale_order_type__invoicing_atomation__validate_invoice
 msgid "Validate Invoice"
 msgstr "Validar Factura"
 
 #. module: sale_order_type_automation
-#: selection:sale.order.type,picking_atomation:0
+#: model:ir.model.fields.selection,name:sale_order_type_automation.selection__sale_order_type__picking_atomation__validate_no_force
 msgid "Validate No Force"
 msgstr "Validar sin forzar"
 
 #. module: sale_order_type_automation
-#: selection:sale.order.type,payment_atomation:0
+#: model:ir.model.fields.selection,name:sale_order_type_automation.selection__sale_order_type__payment_atomation__validate_payment
 msgid "Validate Payment"
 msgstr "Validar Pago"
 
@@ -233,7 +228,7 @@ msgid "Voucher Book"
 msgstr "Talonario de Remitos"
 
 #. module: sale_order_type_automation
-#: code:addons/sale_order_type_automation/models/sale_order.py:42
+#: code:addons/sale_order_type_automation/models/sale_order.py:0
 #, python-format
 msgid ""
 "We couldn't validate the automatically created invoices (ids %s), you will "

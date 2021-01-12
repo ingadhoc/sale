@@ -1,0 +1,84 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_exception_partner_state
+# 
+# Translators:
+# Ekaterina <nawsikaya@bk.ru>, 2020
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-01-11 13:02+0000\n"
+"PO-Revision-Date: 2020-12-20 01:06+0000\n"
+"Last-Translator: Ekaterina <nawsikaya@bk.ru>, 2020\n"
+"Language-Team: Russian (https://www.transifex.com/adhoc/teams/46451/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#. module: sale_exception_partner_state
+#: model:exception.rule,name:sale_exception_partner_state.unapproved_partner_amount_restriction
+msgid "Amount Exceeded for Unapproved Partner"
+msgstr ""
+
+#. module: sale_exception_partner_state
+#: model:ir.model,name:sale_exception_partner_state.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: sale_exception_partner_state
+#: model:ir.model,name:sale_exception_partner_state.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: sale_exception_partner_state
+#: model:ir.model.fields.selection,name:sale_exception_partner_state.selection__res_company__restrict_sales__amount_depends
+msgid "Depends on the amount"
+msgstr ""
+
+#. module: sale_exception_partner_state
+#: model:ir.model.fields,field_description:sale_exception_partner_state.field_res_company__restrict_sales_amount
+#: model:ir.model.fields,field_description:sale_exception_partner_state.field_res_config_settings__restrict_sales_amount
+msgid "Restrict Amounts Greater Than"
+msgstr ""
+
+#. module: sale_exception_partner_state
+#: model:ir.model.fields,help:sale_exception_partner_state.field_res_company__restrict_sales
+#: model:ir.model.fields,help:sale_exception_partner_state.field_res_config_settings__restrict_sales
+#: model_terms:ir.ui.view,arch_db:sale_exception_partner_state.res_config_settings_view_form
+msgid "Restrict Sales to Unapproved Partners?"
+msgstr ""
+
+#. module: sale_exception_partner_state
+#: model:ir.model.fields,field_description:sale_exception_partner_state.field_res_company__restrict_sales
+#: model:ir.model.fields,field_description:sale_exception_partner_state.field_res_config_settings__restrict_sales
+msgid "Restrict Sales?"
+msgstr ""
+
+#. module: sale_exception_partner_state
+#: model:ir.model,name:sale_exception_partner_state.model_sale_order
+msgid "Sales Order"
+msgstr "Заказ на продажу"
+
+#. module: sale_exception_partner_state
+#: model:exception.rule,name:sale_exception_partner_state.unapproved_partner_restriction
+msgid "Unapproved Partner"
+msgstr ""
+
+#. module: sale_exception_partner_state
+#: model:ir.model.fields.selection,name:sale_exception_partner_state.selection__res_company__restrict_sales__yes
+msgid "Yes"
+msgstr ""
+
+#. module: sale_exception_partner_state
+#: model:exception.rule,description:sale_exception_partner_state.unapproved_partner_restriction
+msgid "You can not sell to an Unapproved Partner on this company"
+msgstr ""
+
+#. module: sale_exception_partner_state
+#: model:exception.rule,description:sale_exception_partner_state.unapproved_partner_amount_restriction
+msgid "You can not sell to an Unapproved Partner this amount on this company"
+msgstr ""

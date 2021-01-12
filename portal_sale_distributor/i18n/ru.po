@@ -1,0 +1,124 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* portal_sale_distributor
+# 
+# Translators:
+# Ekaterina <nawsikaya@bk.ru>, 2020
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-01-11 13:02+0000\n"
+"PO-Revision-Date: 2020-12-20 01:28+0000\n"
+"Last-Translator: Ekaterina <nawsikaya@bk.ru>, 2020\n"
+"Language-Team: Russian (https://www.transifex.com/adhoc/teams/46451/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#. module: portal_sale_distributor
+#: code:addons/portal_sale_distributor/controllers/portal_account.py:0
+#, python-format
+msgid "All"
+msgstr "Все"
+
+#. module: portal_sale_distributor
+#: model:ir.ui.menu,name:portal_sale_distributor.catalog_menu
+msgid "Catalog"
+msgstr "Каталог"
+
+#. module: portal_sale_distributor
+#: model_terms:ir.ui.view,arch_db:portal_sale_distributor.view_order_form
+msgid "Confirm Sale"
+msgstr "Подтвердить продажу"
+
+#. module: portal_sale_distributor
+#: code:addons/portal_sale_distributor/controllers/portal_account.py:0
+#, python-format
+msgid "Due Date"
+msgstr "Дата платежа"
+
+#. module: portal_sale_distributor
+#: model:ir.model,name:portal_sale_distributor.model_mail_thread
+msgid "Email Thread"
+msgstr "Переписка по электронной почте"
+
+#. module: portal_sale_distributor
+#: code:addons/portal_sale_distributor/controllers/portal_account.py:0
+#, python-format
+msgid "Invoice Date"
+msgstr "Дата счёта"
+
+#. module: portal_sale_distributor
+#: model:ir.actions.act_url,name:portal_sale_distributor.action_my_account
+#: model:ir.ui.menu,name:portal_sale_distributor.my_account
+msgid "My Account"
+msgstr "Мой аккаунт"
+
+#. module: portal_sale_distributor
+#: model_terms:ir.ui.view,arch_db:portal_sale_distributor.sale_order_link
+msgid "My Sale Orders"
+msgstr "Мои заказы"
+
+#. module: portal_sale_distributor
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_sale_order__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Срок следующей продажи"
+
+#. module: portal_sale_distributor
+#: code:addons/portal_sale_distributor/controllers/portal_account.py:0
+#, python-format
+msgid "Open"
+msgstr "Открыть"
+
+#. module: portal_sale_distributor
+#: code:addons/portal_sale_distributor/models/sale_order.py:0
+#, python-format
+msgid "Pedido confirmado por %s"
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model:res.groups,name:portal_sale_distributor.group_portal_distributor
+msgid "Portal - Distributor"
+msgstr "Портал - Дистрибьютор"
+
+#. module: portal_sale_distributor
+#: model:ir.model,name:portal_sale_distributor.model_product_template
+msgid "Product Template"
+msgstr "Шаблон товара"
+
+#. module: portal_sale_distributor
+#: model:ir.actions.act_window,name:portal_sale_distributor.action_product_template_portal_tree
+msgid "Products"
+msgstr "Товары"
+
+#. module: portal_sale_distributor
+#: model:ir.ui.menu,name:portal_sale_distributor.quotations
+msgid "Quotations"
+msgstr "Котировки"
+
+#. module: portal_sale_distributor
+#: code:addons/portal_sale_distributor/controllers/portal_account.py:0
+#, python-format
+msgid "Reference"
+msgstr "Ссылка"
+
+#. module: portal_sale_distributor
+#: model:ir.ui.menu,name:portal_sale_distributor.sale_menu
+msgid "Sales"
+msgstr "Продажи"
+
+#. module: portal_sale_distributor
+#: model:ir.model,name:portal_sale_distributor.model_sale_order
+#: model:ir.ui.menu,name:portal_sale_distributor.sale_order
+msgid "Sales Order"
+msgstr "Заказ на продажу"
+
+#. module: portal_sale_distributor
+#: code:addons/portal_sale_distributor/controllers/portal_account.py:0
+#, python-format
+msgid "Status"
+msgstr "Статус"

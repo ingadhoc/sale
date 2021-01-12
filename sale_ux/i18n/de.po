@@ -1,17 +1,17 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * sale_ux
-#
+# 	* sale_ux
+# 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019
-#
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-26 01:03+0000\n"
-"PO-Revision-Date: 2019-07-17 13:21+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019\n"
+"POT-Creation-Date: 2021-01-11 13:03+0000\n"
+"PO-Revision-Date: 2020-02-26 15:41+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020\n"
 "Language-Team: German (https://www.transifex.com/adhoc/teams/46451/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,14 +20,38 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__group_allow_any_user_as_salesman
+#: model:res.groups,name:sale_ux.group_allow_any_user_as_salesman
+msgid "Allow any user as salesman"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model,name:sale_ux.model_account_analytic_account
+msgid "Analytic Account"
+msgstr ""
+
+#. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form
 msgid "Automatically update prices when change pricelist."
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form
+msgid ""
+"By default odoo only allows to choose users wich have sales pemission in "
+"sales orders and in the sales teams only internal users. This option make "
+"able to choose, in both places, users of any type (internal or portal)"
 msgstr ""
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order__commercial_partner_id
 msgid "Commercial Entity"
 msgstr "Geschäftsbereich"
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_account_analytic_account__commercial_partner_id
+msgid "Commercial Partner"
+msgstr ""
 
 #. module: sale_ux
 #: model:ir.model,name:sale_ux.model_res_config_settings
@@ -80,7 +104,7 @@ msgid "Force Invoiced Status"
 msgstr "Überschreibe Rechnungsstatus"
 
 #. module: sale_ux
-#: selection:sale.order,force_invoiced_status:0
+#: model:ir.model.fields.selection,name:sale_ux.selection__sale_order__force_invoiced_status__invoiced
 msgid "Fully Invoiced"
 msgstr "Vollständig abgerechnet"
 
@@ -105,9 +129,19 @@ msgid "ID"
 msgstr "ID"
 
 #. module: sale_ux
-#: model:ir.model,name:sale_ux.model_account_invoice
-msgid "Invoice"
-msgstr "Rechnung"
+#: model:ir.model.fields,help:sale_ux.field_sale_order__pricelist_id
+msgid "If you change the pricelist, only newly added lines will be affected."
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order__internal_notes
+msgid "Internal Notes"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_order_form
+msgid "Internal Notes..."
+msgstr ""
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
@@ -119,6 +153,11 @@ msgstr "Rechnungspositionen"
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
 msgid "Invoiced"
 msgstr "Abgerechnet"
+
+#. module: sale_ux
+#: model:ir.model,name:sale_ux.model_account_move
+msgid "Journal Entries"
+msgstr ""
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard____last_update
@@ -136,17 +175,27 @@ msgid "Last Updated on"
 msgstr "Zuletzt aktualisiert am"
 
 #. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__move_internal_notes
+msgid "Mover notas internas a transferencias de stock y facturas"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__move_note
+msgid "Mover términos y condiciones a transferencias de stock y facturas"
+msgstr ""
+
+#. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
 msgid "Not Invoiced"
 msgstr "Nicht abgerechnet"
 
 #. module: sale_ux
-#: selection:sale.order,force_invoiced_status:0
+#: model:ir.model.fields.selection,name:sale_ux.selection__sale_order__force_invoiced_status__no
 msgid "Nothing to Invoice"
 msgstr "Nichts abzurechnen"
 
 #. module: sale_ux
-#: code:addons/sale_ux/models/sale_order.py:75
+#: code:addons/sale_ux/models/sale_order.py:0
 #, python-format
 msgid "Only users with \"%s / %s\" can Set Invoiced manually"
 msgstr "Nur Nutzer mit \"%s / %s\" dürfen manuell abgerechnet setzen"
@@ -162,20 +211,9 @@ msgid "Pricelist"
 msgstr ""
 
 #. module: sale_ux
-#: model:ir.model.fields,help:sale_ux.field_sale_order__pricelist_id
-msgid "Pricelist for current sales order."
-msgstr ""
-
-#. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_usability_tree
-#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
 msgid "Qty"
 msgstr "Menge"
-
-#. module: sale_ux
-#: model_terms:ir.ui.view,arch_db:sale_ux.view_order_tree
-msgid "Quotation Date"
-msgstr ""
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_filter
@@ -184,15 +222,9 @@ msgid "Quotations"
 msgstr "Angebote"
 
 #. module: sale_ux
-#: model:ir.model,name:sale_ux.model_sale_order
-#: model:ir.model.fields,field_description:sale_ux.field_account_invoice__sale_order_ids
+#: model:ir.model.fields,field_description:sale_ux.field_account_move__sale_order_ids
 msgid "Sale Order"
 msgstr "Verkaufsauftrag"
-
-#. module: sale_ux
-#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
-msgid "Sale Order Line"
-msgstr "Auftragsposition"
 
 #. module: sale_ux
 #: model:ir.actions.act_window,name:sale_ux.action_sale_order_line_usability_tree
@@ -202,7 +234,6 @@ msgid "Sale Order Lines"
 msgstr "Auftragspositionen"
 
 #. module: sale_ux
-#: model_terms:ir.ui.view,arch_db:sale_ux.invoice_form
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
 msgid "Sale Orders"
 msgstr "Verkaufsaufträge"
@@ -218,11 +249,17 @@ msgid "Sales Advance Payment Invoice"
 msgstr "Anzahlungsrechnung"
 
 #. module: sale_ux
+#: model:ir.model,name:sale_ux.model_sale_order
+msgid "Sales Order"
+msgstr "Verkaufsauftrag"
+
+#. module: sale_ux
 #: model:ir.model,name:sale_ux.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Auftragsposition"
 
 #. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.account_invoice_form
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_filter
 msgid "Sales Orders"
 msgstr ""
@@ -243,18 +280,33 @@ msgid "Show client reference in list view and in main section of form view"
 msgstr "Zeige Kunden-Referenz in Listen- und in Kopfdaten der Detailsicht"
 
 #. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form
+msgid ""
+"Si marca esta opción y hay un valor definido en \"términos y condiciones\", "
+"el mismo se va a copiar en las facturas o transferencias que se generen "
+"desde esta venta."
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form
+msgid ""
+"Si marca esta opción y hay un valor definido en las \"notas internas\", el "
+"mismo se va a copiar en las facturas o transferencias que se generen desde "
+"esta venta."
+msgstr ""
+
+#. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
 msgid "Status"
 msgstr "Status"
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_usability_tree
-#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
 msgid "Total"
 msgstr "Gesamt"
 
 #. module: sale_ux
-#: code:addons/sale_ux/models/sale_order.py:65
+#: code:addons/sale_ux/models/sale_order.py:0
 #, python-format
 msgid ""
 "Unable to cancel this sale order. You must first cancel related bills and "
@@ -279,7 +331,7 @@ msgid "Update Prices Automatically"
 msgstr ""
 
 #. module: sale_ux
-#: code:addons/sale_ux/wizards/sale_advance_payment_inv.py:36
+#: code:addons/sale_ux/wizards/sale_advance_payment_inv.py:0
 #, python-format
 msgid "You can only set amount total if taxes are of type percentage"
 msgstr ""
@@ -293,3 +345,8 @@ msgstr "Abbrechen"
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
 msgid "or"
 msgstr "oder"
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_account_move__has_sales
+msgid "sale.order"
+msgstr ""
