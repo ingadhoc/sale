@@ -3,7 +3,6 @@
 # directory
 ##############################################################################
 from odoo import models
-from odoo.tools import pycompat
 
 
 class ProductTemplate(models.Model):
@@ -17,7 +16,6 @@ class ProductTemplate(models.Model):
             pricelist = self.env.user.partner_id.property_product_pricelist
             context = dict(self._context, pricelist=pricelist.id,
                            partner=self.env.user.partner_id)
-            self2 = self.with_context(
-                context) if self._context != context else self
-            for rec, rec2 in pycompat.izip(self, self2):
+            self2 = self.with_context(context) if self._context != context else self
+            for rec, rec2 in zip(self, self2):
                 rec.price = rec2.price
