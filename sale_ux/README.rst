@@ -16,6 +16,7 @@ Sale UX
 
 Several Improvements to sales:
 
+#. Make subtotal included / excluded optional and not related to tax b2b/b2c
 #. Hide sale invoicing menu (you can already filter on sales orders menu)
 #. Make button send by email also available on done state on sale orders.
 #. Make sale quotations menu only visible with technical features.

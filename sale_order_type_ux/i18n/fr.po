@@ -1,0 +1,80 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_order_type_ux
+# 
+# Translators:
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-01-11 13:02+0000\n"
+"PO-Revision-Date: 2020-05-08 20:08+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020\n"
+"Language-Team: French (https://www.transifex.com/adhoc/teams/46451/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: sale_order_type_ux
+#: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__analytic_account_id
+msgid "Analytic Account"
+msgstr ""
+
+#. module: sale_order_type_ux
+#: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__analytic_tag_ids
+msgid "Analytic Tags"
+msgstr ""
+
+#. module: sale_order_type_ux
+#: model:ir.model.fields,help:sale_order_type_ux.field_sale_order_type__analytic_account_id
+msgid "Default analytic account that will be used on new sale order"
+msgstr ""
+
+#. module: sale_order_type_ux
+#: model:ir.model.fields,help:sale_order_type_ux.field_sale_order_type__analytic_tag_ids
+msgid "Default analytic tags that will be used on new sale order lines"
+msgstr ""
+
+#. module: sale_order_type_ux
+#: model:ir.model,name:sale_order_type_ux.model_account_move
+msgid "Journal Entries"
+msgstr ""
+
+#. module: sale_order_type_ux
+#: model:ir.model.fields,field_description:sale_order_type_ux.field_account_move__sale_type_id
+msgid "Sale Type"
+msgstr ""
+
+#. module: sale_order_type_ux
+#: model:ir.model,name:sale_order_type_ux.model_sale_order
+msgid "Sales Order"
+msgstr "Bon de commande"
+
+#. module: sale_order_type_ux
+#: model:ir.model,name:sale_order_type_ux.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""
+
+#. module: sale_order_type_ux
+#: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: sale_order_type_ux
+#: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__team_id
+msgid "Team"
+msgstr ""
+
+#. module: sale_order_type_ux
+#: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order__type_id
+msgid "Type"
+msgstr ""
+
+#. module: sale_order_type_ux
+#: model:ir.model,name:sale_order_type_ux.model_sale_order_type
+msgid "Type of sale order"
+msgstr ""

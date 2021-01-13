@@ -1,17 +1,17 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * portal_sale_distributor
-#
+# 	* portal_sale_distributor
+# 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019
-#
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-26 01:03+0000\n"
-"PO-Revision-Date: 2019-10-29 13:50+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019\n"
+"POT-Creation-Date: 2021-01-11 13:02+0000\n"
+"PO-Revision-Date: 2020-12-20 01:28+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020\n"
 "Language-Team: German (https://www.transifex.com/adhoc/teams/46451/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: portal_sale_distributor
-#: code:addons/portal_sale_distributor/controllers/portal_account.py:31
+#: code:addons/portal_sale_distributor/controllers/portal_account.py:0
 #, python-format
 msgid "All"
 msgstr ""
@@ -36,7 +36,7 @@ msgid "Confirm Sale"
 msgstr "Auftrag bestätigen"
 
 #. module: portal_sale_distributor
-#: code:addons/portal_sale_distributor/controllers/portal_account.py:38
+#: code:addons/portal_sale_distributor/controllers/portal_account.py:0
 #, python-format
 msgid "Due Date"
 msgstr ""
@@ -47,7 +47,7 @@ msgid "Email Thread"
 msgstr ""
 
 #. module: portal_sale_distributor
-#: code:addons/portal_sale_distributor/controllers/portal_account.py:37
+#: code:addons/portal_sale_distributor/controllers/portal_account.py:0
 #, python-format
 msgid "Invoice Date"
 msgstr ""
@@ -69,13 +69,13 @@ msgid "Next Activity Deadline"
 msgstr ""
 
 #. module: portal_sale_distributor
-#: code:addons/portal_sale_distributor/controllers/portal_account.py:32
+#: code:addons/portal_sale_distributor/controllers/portal_account.py:0
 #, python-format
 msgid "Open"
 msgstr ""
 
 #. module: portal_sale_distributor
-#: code:addons/portal_sale_distributor/models/sale_order.py:19
+#: code:addons/portal_sale_distributor/models/sale_order.py:0
 #, python-format
 msgid "Pedido confirmado por %s"
 msgstr ""
@@ -84,11 +84,6 @@ msgstr ""
 #: model:res.groups,name:portal_sale_distributor.group_portal_distributor
 msgid "Portal - Distributor"
 msgstr "Portal - Wiederverkäufer"
-
-#. module: portal_sale_distributor
-#: model_terms:ir.ui.view,arch_db:portal_sale_distributor.view_order_form
-msgid "Print"
-msgstr ""
 
 #. module: portal_sale_distributor
 #: model:ir.model,name:portal_sale_distributor.model_product_template
@@ -106,15 +101,10 @@ msgid "Quotations"
 msgstr "Angebote"
 
 #. module: portal_sale_distributor
-#: code:addons/portal_sale_distributor/controllers/portal_account.py:39
+#: code:addons/portal_sale_distributor/controllers/portal_account.py:0
 #, python-format
 msgid "Reference"
 msgstr ""
-
-#. module: portal_sale_distributor
-#: model:ir.model,name:portal_sale_distributor.model_sale_order
-msgid "Sale Order"
-msgstr "Verkaufsauftrag"
 
 #. module: portal_sale_distributor
 #: model:ir.ui.menu,name:portal_sale_distributor.sale_menu
@@ -122,22 +112,13 @@ msgid "Sales"
 msgstr "Verkäufe"
 
 #. module: portal_sale_distributor
+#: model:ir.model,name:portal_sale_distributor.model_sale_order
 #: model:ir.ui.menu,name:portal_sale_distributor.sale_order
 msgid "Sales Order"
 msgstr "Verkaufsauftrag"
 
 #. module: portal_sale_distributor
-#: code:addons/portal_sale_distributor/controllers/portal_account.py:40
+#: code:addons/portal_sale_distributor/controllers/portal_account.py:0
 #, python-format
 msgid "Status"
 msgstr "Status"
-
-#. module: portal_sale_distributor
-#: model_terms:ir.ui.view,arch_db:portal_sale_distributor.portal_my_summary
-msgid "Summary"
-msgstr ""
-
-#. module: portal_sale_distributor
-#: model:ir.model,name:portal_sale_distributor.model_res_users
-msgid "Users"
-msgstr "Anwender"

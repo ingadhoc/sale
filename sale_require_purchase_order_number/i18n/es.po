@@ -1,0 +1,109 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_require_purchase_order_number
+# 
+# Translators:
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2021
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-01-11 13:03+0000\n"
+"PO-Revision-Date: 2020-06-05 17:06+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2021\n"
+"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: sale_require_purchase_order_number
+#: model:ir.model.fields,help:sale_require_purchase_order_number.field_account_move__require_purchase_order_number
+#: model:ir.model.fields,help:sale_require_purchase_order_number.field_res_partner__require_purchase_order_number
+#: model:ir.model.fields,help:sale_require_purchase_order_number.field_res_users__require_purchase_order_number
+#: model:ir.model.fields,help:sale_require_purchase_order_number.field_stock_picking__require_purchase_order_number
+msgid "Check this option to ask for an unique partner RFQ nbr. on SOs"
+msgstr ""
+
+#. module: sale_require_purchase_order_number
+#: model:ir.model,name:sale_require_purchase_order_number.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: sale_require_purchase_order_number
+#: model:ir.model.fields,help:sale_require_purchase_order_number.field_sale_order__require_purchase_order_number
+msgid "If true, required purchase order number in sale order"
+msgstr ""
+"Si es verdadero, se requiere número de orden de compra en orden de venta"
+
+#. module: sale_require_purchase_order_number
+#: model:ir.model,name:sale_require_purchase_order_number.model_account_move
+msgid "Journal Entries"
+msgstr "Asientos Contables"
+
+#. module: sale_require_purchase_order_number
+#: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_stock_picking__manual_purchase_order_number
+msgid "PO Number"
+msgstr ""
+
+#. module: sale_require_purchase_order_number
+#: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_account_move__purchase_order_number
+#: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_sale_order__purchase_order_number
+#: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_stock_picking__purchase_order_number
+msgid "Purchase Order Number"
+msgstr "Numero de Orden de Compra"
+
+#. module: sale_require_purchase_order_number
+#: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_account_move__require_purchase_order_number
+#: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_res_partner__require_purchase_order_number
+#: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_res_users__require_purchase_order_number
+#: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_sale_order__require_purchase_order_number
+#: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_stock_picking__require_purchase_order_number
+msgid "Sale Require Origin"
+msgstr "Origen de venta requerido"
+
+#. module: sale_require_purchase_order_number
+#: model:ir.model,name:sale_require_purchase_order_number.model_sale_order
+msgid "Sales Order"
+msgstr "Pedido de venta"
+
+#. module: sale_require_purchase_order_number
+#: model:ir.model.constraint,message:sale_require_purchase_order_number.constraint_sale_order_purchase_order_number_uniq
+msgid "The Purchase Order Number must be unique!"
+msgstr "El numero de pedido de compra debe ser único!"
+
+#. module: sale_require_purchase_order_number
+#: model:ir.model,name:sale_require_purchase_order_number.model_stock_picking
+msgid "Transfer"
+msgstr "Transferir"
+
+#. module: sale_require_purchase_order_number
+#: code:addons/sale_require_purchase_order_number/models/sale_order.py:0
+#, python-format
+msgid ""
+"You cannot confirm a sales order without a Purchase Order Number for this "
+"partner"
+msgstr ""
+"No se puede confirmar un pedido de venta sin un Número de Pedido de Compra "
+"para este cliente"
+
+#. module: sale_require_purchase_order_number
+#: code:addons/sale_require_purchase_order_number/models/account_move.py:0
+#, python-format
+msgid ""
+"You cannot confirm invoice without a Purchase Order Number for this partner"
+msgstr ""
+"No se puede confirmar factura sin un número de pedido de compra para este "
+"cliente"
+
+#. module: sale_require_purchase_order_number
+#: code:addons/sale_require_purchase_order_number/models/stock_picking.py:0
+#, python-format
+msgid ""
+"You cannot transfer products without a Purchase Order Number for this "
+"partner"
+msgstr ""
+"No puede transferir productos sin un número de pedido de compra para este "
+"cliente"

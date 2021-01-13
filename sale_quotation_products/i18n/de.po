@@ -1,17 +1,17 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * sale_quotation_products
-#
+# 	* sale_quotation_products
+# 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019
-#
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-26 01:03+0000\n"
-"PO-Revision-Date: 2019-08-06 20:05+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019\n"
+"POT-Creation-Date: 2021-01-11 13:03+0000\n"
+"PO-Revision-Date: 2020-02-26 18:12+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020\n"
 "Language-Team: German (https://www.transifex.com/adhoc/teams/46451/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,13 +20,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: sale_quotation_products
-#: code:addons/sale_quotation_products/models/product_product.py:130
+#: code:addons/sale_quotation_products/models/product_product.py:0
 #, python-format
 msgid "Add one"
 msgstr "Eins hinzufügen"
 
 #. module: sale_quotation_products
-#: code:addons/sale_quotation_products/models/product_product.py:141
+#: code:addons/sale_quotation_products/models/product_product.py:0
 #, python-format
 msgid "Open Product Form View"
 msgstr "Öffne Produkt-Detailsicht"
@@ -42,20 +42,20 @@ msgid "Qty"
 msgstr "Menge"
 
 #. module: sale_quotation_products
-#: code:addons/sale_quotation_products/models/product_product.py:120
+#: code:addons/sale_quotation_products/models/product_product.py:0
 #, python-format
 msgid "Quantity"
 msgstr "Menge"
 
 #. module: sale_quotation_products
-#: code:addons/sale_quotation_products/models/sale_order.py:32
+#: code:addons/sale_quotation_products/models/sale_order.py:0
 #, python-format
 msgid "Quotation Products"
 msgstr "Angebotsprodukte"
 
 #. module: sale_quotation_products
 #: model:ir.model,name:sale_quotation_products.model_sale_order
-msgid "Sale Order"
+msgid "Sales Order"
 msgstr "Verkaufsauftrag"
 
 #. module: sale_quotation_products

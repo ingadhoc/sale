@@ -1,0 +1,67 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_barcode
+# 
+# Translators:
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-01-11 13:02+0000\n"
+"PO-Revision-Date: 2020-07-07 01:58+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020\n"
+"Language-Team: French (https://www.transifex.com/adhoc/teams/46451/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: sale_barcode
+#: model_terms:ir.ui.view,arch_db:sale_barcode.res_config_settings_view_form
+msgid "<span class=\"o_form_label\">Barcode Scanner</span>"
+msgstr ""
+
+#. module: sale_barcode
+#: model:ir.model.fields,field_description:sale_barcode.field_sale_order_line__product_barcode
+msgid "Barcode"
+msgstr ""
+
+#. module: sale_barcode
+#: model:ir.model.fields,help:sale_barcode.field_sale_order_line__product_barcode
+msgid "International Article Number used for product identification."
+msgstr ""
+
+#. module: sale_barcode
+#: model_terms:ir.ui.view,arch_db:sale_barcode.res_config_settings_view_form
+msgid "Print Sales Barcode commands"
+msgstr ""
+
+#. module: sale_barcode
+#: model_terms:ir.ui.view,arch_db:sale_barcode.res_config_settings_view_form
+msgid "Process operations faster with barcodes"
+msgstr ""
+
+#. module: sale_barcode
+#: model:ir.model,name:sale_barcode.model_sale_order
+msgid "Sales Order"
+msgstr "Bon de commande"
+
+#. module: sale_barcode
+#: model:ir.model,name:sale_barcode.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""
+
+#. module: sale_barcode
+#: code:addons/sale_barcode/models/sale_order.py:0
+#, python-format
+msgid "The barcode \"%(barcode)s\" doesn't correspond to a proper product."
+msgstr ""
+
+#. module: sale_barcode
+#: code:addons/sale_barcode/models/sale_order.py:0
+#, python-format
+msgid "Wrong barcode"
+msgstr ""

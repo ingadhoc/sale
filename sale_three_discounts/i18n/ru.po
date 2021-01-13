@@ -1,0 +1,60 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_three_discounts
+# 
+# Translators:
+# Ekaterina <nawsikaya@bk.ru>, 2020
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-01-11 13:03+0000\n"
+"PO-Revision-Date: 2020-06-12 01:55+0000\n"
+"Last-Translator: Ekaterina <nawsikaya@bk.ru>, 2020\n"
+"Language-Team: Russian (https://www.transifex.com/adhoc/teams/46451/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#. module: sale_three_discounts
+#: code:addons/sale_three_discounts/models/account_invoice_line.py:0
+#: code:addons/sale_three_discounts/models/sale_order_line.py:0
+#, python-format
+msgid ", must be less or equal than 100"
+msgstr ""
+
+#. module: sale_three_discounts
+#: model:ir.model.fields,field_description:sale_three_discounts.field_sale_order_line__discount
+msgid "Discount (%)"
+msgstr ""
+
+#. module: sale_three_discounts
+#: model:ir.model.fields,field_description:sale_three_discounts.field_account_move_line__discount1
+#: model:ir.model.fields,field_description:sale_three_discounts.field_sale_order_line__discount1
+msgid "Discount 1 (%)"
+msgstr ""
+
+#. module: sale_three_discounts
+#: model:ir.model.fields,field_description:sale_three_discounts.field_account_move_line__discount2
+#: model:ir.model.fields,field_description:sale_three_discounts.field_sale_order_line__discount2
+msgid "Discount 2 (%)"
+msgstr ""
+
+#. module: sale_three_discounts
+#: model:ir.model.fields,field_description:sale_three_discounts.field_account_move_line__discount3
+#: model:ir.model.fields,field_description:sale_three_discounts.field_sale_order_line__discount3
+msgid "Discount 3 (%)"
+msgstr ""
+
+#. module: sale_three_discounts
+#: model:ir.model,name:sale_three_discounts.model_account_move_line
+msgid "Journal Item"
+msgstr ""
+
+#. module: sale_three_discounts
+#: model:ir.model,name:sale_three_discounts.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Заказ на Продажу"

@@ -1,17 +1,17 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * sale_order_validity
-#
+# 	* sale_order_validity
+# 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019
-#
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-26 01:03+0000\n"
-"PO-Revision-Date: 2019-11-20 21:07+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019\n"
+"POT-Creation-Date: 2021-01-11 13:03+0000\n"
+"PO-Revision-Date: 2020-04-14 19:54+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020\n"
 "Language-Team: German (https://www.transifex.com/adhoc/teams/46451/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,13 +20,20 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: sale_order_validity
-#: model:ir.model,name:sale_order_validity.model_res_company
-msgid "Companies"
-msgstr "Unternehmen"
+#: model:ir.model.fields,help:sale_order_validity.field_sale_order__date_order
+msgid ""
+"Creation date of draft/sent orders,\n"
+"Confirmation date of confirmed orders."
+msgstr ""
 
 #. module: sale_order_validity
 #: model:ir.model.fields,help:sale_order_validity.field_sale_order__validity_date
 msgid "Date until when quotation is valid"
+msgstr ""
+
+#. module: sale_order_validity
+#: model:ir.model.fields,field_description:sale_order_validity.field_sale_order__validity_date
+msgid "Expiration"
 msgstr ""
 
 #. module: sale_order_validity
@@ -36,27 +43,13 @@ msgstr ""
 
 #. module: sale_order_validity
 #: model:ir.model,name:sale_order_validity.model_sale_order
-msgid "Sale Order"
+msgid "Sales Order"
 msgstr "Verkaufsauftrag"
-
-#. module: sale_order_validity
-#: model:ir.model.fields,field_description:sale_order_validity.field_res_company__sale_order_validity_days
-msgid "Sale Order Validity Days"
-msgstr "Tage der Auftragsgültigkeit"
 
 #. module: sale_order_validity
 #: model:ir.model.fields,help:sale_order_validity.field_sale_order__validity_days
 msgid "Set days of validity for Sales Order"
 msgstr "Gültigkeitstage des Auftrag pflegen"
-
-#. module: sale_order_validity
-#: model:ir.model.fields,help:sale_order_validity.field_res_company__sale_order_validity_days
-msgid ""
-"Set days of validity for Sales Order, if null, no validity date will be "
-"filled"
-msgstr ""
-"Plege der Gültigkeitstage des Auftrags, bei 0 wird die Gültigkeit nicht "
-"beschränkt"
 
 #. module: sale_order_validity
 #: model_terms:ir.ui.view,arch_db:sale_order_validity.view_order_form_validity
@@ -69,23 +62,18 @@ msgid "Update Validity"
 msgstr "Freigabe aktualisieren"
 
 #. module: sale_order_validity
-#: model:ir.model.fields,field_description:sale_order_validity.field_sale_order__validity_date
-msgid "Validity"
-msgstr ""
-
-#. module: sale_order_validity
 #: model:ir.model.fields,field_description:sale_order_validity.field_sale_order__validity_days
 msgid "Validity Days"
 msgstr "Gültigkeitstage"
 
 #. module: sale_order_validity
-#: code:addons/sale_order_validity/models/sale_order.py:46
+#: code:addons/sale_order_validity/models/sale_order.py:0
 #, python-format
 msgid "Warning!"
 msgstr "Warnung."
 
 #. module: sale_order_validity
-#: code:addons/sale_order_validity/models/sale_order.py:57
+#: code:addons/sale_order_validity/models/sale_order.py:0
 #, python-format
 msgid ""
 "You can not confirm this quotation as it was valid until %s! Please update "
@@ -93,7 +81,7 @@ msgid ""
 msgstr ""
 
 #. module: sale_order_validity
-#: code:addons/sale_order_validity/models/sale_order.py:47
+#: code:addons/sale_order_validity/models/sale_order.py:0
 #, python-format
 msgid ""
 "You can not set more validity days than the configured on the company (%i "
