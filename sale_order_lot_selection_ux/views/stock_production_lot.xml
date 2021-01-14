@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_production_lot_tree" model="ir.ui.view">
+        <field name="model">stock.production.lot</field>
+        <field name="mode">primary</field>
+        <field name="priority" eval="99"/>
+        <field name="inherit_id" ref="stock.view_production_lot_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="replace">
+                <field name="display_name" string="Lot/Serial Number"/>
+            </field>
+        </field>
+    </record>
+</odoo>

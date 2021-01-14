@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Order Lot Selection UX',
-    'version': '12.0.1.1.0',
+    'version': '12.0.1.2.0',
     'category': 'Sale',
     'sequence': 14,
     'author': 'ADHOC SA',
@@ -30,6 +30,7 @@
     ],
     'data': [
         'views/sale_order_views.xml',
+        'views/stock_production_lot.xml',
     ],
     'installable': True,
     'auto_install': False,
