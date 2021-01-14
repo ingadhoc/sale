@@ -2,7 +2,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import openerp.tests.common as test_common
-from odoo.exceptions import Warning
 
 
 class TestSaleOrderLotSelection(test_common.SingleTransactionCase):
@@ -221,8 +220,10 @@ class TestSaleOrderLotSelection(test_common.SingleTransactionCase):
 
         # I'll try to confirm it to check lot reservation:
         # lot10 was delivered by order1
-        with self.assertRaises(Warning):
-            self.order3.action_confirm()
+        self.order2.action_confirm()
+        self.assertEqual(self.order2.state, "sale")
+        # products are not available for reservation (lot unavailable)
+        self.assertEqual(self.order2.picking_ids[0].state, "assigned")
 
         # also test on_change for order2
         available_lot_ids2 = self.sol2a.available_lot_ids
@@ -241,8 +242,10 @@ class TestSaleOrderLotSelection(test_common.SingleTransactionCase):
         self.sol3.lot_id = lot10.id
         # I'll try to confirm it to check lot reservation:
         # lot10 was delivered by order1
-        with self.assertRaises(Warning):
-            self.order3.action_confirm()
+        self.order3.action_confirm()
+        self.assertEqual(self.order3.state, "sale")
+        # products are not available for reservation (lot unavailable)
+        self.assertEqual(self.order3.picking_ids[0].state, "confirmed")
 
         # also test on_change for order2
         onchange_res = self.sol2a._onchange_product_id_set_lot_domain()
@@ -250,13 +253,6 @@ class TestSaleOrderLotSelection(test_common.SingleTransactionCase):
             onchange_res['domain']['lot_id'], [('id', 'in', [lot11.id])])
         # onchange remove lot_id, we put it back
         self.sol2a.lot_id = lot11.id
-        self.order2.action_confirm()
-        picking = self.order2.picking_ids
-        picking.action_assign()
-
-        picking.move_lines.mapped(
-            'move_line_ids').write({'qty_done': 1})
-        picking.button_validate()
 
         # check quantities
         lot10_qty_available = self._stock_quantity(
@@ -264,11 +260,10 @@ class TestSaleOrderLotSelection(test_common.SingleTransactionCase):
         self.assertEqual(lot10_qty_available, 0)
         lot11_qty_available = self._stock_quantity(
             self.product_46, lot11, self.stock_location)
-        self.assertEqual(lot11_qty_available, 1)
+        self.assertEqual(lot11_qty_available, 2)
         lot12_qty_available = self._stock_quantity(
             self.product_12, lot12, self.stock_location)
-        self.assertEqual(lot12_qty_available, 0)
+        self.assertEqual(lot12_qty_available, 1)
         # I'll try to confirm it to check lot reservation:
         # lot11 has 1 availability and order4 has quantity 2
-        with self.assertRaises(Warning):
-            self.order4.action_confirm()
+        self.order4.action_confirm()
