@@ -5,7 +5,7 @@ class MailThread(models.AbstractModel):
     _inherit = 'mail.thread'
 
     @api.multi
-    def _message_auto_subscribe_notify(self, partner_ids, template):
+    def _message_auto_subscribe(self, updated_values):
         """ Cuando usuario portal crea OV se manda un mensjae de suscripcion
         al comercial, esto terminahaciendo que se arroje error si se tiene
         instalado mass_mailing y las estadisticas por permiso de acceso
@@ -15,4 +15,5 @@ class MailThread(models.AbstractModel):
         if self._name == 'sale.order' and \
                 not self.env.user.has_group('base.group_user'):
             self = self.sudo()
-        return super(MailThread, self)._message_auto_subscribe_notify(partner_ids, template)
+
+        return super(MailThread, self)._message_auto_subscribe(updated_values)
