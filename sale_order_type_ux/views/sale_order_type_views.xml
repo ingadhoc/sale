@@ -22,6 +22,23 @@
             <field name="payment_term_id" position="after">
                 <field name="team_id"/>
             </field>
+            <group position="before">
+                <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+            </group>
+            <form>
+                <field name="active" invisible="1"/>
+            </form>
+        </field>
+    </record>
+
+    <record id="sale_order_type_search_view" model="ir.ui.view">
+        <field name="name">sale.order.type.search.view.inherit</field>
+        <field name="model">sale.order.type</field>
+        <field name="inherit_id" ref="sale_order_type.sot_sale_order_type_search_view"/>
+        <field name="arch" type="xml">
+            <field name="company_id" position="after">
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+            </field>
         </field>
     </record>
 </odoo>
