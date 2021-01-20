@@ -32,3 +32,6 @@ class SaleOrderTypology(models.Model):
         domain="['|' , ('company_id', '=', False), ('company_id', '=', company_id)]",
         help="Default analytic account that will be used on new sale order"
         )
+
+    active = fields.Boolean(
+        default=True, help="Set active to false to hide the type of sale without removing it.")
