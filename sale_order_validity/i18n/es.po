@@ -54,16 +54,6 @@ msgid "Set days of validity for Sales Order"
 msgstr "Establece los días de validez del pedido de venta"
 
 #. module: sale_order_validity
-#: model_terms:ir.ui.view,arch_db:sale_order_validity.view_order_form_validity
-msgid "Update Date, Prices and Validity"
-msgstr "Actualizar Fecha, Precios y Validez"
-
-#. module: sale_order_validity
-#: model_terms:ir.ui.view,arch_db:sale_order_validity.view_order_form_validity
-msgid "Update Validity"
-msgstr "Actualizar Validez"
-
-#. module: sale_order_validity
 #: model:ir.model.fields,field_description:sale_order_validity.field_sale_order__validity_days
 msgid "Validity Days"
 msgstr "Días de validez"
@@ -73,14 +63,6 @@ msgstr "Días de validez"
 #, python-format
 msgid "Warning!"
 msgstr "¡Alerta!"
-
-#. module: sale_order_validity
-#: code:addons/sale_order_validity/models/sale_order.py:0
-#, python-format
-msgid ""
-"You can not confirm this quotation as it was valid until %s! Please update "
-"validity."
-msgstr ""
 
 #. module: sale_order_validity
 #: code:addons/sale_order_validity/models/sale_order.py:0
