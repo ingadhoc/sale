@@ -55,11 +55,6 @@ msgstr "Establece los días de validez del pedido de venta"
 
 #. module: sale_order_validity
 #: model_terms:ir.ui.view,arch_db:sale_order_validity.view_order_form_validity
-msgid "Update Date, Prices and Validity"
-msgstr "Actualizar Fecha, Precios y Validez"
-
-#. module: sale_order_validity
-#: model_terms:ir.ui.view,arch_db:sale_order_validity.view_order_form_validity
 msgid "Update Validity"
 msgstr "Actualizar Validez"
 
