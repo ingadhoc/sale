@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Stock UX',
-    'version': '13.0.1.7.0',
+    'version': '13.0.1.8.0',
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -32,8 +32,10 @@
         'sale_stock',
         'sale_ux',
         'stock_ux',
+        'web_ir_actions_act_window_message',
     ],
     'data': [
+        'data/ir_actions_data.xml',
         'views/sale_order_views.xml',
         'views/sale_order_line_views.xml',
         'views/stock_move_views.xml',
