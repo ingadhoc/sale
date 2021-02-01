@@ -16,7 +16,7 @@ class AccountMove(models.Model):
     )
     # en la ui agregamos este que seria mejor a nivel performance
     has_sales = fields.Boolean(
-        'sale.order',
+        string='Has Sales?',
         compute='_compute_has_sales'
     )
 
