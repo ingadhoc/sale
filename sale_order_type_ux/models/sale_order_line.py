@@ -24,7 +24,7 @@ class SaleOrderLine(models.Model):
         self = self.with_context(force_company=company.id)
         res = super()._prepare_invoice_line()
 
-        if company != self.company_id.id:
+        if company != self.company_id:
             # Because we not have the access to the invoice, we obtain the fiscal position who
             # has the invoice really
             fpos_id = self.env['account.fiscal.position'].with_context(
