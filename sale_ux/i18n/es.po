@@ -4,14 +4,15 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2021
+# Juan Rivero <jr@adhoc.com.ar>, 2021
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-11 13:03+0000\n"
+"POT-Creation-Date: 2021-02-05 20:13+0000\n"
 "PO-Revision-Date: 2020-02-26 15:41+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2021\n"
+"Last-Translator: Juan Rivero <jr@adhoc.com.ar>, 2021\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -76,7 +77,7 @@ msgstr "Creado por"
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__create_date
 msgid "Created on"
-msgstr "Creado en"
+msgstr "Creado el"
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
@@ -86,7 +87,7 @@ msgstr "Cliente"
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__group_sale_reference_on_tree_and_main_form
 msgid "Customer reference in list view and form"
-msgstr "Customer reference in list view and form"
+msgstr "Referencia de Cliente en vista lista y formulario"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__amount
@@ -96,7 +97,7 @@ msgstr "Descuento"
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__display_name
 msgid "Display Name"
-msgstr "Display Name"
+msgstr "Mostrar Nombre"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_advance_payment_inv__amount_total
@@ -124,6 +125,11 @@ msgid "Global Discount Wizard"
 msgstr "Asistente para Descuento Global"
 
 #. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_account_move__has_sales
+msgid "Has Sales?"
+msgstr "Tiene ventas?"
+
+#. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
 msgid "Hide cancelled lines"
 msgstr "Ocultar líneas canceladas"
@@ -137,6 +143,11 @@ msgstr "ID"
 #: model:ir.model.fields,help:sale_ux.field_sale_order__pricelist_id
 msgid "If you change the pricelist, only newly added lines will be affected."
 msgstr "Si cambia la tarifa, solo nuevas líneas serán afectadas"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.report_saleorder
+msgid "Image"
+msgstr "Imagen"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order__internal_notes
@@ -167,7 +178,7 @@ msgstr "Asientos Contables"
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard____last_update
 msgid "Last Modified on"
-msgstr "Última modificación en"
+msgstr "Última modificación el"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__write_uid
@@ -177,7 +188,7 @@ msgstr "Última actualización por"
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__write_date
 msgid "Last Updated on"
-msgstr "Última actualización en"
+msgstr "Última actualización el"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__move_internal_notes
@@ -192,7 +203,7 @@ msgstr "Mover términos y condiciones a transferencias de stock y facturas"
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
 msgid "Not Invoiced"
-msgstr "Not Invoiced"
+msgstr "No Facturado"
 
 #. module: sale_ux
 #: model:ir.model.fields.selection,name:sale_ux.selection__sale_order__force_invoiced_status__no
@@ -203,7 +214,7 @@ msgstr "Nada que facturar"
 #: code:addons/sale_ux/models/sale_order.py:0
 #, python-format
 msgid "Only users with \"%s / %s\" can Set Invoiced manually"
-msgstr "Only users with \"%s / %s\" can Set Invoiced manually"
+msgstr "Solo usuarios con \"%s / %s\" pueden establecer Facturado manualmente"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order__payment_term_id
@@ -246,7 +257,7 @@ msgstr "Pedidos de venta"
 #. module: sale_ux
 #: model:ir.model,name:sale_ux.model_sale_order_global_discount_wizard
 msgid "Sale order Global Discount Wizard"
-msgstr "Sale order Global Discount Wizard"
+msgstr "Asistente de Descuento Global para Orden de Venta"
 
 #. module: sale_ux
 #: model:ir.model,name:sale_ux.model_sale_advance_payment_inv
@@ -275,14 +286,26 @@ msgid "Set Global Discount"
 msgstr "Establecer Descuento Global"
 
 #. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__show_product_image_on_report
+msgid "Show Product Image"
+msgstr "Mostrar Imagen del Producto"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form
+msgid "Show Product Image On Report"
+msgstr "Mostrar Imagen Del Producto En El Reporte"
+
+#. module: sale_ux
 #: model:res.groups,name:sale_ux.group_reference_on_tree_and_main_form
 msgid "Show SO reference field on tree and main form views"
-msgstr "Show SO reference field on tree and main form views"
+msgstr "Mostrar campo de referencia SO en vista árbol y formulario"
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form
 msgid "Show client reference in list view and in main section of form view"
-msgstr "Show client reference in list view and in main section of form view"
+msgstr ""
+"Mostrar referencia de CLiente en vista lista y en la sección principal de la"
+" vista formulario"
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form
@@ -358,8 +381,3 @@ msgstr "_Cancelado"
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
 msgid "or"
 msgstr "o"
-
-#. module: sale_ux
-#: model:ir.model.fields,field_description:sale_ux.field_account_move__has_sales
-msgid "sale.order"
-msgstr ""
