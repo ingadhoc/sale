@@ -29,7 +29,6 @@
     ],
     'data': [
         'data/exception_rule_data.xml',
-        'security/sale_exception_price_security_security.xml',
     ],
     'demo': [
     ],
