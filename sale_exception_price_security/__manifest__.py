@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Exception - Price Security Integration',
-    'version': '13.0.1.0.0',
+    'version': '13.0.1.1.0',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
@@ -29,7 +29,6 @@
     ],
     'data': [
         'data/exception_rule_data.xml',
-        'security/sale_exception_price_security_security.xml',
     ],
     'demo': [
     ],
