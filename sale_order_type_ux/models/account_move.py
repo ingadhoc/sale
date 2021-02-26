@@ -3,16 +3,11 @@
 # directory
 ##############################################################################
 
-from odoo import api, fields, models
+from odoo import api, models
 
 
 class AccountMove(models.Model):
     _inherit = 'account.move'
-
-    sale_type_id = fields.Many2one(
-        readonly=True,
-        states={'draft': [('readonly', False)]},
-    )
 
     @api.onchange('sale_type_id')
     def onchange_sale_type_id(self):
