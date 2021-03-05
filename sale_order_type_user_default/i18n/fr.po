@@ -1,0 +1,40 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_order_type_user_default
+# 
+# Translators:
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-02-11 10:30+0000\n"
+"PO-Revision-Date: 2020-06-05 00:28+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020\n"
+"Language-Team: French (https://www.transifex.com/adhoc/teams/46451/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: sale_order_type_user_default
+#: model:ir.model.fields,field_description:sale_order_type_user_default.field_res_users__default_sale_order_type_id
+msgid "Default Sale Order Type"
+msgstr ""
+
+#. module: sale_order_type_user_default
+#: model_terms:ir.ui.view,arch_db:sale_order_type_user_default.view_users_form
+msgid "Sale Order Type"
+msgstr ""
+
+#. module: sale_order_type_user_default
+#: model:ir.model,name:sale_order_type_user_default.model_sale_order
+msgid "Sales Order"
+msgstr "Bon de commande"
+
+#. module: sale_order_type_user_default
+#: model:ir.model,name:sale_order_type_user_default.model_res_users
+msgid "Users"
+msgstr ""
