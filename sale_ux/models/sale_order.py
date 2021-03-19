@@ -41,8 +41,8 @@ class SaleOrder(models.Model):
         if propagate_internal_notes and self.internal_notes:
             vals.update({
                 'internal_notes': self.internal_notes})
-        if 'comment' in vals and not propagate_note:
-            vals.pop('comment')
+        if 'narration' in vals and not propagate_note:
+            vals.pop('narration')
         return vals
 
     @api.onchange('pricelist_id')
