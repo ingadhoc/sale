@@ -23,7 +23,12 @@ class SaleOrder(models.Model):
                     line.qty_to_invoice for line in rec.order_line):
                 _logger.warning('Noting to invoice')
                 continue
-
+            # we take into account if there are any transaction finish from the e-commerce
+            #  and not continue with the automation in this case
+            if self.transaction_ids and self.env['ir.config_parameter'].sudo().get_param('sale.automatic_invoice')\
+                and any(
+                    [True if transaction.state == 'done' else False for transaction in self.transaction_ids]):
+                continue
             # a list is returned but only one invoice should be returned
             # usamos final para que reste adelantos y tmb por ej
             # por si se usa el modulo de facturar las returns
