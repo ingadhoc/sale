@@ -3,7 +3,7 @@
 # directory
 ##############################################################################
 from odoo import models, _
-from odoo.tools import float_compare
+from odoo.tools import float_is_zero
 from odoo.exceptions import UserError
 
 
@@ -45,9 +45,7 @@ class StockPicking(models.Model):
         invoice_status = self.sale_id.mapped(
             'order_line.invoice_lines.move_id.invoice_payment_state')
         if (set(invoice_status) - set(['paid'])) or any(
-                (float_compare(line.product_uom_qty,
-                               line.qty_invoiced,
-                               precision_digits=precision) > 0)
+                not float_is_zero(line.qty_to_invoice, precision_digits=precision)
                 for line in self.sale_id.order_line):
             return False
         return True
