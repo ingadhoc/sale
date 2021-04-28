@@ -64,8 +64,9 @@ class SaleAdvancePaymentInvWizard(models.TransientModel):
         ).get_param('sale.propagate_internal_notes') == 'True'
         propagate_note = self.env['ir.config_parameter'].sudo(
         ).get_param('sale.propagate_note') == 'True'
+        # we use sudo to prevent error with sales user when create the invoice
         if propagate_internal_notes:
-            invoice.internal_notes = order.internal_notes
+            invoice.sudo().internal_notes = order.internal_notes
         if not propagate_note:
-            invoice.comment = False
+            invoice.sudo().comment = False
         return invoice
