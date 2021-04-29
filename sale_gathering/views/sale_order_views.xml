@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_order_form" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <field name="require_payment" position="after">
+                <field name="is_gathering"/>
+            </field>
+            <button name="%(sale.action_view_sale_advance_payment_inv)d" position="attributes">
+                <attribute name="context">{'default_advance_payment_method': is_gathering and 'invoice_gathering' or 'delivered'}</attribute>
+                <!-- <attribute name="attrs">{'invisible': ['|','|',('is_gathering', '==', False), ('amount_total', '<', 0.0),('state', '!=' ,'sale')]}</attribute> -->
+            </button>
+            <button name="%(sale.action_view_sale_advance_payment_inv)d" position="after">
+                <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create  Gathering Invoice" type="action" context="{'default_advance_payment_method': 'fixed'}" attrs="{'invisible': ['|','|', ('is_gathering', '==', False), ('amount_total', '>', 0.0),('state', '!=' ,'sale')]}"/>
+            </button>
+
+        </field>
+    </record>
+
+
+</odoo>
