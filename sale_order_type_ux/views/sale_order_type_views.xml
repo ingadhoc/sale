@@ -21,6 +21,7 @@
             </field>
             <field name="payment_term_id" position="after">
                 <field name="team_id"/>
+                <field name="fiscal_position_id"/>
             </field>
             <group position="before">
                 <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>

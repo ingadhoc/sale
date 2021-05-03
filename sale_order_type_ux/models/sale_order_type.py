@@ -35,3 +35,10 @@ class SaleOrderTypology(models.Model):
 
     active = fields.Boolean(
         default=True, help="Set active to false to hide the type of sale without removing it.")
+
+    fiscal_position_id = fields.Many2one(
+        'account.fiscal.position',
+        string='Fiscal Position',
+        check_company=True,
+        help='If you choose a fiscal position then this fiscal positioon would be used as default instead of the '
+        'automatically detected or setted on the partner')
