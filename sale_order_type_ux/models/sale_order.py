@@ -23,6 +23,14 @@ class SaleOrder(models.Model):
                 order.order_line.analytic_tag_ids = order_type.analytic_tag_ids
             if order_type.analytic_account_id:
                 order.analytic_account_id = order_type.analytic_account_id
+            order.onchange_partner_shipping_id()
+
+    @api.onchange('partner_shipping_id', 'partner_id', 'company_id')
+    def onchange_partner_shipping_id(self):
+        if self.type_id.fiscal_position_id:
+            self.fiscal_position_id = self.type_id.fiscal_position_id
+        else:
+            return super().onchange_partner_shipping_id()
 
     @api.onchange("type_id")
     def onchange_type_id(self):
