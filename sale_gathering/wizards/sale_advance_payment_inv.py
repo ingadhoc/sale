@@ -8,8 +8,10 @@ from odoo import models, fields
 class SaleAdvancePaymentInvWizard(models.TransientModel):
     _inherit = "sale.advance.payment.inv"
 
-
-    advance_payment_method = fields.Selection(selection_add=[('invoice_gathering', 'Invoice Gathering')])
+    advance_payment_method = fields.Selection(selection_add=[
+        # ('invoice_gathering', 'Factura y NC descontando acopio'),
+        ('invoice_gathering_zero', 'Factura en cero descontando acopio'),
+    ])
 
 
     def _prepare_so_line(self, order, analytic_tag_ids, tax_ids, amount):
@@ -21,9 +23,11 @@ class SaleAdvancePaymentInvWizard(models.TransientModel):
     def create_invoices(self):
         sale_orders = self.env['sale.order'].browse(self._context.get('active_ids', []))
 
-        if self.advance_payment_method == 'invoice_gathering':
-            moves = sale_orders._create_invoices()
-            sale_orders.with_context(invoice_ids=moves.ids)._create_invoices(final=True)
+        # if self.advance_payment_method == 'invoice_gathering':
+        #     sale_orders.with_context(invoice_gathering_no_invoiceable=True)._create_invoices()
+        #     sale_orders.with_context(invoice_gathering=True)._create_invoices(final=True)
+        if self.advance_payment_method == 'invoice_gathering_zero':
+            sale_orders.with_context(invoice_gathering=True)._create_invoices(final=True)
         else:
             return super().create_invoices()
         if self._context.get('open_invoices', False):
