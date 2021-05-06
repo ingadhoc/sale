@@ -11,12 +11,15 @@
                 <field name="is_gathering"/>
             </field>
             <button name="%(sale.action_view_sale_advance_payment_inv)d" position="attributes">
-                <attribute name="context">{'default_advance_payment_method': is_gathering and 'invoice_gathering' or 'delivered'}</attribute>
+                <attribute name="context">{'default_advance_payment_method': is_gathering and 'invoice_gathering_zero' or 'delivered'}</attribute>
                 <!-- <attribute name="attrs">{'invisible': ['|','|',('is_gathering', '==', False), ('amount_total', '<', 0.0),('state', '!=' ,'sale')]}</attribute> -->
             </button>
             <button name="%(sale.action_view_sale_advance_payment_inv)d" position="after">
                 <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create  Gathering Invoice" type="action" context="{'default_advance_payment_method': 'fixed'}" attrs="{'invisible': ['|','|', ('is_gathering', '==', False), ('amount_total', '>', 0.0),('state', '!=' ,'sale')]}"/>
             </button>
+            <field name="amount_total" position="after">
+                <field name="amount_gathering" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+            </field>
 
         </field>
     </record>
