@@ -14,7 +14,8 @@ class ProductTemplate(models.Model):
         # action (like fields view get)
         super()._compute_template_price()
         if self._context.get('portal_products'):
-            pricelist = self.env.user.partner_id.property_product_pricelist
+            pricelist = self.env.user.partner_id.with_context(
+                force_company=self.env.user.company_id.id).property_product_pricelist
             context = dict(self._context, pricelist=pricelist.id,
                            partner=self.env.user.partner_id)
             self2 = self.with_context(
