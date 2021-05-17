@@ -43,6 +43,11 @@ class SaleOrder(models.Model):
                 'internal_notes': self.internal_notes})
         if 'narration' in vals and not propagate_note:
             vals.pop('narration')
+        company = self._context.get('force_company', False) and self.env['res.company'].browse(
+            self._context.get('force_company')) or self.env.company
+        if not propagate_note and self.env['ir.config_parameter'].sudo().get_param(
+                'account.use_invoice_terms') and company.invoice_terms:
+            vals['narration'] = company.invoice_terms
         return vals
 
     @api.onchange('pricelist_id')
