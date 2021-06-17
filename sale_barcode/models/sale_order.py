@@ -35,4 +35,6 @@ class SaleOrder(models.Model):
                 'order_id': self.id,
             })
             line.product_id_change()
+            line.product_uom_change()
+            line._onchange_discount()
         return True
