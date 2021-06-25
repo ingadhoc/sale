@@ -59,12 +59,12 @@ msgstr "Pre-Pago"
 #. module: sale_order_type_invoice_policy
 #: selection:sale.order.type,invoice_policy:0
 msgid "Prepaid - Block Delivery"
-msgstr ""
+msgstr "Pre-Pago - Bloquear entrega"
 
 #. module: sale_order_type_invoice_policy
 #: selection:sale.order.type,invoice_policy:0
 msgid "Prepaid - Block Reserve and Delivery"
-msgstr ""
+msgstr "Pre-Pago - Bloquear reserva y entrega"
 
 #. module: sale_order_type_invoice_policy
 #: model:ir.model,name:sale_order_type_invoice_policy.model_sale_order
@@ -85,3 +85,25 @@ msgstr "Transferir"
 #: model:ir.model,name:sale_order_type_invoice_policy.model_sale_order_type
 msgid "Type of sale order"
 msgstr "Tipo de pedido de venta"
+
+#. module: sale_order_type_invoice_policy
+#: code:addons/sale_order_type_invoice_policy/models/stock_picking.py:23
+#, python-format
+msgid "" 
+"If you use a sale type in the sale order related with invoice policy \"Block Reserve/Block Delivery\", then "
+"every sale line must be invoiced and paid before you can validate picking"
+msgstr ""
+"Si en el pedido de venta usa un tipo de pedido relacionado con la política de facturación "
+"\"Bloquear reserva/Bloquear entrega\", entonces todas las lineas del pedido deberán ser "
+"facturadas y pagadas para poder validar la entrega."
+
+#. module: sale_order_type_invoice_policy
+#: code:addons/sale_order_type_invoice_policy/models/stock_picking.py:36
+#, python-format
+msgid ""
+"If you use a sale type in the sale order related with invoice policy \"Prepaid - Block Reserve\" , then "
+"every sale line must be invoiced and paid before you can reserve qty to this picking"
+msgstr ""
+"Si en el pedido de venta usa un tipo de pedido relacionado con la política de facturación "
+"\"Pre-Pago - Bloquear reserva\", entonces todas las lineas del pedido deberán ser "
+"facturadas y pagadas para poder reservar cantidades para esta entrega."
