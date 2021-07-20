@@ -2,18 +2,20 @@
 <odoo>
     <template id="report_saleorder" inherit_id="sale.report_saleorder_document">
         <xpath expr="//table//tr/th[@name='th_description']" position="before">
-            <th t-if="request.env['ir.config_parameter'].sudo().get_param('sale_ux.show_product_image_on_report')" name="th_image" class="text-left">Image</th>
+            <th t-if="request.env['ir.config_parameter'].sudo().get_param('sale_ux.show_product_image_on_report') and any(doc.order_line.mapped('product_id.image_256'))" name="th_image" class="text-left">Image</th>
         </xpath>
         <xpath expr="//t[@t-foreach='doc.order_line']//td[@name='td_name']" position="before">
-            <td t-if="request.env['ir.config_parameter'].sudo().get_param('sale_ux.show_product_image_on_report')" name="td_image"  style="height:20px !important;width:20px !important;"><span t-field="line.product_id.image_1920" t-options='{"widget": "image"}'/></td>
+            <td t-if="request.env['ir.config_parameter'].sudo().get_param('sale_ux.show_product_image_on_report') and line.product_id.image_256" name="td_image"  style="height:20px !important;width:20px !important;"><span t-field="line.product_id.image_256" t-options='{"widget": "image"}'/></td>
+            <td t-elif="request.env['ir.config_parameter'].sudo().get_param('sale_ux.show_product_image_on_report') and not line.product_id.image_256" t-esc="'N/A'" style="text-align:center;"/>
         </xpath>
     </template>
     <template id="report_report_saleorder_document_inherit_sale_management" inherit_id="sale_management.report_saleorder_document_inherit_sale_management">
         <xpath expr="//table//tr/th[@name='th_option_name']" position="before">
-            <th t-if="request.env['ir.config_parameter'].sudo().get_param('sale_ux.show_product_image_on_report')" name="th_image" class="text-left">Image</th>
+            <th t-if="request.env['ir.config_parameter'].sudo().get_param('sale_ux.show_product_image_on_report') and any(doc.sale_order_option_ids.mapped('product_id.image_256'))" name="th_image" class="text-left">Image</th>
         </xpath>
         <xpath expr="//td[@name='td_option_name']" position="before">
-            <td t-if="request.env['ir.config_parameter'].sudo().get_param('sale_ux.show_product_image_on_report')" name="td_image"  style="height:20px !important;width:20px !important;"><span t-field="option.product_id.image_1920" t-options='{"widget": "image"}'/></td>
+            <td t-if="request.env['ir.config_parameter'].sudo().get_param('sale_ux.show_product_image_on_report') and option.product_id.image_256" name="td_image"  style="height:20px !important;width:20px !important;"><span t-field="option.product_id.image_256" t-options='{"widget": "image"}'/></td>
+            <td t-elif="request.env['ir.config_parameter'].sudo().get_param('sale_ux.show_product_image_on_report') and not option.product_id.image_256" t-esc="'N/A'" style="text-align:center;"/>
         </xpath>
     </template>
 </odoo>
