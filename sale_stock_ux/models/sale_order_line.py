@@ -73,6 +73,7 @@ class SaleOrderLine(models.Model):
         # la cantidad entregada cuando todo el kit se entregó. Cuestión que,
         # por ahora, desactivamos la cancelación de kits
         bom_enable = 'bom_ids' in self.env['product.template']._fields
+        pack_enable = 'pack_ok' in self.env['product.template']._fields
 
         for rec in self.filtered('product_id'):
             if bom_enable:
@@ -82,6 +83,9 @@ class SaleOrderLine(models.Model):
                     raise UserError(_(
                         "Cancel remaining can't be called for Kit Products "
                         "(products with a bom of type kit)."))
+            # For product pack compatibility to cancel all of componept in case the product parent is cancel
+            if pack_enable and rec.product_id.pack_ok and rec.pack_type == "detailed" and rec.pack_child_line_ids:
+                rec.pack_child_line_ids.button_cancel_remaining()
             old_product_uom_qty = rec.product_uom_qty
             # Al final permitimos cancelar igual porque es necesario, por ej,
             # si no se va a entregar y ya está facturado y se quiere hacer
