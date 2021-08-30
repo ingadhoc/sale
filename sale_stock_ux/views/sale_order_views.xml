@@ -11,8 +11,11 @@
                 <label for="move_ids" groups="base.group_no_one"/>
                 <field name="move_ids" readonly="True" groups="base.group_no_one"/>
             </xpath>
-            <xpath expr="//field[@name='order_line']/form//label[@for='qty_invoiced']" position="after">
-                <field name="quantity_returned" string="Returned Quantity" attrs="{'invisible': [('quantity_returned', '=', 0.0)]}"/>
+            <xpath expr="//field[@name='order_line']/form//field[@name='qty_invoiced']//.." position="after">
+                <label for="quantity_returned" string="Returned Quantity" attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}"/>
+                <div name="quantity_returned" attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}">
+                    <field name="quantity_returned"/>
+                </div>
                 <field name="delivery_status" invisible="1"/>
             </xpath>
             <!-- agregamos boton de cancelar linea -->
