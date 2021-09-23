@@ -31,6 +31,7 @@
     'depends': [
         'sale',
         'account_ux',
+        'sale_management',
     ],
     'data': [
         'wizards/res_config_settings_views.xml',
