@@ -41,7 +41,7 @@ class AccountInvoiceLine(models.Model):
     @api.onchange('discount1', 'discount2', 'discount3')
     @api.constrains('discount1', 'discount2', 'discount3')
     def _set_discount(self):
-        for rec in self:
+        for rec in self.filtered(lambda x: x.move_id.is_sale_document()):
             discount_factor = 1.0
             for discount in [rec.discount1, rec.discount2, rec.discount3]:
                 discount_factor = discount_factor * (
