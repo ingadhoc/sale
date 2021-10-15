@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mrp_bom_rule_portal_distributor,access_mrp_bom_rule_portal_distributor,mrp.model_mrp_bom,portal_sale_distributor.group_portal_distributor,1,0,0,0
