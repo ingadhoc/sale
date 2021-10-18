@@ -14,10 +14,13 @@ class StockRule(models.Model):
         result = super()._get_stock_move_values(
             product_id, product_qty, product_uom, location_id, name,
             origin, company_id, values)
-        sale_line_id = values.get('sale_line_id', False)
-        if sale_line_id:
-            result['analytic_tag_ids'] = [
-                (6, 0, self.env[
-                    'sale.order.line'].browse(
-                        sale_line_id).analytic_tag_ids.ids)]
+        sol_id = values.get('sale_line_id', False)
+        if sol_id:
+            sol = self.env["sale.order.line"].browse(sol_id)
+            analytic_account = sol.order_id.analytic_account_id
+            analytic_tags = sol.analytic_tag_ids
+            if analytic_tags:
+                result['analytic_tag_ids'] = [(6, 0, analytic_tags.ids)]
+            if analytic_account:
+                result['analytic_account_id'] = analytic_account.id
         return result
