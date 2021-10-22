@@ -30,7 +30,7 @@
         'sale_stock_ux',
         'delivery',
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': True,
     'application': False,
 }
