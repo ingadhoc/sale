@@ -1,4 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/ingadhoc/sale/badge.png?branch=13.0)](https://coveralls.io/r/ingadhoc/sale?branch=13.0)
+[![Coverage Status](https://coveralls.io/repos/ingadhoc/sale/badge.png?branch=15.0)](https://coveralls.io/r/ingadhoc/sale?branch=15.0)
 [![Code Climate](https://codeclimate.com/github/ingadhoc/sale/badges/gpa.svg)](https://codeclimate.com/github/ingadhoc/sale)
 
 # ADHOC Sale
@@ -10,7 +10,7 @@ ADHOC Odoo Sale Modules
 
 Translation Status
 ------------------
-[![Transifex Status](https://www.transifex.com/projects/p/ingadhoc-sale-13-0/chart/image_png)](https://www.transifex.com/projects/p/ingadhoc-sale-13-0)
+[![Transifex Status](https://www.transifex.com/projects/p/ingadhoc-sale-15-0/chart/image_png)](https://www.transifex.com/projects/p/ingadhoc-sale-15-0)
 
 ----
 
