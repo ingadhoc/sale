@@ -18,6 +18,19 @@
                     </div>
                 </div>
             </xpath>
+            <xpath expr="//div[@data-key='sale_management']/div[3]">
+                <div class="col-12 col-lg-6 o_setting_box">
+                    <div class="o_setting_left_pane">
+                        <field name="dont_send_notes_to_invoices"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="dont_send_notes_to_invoices" string="Do not send notes to invoices"/>
+                        <div class="text-muted">
+                            Do not take the notes from the sale order line to the invoice line when create an invoice from a sale order.
+                        </div>
+                    </div>
+                </div>
+            </xpath>
 
             <xpath expr="//div[@id='sale_config_online_confirmation_sign']" position="after">
                 <div class="col-12 col-lg-6 o_setting_box">
