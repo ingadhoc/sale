@@ -381,3 +381,18 @@ msgstr "_Cancelado"
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
 msgid "or"
 msgstr "o"
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__dont_send_notes_to_invoices
+msgid "Do not send notes to invoices"
+msgstr "No llevar las notas a las facturas."
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form
+msgid "Do not send notes to invoices"
+msgstr "No llevar las notas a las facturas."
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form
+msgid "Do not take the notes from the sale order line to the invoice line when create an invoice from a sale order."
+msgstr "No lleve las notas de la línea de la orden de venta a la línea de la factura cuando cree una factura a partir de una orden de venta."

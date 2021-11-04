@@ -170,3 +170,12 @@ class SaleOrder(models.Model):
         res = super().preview_sale_order()
         res.update({'target': 'new'})
         return res
+
+    def _get_invoiceable_lines(self, final=False):
+        """Remove if user allow to remove all notes for invoiceable lines"""
+        dont_send_notes_to_invoices = self.env['ir.config_parameter'].sudo().get_param('sale_ux.dont_send_notes_to_invoices', 'False') == 'True'
+        res = super()._get_invoiceable_lines(final=final)
+        if dont_send_notes_to_invoices:
+            res -= res.filtered(lambda x: x.display_type == 'line_note')
+
+        return res
