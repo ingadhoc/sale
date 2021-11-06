@@ -1,4 +1,3 @@
-[![Coverage Status](https://coveralls.io/repos/ingadhoc/sale/badge.png?branch=15.0)](https://coveralls.io/r/ingadhoc/sale?branch=15.0)
 [![Code Climate](https://codeclimate.com/github/ingadhoc/sale/badges/gpa.svg)](https://codeclimate.com/github/ingadhoc/sale)
 
 # ADHOC Sale
