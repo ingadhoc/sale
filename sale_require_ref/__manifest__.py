@@ -38,7 +38,7 @@
         'demo/exception_rule_demo.xml',
         'demo/sale_order_demo.xml',
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'application': False,
 }
