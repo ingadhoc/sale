@@ -7,7 +7,10 @@
         <field name="inherit_id" ref="account.view_partner_property_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='property_payment_term_id']" position="after">
-                <field name="credit_limit" readonly="1"/>
+                    <field name="credit_limit" attrs="{'invisible': [('is_company','=',False),('parent_id','!=',False)]}"/>
+                    <div name="parent_credit_limit" colspan="2" attrs="{'invisible': ['|',('is_company','=',True),('parent_id','=',False)]}">
+                        <p>Credit limit is managed on <button name="open_commercial_entity" type="object" string="the parent company" class="oe_link"/></p>
+                    </div>
             </xpath>
         </field>
     </record>
