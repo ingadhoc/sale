@@ -12,7 +12,7 @@ class SaleOrder(models.Model):
         self.ensure_one()
         domain = [
             ('order_id.id', '!=', self.id),
-            ('order_id.partner_id', '=', self.partner_id.id),
+            ('order_id.partner_id.commercial_partner_id', '=', self.partner_id.commercial_partner_id.id),
             # buscamos las que estan a facturar o las no ya que nos interesa
             # la cantidad total y no solo la facturada. Esta busqueda ayuda
             # a que no busquemos en todo lo que ya fue facturado al dope
@@ -44,7 +44,7 @@ class SaleOrder(models.Model):
         # We sum from all the invoices lines that are in draft and not linked
         # to a sale order
         domain = [
-            ('move_id.partner_id', '=', self.partner_id.id),
+            ('move_id.partner_id.commercial_partner_id', '=', self.partner_id.commercial_partner_id.id),
             ('move_id.type', 'in', ['out_invoice', 'out_refund']),
             ('move_id.state', '=', 'draft'),
             ('exclude_from_invoice_tab', '=', False),
@@ -63,8 +63,8 @@ class SaleOrder(models.Model):
                     taxes['total_included'], line.company_id.currency_id, line.company_id, fields.Date.today())
             draft_invoice_lines_amount += total
 
-        available_credit = self.partner_id.credit_limit - \
-            self.partner_id.credit - \
+        available_credit = self.partner_id.commercial_partner_id.credit_limit - \
+            self.partner_id.commercial_partner_id.credit - \
             to_invoice_amount - draft_invoice_lines_amount
         amount_total = self.amount_total
         if self.currency_id != self.company_id.currency_id:
