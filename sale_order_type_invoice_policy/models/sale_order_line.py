@@ -19,8 +19,7 @@ class SaleOrderLine(models.Model):
         """
         super()._get_to_invoice_qty()
         for line in self.filtered(lambda sol: sol.order_id.state in [
-            'sale', 'done'] and sol.order_id.type_id.invoice_policy !=
-                'by_product'):
+            'sale', 'done'] and sol.order_id.type_id.invoice_policy not in [False, 'by_product']):
             type_policy = line.order_id.type_id.invoice_policy
             if type_policy in ['order', 'prepaid', 'prepaid_block_delivery']:
                 line.qty_to_invoice = (
