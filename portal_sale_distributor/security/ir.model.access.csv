@@ -37,3 +37,4 @@
 "access_product_template_attribute_line","product_template_attribute_line.portal","product.model_product_template_attribute_line","group_portal_distributor",1,0,0,0
 "access_stock_putaway_rule","stock_putaway_rule.portal","stock.model_stock_putaway_rule","group_portal_distributor",1,0,0,0
 "access_account_tax_repartition_line","account_tax_repartition_line.portal","account.model_account_tax_repartition_line","group_portal_distributor",1,0,0,0
+"access_account_account_tag","account_account_tag.portal","account.model_account_account_tag","group_portal_distributor",1,0,0,0
