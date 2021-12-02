@@ -29,7 +29,7 @@
 "access_fiscal_position_distributor","account.fiscal.position.distributor","account.model_account_fiscal_position","group_portal_distributor",1,0,0,0
 "access_sale_quote_template_subcription","sale.quote.template.distributor","sale_management.model_sale_order_template","group_portal_distributor",1,0,0,0
 "access_sale_quote_line_subcription","sale.quote.line.distributor","sale_management.model_sale_order_template_line","group_portal_distributor",1,0,0,0
-"access_sale_quote_option_subcription","sale.quote.option.distributor","sale_management.model_sale_order_option","group_portal_distributor",1,0,0,0
+"access_sale_quote_option_subcription","sale.quote.option.distributor","sale_management.model_sale_order_option","group_portal_distributor",1,1,1,0
 "access_sale_order_option_subcription","sale.order.option.distributor","sale_management.model_sale_order_template_option","group_portal_distributor",1,1,1,0
 "access_template_attribute_value_portal_distributor","product_template_attribute_value.distributor","product.model_product_template_attribute_value","group_portal_distributor",1,0,0,0
 "access_product_attribute_custom_value_portal_distributor","product_attribute_custom_value.distributor","sale.model_product_attribute_custom_value","group_portal_distributor",1,0,0,0
