@@ -14,7 +14,6 @@
 Sales Timesheet UX
 ==================
 
-* Replaces the 'Overview' string with an 'Info' icon on projects kanban view.
 * When confirming a sale order with service products with Service tracking = "Create a task in sales order's project", if the SO has an analytic account that is related to ONE project, then we don't create a project but instead link the new tasks to this project.
 
 Installation
