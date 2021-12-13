@@ -11,7 +11,7 @@ from odoo.tools import float_is_zero
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    internal_notes = fields.Text('Internal Notes')
+    internal_notes = fields.Html('Internal Notes')
     pricelist_id = fields.Many2one(
         tracking=True,
     )
@@ -51,12 +51,34 @@ class SaleOrder(models.Model):
         return vals
 
     @api.onchange('pricelist_id')
-    def _onchange_pricelist(self):
+    def _onchange_pricelist_id(self):
+        super()._onchange_pricelist_id()
         update_prices_automatically = safe_eval(
             self.env['ir.config_parameter'].sudo().get_param(
                 'sale_ux.update_prices_automatically', 'False'))
-        if update_prices_automatically:
-            self.update_prices()
+        if self.order_line and update_prices_automatically:
+            # we need to user the same code as odoo in update_prices(),
+            # because the "message_post" method isn't available over an onchange trigger.
+            lines_to_update = []
+            for line in self.order_line.filtered(lambda line: not line.display_type):
+                product = line.product_id.with_context(
+                    partner=self.partner_id,
+                    quantity=line.product_uom_qty,
+                    date=self.date_order,
+                    pricelist=self.pricelist_id.id,
+                    uom=line.product_uom.id
+                )
+                price_unit = self.env['account.tax']._fix_tax_included_price_company(
+                    line._get_display_price(product), line.product_id.taxes_id, line.tax_id, line.company_id)
+                if self.pricelist_id.discount_policy == 'without_discount' and price_unit:
+                    discount = max(0, (price_unit - product.price) * 100 / price_unit)
+                else:
+                    discount = 0
+                lines_to_update.append((1, line.id, {'price_unit': price_unit, 'discount': discount}))
+            self.update({
+                'order_line': lines_to_update,
+                'show_update_pricelist': False,
+            })
 
     def action_cancel(self):
         invoices = self.mapped('invoice_ids').filtered(
@@ -84,26 +106,13 @@ class SaleOrder(models.Model):
 
     def update_prices(self):
         # for compatibility with product_pack module
-        self.ensure_one()
         pack_installed = 'pack_parent_line_id' in self.order_line._fields
-        for line in self.order_line.with_context(
-                update_prices=True, pricelist=self.pricelist_id.id).filtered(
-                lambda l: l.product_id.price
-                or (pack_installed and l.product_id.pack_ok and l.product_id.pack_component_price != 'ignored')):
-            # ponemos descuento en cero por las dudas en dos casos:
-            # 1) si estamos cambiando de lista que discrimina descuento
-            #  a lista que los incluye
-            # 2) o estamos actualizando precios
-            # (no sabemos de que lista venimos) a una lista que no discrimina
-            #  descuentos y existen listas que discriminan los
-            if hasattr(self, '_origin') and self._origin.pricelist_id.\
-                discount_policy == 'with_discount' and self.\
-                pricelist_id.discount_policy != 'with_discount' or self.\
-                    pricelist_id.discount_policy == 'with_discount'\
-                    and self.env['product.pricelist'].search(
-                        [('discount_policy', '!=', 'with_discount')], limit=1):
-                line.discount = False
-            if pack_installed:
+        if pack_installed:
+            products_pack = self.order_line.with_context(update_prices=True, pricelist=self.pricelist_id.id).filtered(
+                pack_installed and l.product_id.pack_ok and l.product_id.pack_component_price != 'ignored')
+            super(SaleOrder, self - products_pack).update_prices()
+            lines_to_update = []
+            for line in products_pack:
                 if line.pack_parent_line_id:
                     continue
                 elif line.pack_child_line_ids:
@@ -111,10 +120,8 @@ class SaleOrder(models.Model):
                         self._compute_pack_lines_prices(line)
                     else:
                         line.expand_pack_line(write=True)
-
-            line.product_uom_change()
-            line._onchange_discount()
-        return True
+        else:
+            super().update_prices()
 
     def _compute_pack_lines_prices(self, line):
         """ This method is for the case when came from an onchange and the original method
@@ -153,16 +160,11 @@ class SaleOrder(models.Model):
                     {'price_unit': price_unit, 'discount': sale_discount})
 
     def _create_invoices(self, grouped=False, final=False):
-        invoices = super()._create_invoices(
-            grouped=grouped, final=final)
-        precision = self.env['decimal.precision'].precision_get(
-            'Product Unit of Measure')
-        for inv in invoices.filtered(
+        invoices = super()._create_invoices(grouped=grouped, final=final)
+        precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
+        invoices.filtered(
             lambda i: float_is_zero(i.amount_total, precision_digits=precision) and all(
-                [line.quantity <= 0.0 for line in i.invoice_line_ids])):
-            inv.type = 'out_refund'
-            for line in inv.invoice_line_ids:
-                line.quantity = -line.quantity
+                [line.quantity <= 0.0 for line in i.invoice_line_ids])).action_switch_invoice_into_refund_credit_note()
         return invoices
 
     def preview_sale_order(self):

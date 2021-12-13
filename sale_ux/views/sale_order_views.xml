@@ -107,6 +107,9 @@
             <field name="invoice_status" position="before">
                 <field name="state"/>
             </field>
+            <field name="date_order" position="before">
+                <field name="create_date" widget="date" optional="hide"/>
+            </field>
 
             <!-- As we unify menus we make the draft more visible -->
             <tree position="attributes">
@@ -124,6 +127,9 @@
                 <filter string="Quotations" name="draft" domain="[('state','in',('draft', 'sent'))]"/>
                 <filter string="Sales Orders" name="sales" domain="[('state','in',('sale','done'))]"/>
                 <separator/>
+            </filter>
+            <filter name="order_month" position="after">
+                <filter string="Create Date" name="create_date" domain="[]" context="{'group_by': 'create_date'}"/>
             </filter>
             <filter name="to_invoice" position="after">
                 <filter name="invoiced" string="Invoiced" domain="[('invoice_status','=', 'invoiced')]"/>

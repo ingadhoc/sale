@@ -16,28 +16,27 @@ Sale UX
 
 Several Improvements to sales:
 
-#. Make subtotal included / excluded optional and not related to tax b2b/b2c
+#. Make sale quotations menu not visible.
 #. Hide sale invoicing menu (you can already filter on sales orders menu)
-#. Make button send by email also available on done state on sale orders.
-#. Make sale quotations menu only visible with technical features.
+#. Add filters in the sale order view
 #. Make sale orders menu show all sale records (quotations, and confirmed ones).
-#. Add a menu item on sales for 'sale lines' and improve views with more fields.
-#. Make that, by default, links to sale orders shows "sale" data and not only "quoatation" data.
-#. Make cancel button also visible on done state so that if "Never allow to modify a confirmed sale order" is enable, sale users can still cancel a sale order that has not been delivered or invoiced yet.
-#. Add button to force "invoiced" only for admin with tec features.
-#. Add tracking to payment term and pricelist on sale orders.
-#. Add option to show SO reference field on tree view and on main section of form view.
-#. Add filter to be able to select analytic account on sale orders with the same partner/commercial partner as the sale order.
-#. Add Commercial Partner is automatic set in the sale order taking into account the partner configuration
-#. It adds a button in sale quotations that allowes to update sale prices. It is useful if the pricelist is changed after adding sale order lines. (Only Update the prices if the product has price defined or different than zero).
+#. Make that, by default, links to sale orders shows "sale" data and not only "quotation" data.
+#. Add option in settings to show "Customer Reference" field on Sale Order tree view and in the main section of the form view.
+#. Add a menu item on Orders for "Sale Order Lines" and improve views with more fields.
+#. Make button "Send by email" also available on sale orders with done state.
+#. Make the "Cancel" button also visible sale orders with done state so that if "Lock confirmed Orders" setting is enabled, sale users can still cancel a sale order that has not been delivered or invoiced yet without having to unlock it.
+#. Fix in button "Create invoice" in sale orders, to create a refund invoice if the sale order amount it's zero and the line's quantities are negative (because of a return).
+#. Block cancellation of a sale order if there is a related invoice in a state different from "draft" or "cancel".
+#. Customer Preview" button in sale orders, opens the online quotation in a new tab.
 #. Add a wizard on sales orders that allow you to define global discounts to sale orders by percentage.
-#. Add a link from invoices to the sale orders that generate it.
-#. Add option in setting to update prices automatically.
-#. Fix the filter Sales in Sale orders to filter in states "sale" and "done".
-#. Add column "date_order" in sale order tree view.
-#. Fix in button "create invoice" in sale order, to create an refund invoice if the amount it's cero and the lines quantities are negative.
-#. Add to sale order lines action the form view, to access with the button "sales" in product template.
-#. Preview button in Sale Order now open the online quotation in a new Tab
+#. Make subtotal included/excluded optional and not related to tax b2b/b2c
+#. Add option in Sales settings to update prices automatically.
+#. Add selection field to force "Invoiced" status of a sale order, available only for admin with tec features.
+#. Add options in settings to allow any user as salesman (portal or internal)
+#. Add filter to be able to select an analytic account on sale orders with the same partner/commercial partner as the sale order.
+#. Add tracking to payment terms and pricelist on sale orders.
+#. Add a link from Invoices to the Sale Order that generated it.
+#. Add the field "Internal Notes" in the sales order form and the setting to allow propagating the "Internal Notes" to invoices.
 
 Installation
 ============
