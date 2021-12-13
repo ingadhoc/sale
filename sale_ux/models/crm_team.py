@@ -2,8 +2,10 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from . import sale_order
-from . import sale_order_line
-from . import account_move
-from . import analytic_account
-from . import crm_team
+from odoo import models, fields
+
+
+class CrmTeam(models.Model):
+    _inherit = 'crm.team'
+
+    member_ids = fields.Many2many(domain="[]")

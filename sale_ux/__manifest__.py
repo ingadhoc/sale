@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale UX',
-    'version': "13.0.1.10.0",
+    'version': "15.0.1.0.0",
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -38,15 +38,17 @@
         'wizards/sale_global_discount_wizard_views.xml',
         'wizards/sale_advance_payment_inv_views.xml',
         'security/sale_ux_security.xml',
+        'security/ir.model.access.csv',
         'views/sale_order_views.xml',
         'views/sale_order_line_views.xml',
         'views/account_move_views.xml',
+        'views/crm_team_views.xml',
         'views/sale_reports.xml',
         'data/ir_config_parameter_data.xml',
     ],
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
