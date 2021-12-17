@@ -164,8 +164,8 @@ msgstr "Albarán de devolución"
 
 #. module: sale_stock_ux
 #: model:ir.model.fields,field_description:sale_stock_ux.field_sale_order_line__quantity_returned
-msgid "Returned"
-msgstr "Returned"
+msgid "Returned Quantity"
+msgstr "Cantidad devuelta"
 
 #. module: sale_stock_ux
 #: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_order_form
