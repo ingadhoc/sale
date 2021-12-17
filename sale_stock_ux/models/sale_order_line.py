@@ -18,7 +18,7 @@ class SaleOrderLine(models.Model):
     )
 
     quantity_returned = fields.Float(
-        string='Quantity Returned',
+        string='Returned Quantity',
         compute='_compute_quantity_returned',
         copy=False,
         digits='Product Unit of Measure',
