@@ -91,8 +91,8 @@ class SaleOrderLine(models.Model):
                     (100.0 - discount) / 100.0)
             rec.discount = 100.0 - (discount_factor * 100.0)
 
-    def _prepare_invoice_line(self):
-        res = super()._prepare_invoice_line()
+    def _prepare_invoice_line(self, **optional_values):
+        res = super()._prepare_invoice_line(**optional_values)
         res.update({
             'discount1': self.discount1,
             'discount2': self.discount2,
