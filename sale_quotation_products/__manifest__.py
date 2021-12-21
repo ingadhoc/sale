@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Quotation Products',
-    'version': "13.0.1.1.0",
+    'version': "15.0.1.0.0",
     'category': 'Sales Management',
     'sequence': 14,
     'summary': '',
@@ -29,14 +29,14 @@
     'images': [
     ],
     'depends': [
-        'sale',
+        'sale_management',
     ],
     'data': [
         'views/sale_order_views.xml',
     ],
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
