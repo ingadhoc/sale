@@ -4,4 +4,4 @@
 ##############################################################################
 from . import sale_order
 from . import mail_thread
-from . import product_template
+from . import ir_action_act_window
