@@ -11,10 +11,14 @@ class ActWindowView(models.Model):
 
     def read(self, fields=None, load='_classic_read'):
         result = super().read(fields, load=load)
-        if result and result[0].get('context'):
-            ctx = safe_eval(result[0].get('context', '{}'))
-            if ctx.get('portal_products'):
+        for value in result:
+            if value.get('context') and 'portal_products' in value.get('context'):
+                eval_ctx = dict(self.env.context)
+                try:
+                    ctx = safe_eval(value.get('context', '{}'), eval_ctx)
+                except:
+                    ctx = {}
                 pricelist = self.env.user.partner_id.property_product_pricelist
-                ctx.update({'pricelist': pricelist.id, 'partner': self.env.user.partner_id})
-                result[0].update({'context': ctx})
+                ctx.update({'pricelist': pricelist.id, 'partner': self.env.user.partner_id.id})
+                value.update({'context': str(ctx)})
         return result
