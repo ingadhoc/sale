@@ -39,3 +39,4 @@
 "access_account_tax_repartition_line","account_tax_repartition_line.portal","account.model_account_tax_repartition_line","group_portal_distributor",1,0,0,0
 "access_account_account_tag","account_account_tag.portal","account.model_account_account_tag","group_portal_distributor",1,0,0,0
 "access_stock_production_lot","stock_production_lot.portal","stock.model_stock_production_lot","group_portal_distributor",1,0,0,0
+"access_product_supplierinfo",product.supplierinfo.portal,product.model_product_supplierinfo,"group_portal_distributor",1,0,0,0
