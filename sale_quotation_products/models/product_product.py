@@ -24,6 +24,12 @@ class ProductProduct(models.Model):
         # pasando qty = 0 y queremos que igal entre
         if self._context.get('sale_quotation_products') and \
                 len(vals) == 1 and 'qty' in vals:
+            # hacemos esto para mostrar en el precio del pack detallado
+            #  al elegirlo en la vista tree y que no lleve el precio al producto padre
+            if self._context.get('whole_pack_price', False):
+                context = self._context.copy()
+                context.pop('whole_pack_price', None)
+                self = self.with_context(context)
             # en vez de hacerlo con sudo lo hacemos asi para que se guarde
             # bien el usuario creador y ademas porque SUPERADMIN podria no
             # tener el permiso de editar productos
