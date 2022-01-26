@@ -17,7 +17,9 @@ class SaleOrder(models.Model):
             action_read = actions.read()[0]
             context = safe_eval(action_read['context'])
             context.update(dict(
+                # we send by context to show the price of product pack detailed for component if exist
                 sale_quotation_products=True,
+                whole_pack_price=True,
                 pricelist=self.pricelist_id.display_name,
                 # we send company in context so it filters taxes
                 company_id=self.company_id.id,
