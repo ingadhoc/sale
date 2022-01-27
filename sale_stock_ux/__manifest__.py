@@ -41,6 +41,9 @@
         'views/stock_move_views.xml',
         'wizards/stock_return_picking_views.xml',
     ],
+    'qweb': [
+        'static/src/xml/reserved_quantity.xml',
+    ],
     'demo': [
     ],
     'installable': True,
