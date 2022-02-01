@@ -5,10 +5,8 @@ class Lead(models.Model):
     _inherit = 'crm.lead'
 
     stage_id = fields.Many2one(
-        'crm.stage', string='Stage', ondelete='restrict',
-        track_visibility='onchange', index=True, copy=False,
         domain="['|', ('team_ids', '=', False), ('team_ids', '=', team_id)]",
-        group_expand='_read_group_stage_ids', default=lambda self: self._default_stage_id())
+        group_expand='_read_group_stage_ids')
 
     def _read_group_stage_ids(self, stages, domain, order):
         team_id = self._context.get('default_team_id')

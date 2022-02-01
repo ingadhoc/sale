@@ -1,8 +1,8 @@
 # © 2016 ADHOC SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
-    'name': 'CRM Stage Teams',
-    'version': '13.0.1.0.0',
+    'name': 'CRM Teams UX',
+    'version': "15.0.1.1.0",
     'sequence': 14,
     'summary': '',
     'author': 'ADHOC SA',
@@ -12,6 +12,7 @@
     ],
     'depends': [
         'crm',
+        'sale_ux',
     ],
     'data': [
         'views/crm_stage_views.xml',
@@ -19,7 +20,7 @@
     ],
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
