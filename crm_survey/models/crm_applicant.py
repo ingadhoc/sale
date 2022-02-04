@@ -18,9 +18,7 @@ class Applicant(models.Model):
         if not self.response_id:
             # use link as type in order to avoid deletion of records
             # that they wasn't started yet made by 'do_clean_emptys' method
-            response = self.env['survey.user_input'].with_context(default_type="link").create(
-                {'survey_id': self.survey_id.id,
-                 'partner_id': self.partner_id.id})
+            response = self.survey_id.with_context(default_input_type="link")._create_answer(partner=self.partner_id)
             self.response_id = response.id
         else:
             response = self.response_id
