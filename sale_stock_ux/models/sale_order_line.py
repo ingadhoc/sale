@@ -42,8 +42,8 @@ class SaleOrderLine(models.Model):
     def _compute_total_reserved_quantity(self):
         for line in self:
             loc_id = line.order_id.warehouse_id.lot_stock_id.id
-            stock_quant = line.product_id.stock_quant_ids.filtered(lambda x: x.location_id.id == loc_id)
-            line.total_reserved_quantity = stock_quant.reserved_quantity
+            stock_quants = line.product_id.stock_quant_ids.filtered(lambda x: x.location_id.id == loc_id)
+            line.total_reserved_quantity = sum(stock_quants.mapped('reserved_quantity'))
 
     @api.depends('qty_delivered', 'quantity_returned')
     def _compute_all_qty_delivered(self):
