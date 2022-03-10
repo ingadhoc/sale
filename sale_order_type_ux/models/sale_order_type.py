@@ -42,3 +42,7 @@ class SaleOrderTypology(models.Model):
         check_company=True,
         help='If you choose a fiscal position then this fiscal positioon would be used as default instead of the '
         'automatically detected or setted on the partner')
+
+    journal_id = fields.Many2one(
+        domain="[('type', '=', 'sale')]",
+        check_company=False)
