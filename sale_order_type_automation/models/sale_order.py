@@ -123,6 +123,6 @@ class SaleOrder(models.Model):
 
     def _prepare_invoice(self):
         res = super()._prepare_invoice()
-        if self.type_id.payment_atomation and self.type_id.payment_journal_id:
+        if (self.type_id.payment_atomation != 'none') and self.type_id.payment_journal_id:
             res['pay_now_journal_id'] = self.type_id.payment_journal_id.id
         return res
