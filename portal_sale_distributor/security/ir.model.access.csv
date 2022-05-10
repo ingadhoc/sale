@@ -9,8 +9,8 @@
 "access_procurement_group","procurement.group.portal.distributor","sale_stock.model_procurement_group","group_portal_distributor",1,1,1,0
 "access_stock_move","stock.stock.move.portal.distributor","stock.model_stock_move","group_portal_distributor",1,1,0,0
 "access_stock_picking","stock.stock.picking.portal.distributor","stock.model_stock_picking","group_portal_distributor",1,1,1,0
-"access_product_product","product.product.portal.distributor","product.model_product_product","group_portal_distributor",1,1,1,0
-"access_product_template","product.template.portal.distributor","product.model_product_template","group_portal_distributor",1,1,1,0
+"access_product_product","product.product.portal.distributor","product.model_product_product","group_portal_distributor",1,0,0,0
+"access_product_template","product.template.portal.distributor","product.model_product_template","group_portal_distributor",1,0,0,0
 "access_product_category","product.category.portal.distributor","product.model_product_category","group_portal_distributor",1,1,0,0
 "access_product_uom","product.uom.portal.distributor","uom.model_uom_uom","group_portal_distributor",1,1,0,0
 "access_product_pricelist_item","product.pricelist.item.portal.distributor","product.model_product_pricelist_item","group_portal_distributor",1,1,0,0
