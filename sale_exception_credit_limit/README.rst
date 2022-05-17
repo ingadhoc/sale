@@ -22,6 +22,7 @@ Sale Exception Credit Limit
 * The invoices in draft state.
 * The amount of the Sale Order to be aproved and compares it with the credit limit of the partner. If the credit limit is below this, then it is not to approve the Sale Order.
 
+#. A credit limit equal to zero means that the partner has not credit limit. The precision of comparison depends on currency decimal places.
 
 Installation
 ============
