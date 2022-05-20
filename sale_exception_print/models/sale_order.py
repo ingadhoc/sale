@@ -13,12 +13,6 @@ class SaleOrder(models.Model):
         copy=False,
     )
 
-    def print_quotation(self):
-        if self.detect_print_exceptions():
-            return self.with_context(print_exceptions=True)._popup_exceptions()
-        else:
-            return super().print_quotation()
-
     def action_quotation_send(self):
         self.ensure_one()
         if self.detect_print_exceptions():
