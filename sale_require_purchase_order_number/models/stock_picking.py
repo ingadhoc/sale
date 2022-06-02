@@ -36,7 +36,7 @@ class StockPicking(models.Model):
         for rec in self:
             rec.manual_purchase_order_number = rec.purchase_order_number
 
-    def action_done(self):
+    def _action_done(self):
         picking_missing_po_number = self.filtered(
             lambda pick: pick.require_purchase_order_number
             and pick.picking_type_code
@@ -45,4 +45,4 @@ class StockPicking(models.Model):
             raise UserError(_(
                 'You cannot transfer products without a Purchase'
                 ' Order Number for this partner'))
-        return super().action_done()
+        return super()._action_done()
