@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale UX',
-    'version': "15.0.1.0.0",
+    'version': "15.0.1.1.0",
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -44,6 +44,7 @@
         'views/account_move_views.xml',
         'views/crm_team_views.xml',
         'views/sale_reports.xml',
+        'views/res_partner_view.xml',
         'data/ir_config_parameter_data.xml',
     ],
     'demo': [
