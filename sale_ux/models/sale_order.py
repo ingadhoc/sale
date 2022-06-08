@@ -159,8 +159,8 @@ class SaleOrder(models.Model):
                     lambda x: x.product_id.id == subline.product_id.id).update(
                     {'price_unit': price_unit, 'discount': sale_discount})
 
-    def _create_invoices(self, grouped=False, final=False):
-        invoices = super()._create_invoices(grouped=grouped, final=final)
+    def _create_invoices(self, grouped=False, final=False, date=None):
+        invoices = super()._create_invoices(grouped=grouped, final=final, date=date)
         precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
         invoices.filtered(
             lambda i: float_is_zero(i.amount_total, precision_digits=precision) and all(
