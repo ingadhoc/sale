@@ -234,10 +234,10 @@ msgstr "A entregar"
 #: code:addons/sale_stock_ux/models/sale_order.py:0
 #, python-format
 msgid ""
-"Unable to cancel sale order %s as some receptions have already been done."
+"Unable to cancel sale order %s as some deliveries have already been done."
 msgstr ""
 "No se puede cancelar la orden de venta %s ya que se han hecho algunas "
-"recepciones."
+"entregas."
 
 #. module: sale_stock_ux
 #: model:ir.model.fields,field_description:sale_stock_ux.field_sale_order__with_returns
