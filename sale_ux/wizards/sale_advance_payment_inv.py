@@ -68,5 +68,5 @@ class SaleAdvancePaymentInvWizard(models.TransientModel):
         if propagate_internal_notes:
             invoice.sudo().internal_notes = order.internal_notes
         if not propagate_note:
-            invoice.sudo().comment = False
+            invoice.sudo().narration = False
         return invoice
