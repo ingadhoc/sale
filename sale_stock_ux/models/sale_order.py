@@ -43,7 +43,7 @@ class SaleOrder(models.Model):
         for order in self.filtered(lambda order: order.picking_ids.filtered(
                 lambda x: x.state == 'done')):
             raise UserError(_(
-                'Unable to cancel sale order %s as some receptions'
+                'Unable to cancel sale order %s as some deliveries'
                 ' have already been done.') % (order.name))
         return super().action_cancel()
 

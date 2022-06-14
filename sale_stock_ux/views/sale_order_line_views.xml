@@ -22,6 +22,9 @@
             <field name="product_uom_qty" position="after">
                 <field name="qty_delivered"/>
             </field>
+            <field name="qty_invoiced" position="after">
+                <field name="qty_to_deliver" optional="hide"/>
+            </field>
         </field>
     </record>
 

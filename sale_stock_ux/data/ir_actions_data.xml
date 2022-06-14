@@ -8,7 +8,7 @@
         <field name="state">code</field>
         <field name="code">
 action = {
-    'type': 'ir.actions.act_window.message',
+    'type': 'ir.actions.client',
     'title': 'Mass cancellation of remaining quantities',
     'close_button_title': False,
     'message': 'Do you want to cancel remaining quantities for this orders? This can´t be undone',
