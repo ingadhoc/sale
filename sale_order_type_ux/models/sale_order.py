@@ -9,7 +9,7 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     type_id = fields.Many2one(
-        track_visibility='onchange',
+        tracking=True,
         readonly=True,
         states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
     )
