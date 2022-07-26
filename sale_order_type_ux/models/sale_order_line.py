@@ -14,21 +14,21 @@ class SaleOrderLine(models.Model):
             self.analytic_tag_ids = self.order_id.type_id.analytic_tag_ids
         return super().product_id_change()
 
-    def _prepare_invoice_line(self):
+    def _prepare_invoice_line(self, **optional_values):
         """
         Forzamos compania de diario de sale type
         """
         if not self.order_id.type_id.journal_id:
             return super()._prepare_invoice_line()
         company = self.order_id.type_id.journal_id.company_id
-        self = self.with_context(force_company=company.id)
+        self = self.with_company(company.id)
         res = super()._prepare_invoice_line()
 
         if company != self.company_id:
             # Because we not have the access to the invoice, we obtain the fiscal position who
             # has the invoice really
-            fpos_id = self.env['account.fiscal.position'].with_context(
-                force_company=company.id).get_fiscal_position(
+            fpos_id = self.env['account.fiscal.position'].with_company(
+                company.id).get_fiscal_position(
                 self.order_id.partner_id.id,
                 self.order_id.partner_shipping_id.id)
             fpos = self.env['account.fiscal.position'].browse(fpos_id)
