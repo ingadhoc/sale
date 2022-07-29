@@ -15,7 +15,7 @@ class SaleOrder(models.Model):
 
     validity_date = fields.Date(
         help="Date until when quotation is valid",
-        track_visibility='onchange',
+        tracking=True,
         states={},
     )
 
