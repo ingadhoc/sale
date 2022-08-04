@@ -13,8 +13,16 @@
             <field name="date_order" position="after">
                 <field name="validity_days"/>
             </field>
-            <field name="order_line" position="before">
-                <button name="update_date_prices_and_validity" help="Update Date, Prices and Validity" string="Update Validity" type="object" attrs="{'invisible':[('state','not in',['draft','sent'])]}"/>
+            <field name="validity_date" position="replace">
+                <label for="validity_date"/>
+                <div class="o_row">
+                    <field name="validity_date" attrs="{'invisible': [('state', 'in', ['sale', 'done'])]}"/>
+                    <button name="update_date_prices_and_validity" type="object"
+                    string="Update Validity"
+                    help="Update Date, Prices and Validity"
+                    class="btn-link mb-1 px-0" icon="fa-refresh"
+                    attrs="{'invisible':[('state','not in',['draft','sent'])]}"/>
+                </div>
             </field>
         </field>
     </record>
