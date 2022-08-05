@@ -79,8 +79,8 @@ class SaleOrderType(models.Model):
         domain="[('type','in', ['cash', 'bank']), "
         "('company_id', '=', invoice_company_id), "
         # "('company_id', '=', company_id), "
-        "('inbound_payment_method_ids.code', '=', 'manual')]",
-        help='Jouranl used only with payment_automation. As manual payment '
+        "('inbound_payment_method_line_ids.code', '=', 'manual')]",
+        help='Journal used only with payment_automation. As manual payment '
         'method is used, only journals with manual method are shown.'
     )
     book_id = fields.Many2one(
