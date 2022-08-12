@@ -10,8 +10,5 @@ class SaleOrder(models.Model):
 
     def update_prices(self):
         super().update_prices()
-        for line in self.order_line:
-            purchase_price = line._compute_margin(
-                self, line.product_id, line.product_uom)
-            line.purchase_price = purchase_price
+        self.order_line._compute_purchase_price()
         return True
