@@ -13,7 +13,7 @@ class PortalDistributorAccount(PortalAccount):
 
     def _get_account_invoice_domain(self):
         partner = request.env.user.partner_id
-        domain = [('type', 'in', ['out_invoice', 'out_refund']),
+        domain = [('move_type', 'in', ['out_invoice', 'out_refund']),
                   ('message_partner_ids', 'child_of',
                    [partner.commercial_partner_id.id]),
                   ('state', 'in', ['posted', 'cancel'])]
@@ -30,7 +30,7 @@ class PortalDistributorAccount(PortalAccount):
         searchbar_filters = {
             'all': {'label': _('All'), 'domain': []},
             'open': {'label': _('Open'),
-                     'domain': [('state', '=', 'posted'), ('invoice_payment_state', '=', 'not_paid')]},
+                     'domain': [('state', '=', 'posted'), ('payment_state', '=', 'not_paid')]},
         }
 
         searchbar_sortings = {
