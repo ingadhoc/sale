@@ -16,7 +16,7 @@ class SaleOrder(models.Model):
     def action_confirm_distributor(self):
         self.sudo().message_post(
             body=_("Pedido confirmado por %s") % self.env.user.name,
-            subtype='mt_comment')
+            subtype_id=self.env.ref('mail.mt_comment').id)
         self = self.sudo()
         return self.action_confirm()
 

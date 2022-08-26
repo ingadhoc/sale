@@ -10,6 +10,7 @@
 "access_stock_move","stock.stock.move.portal.distributor","stock.model_stock_move","group_portal_distributor",1,1,0,0
 "access_stock_picking","stock.stock.picking.portal.distributor","stock.model_stock_picking","group_portal_distributor",1,1,1,0
 "access_product_product","product.product.portal.distributor","product.model_product_product","group_portal_distributor",1,0,0,0
+"access_product_packaging","product.packaging.portal.distributor","product.model_product_packaging","group_portal_distributor",1,0,0,0
 "access_product_template","product.template.portal.distributor","product.model_product_template","group_portal_distributor",1,0,0,0
 "access_product_category","product.category.portal.distributor","product.model_product_category","group_portal_distributor",1,1,0,0
 "access_product_uom","product.uom.portal.distributor","uom.model_uom_uom","group_portal_distributor",1,1,0,0
@@ -23,7 +24,8 @@
 "access_tax_group_distributor","tax.group.portal_distributor","account.model_account_tax_group","group_portal_distributor",1,0,0,0
 "access_stock_picking_type_portal_distributor","stock.picking.type portal","stock.model_stock_picking_type","group_portal_distributor",1,0,0,0
 "ir_translation_portal_distributor","ir_translation portal distributor (para duplicar OV)","base.model_ir_translation","group_portal_distributor",1,0,0,0
-"access_crm_portal_distributor","crm.portal.ditributor","sale.model_crm_team","group_portal_distributor",1,0,0,0
+"access_crm_portal_distributor","crm.portal.ditributor","sales_team.model_crm_team","group_portal_distributor",1,0,0,0
+"access_crm_member_portal_distributor","crm.member.portal.ditributor","sales_team.model_crm_team_member","group_portal_distributor",1,0,0,0
 "access_product_pricelist","product.pricelist.portal.distributor","product.model_product_pricelist","group_portal_distributor",1,1,0,0
 "access_tax_portal_distributor","account.tax.distributor","account.model_account_tax","group_portal_distributor",1,0,0,0
 "access_fiscal_position_distributor","account.fiscal.position.distributor","account.model_account_fiscal_position","group_portal_distributor",1,0,0,0

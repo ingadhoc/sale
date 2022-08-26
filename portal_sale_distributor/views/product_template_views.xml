@@ -39,9 +39,6 @@
         <field name="inherit_id" ref="product.product_template_tree_view"/>
         <field name="groups_id" eval="[(4, ref('group_portal_distributor'))]"/>
         <field name="arch" type="xml">
-            <field name="sequence" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </field>
             <field name="list_price" position="attributes">
                 <attribute name="invisible">1</attribute>
             </field>
