@@ -43,8 +43,8 @@ class StockPicking(models.Model):
         precision = self.env['decimal.precision'].precision_get(
             'Product Unit of Measure')
         invoice_status = self.sale_id.mapped(
-            'order_line.invoice_lines.move_id').filtered(lambda x: x.type == 'out_invoice').mapped('invoice_payment_state')
-        if (set(invoice_status) - set(['paid'])) or any(
+            'order_line.invoice_lines.move_id').filtered(lambda x: x.move_type == 'out_invoice').mapped('payment_state')
+        if (set(invoice_status) - set(['paid', 'in_payment'])) or any(
                 not float_is_zero(line.qty_to_invoice, precision_digits=precision)
                 for line in self.sale_id.order_line):
             return False
