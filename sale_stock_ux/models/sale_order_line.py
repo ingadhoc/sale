@@ -42,7 +42,7 @@ class SaleOrderLine(models.Model):
     def _compute_total_reserved_quantity(self):
         for line in self:
             loc_id = line.order_id.warehouse_id.lot_stock_id.id
-            stock_quants = line.product_id.stock_quant_ids.filtered(lambda x: x.location_id.id == loc_id)
+            stock_quants = self.env['stock.quant'].search([('product_id', '=', line.product_id.id), ('location_id', 'child_of', loc_id)])
             line.total_reserved_quantity = sum(stock_quants.mapped('reserved_quantity'))
 
     @api.depends('qty_delivered', 'quantity_returned')
