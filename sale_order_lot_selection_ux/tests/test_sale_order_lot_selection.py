@@ -73,7 +73,7 @@ class TestSaleOrderLotSelection(test_common.SingleTransactionCase):
         })
         picking_out.action_confirm()
         picking_out.action_assign()
-        picking_out.action_done()
+        picking_out._action_done()
 
         self.product_57.write({'tracking': 'lot', 'type': 'product'})
         self.product_46.write({'tracking': 'lot', 'type': 'product'})
@@ -152,7 +152,7 @@ class TestSaleOrderLotSelection(test_common.SingleTransactionCase):
                     'lot_id': lot12.id,
                     'qty_done': ops.product_qty
                 })
-        picking_in.action_done()
+        picking_in._action_done()
 
         # check quantities
         lot10_qty_available = self._stock_quantity(
