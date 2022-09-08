@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Barcode',
-    'version': '13.0.1.0.0',
+    'version': "15.0.1.0.0",
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -33,13 +33,17 @@
         'barcodes',
     ],
     'data': [
-        'views/assets.xml',
         'views/sale_order_view.xml',
         'wizards/res_config_settings_view.xml',
     ],
+    'assets':{
+        'web.assets_backend': [
+            'sale_barcode/static/src/js/sale_barcode_handler.js',
+        ],
+    },
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
