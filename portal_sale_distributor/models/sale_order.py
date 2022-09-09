@@ -21,11 +21,11 @@ class SaleOrder(models.Model):
         return self.action_confirm()
 
     @api.onchange('partner_id')
-    def onchange_partner_id_warning(self):
+    def _onchange_partner_id_warning(self):
         """ desactivamos warning para portal distributor
         """
         if self.env.user.has_group(
                 'portal_sale_distributor.group_portal_distributor'):
             return {}
         else:
-            return super().onchange_partner_id_warning()
+            return super()._onchange_partner_id_warning()
