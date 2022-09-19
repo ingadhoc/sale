@@ -104,15 +104,19 @@ class SaleOrder(models.Model):
         # 'draft' or 'sent'
         return super()._get_forbidden_state_confirm() | set({'sale'})
 
+    def _get_update_prices_lines(self):
+        lines = super()._get_update_prices_lines()
+        lines_to_not_update_ids = self._context.get('lines_to_not_update_ids', [])
+        return lines.filtered(lambda l: l.id not in lines_to_not_update_ids)
+
     def update_prices(self):
         # for compatibility with product_pack module
         pack_installed = 'pack_parent_line_id' in self.order_line._fields
         if pack_installed:
-            products_pack = self.order_line.with_context(update_prices=True, pricelist=self.pricelist_id.id).filtered(
-                pack_installed and l.product_id.pack_ok and l.product_id.pack_component_price != 'ignored')
-            super(SaleOrder, self - products_pack).update_prices()
-            lines_to_update = []
-            for line in products_pack:
+            pack_lines = self.order_line.with_context(update_prices=True, pricelist=self.pricelist_id.id).filtered(
+                lambda l: l.product_id.pack_ok and l.product_id.pack_component_price != 'ignored')
+            super(SaleOrder, self.with_context(lines_to_not_update_ids=pack_lines.ids)).update_prices()
+            for line in pack_lines:
                 if line.pack_parent_line_id:
                     continue
                 elif line.pack_child_line_ids:
