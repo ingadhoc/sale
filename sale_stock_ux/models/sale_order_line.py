@@ -87,7 +87,7 @@ class SaleOrderLine(models.Model):
         for rec in self.filtered('product_id'):
             if bom_enable:
                 bom = self.env['mrp.bom']._bom_find(
-                    product=rec.product_id)
+                    products=rec.product_id)[rec.product_id]
                 if bom and bom.type == 'phantom':
                     raise UserError(_(
                         "Cancel remaining can't be called for Kit Products "
@@ -172,9 +172,9 @@ class SaleOrderLine(models.Model):
                     if not boms and any([m._is_dropshipped()
                                          for m in return_moves]):
                         boms = boms._bom_find(
-                            product=order_line.product_id,
+                            products=order_line.product_id,
                             company_id=order_line.company_id.id,
-                            bom_type='phantom')
+                            bom_type='phantom')[order_line.product_id]
                         dropship = True
                     # We fetch the BoMs of type kits linked to the order_line,
                     # the we keep only the one related to the finished produst.
