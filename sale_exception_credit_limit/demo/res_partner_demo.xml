@@ -10,17 +10,17 @@
 
     <!-- agrolait -->
     <record id="base.res_partner_2" model="res.partner">
-        <field name="credit_limit" eval="60000.00"/>
+        <field name="credit_limit" eval="600000.00"/>
     </record>
 
     <!-- China Export -->
     <record id="base.res_partner_3" model="res.partner">
-        <field name="credit_limit" eval="60000.00"/>
+        <field name="credit_limit" eval="600000.00"/>
     </record>
 
     <!-- Delta PC -->
     <record id="base.res_partner_4" model="res.partner">
-        <field name="credit_limit" eval="60000.00"/>
+        <field name="credit_limit" eval="600000.00"/>
     </record>
 
     <!-- Think Big Systems -->
