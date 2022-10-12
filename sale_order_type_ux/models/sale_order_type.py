@@ -26,11 +26,8 @@ class SaleOrderTypology(models.Model):
     )
 
     analytic_account_id = fields.Many2one(
-        'account.analytic.account',
         copy=False,
-        check_company=True,
         domain="['|' , ('company_id', '=', False), ('company_id', '=', company_id)]",
-        help="Default analytic account that will be used on new sale order"
         )
 
     active = fields.Boolean(
