@@ -27,11 +27,10 @@ class SaleOrderLine(models.Model):
         if company != self.company_id:
             # Because we not have the access to the invoice, we obtain the fiscal position who
             # has the invoice really
-            fpos_id = self.env['account.fiscal.position'].with_company(
+            fpos = self.env['account.fiscal.position'].with_company(
                 company.id).get_fiscal_position(
                 self.order_id.partner_id.id,
                 self.order_id.partner_shipping_id.id)
-            fpos = self.env['account.fiscal.position'].browse(fpos_id)
             taxes = self.product_id.taxes_id.filtered(
                 lambda r: company == r.company_id)
             taxes = fpos.map_tax(taxes) if fpos else taxes
