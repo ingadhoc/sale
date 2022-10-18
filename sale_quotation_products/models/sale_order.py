@@ -14,7 +14,7 @@ class SaleOrder(models.Model):
         action_read = False
         actions = self.env.ref('product.product_normal_action_sell')
         if actions:
-            action_read = actions.read()[0]
+            action_read = actions.sudo().read()[0]
             context = safe_eval(action_read['context'])
             context.update(dict(
                 # we send by context to show the price of product pack detailed for component if exist
