@@ -20,7 +20,7 @@ a) Odoo, mediante distintos mecanismos, puede modificar la sale line vinculada a
    1. billiable de proyecto
    2. empleado
    3. la linea de venta en tarea, ticket o proyecto asociados al parte de horas. Estos a su vez cambian si:
-      3.1 en ticekts, si cambia: commercial partner, team_id.use_helpdesk_sale_timesheet, project_id.pricing_type o project_id.sale_line_id
+      3.1 en tickets, si cambia: commercial partner, team_id.use_helpdesk_sale_timesheet, project_id.pricing_type o project_id.sale_line_id
       3.2 en tareas: commercial_partner_id', 'sale_line_id.order_partner_id.commercial_partner_id', 'parent_id.sale_line_id', 'project_id.sale_line_id
       3.3 en proyectos: si cambai el partner
    4. Cuando se modifica manualmente la so_line de un parte de horas, mediante javascript, odoo marca el campo is_so_line_edited y a partir de ahí queda protegida
@@ -29,6 +29,7 @@ b) el tema de la protección de a4 no protege en dos casos:
    2. para el resto de los casos la protección va bien pero solo se protege cuando la linea se edita manualmente, por lo cual, para partes de horas creados y donde se deja el valor por defecto la protección NO funciona
 c) por todo lo anterior implementamos en este modulo dos mejoras:
    1. Con solo instalar este modulo mejoramos que si se desmarca en un proyecto el allow_billable SOLO se limpien la lineas que no estan editadas manualmente porque ese dato no se recupera
+   2. Agregamos un settings en partes de horas para que el usuario pueda decidir proteger la actualización automática de la linea de venta asociada a un parte de horas
 
 Installation
 ============
