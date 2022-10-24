@@ -11,7 +11,7 @@ class SaleOrder(models.Model):
 
     def add_products_to_quotation(self):
         self.ensure_one()
-        action_read = self.env["ir.actions.actions"]._for_xml_id('product.product_normal_action_sell')
+        action_read = self.env["ir.actions.act_window"]._for_xml_id('product.product_normal_action_sell')
         context = safe_eval(action_read['context'])
         context.update(dict(
             # we send by context to show the price of product pack detailed for component if exist
