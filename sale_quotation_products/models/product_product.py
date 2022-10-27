@@ -96,28 +96,36 @@ class ProductProduct(models.Model):
             rec.qty += qty
 
     @api.model
-    def fields_view_get(self, view_id=None, view_type='form',
-                        toolbar=False, submenu=False):
+    def _get_view_cache_key(self, view_id=None, view_type='form', **options):
+        """The override of _get_view changing the sale_quotation_products
+        makes the view cache dependent on sale_quotation_products"""
+        key = super()._get_view_cache_key(view_id, view_type, **options)
+        if self._context.get('sale_quotation_products', False):
+            key+= ('sale_quotation_products',)
+        return key
+
+
+
+    @api.model
+    def _get_view(self, view_id=None, view_type='form', **options):
         """
         If we came from sale order, we send in context 'force_product_edit'
         and we change tree view to make editable and also field qty
         """
-        res = super().fields_view_get(
-            view_id=view_id, view_type=view_type,
-            toolbar=toolbar, submenu=submenu)
+        arch, view = super()._get_view(view_id, view_type, **options)
         sale_quotation_products = self._context.get('sale_quotation_products')
         if sale_quotation_products and view_type == 'tree':
-            doc = etree.XML(res['arch'])
-
             # make all fields not editable
-            for node in doc.xpath("//field"):
+            for node in arch.xpath("//field[@name]"):
+                if not node.get("modifiers"):
+                    continue
                 node.set('readonly', '1')
                 modifiers = json.loads(node.get("modifiers"))
                 modifiers['readonly'] = True
                 node.set("modifiers", json.dumps(modifiers))
 
             # add qty field
-            placeholder = doc.xpath("//field[1]")[0]
+            placeholder = arch.xpath("//field[1]")[0]
             placeholder.addprevious(
                 etree.Element('field', {
                     'name': 'qty',
@@ -131,25 +139,23 @@ class ProductProduct(models.Model):
                     'name': 'action_product_add_one',
                     'type': 'object',
                     'icon': 'fa-plus',
-                    'string': _('Add one'),
+                    'title': _('Add one'),
                 }))
-            res['fields'].update(self.fields_get(['qty']))
-
+         
             # add button tu open form
-            placeholder = doc.xpath("//tree")[0]
+            placeholder = arch.xpath("//tree")[0]
             placeholder.append(
                 etree.Element('button', {
                     'name': 'action_product_form',
                     'type': 'object',
                     'icon': 'fa-external-link',
-                    'string': _('Open Product Form View'),
+                    'title': _('Open Product Form View'),
                     'groups': 'base.group_user',
                 }))
 
             # make tree view editable
-            for node in doc.xpath("/tree"):
+            for node in arch.xpath("/tree"):
                 node.set('edit', 'true')
                 node.set('create', 'false')
                 node.set('editable', 'top')
-            res['arch'] = etree.tostring(doc)
-        return res
+        return arch, view

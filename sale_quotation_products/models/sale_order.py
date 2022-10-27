@@ -32,7 +32,6 @@ class SaleOrder(models.Model):
             context=context,
             name=_('Quotation Products'),
         )
-        action_read['context'] = context
         return action_read
 
     def add_products(self, product_ids, qty):
@@ -44,14 +43,9 @@ class SaleOrder(models.Model):
             sequence = last_sol and last_sol.sequence + 1 or 10
             vals = {
                 'order_id': self.id,
+                'product_uom_qty': qty, 
                 'product_id': product.id or False,
                 'sequence': sequence,
                 'company_id': self.company_id.id,
             }
-            sol = sol.new(vals)
-            sol.product_id_change()
-            sol.product_uom_qty = qty
-            sol.product_uom_change()
-            sol._onchange_discount()
-            vals = sol._convert_to_write(sol._cache)
             sol.create(vals)
