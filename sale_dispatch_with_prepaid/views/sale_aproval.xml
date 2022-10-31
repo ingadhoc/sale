@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+  <record id="view_order_form_aproval" model="ir.ui.view">
+    <field name="name">picking aproval</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_order_form"/>
+    <field name="arch" type="xml">
+       <field name='payment_term_id' position="after">
+            <field name="approve_picking" readonly="True"/>
+       </field>
+    </field>
+  </record>
+
+  <record id="view_order_form_aproval_edit" model="ir.ui.view">
+    <field name="name">picking aproval_edit</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="view_order_form_aproval"/>
+    <field name="groups_id" eval="[(6, 0, [ref('sale_dispatch_with_prepaid.picking_aproval')])]"/>
+    <field name="arch" type="xml">
+       <field name="approve_picking" position="attributes">
+            <attribute name="readonly">False</attribute>
+       </field>
+    </field>
+  </record>
+</odoo>

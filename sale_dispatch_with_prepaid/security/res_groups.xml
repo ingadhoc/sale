@@ -1,0 +1,5 @@
+<odoo>
+ <record id="picking_aproval" model="res.groups">
+    <field name="name">Allow prepayment in current account</field>
+  </record>
+</odoo>
