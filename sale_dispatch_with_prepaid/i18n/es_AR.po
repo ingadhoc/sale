@@ -1,0 +1,16 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_dispatch_with_prepaid
+#
+# Translators:
+# José Keh <jok@adhoc.com.ar>, 2022
+#
+#. module: sale_dispatch_with_prepaid
+#: model:ir.model.fields,field_description:sale_dispatch_with_prepaid.field_sale_order__approve_picking
+msgid "Prepayment in current account"
+msgstr "Prepago en cuenta corriente"
+
+#. module: sale_dispatch_with_prepaid
+#: model:res.groups,name:sale_dispatch_with_prepaid.picking_aproval
+msgid "Allow prepayment in current account"
+msgstr "Permitir prepago en cuenta corriente"
