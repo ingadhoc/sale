@@ -22,6 +22,7 @@ var SaleBarcodeHandler = AbstractField.extend({
                 barcode: '_barcodeAddX2MQuantity',
             }
         });
+        this.trigger_up('scrollTo', {selector: '.oe_subtotal_footer_separator'});
     },
 });
 
