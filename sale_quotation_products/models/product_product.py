@@ -131,7 +131,7 @@ class ProductProduct(models.Model):
                     'name': 'action_product_add_one',
                     'type': 'object',
                     'icon': 'fa-plus',
-                    'string': _('Add one'),
+                    'title': _('Add one'),
                 }))
             res['fields'].update(self.fields_get(['qty']))
 
@@ -142,7 +142,7 @@ class ProductProduct(models.Model):
                     'name': 'action_product_form',
                     'type': 'object',
                     'icon': 'fa-external-link',
-                    'string': _('Open Product Form View'),
+                    'title': _('Open Product Form View'),
                     'groups': 'base.group_user',
                 }))
 
