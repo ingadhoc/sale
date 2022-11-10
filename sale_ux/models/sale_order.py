@@ -12,9 +12,6 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     internal_notes = fields.Html('Internal Notes')
-    pricelist_id = fields.Many2one(
-        tracking=True,
-    )
     payment_term_id = fields.Many2one(
         tracking=True,
     )
@@ -51,8 +48,8 @@ class SaleOrder(models.Model):
         return vals
 
     @api.onchange('pricelist_id')
-    def _onchange_pricelist_id(self):
-        super()._onchange_pricelist_id()
+    def _onchange_pricelist_id_show_update_prices(self):
+        super()._onchange_pricelist_id_show_update_prices()
         update_prices_automatically = safe_eval(
             self.env['ir.config_parameter'].sudo().get_param(
                 'sale_ux.update_prices_automatically', 'False'))
@@ -69,7 +66,7 @@ class SaleOrder(models.Model):
                     uom=line.product_uom.id
                 )
                 price_unit = self.env['account.tax']._fix_tax_included_price_company(
-                    line._get_display_price(product), line.product_id.taxes_id, line.tax_id, line.company_id)
+                    line._get_display_price(), line.product_id.taxes_id, line.tax_id, line.company_id)
                 if self.pricelist_id.discount_policy == 'without_discount' and price_unit:
                     discount = max(0, (price_unit - product.price) * 100 / price_unit)
                 else:
@@ -171,9 +168,9 @@ class SaleOrder(models.Model):
                 [line.quantity <= 0.0 for line in i.invoice_line_ids])).action_switch_invoice_into_refund_credit_note()
         return invoices
 
-    def preview_sale_order(self):
+    def action_preview_sale_order(self):
         """ Open sale Preview in a new Tab """
-        res = super().preview_sale_order()
+        res = super().action_preview_sale_order()
         res.update({'target': 'new'})
         return res
 

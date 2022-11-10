@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale UX',
-    'version': "15.0.1.2.0",
+    'version': "16.0.1.0.0",
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -41,7 +41,6 @@
         'security/ir.model.access.csv',
         'views/sale_order_views.xml',
         'views/sale_order_line_views.xml',
-        'views/account_move_views.xml',
         'views/crm_team_views.xml',
         'views/sale_reports.xml',
         'views/res_partner_view.xml',
@@ -49,7 +48,7 @@
     ],
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
