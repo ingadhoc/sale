@@ -409,8 +409,8 @@ msgstr ""
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
-msgid "_Cancel"
-msgstr "_Cancelado"
+msgid "Cancel"
+msgstr "Cancelado"
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form

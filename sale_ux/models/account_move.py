@@ -30,12 +30,3 @@ class AccountMove(models.Model):
         (self - moves).has_sales = False
         for rec in moves:
             rec.has_sales = any(line for line in rec.invoice_line_ids.mapped('sale_line_ids'))
-
-    def action_view_sale_orders(self):
-        self.ensure_one()
-        if len(self.sale_order_ids) > 1:
-            action_read = self.env["ir.actions.actions"]._for_xml_id('sale.action_orders')
-            action_read['domain'] = "[('id', 'in', %s)]" % self.sale_order_ids.ids
-            return action_read
-        else:
-            return self.sale_order_ids.get_formview_action()

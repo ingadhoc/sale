@@ -4,10 +4,10 @@
         <field name="name">sale.order.form.salesman</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
-        <field name="groups_id" eval="[(4, ref('group_allow_any_user_as_salesman'))]"/>
         <field name="arch" type="xml">
-            <field name="user_id" position="attributes">
-                <attribute name="domain">[]</attribute>
+            <field name="user_id" position="replace">
+                <field name="user_id" widget="many2one_avatar_user" groups="!sale_ux.group_allow_any_user_as_salesman"/>
+                <field name="user_id" widget="many2one_avatar_user"  domain="[]" groups="sale_ux.group_allow_any_user_as_salesman"/>
             </field>
         </field>
     </record>
@@ -15,22 +15,25 @@
     <record id="view_order_form" model="ir.ui.view">
         <field name="name">sale.order.form</field>
         <field name="model">sale.order</field>
+        <field name="priority">15</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <!-- Make subtotal included / excluded optional and not related to tax b2b/b2c -->
             <xpath expr="//field[@name='order_line']/tree//field[@name='price_subtotal']" position="attributes">
                 <attribute name="groups"></attribute>
+                <attribute name="attrs"></attribute>
                 <attribute name="optional">show</attribute>
             </xpath>
             <xpath expr="//field[@name='order_line']/tree//field[@name='price_total']" position="attributes">
                 <attribute name="groups"></attribute>
+                <attribute name="attrs"></attribute>
                 <attribute name="optional">hide</attribute>
             </xpath>
 
-            <field name="note" position="after">
+            <group name="note_group" position="after">
                 <newline/>
                 <field name="internal_notes" nolabel="1" placeholder="Internal Notes..." groups="base.group_user"/>
-            </field>
+            </group>
 
             <!-- add buttons to send and print for state done too -->
             <xpath expr="//button[@name='action_quotation_send'][4]" position="attributes">
@@ -51,6 +54,7 @@
             </field>
             <field name="validity_date" position="before">
                 <label for="update_prices"/>
+                <br/>
                 <div groups="!product.group_product_pricelist">
                     <button name="update_prices" type="object" string=" Update Prices" help="Recompute all prices based on this pricelist" class="btn-link mb-1 px-0" icon="fa-refresh" attrs="{'invisible': [('state', 'in', ['sale', 'done','cancel'])]}"/>
                 </div>
@@ -70,11 +74,10 @@
         <field name="name">sale.order.reference.on_tree</field>
         <field name="model">sale.order</field>
         <field name="priority" eval="99"/>
-        <field name="groups_id" eval="[(4, ref('group_reference_on_tree_and_main_form'))]"/>
         <field name="inherit_id" ref="sale.view_order_tree"/>
         <field name="arch" type="xml">
             <field name="partner_id" position="after">
-                <field name="client_order_ref"/>
+                <field groups="sale_ux.group_reference_on_tree_and_main_form" name="client_order_ref"/>
             </field>
         </field>
     </record>
@@ -84,11 +87,10 @@
         <field name="name">sale.quotation.reference.on_tree</field>
         <field name="model">sale.order</field>
         <field name="priority" eval="99"/>
-        <field name="groups_id" eval="[(4, ref('group_reference_on_tree_and_main_form'))]"/>
         <field name="inherit_id" ref="sale.view_quotation_tree"/>
         <field name="arch" type="xml">
             <field name="partner_id" position="after">
-                <field name="client_order_ref"/>
+                <field groups="sale_ux.group_reference_on_tree_and_main_form" name="client_order_ref"/>
             </field>
         </field>
     </record>
@@ -97,12 +99,11 @@
         <field name="name">sale.order.reference.on_main_form</field>
         <field name="model">sale.order</field>
         <field name="priority" eval="99"/>
-        <field name="groups_id" eval="[(4, ref('group_reference_on_tree_and_main_form'))]"/>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <field name="client_order_ref" position="replace"/>
             <field name="partner_shipping_id" position="after">
-                <field name="client_order_ref"/>
+                <field groups="sale_ux.group_reference_on_tree_and_main_form" name="client_order_ref"/>
             </field>
         </field>
     </record>

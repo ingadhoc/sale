@@ -13,7 +13,7 @@
                 <footer>
                     <button name="confirm" string="Confirm" type="object" class="oe_highlight"/>
                     or
-                    <button string="_Cancel" class="oe_link" special="cancel" />
+                    <button string="Cancel" class="oe_link" special="cancel" />
                 </footer>
             </form>
         </field>
