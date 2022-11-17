@@ -19,19 +19,20 @@
 ##############################################################################
 {
     'name': 'Sale Exception Print',
-    'version': "15.0.1.0.0",
+    'version': "16.0.1.0.0",
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'depends': [
         'sale_exception',
+        'sale_exception_credit_limit',
     ],
     'data': [
         'views/exception_rule_views.xml'
     ],
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }

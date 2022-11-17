@@ -14,7 +14,7 @@
 Sale Exception Print
 ====================
 
-It adds an exception for printing a quotation if the partner's credit limit es exceeded
+Add a check in the credit limit exception that allows blocking budget printing
 
 Installation
 ============
