@@ -30,6 +30,9 @@
             <field name="virtual_available" position="attributes">
                 <attribute name="invisible">1</attribute>
             </field>
+            <field name="responsible_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
         </field>
     </record>
 
@@ -40,6 +43,9 @@
         <field name="groups_id" eval="[(4, ref('group_portal_distributor'))]"/>
         <field name="arch" type="xml">
             <field name="list_price" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="detailed_type" position="attributes">
                 <attribute name="invisible">1</attribute>
             </field>
         </field>
