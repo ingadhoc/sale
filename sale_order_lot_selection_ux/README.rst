@@ -15,7 +15,7 @@ Sale Order Lot Selection UX
 ===========================
 
 This extend functionally from the "Sale Order Lot Selection" module.
-
+This module makes it possible to select lots with at least one unit available.
 
 Installation
 ============

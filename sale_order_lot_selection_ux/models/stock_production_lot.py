@@ -6,7 +6,7 @@ from odoo import models
 
 
 class ProductionLot(models.Model):
-    _inherit = 'stock.production.lot'
+    _inherit = 'stock.lot'
 
     def name_get(self):
         if not self._context.get('from_sale_line', False):

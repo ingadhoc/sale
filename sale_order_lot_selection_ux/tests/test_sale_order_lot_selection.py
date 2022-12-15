@@ -29,7 +29,7 @@ class TestSaleOrderLotSelection(test_common.SingleTransactionCase):
             'stock.stock_location_customers')
         self.stock_location = self.env.ref('stock.stock_location_stock')
         self.product_model = self.env['product.product']
-        self.production_lot_model = self.env['stock.production.lot']
+        self.production_lot_model = self.env['stock.lot']
 
     def _stock_quantity(self, product, lot, location):
         return product.with_context({
