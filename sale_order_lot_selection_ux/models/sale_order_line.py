@@ -9,7 +9,7 @@ class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
     available_lot_ids = fields.Many2many(
-        'stock.production.lot',
+        'stock.lot',
         compute="_compute_available_lot_ids",
     )
 
