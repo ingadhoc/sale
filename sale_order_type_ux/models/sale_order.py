@@ -10,8 +10,6 @@ class SaleOrder(models.Model):
 
     type_id = fields.Many2one(
         tracking=True,
-        readonly=True,
-        states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
     )
 
     def _change_values_from_type(self):
@@ -19,25 +17,23 @@ class SaleOrder(models.Model):
             order_type = order.type_id
             if order_type.team_id:
                 order.team_id = order_type.team_id
-            if order_type.analytic_tag_ids:
-                order.order_line.analytic_tag_ids = order_type.analytic_tag_ids
             if order_type.analytic_account_id:
                 order.analytic_account_id = order_type.analytic_account_id
-            order.onchange_partner_shipping_id()
+            order._compute_fiscal_position_id()
 
-    @api.onchange('partner_shipping_id', 'partner_id', 'company_id')
-    def onchange_partner_shipping_id(self):
+    @api.depends('partner_shipping_id', 'partner_id', 'company_id')
+    def _compute_fiscal_position_id(self):
         if self.type_id.fiscal_position_id:
             self.fiscal_position_id = self.type_id.fiscal_position_id
         else:
-            return super().onchange_partner_shipping_id()
+            return super()._compute_fiscal_position_id()
 
     @api.onchange("type_id")
     def onchange_type_id(self):
         super().onchange_type_id()
         self._change_values_from_type()
 
-    @api.model
+    @api.model_create_multi
     def create(self, vals):
         res = super().create(vals)
         if res.type_id and self._context.get('website_id'):
@@ -56,5 +52,5 @@ class SaleOrder(models.Model):
             so_fiscal_position = self.env['account.fiscal.position'].browse(res['fiscal_position_id'])
             if so_fiscal_position.company_id and so_fiscal_position.company_id != company:
                 res['fiscal_position_id'] = self.env['account.fiscal.position'].with_company(
-                    company.id).get_fiscal_position(self.partner_invoice_id.id)
+                    company.id)._get_fiscal_position(self.partner_invoice_id)
         return res
