@@ -48,16 +48,16 @@ class SaleOrderLine(models.Model):
                     ",".join(error) + " must be less or equal than 100"
                 ))
 
-    @api.model
-    def create(self, vals):
-        self.inverse_vals(vals)
-        return super().create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        self.inverse_vals(vals_list)
+        return super().create(vals_list)
 
     def write(self, vals):
-        self.inverse_vals(vals)
+        self.inverse_vals([vals])
         return super().write(vals)
 
-    def inverse_vals(self, vals):
+    def inverse_vals(self, vals_list):
         """ No usamos metodo inverse porque en el create odoo termina llamando
         a inverse y unificando los descuentos en la primer linea.
         Además, solo actualizamos con el inverse el primer descuento
@@ -65,21 +65,22 @@ class SaleOrderLine(models.Model):
         y consideramos que las columnas 2 y 3 son descuentos adicionales y no
         las pisamos
         """
-        # we force to remove from vals the discount 1,2,3 when is call from the create method and
-        #  the all compute values are initialized. Because of that values the discount was cleaned wrongly
-        if not self:
-            if 'discount1' in vals and vals.get('discount1') == 0:
-                vals.pop('discount1')
-            if 'discount2' in vals and vals.get('discount2') == 0:
-                vals.pop('discount2')
-            if 'discount3' in vals and vals.get('discount3') == 0:
-                vals.pop('discount3')
-        precision = self.env['decimal.precision'].precision_get('Discount')
-        if 'discount' in vals \
-                and not {'discount1', 'discount2', 'discount3'} & set(vals.keys()):
-            vals.update({
-                'discount1': vals.get('discount'),
-            })
+        for vals in vals_list:
+            # we force to remove from vals the discount 1,2,3 when is call from the create method and
+            #  the all compute values are initialized. Because of that values the discount was cleaned wrongly
+            if not self:
+                if 'discount1' in vals and vals.get('discount1') == 0:
+                    vals.pop('discount1')
+                if 'discount2' in vals and vals.get('discount2') == 0:
+                    vals.pop('discount2')
+                if 'discount3' in vals and vals.get('discount3') == 0:
+                    vals.pop('discount3')
+            precision = self.env['decimal.precision'].precision_get('Discount')
+            if 'discount' in vals \
+                    and not {'discount1', 'discount2', 'discount3'} & set(vals.keys()):
+                vals.update({
+                    'discount1': vals.get('discount'),
+                })
 
     @api.depends('discount1', 'discount2', 'discount3')
     def _compute_discount(self):
