@@ -38,12 +38,15 @@ class AccountInvoiceLine(models.Model):
                     ",".join(error) + " must be less or equal than 100"
                 ))
 
-    @api.onchange('discount1', 'discount2', 'discount3')
-    @api.constrains('discount1', 'discount2', 'discount3')
     def _set_discount(self):
-        for rec in self.filtered(lambda x: x.move_id.is_sale_document()):
+        for rec in self:
             discount_factor = 1.0
             for discount in [rec.discount1, rec.discount2, rec.discount3]:
                 discount_factor = discount_factor * (
                     (100.0 - discount) / 100.0)
             rec.discount = 100.0 - (discount_factor * 100.0)
+
+    @api.depends('quantity', 'discount', 'price_unit', 'tax_ids', 'currency_id', 'discount1', 'discount2', 'discount3')
+    def _compute_totals(self):
+        self.filtered(lambda x: x.move_id.is_sale_document())._set_discount()
+        super()._compute_totals()
