@@ -5,7 +5,7 @@ class ProjectTask(models.Model):
 
     _inherit = 'project.task'
 
-    order_id = fields.Many2one('sale.order', 'Sales Order', store=True, help="Sales order to which the task is linked.")
+    order_id = fields.Many2one('sale.order', 'Related Sales Order', store=True, help="Sales order to which the task is linked.")
 
     def _get_timesheet(self):
         recs = super()._get_timesheet()
