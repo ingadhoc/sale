@@ -27,7 +27,7 @@ class SaleOrderLine(models.Model):
     delivery_status = fields.Selection([
         ('no', 'Nothing to deliver'),
         ('to deliver', 'To Deliver'),
-        ('delivered', 'Delivered'),
+        ('full', 'Fully Delivered'),
     ],
         compute='_compute_delivery_status',
         store=True,
@@ -72,7 +72,7 @@ class SaleOrderLine(models.Model):
             elif float_compare(
                     line.all_qty_delivered, line.product_uom_qty,
                     precision_digits=precision) >= 0:
-                delivery_status = 'delivered'
+                delivery_status = 'full'
             else:
                 delivery_status = 'no'
             line.delivery_status = delivery_status
@@ -83,7 +83,6 @@ class SaleOrderLine(models.Model):
         # por ahora, desactivamos la cancelación de kits
         bom_enable = 'bom_ids' in self.env['product.template']._fields
         pack_enable = 'pack_ok' in self.env['product.template']._fields
-
         for rec in self.filtered('product_id'):
             if bom_enable:
                 bom = self.env['mrp.bom']._bom_find(
@@ -94,7 +93,7 @@ class SaleOrderLine(models.Model):
                         "(products with a bom of type kit)."))
             # For product pack compatibility to cancel all of componept in case the product parent is cancel
             if pack_enable and rec.product_id.pack_ok and rec.pack_type == "detailed" and rec.pack_child_line_ids:
-                rec.pack_child_line_ids.button_cancel_remaining()
+                rec.pack_child_line_ids.with_context(cancel_from_order=True).button_cancel_remaining()
             old_product_uom_qty = rec.product_uom_qty
             # Al final permitimos cancelar igual porque es necesario, por ej,
             # si no se va a entregar y ya está facturado y se quiere hacer
@@ -216,7 +215,7 @@ class SaleOrderLine(models.Model):
             order_line.quantity_returned = quantity_returned
 
     @api.depends('quantity_returned')
-    def _get_to_invoice_qty(self):
+    def _compute_qty_to_invoice(self):
         """
         Modificamos la funcion original para que si el producto es segun lo
         pedido, para que funcione el reembolo hacemos que la cantidad a
@@ -225,7 +224,7 @@ class SaleOrderLine(models.Model):
         odoo ya lo descuenta a la cantidad entregada y automáticamente lo
         termina facturando
         """
-        super()._get_to_invoice_qty()
+        super()._compute_qty_to_invoice()
         for line in self:
             # igual que por defecto, si no en estos estados, no hay a facturar
             if line.order_id.state not in ['sale', 'done']:

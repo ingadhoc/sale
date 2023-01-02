@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Stock UX',
-    'version': "15.0.1.0.0",
+    'version': "16.0.1.0.0",
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -35,11 +35,11 @@
         'web',
     ],
     'data': [
-        'data/ir_actions_data.xml',
         'security/ir.model.access.csv',
         'views/sale_order_views.xml',
         'views/sale_order_line_views.xml',
         'views/stock_move_views.xml',
+        'wizards/sale_order_cancel_remaining.xml',
         'wizards/stock_return_picking_views.xml',
     ],
     'assets': {
@@ -49,7 +49,7 @@
     },
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': True,
     'application': False,
 }

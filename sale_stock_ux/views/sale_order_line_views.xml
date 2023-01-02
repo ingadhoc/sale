@@ -13,7 +13,7 @@
         </field>
     </record>
 
-    <!-- creamos nueva vista porque la original es usada para informes desde los productos, mangenemos mismo orden y criterio de la purchase line -->
+    <!-- creamos nueva vista porque la original es usada para informes desde los productos, mantenemos mismo orden y criterio de la purchase line -->
     <record id="sale_order_line_usability_tree" model="ir.ui.view">
         <field name="name">sale.order.line.usability.tree</field>
         <field name="model">sale.order.line</field>
@@ -21,6 +21,7 @@
         <field name="arch" type="xml">
             <field name="product_uom_qty" position="after">
                 <field name="qty_delivered"/>
+                <field name="quantity_returned"/>
             </field>
             <field name="qty_invoiced" position="after">
                 <field name="qty_to_deliver" optional="hide"/>
@@ -36,7 +37,7 @@
             <filter name="approved" position="after">
                 <separator/>
                 <filter name="to_deliver" string="To Deliver" domain="[('delivery_status','=', 'to deliver')]"/>
-                <filter name="received" string="Delivered" domain="[('delivery_status','=', 'delivered')]"/>
+                <filter name="received" string="Fully Delivered" domain="[('delivery_status','=', 'full')]"/>
             </filter>
         </field>
     </record>

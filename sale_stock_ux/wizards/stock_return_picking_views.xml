@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="view_stock_return_picking_form" model="ir.ui.view">
-        <field name="name">Imrpove refunds wizard</field>
+        <field name="name">Improve refunds wizard</field>
         <field name="inherit_id" ref="stock.view_stock_return_picking_form"/>
         <field name="model">stock.return.picking</field>
         <field name="arch" type="xml">
-            <group position="before">
+            <field name="product_return_moves" position="before">
                 <div class="alert alert-info" role="alert" style="margin-bottom:0px;">
                     <b>Importante</b>: si está haciendo un movimiento inverso relacionado a un Pedido de Venta o de Compra, entonces debe prestar atención al campo <b>"Para Abonar (actualizar OC/OV)"</b>, donde, si:
                     <ul>
@@ -18,7 +18,7 @@
                     </ul>
                     Si la devolución no está ligada a una OC/OV entonces este campo no repercute en nada.
                 </div>
-            </group>
+            </field>
             <field name="to_refund" position="attributes">
                 <!-- porque lo queremos usar tmb en oc y esto lo hace no marcable -->
                 <attribute name="attrs"></attribute>

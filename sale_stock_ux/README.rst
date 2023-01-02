@@ -16,7 +16,7 @@ Sale Stock UX
 
 Several Improvements to sales:
 
-#. Add delivery status on sales
+#. Shows delivery status in the sale tree view
 #. Add filter related to the delivery status for sale orders and sales order lines views
 #. Add a filter name "Pickings" in sale order view to search by delivery order name.
 #. Add field "qty_to_deliver" in the sale lines view.
