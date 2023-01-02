@@ -10,19 +10,15 @@ from odoo.tools.float_utils import float_compare
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    delivery_status = fields.Selection([
+    delivery_status = fields.Selection(selection_add=[
         ('no', 'Nothing to Deliver'),
-        ('to deliver', 'To Deliver'),
-        ('delivered', 'Delivered'),
     ],
-        compute='_compute_delivery_status',
-        store=True,
         readonly=True,
         default='no'
     )
     force_delivery_status = fields.Selection([
         ('no', 'Nothing to Deliver'),
-        ('delivered', 'Delivered'),
+        ('full', 'Fully Delivered'),
     ],
         tracking=True,
         copy=False,
@@ -47,45 +43,26 @@ class SaleOrder(models.Model):
                 ' have already been done.') % (order.name))
         return super().action_cancel()
 
-    # dejamos el depends a qty_delivered por mas que usamos all_qty_delivered
-    # total son iguales pero qty_delivered es storeado
-    @api.depends(
-        'state', 'order_line.qty_delivered', 'order_line.product_uom_qty',
-        'force_delivery_status')
+    @api.depends('picking_ids', 'picking_ids.state', 'force_delivery_status')
     def _compute_delivery_status(self):
-        precision = self.env['decimal.precision'].precision_get(
-            'Product Unit of Measure')
+        super()._compute_delivery_status()
         for order in self:
-            if order.state not in ('sale', 'done'):
+            if not order.picking_ids or all(p.state == 'cancel' for p in order.picking_ids):
                 order.delivery_status = 'no'
                 continue
-
             if order.force_delivery_status:
                 order.delivery_status = order.force_delivery_status
                 continue
-
-            if any(float_compare(
-                    line.all_qty_delivered, line.product_uom_qty,
-                    precision_digits=precision) == -1
-                    for line in order.order_line):
-                delivery_status = 'to deliver'
-            elif all(float_compare(
-                    line.all_qty_delivered, line.product_uom_qty,
-                    precision_digits=precision) >= 0
-                    for line in order.order_line):
-                delivery_status = 'delivered'
-            else:
-                delivery_status = 'no'
-            order.delivery_status = delivery_status
 
     def write(self, vals):
         self.check_force_delivery_status(vals)
         return super().write(vals)
 
-    @api.model
-    def create(self, vals):
-        self.check_force_delivery_status(vals)
-        return super().create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            self.check_force_delivery_status(vals)
+        return super().create(vals_list)
 
     @api.model
     def check_force_delivery_status(self, vals):

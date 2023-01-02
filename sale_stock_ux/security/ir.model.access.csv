@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_stock_return_picking_wizard,access_stock_return_picking_wizard,model_stock_return_picking,base.group_user,1,1,1,0
+access_sale_order_cancel_remaining_wizard,access_sale_order_cancel_remaining_wizard,model_sale_order_cancel_remaining,base.group_user,1,1,1,0
