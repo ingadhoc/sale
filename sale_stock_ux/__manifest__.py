@@ -19,7 +19,13 @@
 ##############################################################################
 {
     'name': 'Sale Stock UX',
+<<<<<<< HEAD
     'version': "16.0.1.0.0",
+||||||| parent of d240e542 (temp)
+    'version': "15.0.1.0.0",
+=======
+    'version': "15.0.2.0.0",
+>>>>>>> d240e542 (temp)
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -41,6 +47,7 @@
         'views/stock_move_views.xml',
         'wizards/sale_order_cancel_remaining.xml',
         'wizards/stock_return_picking_views.xml',
+        'wizards/sale_order_massive_cancellation_remaining_views.xml',
     ],
     'assets': {
         'web.assets_qweb': [

@@ -1,3 +1,8 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_stock_return_picking_wizard,access_stock_return_picking_wizard,model_stock_return_picking,base.group_user,1,1,1,0
+<<<<<<< HEAD
 access_sale_order_cancel_remaining_wizard,access_sale_order_cancel_remaining_wizard,model_sale_order_cancel_remaining,base.group_user,1,1,1,0
+||||||| parent of d240e542 (temp)
+=======
+access_sale_order_massive_cancel_remaining_wizard,access_sale_order_massive_cancel_remaining_wizard,sale_stock_ux.model_sale_stock_ux_action_mass_cancel_remaining_wizard,base.group_user,1,1,1,0
+>>>>>>> d240e542 (temp)
