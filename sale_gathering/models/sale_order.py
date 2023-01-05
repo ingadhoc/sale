@@ -35,7 +35,7 @@ class SaleOrder(models.Model):
 
     def _get_invoiceable_lines(self, final=False):
         """Return the invoiceable lines for order `self`."""
-        invoiceable_lines = super()._get_invoiceable_lines(final=False)
+        invoiceable_lines = super()._get_invoiceable_lines(final)
         if self.is_gathering and self.gathering_balance > 0.0:
             for line in self.order_line.filtered('is_downpayment'):
                 if final:
