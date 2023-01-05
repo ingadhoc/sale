@@ -1,0 +1,30 @@
+<odoo>
+
+<record id="view_action_mass_cancel_remaining" model="ir.ui.view">
+     <field name="name">sale_stock_ux.action_mass_cancel_remaining.wizard</field>
+     <field name="model">sale_stock_ux.action_mass_cancel_remaining.wizard</field>
+     <field name="arch" type="xml">
+        <form>
+            <group>
+                <div class="alert alert-info" role="alert" style="margin-bottom:0px;">
+                        Do you want to cancel remaining quantities for this orders?<b> This can't be undone</b>
+                </div>
+            </group>
+            <footer>
+                <button name="action_mass_cancel_remaining" string="Confirm" type="object" class="oe_highlight"/>
+                or
+                <button string="Cancel" class="oe_link" special="cancel"/>
+            </footer>
+        </form>
+     </field>
+ </record>
+
+<record model="ir.actions.act_window" id="action_mass_cancel_remaining_act_window">
+    <field name="name">Mass cancellation of remaining quantities</field>
+    <field name="res_model">sale_stock_ux.action_mass_cancel_remaining.wizard</field>
+    <field name='view_mode'>form</field>
+    <field name='target'>new</field>
+    <field name='binding_model_id' ref="sale.model_sale_order"/>
+</record>
+
+</odoo>
