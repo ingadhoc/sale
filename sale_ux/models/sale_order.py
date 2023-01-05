@@ -112,7 +112,7 @@ class SaleOrder(models.Model):
         if pack_installed:
             pack_lines = self.order_line.with_context(update_prices=True, pricelist=self.pricelist_id.id).filtered(
                 lambda l: l.product_id.pack_ok and l.product_id.pack_component_price != 'ignored')
-            super(SaleOrder, self.with_context(lines_to_not_update_ids=pack_lines.ids)).update_prices()
+            super(SaleOrder, self.with_context(lines_to_not_update_ids=pack_lines.ids)).action_update_prices()
             for line in pack_lines:
                 if line.pack_parent_line_id:
                     continue
@@ -122,7 +122,7 @@ class SaleOrder(models.Model):
                     else:
                         line.expand_pack_line(write=True)
         else:
-            super().update_prices()
+            super().action_update_prices()
 
     def _compute_pack_lines_prices(self, line):
         """ This method is for the case when came from an onchange and the original method
