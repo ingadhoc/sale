@@ -25,7 +25,6 @@
     'license': 'AGPL-3',
     'depends': [
         'sale_exception',
-        'sale_exception_credit_limit',
     ],
     'data': [
         'views/exception_rule_views.xml'
