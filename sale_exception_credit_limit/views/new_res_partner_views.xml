@@ -6,21 +6,19 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="account.view_partner_property_form"/>
         <field name="arch" type="xml">
-            <!-- <field name="credit" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </field> -->
             <field name="credit" position="after">
                 <field name="credit_sale_exception"/>
             </field>
             <field name="use_partner_credit_limit" position="attributes">
-                <attribute name="groups">False</attribute>
+                <attribute name="groups">sale_exception_credit_limit.credit_config</attribute>
             </field>
-            <!-- <field name="use_partner_credit_limit" position="after">
-                <field name="use_partner_credit_limit" groups=/>
-            </field> -->
-            <!-- <field name="use_partner_credit_limit" groups="sale_exception_credit_limit.credit_config" position="attributes">
-                <attribute name="readonly">False</attribute>
-            </field> -->
+            <field name="use_partner_credit_limit" position="after">
+                <!-- agregamos campo invisible para que no de error la evaluacion de attrs en funcion a este campo. Otra alternativa por si llega a traer problemas seria:
+                a) restringir solo a nivel constraint (no vista)
+                b) agregar un campo calculado que devuelva en funcion a has_groups si lo puede editar o no y usarlo en un attrs -->
+                <field name="use_partner_credit_limit" invisible="1"/>
+                <field name="use_partner_credit_limit" readonly="True" groups="!sale_exception_credit_limit.credit_config"/>
+            </field>
             <!-- <field name="use_partner_credit_limit" position="attributes">
                 <attribute name="attrs">{'readonly': [(self.env.ref('sale_exception_credit_limit.credit_config').id, 'not in' ,self.env.user.groups_id)]}</attribute>
             </field> -->
@@ -31,16 +29,16 @@
         </field>
     </record>
 
-    <record id="view_res_partner_credit_limit_form_2" model="ir.ui.view">
+        <!-- <field name="groups_id" eval="[(4, ref('sale_exception_credit_limit.credit_config'))]"/> -->
+    <!-- <record id="view_res_partner_credit_limit_form_2" model="ir.ui.view">
         <field name="name">res.partner.partner_credit_limit_2.form</field>
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="sale_exception_credit_limit.view_res_partner_credit_limit_form"/>
-        <!-- <field name="groups_id" eval="[(4, ref('sale_exception_credit_limit.credit_config'))]"/> -->
         <field name="arch" type="xml">
             <field name="use_partner_credit_limit" groups="sale_exception_credit_limit.credit_config" position="attributes">
                 <attribute name="readonly">False</attribute>
             </field>
         </field>
-    </record>
+    </record> -->
 
 </odoo>
