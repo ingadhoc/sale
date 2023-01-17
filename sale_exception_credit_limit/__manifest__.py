@@ -30,7 +30,7 @@
     'data': [
         'security/sale_exception_credit_limit_security.xml',
         'data/exception_rule_data.xml',
-        'views/new_res_partner_views.xml',
+        'views/res_partner_views.xml',
     ],
     'demo': [
         'demo/res_partner_demo.xml'
