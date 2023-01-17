@@ -9,8 +9,15 @@ class ResPartner(models.Model):
     _inherit = "res.partner"
 
     credit_sale_exception = fields.Monetary(compute='_compute_credit_sale_exception',
-        string='Total Receivable', help="Total amount this customer owes you.",
-        groups='account.group_account_invoice,account.group_account_readonly')
+        string='Total Receivable', help="Total amount this customer owes you (including not invoiced sale orders).",
+        groups='account.group_account_invoice,account.group_account_readonly'
+    )
+
+    @api.constrains('credit_limit', 'use_partner_credit_limit')
+    def check_credit_limit_edition(self):
+        # TODO verificar cual es el metodo has_group / has_groups que mas se usa
+        if not self.env.user.has_groups(''):
+            raise Warnin
 
     @api.depends_context('company')
     def _compute_credit_sale_exception(self):
