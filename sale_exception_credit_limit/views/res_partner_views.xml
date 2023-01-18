@@ -11,7 +11,7 @@
                 <attribute name="invisible">1</attribute>
             </field>
             <field name="credit" position="after">
-                <field name="credit_sale_exception"/>
+                <field name="credit_with_confirmed_orders" attrs="{'invisible': [('use_partner_credit_limit', '=', False)]}"/>
             </field>
         </field>
     </record>

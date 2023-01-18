@@ -3,26 +3,28 @@
 # directory
 ##############################################################################
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError
+
 
 
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
-    credit_sale_exception = fields.Monetary(compute='_compute_credit_sale_exception',
-        string='Total Receivable', help="Total amount this customer owes you (including not invoiced sale orders).",
+    credit_with_confirmed_orders = fields.Monetary(compute='_compute_credit_with_confirmed_orders',
+        string='Credit Taken', help="Total amount this customer owes you (including not invoiced confirmed sale orders and draft invoices).",
         groups='account.group_account_invoice,account.group_account_readonly'
     )
 
     @api.constrains('credit_limit', 'use_partner_credit_limit')
-    def check_credit_limit_edition(self):
-        # TODO verificar cual es el metodo has_group / has_groups que mas se usa
-        if not self.env.user.has_groups(''):
-            raise Warnin
+    def check_credit_limit_group(self):
+        if not self.env.user.has_group('sale_exception_credit_limit.credit_config'):
+            raise ValidationError('People without Credit limit Configuration Rights cannot modify credit limit parameters')
 
     @api.depends_context('company')
-    def _compute_credit_sale_exception(self):
+    def _compute_credit_with_confirmed_orders(self):
+        # Sets 0 when use_partner_credit_limit is not set avoiding unnecessary overloads
         if not self.use_partner_credit_limit:
-                self.credit_sale_exception = 0
+                self.credit_with_confirmed_orders = 0
         else:
             domain = [
                     ('order_id.partner_id.commercial_partner_id', '=', self.commercial_partner_id.id),
@@ -58,11 +60,9 @@ class ResPartner(models.Model):
                     ('move_id.partner_id.commercial_partner_id', '=', self.commercial_partner_id.id),
                     ('move_id.move_type', 'in', ['out_invoice', 'out_refund']),
                     ('move_id.state', '=', 'draft'),
-            #         ('exclude_from_invoice_tab', '=', False),  VERIFICAR
                     ('sale_line_ids', '=', False)]
             draft_invoice_lines = self.env['account.move.line'].search(domain)
             draft_invoice_lines_amount = 0.0
-            # import pdb; pdb.set_trace()
             for line in draft_invoice_lines:
                 price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
                 taxes = line.tax_ids.compute_all(
@@ -77,5 +77,5 @@ class ResPartner(models.Model):
 
 
 
-            self.credit_sale_exception = to_invoice_amount + draft_invoice_lines_amount + self.credit
+            self.credit_with_confirmed_orders = to_invoice_amount + draft_invoice_lines_amount + self.credit
 
