@@ -3,29 +3,37 @@
 # 	* sale_quotation_products
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2022
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2023
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0+e\n"
+"Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-24 16:45+0000\n"
-"PO-Revision-Date: 2022-04-19 18:55+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2022\n"
-"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/133229/es/)\n"
+"POT-Creation-Date: 2023-01-13 13:56+0000\n"
+"PO-Revision-Date: 2023-01-13 13:56+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2023\n"
+"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #. module: sale_quotation_products
+#. odoo-python
 #: code:addons/sale_quotation_products/models/product_product.py:0
 #, python-format
 msgid "Add one"
 msgstr "Agregar uno"
 
 #. module: sale_quotation_products
+#: model:ir.model.fields,field_description:sale_quotation_products.field_product_product__algolia_search
+#: model:ir.model.fields,field_description:sale_quotation_products.field_sale_order__algolia_search
+msgid "Algolia Search"
+msgstr ""
+
+#. module: sale_quotation_products
+#. odoo-python
 #: code:addons/sale_quotation_products/models/product_product.py:0
 #, python-format
 msgid "Open Product Form View"
@@ -33,7 +41,7 @@ msgstr "Abrir Vista Formulario del Producto"
 
 #. module: sale_quotation_products
 #: model:ir.model,name:sale_quotation_products.model_product_product
-msgid "Product"
+msgid "Product Variant"
 msgstr "Producto"
 
 #. module: sale_quotation_products
@@ -42,12 +50,14 @@ msgid "Qty"
 msgstr "Cant."
 
 #. module: sale_quotation_products
+#. odoo-python
 #: code:addons/sale_quotation_products/models/product_product.py:0
 #, python-format
 msgid "Quantity"
 msgstr "Cantidad"
 
 #. module: sale_quotation_products
+#. odoo-python
 #: code:addons/sale_quotation_products/models/sale_order.py:0
 #, python-format
 msgid "Quotation Products"
