@@ -1,25 +1,15 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* sale_stock_info_popup_color
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-24 16:46+0000\n"
+"POT-Creation-Date: 2022-09-09 16:34+0000\n"
 "PO-Revision-Date: 2022-04-19 18:56+0000\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/133229/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#. module: sale_stock_info_popup_color
-#. openerp-web
-#: code:addons/sale_stock_info_popup_color/static/src/xml/available.xml:0
-#, python-format
-msgid ""
-"widget.data.free_qty_today < widget.data.qty_to_deliver and "
-"!widget.data.is_mto"
-msgstr ""
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
