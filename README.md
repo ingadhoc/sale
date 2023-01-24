@@ -7,9 +7,6 @@ ADHOC Odoo Sale Modules
 [//]: # (addons)
 [//]: # (end addons)
 
-Translation Status
-------------------
-[![Transifex Status](https://www.transifex.com/projects/p/ingadhoc-sale-15-0/chart/image_png)](https://www.transifex.com/projects/p/ingadhoc-sale-15-0)
 
 ----
 
