@@ -1,6 +1,6 @@
 {
     'name': 'Sale Stock Info Pop-up Color',
-    'version': "15.0.1.0.0",
+    'version': "16.0.1.0.0",
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -14,14 +14,14 @@
     ],
     'data': [
     ],
-    "assets": {
-        "web.assets_qweb": [
-            "sale_stock_info_popup_color/static/src/xml/available.xml"
-        ],
+    'assets': {
+        "web.assets_backend_legacy_lazy": [
+            'sale_stock/static/src/legacy/**/*',
+        ]
     },
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
