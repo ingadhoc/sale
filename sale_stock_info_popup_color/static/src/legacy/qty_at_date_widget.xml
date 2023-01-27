@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <templates>
-    <div t-name="sale_stock.qtyAtDate">
+    <div t-name="sale_stock.qtyAtDate.Legacy">
         <div t-att-class="!widget.data.display_qty_widget ? 'invisible' : ''">
             <a tabindex="0" t-attf-class="fa fa-area-chart {{ widget.data.free_qty_today &lt; widget.data.qty_to_deliver ? 'text-danger' : 'text-primary' }}"/>
         </div>
