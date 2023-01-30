@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="product_template_tree_view_website_sale_inherit" model="ir.ui.view">
+        <field name="name">product.template.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="website_sale.product_template_view_tree"/>
+        <field name="groups_id" eval="[(4, ref('portal_sale_distributor.group_portal_distributor'))]"/>
+        <field name="arch" type="xml">
+            <field name="website_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>
