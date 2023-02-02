@@ -12,12 +12,12 @@ class SaleOrderLine(models.Model):
     # .invoice_policy (no hacemos depends en el .invoice_policy para que si
     # lo cambiamos mas adelante no reprosese todas las ventas)
     @api.depends('order_id.type_id')
-    def _get_to_invoice_qty(self):
+    def _compute_qty_to_invoice(self):
         """
         Modificamos la funcion original para sobre escribir con la policy
         del sale type si es que viene definida distinta de by product
         """
-        super()._get_to_invoice_qty()
+        super()._compute_qty_to_invoice()
         for line in self.filtered(lambda sol: sol.order_id.state in [
             'sale', 'done'] and sol.order_id.type_id.invoice_policy not in [False, 'by_product']):
             type_policy = line.order_id.type_id.invoice_policy
