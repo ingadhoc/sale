@@ -19,7 +19,13 @@
 ##############################################################################
 {
     'name': 'Sale Barcode',
+<<<<<<< HEAD
     'version': "15.0.1.0.0",
+||||||| parent of 27cfa0cc... temp
+    'version': '13.0.1.0.0',
+=======
+    'version': '13.0.1.1.0',
+>>>>>>> 27cfa0cc... temp
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
