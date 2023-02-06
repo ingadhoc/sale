@@ -10,7 +10,7 @@
                 <field name="_barcode_scanned" widget="barcode_handler" />
             </form>
             <xpath expr="//field[@name='order_line']/tree" position="inside">
-                <field name="product_barcode" invisible="1"/>
+                <field name="product_barcode"/>
             </xpath>
             <xpath expr="//field[@name='order_line']//field[@name='product_uom_qty']" position="attributes">
                 <attribute name="options">{'barcode_events': True}</attribute>
