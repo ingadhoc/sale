@@ -5,14 +5,16 @@
 from odoo import models, _
 
 
+
 class SaleOrder(models.Model):
 
     _name = 'sale.order'
     _inherit = ['sale.order', 'barcodes.barcode_events_mixin']
 
+
+
     def on_barcode_scanned(self, barcode):
-        product = self.env[
-            'product.product'].search([('barcode', '=', barcode)])
+        product = self.env['product.product'].search(['|', ('barcode', '=', barcode), ('default_code', '=', barcode)], limit=1)
         if product:
             self._add_product(product)
         else:
