@@ -17,7 +17,7 @@ class SaleOrder(models.Model):
             # we send by context to show the price of product pack detailed for component if exist
             sale_quotation_products=True,
             whole_pack_price=True,
-            pricelist=self.pricelist_id.display_name,
+            pricelist=self.pricelist_id.id,
             # we send company in context so it filters taxes
             company_id=self.company_id.id,
             partner_id=self.partner_id.id,
