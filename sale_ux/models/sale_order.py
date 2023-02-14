@@ -68,7 +68,7 @@ class SaleOrder(models.Model):
                 price_unit = self.env['account.tax']._fix_tax_included_price_company(
                     line._get_display_price(), line.product_id.taxes_id, line.tax_id, line.company_id)
                 if self.pricelist_id.discount_policy == 'without_discount' and price_unit:
-                    discount = max(0, (price_unit - product.price) * 100 / price_unit)
+                    discount = max(0, (price_unit - product._get_contextual_price()) * 100 / price_unit)
                 else:
                     discount = 0
                 lines_to_update.append((1, line.id, {'price_unit': price_unit, 'discount': discount}))
