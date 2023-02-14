@@ -53,14 +53,14 @@
                 <attribute name="domain">['|',('partner_id','=',False), ('commercial_partner_id','=',commercial_partner_id)]</attribute>
             </field>
             <field name="validity_date" position="before">
-                <label for="update_prices"/>
+                <label for="action_update_prices"/>
                 <br/>
                 <div groups="!product.group_product_pricelist">
-                    <button name="update_prices" type="object" string=" Update Prices" help="Recompute all prices based on this pricelist" class="btn-link mb-1 px-0" icon="fa-refresh" attrs="{'invisible': [('state', 'in', ['sale', 'done','cancel'])]}"/>
+                    <button name="action_update_prices" type="object" string=" Update Prices" help="Recompute all prices based on this pricelist" class="btn-link mb-1 px-0" icon="fa-refresh" attrs="{'invisible': [('state', 'in', ['sale', 'done','cancel'])]}"/>
                 </div>
             </field>
             <xpath expr="//group[@name='order_details']//div[hasclass('o_row')]/button" position="replace">
-                <button name="update_prices" type="object" string=" Update Prices" help="Recompute all prices based on this pricelist" class="btn-link mb-1 px-0" icon="fa-refresh" attrs="{'invisible': [('state', 'in', ['sale', 'done','cancel'])]}"/>
+                <button name="action_update_prices" type="object" string=" Update Prices" help="Recompute all prices based on this pricelist" class="btn-link mb-1 px-0" icon="fa-refresh" attrs="{'invisible': [('state', 'in', ['sale', 'done','cancel'])]}"/>
             </xpath>
             <xpath expr="//group[@name='note_group']" position="before">
                 <div class="oe_right">

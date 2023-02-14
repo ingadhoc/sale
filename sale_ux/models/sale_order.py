@@ -106,7 +106,10 @@ class SaleOrder(models.Model):
         lines_to_not_update_ids = self._context.get('lines_to_not_update_ids', [])
         return lines.filtered(lambda l: l.id not in lines_to_not_update_ids)
 
-    def update_prices(self):
+    def action_update_prices(self):
+        # avoiding execution for empty records
+        if not self:
+            return
         # for compatibility with product_pack module
         pack_installed = 'pack_parent_line_id' in self.order_line._fields
         if pack_installed:
