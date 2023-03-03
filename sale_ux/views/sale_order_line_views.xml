@@ -73,7 +73,7 @@
                 <filter name="invoiced" string="Invoiced" domain="[('invoice_status','=', 'invoiced')]"/>
             </filter>
             <group>
-                <filter name="order_partner_id" string="Customer" domain="[]" context="{'group_by' : 'order_partner_id'}" />
+                <filter name="partner_id" string="Customer" domain="[]" context="{'group_by' : 'order_partner_id'}" />
                 <filter name="state" string="Status" domain="[]" context="{'group_by' : 'state'}" />
             </group>
             <search>
