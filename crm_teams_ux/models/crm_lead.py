@@ -7,14 +7,6 @@ class Lead(models.Model):
     stage_id = fields.Many2one(
         domain="['|', ('team_ids', '=', False), ('team_ids', '=', team_id)]",
         group_expand='_read_group_stage_ids')
-    user_id = fields.Many2one(domain=lambda self: self._domain_user_id())
-
-    @api.model
-    def _domain_user_id(self):
-        if self.env.user.has_group('sale_ux.group_allow_any_user_as_salesman'):
-            return [('company_ids', 'in', user_company_ids)]
-        else:
-            return []
 
     def _read_group_stage_ids(self, stages, domain, order):
         team_id = self._context.get('default_team_id')
