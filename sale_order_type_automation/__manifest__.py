@@ -33,6 +33,7 @@
     ],
     'category': 'Sale Management',
     'demo': [
+        'demo/sale_order_type_demo.xml',
     ],
     'data': [
         'views/sale_order_type_views.xml',
