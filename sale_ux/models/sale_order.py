@@ -54,28 +54,25 @@ class SaleOrder(models.Model):
             self.env['ir.config_parameter'].sudo().get_param(
                 'sale_ux.update_prices_automatically', 'False'))
         if self.order_line and update_prices_automatically:
-            # we need to user the same code as odoo in update_prices(),
+            # we need to user the same code as odoo in action_update_prices(),
             # because the "message_post" method isn't available over an onchange trigger.
-            lines_to_update = []
-            for line in self.order_line.filtered(lambda line: not line.display_type):
-                product = line.product_id.with_context(
-                    partner=self.partner_id,
-                    quantity=line.product_uom_qty,
-                    date=self.date_order,
-                    pricelist=self.pricelist_id.id,
-                    uom=line.product_uom.id
-                )
-                price_unit = self.env['account.tax']._fix_tax_included_price_company(
-                    line._get_display_price(), line.product_id.taxes_id, line.tax_id, line.company_id)
-                if self.pricelist_id.discount_policy == 'without_discount' and price_unit:
-                    discount = max(0, (price_unit - product._get_contextual_price()) * 100 / price_unit)
-                else:
-                    discount = 0
-                lines_to_update.append((1, line.id, {'price_unit': price_unit, 'discount': discount}))
-            self.update({
-                'order_line': lines_to_update,
-                'show_update_pricelist': False,
-            })
+
+            # for compatibility with product_pack module
+            pack_installed = 'pack_parent_line_id' in self.order_line._fields
+            if pack_installed:
+                pack_lines = self.order_line.with_context(update_prices=True, pricelist=self.pricelist_id.id).filtered(
+                    lambda l: l.product_id.pack_ok and l.product_id.pack_component_price != 'ignored')
+                super(SaleOrder, self.with_context(lines_to_not_update_ids=pack_lines.ids))._recompute_prices()
+                for line in pack_lines:
+                    if line.pack_parent_line_id:
+                        continue
+                    elif line.pack_child_line_ids:
+                        if not isinstance(self.id, int):
+                            self._compute_pack_lines_prices(line)
+                        else:
+                            line.expand_pack_line(write=True)
+            else:
+                super()._recompute_prices()
 
     def action_cancel(self):
         invoices = self.mapped('invoice_ids').filtered(
@@ -115,7 +112,7 @@ class SaleOrder(models.Model):
         if pack_installed:
             pack_lines = self.order_line.with_context(update_prices=True, pricelist=self.pricelist_id.id).filtered(
                 lambda l: l.product_id.pack_ok and l.product_id.pack_component_price != 'ignored')
-            super(SaleOrder, self.with_context(lines_to_not_update_ids=pack_lines.ids)).action_update_prices()
+            super(SaleOrder, self).action_update_prices()
             for line in pack_lines:
                 if line.pack_parent_line_id:
                     continue
@@ -143,10 +140,10 @@ class SaleOrder(models.Model):
                 }
                 sol = line.new(line_vals)
                 sol.order_id.pricelist_id = self.pricelist_id
-                sol.product_id_change()
+                sol._onchange_product_id_warning()
                 sol.product_uom_qty = quantity
-                sol.product_uom_change()
-                sol._onchange_discount()
+                # sol.product_uom_change()
+                # sol._onchange_discount()
                 pack_price_types = {"totalized", "ignored"}
                 sale_discount = 0.0
                 price_unit = sol.price_unit
