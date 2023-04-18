@@ -74,6 +74,17 @@ class SaleOrder(models.Model):
             else:
                 super()._recompute_prices()
 
+    @api.onchange('fiscal_position_id')
+    def _onchange_fiscal_position_id(self):
+        """
+        No utilizamos el método action_update_taxes() directamente porque no funciona
+        el message_post sin que se encuentre guardado el registro. 
+        """
+        self.ensure_one()
+        lines_to_recompute = self.order_line.filtered(lambda line: not line.display_type)
+        lines_to_recompute._compute_tax_id()
+        self.show_update_fpos = False
+
     def action_cancel(self):
         invoices = self.mapped('invoice_ids').filtered(
             lambda x: x.state not in ['cancel', 'draft'])

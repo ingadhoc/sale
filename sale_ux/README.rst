@@ -36,6 +36,7 @@ Several Improvements to sales:
 #. Add filter to be able to select an analytic account on sale orders with the same partner/commercial partner as the sale order.
 #. Add tracking to payment terms on sale orders.
 #. Add the field "Internal Notes" in the sales order form and the setting to allow propagating the "Internal Notes" to invoices.
+#. Automatically refresh taxes when changing fiscal position
 
 Installation
 ============
