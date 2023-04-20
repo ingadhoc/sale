@@ -2,7 +2,7 @@
 
 # ADHOC Sale
 
-ADHOC Odoo Sale Modules
+ADHOC Odoo Sale Modules1
 
 [//]: # (addons)
 [//]: # (end addons)
