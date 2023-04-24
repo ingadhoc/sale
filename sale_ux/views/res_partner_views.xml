@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="view_contact_allow_any_user_as_salesman" model="ir.ui.view">
+        <field name="name">res.partner.form.salesman</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="groups_id" eval="[(4, ref('group_allow_any_user_as_salesman'))]"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group/field[@name='user_id']" position='attributes'>
+                <attribute name="domain">[]</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
