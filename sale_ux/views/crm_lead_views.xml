@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<odoo>
+<!-- This will be deprecated in v15 -->
+    <record id="crm_lead_view_form" model="ir.ui.view">
+        <field name="name">crm.lead.form.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="groups_id" eval="[(4, ref('group_allow_any_user_as_salesman'))]"/>
+        <field name="arch" type="xml">
+            <field name="user_id" position="before">
+                <field name="user_company_ids" invisible="1"/>
+            </field>
+            <field name="user_id" position="attributes">
+                <attribute name="domain">[('company_ids', 'in', user_company_ids)]</attribute>
+            </field>
+        </field>
+    </record>
+
+</odoo>

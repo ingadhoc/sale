@@ -19,7 +19,13 @@
 ##############################################################################
 {
     'name': 'Sale UX',
+<<<<<<< HEAD
     'version': "15.0.1.3.0",
+||||||| parent of af4517ba (temp)
+    'version': "13.0.1.11.0",
+=======
+    'version': "13.0.1.12.0",
+>>>>>>> af4517ba (temp)
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -29,6 +35,7 @@
     'images': [
     ],
     'depends': [
+        'crm',
         'sale',
         'account_ux',
         'sale_management',
@@ -40,6 +47,9 @@
         'security/sale_ux_security.xml',
         'security/ir.model.access.csv',
         'views/sale_order_views.xml',
+        'views/res_partner_views.xml',
+        'views/crm_lead_views.xml',
+        'views/crm_team_views.xml',
         'views/sale_order_line_views.xml',
         'views/account_move_views.xml',
         'views/crm_team_views.xml',
