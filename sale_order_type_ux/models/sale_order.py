@@ -52,5 +52,5 @@ class SaleOrder(models.Model):
             so_fiscal_position = self.env['account.fiscal.position'].browse(res['fiscal_position_id'])
             if so_fiscal_position.company_id and so_fiscal_position.company_id != company:
                 res['fiscal_position_id'] = self.env['account.fiscal.position'].with_company(
-                    company.id)._get_fiscal_position(self.partner_invoice_id)
+                    company.id)._get_fiscal_position(self.partner_invoice_id).id
         return res
