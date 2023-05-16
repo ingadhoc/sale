@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale UX',
-    'version': "13.0.1.12.0",
+    'version': "13.0.1.13.0",
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -29,7 +29,6 @@
     'images': [
     ],
     'depends': [
-        'crm',
         'sale',
         'account_ux',
         'sale_management',
@@ -40,9 +39,6 @@
         'wizards/sale_advance_payment_inv_views.xml',
         'security/sale_ux_security.xml',
         'views/sale_order_views.xml',
-        'views/res_partner_views.xml',
-        'views/crm_lead_views.xml',
-        'views/crm_team_views.xml',
         'views/sale_order_line_views.xml',
         'views/account_move_views.xml',
         'views/sale_reports.xml',
