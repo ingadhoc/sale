@@ -5,7 +5,9 @@
 from odoo import models, api, fields, _
 from odoo.exceptions import UserError
 from odoo.tools.float_utils import float_compare
+import logging
 
+_logger = logging.getLogger(__name__)
 
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
@@ -163,8 +165,11 @@ class SaleOrderLine(models.Model):
                                r.location_dest_id.usage != "customer" and
                                r.to_refund))
                 for move in return_moves:
-                    quantity_returned += move.product_uom._compute_quantity(
-                        move.product_uom_qty, order_line.product_uom)
+                    try:
+                        quantity_returned += move.product_uom._compute_quantity(
+                            move.product_uom_qty, order_line.product_uom)
+                    except Exception:
+                        _logger.warning("Error trying to compute quantities in order: %s" % order_line.order_id.name)
                 bom_enable = 'bom_ids' in self.env['product.template']._fields
                 if bom_enable:
                     boms = return_moves.mapped('bom_line_id.bom_id')
