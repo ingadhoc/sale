@@ -16,10 +16,12 @@ Sale Order Type Invoicing Policy
 
 Add to sale order type invoice policy field with possible values:
 
-* Defined by Product: default odoo behaviour, invoice qty will be computed considering product configuration.
-* Ordered quantities: overwrites product behaviour so that all lines are considered as "ordered quantities" no matter product configuration, once order is confirmed all products should be invoiced.
-* Before Delivery: similar than ordered quantities but it requires a pay invoice for every line before order confirmation.
-* This module is also integrated with sale_usability_return_invoicing so that returns for "Before Delivery" or "Ordered quantities" can be returned.
+#. Defined by Product: default odoo behaviour, invoice qty will be computed considering product configuration.
+#. Prepaid- Block Reserve and Delivery: They cannot reserve or deliver products until the invoice for the total has been created and is fully paid.
+#. Prepaid- Block Delivery: They cannot deliver products until the invoice for the total has been created and is fully paid.
+#. Ordered quantities: overwrites product behaviour so that all lines are considered as "ordered quantities" no matter product configuration, once order is confirmed all products should be invoiced.
+#. Before Delivery: similar than ordered quantities but it requires a pay invoice for every line before order confirmation.
+#. This module is also integrated with sale_usability_return_invoicing so that returns for "Before Delivery" or "Ordered quantities" can be returned.
 
 Installation
 ============
