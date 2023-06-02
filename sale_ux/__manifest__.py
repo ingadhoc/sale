@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale UX',
-    'version': "16.0.1.1.0",
+    'version': "16.0.1.2.0",
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -41,7 +41,6 @@
         'security/ir.model.access.csv',
         'views/sale_order_views.xml',
         'views/sale_order_line_views.xml',
-        'views/crm_team_views.xml',
         'views/sale_reports.xml',
         'views/res_partner_view.xml',
         'data/ir_config_parameter_data.xml',
