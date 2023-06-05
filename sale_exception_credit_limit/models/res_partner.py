@@ -60,7 +60,8 @@ class ResPartner(models.Model):
                     ('move_id.partner_id.commercial_partner_id', '=', self.commercial_partner_id.id),
                     ('move_id.move_type', 'in', ['out_invoice', 'out_refund']),
                     ('move_id.state', '=', 'draft'),
-                    ('sale_line_ids', '=', False)]
+                    '|',('sale_line_ids', '=', False),
+                    ('sale_line_ids.order_id.invoice_status', '=', 'invoiced')]
             draft_invoice_lines = self.env['account.move.line'].search(domain)
             draft_invoice_lines_amount = 0.0
             for line in draft_invoice_lines:
