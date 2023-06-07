@@ -112,7 +112,10 @@ class SaleOrder(models.Model):
                     else:
                         line.expand_pack_line(write=True)
 
-            line.product_uom_change()
+            if pack_installed and line.product_id.pack_ok:
+                continue
+            else:
+                line.product_uom_change()
             line._onchange_discount()
         return True
 
