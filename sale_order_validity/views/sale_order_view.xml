@@ -34,7 +34,9 @@
         <field name="inherit_id" ref="view_order_form_validity"/>
         <field name="arch" type="xml">
             <field name="date_order" position="replace">
-            <label for="date_order" string="Quotation/Order Date" class="o_form_label" groups="!base.group_no_one"/>
+            <div class="o_td_label" groups="!base.group_no_one" attrs="{'invisible': [('state', 'in', ['sale', 'done', 'cancel'])]}">
+                <label for="date_order" string="Quotation/Order Date"/>
+            </div>
                 <field name="date_order" nolabel="1"  groups="base.group_no_one, !sales_team.group_sale_manager" readonly="1" attrs="{'invisible': [('state', 'in', ['sale', 'done', 'cancel'])]}"/>
                 <field name="date_order" nolabel="1" groups="base.group_no_one, sales_team.group_sale_manager" readonly="0" attrs="{'invisible': [('state', 'in', ['sale', 'done', 'cancel'])]}"/>
             </field>
