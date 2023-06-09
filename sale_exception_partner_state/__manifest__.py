@@ -32,6 +32,7 @@
         'wizards/res_config_settings_views.xml',
     ],
     'demo': [
+        'data/res_partner_demo.xml',
     ],
     'installable': True,
     'auto_install': True,
