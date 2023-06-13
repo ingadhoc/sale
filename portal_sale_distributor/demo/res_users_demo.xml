@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="portal_backend.user_portal_advanced" model="res.users" context="{'no_reset_password': True}">
+        <field name="groups_id" eval="[(4, ref('portal_sale_distributor.group_portal_backend_distributor'))]"/>
+    </record>
+ </odoo>
