@@ -12,7 +12,7 @@
         id="my_account"
         name="My Account"
         action="action_my_account"
-        groups="group_portal_distributor"
+        groups="group_portal_backend_distributor"
         web_icon="account,static/description/icon.png"
         />
 
