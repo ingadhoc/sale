@@ -26,7 +26,7 @@ class SaleOrderLine(models.Model):
     # TODO do like in invoice line? Make normal field with constraint and
     # oncahnge?
     discount = fields.Float(
-        compute='_compute_discount',
+        compute='_compute_discounts',
         store=True,
         readonly=True,
         # agregamos states vacio porque lo hereda de la definicion anterior
@@ -83,7 +83,7 @@ class SaleOrderLine(models.Model):
                 })
 
     @api.depends('discount1', 'discount2', 'discount3')
-    def _compute_discount(self):
+    def _compute_discounts(self):
         for rec in self:
             discount_factor = 1.0
             for discount in [rec.discount1, rec.discount2, rec.discount3]:

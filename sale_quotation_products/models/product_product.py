@@ -117,10 +117,8 @@ class ProductProduct(models.Model):
         if sale_quotation_products and view_type == 'tree':
             # make all fields not editable
             for node in arch.xpath("//field[@name]"):
-                if not node.get("modifiers"):
-                    continue
                 node.set('readonly', '1')
-                modifiers = json.loads(node.get("modifiers"))
+                modifiers = json.loads(node.get("modifiers") or "{}")
                 modifiers['readonly'] = True
                 node.set("modifiers", json.dumps(modifiers))
 
@@ -141,7 +139,7 @@ class ProductProduct(models.Model):
                     'icon': 'fa-plus',
                     'title': _('Add one'),
                 }))
-         
+
             # add button tu open form
             placeholder = arch.xpath("//tree")[0]
             placeholder.append(

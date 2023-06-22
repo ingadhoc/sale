@@ -1,4 +1,4 @@
-from odoo import fields, models, SUPERUSER_ID
+from odoo import fields, models, SUPERUSER_ID, api
 
 
 class Lead(models.Model):

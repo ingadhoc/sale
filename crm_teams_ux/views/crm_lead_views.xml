@@ -5,10 +5,20 @@
         <field name="model">crm.lead</field>
         <field name="inherit_id" ref="crm.crm_lead_view_form"/>
         <field name="arch" type="xml">
-            <field name="user_id" position="attributes">
+            <xpath expr="//group//field[@name='user_id']" position="attributes">
                 <attribute name="domain">[('company_ids', 'in', user_company_ids)]</attribute>
                 <attribute name="groups">sale_ux.group_allow_any_user_as_salesman</attribute>
-            </field>
+            </xpath>
+            <xpath expr="//field[@name='team_id']//../field[@name='user_id']" position="attributes">
+                <attribute name="domain">[('company_ids', 'in', user_company_ids)]</attribute>
+                <attribute name="groups">sale_ux.group_allow_any_user_as_salesman</attribute>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="user_id" groups="!sale_ux.group_allow_any_user_as_salesman" context="{'default_sales_team_id': team_id}" widget="many2one_avatar_user"/>
+            </xpath>
+            <xpath expr="//field[@name='team_id']//../field[@name='user_id']" position="after">
+                <field name="user_id" groups="!sale_ux.group_allow_any_user_as_salesman" context="{'default_sales_team_id': team_id}" widget="many2one_avatar_user"/>
+            </xpath>
         </field>
     </record>
 

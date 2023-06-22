@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.sale_exception_credit_limit</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="40"/>
+        <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Ocultamos default de sale_exception por comportamiento no esperado:
+            Si seteamos un valor x en default, siempre que esté este seteado en el partner
+            se inactiva el credit limit. Ocultamos para que quede siempre en 0 y asi replica
+            lo que hacemos en 15.0 -->
+            <xpath expr="//field[@name='account_default_credit_limit']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

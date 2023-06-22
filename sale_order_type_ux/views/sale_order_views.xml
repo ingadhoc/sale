@@ -4,10 +4,9 @@
         <field name="name">portal sale.order.form</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale_order_type.sot_view_order_form"/>
-        <field name="groups_id" eval="[(4, ref('base.group_portal'))]"/>
         <field name="arch" type="xml">
             <field name="type_id" position="attributes">
-                <attribute name="invisible">1</attribute>
+            <attribute name="groups">base.group_user</attribute>
             </field>
         </field>
     </record>

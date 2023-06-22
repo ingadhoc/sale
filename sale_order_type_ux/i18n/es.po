@@ -3,53 +3,62 @@
 # 	* sale_order_type_ux
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2021
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2023
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 13.0\n"
+"Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-18 21:19+0000\n"
-"PO-Revision-Date: 2020-05-08 20:08+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2021\n"
-"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
+"POT-Creation-Date: 2023-04-14 09:55+0000\n"
+"PO-Revision-Date: 2023-04-10 19:30+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2023\n"
+"Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #. module: sale_order_type_ux
-#: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__analytic_account_id
-msgid "Analytic Account"
-msgstr "Cuenta Analítica"
+#: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__active
+msgid "Active"
+msgstr "Activo"
 
 #. module: sale_order_type_ux
-#: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__analytic_tag_ids
-msgid "Analytic Tags"
-msgstr "Etiquetas Analíticas"
+#: model_terms:ir.ui.view,arch_db:sale_order_type_ux.sale_order_type_form_view
+#: model_terms:ir.ui.view,arch_db:sale_order_type_ux.sale_order_type_search_view
+msgid "Archived"
+msgstr "Archivado"
 
 #. module: sale_order_type_ux
-#: model:ir.model.fields,help:sale_order_type_ux.field_sale_order_type__analytic_account_id
-msgid "Default analytic account that will be used on new sale order"
+#: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__journal_id
+msgid "Billing Journal"
+msgstr "Diario de facturación"
+
+#. module: sale_order_type_ux
+#: model:ir.model.fields,help:sale_order_type_ux.field_sale_order_type__journal_id
+msgid ""
+"Billing journal to be used by default. No matter invoice being created "
+"automatically or manually. If no journal is set here, default journal will "
+"be used"
 msgstr ""
 
 #. module: sale_order_type_ux
-#: model:ir.model.fields,help:sale_order_type_ux.field_sale_order_type__analytic_tag_ids
-msgid "Default analytic tags that will be used on new sale order lines"
+#: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__fiscal_position_id
+msgid "Fiscal Position"
+msgstr "Posición Fiscal"
+
+#. module: sale_order_type_ux
+#: model:ir.model.fields,help:sale_order_type_ux.field_sale_order_type__fiscal_position_id
+msgid ""
+"If you choose a fiscal position then this fiscal positioon would be used as "
+"default instead of the automatically detected or setted on the partner"
 msgstr ""
-"Etiquetas analíticas predeterminadas que se utilizarán en nuevas líneas de "
-"orden de venta"
 
 #. module: sale_order_type_ux
 #: model:ir.model,name:sale_order_type_ux.model_account_move
-msgid "Journal Entries"
-msgstr "Asientos Contables"
-
-#. module: sale_order_type_ux
-#: model:ir.model.fields,field_description:sale_order_type_ux.field_account_move__sale_type_id
-msgid "Sale Type"
-msgstr ""
+msgid "Journal Entry"
+msgstr "Asiento contable"
 
 #. module: sale_order_type_ux
 #: model:ir.model,name:sale_order_type_ux.model_sale_advance_payment_inv
@@ -69,17 +78,22 @@ msgstr "Línea de pedido de venta"
 #. module: sale_order_type_ux
 #: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__sequence
 msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: sale_order_type_ux
+#: model:ir.model.fields,help:sale_order_type_ux.field_sale_order_type__active
+msgid "Set active to false to hide the type of sale without removing it."
 msgstr ""
 
 #. module: sale_order_type_ux
 #: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__team_id
 msgid "Team"
-msgstr ""
+msgstr "Equipo"
 
 #. module: sale_order_type_ux
 #: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order__type_id
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #. module: sale_order_type_ux
 #: model:ir.model,name:sale_order_type_ux.model_sale_order_type

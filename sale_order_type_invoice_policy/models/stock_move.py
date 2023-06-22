@@ -8,7 +8,7 @@ from odoo import models
 class StockMove(models.Model):
     _inherit = 'stock.move'
 
-    def _action_assign(self):
+    def _action_assign(self, force_qty=False):
         """
         For the cron call check if the moves needs to be reserved or not depends of the policy in the sale order type.
         """
@@ -19,4 +19,4 @@ class StockMove(models.Model):
             # do not call super if not self because it raise an error
             if not self:
                 return True
-        return super()._action_assign()
+        return super()._action_assign(force_qty)

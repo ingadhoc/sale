@@ -17,12 +17,11 @@ Sale Order Type Ux
 * This module adds in the list view of sale.order.type the field sequence to be able to sort by that field.
 * We also make type field on sale orders readonly on states different from draft and sent.
 * Also add tracking to same field.
-* Auto-complete the same Analytic Tag setted on order type.
-* Move sale type field after date instead of after currency
-* Add new behaivor to the onchage sale type in invoice, to change the company.
+* Add new behavior to the onchage sale type in invoice, to change the company.
 * Set in Invoice view form the field "Sale Type" readonly to states different than "draft".
 * Add fiscal position on sale types
-* Integration betweeen Portal and Sale Order Type module:
+* Allows select journal from another company
+* Integration between Portal and Sale Order Type module:
 
  - New access record to sale type model for portal users
  - Make invisible sale order type for portal users
