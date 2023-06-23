@@ -17,6 +17,9 @@ CRM UX
 This adds some features to CRM of odoo:
 
 #. Show the field "Company" in the oportunities view form.
+#. Allows you to collect information for your opportunities through surveys
+#. Select a previusly created survey (survey app)
+#. Press the "start interview" button to complete the survey or print the survey from the "print interview" button
 
 Installation
 ============
