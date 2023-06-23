@@ -24,7 +24,7 @@ class Applicant(models.Model):
             response = self.response_id
         # grab the token of the response and start surveying
         return self.survey_id.with_context(
-            survey_token=response.token).action_start_survey()
+            survey_token=response.access_token).action_start_survey()
 
     def action_print_survey(self):
         """ If response is available then print"""
@@ -34,4 +34,4 @@ class Applicant(models.Model):
         else:
             response = self.response_id
             return self.survey_id.with_context(
-                survey_token=response.token).action_print_survey()
+                survey_token=response.access_token).action_print_survey()
