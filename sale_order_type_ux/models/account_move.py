@@ -21,7 +21,7 @@ class AccountMove(models.Model):
             new_currency = self.journal_id.currency_id
             if new_currency != self.currency_id:
                 self.currency_id = new_currency
-                self._onchange_currency()
+                self._compute_currency_rate()
         if self.state == 'draft' and self._get_last_sequence(lock=False) and self.name and self.name != '/':
             self.name = '/'
 
