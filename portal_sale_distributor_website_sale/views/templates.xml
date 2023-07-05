@@ -15,13 +15,12 @@
         </t>
         <a class="btn btn-secondary mb32" position="replace"/>
         <a href="/shop/confirm_order" position="replace"/>
-
     </template>
 
     <template id="portal_address_kanban" inherit_id="website_sale.address_kanban" primary="True">
         <div class="card-footer" position="replace"/>
-        <a class="btn btn-link float-right p-0 js_edit_address no-decoration" position="replace">
-            <a t-att-href="'/portal/address/?partner_id='+str(contact.id)" t-if="not actual_partner or (ship.id in actual_partner.child_ids.ids)" class='btn btn-link pull-right fa fa-edit no-decoration' title="Edit this address"></a>
+        <a class="btn btn-link float-end p-0 js_edit_address no-decoration" position="replace">
+            <a t-att-href="'/portal/address/?partner_id='+str(contact.id)" t-if="not actual_partner or (ship.id in actual_partner.child_ids.ids)" class="btn btn-link float-end p-0 fa fa-edit no-decoration" title="Edit this address"></a>
         </a>
     </template>
 

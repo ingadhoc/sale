@@ -2,7 +2,7 @@
 
     <template id="sale_order_website_link" name="Link to backend" inherit_id="portal.user_dropdown">
         <xpath expr="//a[@id='o_logout']" position="before">
-            <a href="/portal/addresses" class="dropdown-item" groups="portal_sale_distributor.group_portal_distributor" role="menuitem">My Adresses</a>
+            <a href="/portal/addresses" class="dropdown-item" groups="portal_sale_distributor.group_portal_backend_distributor" role="menuitem">My Adresses</a>
         </xpath>
     </template>
 
