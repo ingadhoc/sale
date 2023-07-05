@@ -10,45 +10,38 @@ from odoo.addons.website_sale.controllers.main import WebsiteSale
 
 class WebsiteSalePortal(WebsiteSale):
 
+
     @http.route(['/portal/address'], type='http', methods=['GET', 'POST'],
                 auth="public", website=True)
     def portal_address(self, **kw):
-        Partner = request.env[
-            'res.partner'].with_context(show_address=1).sudo()
+        Partner = request.env['res.partner'].with_context(show_address=1).sudo()
         order = request.env['sale.order'].new({
             'partner_id': request.env.user.partner_id.commercial_partner_id.id
         })
         order.pricelist_id = order.partner_id.property_product_pricelist \
             and order.partner_id.property_product_pricelist.id or False
         mode = (False, False)
-        def_country_id = order.partner_id.country_id
         values, errors = {}, {}
 
         partner_id = int(kw.get('partner_id', -1))
-
         # IF PUBLIC ORDER
         if order.partner_id.id == request.website.user_id.sudo().partner_id.id:
             mode = ('new', 'billing')
-            country_code = request.session['geoip'].get('country_code')
-            if country_code:
-                def_country_id = request.env['res.country'].search(
-                    [('code', '=', country_code)], limit=1)
-            else:
-                def_country_id = request.website.user_id.sudo().country_id
         # IF ORDER LINKED TO A PARTNER
         else:
             if partner_id > 0:
                 if partner_id == order.partner_id.id:
                     mode = ('edit', 'billing')
                 else:
-                    shippings = Partner.search(
-                        [('id', 'child_of',
-                          order.partner_id.commercial_partner_id.ids)])
-                    if partner_id in shippings.mapped('id'):
+                    shippings = Partner.search([('id', 'child_of', order.partner_id.commercial_partner_id.ids)])
+                    if order.partner_id.commercial_partner_id.id == partner_id:
+                        mode = ('new', 'shipping')
+                        partner_id = -1
+                    elif partner_id in shippings.mapped('id'):
                         mode = ('edit', 'shipping')
                     else:
                         return Forbidden()
-                if mode:
+                if mode and partner_id != -1:
                     values = Partner.browse(partner_id)
             elif partner_id == -1:
                 mode = ('new', 'shipping')
@@ -57,42 +50,35 @@ class WebsiteSalePortal(WebsiteSale):
 
         # IF POSTED
         if 'submitted' in kw:
-            pre_values = self.values_preprocess(order, mode, kw)
-            errors, error_msg = self.checkout_form_validate(
-                mode, kw, pre_values)
-            post, errors, error_msg = self.values_postprocess(
-                order, mode, pre_values, errors, error_msg)
+            pre_values = self.values_preprocess(kw)
+            errors, error_msg = self.checkout_form_validate(mode, kw, pre_values)
+            post, errors, error_msg = self.values_postprocess(order, mode, pre_values, errors, error_msg)
             if errors:
                 errors['error_message'] = error_msg
                 values = kw
             else:
                 partner_id = self._portal_address_form_save(mode, post, kw)
+                if isinstance(partner_id, Forbidden):
+                    return partner_id
             if mode[1] == 'billing':
                 order.partner_id = partner_id
-                order.onchange_partner_id()
             elif mode[1] == 'shipping':
                 order.partner_shipping_id = partner_id
 
-            order.message_partner_ids = [
-                (4, partner_id),
-                (3, request.website.partner_id.id)]
+            order.message_partner_ids = [(4, partner_id), (3, request.website.partner_id.id)]
             if not errors:
-                return request.redirect(
-                    kw.get('callback') or '/portal/addresses')
+                return request.redirect(kw.get('callback') or '/portal/addresses')
 
-        country = 'country_id' in values and values['country_id'] != '' \
-            and request.env['res.country'].browse(int(values['country_id']))
-        country = country and country.exists() or def_country_id
         render_values = {
             'website_sale_order': order,
             'partner_id': partner_id,
             'mode': mode,
             'checkout': values,
-            'country': country,
-            'countries': country.get_website_sale_countries(mode=mode[1]),
-            "states": country.get_website_sale_states(mode=mode[1]),
             'error': errors,
             'callback': kw.get('callback'),
+            'only_services': order and order.only_services,
+            'account_on_checkout': request.website.account_on_checkout,
+            'is_public_user': request.website.is_public_user()
         }
         # para evitar modulo puente con l10n_ar_website_sale lo hacemos asi
         if request.env['ir.module.module'].sudo().search([
@@ -110,9 +96,8 @@ class WebsiteSalePortal(WebsiteSale):
                 'afip_responsabilities': afip_responsabilities,
                 'partner': Partner,
             })
-        return request.render(
-            "portal_sale_distributor_website_sale.portal_address",
-            render_values)
+        render_values.update(self._get_country_related_render_values(kw, render_values))
+        return request.render("portal_sale_distributor_website_sale.portal_address", render_values)
 
     def _portal_address_form_save(self, mode, checkout, all_values):
         Partner = request.env['res.partner']
