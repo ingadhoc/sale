@@ -44,10 +44,35 @@ class SaleOrder(models.Model):
                 for node in fields:
                     node.set('options', "{'no_create': True, 'no_open': True}")
 
+                # cambiamos atributos solo para portal
+                fields = (arch.xpath("//field[@name='price_unit']")
+                        + arch.xpath("//field[@name='discount']")
+                        + arch.xpath("//field[@name='discount1']")
+                        + arch.xpath("//field[@name='discount2']")
+                        + arch.xpath("//field[@name='discount3']")
+                        + arch.xpath("//field[@name='tax_id']")
+                        + arch.xpath("//field[@name='validity_days']"))
+                for node in fields:
+                    node.set('readonly', '1')
+                    modifiers = json.loads(node.get("modifiers") or "{}")
+                    modifiers['readonly'] = True
+                    node.set("modifiers", json.dumps(modifiers))
+
                 # ocultamos header original y pestaña otra información
                 page = (arch.xpath("//header[1]")
                       + arch.xpath("//page[@name='other_information']"))
                 for node in page:
+                    node.set('invisible', '1')
+                    modifiers = json.loads(node.get("modifiers") or "{}")
+                    modifiers['invisible'] = True
+                    node.set("modifiers", json.dumps(modifiers))
+
+                # ocultamos campos de módulos de los cuales no depende
+                fields = (arch.xpath("//field[@name='ignore_exception']")
+                        + arch.xpath("//label[@for='recurrence_id']")
+                        + arch.xpath("//field[@name='recurrence_id']")
+                        + arch.xpath("//button[@name='update_date_prices_and_validity']"))
+                for node in fields:
                     node.set('invisible', '1')
                     modifiers = json.loads(node.get("modifiers") or "{}")
                     modifiers['invisible'] = True
