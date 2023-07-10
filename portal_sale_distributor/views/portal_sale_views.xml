@@ -46,7 +46,9 @@
             <field name="validity_date" position="after">
                 <field name="validity_date" attrs="{'invisible':[('state', 'in', ('draft', 'sent'))]}" groups="portal_sale_distributor.group_portal_backend_distributor"/>
             </field>
-
+            <xpath expr="//button[@name='action_update_prices']" position="attributes">
+                <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
+            </xpath>
             <xpath expr="//button[@name='action_open_delivery_wizard']" position="attributes">
                 <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
             </xpath>
@@ -76,15 +78,6 @@
             </field>
             <xpath expr="//field[@name='order_line']/tree//widget[@name='qty_at_date_widget']" position="attributes">
                 <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
-            </xpath>
-            <xpath expr="//field[@name='order_line']/tree//field[@name='discount']" position="attributes">
-                <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
-            </xpath>
-            <xpath expr="//field[@name='order_line']/tree//field[@name='discount']" position="after">
-                <field name="discount" string="Disc.%"
-                       groups="portal_sale_distributor.group_portal_backend_distributor"
-                       optional="show" widget="sol_discount"
-                       readonly="1" force_save="1"/>
             </xpath>
             <button name="%(sale_ux.action_sale_global_discount_wizard_form)d" position="attributes">
                 <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>

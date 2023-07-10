@@ -15,7 +15,9 @@ class ProductProduct(models.Model):
         if view_type == 'tree':
             if self.env.user.has_group('portal_sale_distributor.group_portal_backend_distributor'):
                 # ocultamos campos de módulos de los cuales no depende
-                fields = arch.xpath("//field[@name='taxed_lst_price']")
+                fields = (arch.xpath("//field[@name='taxed_lst_price']")
+                        + arch.xpath("//field[@name='website_id']")
+                        + arch.xpath("//field[@name='is_published']"))
                 for node in fields:
                     node.set('invisible', '1')
                     modifiers = json.loads(node.get("modifiers") or "{}")
