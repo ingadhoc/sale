@@ -82,9 +82,12 @@ class SaleOrderLine(models.Model):
                     'discount1': vals.get('discount'),
                 })
 
-    @api.depends('discount1', 'discount2', 'discount3')
+    @api.depends('discount1', 'discount2', 'discount3', 'discount', 'product_id', 'product_uom', 'product_uom_qty')
     def _compute_discounts(self):
+        super()._compute_discount()
         for rec in self:
+            if rec.discount and not rec.discount1 and not rec.discount2 and not rec.discount3:
+                rec.discount1 = rec.discount
             discount_factor = 1.0
             for discount in [rec.discount1, rec.discount2, rec.discount3]:
                 discount_factor = discount_factor * (
