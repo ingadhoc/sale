@@ -1,6 +1,6 @@
 {
     'name': 'Sale Stock Info Pop-up Color',
-    'version': "16.0.1.1.0",
+    'version': "16.0.1.2.0",
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -15,8 +15,12 @@
     'data': [
     ],
     'assets': {
+        'web.assets_backend': [
+            'sale_stock_info_popup_color/static/src/**/*',
+            ('remove', 'sale_stock_info_popup_color/static/src/legacy/**/*'),
+        ],
         "web.assets_backend_legacy_lazy": [
-            'sale_stock/static/src/legacy/**/*',
+            'sale_stock_info_popup_color/static/src/legacy/**/*',
         ]
     },
     'demo': [
