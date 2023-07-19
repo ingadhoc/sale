@@ -36,6 +36,7 @@ class SaleOrder(models.Model):
                                      for line in order.order_line)
 
     def action_cancel(self):
+        self = self.with_context(cancel_from_order=True)
         for order in self.filtered(lambda order: order.picking_ids.filtered(
                 lambda x: x.state == 'done')):
             raise UserError(_(
