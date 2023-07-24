@@ -86,7 +86,7 @@ class SaleOrder(models.Model):
                     pick.new_force_availability()
                 elif rec.type_id.picking_atomation == 'validate_no_force':
                     products = []
-                    for move in pick.mapped('move_lines'):
+                    for move in pick.mapped('move_ids'):
                         if move.state != 'assigned':
                             products.append(move.product_id)
                     if products:
@@ -96,7 +96,7 @@ class SaleOrder(models.Model):
                             ' force availability.\nProducts:\n* %s\n '
                         ) % ('\n *'.join(x.name for x in products)))
                     for op in pick.mapped('move_line_ids'):
-                        op.qty_done = op.product_uom_qty
+                        op.qty_done = op.reserved_uom_qty
                 pick.button_validate()
                 # append action records to print the reports of the pickings
                 #  involves
