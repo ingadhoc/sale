@@ -17,7 +17,7 @@ class ResPartner(models.Model):
 
     @api.constrains('credit_limit', 'use_partner_credit_limit')
     def check_credit_limit_group(self):
-        if not self.env.user.has_group('sale_exception_credit_limit.credit_config'):
+        if not self.env.user.has_group('sale_exception_credit_limit.credit_config') and not self._context.get('website_id'):
             raise ValidationError('People without Credit limit Configuration Rights cannot modify credit limit parameters')
 
     @api.depends_context('company')
