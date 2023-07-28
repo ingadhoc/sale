@@ -52,9 +52,11 @@
             <field name="analytic_account_id" position="attributes">
                 <attribute name="domain">['|',('partner_id','=',False), ('commercial_partner_id','=',commercial_partner_id)]</attribute>
             </field>
-            <field name="validity_date" position="before">
-                <button name="action_update_prices" type="object" string=" Update Prices" groups="!product.group_product_pricelist" icon="fa-refresh" attrs="{'invisible': [('state', 'not in', ['draft', 'sent'])]}"/>
-            </field>
+            <group name="order_details" position="inside">
+                <div groups="!product.group_product_pricelist">
+                  <button name="action_update_prices" type="object" string=" Update Prices" icon="fa-refresh" attrs="{'invisible': [('state', 'not in', ['draft', 'sent'])]}"/>
+                </div>
+            </group>
             <xpath expr="//group[@name='order_details']//div[hasclass('o_row')]/button" position="attributes">
                 <attribute name="attrs">{'invisible': [('state','not in',['draft','sent'])]}</attribute>
                 <attribute name="confirm"></attribute>
