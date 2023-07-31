@@ -4,6 +4,7 @@
 ##############################################################################
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
+import json
 
 
 
@@ -15,10 +16,40 @@ class ResPartner(models.Model):
         groups='account.group_account_invoice,account.group_account_readonly'
     )
 
-    @api.constrains('credit_limit', 'use_partner_credit_limit')
-    def check_credit_limit_group(self):
-        if not self.env.user.has_group('sale_exception_credit_limit.credit_config') and not self._context.get('website_id'):
-            raise ValidationError('People without Credit limit Configuration Rights cannot modify credit limit parameters')
+    use_partner_credit_limit = fields.Boolean(groups='sale_exception_credit_limit.credit_config',)
+
+    credit_limit = fields.Float(
+        groups='sale_exception_credit_limit.credit_config')
+
+    credit_limit_only_view = fields.Float(compute='_compute_limit')
+    use_partner_credit_limit_only_view = fields.Boolean(string='Partner Limit',
+                                                        compute='_compute_use_limit')
+
+    def _compute_limit(self):
+         self.credit_limit_only_view = self.sudo().credit_limit
+
+    def _compute_use_limit(self):
+         self.use_partner_credit_limit_only_view = self.sudo().use_partner_credit_limit
+
+    @api.model
+    def _get_view(self, view_id=None, view_type='form', **options):
+        arch, view = super()._get_view(view_id, view_type, **options)
+        if view_type == 'form':
+            if self.env.user.has_group('sale_exception_credit_limit.credit_config'):
+                invisible_fields = (arch.xpath("//group[@name='credit_limits_only_view']"))
+                for node in invisible_fields:
+                    node.set('invisible', '1')
+                    modifiers = json.loads(node.get("modifiers") or "{}")
+                    modifiers['invisible'] = True
+                    node.set("modifiers", json.dumps(modifiers))
+            if not self.env.user.has_group('sale_exception_credit_limit.credit_config'):
+                invisible_fields = (arch.xpath("//group[@name='credit_limits']"))
+                for node in invisible_fields:
+                    node.set('invisible', '1')
+                    modifiers = json.loads(node.get("modifiers") or "{}")
+                    modifiers['invisible'] = True
+                    node.set("modifiers", json.dumps(modifiers))
+        return arch, view
 
     @api.depends_context('company')
     def _compute_credit_with_confirmed_orders(self):
