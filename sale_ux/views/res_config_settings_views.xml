@@ -1,0 +1,22 @@
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='analytic']" position="inside">
+                <div class="col-12 col-lg-6 o_setting_box">
+                    <div class="o_setting_left_pane">
+                        <field name="analytic_account_without_company"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="analytic_account_without_company"/>
+                        <div class="text-muted">
+                            Al confirmar ventas, crear cuenta analitica sin compañía
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

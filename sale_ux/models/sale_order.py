@@ -193,3 +193,27 @@ class SaleOrder(models.Model):
             res -= res.filtered(lambda x: x.display_type == 'line_note')
 
         return res
+
+    def _prepare_analytic_account_data(self, prefix=None):
+        if self.env['ir.config_parameter'].sudo().get_param(
+            'sale_ux.analytic_account_without_company', 'False') == 'True':
+            self.ensure_one()
+            name = self.name
+            if prefix:
+                name = prefix + ": " + self.name
+            plan = self.env['account.analytic.plan'].sudo().search([
+                ('company_id', '=', False)
+            ], limit=1)
+            if not plan:
+                plan = self.env['account.analytic.plan'].sudo().create({
+                    'name': 'Default',
+                    'company_id': False,
+                })
+            return {
+                'name': name,
+                'code': self.client_order_ref,
+                'company_id': False,
+                'plan_id': plan.id,
+                'partner_id': self.partner_id.id,
+            }
+        return super(SaleOrder, self)._prepare_analytic_account_data(prefix=prefix)
