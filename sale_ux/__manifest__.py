@@ -43,6 +43,7 @@
         'views/sale_order_line_views.xml',
         'views/sale_reports.xml',
         'views/res_partner_view.xml',
+        'views/res_config_settings_views.xml',
         'data/ir_config_parameter_data.xml',
     ],
     'demo': [
