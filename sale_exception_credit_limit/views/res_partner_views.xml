@@ -13,6 +13,16 @@
             <field name="credit" position="after">
                 <field name="credit_with_confirmed_orders" attrs="{'invisible': [('use_partner_credit_limit', '=', False)]}"/>
             </field>
+            <group name="credit_limits" position="after">
+            <group string="Credit Limits" name="credit_limits_only_view" groups="account.group_account_invoice,account.group_account_readonly" attrs="{'invisible': [('show_credit_limit', '=', False)]}">
+                <field name="credit_with_confirmed_orders" attrs="{'invisible': [('use_partner_credit_limit_only_view', '=', False)]}"/>
+                <label for="use_partner_credit_limit_only_view"/>
+                <div class="o_row">
+                    <field name="use_partner_credit_limit_only_view" />
+                    <field name="credit_limit_only_view" class="oe_inline" attrs="{'invisible': [('use_partner_credit_limit_only_view', '=', False)]}"/>
+                </div>
+            </group>
+            </group>
         </field>
     </record>
 
