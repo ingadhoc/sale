@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <template id="sale_order_portal_template" inherit_id="sale.sale_order_portal_template">
+        <xpath expr="//ul[hasclass('list-group')]/li" position="replace">
+            <li class="list-group-item flex-grow-1">
+                <div class="o_download_pdf btn-toolbar flex-sm-nowrap">
+                    <div class="btn-group flex-grow-1 mr-1 mb-1">
+                        <a class="btn btn-secondary btn-block o_download_btn" t-att-href="sale_order.get_portal_url(report_type='pdf', download=True)" title="Download">
+                            <i class="fa fa-download"/>
+                             Download</a>
+                    </div>
+                    <div class="btn-group flex-grow-1 mb-1">
+                        <a class="btn btn-secondary btn-block o_print_btn o_portal_invoice_print" t-att-href="sale_order.get_portal_url(report_type='pdf')" id="print_invoice_report" title="Print" target="_blank">
+                            <i class="fa fa-print"/>
+                        Print</a>
+                    </div>
+                </div>
+            </li>
+        </xpath>
+        <xpath expr="//div[hasclass('justify-content-center')]/t/div/a" position="attributes">
+            <attribute name="id">modalacceptbuttonsign</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('justify-content-center')]/div/a" position="attributes">
+            <attribute name="id">o_sale_portal_paynow</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('justify-content-center')]" position="before">
+            <t  t-if="not is_html_empty(sale_order.note)">
+                <div style="display:flex;flex-direction:column;margin-top:15px" id="tyc_div">
+                    <span id="tycSpan">Debe aceptar los términos y condiciones para continuar:</span>
+                    <div>
+                        <input style="margin-top:5px" type="checkbox" name="x_accept_tyc" id="x_accept_tyc"/>
+                        <span style="font-weight:bold"> Acepto los Términos y Condiciones</span>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+        <xpath expr="//div[hasclass('o_portal_sale_sidebar')]" position="after">
+            <script>
+                var terms = document.getElementById("terms");
+                if(terms !== null ){
+                    var tycDiv = document.getElementById("tyc_div");
+                    var tycSpan = document.getElementById("tycSpan");
+                    var input = document.getElementById("x_accept_tyc");
+                    var button = document.getElementById("modalacceptbuttonsign") ? document.getElementById("modalacceptbuttonsign"): document.getElementById("o_sale_portal_paynow");
+                    var alertSuccess = document.getElementsByClassName("alert-success")[0];
+                    var alertWarning = document.getElementsByClassName("alert-warning")[0];
+                    if(button !== null &amp;&amp; typeof(alertSuccess) == 'undefined' &amp;&amp; typeof(alertWarning) == 'undefined'){
+                        button.disabled = true;
+                        button.dataset['bsTarget'] = "";
+                        button.dataset['bsToggle'] = "";
+                        button.style.backgroundColor = "#787878";
+                        button.style.borderColor = "#787878";
+                        
+                        input.onclick = function(){
+                            if(input.checked){
+                                button.disabled = false;
+                                button.dataset['bsTarget'] = "#modalaccept";
+                                button.dataset['bsToggle'] = "modal";
+                                button.style.backgroundColor = "";
+                                button.style.borderColor = "";
+                            }else {
+                                button.disabled = true;
+                                button.dataset['bsTarget'] = "";
+                                button.dataset['bsToggle'] = "";
+                                button.style.backgroundColor = "#787878";
+                                button.style.borderColor = "#787878";
+                            }
+                        };
+                    }else{
+                        tycSpan.innerText = "Usted ha aceptado los términos y condiciones";
+                        input.checked = true;
+                        input.disabled = true;
+                        tycDiv.scrollIntoView({behavior: 'smooth'})
+                    }
+                }
+            </script>
+        </xpath>
+    </template>
+</odoo>
