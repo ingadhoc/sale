@@ -54,3 +54,10 @@ class SaleOrder(models.Model):
                 res['fiscal_position_id'] = self.env['account.fiscal.position'].with_company(
                     company.id)._get_fiscal_position(self.partner_invoice_id).id
         return res
+    
+    @api.depends('user_id', 'company_id')
+    def _compute_warehouse_id(self):
+        if self.type_id.warehouse_id:
+            self.warehouse_id = self.type_id.warehouse_id
+        else:
+            return super()._compute_warehouse_id()
