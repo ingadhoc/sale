@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale UX',
-    'version': "16.0.1.4.0",
+    'version': "16.0.1.5.0",
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -34,7 +34,6 @@
         'sale_management',
     ],
     'data': [
-        'wizards/res_config_settings_views.xml',
         'wizards/sale_global_discount_wizard_views.xml',
         'wizards/sale_advance_payment_inv_views.xml',
         'security/sale_ux_security.xml',
