@@ -19,4 +19,103 @@
             </xpath>
         </field>
     </record>
+    
+    <record id="res_config_settings_view_form_inherit" model="ir.ui.view">
+        <field name="name">res.config.settings.form.inherit</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@data-key='sale_management']/div" position="inside">
+                <div class="col-12 col-lg-6 o_setting_box">
+                    <div class="o_setting_left_pane">
+                        <field name="show_product_image_on_report"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="show_product_image_on_report" string="Show Product Image On Report"/>
+                        <div class="text-muted">
+                            Show Product Image On Report
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="//div[@data-key='sale_management']/div[3]">
+                <div class="col-12 col-lg-6 o_setting_box">
+                    <div class="o_setting_left_pane">
+                        <field name="dont_send_notes_to_invoices"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="dont_send_notes_to_invoices" string="Do not send notes to invoices"/>
+                        <div class="text-muted">
+                            Do not take the notes from the sale order line to the invoice line when create an invoice from a sale order.
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+
+            <xpath expr="//div[@id='sale_config_online_confirmation_sign']" position="after">
+                <div class="col-12 col-lg-6 o_setting_box">
+                    <div class="o_setting_left_pane">
+                        <field name="group_allow_any_user_as_salesman"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="group_allow_any_user_as_salesman"/>
+                        <div class="text-muted">
+                            By default odoo only allows to choose users wich have sales pemission in sales orders and in the sales teams only internal users. This option make able to choose, in both places, users of any type (internal or portal)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-6 o_setting_box">
+                    <div class="o_setting_left_pane">
+                        <field name="group_sale_reference_on_tree_and_main_form"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="group_sale_reference_on_tree_and_main_form"/>
+                        <div class="text-muted">
+                            Show client reference in list view and in main section of form view
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+
+             <xpath expr="//div[@data-key='sale_management']/div[3]" position="inside">
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="update_prices_automatically"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="update_prices_automatically"/>
+                            <div class="text-muted">
+                                Automatically update prices when change pricelist.
+                            </div>
+                            <div class="content-group" id="msg_update_prices_automatically"/>
+                        </div>
+                    </div>
+            </xpath>
+
+            <xpath expr="//div[@data-key='sale_management']/div[3]">
+                <div class="col-xs-12 col-md-6 o_setting_box">
+                    <div class="o_setting_left_pane">
+                        <field name="move_internal_notes"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="move_internal_notes"/>
+                        <div class="text-muted">
+                            Si marca esta opción y hay un valor definido en las "notas internas", el mismo se va a copiar en las facturas o transferencias que se generen desde esta venta.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-6 o_setting_box">
+                    <div class="o_setting_left_pane">
+                        <field name="move_note"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="move_note"/>
+                        <div class="text-muted">
+                            Si marca esta opción y hay un valor definido en "términos y condiciones", el mismo se va a copiar en las facturas o transferencias que se generen desde esta venta.
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
 </odoo>
