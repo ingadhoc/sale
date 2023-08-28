@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale UX',
-    'version': "16.0.1.5.0",
+    'version': "16.0.1.6.0",
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -38,6 +38,7 @@
         'wizards/sale_advance_payment_inv_views.xml',
         'security/sale_ux_security.xml',
         'security/ir.model.access.csv',
+        'views/account_views.xml',
         'views/sale_order_views.xml',
         'views/sale_order_line_views.xml',
         'views/sale_reports.xml',
