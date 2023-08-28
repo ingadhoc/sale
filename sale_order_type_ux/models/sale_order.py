@@ -12,15 +12,6 @@ class SaleOrder(models.Model):
         tracking=True,
     )
 
-    def _change_values_from_type(self):
-        for order in self:
-            order_type = order.type_id
-            if order_type.team_id:
-                order.team_id = order_type.team_id
-            if order_type.analytic_account_id:
-                order.analytic_account_id = order_type.analytic_account_id
-            order._compute_fiscal_position_id()
-
     @api.depends('partner_shipping_id', 'partner_id', 'company_id')
     def _compute_fiscal_position_id(self):
         if self.type_id.fiscal_position_id:
@@ -28,16 +19,11 @@ class SaleOrder(models.Model):
         else:
             return super()._compute_fiscal_position_id()
 
-    @api.onchange("type_id")
-    def onchange_type_id(self):
-        super().onchange_type_id()
-        self._change_values_from_type()
-
     @api.model_create_multi
     def create(self, vals):
         res = super().create(vals)
         if res.type_id and self._context.get('website_id'):
-            res._change_values_from_type()
+            res._compute_fiscal_position_id()
         return res
 
     def _prepare_invoice(self):
@@ -54,10 +40,12 @@ class SaleOrder(models.Model):
                 res['fiscal_position_id'] = self.env['account.fiscal.position'].with_company(
                     company.id)._get_fiscal_position(self.partner_invoice_id).id
         return res
-    
-    @api.depends('user_id', 'company_id')
-    def _compute_warehouse_id(self):
-        if self.type_id.warehouse_id:
-            self.warehouse_id = self.type_id.warehouse_id
-        else:
-            return super()._compute_warehouse_id()
+
+    @api.depends("type_id")
+    def _compute_team_id(self):
+        res = super()._compute_team_id()
+        for order in self.filtered("type_id"):
+            order_type = order.type_id
+            if order_type.team_id:
+                order.team_id = order_type.team_id
+        return res
