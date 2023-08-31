@@ -42,13 +42,16 @@
                 <field name="order_id"/>
                 <field name="name"/>
                 <field name="order_partner_id"/>
-                <field name="salesman_id"/>
-                <field name="product_id" groups="base.group_no_one"/>
+                <field name="salesman_id" optional="hide"/>
+                <field name="product_id" groups="base.group_no_one" optional="hide"/>
                 <field name="analytic_distribution" groups="analytic.group_analytic_accounting" widget="analytic_distribution" options="{'color_field': 'color'}"/>
                 <field name="price_unit" widget="monetary"/>
                 <field name="product_uom_qty" string="Qty"/>
                 <field name="qty_invoiced"/>
-                <field name="product_uom" string="Unit of Measure" groups="uom.group_uom"/>
+                <field name="qty_to_invoice" optional="hide"/>
+                <field name="product_uom" string="Unit of Measure" groups="uom.group_uom" optional="hide"/>
+                <field name="untaxed_amount_invoiced" optional="hide"/>
+                <field name="untaxed_amount_to_invoice" optional="hide"/>
                 <field name="price_subtotal" sum="Total" widget="monetary"/>
                 <field name="currency_id" invisible="1"/>
             </tree>
