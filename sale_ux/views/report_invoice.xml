@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<odoo>
+    <template id="sale_ux_report_invoice_document" inherit_id="account.report_invoice_document">
+        <xpath expr="//div[@t-field='o.invoice_payment_term_id.note']" position='after'>
+            <div t-out="o.sale_order_ids.mapped('pricelist_id').note if len(o.sale_order_ids.mapped('pricelist_id')) == 1 else ''"/>
+        </xpath>
+    </template>
+</odoo>

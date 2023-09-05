@@ -7,6 +7,11 @@
         <xpath expr="//t[@t-foreach='lines_to_report']//td[@name='td_name']" position="before">
             <td t-if="request.env['ir.config_parameter'].sudo().get_param('sale_ux.show_product_image_on_report') and any(x.image_256 for x in doc.order_line.mapped('product_id'))" name="td_image" style="height:20px !important;width:20px !important;"><span t-if="request.env['ir.config_parameter'].sudo().get_param('sale_ux.show_product_image_on_report') and line.product_id.image_256" t-field="line.product_id.image_256" t-options="{&quot;widget&quot;: &quot;image&quot;}"/></td>
         </xpath>
+        <xpath expr="//p[@t-field='doc.note']/.." position="before">
+            <p t-if="not is_html_empty(doc.pricelist_id.note)">
+                <span t-field="doc.pricelist_id.note"/>
+            </p>
+        </xpath>
     </template>
     <template id="report_report_saleorder_document_inherit_sale_management" inherit_id="sale_management.report_saleorder_document_inherit_sale_management">
         <xpath expr="//table//tr/th[@name='th_option_name']" position="before">

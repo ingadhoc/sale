@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale UX',
-    'version': "16.0.1.8.0",
+    'version': "16.0.1.9.0",
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -44,6 +44,8 @@
         'views/sale_reports.xml',
         'views/res_partner_view.xml',
         'views/res_config_settings_views.xml',
+        'views/report_invoice.xml',
+        'views/product_pricelist_views.xml',
         'data/ir_config_parameter_data.xml',
     ],
     'demo': [

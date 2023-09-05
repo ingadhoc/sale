@@ -167,4 +167,12 @@
         <field name="active" eval="False"/>
     </record>
 
+    <template id="sale_order_portal_content" inherit_id="sale.sale_order_portal_content">
+        <xpath expr="//section[@id='terms']" position="before">
+            <div t-if="not is_html_empty(sale_order.pricelist_id.note)" id="pricelist_note">
+                <span t-field="sale_order.pricelist_id.note"/>
+            </div>
+        </xpath>
+    </template>
+
 </odoo>
