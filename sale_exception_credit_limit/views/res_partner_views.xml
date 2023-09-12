@@ -6,6 +6,9 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="account.view_partner_property_form"/>
         <field name="arch" type="xml">
+                                            <field name="use_partner_credit_limit"/>
+                                    <field name="credit_limit" class="oe_inline" attrs="{'invisible': [('use_partner_credit_limit', '=', False)]}"/>
+
             <!-- as it is shown only for credit limit purpose we replace by new one -->
             <field name="credit" position="attributes">
                 <attribute name="invisible">1</attribute>
