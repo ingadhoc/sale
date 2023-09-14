@@ -98,4 +98,6 @@
         id="menu_sale_order" parent="sale.sale_order_menu"
         sequence="2" groups="sales_team.group_sale_salesman,sales_team.group_sale_manager"/>
 
+    <menuitem id="menu_product_catalog_reporting" name="Reporting" action="sale.action_order_report_all" parent="sale.menu_sale_report" sequence="20"/>
+
 </odoo>
