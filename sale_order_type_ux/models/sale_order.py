@@ -12,7 +12,7 @@ class SaleOrder(models.Model):
         tracking=True,
     )
 
-    @api.depends('partner_shipping_id', 'partner_id', 'company_id')
+    @api.depends('partner_shipping_id', 'partner_id', 'company_id', 'type_id')
     def _compute_fiscal_position_id(self):
         if self.type_id.fiscal_position_id:
             self.fiscal_position_id = self.type_id.fiscal_position_id
@@ -49,3 +49,4 @@ class SaleOrder(models.Model):
             if order_type.team_id:
                 order.team_id = order_type.team_id
         return res
+
