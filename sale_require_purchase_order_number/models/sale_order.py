@@ -35,8 +35,7 @@ class SaleOrder(models.Model):
                 ' Purchase Order Number for this partner'))
         return super().action_confirm()
 
-    def _prepare_invoice(self):
-        invoice_vals = super()._prepare_invoice()
-        invoice_vals.update({
-            'purchase_order_number': self.purchase_order_number})
-        return invoice_vals
+    def _create_invoices(self, grouped=False, final=False, date=None):
+        moves = super()._create_invoices(grouped, final, date)
+        moves.purchase_order_number = ', '.join([x for x in self.mapped('purchase_order_number') if x ] or [])
+        return moves
