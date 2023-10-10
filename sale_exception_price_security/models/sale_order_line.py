@@ -20,8 +20,6 @@ class SaleOrderLine(models.Model):
             # if something, then we have an error, not ok
             if self.env.user.check_discount(
                     self.discount,
-                    self.order_id.pricelist_id.id,
-                    so_line=self,
-                    do_not_raise=True):
+                    self.order_id.pricelist_id.id):
                 return False
         return True
