@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Gathering',
-    'version': '13.0.1.0.0',
+    'version': "16.0.1.0.0",
     'category': 'Sales & Stock',
     'sequence': 14,
     'summary': '',
@@ -31,13 +31,14 @@
     'depends': [
         'account',
         'sale_stock_ux',
+        'l10n_ar_sale'
     ],
     'data': [
         'views/sale_order_views.xml',
     ],
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
