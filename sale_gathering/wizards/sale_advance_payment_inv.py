@@ -9,8 +9,9 @@ class SaleAdvancePaymentInvWizard(models.TransientModel):
     _inherit = "sale.advance.payment.inv"
 
     advance_payment_method = fields.Selection(selection_add=[
-        ('invoice_gathering_zero', 'Factura en cero descontando acopio'),
-    ])
+        ('invoice_gathering_zero', 'Factura en cero descontando acopio'),],
+        ondelete={'invoice_gathering_zero': 'cascade'},
+    )
 
 
     def _prepare_so_line(self, order, analytic_tag_ids, tax_ids, amount):
