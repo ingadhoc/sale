@@ -5,16 +5,8 @@ class SaleOrderLine(models.Model):
 
     _inherit = 'sale.order.line'
 
-    @api.onchange('product_uom', 'product_uom_qty')
-    def product_uom_change(self):
-        price_unit = self.price_unit
-        res = super().product_uom_change()
-        if self.order_id.is_gathering:
-            self.price_unit = price_unit
-        return res
-
-    def _prepare_invoice_line(self):
-        result = super()._prepare_invoice_line()
+    def _prepare_invoice_line(self, **optional_values):
+        result = super()._prepare_invoice_line(**optional_values)
         if self.is_downpayment and self._context.get(
                 'invoice_gathering', False):
             lines = self.order_id.order_line.filtered(
