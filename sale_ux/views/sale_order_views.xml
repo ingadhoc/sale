@@ -100,7 +100,9 @@
         <field name="priority" eval="99"/>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <field name="client_order_ref" position="replace"/>
+            <field name="client_order_ref" position="attributes">
+                <attribute name="groups">!sale_ux.group_reference_on_tree_and_main_form</attribute>
+            </field>
             <field name="partner_shipping_id" position="after">
                 <field groups="sale_ux.group_reference_on_tree_and_main_form" name="client_order_ref"/>
             </field>
