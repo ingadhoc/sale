@@ -33,6 +33,9 @@
     'data': [
         'views/sale_order_view.xml',
     ],
+    'demo': [
+        'demo/res_company_demo.xml',
+    ],
     'installable': True,
     'auto_install': False,
     'application': False,
