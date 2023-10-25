@@ -4,7 +4,7 @@
 
     <record model="ir.actions.act_window" id="action_product_template_portal_tree">
         <field name="name">Products</field>
-        <field name="view_mode">tree,kanban</field>
+        <field name="view_mode">tree</field>
         <field name="res_model">product.template</field>
         <field name="view_id" ref="product.product_template_kanban_view"/>
         <field name="context">{"portal_products":True, 'create': False}</field>
@@ -74,6 +74,89 @@
             <div t-if="record.show_on_hand_qty_status_button.raw_value" position="attributes">
                 <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
             </div>
+        </field>
+    </record>
+
+    <record id="product_template_form_view" model="ir.ui.view">
+        <field name="name">product.template.product.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <page name="purchase" position="attributes">
+                <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
+            </page>
+            <page name="sales" position="attributes">
+                <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
+            </page>
+            <button name="action_open_label_layout" position="attributes">
+                <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
+            </button>
+             <field name="list_price" position="attributes">
+                <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
+            </field>
+            <field name="categ_id" position="attributes">
+                <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
+            </field>
+            <field name="product_tag_ids" position="attributes">
+                <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
+            </field>
+            <field name="description" position="attributes">
+                <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="product_template_form_view_default_code" model="ir.ui.view">
+        <field name="name">product.template.product.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <field name="default_code" position="attributes">
+                <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
+            </field>
+            <field name="detailed_type" position="attributes">
+                <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
+            </field>
+            <field name="barcode" position="attributes">
+                <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="product_template_form_view_tax_id" model="ir.ui.view">
+        <field name="name">product.template.product.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="account.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <field name="taxes_id" position="attributes">
+                <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="product_template_form_view_price_security" model="ir.ui.view">
+        <field name="name">price_security.product.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="price_security.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <field name="can_modify_prices" position="attributes">
+                <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="product_template_form_view_details" model="ir.ui.view">
+        <field name="name">product.template.form.view.inherit.sale</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="sale.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <field name="product_tooltip" position="attributes">
+                <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
+            </field>
+            <!-- <field name="invoice_policy" position="attributes">
+                <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
+                <attribute name="required">0</attribute>
+            </field> -->
         </field>
     </record>
 
