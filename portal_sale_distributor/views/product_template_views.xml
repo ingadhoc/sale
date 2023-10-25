@@ -120,6 +120,10 @@
             <field name="barcode" position="attributes">
                 <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
             </field>
+            <!-- we add this to use in attrs domains and avoid errors -->
+            <field name='attribute_line_ids' position="after">
+                <field name='detailed_type' invisible='1'/>
+            </field>
         </field>
     </record>
 
