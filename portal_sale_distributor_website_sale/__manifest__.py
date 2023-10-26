@@ -35,6 +35,6 @@
         'views/portal_templates.xml',
         'views/templates.xml',
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': True,
 }

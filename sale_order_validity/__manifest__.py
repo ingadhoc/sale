@@ -36,7 +36,7 @@
     'demo': [
         'demo/res_company_demo.xml',
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'application': False,
 }

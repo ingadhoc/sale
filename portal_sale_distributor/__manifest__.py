@@ -46,6 +46,6 @@
         # 'views/portal_templates.xml',
         'views/sale_report_templates.xml',
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
 }

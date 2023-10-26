@@ -33,7 +33,7 @@
     'data': [
         'wizards/sale_order_global_discount_wizard_views.xml',
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': True,
     'application': False,
 }

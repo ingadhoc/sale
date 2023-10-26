@@ -30,7 +30,7 @@
         'views/crm_job_views.xml',
         'views/crm_applicant_views.xml',
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'application': False,
 }

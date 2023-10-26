@@ -36,5 +36,5 @@
     'demo': [
         'demo/res_partner_demo.xml'
     ],
-    'installable': True,
+    'installable': False,
 }

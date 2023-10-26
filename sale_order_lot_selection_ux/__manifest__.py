@@ -32,7 +32,7 @@
         'views/sale_order_views.xml',
         'views/stock_production_lot.xml',
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'application': False,
 }
