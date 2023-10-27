@@ -30,12 +30,12 @@
     'data': [
         'security/sale_exception_credit_limit_security.xml',
         'data/exception_rule_data.xml',
-        'data/config_company_settings.xml',
         'views/res_partner_views.xml',
         'views/res_config_settings_views.xml',
     ],
     'demo': [
         'demo/res_partner_demo.xml'
     ],
+    'post_init_hook': '_post_init_credit',
     'installable': True,
 }
