@@ -36,12 +36,6 @@
     'demo': [
         'demo/res_partner_demo.xml'
     ],
-<<<<<<< HEAD
     'installable': False,
-||||||| parent of 276f598f (temp)
-    'installable': True,
-=======
     'post_init_hook': '_post_init_credit',
-    'installable': True,
->>>>>>> 276f598f (temp)
 }
