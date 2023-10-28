@@ -14,10 +14,17 @@ class ResPartner(models.Model):
         string='Credit Taken', help="Total amount this customer owes you (including not invoiced confirmed sale orders and draft invoices).",
         groups='account.group_account_invoice,account.group_account_readonly'
     )
+    user_credit_config = fields.Boolean(compute='_compute_user_credit_config')
+
+    @api.depends_context('uid')
+    def _compute_user_credit_config(self):
+        self.user_credit_config = self.env.user.has_group('sale_exception_credit_limit.credit_config')
 
     @api.constrains('credit_limit', 'use_partner_credit_limit')
     def check_credit_limit_group(self):
-        if not self.env.user.has_group('sale_exception_credit_limit.credit_config') and not self._context.get('website_id'):
+        """Si esta constraint trae dolores de cabeza la podemos sacar ya que este "bache" de seguridad esta en muchos lugares
+        aún mas criticos. es un problema del ORM donde mucho se protege a nivel vista"""
+        if not self.env.user.has_group('sale_exception_credit_limit.credit_config'):
             raise ValidationError('People without Credit limit Configuration Rights cannot modify credit limit parameters')
 
     @api.depends_context('company')
