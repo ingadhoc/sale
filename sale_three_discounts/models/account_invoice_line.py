@@ -50,3 +50,12 @@ class AccountInvoiceLine(models.Model):
     def _compute_totals(self):
         self.filtered(lambda x: x.move_id.is_sale_document())._set_discount()
         super()._compute_totals()
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        self.env['sale.order.line'].inverse_vals(vals_list)
+        return super().create(vals_list)
+
+    def write(self, vals):
+        self.env['sale.order.line'].inverse_vals([vals])
+        return super().write(vals)

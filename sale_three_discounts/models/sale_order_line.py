@@ -4,7 +4,6 @@
 ##############################################################################
 from odoo import fields, models, api, _
 from odoo.exceptions import ValidationError
-from odoo.tools import float_compare
 
 
 class SaleOrderLine(models.Model):
@@ -57,6 +56,7 @@ class SaleOrderLine(models.Model):
         self.inverse_vals([vals])
         return super().write(vals)
 
+    @api.model
     def inverse_vals(self, vals_list):
         """ No usamos metodo inverse porque en el create odoo termina llamando
         a inverse y unificando los descuentos en la primer linea.
@@ -75,7 +75,6 @@ class SaleOrderLine(models.Model):
                     vals.pop('discount2')
                 if 'discount3' in vals and vals.get('discount3') == 0:
                     vals.pop('discount3')
-            precision = self.env['decimal.precision'].precision_get('Discount')
             if 'discount' in vals \
                     and not {'discount1', 'discount2', 'discount3'} & set(vals.keys()):
                 vals.update({
