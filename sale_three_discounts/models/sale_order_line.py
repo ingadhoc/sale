@@ -14,6 +14,8 @@ class SaleOrderLine(models.Model):
     discount1 = fields.Float(
         'Discount 1 (%)',
         digits='Discount',
+        # compute = '_compute_discount1',
+        # readonly = False
     )
     discount2 = fields.Float(
         'Discount 2 (%)',
@@ -82,17 +84,32 @@ class SaleOrderLine(models.Model):
                     'discount1': vals.get('discount'),
                 })
 
-    @api.depends('discount1', 'discount2', 'discount3', 'discount', 'product_id', 'product_uom', 'product_uom_qty')
+    @api.depends('discount1', 'discount2', 'discount3')
     def _compute_discounts(self):
-        super()._compute_discount()
         for rec in self:
-            if rec.discount and not rec.discount1 and not rec.discount2 and not rec.discount3:
-                rec.discount1 = rec.discount
             discount_factor = 1.0
             for discount in [rec.discount1, rec.discount2, rec.discount3]:
                 discount_factor = discount_factor * (
                     (100.0 - discount) / 100.0)
             rec.discount = 100.0 - (discount_factor * 100.0)
+
+    # @api.depends('product_id')
+    # def _compute_discount1(self):
+    #     ds = {x: (x.discount2, x.discount3) for x in self}
+    #     self.discount1, self.discount2, self.discount3, self.discount = 0,0,0,0
+    #     import pdb;pdb.set_trace()
+    #     super()._compute_discount()
+    #     for k,v in ds.items():
+    #         k.discount2, k.discount3 = v[0], v[1]   
+    #     for rec in self:
+    #         rec.discount1 = rec.discount
+
+    # def _compute_discount(self):
+    #     ds = {x: (x.discount2, x.discount3) for x in self}
+    #     self.discount2, self.discount3 = 0,0
+    #     super()._compute_discount()
+    #     for k,v in ds.items():
+    #         k.discount2, k.discount3 = v[0], v[1]
 
     def _prepare_invoice_line(self, **optional_values):
         res = super()._prepare_invoice_line(**optional_values)
