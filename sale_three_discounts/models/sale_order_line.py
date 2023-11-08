@@ -14,8 +14,6 @@ class SaleOrderLine(models.Model):
     discount1 = fields.Float(
         'Discount 1 (%)',
         digits='Discount',
-        # compute = '_compute_discount1',
-        # readonly = False
     )
     discount2 = fields.Float(
         'Discount 2 (%)',
@@ -93,23 +91,11 @@ class SaleOrderLine(models.Model):
                     (100.0 - discount) / 100.0)
             rec.discount = 100.0 - (discount_factor * 100.0)
 
-    # @api.depends('product_id')
-    # def _compute_discount1(self):
-    #     ds = {x: (x.discount2, x.discount3) for x in self}
-    #     self.discount1, self.discount2, self.discount3, self.discount = 0,0,0,0
-    #     import pdb;pdb.set_trace()
-    #     super()._compute_discount()
-    #     for k,v in ds.items():
-    #         k.discount2, k.discount3 = v[0], v[1]   
-    #     for rec in self:
-    #         rec.discount1 = rec.discount
-
-    # def _compute_discount(self):
-    #     ds = {x: (x.discount2, x.discount3) for x in self}
-    #     self.discount2, self.discount3 = 0,0
-    #     super()._compute_discount()
-    #     for k,v in ds.items():
-    #         k.discount2, k.discount3 = v[0], v[1]
+    @api.onchange('product_id')
+    def _onchange_discounts(self):
+        self._compute_discount()
+        for rec in self:
+            rec.discount1 = rec.discount
 
     def _prepare_invoice_line(self, **optional_values):
         res = super()._prepare_invoice_line(**optional_values)
