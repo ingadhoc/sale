@@ -4,21 +4,25 @@
         <field name="name">Invoice Automation (Create)</field>
         <field name="invoicing_atomation">create_invoice</field>
         <field name="company_id" eval="False"/>
+        <field name="sequence" eval="15"/>
     </record>
     <record id="sale_order_type_validate_invoice_automation" model="sale.order.type">
         <field name="name">Invoice Automation (Validate)</field>
         <field name="invoicing_atomation">validate_invoice</field>
         <field name="company_id" eval="False"/>
+        <field name="sequence" eval="15"/>
     </record>
     <record id="sale_order_type_validate_picking_automation" model="sale.order.type">
         <field name="name">Picking Automation (Validate)</field>
         <field name="picking_atomation">validate</field>
         <field name="company_id" eval="False"/>
+        <field name="sequence" eval="15"/>
     </record>
     <record id="sale_order_type_validate_picking_and_invoice_automation" model="sale.order.type">
         <field name="name">Picking And Invoice Automation (Validate)</field>
         <field name="picking_atomation">validate</field>
         <field name="invoicing_atomation">validate_invoice</field>
         <field name="company_id" eval="False"/>
+        <field name="sequence" eval="15"/>
     </record>
 </odoo>
