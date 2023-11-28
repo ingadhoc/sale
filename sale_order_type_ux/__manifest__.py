@@ -29,6 +29,7 @@
     ],
     'depends': [
         'sale_order_type',
+        'website_sale_order_type_ux'
     ],
     'data': [
         'security/ir.model.access.csv',

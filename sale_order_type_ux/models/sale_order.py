@@ -49,4 +49,11 @@ class SaleOrder(models.Model):
             if order_type.team_id:
                 order.team_id = order_type.team_id
         return res
-
+    
+    @api.depends("website_id.sale_order_type_id")
+    def _compute_sale_type_id(self):
+        for record in self:
+            if record.website_id and record.website_id.sale_order_type_id:
+                record.type_id = record.website_id.sale_order_type_id
+            else:
+                super(SaleOrder, record)._compute_sale_type_id()
