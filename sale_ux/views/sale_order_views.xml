@@ -18,33 +18,25 @@
         <field name="priority">15</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <!-- Make subtotal included / excluded optional and not related to tax b2b/b2c -->
             <xpath expr="//field[@name='order_line']/tree//field[@name='price_subtotal']" position="attributes">
-                <attribute name="groups"></attribute>
-                <attribute name="attrs"></attribute>
-                <attribute name="optional">show</attribute>
+                <attribute name="string">Subtotal</attribute>
             </xpath>
             <xpath expr="//field[@name='order_line']/tree//field[@name='price_total']" position="attributes">
-                <attribute name="groups"></attribute>
-                <attribute name="attrs"></attribute>
-                <attribute name="optional">hide</attribute>
+                <attribute name="string">Total</attribute>
             </xpath>
-
             <group name="note_group" position="after">
                 <newline/>
                 <field name="internal_notes" nolabel="1" placeholder="Internal Notes..." groups="base.group_user"/>
             </group>
 
             <!-- add buttons to send and print for state done too -->
-            <xpath expr="//button[@name='action_quotation_send'][4]" position="attributes">
-                <attribute name="states">sent,sale,done</attribute>
-            </xpath>
+
             <group name="sale_info">
                 <field name="force_invoiced_status" groups="base.group_no_one"/>
             </group>
 
             <button name="action_cancel" position="attributes">
-                <attribute name="states">draft,sent,sale,done</attribute>
+                <attribute name="invisible">state not in ['draft', 'sent', 'sale', 'done']</attribute>
             </button>
             <field name="partner_id" position="after">
                 <field name="commercial_partner_id" invisible="1"/>
@@ -54,17 +46,12 @@
             </field>
             <group name="order_details" position="inside">
                 <div groups="!product.group_product_pricelist">
-                  <button name="action_update_prices" type="object" string=" Update Prices" icon="fa-refresh" attrs="{'invisible': [('state', 'not in', ['draft', 'sent'])]}"/>
+                  <button name="action_update_prices" type="object" string=" Update Prices" icon="fa-refresh" invisible="state not in ['draft', 'sent']"/>
                 </div>
             </group>
             <xpath expr="//group[@name='order_details']//div[hasclass('o_row')]/button" position="attributes">
-                <attribute name="attrs">{'invisible': [('state','not in',['draft','sent'])]}</attribute>
-                <attribute name="confirm"></attribute>
-            </xpath>
-            <xpath expr="//group[@name='note_group']" position="before">
-                <div class="oe_right">
-                    <button name="%(action_sale_global_discount_wizard_form)d" string="Set Global Discount" type="action" attrs="{'invisible':[('state','not in',['draft','sent'])]}" groups="product.group_discount_per_so_line"/>
-                </div>
+                <attribute name="invisible">state not in ['draft', 'sent']</attribute>
+                <attribute name="confirm"/>
             </xpath>
         </field>
     </record>
@@ -117,7 +104,7 @@
             <!-- move state before invoice status and make it visible -->
             <field name="state" position="replace"/>
             <field name="invoice_status" position="before">
-                <field name="state"/>
+                <field name="state" decoration-success="state == 'sale'" decoration-info="state in ['draft', 'sent']" decoration-danger="state == 'cancel'" widget="badge"/>
             </field>
             <field name="date_order" position="before">
                 <field name="create_date" widget="date" optional="hide"/>
