@@ -92,7 +92,39 @@ class SaleOrder(models.Model):
             raise UserError(_(
                 "Unable to cancel this sale order. You must first "
                 "cancel related bills and pickings."))
-        return super().action_cancel()
+        if any(order.locked for order in self):
+            #No encontre otra forma de evitar el raise usererror que impide que ordenes se cancelen si el pedido está bloqueado
+            cancel_warning = self._show_cancel_wizard()
+            if cancel_warning:
+                self.ensure_one()
+                template_id = self.env['ir.model.data']._xmlid_to_res_id(
+                    'sale.mail_template_sale_cancellation', raise_if_not_found=False
+                )
+                lang = self.env.context.get('lang')
+                template = self.env['mail.template'].browse(template_id)
+                if template.lang:
+                    lang = template._render_lang(self.ids)[self.id]
+                ctx = {
+                    'default_template_id': template_id,
+                    'default_order_id': self.id,
+                    'mark_so_as_canceled': True,
+                    'default_email_layout_xmlid': "mail.mail_notification_layout_with_responsible_signature",
+                    'model_description': self.with_context(lang=lang).type_name,
+                }
+                self.action_unlock()
+                return {
+                    'name': _('Cancel %s', self.type_name),
+                    'view_mode': 'form',
+                    'res_model': 'sale.order.cancel',
+                    'view_id': self.env.ref('sale.sale_order_cancel_view_form').id,
+                    'type': 'ir.actions.act_window',
+                    'context': ctx,
+                    'target': 'new'
+                }
+            else:
+                return self._action_cancel()
+        else:
+            return super().action_cancel()
 
     @api.constrains('force_invoiced_status')
     def check_force_invoiced_status(self):
@@ -176,7 +208,7 @@ class SaleOrder(models.Model):
         precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
         invoices.filtered(
             lambda i: float_is_zero(i.amount_total, precision_digits=precision) and all(
-                [line.quantity <= 0.0 for line in i.invoice_line_ids])).action_switch_invoice_into_refund_credit_note()
+                [line.quantity <= 0.0 for line in i.invoice_line_ids])).action_switch_move_type()
         return invoices
 
     def action_preview_sale_order(self):
@@ -202,17 +234,14 @@ class SaleOrder(models.Model):
             if prefix:
                 name = prefix + ": " + self.name
             plan = self.env['account.analytic.plan'].sudo().search([
-                ('company_id', '=', False)
             ], limit=1)
             if not plan:
                 plan = self.env['account.analytic.plan'].sudo().create({
                     'name': 'Default',
-                    'company_id': False,
                 })
             return {
                 'name': name,
                 'code': self.client_order_ref,
-                'company_id': False,
                 'plan_id': plan.id,
                 'partner_id': self.partner_id.id,
             }

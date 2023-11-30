@@ -156,11 +156,6 @@ msgid "Global Discount"
 msgstr "Descuento Global"
 
 #. module: sale_ux
-#: model:ir.actions.act_window,name:sale_ux.action_sale_global_discount_wizard_form
-msgid "Global Discount Wizard"
-msgstr "Asistente para Descuento Global"
-
-#. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_account_bank_statement_line__has_sales
 #: model:ir.model.fields,field_description:sale_ux.field_account_move__has_sales
 #: model:ir.model.fields,field_description:sale_ux.field_account_payment__has_sales
