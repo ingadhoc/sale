@@ -15,14 +15,10 @@ class StockPicking(models.Model):
     )
     manual_purchase_order_number = fields.Char(
         'PO Number',
-        states={'cancel': [('readonly', True)],
-                'done': [('readonly', True)]},
     )
     purchase_order_number = fields.Char(
         compute='_compute_purchase_order_number',
         inverse='_inverse_purchase_order_number',
-        states={'cancel': [('readonly', True)],
-                'done': [('readonly', True)]},
     )
 
     @api.depends('group_id', 'sale_id')

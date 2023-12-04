@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="account.view_move_form"/>
         <field name="arch" type="xml">
             <xpath expr="//page[@name='other_info']//field[@name='invoice_origin']" position="after">
-                <field name="purchase_order_number"/>
+                <field name="purchase_order_number" readonly="state != 'draft'"/>
             </xpath>
         </field>
     </record>
