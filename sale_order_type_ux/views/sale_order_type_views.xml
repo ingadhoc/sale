@@ -20,7 +20,7 @@
                 <field name="fiscal_position_id"/>
             </field>
             <group position="before">
-                <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible="active"/>
             </group>
             <form>
                 <field name="active" invisible="1"/>
