@@ -32,7 +32,7 @@
         'sale_loyalty',
     ],
     'data': [
-        'views/loyalty_rule_views.xml',
+        'views/loyalty_program_views.xml',
     ],
     'demo': [
     ],

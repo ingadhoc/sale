@@ -1,17 +1,18 @@
+import ast
+
 from odoo import fields, models
+from odoo.osv import expression
 
 
 class LoyaltyProgram(models.Model):
     _inherit = 'loyalty.program'
 
-    def _get_valid_pricelists(self, pricelist):
-        '''
-        Returns a dict containing the pricelists that match per rule of the program
-        '''
-        rule_pricelists = dict()
-        for rule in self.rule_ids:
-            if not rule.pricelist_ids:
-                rule_pricelists[rule] = pricelist
-            else:
-                rule_pricelists[rule] = rule.pricelist_ids
-        return rule_pricelists
+    sale_domain = fields.Char(default="[]")
+
+    def _get_valid_sale_order(self):
+        domain = []
+        if self.sale_domain and self.sale_domain != '[]':
+            domain = expression.AND([domain, ast.literal_eval(self.sale_domain)])
+            return domain
+        return False
+
