@@ -174,9 +174,12 @@ class SaleOrder(models.Model):
     def _create_invoices(self, grouped=False, final=False, date=None):
         invoices = super()._create_invoices(grouped=grouped, final=final, date=date)
         precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
-        invoices.filtered(
+        filtered_invoices = invoices.filtered(
             lambda i: float_is_zero(i.amount_total, precision_digits=precision) and all(
-                [line.quantity <= 0.0 for line in i.invoice_line_ids])).action_switch_invoice_into_refund_credit_note()
+                [line.quantity <= 0.0 for line in i.invoice_line_ids])
+        )
+        filtered_invoices.action_switch_invoice_into_refund_credit_note()
+        filtered_invoices.invoice_line_ids.write({'quantity': abs(line.quantity) for line in filtered_invoices.invoice_line_ids})
         return invoices
 
     def action_preview_sale_order(self):
