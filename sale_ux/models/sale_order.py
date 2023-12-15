@@ -135,11 +135,12 @@ class SaleOrder(models.Model):
                     'Only users with "%s / %s" can Set Invoiced manually') % (
                     group.category_id.name, group.name))
 
-    def _get_forbidden_state_confirm(self):
-        # This is because some reason the button are present when you
-        # validate, this way the sale order only validate if the state are
-        # 'draft' or 'sent'
-        return super()._get_forbidden_state_confirm() | set({'sale'})
+    # COMENTAMOS PARA FIX TICKET 68773. ToDo: Evaluar
+    # def _get_forbidden_state_confirm(self):
+    #     # This is because some reason the button are present when you
+    #     # validate, this way the sale order only validate if the state are
+    #     # 'draft' or 'sent'
+    #     return super()._get_forbidden_state_confirm() | set({'sale'})
 
     def _get_update_prices_lines(self):
         lines = super()._get_update_prices_lines()
