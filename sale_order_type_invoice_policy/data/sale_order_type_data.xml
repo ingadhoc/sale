@@ -2,10 +2,14 @@
     <record id="prepaid_sale_type" model="sale.order.type">
         <field name="name">Pre Paid</field>
         <field name="invoice_policy">prepaid</field>
+        <field name="company_id" eval="False"/>
+        <field name="sequence" eval="15"/>
     </record>
 
         <record id="ordered_sale_type" model="sale.order.type">
         <field name="name">Ordered quantities</field>
         <field name="invoice_policy">order</field>
+        <field name="company_id" eval="False"/>
+        <field name="sequence" eval="15"/>
     </record>
 </odoo>
