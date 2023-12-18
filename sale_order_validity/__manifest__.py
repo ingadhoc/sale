@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Order Validity',
-    'version': "16.0.1.2.0",
+    'version': "17.0.1.0.0",
     'category': 'Sales & Purchases',
     'sequence': 14,
     'author': 'ADHOC SA',
@@ -36,7 +36,7 @@
     'demo': [
         'demo/res_company_demo.xml',
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
