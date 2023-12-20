@@ -18,7 +18,7 @@
 #
 ##############################################################################
 {
-    'name': 'Portal Distributor MRP',
+    'name': 'Portal Distributor Sale Exception',
     'version': "16.0.1.0.0",
     'category': 'Tools',
     'complexity': 'easy',
@@ -26,7 +26,7 @@
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'depends': [
-        'mrp',
+        'sale_exception',
         'portal_sale_distributor',
     ],
     'demo': [
