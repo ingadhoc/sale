@@ -15,11 +15,16 @@ class SaleOrder(models.Model):
     )
 
     def action_confirm_distributor(self):
-        self.sudo().message_post(
-            body=_("Pedido confirmado por %s") % self.env.user.name,
+        if self.detect_exceptions() != []:
+            self.sudo().message_post(
+            body=_("El pedido no puede ser confirmado por %s porque contiene excepciones, debe ser revisado por un administrador") % self.env.user.name,
             subtype_id=self.env.ref('mail.mt_comment').id)
-        self = self.sudo()
-        return self.action_confirm()
+        else:
+            self.sudo().message_post(
+                body=_("Pedido confirmado por %s") % self.env.user.name,
+                subtype_id=self.env.ref('mail.mt_comment').id)
+            self = self.sudo()
+            return self.action_confirm()
 
     @api.onchange('partner_id')
     def _onchange_partner_id_warning(self):
