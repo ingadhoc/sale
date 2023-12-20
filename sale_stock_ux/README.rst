@@ -20,7 +20,7 @@ Several Improvements to sales:
 #. Add filter related to the delivery status for sale orders and sales order lines views
 #. Add a filter name "Pickings" in sale order view to search by delivery order name.
 #. Add field "qty_to_deliver" in the sale lines view.
-#. Block cancelation of sale order if there are pickings in 'done' state or 'posted' invoices (this is native on purchase orders)
+#. Block cancelation of sale order if there are pickings in 'done' state
 #. Add new field on order lines called "quantity_returned" and also implement refunds for products with invoicing policy "ordered" taking into account the returned quantity
 #. Add button on sale lines to allow cancelling of remaining qty to be delivered
 #. Block decreasing quantity on sale lines when there is a delivery linked

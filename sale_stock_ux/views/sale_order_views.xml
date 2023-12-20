@@ -12,22 +12,22 @@
                 <field name="move_ids" readonly="True" groups="base.group_no_one"/>
             </xpath>
             <xpath expr="//field[@name='order_line']/form//field[@name='qty_invoiced']//.." position="after">
-                <label for="quantity_returned" string="Returned Quantity" attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}"/>
-                <div name="quantity_returned" attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}">
+                <label for="quantity_returned" string="Returned Quantity" invisible="parent.state not in ['sale', 'done']"/>
+                <div name="quantity_returned" invisible="parent.state not in ['sale', 'done']">
                     <field name="quantity_returned"/>
                 </div>
                 <field name="delivery_status" invisible="1"/>
             </xpath>
             <!-- agregamos boton de cancelar linea -->
             <xpath expr="//field[@name='order_line']/tree/field[@name='qty_delivered']" position="after">
-                <field name="quantity_returned" attrs="{'column_invisible': [('parent.state', 'not in', ['sale', 'done'])], 'readonly': [('qty_delivered_method', '!=', 'manual')]}"/>
-                <field name="delivery_status" invisible="1"/>
+                <field name="quantity_returned" column_invisible="parent.state not in ['sale', 'done']" readonly="qty_delivered_method != 'manual'"/>
+                <field name="delivery_status" column_invisible="True"/>
                 <button name="button_cancel_remaining"
                         type="object"
                         title="Cancel remaining quanitity to be delivered. This will set line quantity equal to delivered qty and will cancel remaining moves" 
                         icon="fa-ban"
                         confirm="This will set line quantity equal to delivery qty and will cancel remaining moves. This can not be undone. Are you sure you want to continue?" 
-                        attrs="{'invisible': [('delivery_status', '!=', 'to deliver')]}"
+                        invisible="delivery_status != 'to deliver'"
                         groups="sales_team.group_sale_salesman"
                         context="{'cancel_from_order': True}"/>
             </xpath>
@@ -40,7 +40,7 @@
             </field>
 
             <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_uom_qty']" position="after">
-                <field name="total_reserved_quantity" invisible="1"/>
+                <field name="total_reserved_quantity" column_invisible="True"/>
             </xpath>
         </field>
     </record>
@@ -60,6 +60,19 @@
                 <filter name="delivered" string="Fully Delivered" domain="[('delivery_status','=', 'full')]" help="Sale orders with all lines delivered."/>
                 <separator/>
             </filter>
+        </field>
+    </record>
+
+    <record id="view_order_tree" model="ir.ui.view">
+        <field name="name">sale.order.tree</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <field name="delivery_status" position="attributes">
+                <attribute name="decoration-success">delivery_status == 'full'</attribute>
+                <attribute name="decoration-warning">delivery_status == 'partial'</attribute>
+                <attribute name="decoration-info">delivery_status == 'pending'</attribute>
+            </field>
         </field>
     </record>
 
