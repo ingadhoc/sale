@@ -13,8 +13,7 @@
                         type="object"
                         groups="sales_team.group_sale_salesman"
                         context="{'res_id': sale_id, 'action': 'sale.action_orders', 'form_view': 'sale.view_order_form'}"
-                        attrs="{'invisible': [('sale_id', '=', False)]}"
-                        >
+                        invisible="not sale_id">
                 </button>
             </xpath>
         </field>
