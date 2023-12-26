@@ -17,7 +17,7 @@ CRM Stage Teams
 This module:
 
 #. Allows to select multiple teams in one stage. Then each user is going to see the stages that the teams he belogns are allowed to see.
-#. If the option "Allow any user as salesman" is enable, it would be possible to assign any user as salesperson in leads.
+#. If the option "Allow any user as salesman" is enable, it would be possible to assign any user as salesperson in leads, opportunities and teams.
 
 Installation
 ============
