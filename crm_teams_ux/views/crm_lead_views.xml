@@ -28,7 +28,18 @@
         <field name="inherit_id" ref="crm.crm_lead_view_form"/>
         <field name="arch" type="xml">
             <field name="stage_id" position="replace">
-                <field name="stage_id" widget="statusbar" options="{'clickable': '1', 'fold_field': 'fold'}" domain="['|', ('team_ids', '=', team_id), ('team_ids', '=', False)]" attrs="{'invisible': [('active', '=', False)]}"/>
+                <field name="stage_id" widget="statusbar" options="{'clickable': '1', 'fold_field': 'fold'}" domain="['|', ('team_ids', '=', team_id), ('team_ids', '=', False)]" invisible="not active"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_crm_allow_any_user_as_salesman" model="ir.ui.view">
+        <field name="name">sale.order.form.salesman</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <field name="user_id" position="replace">
+                <field name="user_id" widget="many2one_avatar_user"  domain="[]" groups="sale_ux.group_allow_any_user_as_salesman"/>
             </field>
         </field>
     </record>
