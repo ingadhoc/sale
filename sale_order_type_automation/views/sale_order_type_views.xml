@@ -7,15 +7,15 @@
         <field name="arch" type="xml">
             <field name="journal_id" position="after">
                 <field name="invoice_company_id" invisible="1"/>
-                <field name="book_id" attrs="{'invisible' : [('picking_atomation', '=', 'none')]}"/>
-                <field name="payment_journal_id" attrs="{'invisible' : [('payment_atomation', '=', 'none')], 'required' : [('payment_atomation', '!=', 'none')]}"/>
+                <field name="book_id" invisible="picking_atomation == 'none'"/>
+                <field name="payment_journal_id" invisible="payment_atomation == 'none'" required="payment_atomation != 'none'"/>
             </field>
             <field name="sequence_id" position="after">
                 <field name="picking_atomation"/>
                 <field name="invoicing_atomation"/>
-                <field name="payment_atomation" attrs="{'invisible' : [('journal_id', '=', False)]}"/>
+                <field name="payment_atomation" invisible="not journal_id"/>
                 <field name="auto_done_setting" invisible="1"/>
-                <field name="set_done_on_confirmation" attrs="{'invisible' : [('auto_done_setting', '=', True)]}"/>
+                <field name="set_done_on_confirmation" invisible="auto_done_setting"/>
             </field>
         </field>
     </record>
