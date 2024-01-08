@@ -12,11 +12,40 @@
                 <attribute name="context">{'default_advance_payment_method': is_gathering and 'invoice_gathering_zero' or 'delivered'}</attribute>
             </button>
             <button name="%(sale.action_view_sale_advance_payment_inv)d" position="after">
-                <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Gathering Invoice" type="action" context="{'default_advance_payment_method': 'fixed'}" attrs="{'invisible': ['|', ('is_gathering', '==', False),('state', '!=' ,'sale')]}"/>
+                <field name="has_gathering_invoice" invisible="1"/>
+                <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Gathering Invoice" type="action" context="{'default_advance_payment_method': 'fixed', 'default_fixed_amount': gathering_amount}" attrs="{'invisible': ['|', '|', ('is_gathering', '==', False),('state', '!=' ,'sale'), ('has_gathering_invoice', '=', True)]}"/>
             </button>
             <group name="sale_total" position="inside">
-                <field name="gathering_balance" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <field name="gathering_amount" widget="monetary" options="{'currency_field': 'currency_id'}" attrs="{'invisible': [('is_gathering', '=', False)]}"/>
+                <field name="gathering_balance" widget="monetary" options="{'currency_field': 'currency_id'}" attrs="{'invisible': [('is_gathering', '=', False)]}"/>
             </group>
+            <xpath expr="//field[@name='order_line']/tree//field[@name='product_uom_qty']" position="after">
+                <field name="initial_qty_gathered" readonly="1" force_save="1" attrs="{'column_invisible': [('parent.is_gathering', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_order_tree" model="ir.ui.view">
+        <field name="name">sale.order.tree</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <field name="amount_total" position="after">
+                <field name="gathering_balance"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_sales_order_filter" model="ir.ui.view">
+        <field name="name">sale.order.filter</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_ux.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <filter name="sales" position="after">
+                <filter string="Gathering" name="gathering" domain="[('is_gathering','=', True)]"/>
+                <filter string="Open Gathering" name="open_gathering" domain="[('gathering_balance', '>', 0)]"/>
+                <separator/>
+            </filter>
         </field>
     </record>
 </odoo>
