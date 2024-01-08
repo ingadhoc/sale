@@ -1,0 +1,14 @@
+<odoo>
+    <template id="report_saleorder" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//th[@name='th_priceunit']" position="before">
+            <th class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">Initial Quantity Gathered</th>
+        </xpath>
+        <xpath expr="//td[@name='td_priceunit']" position="before">
+            <td name="td_priceunit" class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">
+                <span t-if="line.initial_qty_gathered &gt; 0">
+                    <t t-esc="line.initial_qty_gathered"/>
+                </span>
+            </td>
+        </xpath>
+    </template>
+</odoo>

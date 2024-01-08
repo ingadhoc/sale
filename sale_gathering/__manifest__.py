@@ -34,6 +34,7 @@
         'l10n_ar_sale'
     ],
     'data': [
+        'reports/report_saleorder_document.xml',
         'views/sale_order_views.xml',
     ],
     'demo': [
