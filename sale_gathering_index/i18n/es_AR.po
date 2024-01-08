@@ -1,0 +1,62 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_gathering_index
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-13 14:59+0000\n"
+"PO-Revision-Date: 2024-03-13 14:59+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_gathering_index
+#: model:ir.model.fields,field_description:sale_gathering_index.field_sale_order__gathering_balance_indexed
+msgid "Gathering Balance Indexed"
+msgstr "Balance de acopio indexado"
+
+#. module: sale_gathering_index
+#: model:ir.model.fields,field_description:sale_gathering_index.field_sale_order__index
+msgid "Index"
+msgstr "Índice"
+
+#. module: sale_gathering_index
+#: model:ir.model,name:sale_gathering_index.model_sale_order
+msgid "Sales Order"
+msgstr "Pedido de venta"
+
+#. module: sale_gathering_index
+#: model:ir.model,name:sale_gathering_index.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Línea de pedido de venta"
+
+#. module: sale_gathering_index
+#: model:ir.model.fields,field_description:sale_gathering_index.field_sale_order__indexed_gathering_amount
+msgid "Indexed Gathering Amount"
+msgstr "Monto acopiado indexado"
+
+#. module: sale_gathering_index
+#. odoo-python
+#: code:addons/sale_gathering_index/models/sale_order_line.py:0
+#, python-format
+msgid ""
+"You can't add an already gathered product more than once. Please modify the "
+"quantity of the existing line."
+msgstr ""
+"No puedes agregar un producto de acopio más de una vez. Por favor modifique "
+"el la cantidad de la línea existente."
+
+#. module: sale_gathering_index
+#. odoo-python
+#: code:addons/sale_gathering_index/models/sale_order_line.py:0
+#, python-format
+msgid ""
+"You can't modify the quantity of an added product. Please add a new line."
+msgstr ""
+"No puedes modificar la cantidad de un producto agregado. Por favor agregar "
+"una nueva línea."
