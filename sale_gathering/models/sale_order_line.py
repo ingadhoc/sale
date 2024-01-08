@@ -1,9 +1,14 @@
-from odoo import api, models
+from odoo import models, fields
 
 
 class SaleOrderLine(models.Model):
-
     _inherit = 'sale.order.line'
+
+    initial_qty_gathered = fields.Float(string='Initial Quantity Gathered', copy=False)
+
+    def _compute_price_unit(self):
+        gathering_lines = self.filtered(lambda x: x.order_id.is_gathering and x.initial_qty_gathered > 0)
+        super(SaleOrderLine, self - gathering_lines)._compute_price_unit()
 
     def _prepare_invoice_line(self, **optional_values):
         result = super()._prepare_invoice_line(**optional_values)
