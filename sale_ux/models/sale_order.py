@@ -115,27 +115,6 @@ class SaleOrder(models.Model):
         lines_to_not_update_ids = self._context.get('lines_to_not_update_ids', [])
         return lines.filtered(lambda l: l.id not in lines_to_not_update_ids)
 
-    def action_update_prices(self):
-        # avoiding execution for empty records
-        if not self:
-            return
-        # for compatibility with product_pack module
-        pack_installed = 'pack_parent_line_id' in self.order_line._fields
-        if pack_installed:
-            pack_lines = self.order_line.with_context(update_prices=True, pricelist=self.pricelist_id.id).filtered(
-                lambda l: l.product_id.pack_ok and l.product_id.pack_component_price != 'ignored')
-            super(SaleOrder, self).action_update_prices()
-            for line in pack_lines:
-                if line.pack_parent_line_id:
-                    continue
-                elif line.pack_child_line_ids:
-                    if not isinstance(self.id, int):
-                        self._compute_pack_lines_prices(line)
-                    else:
-                        line.expand_pack_line(write=True)
-        else:
-            super().action_update_prices()
-
     def _compute_pack_lines_prices(self, line):
         """ This method is for the case when came from an onchange and the original method
         doesn't works with _origin and the values aren't change.
