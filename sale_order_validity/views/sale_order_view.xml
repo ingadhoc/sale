@@ -36,6 +36,7 @@
             <field name="date_order" position="replace">
             <div class="o_td_label" groups="!base.group_no_one" attrs="{'invisible': [('state', 'in', ['sale', 'done', 'cancel'])]}">
                 <label for="date_order" string="Quotation/Order Date"/>
+                <field name="date_order" attrs="{'invisible': [(1, '=', 1)]}"/>
             </div>
                 <field name="date_order" nolabel="1"  groups="!sales_team.group_sale_manager" readonly="1" attrs="{'invisible': [('state', 'in', ['sale', 'done', 'cancel'])]}"/>
                 <field name="date_order" nolabel="1" groups="sales_team.group_sale_manager" readonly="0" attrs="{'invisible': [('state', 'in', ['sale', 'done', 'cancel'])]}"/>
