@@ -34,11 +34,11 @@
         <field name="inherit_id" ref="view_order_form_validity"/>
         <field name="arch" type="xml">
             <field name="date_order" position="replace">
-                <div class="o_td_label" groups="!base.group_no_one" invisible="state in ['sale', 'cancel'] or locked">
-                    <label for="date_order" string="Quotation/Order Date"/>
-                </div>
-                    <field name="date_order" nolabel="1"  groups="!sales_team.group_sale_manager" readonly="1" invisible="state in ['sale', 'cancel'] or locked"/>
-                    <field name="date_order" nolabel="1" groups="sales_team.group_sale_manager" readonly="0" invisible="state in ['sale', 'cancel'] or locked"/>
+            <div class="o_td_label" groups="!base.group_no_one" invisible="state in ['sale', 'cancel'] or locked">
+                <label for="date_order" string="Quotation/Order Date"/>
+            </div>
+                <field name="date_order" nolabel="1"  groups="!sales_team.group_sale_manager" readonly="1" invisible="state in ['sale', 'cancel'] or locked"/>
+                <field name="date_order" nolabel="1" groups="sales_team.group_sale_manager" readonly="0" invisible="state in ['sale', 'cancel'] or locked"/>
             </field>
             <field name="validity_date" position="replace">
                 <field name="validity_date" readonly="state not in ['draft', 'sent']" invisible="state in ['sale'] or locked" groups="sales_team.group_sale_manager"/>
