@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-13 14:05+0000\n"
+"POT-Creation-Date: 2023-04-18 00:33+0000\n"
 "PO-Revision-Date: 2023-01-13 14:05+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2023\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -20,14 +20,6 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #. module: sale_exception_print
-#: model:ir.model.fields,field_description:sale_exception_print.field_base_exception_method__algolia_search
-#: model:ir.model.fields,field_description:sale_exception_print.field_exception_rule__algolia_search
-#: model:ir.model.fields,field_description:sale_exception_print.field_sale_exception_confirm__algolia_search
-#: model:ir.model.fields,field_description:sale_exception_print.field_sale_order__algolia_search
-msgid "Algolia Search"
-msgstr ""
-
-#. module: sale_exception_print
 #: model:ir.model.fields,field_description:sale_exception_print.field_exception_rule__block_print
 msgid "Block Print"
 msgstr "Bloquear Impresión"
@@ -35,7 +27,7 @@ msgstr "Bloquear Impresión"
 #. module: sale_exception_print
 #: model:ir.model,name:sale_exception_print.model_exception_rule
 msgid "Exception Rule"
-msgstr "Regla de excepción "
+msgstr "Regla de excepción"
 
 #. module: sale_exception_print
 #: model:ir.model,name:sale_exception_print.model_base_exception_method
@@ -50,9 +42,9 @@ msgstr "Ignorar Excepciones de Impresión"
 #. module: sale_exception_print
 #: model:ir.model,name:sale_exception_print.model_sale_exception_confirm
 msgid "Sale exception confirm wizard"
-msgstr ""
+msgstr "Asistente de confirmación de excepción de venta"
 
 #. module: sale_exception_print
 #: model:ir.model,name:sale_exception_print.model_sale_order
 msgid "Sales Order"
-msgstr "Pedido de venta"
+msgstr "Pedidos de venta"
