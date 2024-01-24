@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_exception_rule_portal_distributor,product.pack.line.portal.distributor,product_pack.model_product_pack_line,portal_sale_distributor.group_portal_backend_distributor,1,0,0,0
