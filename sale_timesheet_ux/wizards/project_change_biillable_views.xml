@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+<data>
+    
+    <record id="change_allow_billable_wizzard" model="ir.ui.view">
+        <field name="name">allow.billable.wizard.form</field>
+        <field name="model">allow.billable.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="project_id" invisible="1"/>
+                <group>
+                    <label for='project_id' string="Confirm Allow Billable Change"/>
+                    <p>Are you sure you want to change the 'Allow Billable' field to False for this project?</p>
+                </group>
+                <footer>
+                    <button name="confirm_change" string="Yes, Change it" type="object" class="btn-primary"/>
+                    <button name="cancel_change" string="Cancel" type="object" class="btn btn-default"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</data>
+
+</odoo>
