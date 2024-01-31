@@ -6,6 +6,5 @@ from . import models
 from odoo import api, SUPERUSER_ID
 
 
-def _post_init_credit(cr, registry):
-    env = api.Environment(cr, SUPERUSER_ID, {})
+def _post_init_credit(env):
     env['res.company'].search([]).write({'account_use_credit_limit':True})
