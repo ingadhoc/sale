@@ -24,6 +24,7 @@ class SaleOrder(models.Model):
         ))
         # we do this apart because we need to ensure "warehouse_id" exists in datebase, if for the case that
         # we don't have inventory installed yet
+        # for this to work stock_ux needs to be installed because it's adding those filters on every view
         if 'warehouse_id' in self._fields:
             context.update(dict(
                 search_default_location_id=self.warehouse_id.lot_stock_id.id,
