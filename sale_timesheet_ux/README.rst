@@ -14,8 +14,8 @@
 Sales Timesheet UX
 ==================
 
-* When confirming a sale order with service products with Service tracking = "Create a task in sales order's project", if the SO has an analytic account that is related to ONE project, then we don't create a project but instead link the new tasks to this project.
-* When confirming a sale order with a service product type with service tracking = "Create a task in sales order's project (Project & Task option)", now both the proyect and the task will remain related to the SO when billable is turned off from the proyect settings (works both for a new proyect and task as for a new task in an existing proyect).
+* When confirming a sale order with a product with Product Type = "Service" and Create on Order = "Project & Task", if the SO has an analytic account that is related to one project, then the system won't create a new project but use the analytic's account project to create the task inside.
+* When confirming a sale order with a product with Product Type = "Service" and Create on Order = "Project & Task" both the proyect and the task will remain related to the SO when "Billable" is turned off from the project settings (works both for a new proyect and task as for a new task in an existing proyect).
 * Se protegen las lineas de las ordenes de ventas que estan asociadas a los partes de horas en los siguientes casos (no se borran las horas imputadas a esa linea de la OV) (esta proteccion se habilita desde las configuraciones del parte de horas):
 
    1) Si a un proyecto se le desmarga el facturable en su configuración: si un proyecto esta como facturable, y tiene tareas con partes de horas asociados a ordenes de venta, al destildarle el facturable la orden de venta seguira teniendo cargadas las horas imputadas en esa tarea.
