@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale UX',
-    'version': "17.0.1.0.0",
+    'version': "17.0.1.1.0",
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -42,6 +42,7 @@
         'views/sale_order_views.xml',
         'views/sale_order_line_views.xml',
         'views/sale_reports.xml',
+        'views/sale_portal_template.xml',
         'views/res_partner_view.xml',
         'views/res_config_settings_views.xml',
         'data/ir_config_parameter_data.xml',
