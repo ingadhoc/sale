@@ -1,0 +1,5 @@
+<odoo noupdate="1">
+    <record id="portal_product_template_public_rule" model="ir.rule">
+        <field name="domain_force">[('sale_ok', '=', True)]</field>
+    </record>
+</odoo>
