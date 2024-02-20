@@ -43,7 +43,7 @@
     <record id="portal_product_template_public_rule" model="ir.rule">
         <field name="name">Public product template (distribuidores) </field>
         <field name="model_id" ref="product.model_product_template"/>
-        <field name="domain_force">[(1 ,'=', 1)]</field>
+        <field name="domain_force">[('sale_ok', '=', True)]</field>
         <field name="groups" eval="[(4, ref('group_portal_backend_distributor'))]"/>
         <field eval="1" name="perm_read"/>
         <field eval="0" name="perm_write"/>
