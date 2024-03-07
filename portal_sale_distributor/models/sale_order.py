@@ -83,3 +83,7 @@ class SaleOrder(models.Model):
                     modifiers['invisible'] = True
                     node.set("modifiers", json.dumps(modifiers))
         return arch, view
+
+    def action_update_prices(self):
+        self = self.sudo()
+        super().action_update_prices()
