@@ -243,6 +243,7 @@ class SaleOrder(models.Model):
             return {
                 'name': name,
                 'code': self.client_order_ref,
+                'company_id': False,
                 'plan_id': plan.id,
                 'partner_id': self.partner_id.id,
             }
