@@ -7,7 +7,7 @@
         <field name="inherit_id" ref="sale.view_order_line_tree"/>
         <field name="arch" type="xml">
             <tree>
-                <field name="currency_id" invisible="1"/>
+                <field name="currency_id" column_invisible="True"/>
             </tree>
         </field>
     </record>
@@ -53,7 +53,7 @@
                 <field name="untaxed_amount_invoiced" optional="hide"/>
                 <field name="untaxed_amount_to_invoice" optional="hide"/>
                 <field name="price_subtotal" sum="Total" widget="monetary"/>
-                <field name="currency_id" invisible="1"/>
+                <field name="currency_id" column_invisible="True"/>
             </tree>
         </field>
     </record>

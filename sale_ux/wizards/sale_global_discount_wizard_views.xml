@@ -19,11 +19,4 @@
         </field>
     </record>
 
-    <record id="action_sale_global_discount_wizard_form" model="ir.actions.act_window">
-        <field name="name">Global Discount Wizard</field>
-        <field name="res_model">sale.order.global_discount.wizard</field>
-        <field name="view_mode">form</field>
-        <field name="target">new</field>
-    </record>
-
 </odoo>

@@ -8,8 +8,9 @@
         <field name="inherit_id" ref="sale_ux.sale_order_line_usability_tree"/>
         <field name="arch" type="xml">
             <field name="price_unit" position="after">
-                <field name="purchase_price" sum="Total" groups="base.group_user"/>
-                <field name="margin" sum="Total" groups="base.group_user"/>
+                <field name="purchase_price" sum="Total" optional="hide" groups="base.group_user"/>
+                <field name="margin" sum="Total" optional="hide" groups="base.group_user"/>
+                <field name="margin_percent" optional="hide" widget="percentage" groups="base.group_user"/>
             </field>
         </field>
     </record>

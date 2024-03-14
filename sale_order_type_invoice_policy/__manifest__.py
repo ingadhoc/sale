@@ -26,7 +26,7 @@
     'license': 'AGPL-3',
     'depends': [
         'account',
-        'sale_order_type',
+        'sale_order_type_ux',
         # agregamos esta depenencia para permitir reembolsar las devoluciones
         # y para no tener que hacer modulos puente
         'sale_stock_ux',

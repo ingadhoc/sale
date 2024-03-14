@@ -15,7 +15,7 @@ Sale Margin Ux
 ==============
 
 #. This module adds to the "update prices" button the functionality of updating the cost prices in the SO lines.
-#. Adds purchase_price and margin to sale_ux's sale_order_line view
+#. Adds purchase_price and margins to sale_ux's sale_order_line view
 
 Installation
 ============

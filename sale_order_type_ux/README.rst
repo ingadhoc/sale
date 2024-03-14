@@ -19,8 +19,8 @@ Sale Order Type Ux
 * Also add tracking to same field.
 * Add new behavior to the onchage sale type in invoice, to change the company.
 * Set in Invoice view form the field "Sale Type" readonly to states different than "draft".
-* Add fiscal position on sale types
-* Allows select journal from another company
+* Add fiscal position on sale types.
+* Allows select journal from another company.
 * Integration between Portal and Sale Order Type module:
 
  - New access record to sale type model for portal users
@@ -31,7 +31,7 @@ Installation
 
 To install this module, you need to:
 
-#. Only need to install the module
+#. Only need to install the module.
 
 Configuration
 =============

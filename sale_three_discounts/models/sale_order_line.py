@@ -95,7 +95,13 @@ class SaleOrderLine(models.Model):
     def _onchange_discounts(self):
         self._compute_discount()
         for rec in self:
-            rec.discount1 = rec.discount
+            if not (
+                rec.order_id.pricelist_id
+                and rec.order_id.pricelist_id.discount_policy == 'without_discount'
+            ):
+                continue
+            else:
+                rec.discount1 = rec.discount
 
     def _prepare_invoice_line(self, **optional_values):
         res = super()._prepare_invoice_line(**optional_values)

@@ -1,7 +1,7 @@
 {
     "name": "Sales Timesheet UX",
     "summary": "",
-    "version": "16.0.1.1.0",
+    "version": "16.0.1.2.0",
     "website": "www.adhoc.com.ar",
     "license": "AGPL-3",
     "author": "ADHOC SA",

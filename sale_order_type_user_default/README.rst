@@ -14,14 +14,14 @@
 Sale Order Type User Default
 ============================
 
-This module adds to the user a "type of sales order" field, when creating a sales order you get by default the "type of sales order" chosen in the user.
+This module adds to the user a "type of sales order" field, when creating a sales order you get by default the "type of sales order" chosen in the user
 
 Installation
 ============
 
 To install this module, you need to:
 
-#. Just install this module
+#. Just install this module.
 
 Configuration
 =============

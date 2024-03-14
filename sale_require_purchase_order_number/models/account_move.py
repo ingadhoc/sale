@@ -9,10 +9,7 @@ from odoo.exceptions import UserError
 class AccountInvoice(models.Model):
     _inherit = "account.move"
 
-    purchase_order_number = fields.Char(
-        readonly=True,
-        states={'draft': [('readonly', False)]},
-    )
+    purchase_order_number = fields.Char()
 
     @api.constrains('state', 'purchase_order_number')
     def check_missing_po_number(self):

@@ -18,6 +18,8 @@ This module adds a button "Search Products" in sale order that gets you to a pro
 When you return to the sale order form view, you can see all the sale order lines added from the product list view
 You can edit the sale order lines as you wish afterwards.
 
+If you have also stock_ux installed, when using this new button, the stock location of the warehouse of the picking type is used as a default filter so that the stock info shown on the products tree view uses that location.
+
 Installation
 ============
 
