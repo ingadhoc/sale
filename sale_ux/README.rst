@@ -30,7 +30,7 @@ Several Improvements to sales:
 #. Add option in Sales settings to update prices automatically.
 #. Add selection field to force "Invoiced" status of a sale order, available only for admin with tec features.
 #. Add options in settings to allow any user as salesman (portal or internal)
-#. Allows you to create an analytical account when confirming the sale (requires activating analytic accounting)
+#. Add a setting to create an analytic account without company when confirming the sale (requires enabling analytics accounting)
 #. Add tracking to payment terms on sale orders.
 #. Add the field "Internal Notes" in the sales order form and the setting to allow propagating the "Internal Notes / terms & conditions" to invoices / pickings.
 #. Automatically refresh taxes when changing fiscal position
