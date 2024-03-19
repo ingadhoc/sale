@@ -33,8 +33,7 @@
             <header position="after">
                 <header groups="portal_sale_distributor.group_portal_backend_distributor">
                     <field name="invoice_count" invisible="1"/>
-                    <button name="action_confirm_distributor" states="draft,sent" string="Confirm Sale" class="btn-primary" type="object" context="{'show_sale': True}"/>
-                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,sale,done"/>
+                    <button name="action_confirm_distributor" invisible="state not in ('draft', 'sent')" string="Confirm Sale" class="btn-primary" type="object" context="{'show_sale': True}"/>
                 </header>
             </header>
             <button name="action_view_invoice" position="attributes">
@@ -44,7 +43,7 @@
                 <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
             </field>
             <field name="validity_date" position="after">
-                <field name="validity_date" attrs="{'invisible':[('state', 'in', ('draft', 'sent'))]}" groups="portal_sale_distributor.group_portal_backend_distributor"/>
+                <field name="validity_date" invisible="state in ('draft', 'sent')" groups="portal_sale_distributor.group_portal_backend_distributor"/>
             </field>
             <xpath expr="//button[@name='action_update_prices']" position="attributes">
                 <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
@@ -64,8 +63,7 @@
                     name="action_open_delivery_wizard"
                     type="object"
                     groups="portal_sale_distributor.group_portal_backend_distributor"
-                    attrs="{'invisible': ['|', '|', '|',('is_all_service', '=', True), ('order_line', '=', []), ('delivery_set', '=', True), ('state','not in',('draft','sent'))]}"
-                />
+                    invisible="is_all_service or not order_line or delivery_set or state not in ('draft', 'sent')"/>
             </xpath>
             <field name="pricelist_id" position="attributes">
                 <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
@@ -79,7 +77,7 @@
             <xpath expr="//field[@name='order_line']/tree//widget[@name='qty_at_date_widget']" position="attributes">
                 <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
             </xpath>
-            <button name="%(sale_ux.action_sale_global_discount_wizard_form)d" position="attributes">
+            <button name="action_open_discount_wizard" position="attributes">
                 <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
             </button>
             <field name="sale_order_template_id" position="attributes">
