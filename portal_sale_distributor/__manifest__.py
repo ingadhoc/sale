@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Portal Distributor Sale',
-    'version': "16.0.1.5.0",
+    'version': "17.0.1.0.0",
     'category': 'Tools',
     'complexity': 'easy',
     'author': 'ADHOC SA, Odoo Community Association (OCA)',
@@ -46,6 +46,6 @@
         # 'views/portal_templates.xml',
         'views/sale_report_templates.xml',
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
 }
