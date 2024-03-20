@@ -41,7 +41,6 @@ class SaleOrder(models.Model):
                     company.id)._get_fiscal_position(self.partner_invoice_id).id
         return res
 
-    @api.depends("type_id")
     def _compute_team_id(self):
         res = super()._compute_team_id()
         for order in self.filtered("type_id"):
@@ -49,4 +48,9 @@ class SaleOrder(models.Model):
             if order_type.team_id:
                 order.team_id = order_type.team_id
         return res
+
+    @api.onchange("type_id")
+    def _onchange_team_id(self):
+        if self.type_id and self.type_id.team_id:
+            self.team_id = self.type_id.team_id
 
