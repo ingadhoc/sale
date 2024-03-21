@@ -18,7 +18,7 @@
 #
 ##############################################################################
 {
-    'name': 'Portal Distributor Sale Exception',
+    'name': 'Portal Distributor Sales Team ',
     'version': "16.0.1.0.0",
     'category': 'Tools',
     'complexity': 'easy',
@@ -26,14 +26,12 @@
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'depends': [
-        'sale_exception',
+        'sales_team',
         'portal_sale_distributor',
-    ],
-    'demo': [
     ],
     'data': [
         'security/ir.model.access.csv',
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': True,
 }
