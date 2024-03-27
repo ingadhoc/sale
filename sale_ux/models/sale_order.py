@@ -86,9 +86,11 @@ class SaleOrder(models.Model):
         self.show_update_fpos = False
 
     def action_cancel(self):
-        invoices = self.mapped('invoice_ids').filtered(
-            lambda x: x.state not in ['cancel', 'draft'])
-        if invoices:
+        invoice_lines = self.sudo().env["account.move.line"].search([('sale_line_ids', 'in', self.order_line.ids)])
+        moves = invoice_lines.mapped('move_id').filtered(
+            lambda x: x.move_type in ('out_invoice', 'out_refund') and x.state not in ['cancel', 'draft']
+        )
+        if moves:
             raise UserError(_(
                 "Unable to cancel this sale order. You must first "
                 "cancel related bills and pickings."))
