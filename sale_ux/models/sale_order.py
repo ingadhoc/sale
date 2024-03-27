@@ -86,7 +86,9 @@ class SaleOrder(models.Model):
         self.show_update_fpos = False
 
     def action_cancel(self):
-        invoices = self.mapped('invoice_ids').filtered(
+        #Busca todas las facturas que tengan como origen la OV actual independientemente de la compañía
+        invoices_all_companies = self.sudo().env['account.move'].search([('invoice_origin', '=', self.name)])
+        invoices = invoices_all_companies.filtered(
             lambda x: x.state not in ['cancel', 'draft'])
         if invoices:
             raise UserError(_(
