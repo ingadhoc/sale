@@ -18,7 +18,7 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Gathering',
+    'name': 'Sale Gathering Index',
     'version': "16.0.1.0.0",
     'category': 'Sales & Stock',
     'sequence': 14,
@@ -29,13 +29,10 @@
     'images': [
     ],
     'depends': [
-        'account',
-        'sale_stock_ux',
-        'l10n_ar_sale'
+        'sale_gathering'
     ],
     'data': [
-        'reports/report_saleorder_document.xml',
-        'views/sale_order_views.xml',
+        'views/sale_order_views.xml'
     ],
     'demo': [
     ],
