@@ -6,6 +6,7 @@ from odoo import models, api, fields, _
 from odoo.exceptions import UserError, ValidationError
 from odoo.tools.safe_eval import safe_eval
 from odoo.tools import float_is_zero
+from datetime import datetime, timedelta
 
 
 class SaleOrder(models.Model):
@@ -248,3 +249,20 @@ class SaleOrder(models.Model):
                 'partner_id': self.partner_id.id,
             }
         return super(SaleOrder, self)._prepare_analytic_account_data(prefix=prefix)
+
+    def _cron_clean_old_quotations(self, website=None):
+        cancel_old_quotations = bool(self.env['ir.config_parameter'].sudo().get_param('sale_ux.cancel_old_quotations', False))
+        if cancel_old_quotations or website:
+            today = fields.Date.today()
+            days_to_keep = int(self.env['ir.config_parameter'].sudo().get_param('sale_ux.days_to_keep_quotations', 30))
+            oldest_date = today - timedelta(days=days_to_keep)
+            domain = [
+                ('state', 'in', ['draft', 'sent']),
+                ('date_order', '<', oldest_date),
+            ]
+            if website is not None:
+                domain += [('website_id', '!=', False) if website else ('website_id', '=', False)]
+            quotations_to_cancel = self.env['sale.order'].sudo().search(domain)
+            for quotation in quotations_to_cancel:
+                quotation._action_cancel()
+                quotation.message_post(body=_("This quotation has been automatically canceled due to its expiration."))

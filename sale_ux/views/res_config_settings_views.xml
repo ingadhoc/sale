@@ -70,6 +70,16 @@
                     </div>
                 </div>
             </xpath>
+            <xpath expr="//setting[@id='order_default_values']" position="after">
+                <setting id="cancel_old_quotations" string="Cancel Old Quotations">
+                    <div class="text-muted">
+                        <span>Cancel quotations older than</span>
+                        <field name="days_to_keep_quotations" style="width:15%; text-align:center;"/>
+                        <span>days.</span>
+                    </div>
+                    <strong>Sales</strong> <field name="cancel_old_quotations" style="margin-left:5px;"/>
+                </setting>
+            </xpath>
         </field>
     </record>
 </odoo>

@@ -46,6 +46,7 @@
         'views/res_partner_view.xml',
         'views/res_config_settings_views.xml',
         'data/ir_config_parameter_data.xml',
+        'data/ir_cron.xml',
     ],
     'demo': [
     ],
