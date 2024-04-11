@@ -423,3 +423,53 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
 msgid "or"
 msgstr "o"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
+msgid "<span>Cancel quotations older than</span>"
+msgstr "<span>Cancelar presupuestos mayores que</span>"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
+msgid "<span>days.</span>"
+msgstr "<span>días.</span>"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
+msgid "<strong>Cancel Old Quotations</strong>"
+msgstr "<strong>Cancelar presupuestos viejos</strong>"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
+msgid "<strong>Sales</strong>"
+msgstr "<strong>Ventas</strong>"
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__cancel_old_quotations
+msgid "Cancel Old Quotations"
+msgstr "Cancelar presupuestos viejos"
+
+#. module: sale_ux
+#: model:ir.actions.server,name:sale_ux.ir_cron_clean_old_quotations_ir_actions_server
+#: model:ir.cron,cron_name:sale_ux.ir_cron_clean_old_quotations
+msgid "Clean Old Quotations"
+msgstr "Limpiar presupuestos viejos"
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__days_to_keep_quotations
+msgid "Days to Keep Quotations"
+msgstr "Días que se mantienen los presupuestos"
+
+#. module: sale_ux
+#. odoo-python
+#: code:addons/sale_ux/models/res_config_settings.py:0
+#, python-format
+msgid "Days to keep quotations must be greater than 0."
+msgstr "Los días para mantener los presupuestos deben ser mayor que 0."
+
+#. module: sale_ux
+#. odoo-python
+#: code:addons/sale_ux/models/sale_order.py:0
+#, python-format
+msgid "This quotation has been automatically canceled due to its expiration."
+msgstr "Esta cotización ha sido cancelada automáticamente debido a su vencimiento."
