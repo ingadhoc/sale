@@ -1,4 +1,5 @@
-from odoo import fields, models
+from odoo import fields, models, api, _
+from odoo.exceptions import ValidationError
 
 
 class ResConfigSettings(models.TransientModel):
@@ -33,6 +34,16 @@ class ResConfigSettings(models.TransientModel):
     move_note = fields.Boolean(
         'Mover términos y condiciones a transferencias de stock y facturas',
     )
+    cancel_old_quotations = fields.Boolean(
+        config_parameter='sale_ux.cancel_old_quotations',
+        help='Enable automatic cancellation of old quotations.'
+    )
+    days_to_keep_quotations = fields.Integer(
+        string='Days to Keep Quotations',
+        config_parameter='sale_ux.days_to_keep_quotations',
+        help='Number of days to keep quotations before cancelling them.',
+        default=30
+    )
 
     def get_values(self):
         res = super(ResConfigSettings, self).get_values()
@@ -54,3 +65,9 @@ class ResConfigSettings(models.TransientModel):
         set_param('sale.propagate_note', repr(self.move_note))
         set_param('sale_ux.update_prices_automatically',
                   repr(self.update_prices_automatically))
+
+    @api.constrains('days_to_keep_quotations')
+    def _check_days_to_keep_sale_orders(self):
+        for record in self:
+            if record.days_to_keep_quotations <= 0:
+                raise ValidationError(_("Days to keep quotations must be greater than 0."))
