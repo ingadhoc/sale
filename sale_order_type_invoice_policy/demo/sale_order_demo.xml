@@ -6,7 +6,6 @@
         <field name="partner_invoice_id" ref="res_partner_prepaid_customer"/>
         <field name="partner_shipping_id" ref="res_partner_prepaid_customer"/>
         <field name="user_id" ref="base.user_root"/>
-        <field name="pricelist_id" ref="product.list0"/>
         <field name="team_id" ref="sales_team.team_sales_department"/>
         <field name="date_order" eval="(DateTime.today() - relativedelta(months=1)).strftime('%Y-%m-%d %H:%M')"/>
     </record>
@@ -35,7 +34,6 @@
         <field name="partner_invoice_id" ref="res_partner_ordered_customer"/>
         <field name="partner_shipping_id" ref="res_partner_ordered_customer"/>
         <field name="user_id" ref="base.user_root"/>
-        <field name="pricelist_id" ref="product.list0"/>
         <field name="team_id" ref="sales_team.team_sales_department"/>
         <field name="date_order" eval="(DateTime.today() - relativedelta(months=1)).strftime('%Y-%m-%d %H:%M')"/>
     </record>
