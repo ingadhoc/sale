@@ -212,7 +212,7 @@ class SaleOrder(models.Model):
             lambda i: float_is_zero(i.amount_total, precision_digits=precision) and all(
                 [line.quantity <= 0.0 for line in i.invoice_line_ids])
         )
-        filtered_invoices.action_switch_invoice_into_refund_credit_note()
+        filtered_invoices.action_switch_move_type()
         filtered_invoices.invoice_line_ids.write({'quantity': abs(line.quantity) for line in filtered_invoices.invoice_line_ids})
         return invoices
 
