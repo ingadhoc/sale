@@ -82,19 +82,14 @@ class SaleOrderLine(models.Model):
                     'discount1': vals.get('discount'),
                 })
 
-    @api.depends('discount1', 'discount2', 'discount3', 'product_id')
+    @api.depends('discount1', 'discount2', 'discount3')
     def _compute_discounts(self):
-        website_id = self._context.get('website_id')
         for rec in self:
-            if website_id:
-                rec._compute_discount()
-                rec.discount1 = rec.discount
-            else:
-                discount_factor = 1.0
-                for discount in [rec.discount1, rec.discount2, rec.discount3]:
-                    discount_factor = discount_factor * (
-                        (100.0 - discount) / 100.0)
-                rec.discount = 100.0 - (discount_factor * 100.0)
+            discount_factor = 1.0
+            for discount in [rec.discount1, rec.discount2, rec.discount3]:
+                discount_factor = discount_factor * (
+                    (100.0 - discount) / 100.0)
+            rec.discount = 100.0 - (discount_factor * 100.0)
 
     @api.onchange('product_id')
     def _onchange_discounts(self):
