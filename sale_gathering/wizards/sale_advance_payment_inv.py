@@ -23,9 +23,8 @@ class SaleAdvancePaymentInvWizard(models.TransientModel):
     def create_invoices(self):
         sale_orders = self.env['sale.order'].browse(self._context.get('active_ids', []))
         if self.advance_payment_method == 'invoice_gathering_zero':
-            sale_orders.with_context(invoice_gathering=True)._create_invoices(final=True)
+            invoices = sale_orders.with_context(invoice_gathering=True)._create_invoices(final=True)
         else:
+            self = self.with_context(advance_payment=True)
             return super().create_invoices()
-        if self._context.get('open_invoices', False):
-            return sale_orders.action_view_invoice()
-        return {'type': 'ir.actions.act_window_close'}
+        return self.sale_order_ids.action_view_invoice(invoices=invoices)

@@ -6,21 +6,21 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <field name="client_order_ref" position="before">
-                <field name="is_gathering"/>
+                <field name="is_gathering" readonly="state in ['done', 'sale']"/>
             </field>
             <button name="%(sale.action_view_sale_advance_payment_inv)d" position="attributes">
                 <attribute name="context">{'default_advance_payment_method': is_gathering and 'invoice_gathering_zero' or 'delivered'}</attribute>
             </button>
             <button name="%(sale.action_view_sale_advance_payment_inv)d" position="after">
                 <field name="has_gathering_invoice" invisible="1"/>
-                <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Gathering Invoice" type="action" context="{'default_advance_payment_method': 'fixed', 'default_fixed_amount': gathering_amount}" attrs="{'invisible': ['|', '|', ('is_gathering', '==', False),('state', '!=' ,'sale'), ('has_gathering_invoice', '=', True)]}"/>
+                <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Gathering Invoice" type="action" context="{'default_advance_payment_method': 'fixed', 'default_fixed_amount': gathering_amount}" invisible="not is_gathering or state != 'sale' or has_gathering_invoice"/>
             </button>
             <group name="sale_total" position="inside">
-                <field name="gathering_amount" widget="monetary" options="{'currency_field': 'currency_id'}" attrs="{'invisible': [('is_gathering', '=', False)]}"/>
-                <field name="gathering_balance" widget="monetary" options="{'currency_field': 'currency_id'}" attrs="{'invisible': [('is_gathering', '=', False)]}"/>
+                <field name="gathering_amount" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="not is_gathering"/>
+                <field name="gathering_balance" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="not is_gathering"/>
             </group>
             <xpath expr="//field[@name='order_line']/tree//field[@name='product_uom_qty']" position="after">
-                <field name="initial_qty_gathered" readonly="1" force_save="1" attrs="{'column_invisible': [('parent.is_gathering', '=', False)]}"/>
+                <field name="initial_qty_gathered" force_save="1" readonly="1" column_invisible="not parent.is_gathering"/>
             </xpath>
         </field>
     </record>
