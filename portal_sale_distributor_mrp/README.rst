@@ -10,9 +10,9 @@
    :target: https://www.gnu.org/licenses/agpl
    :alt: License: AGPL-3
 
-=========================================
+================================
 Portal Distributor Sale with MRP
-=========================================
+================================
 
 This module integrate portal sale distributor using MRP.
 
