@@ -7,13 +7,7 @@ from odoo.osv import expression
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    is_gathering = fields.Boolean(
-        'Is Gathering?',
-        states={
-            "sale": [("readonly", True)],
-            "done": [("readonly", True)]
-        }
-    )
+    is_gathering = fields.Boolean('Is Gathering?')
     gathering_balance = fields.Float(
         compute="_compute_gathering_balance",
         digits='Product Price',

@@ -25,3 +25,21 @@ class SaleOrderLine(models.Model):
                 'total_excluded']
             result['quantity'] = -1.0
         return result
+
+    def _convert_to_tax_base_line_dict(self, **kwargs):
+        if self.env.context.get('advance_payment') and self.initial_qty_gathered > 0:
+            self.ensure_one()
+            return self.env['account.tax']._convert_to_tax_base_line_dict(
+                self,
+                partner=self.order_id.partner_id,
+                currency=self.order_id.currency_id,
+                product=self.product_id,
+                taxes=self.tax_id,
+                price_unit=self.price_unit,
+                quantity=self.initial_qty_gathered,
+                discount=self.discount,
+                price_subtotal=self.price_subtotal,
+                **kwargs,
+            )
+        else:
+            return super()._convert_to_tax_base_line_dict(**kwargs)
