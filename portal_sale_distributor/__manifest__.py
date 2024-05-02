@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Portal Distributor Sale',
-    'version': "16.0.1.5.0",
+    'version': "16.0.1.6.0",
     'category': 'Tools',
     'complexity': 'easy',
     'author': 'ADHOC SA, Odoo Community Association (OCA)',
@@ -48,4 +48,9 @@
     ],
     'installable': True,
     'auto_install': False,
+    "assets": {
+        "web.assets_backend": [
+            "portal_sale_distributor/static/src/**/*",
+        ]
+    },
 }
