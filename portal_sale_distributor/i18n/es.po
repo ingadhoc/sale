@@ -121,3 +121,10 @@ msgstr "Ventas"
 #: model:ir.ui.menu,name:portal_sale_distributor.sale_order
 msgid "Sales Order"
 msgstr "Pedidos de venta"
+
+#. module: portal_sale_distributor
+#. odoo-python
+#: code:addons/portal_sale_distributor/models/product_product.py:0
+#, python-format
+msgid "Portal users may not archive or unarchive records."
+msgstr "Usuarios portales no pueden archivar o desarchivar registros."

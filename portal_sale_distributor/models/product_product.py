@@ -2,8 +2,9 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, api
+from odoo import models, api, _
 import json
+from odoo.exceptions import ValidationError
 
 
 class ProductProduct(models.Model):
@@ -24,3 +25,15 @@ class ProductProduct(models.Model):
                     modifiers['invisible'] = True
                     node.set("modifiers", json.dumps(modifiers))
         return arch, view
+
+    def _portal_archive_unarchive(self):
+        if self.env.user.has_group('portal_sale_distributor.group_portal_backend_distributor'):
+            raise ValidationError(_('Portal users may not archive or unarchive records.'))
+
+    def action_archive(self):
+        self._portal_archive_unarchive()
+        return super().action_archive()
+
+    def action_unarchive(self):
+        self._portal_archive_unarchive()
+        return super().action_unarchive()
