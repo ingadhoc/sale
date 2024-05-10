@@ -16,7 +16,7 @@ class SaleOrder(models.Model):
         help='Monto equivalente del acopio inicial actualizado por el indice de inflacion calculado en este acopio'
     )
 
-    @api.depends('order_line.product_id.lst_price')
+    @api.depends('order_line.product_id.list_price')
     def _compute_indexed_gathering_amount(self):
         gathering_orders = self.filtered(
             lambda x: x.is_gathering and x.order_line.filtered(lambda x: x.initial_qty_gathered > 0)
