@@ -6,17 +6,17 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <field name="payment_term_id" position="after">
-                <field name="index" attrs="{'invisible': [('is_gathering', '=', False)]}" widget="percentage"/>
+                <field name="index" invisible="not is_gathering" widget="percentage"/>
             </field>
             <xpath expr="//field[@name='order_line']/tree//field[@name='name']" position="attributes">
-                <attribute name="attrs">{'readonly': [('parent.is_gathering', '=', True), ('display_type', 'not in', ['line_section', 'line_note'])]}</attribute>
+                <attribute name="readonly">parent.is_gathering and display_type not in ['line_section', 'line_note']</attribute>
             </xpath>
             <xpath expr="//field[@name='order_line']/tree//field[@name='price_unit']" position="attributes">
-                <attribute name="attrs">{'readonly': [('parent.is_gathering', '=', True), ('state', '=', 'sale')]}</attribute>
+                <attribute name="readonly">parent.is_gathering and state == 'sale'</attribute>
             </xpath>
             <group name="sale_total" position="inside">
-                <field name="indexed_gathering_amount" widget="monetary" options="{'currency_field': 'currency_id'}" attrs="{'invisible': [('is_gathering', '=', False)]}"/>
-                <field name="gathering_balance_indexed" widget="monetary" options="{'currency_field': 'currency_id'}" attrs="{'invisible': [('is_gathering', '=', False)]}"/>
+                <field name="indexed_gathering_amount" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="not is_gathering"/>
+                <field name="gathering_balance_indexed" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="not is_gathering"/>
             </group>
         </field>
     </record>
