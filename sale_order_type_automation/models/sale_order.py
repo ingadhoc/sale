@@ -35,10 +35,10 @@ class SaleOrder(models.Model):
             invoices = self._create_invoices(final=True)
             if not invoices:
                 continue
-
-            if rec.type_id.invoicing_atomation == 'validate_invoice':
+            validate_using_try_except = bool(self._context.get("validate_using_try_except"))
+            if not validate_using_try_except and rec.type_id.invoicing_atomation == 'validate_invoice':
                 invoices.sudo().action_post()
-            elif rec.type_id.invoicing_atomation == 'try_validate_invoice':
+            elif validate_using_try_except or rec.type_id.invoicing_atomation == 'try_validate_invoice':
                 try:
                     invoices.sudo().action_post()
                 except Exception as error:
