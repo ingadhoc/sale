@@ -55,6 +55,4 @@ class ResPartner(models.Model):
                         taxes['total_included'], line.company_id.currency_id, line.company_id, fields.Date.today())
                 draft_invoice_lines_amount += total
 
-
-
             self.credit_with_confirmed_orders = draft_invoice_lines_amount + self.credit + self.credit_to_invoice
