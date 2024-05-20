@@ -19,15 +19,15 @@ class SaleOrderLine(models.Model):
             if (rec.product_id.tracking in ['serial', 'lot']
                and rec.order_id.warehouse_id):
                 location = rec.order_id.warehouse_id.lot_stock_id
-                quants = self.env['stock.quant'].read_group([
+                quants = self.env['stock.quant']._read_group([
                     ('product_id', '=', rec.product_id.id),
                     ('location_id', 'child_of', location.id),
                     ('quantity', '>', 0),
                     ('lot_id', '!=', False),
-                ], ['lot_id', 'reserved_quantity', 'quantity'], 'lot_id')
+                 ],['lot_id'], ['reserved_quantity:sum', 'quantity:sum'] )
                 available_lot_ids = [
-                    quant['lot_id'][0] for quant in quants
-                    if quant['reserved_quantity'] < quant['quantity']]
+                    quant[0].id for quant in quants
+                    if quant[1] < quant[2]]
                 rec.available_lot_ids = available_lot_ids
             else:
                 rec.available_lot_ids = False
