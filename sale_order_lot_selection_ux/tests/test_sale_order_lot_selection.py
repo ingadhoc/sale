@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import odoo.tests.common as test_common
-from odoo.exceptions import Warning
+from odoo.exceptions import ValidationError
 
 
 class TestSaleOrderLotSelection(test_common.SingleTransactionCase):
@@ -224,7 +224,7 @@ class TestSaleOrderLotSelection(test_common.SingleTransactionCase):
 
         # I'll try to confirm it to check lot reservation:
         # lot10 was delivered by order1
-        with self.assertRaises(Warning):
+        with self.assertRaises(ValidationError):
             self.order3.action_confirm()
 
         # also test on_change for order2
@@ -244,7 +244,7 @@ class TestSaleOrderLotSelection(test_common.SingleTransactionCase):
         self.sol3.lot_id = lot10.id
         # I'll try to confirm it to check lot reservation:
         # lot10 was delivered by order1
-        with self.assertRaises(Warning):
+        with self.assertRaises(ValidationError):
             self.order3.action_confirm()
 
         # also test on_change for order2
@@ -273,5 +273,5 @@ class TestSaleOrderLotSelection(test_common.SingleTransactionCase):
         self.assertEqual(lot12_qty_available, 0)
         # I'll try to confirm it to check lot reservation:
         # lot11 has 1 availability and order4 has quantity 2
-        with self.assertRaises(Warning):
+        with self.assertRaises(ValidationError):
             self.order4.action_confirm()
