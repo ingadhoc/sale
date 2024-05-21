@@ -50,3 +50,11 @@ class SaleOrder(models.Model):
                 'company_id': self.company_id.id,
             }
             sol.create(vals)
+
+    def action_add_from_catalog(self):
+        # Replaces the product's kanban view by the purchase specific one.
+        action = super().action_add_from_catalog()
+        tree_view_id = self.env.ref('product.product_product_tree_view').id
+        kanban_view_id = self.env.ref('product.product_view_kanban_catalog').id
+        action['views'] = [(tree_view_id, 'tree'), (kanban_view_id, 'kanban')]
+        return action

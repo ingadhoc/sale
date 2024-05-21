@@ -18,7 +18,7 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Quotation Products',
+    'name': 'Sale Catalog Tree',
     'version': "17.0.1.0.0",
     'category': 'Sales Management',
     'sequence': 14,
