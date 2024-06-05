@@ -119,3 +119,7 @@ class SaleOrder(models.Model):
                 invoice._is_downpayment() for invoice in rec.invoice_ids if invoice.state != 'cancel'
             )
         (self - orders_gathering).has_gathering_invoice = False
+
+    def action_done(self):
+        super().action_done()
+        self.filtered('is_gathering').write({'state': 'sale'})
