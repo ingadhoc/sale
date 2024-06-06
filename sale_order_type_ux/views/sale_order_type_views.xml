@@ -15,8 +15,47 @@
         <field name="model">sale.order.type</field>
         <field name="inherit_id" ref="sale_order_type.sot_sale_order_type_form_view"/>
         <field name="arch" type="xml">
+            <xpath expr="//group" position="attributes">
+                <attribute name="string">Predefined fields</attribute>
+            </xpath>
+            <xpath expr="//field[@name='description']" position="attributes">
+                <attribute name="placeholder">Notes</attribute>
+                <attribute name="colspan">2</attribute>
+            </xpath>
+            <xpath expr="//field[@name='company_id'][2]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='warehouse_id'][2]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='pricelist_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='sequence_id']" position="before">
+                <div class="o_row o_wrap_label">
+                    <label for="warehouse_id"/>
+                    <i class="fa fa-exclamation-circle" data-tooltip="This field will not be taken into account for sales that come from eCommerce, in this case you must configure it directly in Settings" title="This field will not be taken into account for sales that come from eCommerce, in this case you must configure it directly in Settings" aria-hidden="true"/> 
+                </div>
+                <field name="warehouse_id" nolabel="1" />
+                <div class="o_row o_wrap_label">
+                    <label for="company_id"/>
+                    <i class="fa fa-exclamation-circle" data-tooltip="This field will not be taken into account for sales that come from eCommerce, in this case you must configure it directly in Settings" title="This field will not be taken into account for sales that come from eCommerce, in this case you must configure it directly in Settings" aria-hidden="true"/> 
+                </div>
+                <field name="company_id" nolabel="1" />
+                <div class="o_row o_wrap_label">
+                    <label for="pricelist_id"/>
+                    <i class="fa fa-exclamation-circle" data-tooltip="This field will not be taken into account for sales that come from eCommerce, in this case you must configure it directly in Settings" title="This field will not be taken into account for sales that come from eCommerce, in this case you must configure it directly in Settings" aria-hidden="true"/> 
+                </div>
+                <field name="pricelist_id" nolabel="1" />
+            </xpath>
+
             <field name="payment_term_id" position="after">
-                <field name="team_id"/>
+                <div class="o_row o_wrap_label">
+                    <label for="team_id"/>
+                    <i class="fa fa-exclamation-circle" data-tooltip="This field will not be taken into account for sales that come from eCommerce, in this case you must configure it directly in Settings" title="This field will not be taken into account for sales that come from eCommerce, in this case you must configure it directly in Settings" aria-hidden="true"/> 
+                </div>
+                <field name="team_id" nolabel="1"/>
                 <field name="fiscal_position_id"/>
             </field>
             <group position="before">
