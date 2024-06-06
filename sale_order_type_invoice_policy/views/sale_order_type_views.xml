@@ -4,9 +4,11 @@
         <field name="model">sale.order.type</field>
         <field name="inherit_id" ref="sale_order_type.sot_sale_order_type_form_view"/>
         <field name="arch" type="xml">
-            <field name="picking_policy" position="before">
+            <group position="inside">
+            <group string="Invoicing Policy">
                 <field name="invoice_policy"/>
-            </field>
+           </group>
+        </group>
         </field>
     </record>
 </odoo>
