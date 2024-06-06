@@ -7,16 +7,24 @@
         <field name="arch" type="xml">
             <field name="journal_id" position="after">
                 <field name="invoice_company_id" invisible="1"/>
-                <field name="book_id" attrs="{'invisible' : [('picking_atomation', '=', 'none')]}"/>
-                <field name="payment_journal_id" attrs="{'invisible' : [('payment_atomation', '=', 'none')], 'required' : [('payment_atomation', '!=', 'none')]}"/>
             </field>
             <field name="sequence_id" position="after">
-                <field name="picking_atomation"/>
-                <field name="invoicing_atomation"/>
-                <field name="payment_atomation" attrs="{'invisible' : [('journal_id', '=', False)]}"/>
                 <field name="auto_done_setting" invisible="1"/>
-                <field name="set_done_on_confirmation" attrs="{'invisible' : [('auto_done_setting', '=', True)]}"/>
             </field>
+               <group position="inside">
+                <group string="Automations">
+                    <field name="picking_atomation"/>
+                    <field name="book_id" attrs="{'invisible' : [('picking_atomation', '=', 'none')]}"/>
+                    <field name="invoicing_atomation"/>
+                    <field name="payment_atomation" attrs="{'invisible' : [('journal_id', '=', False)]}"/>
+                    <div class="o_row o_wrap_label" attrs="{'invisible' : [('payment_atomation', '=', 'none')]}">
+                        <label for="payment_journal_id"/>
+                        <i class="fa fa-exclamation-circle" data-tooltip="This field will not be taken into account for sales that come from eCommerce, in this case you must configure it directly in Settings" title="This field will not be taken into account for sales that come from eCommerce, in this case you must configure it directly in Settings" aria-hidden="true"/> 
+                    </div>
+                    <field name="payment_journal_id" nolabel="1" attrs="{'invisible' : [('payment_atomation', '=', 'none')], 'required' : [('payment_atomation', '!=', 'none')]}"/>
+                    <field name="set_done_on_confirmation" attrs="{'invisible' : [('auto_done_setting', '=', True)]}"/>
+                </group>
+            </group>
         </field>
     </record>
 </odoo>
