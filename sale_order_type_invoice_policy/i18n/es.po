@@ -59,12 +59,12 @@ msgstr "Pre-Pago"
 #. module: sale_order_type_invoice_policy
 #: model:ir.model.fields.selection,name:sale_order_type_invoice_policy.selection__sale_order_type__invoice_policy__prepaid_block_delivery
 msgid "Prepaid - Block Delivery"
-msgstr ""
+msgstr "Prepago - Entrega Bloqueada"
 
 #. module: sale_order_type_invoice_policy
 #: model:ir.model.fields.selection,name:sale_order_type_invoice_policy.selection__sale_order_type__invoice_policy__prepaid
 msgid "Prepaid - Block Reserve and Delivery"
-msgstr ""
+msgstr "Prepago - Reserva y Entrega Bloqueadas"
 
 #. module: sale_order_type_invoice_policy
 #: model:ir.model,name:sale_order_type_invoice_policy.model_sale_order_line
