@@ -16,6 +16,7 @@ class SaleOrderTypology(models.Model):
         'crm.team',
         check_company=True,
         domain="['|', ('company_id', '=', False), ('company_id', '=', company_id),]",
+        help="This field will not be considered for sales coming from eCommerce. You should configure it directly in Settings > Website."
     )
 
     active = fields.Boolean(
@@ -31,3 +32,15 @@ class SaleOrderTypology(models.Model):
     journal_id = fields.Many2one(
         domain="[('type', '=', 'sale')]",
         check_company=False)
+
+    warehouse_id = fields.Many2one(
+        help="This field will not be considered for sales coming from eCommerce. You should configure it directly in Settings > Website."
+    )
+
+    company_id = fields.Many2one(
+        help="This field will not be considered for sales coming from eCommerce. You should configure it directly in Settings > Website."
+    )
+
+    pricelist_id = fields.Many2one(
+        help="This field will not be considered for sales coming from eCommerce. You should configure it directly in Settings > Website."
+    )

@@ -15,10 +15,34 @@
         <field name="model">sale.order.type</field>
         <field name="inherit_id" ref="sale_order_type.sot_sale_order_type_form_view"/>
         <field name="arch" type="xml">
-            <field name="payment_term_id" position="after">
+            <xpath expr="//group" position="attributes">
+                <attribute name="string">Predefined fields</attribute>
+            </xpath>
+            <xpath expr="//field[@name='description']" position="attributes">
+                <attribute name="placeholder">Notes</attribute>
+                <attribute name="colspan">2</attribute>
+            </xpath>
+            <xpath expr="//field[@name='company_id'][2]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='warehouse_id'][2]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='pricelist_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='sequence_id']" position="before">
+                <field name="warehouse_id"/>
+                <field name="company_id"/>
+                <field name="pricelist_id"/>
+            </xpath>
+
+             <field name="payment_term_id" position="after">
                 <field name="team_id"/>
                 <field name="fiscal_position_id"/>
             </field>
+
             <group position="before">
                 <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible="active"/>
             </group>

@@ -53,4 +53,3 @@ class SaleOrder(models.Model):
     def _onchange_team_id(self):
         if self.type_id and self.type_id.team_id:
             self.team_id = self.type_id.team_id
-
