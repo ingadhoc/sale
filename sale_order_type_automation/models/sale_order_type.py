@@ -81,12 +81,11 @@ class SaleOrderType(models.Model):
         # "('company_id', '=', company_id), "
         "('inbound_payment_method_line_ids.code', '=', 'manual')]",
         help='Journal used only with payment_automation. As manual payment '
-        'method is used, only journals with manual method are shown.'
+        'method is used, only journals with manual method are shown. '
+        'This field will not be considered for sales coming from eCommerce. '
+        'You should configure it directly in Settings > Website.'
     )
-    book_id = fields.Many2one(
-        'stock.book',
-        'Voucher Book',
-    )
+
     set_done_on_confirmation = fields.Boolean(
         help="Upon confirmation set"
         " sale order done instead of leaving it on"
