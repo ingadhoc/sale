@@ -2,13 +2,49 @@
     <template id="report_saleorder" inherit_id="sale.report_saleorder_document">
         <xpath expr="//th[@name='th_priceunit']" position="before">
             <th class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">Initial Quantity Gathered</th>
+            <th class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">Quantity Deliveredd</th>
+            <th class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">Quantity Returned</th>
         </xpath>
+
         <xpath expr="//td[@name='td_priceunit']" position="before">
-            <td name="td_priceunit" class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">
+            <td class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">
                 <span t-if="line.initial_qty_gathered &gt; 0">
                     <t t-esc="line.initial_qty_gathered"/>
                 </span>
             </td>
+            <td class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">
+                    <t t-esc="line.qty_delivered"/>
+            </td>
+            <td class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">
+                    <t t-esc="line.quantity_returned"/>
+            </td>
+        </xpath>
+    </template>
+
+    <template id="report_saleorder_gathering" inherit_id="account.document_tax_totals">
+        <xpath expr="//tr[hasclass('o_total')]" position="inside">
+            <t t-if="doc.is_gathering and doc.state not in ['draft','sent']">
+                <tr class="border-black o_total">
+                    <td>
+                        <strong>Gathering Amount:</strong>
+                    </td>
+                    <td class="text-end">
+                    <span>$
+                    <t t-esc="doc.gathering_amount or 0"/>
+                    </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Gathering Balance:</strong>
+                    </td>
+                    <td class="text-end">
+                    <span>$
+                    <t t-esc="doc.gathering_balance or 0"/>
+                    </span>
+                    </td>
+                </tr>
+            </t>
         </xpath>
     </template>
 </odoo>
