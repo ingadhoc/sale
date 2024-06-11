@@ -1,4 +1,5 @@
-from odoo import models, fields, api
+from odoo import models, fields, api, _
+from odoo.exceptions import UserError, ValidationError
 
 
 class SaleOrderLine(models.Model):
@@ -24,3 +25,14 @@ class SaleOrderLine(models.Model):
                 'total_excluded']
             result['quantity'] = -1.0
         return result
+
+    def write(self, vals):
+        if "discount" in vals:
+            if self.filtered(lambda x: x.order_id.is_gathering and x.order_id.state == 'sale' and x.initial_qty_gathered > 0):
+                raise UserError(_("You cannot modify the discount of the gathering lines once the sale has been confirmed.\n"))
+        return super().write(vals)
+
+    @api.constrains('discount')
+    def _check_discount(self):
+        for rec in self.filtered(lambda x: x.order_id.is_gathering and x.state == 'sale' and x.initial_qty_gathered == 0 and x.discount > 0):
+            raise ValidationError(_("Cannot add discounts to redeemed products."))
