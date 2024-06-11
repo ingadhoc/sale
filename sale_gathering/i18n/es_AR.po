@@ -110,3 +110,20 @@ msgstr ""
 #, python-format
 msgid "You can't add more products. First create the gathering invoice."
 msgstr "No puedes agregar más productos. Primero cree la factura de acopio"
+
+#. module: sale_gathering
+#. odoo-python
+#: code:addons/sale_gathering/models/sale_order_line.py:0
+#, python-format
+msgid ""
+"You cannot modify the discount of the gathering lines once the sale has been confirmed.\n"
+msgstr ""
+"No puede modificar el descuento de las líneas de acopio una vez confirmada la venta.\n"
+
+
+#. module: sale_gathering
+#. odoo-python
+#: code:addons/sale_gathering/models/sale_order_line.py:0
+#, python-format
+msgid "Cannot add discounts to redeemed products."
+msgstr "No puede agregar descuentos en productos canjeados."
