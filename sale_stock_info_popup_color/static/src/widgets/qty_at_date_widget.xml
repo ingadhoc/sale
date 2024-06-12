@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<templates>
-    <t t-name="sale_stock.qtyAtDate" owl="1">
-        <div t-att-class="!props.record.data.display_qty_widget ? 'invisible' : ''">
-            <a t-att-tabindex="props.record.data.display_qty_widget ? '0' : '-1'" t-on-click="showPopup"
-                t-attf-class="fa fa-area-chart {{ props.record.data.free_qty_today &lt; props.record.data.qty_to_deliver ? 'text-danger' : 'text-primary' }}"/>
-        </div>
+<?xml version="1.0" encoding="UTF-8" ?>
+<template id="template" xml:space="preserve">
+    <t t-name="sale_stock_info_popup_color.QtyAtDate" t-inherit="sale_stock.QtyAtDate" t-inherit-mode="extension">
+        <xpath expr="//a" position="attributes">
+            <attribute name="t-attf-class">fa fa-area-chart cursor-pointer {{ props.record.data.free_qty_today &lt; props.record.data.qty_to_deliver ? 'text-danger' : '' }}</attribute>
+        </xpath>
     </t>
-</templates>
+</template>
