@@ -23,6 +23,10 @@ class SaleOrder(models.Model):
                     line.qty_to_invoice for line in rec.order_line):
                 _logger.warning('Noting to invoice')
                 continue
+            # If the sales order confirmation comes from ecommerce and the automation type
+            # is create_invoice then it is not compatible because the transaction posts the invoice.
+            if self.transaction_ids and rec.type_id.invoicing_atomation == 'create_invoice':
+                continue
             # we take into account if there are any transaction finish from the e-commerce
             #  and not continue with the automation in this case
             if self.transaction_ids and self.env['ir.config_parameter'].sudo().get_param('sale.automatic_invoice')\
