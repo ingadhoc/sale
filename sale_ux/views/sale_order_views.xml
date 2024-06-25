@@ -66,6 +66,9 @@
                     <button name="%(action_sale_global_discount_wizard_form)d" string="Set Global Discount" type="action" attrs="{'invisible':[('state','not in',['draft','sent'])]}" groups="product.group_discount_per_so_line"/>
                 </div>
             </xpath>
+            <xpath expr="//field[@name='order_line']/tree//field[@name='discount']" position="after">
+                <button name="action_sale_history" type="object" icon="fa-history" title="Sale History" attrs="{'invisible': [('id', '=', False)]}"/>
+            </xpath>
         </field>
     </record>
 
