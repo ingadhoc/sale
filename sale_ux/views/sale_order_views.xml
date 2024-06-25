@@ -53,6 +53,9 @@
                 <attribute name="invisible">state not in ['draft', 'sent']</attribute>
                 <attribute name="confirm"/>
             </xpath>
+            <xpath expr="//field[@name='order_line']/tree//field[@name='discount']" position="after">
+                <button name="action_sale_history" type="object" icon="fa-history" title="Sale History" attrs="{'invisible': [('id', '=', False)]}"/>
+            </xpath>
         </field>
     </record>
 
