@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, api, fields
+from odoo import models, api, fields, _
 
 
 class SaleOrderLine(models.Model):
@@ -25,3 +25,13 @@ class SaleOrderLine(models.Model):
                 continue
             if line.order_id.force_invoiced_status:
                 line.invoice_status = line.order_id.force_invoiced_status
+
+    def action_sale_history(self):
+        self.ensure_one()
+        action = self.env["ir.actions.actions"]._for_xml_id("sale_ux.action_sale_order_line_usability_tree")
+        action['domain'] = [('state', 'in', ['sale', 'done']), ('product_id', '=', self.product_id.id)]
+        action['display_name'] = _("Sale History for %s", self.product_id.display_name)
+        action['context'] = {
+            'search_default_order_partner_id': self.order_partner_id.id
+        }
+        return action
