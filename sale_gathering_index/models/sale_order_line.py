@@ -16,15 +16,14 @@ class SaleOrderLine(models.Model):
                 raise UserError(_("You can't add an already gathered product more than once. Please modify the quantity of the existing line."))
 
     def write(self, vals):
-        if (
-            self.order_id.is_gathering
-            and self.order_id.state == 'sale'
-            and 'product_uom_qty' in vals
-            and vals['product_uom_qty'] > self.product_uom_qty
-            and 'initial_qty_gathered' not in vals
-            and self.initial_qty_gathered == 0
-        ):
-            raise UserError(_("You can't modify the quantity of an added product. Please add a new line."))
+        if 'product_uom_qty' in vals and 'initial_qty_gathered' not in vals:
+            if any(
+                line.order_id.is_gathering
+                and line.order_id.state == 'sale'
+                and vals['product_uom_qty'] > line.product_uom_qty
+                and line.initial_qty_gathered == 0 for line in self
+            ):
+                raise UserError(_("You can't modify the quantity of an added product. Please add a new line."))
         return super(SaleOrderLine, self).write(vals)
 
     def _compute_price_unit(self):
