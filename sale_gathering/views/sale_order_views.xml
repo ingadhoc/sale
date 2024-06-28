@@ -11,6 +11,9 @@
             <button name="%(sale.action_view_sale_advance_payment_inv)d" position="attributes">
                 <attribute name="context">{'default_advance_payment_method': is_gathering and 'invoice_gathering_zero' or 'delivered'}</attribute>
             </button>
+            <button id="create_invoice_percentage" position="attributes">
+                <attribute name="invisible">is_gathering or invoice_status != 'no' or state != 'sale'</attribute>
+            </button>
             <button name="%(sale.action_view_sale_advance_payment_inv)d" position="after">
                 <field name="has_gathering_invoice" invisible="1"/>
                 <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Gathering Invoice" type="action" context="{'default_advance_payment_method': 'fixed', 'default_fixed_amount': gathering_amount}" invisible="not is_gathering or state != 'sale' or has_gathering_invoice"/>
