@@ -2,11 +2,13 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, api
+from odoo import models, api, fields
 
 
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
+
+    date_order = fields.Datetime("Order Date", related="order_id.date_order")
 
     @api.depends('order_id.force_invoiced_status')
     def _compute_invoice_status(self):
