@@ -61,8 +61,7 @@ class SaleOrder(models.Model):
         product_precision_digits = self.env['decimal.precision'].precision_get(
             'Product Price')
         for rec in self.filtered('is_gathering'):
-            gathering_lines = rec.order_line.filtered(lambda sol: sol.product_uom_qty > 0 and sol.initial_qty_gathered > 0)
-            if gathering_lines and float_compare(rec.gathering_balance, 0.0, precision_digits=product_precision_digits) == -1:
+            if float_compare(rec.gathering_balance, 0.0, precision_digits=product_precision_digits) == -1:
                 raise ValidationError(
                     _(
                         "The gathering balance will be negative (%s), you cannot make this modification"
