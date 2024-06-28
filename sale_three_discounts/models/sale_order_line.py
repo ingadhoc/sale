@@ -76,11 +76,14 @@ class SaleOrderLine(models.Model):
                 if 'discount3' in vals and vals.get('discount3') == 0:
                     vals.pop('discount3')
             precision = self.env['decimal.precision'].precision_get('Discount')
-            if 'discount' in vals \
-                    and not {'discount1', 'discount2', 'discount3'} & set(vals.keys()):
-                vals.update({
-                    'discount1': vals.get('discount'),
-                })
+            for rec in self:
+                if 'discount' in vals and float_compare(vals.get('discount'), rec.discount, precision_digits=precision) != 0 \
+                        and not {'discount1', 'discount2', 'discount3'} & set(vals.keys()):
+                    vals.update({
+                        'discount1': vals.get('discount'),
+                        'discount2': 0,
+                        'discount3': 0,
+                    })
 
     @api.depends('discount1', 'discount2', 'discount3')
     def _compute_discounts(self):
