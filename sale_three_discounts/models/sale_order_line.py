@@ -5,6 +5,7 @@
 from odoo import fields, models, api, _
 from odoo.exceptions import ValidationError
 from odoo.tools import float_compare
+from odoo.tools.float_utils import float_round
 
 
 class SaleOrderLine(models.Model):
@@ -80,6 +81,8 @@ class SaleOrderLine(models.Model):
                     and not {'discount1', 'discount2', 'discount3'} & set(vals.keys()):
                 vals.update({
                     'discount1': vals.get('discount'),
+                    'discount2': 0.0,
+                    'discount3': 0.0
                 })
 
     @api.depends('discount1', 'discount2', 'discount3')
@@ -89,7 +92,9 @@ class SaleOrderLine(models.Model):
             for discount in [rec.discount1, rec.discount2, rec.discount3]:
                 discount_factor = discount_factor * (
                     (100.0 - discount) / 100.0)
-            rec.discount = 100.0 - (discount_factor * 100.0)
+            discount = 100.0 - (discount_factor * 100.0)
+            rec.discount = float_round(discount, precision_rounding=self.env['decimal.precision'].precision_get(
+            'Discount'))
 
     @api.onchange('product_id')
     def _onchange_discounts(self):
