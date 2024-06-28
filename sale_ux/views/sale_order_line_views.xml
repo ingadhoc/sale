@@ -40,6 +40,7 @@
         <field name="arch" type="xml">
             <tree string="Sale Order Lines" create="false" delete="false" edit="false">
                 <field name="order_id"/>
+                <field name="date_order" optional="show"/>
                 <field name="name"/>
                 <field name="order_partner_id"/>
                 <field name="salesman_id" optional="hide"/>
