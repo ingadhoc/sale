@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Three Discounts',
-    'version': "16.0.1.1.0",
+    'version': "17.0.1.0.0",
     'category': 'Sales Management',
     'sequence': 14,
     'author': 'ADHOC SA',
@@ -33,10 +33,11 @@
     'data': [
         'views/sale_order_views.xml',
         'views/account_invoice_views.xml',
+        'wizards/sale_order_discount_views.xml',
     ],
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
     'post_init_hook': 'post_init_hook',
