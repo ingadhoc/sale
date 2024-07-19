@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_barcode_rule_portal_distributor,barcode.rule.portal.distributor,barcodes.model_barcode_nomenclature,portal_sale_distributor.group_portal_backend_distributor,1,0,0,0
-
