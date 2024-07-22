@@ -43,7 +43,7 @@ class ResPartner(models.Model):
                     ('invoice_status', 'in', ['to invoice', 'no']),
                     ('order_id.state', 'in', ['sale', 'done']),
                 ]
-            order_lines = self.env['sale.order.line'].search(domain)
+            order_lines = self.env['sale.order.line'].sudo().search(domain)
 
             # We sum from all the sale orders that are aproved, the sale order
             # lines that are not yet invoiced
@@ -73,7 +73,7 @@ class ResPartner(models.Model):
                     ('move_id.state', '=', 'draft'),
                     '|',('sale_line_ids', '=', False),
                     ('sale_line_ids.order_id.invoice_status', '=', 'invoiced')]
-            draft_invoice_lines = self.env['account.move.line'].search(domain)
+            draft_invoice_lines = self.env['account.move.line'].sudo().search(domain)
             draft_invoice_lines_amount = 0.0
             for line in draft_invoice_lines:
                 price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
@@ -87,6 +87,9 @@ class ResPartner(models.Model):
                         taxes['total_included'], line.company_id.currency_id, line.company_id, fields.Date.today())
                 draft_invoice_lines_amount += total
 
+            total_credit = 0.0
+            for company in self.env['res.company'].search([]):
+                credit = self.with_company(company).credit
+                total_credit += company.currency_id._convert(credit, self.env.company.currency_id, self.env.company, fields.Date.today())
 
-
-            self.credit_with_confirmed_orders = to_invoice_amount + draft_invoice_lines_amount + self.credit
+            self.credit_with_confirmed_orders = to_invoice_amount + draft_invoice_lines_amount + total_credit
