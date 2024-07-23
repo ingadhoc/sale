@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * portal_sale_distributor_website_sale
+# * portal_addresses
 #
 # Translators:
 # Nicolas Robles <nr@adhoc.com.ar>, 2020
@@ -19,27 +19,27 @@ msgstr ""
 "Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#. module: portal_sale_distributor_website_sale
-#: model_terms:ir.ui.view,arch_db:portal_sale_distributor_website_sale.portal_address
+#. module: portal_addresses
+#: model_terms:ir.ui.view,arch_db:portal_addresses.portal_address
 msgid "<span class=\"fa fa-long-arrow-left\"/> Cancelar"
 msgstr "<span class=\"fa fa-long-arrow-left\"/> Cancelar"
 
-#. module: portal_sale_distributor_website_sale
-#: model_terms:ir.ui.view,arch_db:portal_sale_distributor_website_sale.portal_address
+#. module: portal_addresses
+#: model_terms:ir.ui.view,arch_db:portal_addresses.portal_address
 msgid "<span>Guardar </span><span class=\"fa fa-long-arrow-right\"/>"
 msgstr "<span>Guardar </span><span class=\"fa fa-long-arrow-right\"/>"
 
-#. module: portal_sale_distributor_website_sale
-#: model_terms:ir.ui.view,arch_db:portal_sale_distributor_website_sale.addresses
+#. module: portal_addresses
+#: model_terms:ir.ui.view,arch_db:portal_addresses.addresses
 msgid "Addresses"
 msgstr "Direcciones"
 
-#. module: portal_sale_distributor_website_sale
-#: model_terms:ir.ui.view,arch_db:portal_sale_distributor_website_sale.portal_address_kanban
+#. module: portal_addresses
+#: model_terms:ir.ui.view,arch_db:portal_addresses.portal_address_kanban
 msgid "Edit this address"
 msgstr "Editar esta dirección"
 
-#. module: portal_sale_distributor_website_sale
-#: model_terms:ir.ui.view,arch_db:portal_sale_distributor_website_sale.sale_order_website_link
+#. module: portal_addresses
+#: model_terms:ir.ui.view,arch_db:portal_addresses.sale_order_website_link
 msgid "My Adresses"
 msgstr "Mis Direcciones"

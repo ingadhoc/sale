@@ -18,35 +18,22 @@ class WebsiteSalePortal(WebsiteSale):
         order = request.env['sale.order'].new({
             'partner_id': request.env.user.partner_id.commercial_partner_id.id
         })
-        order.pricelist_id = order.partner_id.property_product_pricelist \
-            and order.partner_id.property_product_pricelist.id or False
+        
         mode = (False, False)
         values, errors = {}, {}
-
         partner_id = int(kw.get('partner_id', -1))
-        # IF PUBLIC ORDER
-        if order.partner_id.id == request.website.user_id.sudo().partner_id.id:
-            mode = ('new', 'billing')
-        # IF ORDER LINKED TO A PARTNER
-        else:
-            if partner_id > 0:
-                if partner_id == order.partner_id.id:
-                    mode = ('edit', 'billing')
-                else:
-                    shippings = Partner.search([('id', 'child_of', order.partner_id.commercial_partner_id.ids)])
-                    if order.partner_id.commercial_partner_id.id == partner_id:
-                        mode = ('new', 'shipping')
-                        partner_id = -1
-                    elif partner_id in shippings.mapped('id'):
-                        mode = ('edit', 'shipping')
-                    else:
-                        return Forbidden()
-                if mode and partner_id != -1:
-                    values = Partner.browse(partner_id)
-            elif partner_id == -1:
-                mode = ('new', 'shipping')
-            else:  # no mode - refresh without post?
-                return request.redirect('/portal/addresses')
+
+        if partner_id > 0:
+            partner_type = request.env['res.partner'].browse(partner_id).type
+            values = Partner.browse(partner_id)
+            if partner_type == 'invoice':
+                mode = ('edit', 'billing')
+            else:
+                mode = ('edit', 'shipping')
+        elif partner_id == -1:
+            mode = ('new', kw.get('mode') or 'shipping')
+        else:  # no mode - refresh without post?
+            return request.redirect('/portal/addresses')
 
         # IF POSTED
         if 'submitted' in kw:
@@ -97,7 +84,7 @@ class WebsiteSalePortal(WebsiteSale):
                 'partner': Partner,
             })
         render_values.update(self._get_country_related_render_values(kw, render_values))
-        return request.render("portal_sale_distributor_website_sale.portal_address", render_values)
+        return request.render("portal_addresses.portal_address", render_values)
 
     def _portal_address_form_save(self, mode, checkout, all_values):
         Partner = request.env['res.partner']
@@ -131,13 +118,19 @@ class WebsiteSalePortal(WebsiteSale):
              '|', ("type", "in", ["delivery", "other"]),
              ("id", "=", order.partner_id.commercial_partner_id.id)],
             order='id desc')
+        billings = Partner.search([
+            ("id", "child_of", order.partner_id.commercial_partner_id.ids),
+            '|', ("type", "in", ["invoice", "other"]),
+            ("id", "=", order.partner_id.commercial_partner_id.id)
+        ], order='id desc')
         values = {
             'order': order,
             'website_sale_order': order,
             'shippings': shippings,
+            'billings': billings
         }
         # Avoid useless rendering if called in ajax
         if post.get('xhr'):
             return 'ok'
         return request.render(
-            "portal_sale_distributor_website_sale.addresses", values)
+            "portal_addresses.addresses", values)

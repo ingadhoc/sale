@@ -18,8 +18,8 @@
 #
 ##############################################################################
 {
-    'name': 'Portal Distributor Website Sale',
-    'version': "16.0.1.0.0",
+    'name': 'Portal Addresses',
+    'version': "17.0.1.0.0",
     'category': 'Tools',
     'complexity': 'easy',
     'author': 'ADHOC SA, Odoo Community Association (OCA)',
@@ -35,6 +35,6 @@
         'views/portal_templates.xml',
         'views/templates.xml',
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': True,
 }
