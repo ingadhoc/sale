@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* portal_sale_distributor_website_sale
+# 	* portal_addresses
 # 
 # Translators:
 # Ekaterina <nawsikaya@bk.ru>, 2020
@@ -19,27 +19,27 @@ msgstr ""
 "Language: ru\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#. module: portal_sale_distributor_website_sale
-#: model_terms:ir.ui.view,arch_db:portal_sale_distributor_website_sale.portal_address
+#. module: portal_addresses
+#: model_terms:ir.ui.view,arch_db:portal_addresses.portal_address
 msgid "<span class=\"fa fa-long-arrow-left\"/> Cancelar"
 msgstr "<span class=\"fa fa-long-arrow-left\"/>Отмена"
 
-#. module: portal_sale_distributor_website_sale
-#: model_terms:ir.ui.view,arch_db:portal_sale_distributor_website_sale.portal_address
+#. module: portal_addresses
+#: model_terms:ir.ui.view,arch_db:portal_addresses.portal_address
 msgid "<span>Guardar </span><span class=\"fa fa-long-arrow-right\"/>"
 msgstr ""
 
-#. module: portal_sale_distributor_website_sale
-#: model_terms:ir.ui.view,arch_db:portal_sale_distributor_website_sale.addresses
+#. module: portal_addresses
+#: model_terms:ir.ui.view,arch_db:portal_addresses.addresses
 msgid "Addresses"
 msgstr "Адреса"
 
-#. module: portal_sale_distributor_website_sale
-#: model_terms:ir.ui.view,arch_db:portal_sale_distributor_website_sale.portal_address_kanban
+#. module: portal_addresses
+#: model_terms:ir.ui.view,arch_db:portal_addresses.portal_address_kanban
 msgid "Edit this address"
 msgstr "Редактировать адрес"
 
-#. module: portal_sale_distributor_website_sale
-#: model_terms:ir.ui.view,arch_db:portal_sale_distributor_website_sale.sale_order_website_link
+#. module: portal_addresses
+#: model_terms:ir.ui.view,arch_db:portal_addresses.sale_order_website_link
 msgid "My Adresses"
 msgstr "Мои адреса"

@@ -1,0 +1,64 @@
+<odoo>
+    <template id="addresses" inherit_id="website_sale.checkout" primary="True">
+        <t t-call="website_sale.checkout_layout" position="attributes">
+            <attribute name="t-call">portal_addresses.portal_checkout_layout</attribute>
+        </t>
+        <t t-call="website_sale.row_addresses" position="attributes">
+            <attribute name="t-call">portal_addresses.portal_row_addresses</attribute>
+        </t>
+        <t t-call="website_sale.row_addresses" position="attributes">
+            <attribute name="t-call">portal_addresses.portal_row_addresses</attribute>
+        </t>
+    </template>
+
+    <template id="portal_checkout_layout" inherit_id="website_sale.checkout_layout" primary="True">
+        <t t-call="website_sale.wizard_checkout" position="replace"/>
+        <t t-call="website_sale.navigation_buttons" position="replace"/>
+        <xpath expr="//div[@id='o_cart_summary']" position="replace"></xpath>
+        <t t-call="website_sale.navigation_buttons" position="replace"/>
+    </template>
+
+    <template id="portal_row_addresses" inherit_id="website_sale.row_addresses" primary="True">
+
+         <t t-if="is_invoice" position="replace">
+            <t t-if="is_invoice">
+               <t t-set="new_address_href" t-valuef="/portal/address?mode=billing"/>
+              </t>
+         </t>
+            <t t-else="" position="replace">
+              <t t-else="">
+               <t t-set="new_address_href" t-valuef="/portal/address?mode=shipping"/>
+             </t>
+         </t>
+        <t t-call="website_sale.address_kanban" position="attributes">
+            <attribute name="t-call">portal_addresses.portal_address_kanban</attribute>
+        </t>
+    </template>
+
+    <template id="portal_address_kanban" inherit_id="website_sale.address_kanban" primary="True">
+        <xpath expr="//a[hasclass('js_edit_address')]" position="replace">
+            <a role="button" t-att-href="'/portal/address/?partner_id='+str(contact.id)" t-if="not actual_partner or (ship.id in actual_partner.child_ids.ids)" class="js_edit_address btn btn-link p-0 mt-auto" title="Edit this address" aria-label="Edit this address">
+                <i class="fa fa-pencil me-1"/>Edit
+         </a>
+    </xpath>
+    </template>
+
+    <template id="portal_address" inherit_id="website_sale.address" primary="True">
+        <t t-call="website_sale.wizard_checkout" position="replace"/>
+        <xpath expr="//a[hasclass('btn-outline-secondary')]" position="replace">
+            <a role="button" t-att-href="'/portal/addresses'" class="btn btn-outline-secondary w-100 w-md-auto order-md-1 order-3">
+                <i class="fw-light fa fa-angle-left me-2"/> Discard
+            </a>
+    </xpath>
+        <xpath expr="//a[hasclass('a-submit')]" position="replace">
+            <a role="button" href="#" class="a-submit a-submit-disable a-submit-loading btn btn-primary w-100 w-md-auto order-1 order-md-3">
+                Save address <i class="fw-light fa fa-angle-right ms-2"/>
+            </a>
+         </xpath>
+        <form action="/shop/address" position="attributes">
+            <attribute name="action">/portal/address</attribute>
+        </form>
+    </template>
+
+</odoo>
+
