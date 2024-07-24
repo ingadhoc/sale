@@ -54,6 +54,7 @@ class SaleOrder(models.Model):
         update_prices_automatically = safe_eval(
             self.env['ir.config_parameter'].sudo().get_param(
                 'sale_ux.update_prices_automatically', 'False'))
+        self = self.with_context(onchange_pricelist_id=True)
         if self.order_line and update_prices_automatically:
             # we need to user the same code as odoo in action_update_prices(),
             # because the "message_post" method isn't available over an onchange trigger.
