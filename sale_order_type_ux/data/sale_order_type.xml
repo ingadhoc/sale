@@ -1,0 +1,7 @@
+<odoo noupdate="1">
+    <record id="default_sale_order_type" model="sale.order.type">
+        <field name="name">Default</field>
+        <field name="active" eval="False"/>
+        <field name="company_id" eval="False"/>
+    </record>
+</odoo>
