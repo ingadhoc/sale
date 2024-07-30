@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Order Type Ux',
-    'version': "16.0.1.2.0",
+    'version': "16.0.1.3.0",
     'category': 'Accounting',
     'sequence': 14,
     'author': 'ADHOC SA',
@@ -31,6 +31,7 @@
         'sale_order_type',
     ],
     'data': [
+        'data/sale_order_type.xml',
         'security/ir.model.access.csv',
         'views/sale_order_type_views.xml',
         'views/sale_order_views.xml',
@@ -40,4 +41,5 @@
     'installable': True,
     'auto_install': False,
     'application': False,
+    'post_init_hook': 'post_init_hook',
 }
