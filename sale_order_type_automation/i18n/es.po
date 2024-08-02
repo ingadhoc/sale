@@ -3,15 +3,17 @@
 # 	* sale_order_type_automation
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2023
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
+# Franco Leyes, 2024
+# Nicolas Col, 2024
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0+e\n"
+"Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-14 09:56+0000\n"
-"PO-Revision-Date: 2023-04-14 09:56+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2023\n"
+"POT-Creation-Date: 2024-06-13 12:47+0000\n"
+"PO-Revision-Date: 2024-04-11 17:17+0000\n"
+"Last-Translator: Nicolas Col, 2024\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -36,16 +38,19 @@ msgid ""
 "automatically or manually. If no journal is set here, default journal will "
 "be used"
 msgstr ""
+"Diario de facturación que se utilizará de forma predeterminada. No importa "
+"que la factura se cree de forma automática o manual. Si no se establece "
+"ningún diario aquí, se utilizará el diario predeterminado."
 
 #. module: sale_order_type_automation
 #: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type__invoice_company_id
 msgid "Company related to this journal"
-msgstr ""
+msgstr "Compañía relacionada con este diario"
 
 #. module: sale_order_type_automation
 #: model:ir.model.fields.selection,name:sale_order_type_automation.selection__sale_order_type__invoicing_atomation__create_invoice
 msgid "Create Invoice"
-msgstr ""
+msgstr "Crear factura"
 
 #. module: sale_order_type_automation
 #: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type__sequence_id
@@ -57,7 +62,7 @@ msgstr "Secuencia de entrada"
 #: code:addons/sale_order_type_automation/models/sale_order_type.py:0
 #, python-format
 msgid "If you choose a Payment automation, Payment Journal is required"
-msgstr ""
+msgstr "Si elige una automatización de pagos, se requiere el Diario de pagos"
 
 #. module: sale_order_type_automation
 #: model:sale.order.type,name:sale_order_type_automation.sale_order_type_create_invoice_automation
@@ -103,7 +108,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:sale_order_type_automation.selection__sale_order_type__payment_atomation__none
 #: model:ir.model.fields.selection,name:sale_order_type_automation.selection__sale_order_type__picking_atomation__none
 msgid "None"
-msgstr "Ninguna"
+msgstr ""
 
 #. module: sale_order_type_automation
 #: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type__payment_atomation
@@ -159,7 +164,7 @@ msgstr ""
 #. module: sale_order_type_automation
 #: model:ir.model,name:sale_order_type_automation.model_sale_advance_payment_inv
 msgid "Sales Advance Payment Invoice"
-msgstr "Ventas. Anticipo pago factura"
+msgstr "Pago anticipado para factura de ventas"
 
 #. module: sale_order_type_automation
 #: model:ir.model,name:sale_order_type_automation.model_sale_order
@@ -192,7 +197,7 @@ msgstr ""
 #. module: sale_order_type_automation
 #: model:ir.model,name:sale_order_type_automation.model_stock_picking
 msgid "Transfer"
-msgstr "Albarán"
+msgstr "Traslado"
 
 #. module: sale_order_type_automation
 #: model:ir.model,name:sale_order_type_automation.model_sale_order_type
@@ -209,7 +214,7 @@ msgstr ""
 #. module: sale_order_type_automation
 #: model:ir.model.fields.selection,name:sale_order_type_automation.selection__sale_order_type__picking_atomation__validate
 msgid "Validate"
-msgstr "Validar"
+msgstr ""
 
 #. module: sale_order_type_automation
 #: model:ir.model.fields.selection,name:sale_order_type_automation.selection__sale_order_type__invoicing_atomation__validate_invoice
@@ -229,7 +234,7 @@ msgstr ""
 #. module: sale_order_type_automation
 #: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type__book_id
 msgid "Voucher Book"
-msgstr "Talonario de Remitos"
+msgstr ""
 
 #. module: sale_order_type_automation
 #. odoo-python

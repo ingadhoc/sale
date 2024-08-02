@@ -3,21 +3,29 @@
 # 	* sale_exception_credit_limit
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
+# JoseKeh, 2024
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 13.0\n"
+"Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-11 13:02+0000\n"
-"PO-Revision-Date: 2020-12-20 01:06+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020\n"
-"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
+"POT-Creation-Date: 2024-05-16 13:50+0000\n"
+"PO-Revision-Date: 2024-04-19 17:13+0000\n"
+"Last-Translator: JoseKeh, 2024\n"
+"Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#. module: sale_exception_credit_limit
+#. odoo-python
+#: code:addons/sale_exception_credit_limit/models/account_move.py:0
+#, python-format
+msgid "%(partner_name)s has reached its credit limit of: %(credit_limit)s"
+msgstr ""
 
 #. module: sale_exception_credit_limit
 #: model:res.groups,name:sale_exception_credit_limit.credit_config
@@ -25,9 +33,25 @@ msgid "Config Credit Limit On partners"
 msgstr "Configurar Límite de Crédito en Partners"
 
 #. module: sale_exception_credit_limit
+#: model:ir.model,name:sale_exception_credit_limit.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: sale_exception_credit_limit
 #: model:exception.rule,name:sale_exception_credit_limit.credit_limit_exceeded
 msgid "Credit Limit Exceeded"
 msgstr "Límite de Crédito Excedido"
+
+#. module: sale_exception_credit_limit
+#: model:ir.model.fields,field_description:sale_exception_credit_limit.field_res_partner__credit_with_confirmed_orders
+#: model:ir.model.fields,field_description:sale_exception_credit_limit.field_res_users__credit_with_confirmed_orders
+msgid "Credit Taken"
+msgstr "Crédito Tomado"
+
+#. module: sale_exception_credit_limit
+#: model:ir.model,name:sale_exception_credit_limit.model_account_move
+msgid "Journal Entry"
+msgstr "Asiento contable"
 
 #. module: sale_exception_credit_limit
 #: model:exception.rule,description:sale_exception_credit_limit.credit_limit_exceeded
@@ -37,4 +61,48 @@ msgstr "No hay suficiente crédito en el Partner para este pedido de venta."
 #. module: sale_exception_credit_limit
 #: model:ir.model,name:sale_exception_credit_limit.model_sale_order
 msgid "Sales Order"
-msgstr "Pedido de venta"
+msgstr "Orden de venta"
+
+#. module: sale_exception_credit_limit
+#. odoo-python
+#: code:addons/sale_exception_credit_limit/models/account_move.py:0
+#, python-format
+msgid ""
+"Total amount due (including sales orders and this document): "
+"%(total_credit)s"
+msgstr ""
+
+#. module: sale_exception_credit_limit
+#. odoo-python
+#: code:addons/sale_exception_credit_limit/models/account_move.py:0
+#, python-format
+msgid "Total amount due (including sales orders): %(total_credit)s"
+msgstr ""
+
+#. module: sale_exception_credit_limit
+#. odoo-python
+#: code:addons/sale_exception_credit_limit/models/account_move.py:0
+#, python-format
+msgid "Total amount due (including this document): %(total_credit)s"
+msgstr ""
+
+#. module: sale_exception_credit_limit
+#. odoo-python
+#: code:addons/sale_exception_credit_limit/models/account_move.py:0
+#, python-format
+msgid "Total amount due: %(total_credit)s"
+msgstr ""
+
+#. module: sale_exception_credit_limit
+#: model:ir.model.fields,help:sale_exception_credit_limit.field_res_partner__credit_with_confirmed_orders
+#: model:ir.model.fields,help:sale_exception_credit_limit.field_res_users__credit_with_confirmed_orders
+msgid ""
+"Total amount this customer owes you (including not invoiced confirmed sale "
+"orders and draft invoices)."
+msgstr ""
+
+#. module: sale_exception_credit_limit
+#: model:ir.model.fields,field_description:sale_exception_credit_limit.field_res_partner__user_credit_config
+#: model:ir.model.fields,field_description:sale_exception_credit_limit.field_res_users__user_credit_config
+msgid "User Credit Config"
+msgstr ""

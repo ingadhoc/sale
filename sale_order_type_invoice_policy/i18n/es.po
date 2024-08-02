@@ -3,21 +3,21 @@
 # 	* sale_order_type_invoice_policy
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 13.0\n"
+"Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-11 13:02+0000\n"
-"PO-Revision-Date: 2020-06-02 20:49+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020\n"
-"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
+"POT-Creation-Date: 2024-05-29 13:27+0000\n"
+"PO-Revision-Date: 2024-05-29 13:27+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
+"Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #. module: sale_order_type_invoice_policy
 #: model:ir.model.fields.selection,name:sale_order_type_invoice_policy.selection__sale_order_type__invoice_policy__by_product
@@ -40,6 +40,7 @@ msgid "Invoicing Policy"
 msgstr "Política de Facturación"
 
 #. module: sale_order_type_invoice_policy
+#. odoo-python
 #: code:addons/sale_order_type_invoice_policy/models/sale_order_line.py:0
 #, python-format
 msgid "Invoicing Policy %s not implemented!"
@@ -69,12 +70,17 @@ msgstr ""
 #. module: sale_order_type_invoice_policy
 #: model:ir.model,name:sale_order_type_invoice_policy.model_sale_order_line
 msgid "Sales Order Line"
-msgstr "Línea de pedido de venta"
+msgstr "Línea de orden de venta"
+
+#. module: sale_order_type_invoice_policy
+#: model:ir.model,name:sale_order_type_invoice_policy.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento de stock"
 
 #. module: sale_order_type_invoice_policy
 #: model:ir.model,name:sale_order_type_invoice_policy.model_stock_picking
 msgid "Transfer"
-msgstr "Transferir"
+msgstr "Traslado"
 
 #. module: sale_order_type_invoice_policy
 #: model:ir.model,name:sale_order_type_invoice_policy.model_sale_order_type

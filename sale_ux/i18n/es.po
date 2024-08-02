@@ -3,15 +3,16 @@
 # 	* sale_ux
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2023
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
+# Nicolas Col, 2024
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-18 17:35+0000\n"
+"POT-Creation-Date: 2024-07-30 18:53+0000\n"
 "PO-Revision-Date: 2023-12-15 19:03+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2023\n"
+"Last-Translator: Nicolas Col, 2024\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,8 +22,23 @@ msgstr ""
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
+msgid "<span>Cancel quotations older than</span>"
+msgstr "<span>Cancelar presupuestos mayores que</span>"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
+msgid "<span>days.</span>"
+msgstr "<span>días.</span>"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
+msgid "<strong>Sales</strong>"
+msgstr "<strong>Ventas</strong>"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
 msgid "Al confirmar ventas, crear cuenta analitica sin compañía."
-msgstr ""
+msgstr "Al confirmar ventas, crear cuenta analitica sin compañía."
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__group_allow_any_user_as_salesman
@@ -38,7 +54,7 @@ msgstr "Cuenta analítica"
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
 msgid "Automatically update prices when change pricelist."
-msgstr ""
+msgstr "Actualizar precios automáticamente al cambiar la lista de precio."
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
@@ -47,6 +63,10 @@ msgid ""
 "sales orders and only internal users in the sales' teams . This option "
 "enables to choose, in both places, users of any type (internal or portal)"
 msgstr ""
+"Por defecto, Odoo sólo permite elegir usuarios que tengan permiso de ventas "
+"en pedidos de venta y sólo usuarios internos en los equipos de ventas. Esta "
+"opción permite elegir, en ambos lugares, usuarios de cualquier tipo (interno"
+" o portal)."
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
@@ -61,6 +81,17 @@ msgid "Cancel %s"
 msgstr ""
 
 #. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__cancel_old_quotations
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
+msgid "Cancel Old Quotations"
+msgstr "Cancelar presupuestos viejos"
+
+#. module: sale_ux
+#: model:ir.actions.server,name:sale_ux.ir_cron_clean_old_quotations_ir_actions_server
+msgid "Clean Old Quotations"
+msgstr "Limpiar presupuestos viejos"
+
+#. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order__commercial_partner_id
 msgid "Commercial Entity"
 msgstr "Entidad comercial"
@@ -73,7 +104,7 @@ msgstr "Entidad Comercial"
 #. module: sale_ux
 #: model:ir.model,name:sale_ux.model_res_config_settings
 msgid "Config Settings"
-msgstr "Opciones de configuración"
+msgstr "Ajustes de configuración"
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
@@ -83,12 +114,12 @@ msgstr "Confirmar"
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__analytic_account_without_company
 msgid "Crear cuenta analitica sin compañía"
-msgstr ""
+msgstr "Crear cuenta analitica sin compañía"
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_filter
 msgid "Create Date"
-msgstr ""
+msgstr "Fecha de creación"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__create_uid
@@ -101,6 +132,13 @@ msgid "Created on"
 msgstr "Creado el"
 
 #. module: sale_ux
+#: model:ir.model.fields,help:sale_ux.field_sale_order_line__date_order
+msgid ""
+"Creation date of draft/sent orders,\n"
+"Confirmation date of confirmed orders."
+msgstr ""
+
+#. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
 msgid "Customer"
 msgstr "Cliente"
@@ -109,6 +147,18 @@ msgstr "Cliente"
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__group_sale_reference_on_tree_and_main_form
 msgid "Customer reference in list view and form"
 msgstr "Referencia de Cliente en vista lista y formulario"
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__days_to_keep_quotations
+msgid "Days to Keep Quotations"
+msgstr "Días que se mantienen los presupuestos"
+
+#. module: sale_ux
+#. odoo-python
+#: code:addons/sale_ux/models/res_config_settings.py:0
+#, python-format
+msgid "Days to keep quotations must be greater than 0."
+msgstr "Los días para mantener los presupuestos deben ser mayor que 0."
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__amount
@@ -129,6 +179,11 @@ msgstr "No llevar las notas a las facturas."
 #: model:ir.model.fields,field_description:sale_ux.field_sale_advance_payment_inv__amount_total
 msgid "Down Payment Amount With Taxes"
 msgstr "Monto del anticipo con impuestos"
+
+#. module: sale_ux
+#: model:ir.model.fields,help:sale_ux.field_res_config_settings__cancel_old_quotations
+msgid "Enable automatic cancellation of old quotations."
+msgstr "Habilitar la cancelación automática de cotizaciones antiguas."
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order__force_invoiced_status
@@ -207,12 +262,12 @@ msgstr "Última actualización el"
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__move_internal_notes
 msgid "Mover notas internas a transferencias de stock y facturas"
-msgstr ""
+msgstr "Mover notas internas a transferencias de stock y facturas"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__move_note
 msgid "Mover términos y condiciones a transferencias de stock y facturas"
-msgstr ""
+msgstr "Mover términos y condiciones a transferencias de stock y facturas"
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
@@ -225,11 +280,21 @@ msgid "Nothing to Invoice"
 msgstr "Nada que facturar"
 
 #. module: sale_ux
+#: model:ir.model.fields,help:sale_ux.field_res_config_settings__days_to_keep_quotations
+msgid "Number of days to keep quotations before cancelling them."
+msgstr "Número de días para mantener las cotizaciones antes de cancelarlas."
+
+#. module: sale_ux
 #. odoo-python
 #: code:addons/sale_ux/models/sale_order.py:0
 #, python-format
 msgid "Only users with \"%s / %s\" can Set Invoiced manually"
 msgstr "Solo usuarios con \"%s / %s\" pueden establecer Facturado manualmente"
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_line__date_order
+msgid "Order Date"
+msgstr ""
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order__payment_term_id
@@ -239,7 +304,7 @@ msgstr "Plazos de pago"
 #. module: sale_ux
 #: model:ir.model,name:sale_ux.model_product_product
 msgid "Product Variant"
-msgstr "Variantes de producto"
+msgstr "Variante de producto"
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_usability_tree
@@ -255,7 +320,19 @@ msgstr "Presupuestos"
 #. module: sale_ux
 #: model:ir.ui.menu,name:sale_ux.menu_product_catalog_reporting
 msgid "Reporting"
-msgstr ""
+msgstr "Informes"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_order_form
+msgid "Sale History"
+msgstr "Historial de ventas"
+
+#. module: sale_ux
+#. odoo-python
+#: code:addons/sale_ux/models/sale_order_line.py:0
+#, python-format
+msgid "Sale History for %s"
+msgstr "Historial de ventas para %s"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_account_bank_statement_line__sale_order_ids
@@ -284,7 +361,7 @@ msgstr "Asistente de Descuento Global para Orden de Venta"
 #. module: sale_ux
 #: model:ir.model,name:sale_ux.model_sale_advance_payment_inv
 msgid "Sales Advance Payment Invoice"
-msgstr "Ventas. Anticipo pago factura"
+msgstr "Pago anticipado para factura de ventas"
 
 #. module: sale_ux
 #: model:ir.model,name:sale_ux.model_sale_order
@@ -309,7 +386,7 @@ msgstr "Mostrar Imagen del Producto"
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
 msgid "Show Product Image On Report"
-msgstr ""
+msgstr "Mostrar imagen del producto en el reporte"
 
 #. module: sale_ux
 #: model:res.groups,name:sale_ux.group_reference_on_tree_and_main_form
@@ -320,6 +397,8 @@ msgstr "Mostrar campo de referencia SO en vista árbol y formulario"
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
 msgid "Show client reference in list view and in main section of form view"
 msgstr ""
+"Mostrar la referencia del cliente en la vista de lista y en el encabezado de"
+" la vista de formulario de la OV"
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
@@ -328,6 +407,9 @@ msgid ""
 "el mismo se va a copiar en las facturas o transferencias que se generen "
 "desde esta venta."
 msgstr ""
+"Si marca esta opción y hay un valor definido en \"términos y condiciones\", "
+"el mismo se va a copiar en las facturas o transferencias que se generen "
+"desde esta venta."
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
@@ -336,6 +418,9 @@ msgid ""
 "mismo se va a copiar en las facturas o transferencias que se generen desde "
 "esta venta."
 msgstr ""
+"Si marca esta opción y hay un valor definido en las \"notas internas\", el "
+"mismo se va a copiar en las facturas o transferencias que se generen desde "
+"esta venta."
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
@@ -345,13 +430,21 @@ msgstr "Estado"
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_order_form
 msgid "Subtotal"
+msgstr "Subtotal"
+
+#. module: sale_ux
+#. odoo-python
+#: code:addons/sale_ux/models/sale_order.py:0
+#, python-format
+msgid "This quotation has been automatically canceled due to its expiration."
 msgstr ""
+"Esta cotización ha sido cancelada automáticamente debido a su vencimiento."
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_usability_tree
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_order_form
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 #. module: sale_ux
 #. odoo-python
@@ -392,53 +485,3 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
 msgid "or"
 msgstr "o"
-
-#. module: sale_ux
-#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
-msgid "<span>Cancel quotations older than</span>"
-msgstr "<span>Cancelar presupuestos mayores que</span>"
-
-#. module: sale_ux
-#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
-msgid "<span>days.</span>"
-msgstr "<span>días.</span>"
-
-#. module: sale_ux
-#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
-msgid "<strong>Cancel Old Quotations</strong>"
-msgstr "<strong>Cancelar presupuestos viejos</strong>"
-
-#. module: sale_ux
-#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
-msgid "<strong>Sales</strong>"
-msgstr "<strong>Ventas</strong>"
-
-#. module: sale_ux
-#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__cancel_old_quotations
-msgid "Cancel Old Quotations"
-msgstr "Cancelar presupuestos viejos"
-
-#. module: sale_ux
-#: model:ir.actions.server,name:sale_ux.ir_cron_clean_old_quotations_ir_actions_server
-#: model:ir.cron,cron_name:sale_ux.ir_cron_clean_old_quotations
-msgid "Clean Old Quotations"
-msgstr "Limpiar presupuestos viejos"
-
-#. module: sale_ux
-#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__days_to_keep_quotations
-msgid "Days to Keep Quotations"
-msgstr "Días que se mantienen los presupuestos"
-
-#. module: sale_ux
-#. odoo-python
-#: code:addons/sale_ux/models/res_config_settings.py:0
-#, python-format
-msgid "Days to keep quotations must be greater than 0."
-msgstr "Los días para mantener los presupuestos deben ser mayor que 0."
-
-#. module: sale_ux
-#. odoo-python
-#: code:addons/sale_ux/models/sale_order.py:0
-#, python-format
-msgid "This quotation has been automatically canceled due to its expiration."
-msgstr "Esta cotización ha sido cancelada automáticamente debido a su vencimiento."

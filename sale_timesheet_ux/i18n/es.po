@@ -3,16 +3,16 @@
 # 	* sale_timesheet_ux
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2023
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0+e\n"
+"Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-13 14:05+0000\n"
-"PO-Revision-Date: 2023-01-13 14:05+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2023\n"
-"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
+"POT-Creation-Date: 2024-04-22 17:28+0000\n"
+"PO-Revision-Date: 2024-04-22 17:28+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
+"Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -20,19 +20,16 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #. module: sale_timesheet_ux
-#: model:ir.model.fields,field_description:sale_timesheet_ux.field_account_analytic_line__algolia_search
-#: model:ir.model.fields,field_description:sale_timesheet_ux.field_project_project__algolia_search
-#: model:ir.model.fields,field_description:sale_timesheet_ux.field_project_task__algolia_search
-#: model:ir.model.fields,field_description:sale_timesheet_ux.field_res_config_settings__algolia_search
-#: model:ir.model.fields,field_description:sale_timesheet_ux.field_sale_order__algolia_search
-#: model:ir.model.fields,field_description:sale_timesheet_ux.field_sale_order_line__algolia_search
-msgid "Algolia Search"
-msgstr ""
-
-#. module: sale_timesheet_ux
 #: model:ir.model,name:sale_timesheet_ux.model_account_analytic_line
 msgid "Analytic Line"
 msgstr "Línea analítica"
+
+#. module: sale_timesheet_ux
+#: model_terms:ir.ui.view,arch_db:sale_timesheet_ux.change_allow_billable_wizzard
+msgid ""
+"Are you sure you want to change the 'Allow Billable' field to False for this"
+" project?"
+msgstr ""
 
 #. module: sale_timesheet_ux
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_ux.res_config_settings_view_form
@@ -46,12 +43,66 @@ msgid ""
 msgstr ""
 
 #. module: sale_timesheet_ux
-#: model:ir.model,name:sale_timesheet_ux.model_res_config_settings
-msgid "Config Settings"
-msgstr "Opciones de configuración"
+#: model_terms:ir.ui.view,arch_db:sale_timesheet_ux.change_allow_billable_wizzard
+msgid "Cancel"
+msgstr ""
 
 #. module: sale_timesheet_ux
+#: model:ir.model,name:sale_timesheet_ux.model_res_config_settings
+msgid "Config Settings"
+msgstr "Ajustes de configuración"
+
+#. module: sale_timesheet_ux
+#: model_terms:ir.ui.view,arch_db:sale_timesheet_ux.change_allow_billable_wizzard
+msgid "Confirm Allow Billable Change"
+msgstr ""
+
+#. module: sale_timesheet_ux
+#: model:ir.model,name:sale_timesheet_ux.model_allow_billable_wizard
+msgid "Confirmar cambio de valor de Allow Billable"
+msgstr ""
+
+#. module: sale_timesheet_ux
+#: model:ir.model.fields,field_description:sale_timesheet_ux.field_allow_billable_wizard__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: sale_timesheet_ux
+#: model:ir.model.fields,field_description:sale_timesheet_ux.field_allow_billable_wizard__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: sale_timesheet_ux
+#: model_terms:ir.ui.view,arch_db:sale_timesheet_ux.view_edit_project_billable_inherit_form
+msgid "Deactivate Billable"
+msgstr ""
+
+#. module: sale_timesheet_ux
+#: model:ir.model.fields,field_description:sale_timesheet_ux.field_allow_billable_wizard__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: sale_timesheet_ux
+#: model:ir.model.fields,field_description:sale_timesheet_ux.field_allow_billable_wizard__id
+msgid "ID"
+msgstr ""
+
+#. module: sale_timesheet_ux
+#: model:ir.model.fields,field_description:sale_timesheet_ux.field_allow_billable_wizard__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: sale_timesheet_ux
+#: model:ir.model.fields,field_description:sale_timesheet_ux.field_allow_billable_wizard__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: sale_timesheet_ux
+#. odoo-python
+#: code:addons/sale_timesheet_ux/models/project_project.py:0
 #: model:ir.model,name:sale_timesheet_ux.model_project_project
+#: model:ir.model.fields,field_description:sale_timesheet_ux.field_allow_billable_wizard__project_id
+#, python-format
 msgid "Project"
 msgstr "Proyecto"
 
@@ -68,12 +119,12 @@ msgstr ""
 #. module: sale_timesheet_ux
 #: model:ir.model,name:sale_timesheet_ux.model_sale_order
 msgid "Sales Order"
-msgstr "Pedido de venta"
+msgstr "Orden de venta"
 
 #. module: sale_timesheet_ux
 #: model:ir.model,name:sale_timesheet_ux.model_sale_order_line
 msgid "Sales Order Line"
-msgstr "Línea de pedido de venta"
+msgstr "Línea de orden de venta"
 
 #. module: sale_timesheet_ux
 #: model:ir.model.fields,help:sale_timesheet_ux.field_project_task__order_id
@@ -84,3 +135,8 @@ msgstr ""
 #: model:ir.model,name:sale_timesheet_ux.model_project_task
 msgid "Task"
 msgstr "Tarea"
+
+#. module: sale_timesheet_ux
+#: model_terms:ir.ui.view,arch_db:sale_timesheet_ux.change_allow_billable_wizzard
+msgid "Yes, Change it"
+msgstr ""

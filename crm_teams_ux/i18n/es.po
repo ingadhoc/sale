@@ -3,27 +3,21 @@
 # 	* crm_teams_ux
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2023
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0+e\n"
+"Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-13 13:47+0000\n"
-"PO-Revision-Date: 2023-01-13 13:47+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2023\n"
-"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
+"POT-Creation-Date: 2024-02-28 19:56+0000\n"
+"PO-Revision-Date: 2024-02-28 19:56+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
+"Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: es\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
-
-#. module: crm_teams_ux
-#: model:ir.model.fields,field_description:crm_teams_ux.field_crm_lead__algolia_search
-#: model:ir.model.fields,field_description:crm_teams_ux.field_crm_stage__algolia_search
-msgid "Algolia Search"
-msgstr ""
 
 #. module: crm_teams_ux
 #: model:ir.model,name:crm_teams_ux.model_crm_stage
@@ -36,11 +30,26 @@ msgid "Lead/Opportunity"
 msgstr "Lead/Oportunidad"
 
 #. module: crm_teams_ux
+#: model:ir.model,name:crm_teams_ux.model_crm_team
+msgid "Sales Team"
+msgstr "Equipo de ventas"
+
+#. module: crm_teams_ux
 #: model:ir.model.fields,field_description:crm_teams_ux.field_crm_stage__team_ids
 msgid "Sales Teams"
 msgstr ""
 
 #. module: crm_teams_ux
+#: model:ir.model.fields,field_description:crm_teams_ux.field_crm_team__member_ids
+msgid "Salespersons"
+msgstr "Comerciales"
+
+#. module: crm_teams_ux
 #: model:ir.model.fields,field_description:crm_teams_ux.field_crm_lead__stage_id
 msgid "Stage"
 msgstr "Etapa"
+
+#. module: crm_teams_ux
+#: model:ir.model.fields,help:crm_teams_ux.field_crm_team__member_ids
+msgid "Users assigned to this team."
+msgstr "Usuarios asignados a este equipo."

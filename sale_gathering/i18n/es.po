@@ -1,0 +1,130 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_gathering
+# 
+# Translators:
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-07-29 15:35+0000\n"
+"PO-Revision-Date: 2024-06-27 14:51+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
+"Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#. module: sale_gathering
+#: model:ir.model.fields,help:sale_gathering.field_sale_advance_payment_inv__advance_payment_method
+msgid ""
+"A standard invoice is issued with all the order lines ready for "
+"invoicing,according to their invoicing policy (based on ordered or delivered"
+" quantity)."
+msgstr ""
+"Se emite una factura estándar con todas las líneas de pedido listos para la "
+"facturación, de acuerdo con su política de facturación (basada en la "
+"cantidad pedida o entregada)."
+
+#. module: sale_gathering
+#: model:ir.model.fields,help:sale_gathering.field_sale_order__gathering_balance
+msgid ""
+"Balance entre la factura de acopio/anticipo y los retiros de mercaderia que "
+"realizo el cliente. Monto positivo es a favor del cliente"
+msgstr ""
+
+#. module: sale_gathering
+#: model_terms:ir.ui.view,arch_db:sale_gathering.view_order_form
+msgid "Create Gathering Invoice"
+msgstr ""
+
+#. module: sale_gathering
+#: model:ir.model.fields,field_description:sale_gathering.field_sale_advance_payment_inv__advance_payment_method
+msgid "Create Invoice"
+msgstr "Crear factura"
+
+#. module: sale_gathering
+#: model:ir.model.fields.selection,name:sale_gathering.selection__sale_advance_payment_inv__advance_payment_method__invoice_gathering_zero
+msgid "Factura en cero descontando acopio"
+msgstr ""
+
+#. module: sale_gathering
+#: model_terms:ir.ui.view,arch_db:sale_gathering.view_sales_order_filter
+msgid "Gathering"
+msgstr ""
+
+#. module: sale_gathering
+#: model:ir.model.fields,field_description:sale_gathering.field_sale_order__gathering_amount
+msgid "Gathering Amount"
+msgstr ""
+
+#. module: sale_gathering
+#: model:ir.model.fields,field_description:sale_gathering.field_sale_order__gathering_balance
+msgid "Gathering Balance"
+msgstr ""
+
+#. module: sale_gathering
+#: model:ir.model.fields,field_description:sale_gathering.field_sale_order__has_gathering_invoice
+msgid "Has Gathering Invoice"
+msgstr ""
+
+#. module: sale_gathering
+#: model:ir.model.fields,field_description:sale_gathering.field_sale_order_line__initial_qty_gathered
+#: model_terms:ir.ui.view,arch_db:sale_gathering.report_saleorder
+msgid "Initial Quantity Gathered"
+msgstr ""
+
+#. module: sale_gathering
+#: model:ir.model.fields,field_description:sale_gathering.field_sale_order__is_gathering
+msgid "Is Gathering?"
+msgstr ""
+
+#. module: sale_gathering
+#: model:ir.model,name:sale_gathering.model_account_move
+msgid "Journal Entry"
+msgstr "Asiento contable"
+
+#. module: sale_gathering
+#: model:ir.model.fields,help:sale_gathering.field_sale_order__gathering_amount
+msgid "Monto, sin impuestos, acopiado inicialmente."
+msgstr ""
+
+#. module: sale_gathering
+#: model_terms:ir.ui.view,arch_db:sale_gathering.view_sales_order_filter
+msgid "Open Gathering"
+msgstr ""
+
+#. module: sale_gathering
+#: model:ir.model,name:sale_gathering.model_sale_advance_payment_inv
+msgid "Sales Advance Payment Invoice"
+msgstr "Pago anticipado para factura de ventas"
+
+#. module: sale_gathering
+#: model:ir.model,name:sale_gathering.model_sale_order
+msgid "Sales Order"
+msgstr "Pedido de venta"
+
+#. module: sale_gathering
+#: model:ir.model,name:sale_gathering.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Línea de pedido de venta"
+
+#. module: sale_gathering
+#. odoo-python
+#: code:addons/sale_gathering/models/sale_order.py:0
+#, python-format
+msgid ""
+"The gathering balance will be negative (%s), you cannot make this "
+"modification to the order. Order: %s"
+msgstr ""
+
+#. module: sale_gathering
+#. odoo-python
+#: code:addons/sale_gathering/models/sale_order.py:0
+#, python-format
+msgid "You can't add more products. First create the gathering invoice."
+msgstr ""
