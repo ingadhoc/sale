@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import fields, models
+from odoo import fields, models, api
 
 
 class AccountMove(models.Model):
@@ -30,3 +30,11 @@ class AccountMove(models.Model):
         (self - moves).has_sales = False
         for rec in moves:
             rec.has_sales = any(line for line in rec.invoice_line_ids.mapped('sale_line_ids'))
+
+    @api.depends('move_type', 'partner_id', 'company_id')
+    def _compute_narration(self):
+        use_invoice_terms = self.env['ir.config_parameter'].sudo().get_param('sale.propagate_internal_notes')
+        for move in self:
+            super(AccountMove, move)._compute_narration()
+            if use_invoice_terms and move.sale_order_ids.note:
+                move.narration = move.sale_order_ids.note
