@@ -67,7 +67,7 @@
                 </div>
             </xpath>
             <xpath expr="//field[@name='order_line']/tree//field[@name='discount']" position="after">
-                <button name="action_sale_history" type="object" icon="fa-history" title="Sale History" attrs="{'invisible': [('id', '=', False)]}"/>
+                <button name="action_sale_history" type="object" icon="fa-history" title="Sale History"/>
             </xpath>
         </field>
     </record>
