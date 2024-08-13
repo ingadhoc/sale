@@ -32,6 +32,7 @@ class SaleOrderLine(models.Model):
         action['domain'] = [('state', 'in', ['sale', 'done']), ('product_id', '=', self.product_id.id)]
         action['display_name'] = _("Sale History for %s", self.product_id.display_name)
         action['context'] = {
-            'search_default_order_partner_id': self.order_partner_id.id
+            'search_default_order_partner_id': self.order_partner_id.parent_id.id or self.order_partner_id.id,
+            'search_default_partner_id': 1
         }
         return action
