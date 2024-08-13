@@ -87,10 +87,10 @@ class SaleOrderLine(models.Model):
             if bom_enable:
                 bom = self.env['mrp.bom']._bom_find(
                     products=rec.product_id)[rec.product_id]
-                if bom and bom.type == 'phantom':
-                    raise UserError(_(
-                        "Cancel remaining can't be called for Kit Products "
-                        "(products with a bom of type kit)."))
+                # if bom and bom.type == 'phantom':
+                #     raise UserError(_(
+                #         "Cancel remaining can't be called for Kit Products "
+                #         "(products with a bom of type kit)."))
             # For product pack compatibility to cancel all of componept in case the product parent is cancel
             if pack_enable and rec.product_id.pack_ok and rec.pack_type == "detailed" and rec.pack_child_line_ids:
                 rec.pack_child_line_ids.with_context(cancel_from_order=True).button_cancel_remaining()
@@ -106,9 +106,9 @@ class SaleOrderLine(models.Model):
             #         'You should correct invoice or ask for a refund'))
             rec.with_context(
                 bypass_protecion=True).product_uom_qty = rec.qty_delivered
-            to_cancel_moves = rec.move_ids.filtered(
-                lambda x: x.state not in ['done', 'cancel'])
-            to_cancel_moves._cancel_quantity()
+            # to_cancel_moves = rec.move_ids.filtered(
+            #     lambda x: x.state not in ['done', 'cancel'])
+            # to_cancel_moves._cancel_quantity()
             rec.order_id.message_post(
                 body=_(
                     'Cancel remaining call for line "%s" (id %s), line '
