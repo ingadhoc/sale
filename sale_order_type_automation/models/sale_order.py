@@ -21,7 +21,7 @@ class SaleOrder(models.Model):
             # an error
             if not any(
                     line.qty_to_invoice for line in rec.order_line):
-                _logger.warning('Noting to invoice')
+                _logger.info('Nothing to invoice')
                 continue
             # we take into account if there are any transaction finish from the e-commerce
             #  and not continue with the automation in this case
