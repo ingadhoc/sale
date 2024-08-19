@@ -19,7 +19,13 @@
 ##############################################################################
 {
     'name': 'Sale Order Type Automation',
+<<<<<<< HEAD
     'version': "17.0.1.1.0",
+||||||| parent of b3f2ca2d (temp)
+    'version': "16.0.1.1.0",
+=======
+    'version': "16.0.1.2.0",
+>>>>>>> b3f2ca2d (temp)
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
