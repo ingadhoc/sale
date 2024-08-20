@@ -40,9 +40,4 @@
     ],
     'installable': True,
     'auto_install': True,
-    'assets': {
-        'web.assets_tests': [
-            'sale_order_type_automation/static/tests/tours/**/*',
-        ],
-    },
 }
