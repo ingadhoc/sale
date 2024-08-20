@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Order Type Automation',
-    'version': "17.0.1.1.0",
+    'version': "17.0.1.0.0",
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
@@ -40,9 +40,4 @@
     ],
     'installable': True,
     'auto_install': True,
-    'assets': {
-        'web.assets_tests': [
-            'sale_order_type_automation/static/tests/tours/**/*',
-        ],
-    },
 }
