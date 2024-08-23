@@ -193,6 +193,10 @@ msgid ""
 "* %s\n"
 " "
 msgstr ""
+"Los siguientes productos no están disponibles, sugerimos consultar stock o utilizar algún tipo de venta que fuerce la disponibilidad.\n"
+"Productos:\n"
+"* %s\n"
+" "
 
 #. module: sale_order_type_automation
 #: model:ir.model,name:sale_order_type_automation.model_stock_picking
