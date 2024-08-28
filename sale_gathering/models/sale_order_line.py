@@ -18,11 +18,16 @@ class SaleOrderLine(models.Model):
                 'invoice_gathering', False):
             lines = self.order_id.order_line.filtered(
                 lambda x: not x.is_downpayment and x.qty_to_invoice)
-            price_subtotal = lines and sum(lines.mapped(
-                lambda l: l.qty_to_invoice * l.price_unit)) or 0.0
-            result['price_unit'] = self.tax_id.compute_all(
-                price_subtotal, currency=self.order_id.currency_id)[
-                'total_excluded']
+            price_subtotal = 0
+            for line in lines:
+                price_reduce = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
+                price_subtotal += line.tax_id.compute_all(
+                    price_reduce,
+                    currency=line.currency_id,
+                    quantity=line.qty_to_invoice,
+                    product=line.product_id,
+                    partner=line.order_id.partner_shipping_id)['total_excluded']
+            result['price_unit'] = price_subtotal
             result['quantity'] = -1.0
         return result
 
