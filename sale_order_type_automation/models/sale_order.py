@@ -14,15 +14,11 @@ class SaleOrder(models.Model):
 
     def run_invoicing_atomation(self):
         for rec in self.filtered(
-                lambda x: x.type_id.invoicing_atomation and
-                x.type_id.invoicing_atomation != 'none'):
-            # we add this check just because if we call
-            # _create_invoices and nothing to invoice, it raise
-            # an error
-            if not any(
-                    line.qty_to_invoice for line in rec.order_line):
-                _logger.info('Nothing to invoice')
-                continue
+            lambda x: (
+                x.type_id.invoicing_atomation != 'none' and
+                any(line.qty_to_invoice for line in x.order_line)
+            )
+        ):
             # we take into account if there are any transaction finish from the e-commerce
             #  and not continue with the automation in this case
             if self.transaction_ids and self.env['ir.config_parameter'].sudo().get_param('sale.automatic_invoice')\
@@ -96,7 +92,7 @@ class SaleOrder(models.Model):
                             ' force availability.\nProducts:\n* %s\n '
                         ) % ('\n *'.join(x.name for x in products)))
                     for op in pick.mapped('move_line_ids'):
-                        op.qty_done = op.reserved_uom_qty
+                        op.quantity = op.quantity_product_uom
                 pick.button_validate()
                 # append action records to print the reports of the pickings
                 #  involves
