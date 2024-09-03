@@ -37,18 +37,36 @@ class SaleOrder(models.Model):
                 order.order_line.filtered('is_downpayment')
             )
         )
-        for rec in orders_gathering:
-            amount_to_invoice = sum(
-                rec.order_line.filtered(lambda x: not x.is_downpayment).mapped(
-                    lambda l: l.price_reduce_taxinc * l.qty_to_invoice))
-            amount_invoiced = sum(
-                rec.order_line.filtered(lambda x: not x.is_downpayment).mapped(
-                    lambda l: l.price_reduce_taxinc * l.qty_invoiced))
-            downpayment_amount = sum(
-                rec.order_line.filtered('is_downpayment').mapped('price_unit_with_tax')
+
+        def _prepare_tax_dict(line, quantity):
+            tax_dict = line._convert_to_tax_base_line_dict()
+            tax_dict.update({
+                'quantity': quantity,
+                'company': line.company_id
+            })
+            return tax_dict
+
+        def _calculate_tax_amount(tax_dict):
+            tax_data = self.env['account.tax'].with_company(tax_dict['company'])._compute_taxes([tax_dict])
+            totals = list(tax_data['totals'].values())[0]
+            return totals['amount_untaxed'] + totals['amount_tax']
+
+        for order in orders_gathering:
+            total_amount_to_invoice = sum(
+                _calculate_tax_amount(_prepare_tax_dict(line, line.qty_to_invoice))
+                for line in order.order_line.filtered(lambda x: not x.is_downpayment)
             )
-            rec.gathering_balance = downpayment_amount - amount_invoiced - amount_to_invoice
+            total_amount_invoiced = sum(
+                _calculate_tax_amount(_prepare_tax_dict(line, line.qty_invoiced))
+                for line in order.order_line.filtered(lambda x: not x.is_downpayment)
+            )
+            total_downpayment_amount = sum(
+                order.order_line.filtered('is_downpayment').mapped('price_unit_with_tax')
+            )
+            order.gathering_balance = total_downpayment_amount - total_amount_invoiced - total_amount_to_invoice
+
         (self - orders_gathering).gathering_balance = 0
+
 
     def _get_invoiceable_lines(self, final=False):
         """Return the invoiceable lines for order `self`."""
