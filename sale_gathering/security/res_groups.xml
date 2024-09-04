@@ -1,0 +1,6 @@
+<odoo>
+    <record id="group_allow_redeemed_product_discounts" model="res.groups">
+        <field name="name">Allow Redeemed Product Discounts</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+</odoo>

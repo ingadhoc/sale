@@ -128,3 +128,23 @@ msgstr ""
 #, python-format
 msgid "You can't add more products. First create the gathering invoice."
 msgstr ""
+
+#. module: sale_gathering
+#: model:res.groups,name:sale_gathering.group_allow_redeemed_product_discounts
+msgid "Allow Redeemed Product Discounts"
+msgstr "Permitir descuentos en productos canjeados"
+
+#. module: sale_gathering
+#. odoo-python
+#: code:addons/sale_gathering/models/sale_order_line.py:0
+#, python-format
+msgid ""
+"It is not possible to add discounts once the product has been invoiced or delivered."
+msgstr "No es posible añadir descuentos una vez facturado o entregado el producto."
+
+#. module: sale_gathering
+#. odoo-python
+#: code:addons/sale_gathering/models/sale_order_line.py:0
+#, python-format
+msgid "Discounts cannot be added to downpayments."
+msgstr "Los descuentos no pueden añadirse a los anticipos."
