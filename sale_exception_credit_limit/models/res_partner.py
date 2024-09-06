@@ -89,7 +89,7 @@ class ResPartner(models.Model):
 
             total_credit = 0.0
             for company in self.env['res.company'].search([]):
-                credit = self.with_company(company).credit
+                credit = self.sudo().with_company(company).credit
                 total_credit += company.currency_id._convert(credit, self.env.company.currency_id, self.env.company, fields.Date.today())
 
             self.credit_with_confirmed_orders = to_invoice_amount + draft_invoice_lines_amount + total_credit
