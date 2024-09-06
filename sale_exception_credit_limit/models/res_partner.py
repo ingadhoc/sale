@@ -55,4 +55,20 @@ class ResPartner(models.Model):
                         taxes['total_included'], line.company_id.currency_id, line.company_id, fields.Date.today())
                 draft_invoice_lines_amount += total
 
+<<<<<<< HEAD
             self.credit_with_confirmed_orders = draft_invoice_lines_amount + self.credit + self.credit_to_invoice
+||||||| parent of c173bc85 (temp)
+            total_credit = 0.0
+            for company in self.env['res.company'].search([]):
+                credit = self.with_company(company).credit
+                total_credit += company.currency_id._convert(credit, self.env.company.currency_id, self.env.company, fields.Date.today())
+
+            self.credit_with_confirmed_orders = to_invoice_amount + draft_invoice_lines_amount + total_credit
+=======
+            total_credit = 0.0
+            for company in self.env['res.company'].search([]):
+                credit = self.sudo().with_company(company).credit
+                total_credit += company.currency_id._convert(credit, self.env.company.currency_id, self.env.company, fields.Date.today())
+
+            self.credit_with_confirmed_orders = to_invoice_amount + draft_invoice_lines_amount + total_credit
+>>>>>>> c173bc85 (temp)
