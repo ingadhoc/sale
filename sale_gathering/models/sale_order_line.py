@@ -56,3 +56,8 @@ class SaleOrderLine(models.Model):
                     and rec.discount > 0
                 ):
                     raise ValidationError(_("Cannot add discounts to redeemed products."))
+
+    def _compute_qty_invoiced(self):
+        super()._compute_qty_invoiced()
+        for line in self.filtered(lambda x: x.order_id.is_gathering and x.qty_invoiced < 0 and x.is_downpayment):
+            line.qty_invoiced = 0
