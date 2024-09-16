@@ -1,14 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="report_saleorder" inherit_id="sale.report_saleorder_document">
+    <template
+        id="report_saleorder_document_gathering"
+        inherit_id="sale.report_saleorder_document"
+        primary="True"
+        priority="99"
+    >
         <xpath expr="//th[@name='th_priceunit']" position="before">
             <th class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">Initial Quantity Gathered</th>
+            <th class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">Quantity Delivered</th>
+            <th class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">Quantity Returned</th>
+            <th class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">Quantity Invoiced</th>
         </xpath>
+
         <xpath expr="//td[@name='td_priceunit']" position="before">
-            <td name="td_priceunit" class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">
+            <td class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">
                 <span t-if="line.initial_qty_gathered &gt; 0">
                     <t t-esc="line.initial_qty_gathered"/>
                 </span>
             </td>
+            <td class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">
+                    <t t-esc="line.qty_delivered"/>
+            </td>
+            <td class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">
+                    <t t-esc="line.quantity_returned"/>
+            </td>
+            <td class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">
+                    <t t-esc="line.qty_invoiced"/>
+            </td>
         </xpath>
+    </template>
+
+    <template id="document_tax_totals_gathering" inherit_id="account.document_tax_totals_template">
+        <xpath expr="//tr[hasclass('o_total')]" position="inside">
+            <t t-if="is_gathering and doc.is_gathering and doc.state not in ['draft','sent']">
+                <tr class="border-black o_total">
+                    <td>
+                        <strong>Gathering Amount:</strong>
+                    </td>
+                    <td class="text-end">
+                    <span>$
+                    <t t-esc="doc.gathering_amount or 0"/>
+                    </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Gathering Balance:</strong>
+                    </td>
+                    <td class="text-end">
+                    <span>$
+                    <t t-esc="doc.gathering_balance or 0"/>
+                    </span>
+                    </td>
+                </tr>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="report_saleorder_gathering_document">
+        <t t-call="web.html_container">
+        <t t-set="is_gathering" t-value="True"/>
+            <t t-foreach="docs" t-as="doc">
+                <t
+                    t-call="sale_gathering.report_saleorder_document_gathering"
+                    t-lang="doc.partner_id.lang"
+                />
+            </t>
+        </t>
     </template>
 </odoo>
