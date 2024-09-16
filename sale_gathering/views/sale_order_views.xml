@@ -34,7 +34,7 @@
         <field name="inherit_id" ref="sale.view_order_tree"/>
         <field name="arch" type="xml">
             <field name="amount_total" position="after">
-                <field name="gathering_balance"/>
+                <field name="gathering_balance" optional="show"/>
             </field>
         </field>
     </record>

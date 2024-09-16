@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Gathering',
-    'version': "17.0.1.1.0",
+    'version': "17.0.1.2.0",
     'category': 'Sales & Stock',
     'sequence': 14,
     'summary': '',
@@ -36,6 +36,7 @@
     'data': [
         'security/res_groups.xml',
         'reports/report_saleorder_document.xml',
+        'reports/report_saleorder_action.xml',
         'views/sale_order_views.xml',
     ],
     'demo': [

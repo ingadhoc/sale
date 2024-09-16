@@ -16,6 +16,17 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: sale_gathering
+#: model_terms:ir.ui.view,arch_db:sale_gathering.document_tax_totals
+msgid "<strong>Gathering Amount:</strong>"
+msgstr "<strong>Monto acopiado:</strong>"
+
+#. module: sale_gathering
+#: model_terms:ir.ui.view,arch_db:sale_gathering.document_tax_totals
+msgid "<strong>Gathering Balance:</strong>"
+msgstr "<strong>Balance de Acopio:</strong>"
+
+
+#. module: sale_gathering
 #: model:ir.model.fields,help:sale_gathering.field_sale_advance_payment_inv__advance_payment_method
 msgid ""
 "A standard invoice is issued with all the order lines ready for "
@@ -52,13 +63,19 @@ msgid "Gathering"
 msgstr "Acopio"
 
 #. module: sale_gathering
+#: model:ir.actions.report,name:sale_gathering.action_report_saleorder_gathering
 #: model:ir.model.fields,field_description:sale_gathering.field_sale_order__gathering_balance
 msgid "Gathering Balance"
-msgstr "Balance de acopio"
+msgstr "Balance de Acopio"
+
+#. module: sale_gathering
+#: model:ir.model.fields,field_description:sale_gathering.field_sale_order__has_gathering_invoice
+msgid "Has Gathering Invoice"
+msgstr "Tienes facturas de acopio"
 
 #. module: sale_gathering
 #: model:ir.model.fields,field_description:sale_gathering.field_sale_order_line__initial_qty_gathered
-#: model_terms:ir.ui.view,arch_db:sale_gathering.report_saleorder
+#: model_terms:ir.ui.view,arch_db:sale_gathering.report_saleorder_document_gathering
 msgid "Initial Quantity Gathered"
 msgstr "Cantidad inicial acopiada"
 
@@ -81,6 +98,21 @@ msgstr "Acopio Abierto"
 #: model:ir.model,name:sale_gathering.model_sale_advance_payment_inv
 msgid "Sales Advance Payment Invoice"
 msgstr "Ventas. Anticipo pago factura"
+
+#. module: sale_gathering
+#: model_terms:ir.ui.view,arch_db:sale_gathering.report_saleorder_document_gathering
+msgid "Quantity Delivered"
+msgstr "Cantidad Entregada"
+
+#. module: sale_gathering
+#: model_terms:ir.ui.view,arch_db:sale_gathering.report_saleorder_document_gathering
+msgid "Quantity Invoiced"
+msgstr "Cantidad Facturada"
+
+#. module: sale_gathering
+#: model_terms:ir.ui.view,arch_db:sale_gathering.report_saleorder_document_gathering
+msgid "Quantity Returned"
+msgstr "Cantidad Devuelta"
 
 #. module: sale_gathering
 #: model:ir.model,name:sale_gathering.model_sale_order
