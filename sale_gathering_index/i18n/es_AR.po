@@ -16,6 +16,16 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: sale_gathering_index
+#: model_terms:ir.ui.view,arch_db:sale_gathering_index.report_saleorder_index
+msgid "<strong>Gathering Balance Indexed:</strong>"
+msgstr "<strong>Balance de Acopio Indexado:</strong>"
+
+#. module: sale_gathering_index
+#: model_terms:ir.ui.view,arch_db:sale_gathering_index.report_saleorder_index
+msgid "<strong>Indexed Gathering Amount:</strong>"
+msgstr "<strong>Monto Acopiado Indexado:</strong>"
+
+#. module: sale_gathering_index
 #: model:ir.model.fields,field_description:sale_gathering_index.field_sale_order__gathering_balance_indexed
 msgid "Gathering Balance Indexed"
 msgstr "Balance de acopio indexado"

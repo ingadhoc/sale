@@ -1,0 +1,30 @@
+<odoo>
+    <template id="report_saleorder_index" inherit_id="sale_gathering.document_tax_totals" priority="14">
+
+        <xpath expr="//tr[2]" position="after">
+            <t t-if="doc.is_gathering and doc.state not in ['draft','sent']">
+                <tr class="border-black o_total">
+                    <td>
+                        <strong>Indexed Gathering Amount:</strong>
+                    </td>
+                    <td class="text-end">
+                    <span>$
+                    <t t-esc="doc.indexed_gathering_amount or 0"/>
+                    </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Gathering Balance Indexed:</strong>
+                    </td>
+                    <td class="text-end">
+                    <span>$
+                    <t t-esc="doc.gathering_balance_indexed or 0"/>
+                    </span>
+                    </td>
+                </tr>
+            </t>
+        </xpath>
+
+    </template>
+</odoo>
