@@ -61,3 +61,17 @@ class SaleOrderLine(models.Model):
         super()._compute_qty_invoiced()
         for line in self.filtered(lambda x: x.order_id.is_gathering and x.qty_invoiced < 0 and x.is_downpayment):
             line.qty_invoiced = 0
+
+    @api.constrains('product_uom_qty')
+    def _check_gathering_invoice(self):
+        for rec in self.filtered(
+            lambda x: (
+                x.order_id.is_gathering
+                and x.order_id.state == 'sale'
+                and x.product_uom_qty > 0
+                and not any(invoice._is_downpayment() for invoice in x.order_id.invoice_ids if invoice.state not in ('cancel', 'draft'))
+            )
+        ):
+            raise ValidationError(
+                _("Before adding quantities, you need to create and confirm the gathering invoice.")
+            )
