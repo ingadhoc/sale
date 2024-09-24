@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sot_sale_order_type_form_view" model="ir.ui.view">
+        <field name="name">sale.order.type.form.view</field>
+        <field name="model">sale.order.type</field>
+        <field name="inherit_id" ref="sale_order_type.sot_sale_order_type_form_view"/>
+        <field name="arch" type="xml">
+            <field name="picking_atomation" position="after">
+                <field name="book_id" invisible="picking_atomation == 'none'"/>
+             </field>
+        </field>
+    </record>
+</odoo>
