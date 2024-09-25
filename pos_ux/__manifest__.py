@@ -17,7 +17,7 @@ This module extend functionality of point of sale .
             'pos_ux/static/src/**/*'
         ],
     },
-    'installable': True,
-    'auto_install': True,
+    'installable': False,
+    'auto_install': False,
     'license': 'LGPL-3',
 }
