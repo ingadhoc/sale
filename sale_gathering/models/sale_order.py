@@ -24,6 +24,7 @@ class SaleOrder(models.Model):
         'order_line.qty_invoiced',
         'order_line.qty_to_invoice',
         'order_line.is_downpayment',
+        'order_line.qty_to_deliver',
         'state'
     )
     def _compute_gathering_balance(self):
@@ -42,7 +43,11 @@ class SaleOrder(models.Model):
             tax_totals = order.env['account.tax']._compute_taxes([
                 {
                     **line._convert_to_tax_base_line_dict(),
-                    'quantity': line.qty_to_invoice + line.qty_invoiced
+                    'quantity': (
+                        line.qty_to_invoice + line.qty_invoiced + line.qty_to_deliver
+                        if line.product_id.invoice_policy == 'delivery' else
+                        line.qty_to_invoice + line.qty_invoiced
+                    )
                 }
                 for line in order_lines
             ])
