@@ -215,7 +215,7 @@ class SaleOrder(models.Model):
                 [line.quantity <= 0.0 for line in i.invoice_line_ids])
         )
         filtered_invoices.action_switch_move_type()
-        filtered_invoices.invoice_line_ids.write({'quantity': abs(line.quantity) for line in filtered_invoices.invoice_line_ids})
+        filtered_invoices.mapped('invoice_line_ids').mapped(lambda line: line.write({'quantity': abs(line.quantity)}))
         return invoices
 
     def action_preview_sale_order(self):
