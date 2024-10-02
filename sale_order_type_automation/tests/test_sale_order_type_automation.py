@@ -47,3 +47,35 @@ class TestSaleOrderTypeAutomation(common.TransactionCase):
         }
         sale_order = self.sale_order_model.create(vals)
         sale_order.action_confirm()
+
+    def test_pay_automation_wo_payment_pro(self):
+        company = self.env['res.company'].search([('use_payment_pro', '=', False)], limit=1)
+        self.env.company = company
+
+        automatic_sale_order_type = self.sale_order_type.copy()
+        automatic_sale_order_type.write({
+            'picking_atomation':  'validate',
+            'invoicing_atomation': 'validate_invoice',
+            'payment_atomation': 'validate_payment',
+            'journal_id': self.env.ref('account.1_sale'),
+            'payment_journal_id': self.env.ref('account.1_cash')
+        })
+
+        sale_order = self.sale_order_model.create({
+                    'partner_id': self.partner.id,
+                    'type_id': automatic_sale_order_type.id,
+                    'order_line': [
+                        (0, 0, {
+                            'product_id': self.product.id,
+                            'name': self.product.name,
+                            'product_uom_qty': 1,
+                            'price_unit': 100,
+                        }),
+                    ],
+                })
+
+        sale_order.action_confirm()
+
+        payment_amount = sale_order.invoice_ids.invoice_payments_widget['content'][0]['amount']
+        invoice_amount = sale_order.invoice_ids.amount_total
+        self.assertEqual(invoice_amount, payment_amount, "No se generó correctamente el pago automático en una compañía sin payment_pro")
