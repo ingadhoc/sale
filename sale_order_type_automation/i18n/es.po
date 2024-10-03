@@ -3,17 +3,18 @@
 # 	* sale_order_type_automation
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
 # Franco Leyes, 2024
 # Nicolas Col, 2024
+# Juan Rivero <jr@adhoc.com.ar>, 2024
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-13 12:47+0000\n"
+"POT-Creation-Date: 2024-09-26 13:47+0000\n"
 "PO-Revision-Date: 2024-04-11 17:17+0000\n"
-"Last-Translator: Nicolas Col, 2024\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,6 +28,11 @@ msgid "Auto Done Setting"
 msgstr "Configuración automática"
 
 #. module: sale_order_type_automation
+#: model_terms:ir.ui.view,arch_db:sale_order_type_automation.sot_sale_order_type_form_view
+msgid "Automations"
+msgstr "Automatizaciones"
+
+#. module: sale_order_type_automation
 #: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type__journal_id
 msgid "Billing Journal"
 msgstr "Diario de facturación"
@@ -37,7 +43,10 @@ msgid ""
 "Billing journal to be used by default. No matter invoice being created "
 "automatically or manually. If no journal is set here, default journal will "
 "be used"
-msgstr "Diario de facturación que se utilizará de forma predeterminada. No importa que la factura se cree de forma automática o manual. Si no se establece ningún diario aquí, se utilizará el diario predeterminado"
+msgstr ""
+"Diario de facturación que se utilizará de forma predeterminada. No importa "
+"que la factura se cree de forma automática o manual. Si no se establece "
+"ningún diario aquí, se utilizará el diario predeterminado"
 
 #. module: sale_order_type_automation
 #: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type__invoice_company_id
@@ -81,7 +90,8 @@ msgstr "Empresa de facturas"
 #: code:addons/sale_order_type_automation/models/sale_order_type.py:0
 #, python-format
 msgid "Invoice Journal and Payment Journal must be of the same company"
-msgstr "El diario de facturas y el diario de pagos deben ser de la misma empresa"
+msgstr ""
+"El diario de facturas y el diario de pagos deben ser de la misma empresa"
 
 #. module: sale_order_type_automation
 #: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type__invoicing_atomation
@@ -97,15 +107,19 @@ msgstr "Asiento contable"
 #: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type__payment_journal_id
 msgid ""
 "Journal used only with payment_automation. As manual payment method is used,"
-" only journals with manual method are shown."
-msgstr "Diario usado solo con payment_automation. Como se utiliza el método de pago manual, solo se muestran diarios con método manual."
+" only journals with manual method are shown. This field will not be "
+"considered for sales coming from eCommerce. You should configure it directly"
+" in Settings > Website."
+msgstr ""
+"Diario usado solo con payment_automation. Como se utiliza el método de pago "
+"manual, solo se muestran diarios con método manual."
 
 #. module: sale_order_type_automation
 #: model:ir.model.fields.selection,name:sale_order_type_automation.selection__sale_order_type__invoicing_atomation__none
 #: model:ir.model.fields.selection,name:sale_order_type_automation.selection__sale_order_type__payment_atomation__none
 #: model:ir.model.fields.selection,name:sale_order_type_automation.selection__sale_order_type__picking_atomation__none
 msgid "None"
-msgstr ""
+msgstr "Ninguno"
 
 #. module: sale_order_type_automation
 #: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type__payment_atomation
@@ -113,7 +127,8 @@ msgid ""
 "On invoice validation, if:\n"
 "*None: no payment is created\n"
 "*Validate Payment: create payment and validate it\n"
-msgstr "En la validación de la factura, si:\n"
+msgstr ""
+"En la validación de la factura, si:\n"
 "*Ninguno: no se crea ningún pago\n"
 "*Validar Pago: crear pago y validarlo\n"
 
@@ -125,7 +140,8 @@ msgid ""
 "*Create Invoice: create invoice for 'Invoiceable lines' (regarding product configuration and delivery status)\n"
 "*Validate Invoice: create invoice and validate it\n"
 "*Try to Validate Invoice: create invoice and try to validate it, if there is a validation error, do not raise it, just log it on SO and Invoice chatter (invoice will be in draft state till someone validate it. This option is not recommended because it is less intuiteve for user. Should only be use if it is common that you are facing errors on invoice validation."
-msgstr "Confirmación de pedido en venta y confirmación de recolección, si:\n"
+msgstr ""
+"Confirmación de pedido en venta y confirmación de recolección, si:\n"
 "*Ninguno: no se crea ninguna factura\n"
 "*Crear factura: crear factura para 'Líneas facturables' (con respecto a la configuración del producto y el estado de entrega)\n"
 "*Validar Factura: crear factura y validarla\n"
@@ -162,7 +178,8 @@ msgid ""
 "Pickings are generated automatically upon sale confirmation.\n"
 "If you set \"Validate\", then they will be also confirmed automatically.\n"
 "If you set \"Validate No Force\", then Validate without forcing availabilty"
-msgstr "Las entregas se generan automáticamente tras la confirmación de la venta.\n"
+msgstr ""
+"Las entregas se generan automáticamente tras la confirmación de la venta.\n"
 "Si configura \"Validar\", también se confirmarán automáticamente.\n"
 "Si configura \"Validar sin forzar\", entonces Validar sin forzar la disponibilidad"
 
@@ -197,7 +214,8 @@ msgid ""
 "Products:\n"
 "* %s\n"
 " "
-msgstr "Los siguientes productos no están disponibles, sugerimos consultar stock o utilizar algún tipo de venta que fuerce la disponibilidad.\n"
+msgstr ""
+"Los siguientes productos no están disponibles, sugerimos consultar stock o utilizar algún tipo de venta que fuerce la disponibilidad.\n"
 "Productos:\n"
 
 #. module: sale_order_type_automation
@@ -215,12 +233,14 @@ msgstr "Tipo de pedido de venta"
 msgid ""
 "Upon confirmation set sale order done instead of leaving it on 'sale order' "
 "state that allows modifications"
-msgstr "Tras la confirmación, establezca el pedido de venta realizado en lugar de dejarlo en el estado 'orden de venta' que permite modificaciones"
+msgstr ""
+"Tras la confirmación, establezca el pedido de venta realizado en lugar de "
+"dejarlo en el estado 'orden de venta' que permite modificaciones"
 
 #. module: sale_order_type_automation
 #: model:ir.model.fields.selection,name:sale_order_type_automation.selection__sale_order_type__picking_atomation__validate
 msgid "Validate"
-msgstr ""
+msgstr "Validar"
 
 #. module: sale_order_type_automation
 #: model:ir.model.fields.selection,name:sale_order_type_automation.selection__sale_order_type__invoicing_atomation__validate_invoice
@@ -238,20 +258,12 @@ msgid "Validate Payment"
 msgstr "Validar pago"
 
 #. module: sale_order_type_automation
-#: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type__book_id
-msgid "Voucher Book"
-msgstr ""
-
-#. module: sale_order_type_automation
-#: model_terms:ir.ui.view,arch_db:sale_order_type_automation.sot_sale_order_type_form_view
-msgid "Automations"
-msgstr "Automatizaciones"
-
-#. module: sale_order_type_automation
 #. odoo-python
 #: code:addons/sale_order_type_automation/models/sale_order.py:0
 #, python-format
 msgid ""
 "We couldn't validate the automatically created invoices (ids %s), you will "
 "need to validate them manually. This is what we get: %s"
-msgstr "No pudimos validar las facturas creadas automáticamente (ids %s), necesitarás validarlos manualmente. Esto es lo que obtenemos: %s"
+msgstr ""
+"No pudimos validar las facturas creadas automáticamente (ids %s), "
+"necesitarás validarlos manualmente. Esto es lo que obtenemos: %s"
