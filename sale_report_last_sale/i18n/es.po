@@ -3,21 +3,21 @@
 # 	* sale_report_last_sale
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2022
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0+e\n"
+"Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-24 16:53+0000\n"
-"PO-Revision-Date: 2022-04-19 14:04+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2022\n"
-"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/133229/es/)\n"
+"POT-Creation-Date: 2024-09-26 15:54+0000\n"
+"PO-Revision-Date: 2024-09-26 15:54+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
+"Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #. module: sale_report_last_sale
 #: model:ir.model.fields,field_description:sale_report_last_sale.field_sale_last_sale_report__company_id
@@ -44,11 +44,6 @@ msgstr "Agrupar por..."
 #: model:ir.model.fields,field_description:sale_report_last_sale.field_sale_last_sale_report__id
 msgid "ID"
 msgstr "ID (identificación)"
-
-#. module: sale_report_last_sale
-#: model:ir.model.fields,field_description:sale_report_last_sale.field_sale_last_sale_report____last_update
-msgid "Last Modified on"
-msgstr "Última modificación el"
 
 #. module: sale_report_last_sale
 #: model:ir.actions.act_window,name:sale_report_last_sale.action_sale_last_sale_report
