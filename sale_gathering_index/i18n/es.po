@@ -4,20 +4,31 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
+# manucep, 2024
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-29 15:36+0000\n"
+"POT-Creation-Date: 2024-09-26 12:10+0000\n"
 "PO-Revision-Date: 2024-07-29 15:36+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
+"Last-Translator: manucep, 2024\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: es\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#. module: sale_gathering_index
+#: model_terms:ir.ui.view,arch_db:sale_gathering_index.report_saleorder_index
+msgid "<strong>Gathering Balance Indexed:</strong>"
+msgstr ""
+
+#. module: sale_gathering_index
+#: model_terms:ir.ui.view,arch_db:sale_gathering_index.report_saleorder_index
+msgid "<strong>Indexed Gathering Amount:</strong>"
+msgstr ""
 
 #. module: sale_gathering_index
 #: model:ir.model.fields,help:sale_gathering_index.field_sale_order__gathering_balance_indexed
@@ -29,17 +40,17 @@ msgstr ""
 #. module: sale_gathering_index
 #: model:ir.model.fields,field_description:sale_gathering_index.field_sale_order__gathering_balance_indexed
 msgid "Gathering Balance Indexed"
-msgstr ""
+msgstr "Balance de acopio indexado"
 
 #. module: sale_gathering_index
 #: model:ir.model.fields,field_description:sale_gathering_index.field_sale_order__index
 msgid "Index"
-msgstr ""
+msgstr "Índice"
 
 #. module: sale_gathering_index
 #: model:ir.model.fields,field_description:sale_gathering_index.field_sale_order__indexed_gathering_amount
 msgid "Indexed Gathering Amount"
-msgstr ""
+msgstr "Monto Acopiado indexado"
 
 #. module: sale_gathering_index
 #: model:ir.model.fields,help:sale_gathering_index.field_sale_order__indexed_gathering_amount
@@ -66,6 +77,8 @@ msgid ""
 "You can't add an already gathered product more than once. Please modify the "
 "quantity of the existing line."
 msgstr ""
+"No puedes agregar un producto ya acopiado más de una vez. Por favor, "
+"modifica la cantidad de la línea existente."
 
 #. module: sale_gathering_index
 #. odoo-python
@@ -74,3 +87,5 @@ msgstr ""
 msgid ""
 "You can't modify the quantity of an added product. Please add a new line."
 msgstr ""
+"No puedes modificar la cantidad de un producto agregado. Por favor, añade "
+"una nueva línea."

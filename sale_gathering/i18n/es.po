@@ -3,13 +3,14 @@
 # 	* sale_gathering
 # 
 # Translators:
+# Franco Leyes, 2024
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-29 15:35+0000\n"
+"POT-Creation-Date: 2024-09-26 21:44+0000\n"
 "PO-Revision-Date: 2024-06-27 14:51+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -18,6 +19,23 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Language: es\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#. module: sale_gathering
+#: model:ir.actions.report,print_report_name:sale_gathering.action_report_saleorder_gathering
+msgid ""
+"(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or "
+"'Order - %s' % (object.name)"
+msgstr ""
+
+#. module: sale_gathering
+#: model_terms:ir.ui.view,arch_db:sale_gathering.document_tax_totals_gathering
+msgid "<strong>Gathering Amount:</strong>"
+msgstr ""
+
+#. module: sale_gathering
+#: model_terms:ir.ui.view,arch_db:sale_gathering.document_tax_totals_gathering
+msgid "<strong>Gathering Balance:</strong>"
+msgstr ""
 
 #. module: sale_gathering
 #: model:ir.model.fields,help:sale_gathering.field_sale_advance_payment_inv__advance_payment_method
@@ -31,6 +49,11 @@ msgstr ""
 "cantidad pedida o entregada)."
 
 #. module: sale_gathering
+#: model:res.groups,name:sale_gathering.group_allow_redeemed_product_discounts
+msgid "Allow Redeemed Product Discounts"
+msgstr "Permitir descuentos en productos canjeados"
+
+#. module: sale_gathering
 #: model:ir.model.fields,help:sale_gathering.field_sale_order__gathering_balance
 msgid ""
 "Balance entre la factura de acopio/anticipo y los retiros de mercaderia que "
@@ -38,14 +61,37 @@ msgid ""
 msgstr ""
 
 #. module: sale_gathering
+#. odoo-python
+#: code:addons/sale_gathering/models/sale_order_line.py:0
+#, python-format
+msgid ""
+"Before adding quantities, you need to create and confirm the gathering "
+"invoice."
+msgstr ""
+
+#. module: sale_gathering
+#. odoo-python
+#: code:addons/sale_gathering/models/sale_order_line.py:0
+#, python-format
+msgid "Cannot add discounts to redeemed products."
+msgstr "No se pueden añadir descuentos a productos canjeados."
+
+#. module: sale_gathering
 #: model_terms:ir.ui.view,arch_db:sale_gathering.view_order_form
 msgid "Create Gathering Invoice"
-msgstr ""
+msgstr "Crear Factura de Acopio"
 
 #. module: sale_gathering
 #: model:ir.model.fields,field_description:sale_gathering.field_sale_advance_payment_inv__advance_payment_method
 msgid "Create Invoice"
 msgstr "Crear factura"
+
+#. module: sale_gathering
+#. odoo-python
+#: code:addons/sale_gathering/models/sale_order_line.py:0
+#, python-format
+msgid "Discounts cannot be added to downpayments."
+msgstr "Los descuentos no pueden añadirse a los anticipos."
 
 #. module: sale_gathering
 #: model:ir.model.fields.selection,name:sale_gathering.selection__sale_advance_payment_inv__advance_payment_method__invoice_gathering_zero
@@ -55,33 +101,44 @@ msgstr ""
 #. module: sale_gathering
 #: model_terms:ir.ui.view,arch_db:sale_gathering.view_sales_order_filter
 msgid "Gathering"
-msgstr ""
+msgstr "Acopio"
 
 #. module: sale_gathering
 #: model:ir.model.fields,field_description:sale_gathering.field_sale_order__gathering_amount
 msgid "Gathering Amount"
-msgstr ""
+msgstr "Monto Acopiado"
 
 #. module: sale_gathering
+#: model:ir.actions.report,name:sale_gathering.action_report_saleorder_gathering
 #: model:ir.model.fields,field_description:sale_gathering.field_sale_order__gathering_balance
 msgid "Gathering Balance"
-msgstr ""
+msgstr "Balance de Acopio"
 
 #. module: sale_gathering
 #: model:ir.model.fields,field_description:sale_gathering.field_sale_order__has_gathering_invoice
 msgid "Has Gathering Invoice"
-msgstr ""
+msgstr "Tiene Factura de Acopio"
 
 #. module: sale_gathering
 #: model:ir.model.fields,field_description:sale_gathering.field_sale_order_line__initial_qty_gathered
-#: model_terms:ir.ui.view,arch_db:sale_gathering.report_saleorder
+#: model_terms:ir.ui.view,arch_db:sale_gathering.report_saleorder_document_gathering
 msgid "Initial Quantity Gathered"
-msgstr ""
+msgstr "Cantidad Inicial Acopiada"
 
 #. module: sale_gathering
 #: model:ir.model.fields,field_description:sale_gathering.field_sale_order__is_gathering
 msgid "Is Gathering?"
+msgstr "Es Acopio?"
+
+#. module: sale_gathering
+#. odoo-python
+#: code:addons/sale_gathering/models/sale_order_line.py:0
+#, python-format
+msgid ""
+"It is not possible to add discounts once the product has been invoiced or "
+"delivered."
 msgstr ""
+"No es posible añadir descuentos una vez facturado o entregado el producto."
 
 #. module: sale_gathering
 #: model:ir.model,name:sale_gathering.model_account_move
@@ -96,7 +153,27 @@ msgstr ""
 #. module: sale_gathering
 #: model_terms:ir.ui.view,arch_db:sale_gathering.view_sales_order_filter
 msgid "Open Gathering"
+msgstr "Acopio Abierto"
+
+#. module: sale_gathering
+#: model_terms:ir.ui.view,arch_db:sale_gathering.report_saleorder_document_gathering
+msgid "Quantity Delivered"
 msgstr ""
+
+#. module: sale_gathering
+#: model_terms:ir.ui.view,arch_db:sale_gathering.report_saleorder_document_gathering
+msgid "Quantity Invoiced"
+msgstr ""
+
+#. module: sale_gathering
+#: model_terms:ir.ui.view,arch_db:sale_gathering.report_saleorder_document_gathering
+msgid "Quantity Returned"
+msgstr ""
+
+#. module: sale_gathering
+#: model:ir.model,name:sale_gathering.model_ir_actions_report
+msgid "Report Action"
+msgstr "Acción de informe"
 
 #. module: sale_gathering
 #: model:ir.model,name:sale_gathering.model_sale_advance_payment_inv
@@ -121,30 +198,23 @@ msgid ""
 "The gathering balance will be negative (%s), you cannot make this "
 "modification to the order. Order: %s"
 msgstr ""
+"El saldo de acopio será negativo (%s), no puedes hacer esta modificación a "
+"la orden. Orden: %s"
 
 #. module: sale_gathering
 #. odoo-python
 #: code:addons/sale_gathering/models/sale_order.py:0
 #, python-format
 msgid "You can't add more products. First create the gathering invoice."
-msgstr ""
-
-#. module: sale_gathering
-#: model:res.groups,name:sale_gathering.group_allow_redeemed_product_discounts
-msgid "Allow Redeemed Product Discounts"
-msgstr "Permitir descuentos en productos canjeados"
+msgstr "No puedes añadir más productos. Primero crea la factura de acopio."
 
 #. module: sale_gathering
 #. odoo-python
 #: code:addons/sale_gathering/models/sale_order_line.py:0
 #, python-format
 msgid ""
-"It is not possible to add discounts once the product has been invoiced or delivered."
-msgstr "No es posible añadir descuentos una vez facturado o entregado el producto."
-
-#. module: sale_gathering
-#. odoo-python
-#: code:addons/sale_gathering/models/sale_order_line.py:0
-#, python-format
-msgid "Discounts cannot be added to downpayments."
-msgstr "Los descuentos no pueden añadirse a los anticipos."
+"You cannot modify the discount of the gathering lines once the sale has been"
+" confirmed.\n"
+msgstr ""
+"No puede modificar el descuento de las líneas de acopio una vez confirmada "
+"la venta.\n"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-16 13:50+0000\n"
+"POT-Creation-Date: 2024-08-02 19:36+0000\n"
 "PO-Revision-Date: 2024-04-19 17:13+0000\n"
 "Last-Translator: JoseKeh, 2024\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -30,7 +30,7 @@ msgstr ""
 #. module: sale_exception_credit_limit
 #: model:res.groups,name:sale_exception_credit_limit.credit_config
 msgid "Config Credit Limit On partners"
-msgstr "Configurar Límite de Crédito en Partners"
+msgstr "Configurar Límite de Crédito en Contactos"
 
 #. module: sale_exception_credit_limit
 #: model:ir.model,name:sale_exception_credit_limit.model_res_partner
@@ -56,12 +56,12 @@ msgstr "Asiento contable"
 #. module: sale_exception_credit_limit
 #: model:exception.rule,description:sale_exception_credit_limit.credit_limit_exceeded
 msgid "Not enough credit on partner for this sales order."
-msgstr "No hay suficiente crédito en el Partner para este pedido de venta."
+msgstr "No hay suficiente crédito en el Contacto para este pedido de venta."
 
 #. module: sale_exception_credit_limit
 #: model:ir.model,name:sale_exception_credit_limit.model_sale_order
 msgid "Sales Order"
-msgstr "Orden de venta"
+msgstr "Pedido de venta"
 
 #. module: sale_exception_credit_limit
 #. odoo-python
