@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_crossovered_budget_line_detail_user,crossovered_budget_line_detail_user,model_crossovered_budget_line_detail,base.group_user,1,1,1,1
+access_crossovered_budget_line_detail_all,crossovered_budget_line_detail_all,model_crossovered_budget_line_detail,,1,0,0,0
