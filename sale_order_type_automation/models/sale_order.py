@@ -61,15 +61,14 @@ class SaleOrder(models.Model):
             jit_installed = self.env['ir.module.module'].search(
                 [('name', '=', 'procurement_jit'),
                     ('state', '=', 'installed')], limit=1)
+            stock_voucher_installed = self.env['ir.module.module'].search(
+                [('name', '=', 'stock_voucher'),
+                    ('state', '=', 'installed')], limit=1)
             # we add invalidate because on boggio we have add an option
             # for tracking_disable and with that setup pickings where not seen
             # rec.invalidate_cache()
             pickings = rec.picking_ids.filtered(
                 lambda x: x.state not in ('done', 'cancel'))
-            if rec.type_id.book_id:
-                pickings.write({'book_id': rec.type_id.book_id.id})
-            # because of ensure_one on delivery module
-            actions = []
             if not jit_installed:
                 pickings.action_assign()
             # ordenamos primeros los pickings asignados y luego el resto
@@ -93,28 +92,18 @@ class SaleOrder(models.Model):
                         ) % ('\n *'.join(x.name for x in products)))
                     for op in pick.mapped('move_line_ids'):
                         op.quantity = op.quantity_product_uom
-                pick.button_validate()
-                # append action records to print the reports of the pickings
-                #  involves
-                if pick.book_required:
-                    actions.append(pick.do_print_voucher())
-            if actions:
-                return {
-                    'actions': actions,
-                    'type': 'ir.actions.act_multi',
-                }
-            else:
-                return True
+                if not stock_voucher_installed:
+                    pick.button_validate()
 
     def action_confirm(self):
         res = super().action_confirm()
         # we use this because compatibility with sale exception module
         if isinstance(res, bool) and res:
             # because it's needed to return actions if exists
-            res = self.run_picking_atomation()
+            self.run_picking_atomation()
             self.sudo().run_invoicing_atomation()
             if self.type_id.set_done_on_confirmation:
-                self.action_done()
+                self.action_lock()
         return res
 
     def _prepare_invoice(self):
