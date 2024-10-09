@@ -1,5 +1,4 @@
-from odoo import models, fields
-
+from odoo import models, fields, api
 
 class ProjectTask(models.Model):
 
@@ -25,3 +24,14 @@ class ProjectTask(models.Model):
             super()._compute_sale_line()
             if not task.sale_line_id or task.sale_line_id != sale_line:
                 task.sale_line_id = sale_line
+
+    @api.onchange('sale_line_id')
+    def _onchange_sale_line_id(self):
+        for line in self.timesheet_ids:
+            if line.so_line and not line.validated:
+                return {
+                    'warning': {
+                        'title': "Confirmación",
+                        'message': "Tenga en cuenta que cambiar la linea de venta de la tarea recomputará las lineas de venta de las lineas de parte de hora NO validadas. ¿Está seguro de que desea cambiarla?",
+                    }
+                }
