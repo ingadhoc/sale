@@ -9,9 +9,9 @@ from odoo.exceptions import ValidationError
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
-    discount1 = fields.Float('Discount 1 (%)', digits='Discount', compute="_compute_discount", precompute=True, store=True, readonly=False)
-    discount2 = fields.Float('Discount 2 (%)', digits='Discount', compute="_compute_discount", precompute=True, store=True, readonly=False)
-    discount3 = fields.Float('Discount 3 (%)', digits='Discount', compute="_compute_discount", precompute=True, store=True, readonly=False)
+    discount1 = fields.Float('Discount 1 (%)', digits='Discount', compute="_compute_discounts", precompute=True, store=True, readonly=False)
+    discount2 = fields.Float('Discount 2 (%)', digits='Discount', compute="_compute_discounts", precompute=True, store=True, readonly=False)
+    discount3 = fields.Float('Discount 3 (%)', digits='Discount', compute="_compute_discounts", precompute=True, store=True, readonly=False)
     discount = fields.Float(readonly=True)
 
     @api.constrains('discount1', 'discount2', 'discount3')
@@ -31,24 +31,30 @@ class SaleOrderLine(models.Model):
 
     @api.depends('discount1', 'discount2', 'discount3')
     def _compute_discount(self):
+        context = self._context
         for line in self:
-            context = self._context
-            pricelist_id = line.order_id.pricelist_id
-            discount_policy_with_discount = pricelist_id and pricelist_id.discount_policy == 'with_discount'
-            if (context.get('recompute_prices') and not discount_policy_with_discount) or context.get('onchange_product') or context.get('website_id'):
+            show_discount = line.pricelist_item_id._show_discount()
+            if (context.get('recompute_prices') and show_discount) or context.get('onchange_product') or context.get('website_id'):
                 super(SaleOrderLine, line)._compute_discount()
-                line.discount1 = line.discount
-                line.discount2 = 0.0
-                line.discount3 = 0.0
             else:
                 discount_factor = 1.0
                 for discount in [line.discount1, line.discount2, line.discount3]:
                     discount_factor *= (100.0 - discount) / 100.0
                 line.discount = 100.0 - (discount_factor * 100.0)
 
+    @api.depends('discount')
+    def _compute_discounts(self):
+        for line in self:
+            context = dict(self._context)
+            show_discount = line.pricelist_item_id._show_discount()
+            if (context.get('recompute_prices') and show_discount) or context.get('onchange_product') or context.get('website_id'):
+                line.discount1 = line.discount
+                line.discount2 = 0.0
+                line.discount3 = 0.0
+
     @api.onchange('product_id')
     def _onchange_product(self):
-        self.with_context(onchange_product=True)._compute_discount()
+        self.with_context(onchange_product=True)._compute_discounts()
 
     def _prepare_invoice_line(self, **optional_values):
         res = super()._prepare_invoice_line(**optional_values)
