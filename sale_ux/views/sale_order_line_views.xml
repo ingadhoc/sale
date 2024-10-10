@@ -2,13 +2,13 @@
 <odoo>
 
     <record id="view_order_line_tree" model="ir.ui.view">
-        <field name="name">sale.order.line.tree</field>
+        <field name="name">sale.order.line.list</field>
         <field name="model">sale.order.line</field>
         <field name="inherit_id" ref="sale.view_order_line_tree"/>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="currency_id" column_invisible="True"/>
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -34,11 +34,11 @@
 
     <!-- creamos nueva vista porque la original es usada para informes desde los productos, mangenemos mismo orden y criterio de la purchase line -->
     <record id="sale_order_line_usability_tree" model="ir.ui.view">
-        <field name="name">sale.order.line.usability.tree</field>
+        <field name="name">sale.order.line.usability.list</field>
         <field name="model">sale.order.line</field>
         <field name="priority" eval="90"/>
         <field name="arch" type="xml">
-            <tree string="Sale Order Lines" create="false" delete="false" edit="false">
+            <list string="Sale Order Lines" create="false" delete="false" edit="false">
                 <field name="order_id"/>
                 <field name="date_order" optional="show"/>
                 <field name="name"/>
@@ -55,7 +55,7 @@
                 <field name="untaxed_amount_to_invoice" optional="hide"/>
                 <field name="price_subtotal" sum="Total" widget="monetary"/>
                 <field name="currency_id" column_invisible="True"/>
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -90,7 +90,7 @@
     <record model="ir.actions.act_window" id="action_sale_order_line_usability_tree">
         <field name="context">{'search_default_confirmed': 1}</field>
         <field name="name">Sale Order Lines</field>
-        <field name="view_mode">tree,form,pivot</field>
+        <field name="view_mode">list,form,pivot</field>
         <field name="res_model">sale.order.line</field>
         <field name="view_id" ref="sale_order_line_usability_tree"/>
     </record>
