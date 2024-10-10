@@ -16,13 +16,19 @@ class SaleAdvancePaymentInvWizard(models.TransientModel):
         digits='Account',
     )
 
-    @api.onchange('amount_total', 'deposit_taxes_id')
+    tax_ids = fields.Many2many(
+        string="Taxes",
+        comodel_name='account.tax',
+        domain="[('type_tax_use', '=', 'sale')",
+    )
+
+    @api.onchange('amount_total', 'tax_ids')
     def _inverse_amount_total(self):
         self.ensure_one()
         sale_obj = self.env['sale.order']
         order = sale_obj.browse(self._context.get('active_ids'))[0]
         tax_percent = 0.0
-        for tax in self.deposit_taxes_id.filtered(
+        for tax in self.tax_ids.filtered(
                 lambda x: not x.price_include):
             if tax.amount_type == 'percent':
                 tax_percent += tax.amount
@@ -38,7 +44,7 @@ class SaleAdvancePaymentInvWizard(models.TransientModel):
         total_percent = (1 + tax_percent / 100) or 1.0
         self.amount = self.amount_total / total_percent
 
-    @api.depends('deposit_taxes_id', 'amount')
+    @api.depends('tax_ids', 'amount')
     def _compute_amount_total(self):
         """
         For now we implement inverse only for percent taxes. We could extend to
@@ -48,8 +54,8 @@ class SaleAdvancePaymentInvWizard(models.TransientModel):
         sale_obj = self.env['sale.order']
         order = sale_obj.browse(self._context.get('active_ids'))[0]
 
-        if self.deposit_taxes_id:
-            taxes = self.deposit_taxes_id.compute_all(
+        if self.tax_ids:
+            taxes = self.tax_ids.compute_all(
                 self.amount, order.company_id.currency_id,
                 1.0, product=self.product_id,
                 partner=order.partner_id)
