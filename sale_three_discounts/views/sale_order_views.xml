@@ -6,23 +6,23 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='order_line']//tree//field[@name='discount']" position="attributes">
+            <xpath expr="//field[@name='order_line']//list//field[@name='discount']" position="attributes">
                 <attribute name="readonly">1</attribute>
                 <attribute name="force_save">1</attribute>
             </xpath>
-            <xpath expr="//field[@name='order_line']//tree//field[@name='discount']" position="before">
-                <field name="discount1" groups="product.group_discount_per_so_line"/>
-                <field name="discount2" groups="product.group_discount_per_so_line"/>
-                <field name="discount3" groups="product.group_discount_per_so_line"/>
+            <xpath expr="//field[@name='order_line']//list//field[@name='discount']" position="before">
+                <field name="discount1" groups="sale.group_discount_per_so_line"/>
+                <field name="discount2" groups="sale.group_discount_per_so_line"/>
+                <field name="discount3" groups="sale.group_discount_per_so_line"/>
             </xpath>
             <xpath expr="//field[@name='order_line']//form//field[@name='discount']" position="attributes">
                 <attribute name="readonly">1</attribute>
                 <attribute name="force_save">1</attribute>
             </xpath>
-            <xpath expr="//field[@name='order_line']//form//t[@groups='product.group_discount_per_so_line']" position="before">
-                <field name="discount1" groups="product.group_discount_per_so_line"/>
-                <field name="discount2" groups="product.group_discount_per_so_line"/>
-                <field name="discount3" groups="product.group_discount_per_so_line"/>
+            <xpath expr="//field[@name='order_line']//form//t[@groups='sale.group_discount_per_so_line']" position="before">
+                <field name="discount1" groups="sale.group_discount_per_so_line"/>
+                <field name="discount2" groups="sale.group_discount_per_so_line"/>
+                <field name="discount3" groups="sale.group_discount_per_so_line"/>
             </xpath>
         </field>
     </record>
