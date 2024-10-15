@@ -21,7 +21,7 @@ Installation
 
 To install this module, you need to:
 
-#. Only need to install the module
+#. Only need to install the module.
 
 Configuration
 =============
