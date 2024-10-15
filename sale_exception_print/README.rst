@@ -14,14 +14,14 @@
 Sale Exception Print
 ====================
 
-Add a check in the credit limit exception that allows blocking budget printing
+Adds the possibility of blocking the sending of the quotation in the sales exceptions.
 
 Installation
 ============
 
 To install this module, you need to:
 
-#. Only need to install the module
+#. Only need to install the module.
 
 Configuration
 =============

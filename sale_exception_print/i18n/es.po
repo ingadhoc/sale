@@ -22,8 +22,8 @@ msgstr ""
 
 #. module: sale_exception_print
 #: model:ir.model.fields,field_description:sale_exception_print.field_exception_rule__block_print
-msgid "Block Print"
-msgstr "Bloquear Impresión"
+msgid "Block Send Quotation"
+msgstr "Bloquear Envio de Presupuesto"
 
 #. module: sale_exception_print
 #: model:ir.model,name:sale_exception_print.model_exception_rule

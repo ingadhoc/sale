@@ -9,5 +9,5 @@ class ExceptionRule(models.Model):
     _inherit = "exception.rule"
 
     block_print = fields.Boolean(
-        'Block Print',
+        'Block Send Quotation',
     )
