@@ -24,7 +24,9 @@ Sale Order Type Ux
 * Integration between Portal and Sale Order Type module:
 
  - New access record to sale type model for portal users
- - Make invisible sale order type for portal users
+ - Make invisible sale order type for portal users.
+
+* If installed after some sales have been confirmed, it sets the "Default" sales order type on them.
 
 Installation
 ============

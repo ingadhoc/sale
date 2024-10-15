@@ -8,15 +8,15 @@ from odoo import models
 class SaleAdvancePaymentInv(models.TransientModel):
     _inherit = "sale.advance.payment.inv"
 
-    def _prepare_invoice_values(self, order, so_line):
+    def _prepare_invoice_values(self, order, so_line, accounts):
         """
         Forzamos compania de diario de sale type
         """
         if not order.type_id.journal_id:
-            return super()._prepare_invoice_values(order, so_line)
+            return super()._prepare_invoice_values(order, so_line, accounts)
         company = order.type_id.journal_id.company_id
         self = self.with_company(company.id)
-        res = super()._prepare_invoice_values(order, so_line)
+        res = super()._prepare_invoice_values(order, so_line, accounts)
         if company != order.company_id.id:
             taxes = self.product_id.taxes_id.filtered(
                 lambda r: not order.company_id or r.company_id == company)
