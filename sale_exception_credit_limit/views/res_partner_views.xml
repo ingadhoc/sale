@@ -5,15 +5,6 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="account.view_partner_property_form"/>
         <field name="arch" type="xml">
-            <field name="credit" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </field>
-            <field name="credit" position="after">
-                <field name="credit_with_confirmed_orders" invisible="not use_partner_credit_limit"/>
-            </field>
-            <form>
-                <field name="user_credit_config" invisible="1"/>
-            </form>
 
             <!-- hacemos campos editables solo si tiene permisos (no solo es mas lindo si no que tmb. es necesario para que el vampo no vaya en el vals y luego salte la constraint) -->
             <field name="use_partner_credit_limit" position="attributes">
