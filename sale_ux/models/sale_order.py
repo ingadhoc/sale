@@ -265,9 +265,11 @@ class SaleOrder(models.Model):
                 ('state', 'in', ['draft', 'sent']),
                 ('date_order', '<', oldest_date),
             ]
-            if website is not None:
-                domain += [('website_id', '!=', False) if website else ('website_id', '=', False)]
-            quotations_to_cancel = self.env['sale.order'].sudo().search(domain)
+            quotations_to_cancel = self.env['sale.order']
+            if cancel_old_quotations:
+                quotations_to_cancel |= self.env['sale.order'].sudo().search(domain + [('website_id', '=', False)])
+            if website:
+                quotations_to_cancel |= self.env['sale.order'].sudo().search(domain + [('website_id', '!=', False)])
             for quotation in quotations_to_cancel:
                 quotation._action_cancel()
                 quotation.message_post(body=_("This quotation has been automatically canceled due to its expiration."))
