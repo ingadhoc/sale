@@ -45,11 +45,6 @@ msgid "Order Date"
 msgstr "Fecha de pedido"
 
 #. module: sale_order_validity
-#: model_terms:ir.ui.view,arch_db:sale_order_validity.view_order_form_date_order_writeable
-msgid "Quotation/Order Date"
-msgstr "Fecha de Presupuesto/Orden"
-
-#. module: sale_order_validity
 #: model:ir.model,name:sale_order_validity.model_sale_order
 msgid "Sales Order"
 msgstr "Pedido de venta"

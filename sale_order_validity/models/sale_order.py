@@ -1,71 +1,53 @@
 from odoo import fields, models, api, _
-from dateutil.relativedelta import relativedelta
 from odoo.exceptions import UserError
+from datetime import timedelta
 
 
 class SaleOrder(models.Model):
-
     _inherit = "sale.order"
 
     validity_days = fields.Integer(
-        readonly=True,
         help='Set days of validity for Sales Order',
+        compute="_compute_validity_days",
+        readonly=False,
+        store=True,
+        precompute=True
     )
 
     validity_date = fields.Date(
         help="Date until when quotation is valid",
         tracking=True,
-        states={},
     )
 
     date_order = fields.Datetime(
         copy=True,
     )
 
-    @api.onchange('date_order', 'validity_days')
-    @api.constrains('date_order', 'validity_days')
-    def get_validity_date(self):
-        for rec in self.filtered(lambda x: x.validity_days):
-            date_order = fields.Datetime.from_string(rec.date_order)
-            rec.validity_date = fields.Datetime.to_string(
-                date_order + relativedelta(days=rec.validity_days))
+    @api.depends('date_order', 'validity_days')
+    def _compute_validity_date(self):
+        orders = self.filtered(lambda x: x.date_order and x.validity_days)
+        for rec in orders:
+            rec.validity_date = rec.date_order.date() + timedelta(days=rec.validity_days)
+        super(SaleOrder, self - orders)._compute_validity_date()
 
-    @api.onchange('company_id')
-    @api.constrains('company_id')
-    def onchange_company(self):
+    @api.depends('company_id')
+    def _compute_validity_days(self):
         for rec in self:
             rec.validity_days = rec.company_id.quotation_validity_days
 
-    @api.onchange('validity_days')
-    def onchange_validity_days(self):
-        company_validity_days = self.company_id.quotation_validity_days
-        if self.validity_days > company_validity_days:
-            self.validity_days = self.company_id.quotation_validity_days
-            warning = {
-                'title': _('Warning!'),
-                'message': _(
-                    'You can not set more validity days than the configured on'
-                    ' the company (%i days).' % company_validity_days),
-            }
-            return {'warning': warning}
-
-    def _compute_is_expired(self):
-        today = fields.Date.today()
-        for order in self:
-            order.is_expired = order.state == 'draft' and order.validity_date and order.validity_date < today
-        if not order.is_expired:
-            return super()._compute_is_expired()
+    @api.constrains('validity_days')
+    def _check_validity_days(self):
+        for rec in self.filtered('validity_days'):
+            if rec.validity_days > rec.company_id.quotation_validity_days:
+                raise UserError(_("You can not set more validity days than the configured on the company (%i days).") % rec.company_id.quotation_validity_days)
 
     def action_confirm(self):
-        self.ensure_one()
-        if self.is_expired:
+        for rec in self.filtered('is_expired'):
             raise UserError(_(
                 'You can not confirm this quotation as it was valid until'
-                ' %s! Please update validity.') % (self.validity_date))
-        return super().action_confirm()
+                ' %s! Please update validity.') % (rec.validity_date))
+        super().action_confirm()
 
     def update_date_prices_and_validity(self):
         self.date_order = fields.Datetime.now()
         self.action_update_prices()
-        self.onchange_company()
-        return True
