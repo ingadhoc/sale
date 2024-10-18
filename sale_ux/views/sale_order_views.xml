@@ -18,11 +18,14 @@
         <field name="priority">15</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='order_line']/tree//field[@name='price_subtotal']" position="attributes">
+            <xpath expr="//field[@name='order_line']/list//field[@name='price_subtotal']" position="attributes">
                 <attribute name="string">Subtotal</attribute>
+                <attribute name="column_invisible"></attribute>
             </xpath>
-            <xpath expr="//field[@name='order_line']/tree//field[@name='price_total']" position="attributes">
+            <xpath expr="//field[@name='order_line']/list//field[@name='price_total']" position="attributes">
                 <attribute name="string">Total</attribute>
+                <attribute name="column_invisible"></attribute>
+                <attribute name="optional">hide</attribute>
             </xpath>
             <group name="note_group" position="after">
                 <newline/>
@@ -41,9 +44,9 @@
             <field name="partner_id" position="after">
                 <field name="commercial_partner_id" invisible="1"/>
             </field>
-            <field name="analytic_account_id" position="attributes">
+            <!-- <field name="analytic_account_id" position="attributes">
                 <attribute name="domain">['|',('partner_id','=',False), ('commercial_partner_id','=',commercial_partner_id)]</attribute>
-            </field>
+            </field> -->
             <group name="order_details" position="inside">
                 <div groups="!product.group_product_pricelist">
                   <button name="action_update_prices" type="object" string=" Update Prices" icon="fa-refresh" invisible="state not in ['draft', 'sent']"/>
@@ -53,7 +56,7 @@
                 <attribute name="invisible">state not in ['draft', 'sent']</attribute>
                 <attribute name="confirm"/>
             </xpath>
-            <xpath expr="//field[@name='order_line']/tree//field[@name='discount']" position="after">
+            <xpath expr="//field[@name='order_line']/list//field[@name='discount']" position="after">
                 <button name="action_sale_history" type="object" icon="fa-history" title="Sale History"/>
             </xpath>
         </field>
@@ -100,7 +103,7 @@
     </record>
 
     <record id="view_order_tree" model="ir.ui.view">
-        <field name="name">sale.order.tree</field>
+        <field name="name">sale.order.list</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_tree"/>
         <field name="arch" type="xml">
@@ -114,9 +117,9 @@
             </field>
 
             <!-- As we unify menus we make the draft more visible -->
-            <tree position="attributes">
+            <list position="attributes">
                 <attribute name="decoration-info">state in ['draft', 'sent']</attribute>
-            </tree>
+            </list>
         </field>
     </record>
 

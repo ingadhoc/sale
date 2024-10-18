@@ -5,7 +5,7 @@
         <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
         <field name="arch" type="xml">
 
-            <xpath expr="//div[@id='order_default_values_div']" position="after">
+            <xpath expr="//block[@name='quotation_order_setting_container']" position="inside">
                 <div class="mt16">
                     <div>
                         <field name="group_allow_any_user_as_salesman"/>
@@ -57,7 +57,7 @@
                         <label for="show_product_image_on_report"/>
                     </div>
                     <div class="text-muted">
-                        Show Product Image On Report
+                        Show Product Image on quotation report
                     </div>
                 </div>
                 <div class="mt16">
@@ -70,7 +70,7 @@
                     </div>
                 </div>
             </xpath>
-            <xpath expr="//setting[@id='order_default_values']" position="after">
+            <xpath expr="//block[@name='quotation_order_setting_container']" position="after">
                 <setting id="cancel_old_quotations" string="Cancel Old Quotations">
                     <div class="text-muted">
                         <span>Cancel quotations older than</span>
