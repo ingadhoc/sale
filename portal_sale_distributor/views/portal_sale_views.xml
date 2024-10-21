@@ -74,7 +74,7 @@
             <field name="payment_term_id" position="attributes">
                 <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
             </field>
-            <xpath expr="//field[@name='order_line']/tree//widget[@name='qty_at_date_widget']" position="attributes">
+            <xpath expr="//field[@name='order_line']/list//widget[@name='qty_at_date_widget']" position="attributes">
                 <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
             </xpath>
             <button name="action_open_discount_wizard" position="attributes">
@@ -83,7 +83,7 @@
             <field name="sale_order_template_id" position="attributes">
                 <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
             </field>
-            <xpath expr="//field[@name='order_line']/tree//field[@name='product_uom'][2]" position="attributes">
+            <xpath expr="//field[@name='order_line']/list//field[@name='product_uom'][2]" position="attributes">
                 <attribute name="groups">uom.group_uom,portal_sale_distributor.group_portal_backend_distributor</attribute>
             </xpath>
         </field>
