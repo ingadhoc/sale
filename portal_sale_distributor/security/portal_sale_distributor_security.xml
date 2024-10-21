@@ -9,11 +9,11 @@
     <record id="group_portal_backend_distributor" model="res.groups">
         <field name="name">Portal Distributor</field>
         <field name="category_id" ref="category_portal_distributor"/>
-        <field name="implied_ids" eval="[(4,ref('product.group_discount_per_so_line'))]"/>
+        <field name="implied_ids" eval="[(4,ref('sale.group_discount_per_so_line'))]"/>
     </record>
 
     <record id="base.group_user" model="res.groups">
-        <field name="implied_ids" eval="[(4,ref('product.group_discount_per_so_line'))]"/>
+        <field name="implied_ids" eval="[(4,ref('sale.group_discount_per_so_line'))]"/>
     </record>
 
     <!-- Sale Portal Distributor CRUD all orders -->
