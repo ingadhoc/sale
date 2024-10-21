@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <odoo>
 
-
     <record id="action_my_account" model="ir.actions.act_url">
         <field name="name">My Account</field>
         <field name="url">/my/home</field>

@@ -34,6 +34,7 @@
                 <header groups="portal_sale_distributor.group_portal_backend_distributor">
                     <field name="invoice_count" invisible="1"/>
                     <button name="action_confirm_distributor" invisible="state not in ('draft', 'sent')" string="Confirm Sale" class="btn-primary" type="object" context="{'show_sale': True}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,sale"/>
                 </header>
             </header>
             <button name="action_view_invoice" position="attributes">
@@ -74,7 +75,7 @@
             <field name="payment_term_id" position="attributes">
                 <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
             </field>
-            <xpath expr="//field[@name='order_line']/tree//widget[@name='qty_at_date_widget']" position="attributes">
+            <xpath expr="//field[@name='order_line']/list//widget[@name='qty_at_date_widget']" position="attributes">
                 <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
             </xpath>
             <button name="action_open_discount_wizard" position="attributes">
@@ -83,8 +84,11 @@
             <field name="sale_order_template_id" position="attributes">
                 <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
             </field>
-            <xpath expr="//field[@name='order_line']/tree//field[@name='product_uom'][2]" position="attributes">
+            <xpath expr="//field[@name='order_line']/list//field[@name='product_uom'][2]" position="attributes">
                 <attribute name="groups">uom.group_uom,portal_sale_distributor.group_portal_backend_distributor</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list//field[@name='customer_lead']" position="attributes">
+                <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
             </xpath>
         </field>
     </record>
@@ -95,11 +99,20 @@
         <field name="inherit_id" ref="sale.view_quotation_tree" />
         <field name="arch" type="xml">
             <field name="main_exception_id" position="attributes">
-                <attribute name="optional" groups="portal_sale_distributor.group_portal_backend_distributor">hide</attribute>
-            </field>
-            <field name="amount_total" position="after">
-                <field name="delivery_status" widget="badge" groups="portal_sale_distributor.group_portal_backend_distributor"/>
+                <attribute name="optional">hide</attribute>
             </field>
         </field>
     </record>
+
+    <record id="view_order_form_tree" model="ir.ui.view">
+        <field name="name">portal_sale_distributor.view_order_form_tree</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="price_security.view_price_security_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/list//field[@name='product_can_modify_prices']" position="attributes">
+                <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
+            </xpath>
+        </field>
+    </record>
 </odoo>
+

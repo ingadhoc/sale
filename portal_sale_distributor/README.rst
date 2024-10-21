@@ -17,7 +17,6 @@ Portal Distributor Sale
 This module add an new group to use portal with only sale orders in backend.
 
 #. This module activate the option to manager discounts in sales.
-#. TODO ahora que confirmamos pedido con SUDO deberíamos ver si hay permisos que podamos sacar a portal distributor
 
 Installation
 ============
