@@ -105,7 +105,7 @@ class SaleOrderLine(models.Model):
             #         'there are more product invoiced than the delivered. '
             #         'You should correct invoice or ask for a refund'))
             rec.with_context(
-                bypass_protecion=True).product_uom_qty = rec.qty_delivered + rec.quantity_returned
+                bypass_protecion=True).product_uom_qty = rec.qty_delivered
             to_cancel_moves = rec.move_ids.filtered(
                 lambda x: x.state not in ['done', 'cancel'])
             to_cancel_moves._cancel_quantity()
