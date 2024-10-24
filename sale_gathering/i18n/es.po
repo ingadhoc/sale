@@ -203,13 +203,6 @@ msgstr ""
 
 #. module: sale_gathering
 #. odoo-python
-#: code:addons/sale_gathering/models/sale_order.py:0
-#, python-format
-msgid "You can't add more products. First create the gathering invoice."
-msgstr "No puedes añadir más productos. Primero crea la factura de acopio."
-
-#. module: sale_gathering
-#. odoo-python
 #: code:addons/sale_gathering/models/sale_order_line.py:0
 #, python-format
 msgid ""
