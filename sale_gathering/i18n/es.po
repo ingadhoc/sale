@@ -166,11 +166,6 @@ msgid "Quantity Invoiced"
 msgstr ""
 
 #. module: sale_gathering
-#: model_terms:ir.ui.view,arch_db:sale_gathering.report_saleorder_document_gathering
-msgid "Quantity Returned"
-msgstr ""
-
-#. module: sale_gathering
 #: model:ir.model,name:sale_gathering.model_ir_actions_report
 msgid "Report Action"
 msgstr "Acción de informe"

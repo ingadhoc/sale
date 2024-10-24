@@ -16,22 +16,32 @@
             </button>
             <button name="%(sale.action_view_sale_advance_payment_inv)d" position="after">
                 <field name="has_gathering_invoice" invisible="1"/>
-                <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Gathering Invoice" type="action" context="{'default_advance_payment_method': 'fixed', 'default_fixed_amount': gathering_amount}" invisible="not is_gathering or state != 'sale' or has_gathering_invoice"/>
+                <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Gathering Invoice" type="action" context="{'default_advance_payment_method': 'percentage', 'default_amount': 100}" invisible="not is_gathering or state != 'sale' or has_gathering_invoice"/>
             </button>
             <group name="sale_total" position="inside">
-                <field name="gathering_amount" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="not is_gathering"/>
-                <field name="gathering_balance" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="not is_gathering"/>
+                <table class="float-end">
+                    <tbody>
+                        <tr>
+                            <td> <label for="gathering_amount"/> </td>
+                            <td> <field name="gathering_amount" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="not is_gathering"/> </td>
+                        </tr>
+                        <tr>
+                            <td> <label for="gathering_balance"/> </td>
+                            <td> <field name="gathering_balance" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="not is_gathering"/> </td>
+                        </tr>
+                    </tbody>
+                </table>
             </group>
-            <xpath expr="//field[@name='order_line']/tree//field[@name='product_uom_qty']" position="after">
+            <xpath expr="//field[@name='order_line']/list//field[@name='product_uom_qty']" position="after">
                 <field name="initial_qty_gathered" force_save="1" readonly="1" column_invisible="not parent.is_gathering"/>
             </xpath>
         </field>
     </record>
 
-    <record id="view_order_tree" model="ir.ui.view">
-        <field name="name">sale.order.tree</field>
+    <record id="sale_order_tree" model="ir.ui.view">
+        <field name="name">sale.order.list</field>
         <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="inherit_id" ref="sale.sale_order_tree"/>
         <field name="arch" type="xml">
             <field name="amount_total" position="after">
                 <field name="gathering_balance" optional="show"/>
@@ -42,12 +52,12 @@
     <record id="view_sales_order_filter" model="ir.ui.view">
         <field name="name">sale.order.filter</field>
         <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale_ux.view_sales_order_filter"/>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
         <field name="arch" type="xml">
-            <filter name="sales" position="after">
+            <filter name="my_sale_orders_filter" position="after">
+                <separator/>
                 <filter string="Gathering" name="gathering" domain="[('is_gathering','=', True)]"/>
                 <filter string="Open Gathering" name="open_gathering" domain="[('gathering_balance', '>', 0)]"/>
-                <separator/>
             </filter>
         </field>
     </record>

@@ -110,11 +110,6 @@ msgid "Quantity Invoiced"
 msgstr "Cantidad Facturada"
 
 #. module: sale_gathering
-#: model_terms:ir.ui.view,arch_db:sale_gathering.report_saleorder_document_gathering
-msgid "Quantity Returned"
-msgstr "Cantidad Devuelta"
-
-#. module: sale_gathering
 #: model:ir.model,name:sale_gathering.model_sale_order
 msgid "Sales Order"
 msgstr "Pedido de venta"

@@ -20,11 +20,12 @@ class SaleOrder(models.Model):
 
     @api.depends(
         'is_gathering',
-        'order_line.price_unit_with_tax',
+        'state',
+        'order_line.product_id',
+        'order_line.price_unit',
         'order_line.qty_invoiced',
         'order_line.qty_to_invoice',
         'order_line.is_downpayment',
-        'state'
     )
     def _compute_gathering_balance(self):
         orders_gathering = self.filtered(
@@ -34,20 +35,25 @@ class SaleOrder(models.Model):
         )
 
         for order in orders_gathering:
-            total_downpayment_amount = sum(
-                line.price_unit_with_tax
-                for line in order.order_line.filtered('is_downpayment')
-            )
-            order_lines = order.order_line.filtered(lambda x: not x.is_downpayment)
-            tax_totals = order.env['account.tax']._compute_taxes([
-                {
-                    **line._convert_to_tax_base_line_dict(),
-                    'quantity': line.qty_to_invoice + line.qty_invoiced
-                }
-                for line in order_lines
-            ])
-            totals = list(tax_totals['totals'].values())[0]
-            total_amount_to_invoice_invoiced = totals['amount_untaxed'] + totals['amount_tax']  # total amount qty to invoice + qty invoiced
+            total_downpayment_amount = 0
+            for line in order.order_line.filtered('is_downpayment'):
+                total_downpayment_amount += line.tax_id.with_context(round=False).compute_all(
+                    line.price_unit,
+                    currency=line.currency_id,
+                    quantity=1,
+                    product=line.product_id,
+                    partner=line.order_id.partner_shipping_id)['total_included']
+
+            total_amount_to_invoice_invoiced = 0
+            for line in order.order_line.filtered(lambda x: not x.is_downpayment):
+                price_reduce = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
+                total_amount_to_invoice_invoiced += line.tax_id.compute_all(
+                                price_reduce,
+                                currency=line.currency_id,
+                                quantity=line.qty_to_invoice + line.qty_invoiced,
+                                product=line.product_id,
+                                partner=line.order_id.partner_shipping_id)['total_included']
+
             order.gathering_balance = total_downpayment_amount - total_amount_to_invoice_invoiced
 
         (self - orders_gathering).gathering_balance = 0
@@ -75,15 +81,14 @@ class SaleOrder(models.Model):
                         " to the order. Order: %s" %
                         (rec.gathering_balance, rec.name)))
 
-    def _action_confirm(self):
+    def action_confirm(self):
         for order in self.filtered('is_gathering'):
             for line in order.order_line:
                 line.write({
                     'initial_qty_gathered': line.product_uom_qty,
                     'product_uom_qty': 0
                 })
-        res = super(SaleOrder, self)._action_confirm()
-        return res
+        return super().action_confirm()
 
     @api.depends('order_line.initial_qty_gathered', 'is_gathering')
     def _compute_gathering_amount(self):
@@ -91,16 +96,16 @@ class SaleOrder(models.Model):
             lambda x: x.is_gathering and x.order_line.filtered(lambda x: x.initial_qty_gathered > 0)
         )
         for order in orders_gathering:
-            price_subtotal = 0
+            gathering_amount = 0
             for line in order.order_line.filtered(lambda x: x.initial_qty_gathered > 0):
                 price_reduce = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
-                price_subtotal += line.tax_id.compute_all(
+                gathering_amount += line.tax_id.compute_all(
                                 price_reduce,
                                 currency=line.currency_id,
                                 quantity=line.initial_qty_gathered,
                                 product=line.product_id,
                                 partner=line.order_id.partner_shipping_id)['total_excluded']
-            order.gathering_amount = price_subtotal
+            order.gathering_amount = gathering_amount
         (self - orders_gathering).gathering_amount = 0.0
 
     @api.depends('is_gathering', 'invoice_ids', 'invoice_ids.state')

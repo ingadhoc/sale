@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Gathering',
-    'version': "17.0.1.2.0",
+    'version': "18.0.1.0.0",
     'category': 'Sales & Stock',
     'sequence': 14,
     'summary': '',
@@ -29,9 +29,7 @@
     'images': [
     ],
     'depends': [
-        'account',
-        'sale_stock_ux',
-        'l10n_ar_sale'
+        'sale',
     ],
     'data': [
         'security/res_groups.xml',
@@ -41,7 +39,7 @@
     ],
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
