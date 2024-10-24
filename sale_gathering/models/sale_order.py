@@ -108,14 +108,6 @@ class SaleOrder(models.Model):
             order.gathering_amount = price_subtotal
         (self - orders_gathering).gathering_amount = 0.0
 
-    @api.constrains('order_line')
-    def _check_gathering_order_line(self):
-        if (
-            self.is_gathering and self.state == 'sale' and not self.invoice_ids
-            and self.order_line.filtered(lambda x: x.initial_qty_gathered == 0)
-        ):
-            raise ValidationError(_("You can't add more products. First create the gathering invoice."))
-
     @api.depends('is_gathering', 'invoice_ids', 'invoice_ids.state')
     def _compute_has_gathering_invoice(self):
         orders_gathering = self.filtered('is_gathering')
@@ -125,6 +117,5 @@ class SaleOrder(models.Model):
             )
         (self - orders_gathering).has_gathering_invoice = False
 
-    def action_done(self):
-        super().action_done()
-        self.filtered('is_gathering').write({'state': 'sale'})
+    def action_lock(self):
+        super(SaleOrder, self - self.filtered('is_gathering')).action_lock()
