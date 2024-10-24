@@ -83,7 +83,10 @@ class SaleOrderType(models.Model):
         help='Journal used only with payment_automation. As manual payment '
         'method is used, only journals with manual method are shown. '
         'This field will not be considered for sales coming from eCommerce. '
-        'You should configure it directly in Settings > Website.'
+        'You should configure it directly in Settings > Website.',
+        store=True,
+        readonly=False,
+        compute='_compute_payment_journal_id'
     )
 
     set_done_on_confirmation = fields.Boolean(
@@ -94,6 +97,11 @@ class SaleOrderType(models.Model):
     auto_done_setting = fields.Boolean(
         compute='_compute_auto_done_setting',
     )
+
+    @api.depends('payment_atomation')
+    def _compute_payment_journal_id(self):
+        for rec in self.filtered(lambda x: x.payment_atomation == 'none'):
+            rec.payment_journal_id = False
 
     @api.depends()
     def _compute_auto_done_setting(self):
