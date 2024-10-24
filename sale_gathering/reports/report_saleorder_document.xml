@@ -23,9 +23,6 @@
                     <t t-esc="line.qty_delivered"/>
             </td>
             <td class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">
-                    <t t-esc="line.quantity_returned"/>
-            </td>
-            <td class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">
                     <t t-esc="line.qty_invoiced"/>
             </td>
         </xpath>

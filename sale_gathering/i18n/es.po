@@ -166,11 +166,6 @@ msgid "Quantity Invoiced"
 msgstr ""
 
 #. module: sale_gathering
-#: model_terms:ir.ui.view,arch_db:sale_gathering.report_saleorder_document_gathering
-msgid "Quantity Returned"
-msgstr ""
-
-#. module: sale_gathering
 #: model:ir.model,name:sale_gathering.model_ir_actions_report
 msgid "Report Action"
 msgstr "Acción de informe"
@@ -200,13 +195,6 @@ msgid ""
 msgstr ""
 "El saldo de acopio será negativo (%s), no puedes hacer esta modificación a "
 "la orden. Orden: %s"
-
-#. module: sale_gathering
-#. odoo-python
-#: code:addons/sale_gathering/models/sale_order.py:0
-#, python-format
-msgid "You can't add more products. First create the gathering invoice."
-msgstr "No puedes añadir más productos. Primero crea la factura de acopio."
 
 #. module: sale_gathering
 #. odoo-python

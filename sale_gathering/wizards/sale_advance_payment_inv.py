@@ -13,13 +13,6 @@ class SaleAdvancePaymentInvWizard(models.TransientModel):
         ondelete={'invoice_gathering_zero': 'cascade'},
     )
 
-
-    def _prepare_so_line(self, order, analytic_tag_ids, tax_ids, amount):
-        result = super()._prepare_so_line(order, analytic_tag_ids, tax_ids, amount)
-        result['sequence'] = 0
-        return result
-
-
     def create_invoices(self):
         sale_orders = self.env['sale.order'].browse(self._context.get('active_ids', []))
         if self.advance_payment_method == 'invoice_gathering_zero':
