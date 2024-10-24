@@ -89,8 +89,8 @@ class SaleOrder(models.Model):
                         raise UserError(_(
                             'The following products are not available, we '
                             'suggest to check stock or to use a sale type that'
-                            ' force availability.\nProducts:\n* %s\n '
-                        ) % ('\n *'.join(x.name for x in products)))
+                            'force availability.\nProducts:\n* %s\n'
+                        ) % ('\n * '.join(x.name for x in products)))
                     for op in pick.mapped('move_line_ids'):
                         op.quantity = op.quantity_product_uom
                 pick.button_validate()
