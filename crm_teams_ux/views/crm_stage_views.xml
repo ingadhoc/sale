@@ -13,7 +13,7 @@
             </field>
         </record>
         <record id="crm_stage_tree_inherit" model="ir.ui.view">
-            <field name="name">crm.stage.inherit.view.tree</field>
+            <field name="name">crm.stage.inherit.view.list</field>
             <field name="model">crm.stage</field>
             <field name="inherit_id" ref="crm.crm_stage_tree"/>
             <field name="arch" type="xml">

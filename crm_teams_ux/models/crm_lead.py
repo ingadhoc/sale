@@ -8,7 +8,7 @@ class Lead(models.Model):
         domain="['|', ('team_ids', '=', False), ('team_ids', '=', team_id)]",
         group_expand='_read_group_stage_ids')
 
-    def _read_group_stage_ids(self, stages, domain, order):
+    def _read_group_stage_ids(self, stages, domain):
         team_id = self._context.get('default_team_id')
         if team_id:
             search_domain = [
@@ -17,5 +17,5 @@ class Lead(models.Model):
         else:
             search_domain = ['|', ('id', 'in', stages.ids), ('team_ids', '=', False)]
         # perform search
-        stage_ids = stages._search(search_domain, order=order, access_rights_uid=SUPERUSER_ID)
+        stage_ids = stages.sudo()._search(search_domain, order=stages._order)
         return stages.browse(stage_ids)
