@@ -234,11 +234,12 @@ class SaleOrderLine(models.Model):
                     line.product_uom_qty - line.quantity_returned -
                     line.qty_invoiced)
 
-    @api.depends('order_id.force_invoiced_status', 'state', 'product_uom_qty', 'qty_delivered', 'qty_to_invoice', 'qty_invoiced')
-    def _compute_invoice_status(self):
-        super()._compute_invoice_status()
-        precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
-        for line in self:
-            if float_compare(line.qty_invoiced, (line.product_uom_qty - line.quantity_returned),
-                            precision_digits=precision) >= 0:
-                line.invoice_status = 'invoiced'
+    # Queda comentado ya que habría que incorporarlo a futuro en v17, peor en v16 rompe.
+    # @api.depends('order_id.force_invoiced_status', 'state', 'product_uom_qty', 'qty_delivered', 'qty_to_invoice', 'qty_invoiced')
+    # def _compute_invoice_status(self):
+    #     super()._compute_invoice_status()
+    #     precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
+    #     for line in self:
+    #         if float_compare(line.qty_invoiced, (line.product_uom_qty - line.quantity_returned),
+    #                         precision_digits=precision) >= 0:
+    #             line.invoice_status = 'invoiced'
