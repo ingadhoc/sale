@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Exception - Price Security Integration',
-    'version': "17.0.1.0.0",
+    'version': "18.0.1.0.0",
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
@@ -32,6 +32,6 @@
     ],
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': True,
 }
