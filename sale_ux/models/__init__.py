@@ -9,3 +9,4 @@ from . import analytic_account
 from . import res_config_settings
 from . import product_product
 from . import sale_order_option
+from . import account_fiscal_position
