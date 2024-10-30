@@ -8,3 +8,4 @@ from . import account_move
 from . import analytic_account
 from . import res_config_settings
 from . import product_product
+from . import account_fiscal_position
