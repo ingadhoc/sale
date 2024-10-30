@@ -8,23 +8,26 @@
             <field name="payment_term_id" position="after">
                 <field name="index" invisible="not is_gathering" widget="percentage"/>
             </field>
-            <xpath expr="//field[@name='order_line']/tree//field[@name='name']" position="attributes">
-                <attribute name="readonly">parent.is_gathering and display_type not in ['line_section', 'line_note']</attribute>
-            </xpath>
-            <xpath expr="//field[@name='order_line']/tree//field[@name='price_unit']" position="attributes">
+            <xpath expr="//field[@name='order_line']/list//field[@name='price_unit']" position="attributes">
                 <attribute name="readonly">parent.is_gathering and state == 'sale'</attribute>
             </xpath>
-            <group name="sale_total" position="inside">
-                <field name="indexed_gathering_amount" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="not is_gathering"/>
-                <field name="gathering_balance_indexed" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="not is_gathering"/>
-            </group>
+            <xpath expr="//group[@name='sale_total']/table/tbody" position="inside">
+                <tr>
+                    <td> <label for="indexed_gathering_amount"/> </td>
+                    <td> <field name="indexed_gathering_amount" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="not is_gathering"/> </td>
+                </tr>
+                <tr>
+                    <td> <label for="gathering_balance_indexed"/> </td>
+                    <td> <field name="gathering_balance_indexed" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="not is_gathering"/> </td>
+                </tr>
+            </xpath>
         </field>
     </record>
 
-    <record id="view_order_tree" model="ir.ui.view">
-        <field name="name">sale.order.tree</field>
+    <record id="sale_order_tree" model="ir.ui.view">
+        <field name="name">sale.order.list</field>
         <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="inherit_id" ref="sale.sale_order_tree"/>
         <field name="arch" type="xml">
             <field name="state" position="before">
                 <field name="index" optional="show" widget="percentage"/>

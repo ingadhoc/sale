@@ -89,3 +89,13 @@ msgid ""
 msgstr ""
 "No puedes modificar la cantidad de un producto agregado. Por favor, añade "
 "una nueva línea."
+
+#. module: sale_gathering_index
+#. odoo-python
+#: code:addons/sale_gathering_index/models/sale_order_line.py:0
+msgid ""
+"\n"
+"(Current price: $%s | Coef: %s%%)"
+msgstr ""
+"\n"
+"(Precio actual: $%s | Coef: %s%%)"
