@@ -34,7 +34,7 @@ Several Improvements to sales:
 #. Add tracking to payment terms on sale orders.
 #. Add the field "Internal Notes" in the sales order form and the setting to allow propagating the "Internal Notes / terms & conditions" to invoices / pickings.
 #. Automatically refresh taxes when changing fiscal position
-#. Do not use fiscal positions on prices. By default, when using fiscal position and taxes included on the price on sale orders, the price used on the sale line will be the price without the tax being replaced. We remove that functionality. There are some issues where this is already discussed in odoo standard. For eg. https://github.com/odoo/odoo/issues/66875
+#. Do not use fiscal positions on prices. By default, when using fiscal position and taxes included on the price on sale orders, the price used on the sale line will be the price without the tax being replaced. We added the possibility to take that functionality, or not, with the setting "deduct price-included taxes" in fiscal positions. There are some issues where this is already discussed in odoo standard. For eg. https://github.com/odoo/odoo/issues/66875
 #. Makes the "update prices" button visible.
 #. Show product image on report
 #. Add a setting for automatic cancellation of quotations

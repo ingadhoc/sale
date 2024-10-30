@@ -19,7 +19,9 @@ class ProductProduct(models.Model):
         el precio (cambiando cantidad o agregando producto) y el impuesto es con opcion "incluido", el precio que se
         usa es descontando el impuesto original en vez del precio final
         """
+        if fiscal_position and not fiscal_position.deduct_price_included_taxes:
+            fiscal_position = False
         return super()._get_tax_included_unit_price_from_price(
             product_price_unit, currency, product_taxes, product_taxes_after_fp=product_taxes_after_fp,
             is_refund_document=is_refund_document,
-            fiscal_position=False)
+            fiscal_position=fiscal_position)
