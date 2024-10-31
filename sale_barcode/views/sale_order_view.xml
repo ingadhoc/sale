@@ -9,7 +9,7 @@
             <form position="inside">
                 <field name="_barcode_scanned" widget="barcode_handler" />
             </form>
-            <xpath expr="//field[@name='order_line']/tree" position="inside">
+            <xpath expr="//field[@name='order_line']/list" position="inside">
                 <field name="product_barcode" invisible="1"/>
             </xpath>
             <xpath expr="//field[@name='order_line']//field[@name='product_uom_qty']" position="attributes">
