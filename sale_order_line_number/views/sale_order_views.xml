@@ -4,11 +4,8 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <field name="partner_id" position="after">
-                <field name="number_sale_order_line" invisible="1"/>
-            </field>
             <xpath expr="//field[@name='order_line']/list//field[@name='sequence']" position="after">
-                <field name="number" string="Nbr" column_invisible="not parent.number_sale_order_line"/>
+                <field name="number" string="Nbr"/>
             </xpath>
         </field>
     </record>

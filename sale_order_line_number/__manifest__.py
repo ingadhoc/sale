@@ -32,7 +32,8 @@
     ],
     'data': [
         'views/sale_order_views.xml',
-        'views/res_config_settings_views.xml'
+        'views/res_config_settings_views.xml',
+        'reports/sale_order.xml',
     ],
     'installable': True,
     'auto_install': False,

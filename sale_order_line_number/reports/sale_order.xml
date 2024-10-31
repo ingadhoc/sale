@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_saleorder_document" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//th[@name='th_description']" position="before">
+            <th class="text-center" t-if="doc.env['ir.config_parameter'].sudo().get_param('sale_order_line_number.number_sale_order_line')">Nbr</th>
+        </xpath>
+        <xpath expr="//td[@name='td_name']" position="before">
+            <td name="td_number" class="text-center" t-if="doc.env['ir.config_parameter'].sudo().get_param('sale_order_line_number.number_sale_order_line')">
+                <span t-field="line.number" />
+            </td>
+        </xpath>
+    </template>
+</odoo>
