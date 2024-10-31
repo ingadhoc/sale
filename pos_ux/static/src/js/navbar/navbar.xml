@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="Navbar" t-inherit="point_of_sale.Navbar" t-inherit-mode="extension">
+        <xpath expr="//ProxyStatus" position="before">
+            <div class="header-button invoice-contingency"
+                t-on-click="setContingencyMode">
+                <span class="contingency-button ">
+                    <i class="fa"
+                    t-att-class="{'fa-unlink': pos.pos_session.invoice_contingency, 'fa-link': !pos.pos_session.invoice_contingency }"
+                    role="img" aria-label="Contingency mode" title="Contingency mode"></i>
+                </span>
+            </div>
+        </xpath>
+    </t>
+
+</templates>
