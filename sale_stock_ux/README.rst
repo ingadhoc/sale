@@ -16,19 +16,20 @@ Sale Stock UX
 
 Several Improvements to sales:
 
-#. Shows delivery status in the sale tree view
-#. Add filter related to the delivery status for sale orders and sales order lines views
+#. Shows delivery status in the sale tree view.
+#. Add filter related to the delivery status for sale orders and sales order lines views.
 #. Add a filter name "Pickings" in sale order view to search by delivery order name.
-#. Add field "qty_to_deliver" in the sale lines view.
-#. Block cancelation of sale order if there are pickings in 'done' state
-#. Add new field on order lines called "quantity_returned" and also implement refunds for products with invoicing policy "ordered" taking into account the returned quantity
-#. Add button on sale lines to allow cancelling of remaining qty to be delivered
-#. Block decreasing quantity on sale lines when there is a delivery linked
-#. Integrate delivery status with returns logic
+#. Add field "qty_to_deliver" in the sale lines view.G
+#. Add new field on order lines called "quantity_returned" and also implement refunds for products with invoicing policy "ordered" taking into account the returned quantity.
+#. Block cancelation of sale order if there are pickings in 'done' state.
+#. Add button on sale lines to allow cancelling of remaining qty to be delivered.
+#. Block decreasing quantity on sale lines when there is a delivery linked.
+#. Integrate delivery status with returns logic.
 #. Propagate Internal Notes from SO to pickings.
-#. Add procurement group field on sale orders for technical features
-#. Add moves on sale order line form view (only for technical features)
-#. Add selection field to force "Delivery" status of a sale order, available only for admin with tec features.
+#. Add procurement group field on sale orders for technical features.
+#. Add moves on sale order line form view (only for technical features).
+#. Add selection field to force "Delivery" status of a sale order, available only for admin with tecH features.
+#. Add parameter in settings to propagate the UoM from the sale order to the picking.
 
 IMPORTANT:
 ----------

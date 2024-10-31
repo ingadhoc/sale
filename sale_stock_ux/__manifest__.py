@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Stock UX',
-    'version': "17.0.1.1.0",
+    'version': "18.0.1.0.0",
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -41,6 +41,7 @@
         'views/stock_move_views.xml',
         'wizards/sale_order_cancel_remaining.xml',
         'wizards/stock_return_picking_views.xml',
+        'wizards/res_config_settings_views.xml'
     ],
     'assets': {
         'web.assets_qweb': [
@@ -51,7 +52,7 @@
     ],
     'test': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': True,
     'application': False,
 }

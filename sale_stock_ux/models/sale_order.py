@@ -67,8 +67,7 @@ class SaleOrder(models.Model):
 
     @api.model
     def check_force_delivery_status(self, vals):
-        if vals.get('force_delivery_status') and not self.user_has_groups(
-                'base.group_system'):
+        if vals.get('force_delivery_status') and not self.env.user.has_group('base.group_system'):
             group = self.env.ref('base.group_system').sudo()
             raise UserError(_(
                 'Only users with "%s / %s" can Set Delivered manually') % (

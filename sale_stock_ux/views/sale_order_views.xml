@@ -19,7 +19,7 @@
                 <field name="delivery_status" invisible="1"/>
             </xpath>
             <!-- agregamos boton de cancelar linea -->
-            <xpath expr="//field[@name='order_line']/tree/field[@name='qty_delivered']" position="after">
+            <xpath expr="//field[@name='order_line']/list/field[@name='qty_delivered']" position="after">
                 <field name="quantity_returned" column_invisible="parent.state not in ['sale', 'done']" readonly="qty_delivered_method != 'manual'"/>
                 <field name="delivery_status" column_invisible="True"/>
                 <button name="button_cancel_remaining"
@@ -39,7 +39,7 @@
                 <field name="procurement_group_id" groups="base.group_no_one"/>
             </field>
 
-            <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_uom_qty']" position="after">
+            <xpath expr="//page/field[@name='order_line']/list/field[@name='product_uom_qty']" position="after">
                 <field name="total_reserved_quantity" column_invisible="True"/>
             </xpath>
         </field>
@@ -64,7 +64,7 @@
     </record>
 
     <record id="view_order_tree" model="ir.ui.view">
-        <field name="name">sale.order.tree</field>
+        <field name="name">sale.order.list</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_tree"/>
         <field name="arch" type="xml">

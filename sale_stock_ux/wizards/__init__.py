@@ -4,3 +4,4 @@
 ##############################################################################
 from . import sale_order_cancel_remaining
 from . import stock_return_picking
+from . import res_config_settings

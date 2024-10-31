@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_sale" model="ir.ui.view">
+        <field name="name">res.config.settings.form.inherit.sale</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="sale_stock.res_config_settings_view_form_stock"/>
+        <field name="arch" type="xml">
+            <!-- Insertar la configuración después del setting con id='warning_info' -->
+            <xpath expr="//setting[@id='warning_info']" position="after">
+                <div class="row mt16">
+                    <setting class="col-12 col-lg-6 o_setting_box" help="Use the same UoM in the picking of the one selected in the sale order (instead of the default UoM of the product)">
+                        <field name="propagate_uom"/>
+                    </setting>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

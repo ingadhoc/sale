@@ -11,7 +11,7 @@ class TestActionCancel(TransactionCase):
         self.product = self.env['product.product'].create({
             'name': 'Test Product',
             'list_price': 100.0,
-            'type': 'product'
+            'type': 'consu'
         })
         self.partner = self.env['res.partner'].create({
             'name': 'Test Partner',
