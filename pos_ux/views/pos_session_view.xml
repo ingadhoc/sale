@@ -10,9 +10,9 @@
             </form>
             <button name="open_frontend_cb" position="after">
                 <button name="action_set_invoice_contingency" type="object" string="Set contingency mode"
-                    attrs="{'invisible' : ['|', ('invoice_contingency', '=', True), ('state', 'not in', ['opening_control', 'opened'])]}"/>
+                    invisible="invoice_contingency or state not in ['opening_control', 'opened']"/>
                 <button name="action_unset_invoice_contingency" type="object" string="Exit contingency mode"
-                    attrs="{'invisible' : ['|', ('invoice_contingency', '=', False), ('state', 'not in', ['opening_control', 'opened'])]}"/>
+                    invisible="not invoice_contingency or state not in ['opening_control', 'opened']"/>
                 <button name="action_generate_invoices" type="object" string="Create invoices"/>
             </button>
         </field>
