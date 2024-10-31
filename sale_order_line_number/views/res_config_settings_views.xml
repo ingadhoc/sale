@@ -1,0 +1,14 @@
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.inherit</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <block name="quotation_order_setting_container" position="inside">
+                <setting id="number_sale_order_line_setting" string="Activate number in sales order lines">
+                    <field name="number_sale_order_line"/>
+                </setting>
+            </block>
+        </field>
+    </record>
+</odoo>
