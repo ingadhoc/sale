@@ -51,7 +51,7 @@
         <field name="inherit_id" ref="sale_ux.view_sales_order_filter"/>
         <field name="arch" type="xml">
             <field name="partner_id" position="after">
-                <field name="picking_ids" string="Pickings" filter_domain="[('picking_ids.group_id', '!=', False),'|', ('picking_ids.name', 'ilike', self),('picking_ids.voucher_ids.name', 'ilike', self)]"/>
+                <field name="picking_ids" string="Pickings" filter_domain="[('picking_ids.group_id', '!=', False), ('picking_ids.name', 'ilike', self)]"/>
             </field>
             <filter domain="[('invoice_status','=','to invoice')]" position="before">
                 <separator/>

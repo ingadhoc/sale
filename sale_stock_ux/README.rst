@@ -27,7 +27,6 @@ Several Improvements to sales:
 #. Integrate delivery status with returns logic.
 #. Propagate Internal Notes from SO to pickings.
 #. Add procurement group field on sale orders for technical features.
-#. Add moves on sale order line form view (only for technical features).
 #. Add selection field to force "Delivery" status of a sale order, available only for admin with tecH features.
 #. Add parameter in settings to propagate the UoM from the sale order to the picking.
 
