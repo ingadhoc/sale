@@ -68,13 +68,14 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_tree"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='delivery_status']" position="replace"/>
-            <xpath expr="//field[@name='invoice_status']" position="after">
-                <field name="delivery_status" optional="hide" widget="badge"
-                    decoration-success="delivery_status == 'full'"
-                    decoration-warning="delivery_status == 'partial'"
-                    decoration-info="delivery_status == 'pending'"/>
+            <xpath expr="//field[@name='invoice_status']" position="before">
+                <field name="delivery_status" position="move"/>
             </xpath>
+            <field name="delivery_status" position="attributes">
+                <attribute name="decoration-success">delivery_status == 'full'</attribute>
+                <attribute name="decoration-warning">delivery_status == 'partial'</attribute>
+                <attribute name="decoration-info">delivery_status == 'pending'</attribute>
+            </field>
         </field>
     </record>
 
