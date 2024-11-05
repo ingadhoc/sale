@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Order Type Invoicing Policy',
-    'version': "17.0.1.1.0",
+    'version': "18.0.1.0.0",
     'category': 'Sale Management',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
@@ -40,6 +40,6 @@
         'views/stock_picking_views.xml',
         'data/sale_order_type_data.xml',
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
 }
