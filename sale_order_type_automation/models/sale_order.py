@@ -31,13 +31,15 @@ class SaleOrder(models.Model):
             invoices = self._create_invoices(final=True)
             if not invoices:
                 continue
-            validate_using_try_except = bool(self._context.get("validate_using_try_except"))
-            if not validate_using_try_except and rec.type_id.invoicing_atomation == 'validate_invoice':
-                invoices.sudo().action_post()
-            elif validate_using_try_except or rec.type_id.invoicing_atomation == 'try_validate_invoice':
+            if rec.type_id.invoicing_atomation == 'validate_invoice':
+                if self._context.get("commit_invoice_automation"):
+                    rec.env.cr.commit()
                 try:
                     invoices.sudo().action_post()
                 except Exception as error:
+                    rec.env.cr.rollback()
+                    if not self._context.get("commit_invoice_automation"):
+                        raise error
                     message = _(
                         "We couldn't validate the automatically created "
                         "invoices (ids %s), you will need to validate them"
