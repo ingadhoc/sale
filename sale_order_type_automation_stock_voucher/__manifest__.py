@@ -31,5 +31,12 @@
     'data': [
         'views/sale_order_type_views.xml',
     ],
+<<<<<<< HEAD
     'installable': False,
+||||||| parent of 5ca13a03 (temp)
+    'installable': True,
+=======
+    'installable': True,
+    'auto_install': True,
+>>>>>>> 5ca13a03 (temp)
 }
