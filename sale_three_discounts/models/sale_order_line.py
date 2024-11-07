@@ -94,7 +94,7 @@ class SaleOrderLine(models.Model):
                     (100.0 - discount) / 100.0)
             rec.discount = 100.0 - (discount_factor * 100.0)
 
-    @api.onchange('product_id')
+    @api.onchange('product_id', 'product_uom_qty')
     def _onchange_discounts(self):
         self._compute_discount()
         for rec in self:

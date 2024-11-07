@@ -49,4 +49,9 @@ class SaleOrder(models.Model):
                 'sequence': sequence,
                 'company_id': self.company_id.id,
             }
-            sol.create(vals)
+            # se hace este cambio para no crear un nuevo módulo puente con sale_three_discounts
+            # ya que sale_quotation_products se deprecia en 17
+            # este artilugio solo va a estar en 16
+            new_line = sol.create(vals)
+            if new_line._fields.get('discount1'):
+                new_line._onchange_discounts()
