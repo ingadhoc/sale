@@ -94,6 +94,11 @@ class ProductProduct(models.Model):
                 qty = line.product_uom._compute_quantity(
                     qty, rec.uom_id)
             rec.qty += qty
+            # se hace este cambio para no crear un nuevo módulo puente con sale_three_discounts
+            # ya que sale_quotation_products se deprecia en 17
+            # este artilugio solo va a estar en 16
+            if line._fields.get('discount1'):
+                line._onchange_discounts()
 
     @api.model
     def _get_view_cache_key(self, view_id=None, view_type='form', **options):
