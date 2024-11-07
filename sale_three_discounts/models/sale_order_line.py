@@ -46,9 +46,35 @@ class SaleOrderLine(models.Model):
                     discount_factor *= (100.0 - discount) / 100.0
                 line.discount = 100.0 - (discount_factor * 100.0)
 
+<<<<<<< HEAD
     @api.onchange('product_id')
     def _onchange_product(self):
         self.with_context(onchange_product=True)._compute_discount()
+||||||| parent of 9f7b1ee1 (temp)
+    @api.onchange('product_id')
+    def _onchange_discounts(self):
+        self._compute_discount()
+        for rec in self:
+            if not (
+                rec.order_id.pricelist_id
+                and rec.order_id.pricelist_id.discount_policy == 'without_discount'
+            ):
+                continue
+            else:
+                rec.discount1 = rec.discount
+=======
+    @api.onchange('product_id', 'product_uom_qty')
+    def _onchange_discounts(self):
+        self._compute_discount()
+        for rec in self:
+            if not (
+                rec.order_id.pricelist_id
+                and rec.order_id.pricelist_id.discount_policy == 'without_discount'
+            ):
+                continue
+            else:
+                rec.discount1 = rec.discount
+>>>>>>> 9f7b1ee1 (temp)
 
     def _prepare_invoice_line(self, **optional_values):
         res = super()._prepare_invoice_line(**optional_values)
