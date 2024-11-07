@@ -14,11 +14,10 @@
 Sales Timesheet UX
 ==================
 
-* When confirming a sale order with a product with Product Type = "Service" and Create on Order = "Project & Task", if the SO has an analytic account that is related to one project, then the system won't create a new project but use the analytic's account project to create the task inside.
+* When confirming a sale order with a product with Product Type = "Service" and Create on Order = "Project & Task", if the SO has project, then the system won't create a new project but use the project associated to the SO to create the task inside.
 * When confirming a sale order with a product with Product Type = "Service" and Create on Order = "Project & Task", the project and the task will remain related to the SO and the customer will remain related to the project (stays related in the backend even though is hidden by default) when "Billable" is turned off from the project settings (works both for a new proyect and task as for a new task in an existing proyect).
 * When (and only when) "Billable" is active can't be edited. Instead adds a button to change its value with an alert message to confirm the disabling of the "Billable" option in the project settings.
 * Se protegen las lineas de las ordenes de ventas que estan asociadas a los partes de horas en los siguientes casos (no se borran las horas imputadas a esa linea de la OV) (esta proteccion se habilita desde las configuraciones del parte de horas):
-
    1) Si a un proyecto se le desmarga el facturable en su configuración: si un proyecto esta como facturable, y tiene tareas con partes de horas asociados a ordenes de venta, al destildarle el facturable la orden de venta seguira teniendo cargadas las horas imputadas en esa tarea.
    2) Se elimina el partner, la cuenta analitica o el item de la orden de venta del proyecto.
    3) Se elimina el partner, la cuenta analitica, el item de la orden de venta o el proyecto de la tarea.

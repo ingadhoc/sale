@@ -5,13 +5,13 @@
         <field name="model">project.project</field>
         <field name="inherit_id" ref="sale_project.view_edit_project_inherit_form"/>
         <field name="arch" type="xml">
-            <field name="allow_billable" position="attributes">
+            <xpath expr="//group[@name='group_sales_invoicing']//field[@name='allow_billable']" position="attributes">
                 <attribute name="readonly">allow_billable</attribute>
                 <attribute name="force_save">1</attribute>
-            </field>
-            <field name="allow_billable" position="after">
+            </xpath>
+            <xpath expr="//group[@name='group_sales_invoicing']//field[@name='allow_billable']" position="after">
                 <button string="Deactivate Billable" name="change_allow_billable" type="object" class="btn-primary" invisible="not allow_billable"/> 
-            </field>
+            </xpath>
         </field>
     </record>
 </odoo>

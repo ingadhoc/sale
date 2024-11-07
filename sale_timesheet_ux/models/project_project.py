@@ -1,4 +1,4 @@
-from odoo import models
+from odoo import models, _
 
 
 class ProjectProject(models.Model):
@@ -20,7 +20,7 @@ class ProjectProject(models.Model):
 
     def _compute_partner_id(self):
         for project in self:
-            project_partner_id = project.partner_id or project.analytic_account_id.partner_id or project.sale_order_id.partner_id
+            project_partner_id = project.partner_id or project.sale_order_id.partner_id
             super()._compute_partner_id()
             project.partner_id = project_partner_id
 

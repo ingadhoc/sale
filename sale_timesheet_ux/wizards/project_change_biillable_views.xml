@@ -1,7 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
-<data>
-    
     <record id="change_allow_billable_wizzard" model="ir.ui.view">
         <field name="name">allow.billable.wizard.form</field>
         <field name="model">allow.billable.wizard</field>
@@ -19,7 +17,4 @@
             </form>
         </field>
     </record>
-
-</data>
-
 </odoo>

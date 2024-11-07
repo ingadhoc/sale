@@ -7,11 +7,11 @@ class SaleOrderLine(models.Model):
 
     def _timesheet_create_project(self):
         self.ensure_one()
-        account = self.order_id.analytic_account_id
-        if account:
+        project_so = self.order_id.project_id
+        if project_so:
             project = self.env[
                 'project.project'].search([(
-                    'analytic_account_id', '=', account.id)])
+                    'id', '=', project_so.id)])
             if len(project) == 1:
                 return project
         return super()._timesheet_create_project()
