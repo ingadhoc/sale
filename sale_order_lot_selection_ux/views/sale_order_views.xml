@@ -4,19 +4,19 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale_order_lot_selection.view_order_tree_lot"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="after">
+            <xpath expr="//field[@name='order_line']/list/field[@name='product_id']" position="after">
                 <field name="available_lot_ids" column_invisible="1"/>
             </xpath>
-            <xpath expr="//field[@name='order_line']/form/group/group/field[@name='product_id']" position="after">
+            <xpath expr="//field[@name='order_line']/form/group/group/div/field[@name='product_id']" position="after">
                 <field name="available_lot_ids" column_invisible="1"/>
             </xpath>
-            <xpath expr="//field[@name='order_line']/tree/field[@name='lot_id']" position="attributes">
+            <xpath expr="//field[@name='order_line']/list/field[@name='lot_id']" position="attributes">
                 <attribute name="domain">[('id', 'in', available_lot_ids)]</attribute>
-                <attribute name="context">{'tree_view_ref': 'sale_order_lot_selection_ux.view_production_lot_tree','from_sale_line':True, 'warehouse_id':parent.warehouse_id}</attribute>
+                <attribute name="context">{'list_view_ref': 'sale_order_lot_selection_ux.view_production_lot_tree','from_sale_line':True, 'warehouse_id':parent.warehouse_id}</attribute>
             </xpath>
-            <xpath expr="//field[@name='order_line']/form/group/group/field[@name='lot_id']" position="attributes">
+            <xpath expr="//field[@name='order_line']/form/group/group/div/field[@name='lot_id']" position="attributes">
                 <attribute name="domain">[('id', 'in', available_lot_ids)]</attribute>
-                <attribute name="context">{'tree_view_ref': 'sale_order_lot_selection_ux.view_production_lot_tree','from_sale_line':True, 'warehouse_id':parent.warehouse_id}</attribute>
+                <attribute name="context">{'list_view_ref': 'sale_order_lot_selection_ux.view_production_lot_tree','from_sale_line':True, 'warehouse_id':parent.warehouse_id}</attribute>
             </xpath>
         </field>
     </record>
