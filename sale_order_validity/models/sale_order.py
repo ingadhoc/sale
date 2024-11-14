@@ -46,7 +46,7 @@ class SaleOrder(models.Model):
             raise UserError(_(
                 'You can not confirm this quotation as it was valid until'
                 ' %s! Please update validity.') % (rec.validity_date))
-        super().action_confirm()
+        return super().action_confirm()
 
     def update_date_prices_and_validity(self):
         self.date_order = fields.Datetime.now()
