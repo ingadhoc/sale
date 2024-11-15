@@ -16,7 +16,7 @@ Portal Distributor Sale with Event
 
 This module integrate portal sale distributor using Event.
 
-#. Add a model access rule in order to able portal distributor users to add products in sale orders.
+#. Add a model access rule in order to able portal distributor users to add events products in sale orders.
 
 Installation
 ============
