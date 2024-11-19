@@ -273,3 +273,8 @@ class SaleOrder(models.Model):
             for quotation in quotations_to_cancel:
                 quotation._action_cancel()
                 quotation.message_post(body=_("This quotation has been automatically canceled due to its expiration."))
+
+    @api.constrains('pricelist_id')
+    def _check_changes_locked_orders(self):
+        for rec in self.filtered(lambda x: x.state == 'done'):
+            raise ValidationError(_("You cannot modify already locked orders."))

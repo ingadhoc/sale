@@ -38,6 +38,7 @@ Several Improvements to sales:
 #. Makes the "update prices" button visible.
 #. Show product image on report
 #. Add a setting for automatic cancellation of quotations
+#. Modifying the discount, adding lines and changing the price list of a blocked sales order is prevented. This error occurs when working in the same form view in more than one tab at the same time.
 
 Installation
 ============
