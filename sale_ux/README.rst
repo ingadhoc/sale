@@ -39,6 +39,7 @@ Several Improvements to sales:
 #. Automatically refresh taxes when changing fiscal position
 #. Do not use fiscal positions on prices. By default, when using fiscal position and taxes included on the price on sale orders, the price used on the sale line will be the price without the tax being replaced. We added the possibility to take that functionality, or not, with the setting "deduct price-included taxes" in fiscal positions. There are some issues where this is already discussed in odoo standard. For eg. https://github.com/odoo/odoo/issues/66875
 #. Add a setting for automatic cancellation of quotations
+#. Modifying the discount, adding lines and changing the price list of a blocked sales order is prevented. This error occurs when working in the same form view in more than one tab at the same time.
 
 Installation
 ============
