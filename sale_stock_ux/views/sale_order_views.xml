@@ -68,6 +68,9 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_tree"/>
         <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_status']" position="before">
+                <field name="delivery_status" position="move"/>
+            </xpath>
             <field name="delivery_status" position="attributes">
                 <attribute name="decoration-success">delivery_status == 'full'</attribute>
                 <attribute name="decoration-warning">delivery_status == 'partial'</attribute>
