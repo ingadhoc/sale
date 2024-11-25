@@ -1,13 +1,15 @@
 <odoo>
     <template id="addresses" inherit_id="website_sale.checkout" primary="True">
+        <t t-if="order._has_deliverable_products()" position="replace">
+            <t t-call="portal_addresses.portal_delivery_address_row">
+                <t t-set="addresses" t-value="delivery_addresses"/>
+            </t>
+         </t>
         <t t-call="website_sale.checkout_layout" position="attributes">
             <attribute name="t-call">portal_addresses.portal_checkout_layout</attribute>
         </t>
-        <t t-call="website_sale.row_addresses" position="attributes">
-            <attribute name="t-call">portal_addresses.portal_row_addresses</attribute>
-        </t>
-        <t t-call="website_sale.row_addresses" position="attributes">
-            <attribute name="t-call">portal_addresses.portal_row_addresses</attribute>
+        <t t-call="website_sale.billing_address_row" position="attributes">
+            <attribute name="t-call">portal_addresses.portal_billing_address_row</attribute>
         </t>
     </template>
 
@@ -18,16 +20,27 @@
         <t t-call="website_sale.navigation_buttons" position="replace"/>
     </template>
 
-    <template id="portal_row_addresses" inherit_id="website_sale.row_addresses" primary="True">
+    <template id="portal_delivery_address_row" inherit_id="website_sale.delivery_address_row" primary="True">
+        <t t-call="website_sale.address_row" position="attributes">
+            <attribute name="t-call">portal_addresses.portal_address_row</attribute>
+        </t>
+    </template>
 
+    <template id="portal_billing_address_row" inherit_id="website_sale.billing_address_row" primary="True">
+        <t t-call="website_sale.address_row" position="attributes">
+            <attribute name="t-call">portal_addresses.portal_address_row</attribute>
+        </t>
+    </template>
+
+    <template id="portal_address_row" inherit_id="website_sale.address_row" primary="True">
          <t t-if="is_invoice" position="replace">
             <t t-if="is_invoice">
-               <t t-set="new_address_href" t-valuef="/portal/address?mode=billing"/>
+               <t t-set="new_address_href" t-valuef="/portal/address?address_type=billing"/>
               </t>
          </t>
             <t t-else="" position="replace">
               <t t-else="">
-               <t t-set="new_address_href" t-valuef="/portal/address?mode=shipping"/>
+               <t t-set="new_address_href" t-valuef="/portal/address?address_type=delivery"/>
              </t>
          </t>
         <t t-call="website_sale.address_kanban" position="attributes">
@@ -49,16 +62,15 @@
             <a role="button" t-att-href="'/portal/addresses'" class="btn btn-outline-secondary w-100 w-md-auto order-md-1 order-3">
                 <i class="fw-light fa fa-angle-left me-2"/> Discard
             </a>
-    </xpath>
-        <xpath expr="//a[hasclass('a-submit')]" position="replace">
-            <a role="button" href="#" class="a-submit a-submit-disable a-submit-loading btn btn-primary w-100 w-md-auto order-1 order-md-3">
+        </xpath>
+        <xpath expr="//button[@id='save_address']" position="replace">
+             <button id="save_address" class="btn btn-primary w-100 w-md-auto order-1 order-md-3">
                 Save address <i class="fw-light fa fa-angle-right ms-2"/>
-            </a>
+            </button>
          </xpath>
-        <form action="/shop/address" position="attributes">
-            <attribute name="action">/portal/address</attribute>
+        <form action="/shop/address/submit" position="attributes">
+            <attribute name="action">/portal/address/submit</attribute>
         </form>
     </template>
 
 </odoo>
-
