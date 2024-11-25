@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Portal Addresses',
-    'version': "17.0.1.0.0",
+    'version': "18.0.1.0.0",
     'category': 'Tools',
     'complexity': 'easy',
     'author': 'ADHOC SA, Odoo Community Association (OCA)',
@@ -35,6 +35,11 @@
         'views/portal_templates.xml',
         'views/templates.xml',
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': True,
+    'assets': {
+            'web.assets_frontend': [
+                '/portal_addresses/static/src/js/address.js'
+            ]
+    }
 }
