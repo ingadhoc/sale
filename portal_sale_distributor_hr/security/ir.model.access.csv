@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_department_rule_portal_distributor,access_hr_department_rule_portal_distributor,hr.model_hr_department,portal_sale_distributor.group_portal_backend_distributor,1,0,0,0
