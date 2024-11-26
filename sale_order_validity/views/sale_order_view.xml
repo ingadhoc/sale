@@ -29,6 +29,10 @@
                     invisible="state not in ['draft', 'sent']"/>
                 </div>
             </field>
+            <xpath expr="//div[hasclass('o_td_label') and @groups='base.group_no_one']" position="attributes">
+                <!-- Eliminamos el atributo 'groups' -->
+                <attribute name="groups"/>
+            </xpath>
         </field>
     </record>
 </odoo>

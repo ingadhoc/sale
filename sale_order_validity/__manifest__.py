@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Order Validity',
-    'version': "18.0.1.0.0",
+    'version': "18.0.1.1.0",
     'category': 'Sales & Purchases',
     'sequence': 14,
     'author': 'ADHOC SA',
