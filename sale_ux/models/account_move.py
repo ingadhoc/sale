@@ -39,11 +39,10 @@ class AccountMove(models.Model):
         )
         for downpayment_line in downpayment_lines:
             if self.currency_id != downpayment_line.currency_id:
-                downpayment_lines.price_unit = self.currency_id._convert(
-                    downpayment_lines.price_unit, 
-                    downpayment_lines.currency_id, 
+                downpayment_line.price_unit = self.currency_id._convert(
+                    downpayment_line.price_unit, 
+                    downpayment_line.currency_id, 
                     self.company_id, 
                     self.invoice_date or fields.Date.today()
                 )
-
         return res
