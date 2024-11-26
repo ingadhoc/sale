@@ -17,19 +17,10 @@ class SaleOrder(models.Model):
                 lambda x: x.state not in ('done', 'cancel'))
             if rec.type_id.book_id:
                 pickings.write({'book_id': rec.type_id.book_id.id})
-            # because of ensure_one on delivery module
-            actions = []
             for pick in pickings:
-                # append action records to print the reports of the pickings
-                #  involves
-                if pick.book_required:
-                    actions.append(pick.do_print_voucher())
                 pick.button_validate()
-            if actions:
-                return {
-                    'actions': actions,
-                    'type': 'ir.actions.act_multi',
-                }
+            if pickings.filtered('book_required'):
+                return pickings.do_print_voucher()
             else:
                 return True
 
