@@ -4,7 +4,7 @@
 ##############################################################################
 from odoo import models, api, fields, _
 from odoo.exceptions import UserError
-from odoo.tools.float_utils import float_compare
+from odoo.tools.float_utils import float_compare, float_is_zero
 
 
 class SaleOrderLine(models.Model):
@@ -216,3 +216,21 @@ class SaleOrderLine(models.Model):
                 line.qty_to_invoice = (
                     line.product_uom_qty - line.quantity_returned -
                     line.qty_invoiced)
+
+    @api.depends('order_id.force_invoiced_status', 'state', 'product_uom_qty', 'qty_delivered', 'qty_to_invoice', 'qty_invoiced')
+    def _compute_invoice_status(self):
+        super()._compute_invoice_status()
+        precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
+        for line in self:
+            if not line.order_id.force_invoiced_status:
+                if not float_is_zero(line.qty_to_invoice, precision_digits=precision):
+                    line.invoice_status = 'to invoice'
+                elif line.state == 'sale' and line.product_id.invoice_policy == 'order' and\
+                        line.product_uom_qty >= 0.0 and\
+                        float_compare(line.qty_delivered, line.product_uom_qty, precision_digits=precision) == 1:
+                    line.invoice_status = 'upselling'
+                elif float_compare(line.qty_invoiced, (line.product_uom_qty - line.quantity_returned),
+                                precision_digits=precision) >= 0:
+                    line.invoice_status = 'invoiced'
+                else:
+                    line.invoice_status = 'no'
