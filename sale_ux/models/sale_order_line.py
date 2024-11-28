@@ -41,9 +41,8 @@ class SaleOrderLine(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         lines = super().create(vals_list)
-        for line in lines:
-            if lines.order_id and lines.order_id.state == 'done':
-                raise ValidationError(_("You cannot add lines to blocked sale orders."))
+        if lines.filtered(lambda x: x.order_id and x.order_id.state == 'done'):
+            raise ValidationError(_("You cannot add lines to blocked sale orders."))
         return lines
 
     def _get_protected_fields(self):
