@@ -251,3 +251,9 @@ class SaleOrderLine(models.Model):
                     line.invoice_status = 'invoiced'
                 else:
                     line.invoice_status = 'no'
+
+    @api.depends('product_type', 'product_uom_qty', 'qty_delivered', 'state', 'move_ids', 'product_uom', 'quantity_returned')
+    def _compute_qty_to_deliver(self):
+        for line in self:
+            super(SaleOrderLine, line)._compute_qty_to_deliver()
+            line.qty_to_deliver = line.product_uom_qty - line.qty_delivered - line.quantity_returned
