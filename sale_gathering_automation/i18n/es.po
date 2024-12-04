@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* sale_margin_ux
+# 	* sale_gathering_automation
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-13 18:05+0000\n"
-"PO-Revision-Date: 2023-06-13 18:05+0000\n"
+"POT-Creation-Date: 2024-11-13 18:10+0000\n"
+"PO-Revision-Date: 2024-11-13 18:10+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -19,12 +19,7 @@ msgstr ""
 "Language: es\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
-#. module: sale_margin_ux
-#: model:ir.model,name:sale_margin_ux.model_sale_order
+#. module: sale_gathering_automation
+#: model:ir.model,name:sale_gathering_automation.model_sale_order
 msgid "Sales Order"
 msgstr "Pedido de venta"
-
-#. module: sale_margin_ux
-#: model_terms:ir.ui.view,arch_db:sale_margin_ux.sale_order_line_usability_tree
-msgid "Total"
-msgstr "Total en moneda"
