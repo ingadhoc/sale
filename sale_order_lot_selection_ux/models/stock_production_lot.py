@@ -13,7 +13,13 @@ class ProductionLot(models.Model):
             return super()._compute_display_name()
         location = self.env['stock.warehouse'].browse(self._context.get('warehouse_id', [])).lot_stock_id
         for rec in self:
+<<<<<<< HEAD
             quants = rec.quant_ids.filtered(lambda x : x.location_id == location or x.location_id.location_id == location)
+||||||| parent of 16c95f29 (temp)
+            quants = rec.quant_ids.filtered(lambda x : x.location_id.location_id == location)
+=======
+            quants = rec.quant_ids.filtered(lambda x :  x.location_id == location or x.location_id.location_id == location)
+>>>>>>> 16c95f29 (temp)
             qty = quants and sum(quants.mapped(lambda x: x.quantity - x.reserved_quantity)) or 0.0
             name = rec.name + " (%s %s) " % (qty, quants and quants[0].product_uom_id.name or ' ')
             rec.display_name = name
