@@ -524,3 +524,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
 msgid "or"
 msgstr "o"
+
+#. module: academic_sale_subscription
+#: model:ir.actions.server,name:academic_sale_subscription.model_sale_order_subscription_change_customer
+msgid "Confirm sale order"
+msgstr "Confirmar pedido de venta"
