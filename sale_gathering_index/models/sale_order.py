@@ -48,7 +48,7 @@ class SaleOrder(models.Model):
     @api.depends('is_gathering', 'order_line.initial_qty_gathered', 'indexed_gathering_amount', 'gathering_amount')
     def _compute_index(self):
         gathering_orders = self.filtered(
-            lambda x: x.is_gathering and x.order_line.filtered(lambda x: x.initial_qty_gathered > 0)
+            lambda x: x.is_gathering and x.order_line.filtered(lambda x: x.initial_qty_gathered > 0) and x.gathering_amount > 0
         )
         for order in gathering_orders:
             order.index = (order.indexed_gathering_amount / order.gathering_amount) - 1
