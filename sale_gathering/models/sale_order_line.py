@@ -59,7 +59,8 @@ class SaleOrderLine(models.Model):
                     raise ValidationError(_("Discounts cannot be added to downpayments."))
 
                 if (
-                    not self.env.user.has_group('sale_gathering.group_allow_redeemed_product_discounts')
+                    not self.env.user._is_superuser()
+                    and not self.env.user.has_group('sale_gathering.group_allow_redeemed_product_discounts')
                     and rec.initial_qty_gathered == 0
                     and rec.discount > 0
                 ):
