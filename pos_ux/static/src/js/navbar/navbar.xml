@@ -2,12 +2,12 @@
 <templates id="template" xml:space="preserve">
 
     <t t-name="Navbar" t-inherit="point_of_sale.Navbar" t-inherit-mode="extension">
-        <xpath expr="//ProxyStatus" position="before">
+        <xpath expr="//CashierName" position="after">
             <div class="header-button invoice-contingency"
                 t-on-click="setContingencyMode">
                 <span class="contingency-button ">
                     <i class="fa"
-                    t-att-class="{'fa-unlink': pos.pos_session.invoice_contingency, 'fa-link': !pos.pos_session.invoice_contingency }"
+                    t-att-class="{'fa-unlink': pos.session.invoice_contingency, 'fa-link': !pos.session.invoice_contingency }"
                     role="img" aria-label="Contingency mode" title="Contingency mode"></i>
                 </span>
             </div>

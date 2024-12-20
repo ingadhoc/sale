@@ -5,9 +5,6 @@
         <field name="model">pos.session</field>
         <field name="inherit_id" ref="point_of_sale.view_pos_session_form" />
         <field name="arch" type="xml">
-            <form>
-                <field name="invoice_contingency" invisible="1"/>
-            </form>
             <button name="open_frontend_cb" position="after">
                 <button name="action_set_invoice_contingency" type="object" string="Set contingency mode"
                     invisible="invoice_contingency or state not in ['opening_control', 'opened']"/>
