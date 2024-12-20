@@ -24,10 +24,9 @@ class PosSession(models.Model):
     def action_unset_invoice_contingency(self):
         self.invoice_contingency = False
 
-    def _loader_params_pos_session(self):
-        params = super()._loader_params_pos_session()
-        params['search_params']['fields'].append('invoice_contingency')
-        return params
+    @api.model
+    def _load_pos_data_fields(self, config_id):
+        return super()._load_pos_data_fields(config_id) + ['invoice_contingency']
 
     def _validate_session(self, balancing_account=False, amount_to_balance=0, bank_payment_method_diffs=None):
         """
