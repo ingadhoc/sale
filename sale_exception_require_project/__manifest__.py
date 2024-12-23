@@ -18,8 +18,8 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Order Require Contract on Confirmation',
-    'version': "17.0.1.0.0",
+    'name': 'Sale Order Require Project',
+    'version': "18.0.1.0.0",
     'category': 'Projects & Services',
     'sequence': 14,
     'summary': '',
@@ -30,6 +30,7 @@
     ],
     'depends': [
         'sale_exception',
+        'sale_project',
     ],
     'data': [
         'data/exception_rule_data.xml',
@@ -38,7 +39,7 @@
         'demo/exception_rule_demo.xml',
         'demo/sale_order_demo.xml',
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
