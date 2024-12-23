@@ -10,12 +10,11 @@
    :target: https://www.gnu.org/licenses/agpl
    :alt: License: AGPL-3
 
-===========================================
-Sale Order Require Contract on Confirmation
-===========================================
+==========================
+Sale Order Require Project
+==========================
 
-This module adds an exception to sales order.
-It makes the "contract" field required to validate a sales order.
+This module adds an exception to sales order. It makes the "project_id" field required to validate a sales order.
 
 Installation
 ============
@@ -36,7 +35,7 @@ Usage
 
 To use this module, you need to:
 
-#. This module add an exception to sale order to required the contract to confirm the sale order.
+#. This module add an exception to sale order to required the project to confirm the sale order.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
