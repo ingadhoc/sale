@@ -20,12 +20,12 @@ class SaleOrder(models.Model):
         else:
             super()._recompute_prices()
 
-    @api.onchange('pricelist_id')
-    def _onchange_pricelist(self):
-        self.order_line.write({
-            'discount1': 0,
-            'discount2': 0,
-            'discount3': 0
-        })
-        self._recompute_prices()
-        self.order_line._onchange_discounts()
+    # @api.onchange('pricelist_id')
+    # def _onchange_pricelist(self):
+    #     self.order_line.write({
+    #         'discount1': 0,
+    #         'discount2': 0,
+    #         'discount3': 0
+    #     })
+    #     self._recompute_prices()
+    #     self.order_line._onchange_discounts()
