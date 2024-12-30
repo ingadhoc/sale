@@ -17,7 +17,13 @@ class SaleOrder(models.Model):
     gathering_amount = fields.Float(
         compute="_compute_gathering_amount", help="Monto, sin impuestos, acopiado inicialmente."
     )
+    gathering_amount = fields.Float(compute="_compute_gathering_amount")
+    gathering_amount_with_taxes = fields.Float(compute="_compute_gathering_amount", help="Monto acopiado inicialmente.")
     has_gathering_invoice = fields.Boolean(compute="_compute_has_gathering_invoice")
+    withdrawn_amount = fields.Float(
+        compute="_compute_withdrawn_amount",
+        help="El monto retirado (o solicitado) se calcula en base a la columna cantidad de las lineas de ventas, no necesariamente tienen que estar entregadas/facturadas esas lineas de venta.",
+    )
 
     @api.depends(
         "is_gathering",
@@ -27,6 +33,7 @@ class SaleOrder(models.Model):
         "order_line.qty_invoiced",
         "order_line.qty_to_invoice",
         "order_line.is_downpayment",
+        "order_line.quantity_returned",
     )
     def _compute_gathering_balance(self):
         orders_gathering = self.filtered(
@@ -52,7 +59,7 @@ class SaleOrder(models.Model):
                 total_amount_to_invoice_invoiced += line.tax_id.compute_all(
                     price_reduce,
                     currency=line.currency_id,
-                    quantity=line.qty_to_invoice + line.qty_invoiced,
+                    quantity=line.qty_to_invoice + line.qty_invoiced - line.quantity_returned,
                     product=line.product_id,
                     partner=line.order_id.partner_shipping_id,
                 )["total_included"]
@@ -101,18 +108,23 @@ class SaleOrder(models.Model):
             lambda x: x.is_gathering and x.order_line.filtered(lambda x: x.initial_qty_gathered > 0)
         )
         for order in orders_gathering:
-            gathering_amount = 0
+            price_subtotal = 0
+            price_subtotal_with_taxes = 0
             for line in order.order_line.filtered(lambda x: x.initial_qty_gathered > 0):
                 price_reduce = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
-                gathering_amount += line.tax_id.compute_all(
+                subtotal = line.tax_id.compute_all(
                     price_reduce,
                     currency=line.currency_id,
                     quantity=line.initial_qty_gathered,
                     product=line.product_id,
                     partner=line.order_id.partner_shipping_id,
-                )["total_excluded"]
-            order.gathering_amount = gathering_amount
+                )
+                price_subtotal += subtotal["total_excluded"]
+                price_subtotal_with_taxes += subtotal["total_included"]
+            order.gathering_amount = price_subtotal
+            order.gathering_amount_with_taxes = price_subtotal_with_taxes
         (self - orders_gathering).gathering_amount = 0.0
+        (self - orders_gathering).gathering_amount_with_taxes = 0.0
 
     @api.depends("is_gathering", "invoice_ids", "invoice_ids.state")
     def _compute_has_gathering_invoice(self):
@@ -125,3 +137,10 @@ class SaleOrder(models.Model):
 
     def action_lock(self):
         super(SaleOrder, self - self.filtered("is_gathering")).action_lock()
+
+    @api.depends("gathering_balance", "gathering_amount_with_taxes")
+    def _compute_withdrawn_amount(self):
+        orders = self.filtered(lambda x: x.gathering_balance > 0)
+        for rec in orders:
+            rec.withdrawn_amount = rec.gathering_amount_with_taxes - rec.gathering_balance
+        (self - orders).withdrawn_amount = 0.0

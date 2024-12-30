@@ -22,12 +22,16 @@
                 <table class="float-end">
                     <tbody>
                         <tr>
-                            <td> <label for="gathering_amount"/> </td>
-                            <td> <field name="gathering_amount" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="not is_gathering"/> </td>
+                            <td> <label for="gathering_amount_with_taxes"/> </td>
+                            <td> <field name="gathering_amount_with_taxes" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="not is_gathering"/> </td>
                         </tr>
                         <tr>
                             <td> <label for="gathering_balance"/> </td>
                             <td> <field name="gathering_balance" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="not is_gathering"/> </td>
+                        </tr>
+                        <tr>
+                            <td> <label for="withdrawn_amount"/> </td>
+                            <td> <field name="withdrawn_amount" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="not is_gathering"/> </td>
                         </tr>
                     </tbody>
                 </table>
