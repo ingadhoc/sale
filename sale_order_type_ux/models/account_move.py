@@ -25,3 +25,9 @@ class AccountMove(models.Model):
         if self.state == 'draft' and self._get_last_sequence(lock=False) and self.name and self.name != '/':
             self.name = '/'
 
+    @api.depends("sale_type_id")
+    def _compute_fiscal_position_id(self):
+        res = super()._compute_fiscal_position_id()
+        for move in self.filtered("sale_type_id.fiscal_position_id"):
+            move.fiscal_position_id = move.sale_type_id.fiscal_position_id
+        return res
