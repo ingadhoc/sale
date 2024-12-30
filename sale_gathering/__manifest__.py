@@ -28,7 +28,7 @@
     "license": "AGPL-3",
     "images": [],
     "depends": [
-        "sale_stock",
+        "sale_stock_ux",
     ],
     "data": [
         "security/res_groups.xml",

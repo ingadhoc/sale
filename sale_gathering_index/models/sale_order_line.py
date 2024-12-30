@@ -76,4 +76,4 @@ class SaleOrderLine(models.Model):
                 fiscal_position=line.order_id.fiscal_position_id,
             )
             coefficient = 1 / (line.order_id.index + 1)
-            line.name += _("\n(Current price: $%s | Coef: %s%%)") % (price_unit, round(coefficient, 4))
+            line.name += _("\n(Current price: $%s | Coef: %s)") % (price_unit, round(coefficient, 4))

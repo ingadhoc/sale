@@ -1,30 +1,12 @@
 <odoo>
-    <template id="report_saleorder_index" inherit_id="account.document_tax_totals_template" priority="20">
-
-        <xpath expr="//tr[hasclass('o_total')]" position="inside">
-            <t t-if="is_gathering and doc.is_gathering and doc.state not in ['draft','sent']">
-                <tr class="border-black o_total">
-                    <td>
-                        <strong>Indexed Gathering Amount:</strong>
-                    </td>
-                    <td class="text-end">
-                    <span>$
-                    <t t-esc="doc.indexed_gathering_amount or 0"/>
-                    </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <strong>Gathering Balance Indexed:</strong>
-                    </td>
-                    <td class="text-end">
-                    <span>$
-                    <t t-esc="doc.gathering_balance_indexed or 0"/>
-                    </span>
-                    </td>
-                </tr>
-            </t>
+    <template
+        id="report_saleorder_document_gathering"
+        inherit_id="sale_gathering.report_saleorder_document_gathering"
+    >
+        <xpath expr="//div[@id='informations']" position="after">
+            <div class="row">
+                <strong>Update Index:</strong> <span t-esc="round(doc.index * 100, 2)"/> <span>% = <strong>Coef:</strong>  <span t-esc="round(doc.index + 1, 4)"/> </span>
+            </div>
         </xpath>
-
     </template>
 </odoo>
