@@ -7,54 +7,23 @@
         priority="99"
     >
         <xpath expr="//th[@name='th_priceunit']" position="before">
-            <th class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">Initial Quantity Gathered</th>
-            <th class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">Quantity Delivered</th>
-            <th class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">Quantity Returned</th>
-            <th class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">Quantity Invoiced</th>
+            <th class="text-end" t-if="doc.is_gathering and doc.state not in ['draft','sent']">Initial Quantity Gathered</th>
+            <th class="text-end" t-if="doc.is_gathering and doc.state not in ['draft','sent']">Quantity Invoiced</th>
+        </xpath>
+
+        <xpath expr="//thead[@style='display: table-row-group']" position="attributes">
+            <attribute name="style"></attribute>
         </xpath>
 
         <xpath expr="//td[@name='td_priceunit']" position="before">
-            <td class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">
+            <td class="text-end" t-if="doc.is_gathering and doc.state not in ['draft','sent']">
                 <span t-if="line.initial_qty_gathered &gt; 0">
                     <t t-esc="line.initial_qty_gathered"/>
                 </span>
             </td>
-            <td class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">
-                    <t t-esc="line.qty_delivered"/>
-            </td>
-            <td class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">
-                    <t t-esc="line.quantity_returned"/>
-            </td>
-            <td class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">
+            <td class="text-end" t-if="doc.is_gathering and doc.state not in ['draft','sent']">
                     <t t-esc="line.qty_invoiced"/>
             </td>
-        </xpath>
-    </template>
-
-    <template id="document_tax_totals_gathering" inherit_id="account.document_tax_totals_template">
-        <xpath expr="//tr[hasclass('o_total')]" position="inside">
-            <t t-if="is_gathering and doc.is_gathering and doc.state not in ['draft','sent']">
-                <tr class="border-black o_total">
-                    <td>
-                        <strong>Gathering Amount:</strong>
-                    </td>
-                    <td class="text-end">
-                    <span>$
-                    <t t-esc="doc.gathering_amount or 0"/>
-                    </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <strong>Gathering Balance:</strong>
-                    </td>
-                    <td class="text-end">
-                    <span>$
-                    <t t-esc="doc.gathering_balance or 0"/>
-                    </span>
-                    </td>
-                </tr>
-            </t>
         </xpath>
     </template>
 

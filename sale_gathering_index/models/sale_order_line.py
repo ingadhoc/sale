@@ -57,9 +57,7 @@ class SaleOrderLine(models.Model):
                 product_price_unit=price,
                 product_currency=line.currency_id
             )
-            # misma nota que en método _compute_price_unit
-            if isinstance(line.order_id.id, models.NewId):
-                index = line.order_id._origin.index
-            else:
-                index = line.order_id.index
-            line.name += "\n($%s)\n(%s%%)" % (line_price, round(index*100, 2))
+            coefficient = 1 / (line.order_id.index + 1)
+            line.name += _(
+                "\n(Current price: $%s | Coef: %s)"
+            ) % (line_price, round(coefficient, 4))
