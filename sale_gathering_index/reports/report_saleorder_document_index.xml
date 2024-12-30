@@ -1,4 +1,15 @@
 <odoo>
+    <template
+        id="report_saleorder_document_gathering"
+        inherit_id="sale_gathering.report_saleorder_document_gathering"
+    >
+        <xpath expr="//div[@id='informations']" position="after">
+            <div class="row">
+                <strong>Update Index:</strong> <span t-esc="round(doc.index * 100, 2)"/> <span>% = <strong>Coef:</strong>  <span t-esc="round(doc.index + 1, 4)"/> </span>
+            </div>
+        </xpath>
+    </template>
+
     <template id="report_saleorder_index" inherit_id="sale_gathering.document_tax_totals" priority="14">
 
         <xpath expr="//tr[2]" position="after">
@@ -8,9 +19,7 @@
                         <strong>Indexed Gathering Amount:</strong>
                     </td>
                     <td class="text-end">
-                    <span>$
-                    <t t-esc="doc.indexed_gathering_amount or 0"/>
-                    </span>
+                        <span t-out="doc.indexed_gathering_amount or 0"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                     </td>
                 </tr>
                 <tr>
@@ -18,9 +27,7 @@
                         <strong>Gathering Balance Indexed:</strong>
                     </td>
                     <td class="text-end">
-                    <span>$
-                    <t t-esc="doc.gathering_balance_indexed or 0"/>
-                    </span>
+                        <span t-out="doc.gathering_balance_indexed or 0"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                     </td>
                 </tr>
             </t>

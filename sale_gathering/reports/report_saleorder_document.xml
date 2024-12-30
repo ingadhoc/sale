@@ -7,41 +7,41 @@
         priority="99"
     >
         <xpath expr="//th[@name='th_priceunit']" position="before">
-            <th class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">Initial Quantity Gathered</th>
-            <th class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">Quantity Delivered</th>
-            <th class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">Quantity Returned</th>
-            <th class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">Quantity Invoiced</th>
+            <th class="text-end" t-if="doc.is_gathering and doc.state not in ['draft','sent']">Initial Quantity Gathered</th>
+            <th class="text-end" t-if="doc.is_gathering and doc.state not in ['draft','sent']">Quantity Invoiced</th>
+        </xpath>
+
+        <xpath expr="//thead[@style='display: table-row-group']" position="attributes">
+            <attribute name="style"></attribute>
         </xpath>
 
         <xpath expr="//td[@name='td_priceunit']" position="before">
-            <td class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">
+            <td class="text-end" t-if="doc.is_gathering and doc.state not in ['draft','sent']">
                 <span t-if="line.initial_qty_gathered &gt; 0">
                     <t t-esc="line.initial_qty_gathered"/>
                 </span>
             </td>
-            <td class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">
-                    <t t-esc="line.qty_delivered"/>
-            </td>
-            <td class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">
-                    <t t-esc="line.quantity_returned"/>
-            </td>
-            <td class="text-center" t-if="doc.is_gathering and doc.state not in ['draft','sent']">
+            <td class="text-end" t-if="doc.is_gathering and doc.state not in ['draft','sent']">
                     <t t-esc="line.qty_invoiced"/>
             </td>
         </xpath>
     </template>
 
     <template id="document_tax_totals" inherit_id="account.document_tax_totals">
-        <xpath expr="//tr[hasclass('o_total')]" position="inside">
+        <xpath expr="//tr[hasclass('o_total')]" position="attributes">
+            <attribute name="t-if">not doc.is_gathering and not is_gathering</attribute>
+        </xpath>
+        <xpath expr="//t[@t-as='subtotal']" position="attributes">
+            <attribute name="t-if">not doc.is_gathering and not is_gathering</attribute>
+        </xpath>
+        <xpath expr="//tr[hasclass('o_total')]" position="after">
             <t t-if="is_gathering and doc.is_gathering and doc.state not in ['draft','sent']">
                 <tr class="border-black o_total">
                     <td>
-                        <strong>Gathering Amount:</strong>
+                        <strong>Gathering Amount With Taxes:</strong>
                     </td>
                     <td class="text-end">
-                    <span>$
-                    <t t-esc="doc.gathering_amount or 0"/>
-                    </span>
+                        <span t-out="doc.gathering_amount_with_taxes or 0"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                     </td>
                 </tr>
                 <tr>
@@ -49,9 +49,15 @@
                         <strong>Gathering Balance:</strong>
                     </td>
                     <td class="text-end">
-                    <span>$
-                    <t t-esc="doc.gathering_balance or 0"/>
-                    </span>
+                        <span t-out="doc.gathering_balance or 0" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                    </td>
+                </tr>
+                <tr class="border-black o_total">
+                    <td>
+                        <strong>Withdrawn Amount:</strong>
+                    </td>
+                    <td class="text-end">
+                        <span t-out="doc.withdrawn_amount or 0" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                     </td>
                 </tr>
             </t>

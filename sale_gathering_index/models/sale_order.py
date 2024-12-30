@@ -40,20 +40,28 @@ class SaleOrder(models.Model):
                                 currency=line.currency_id,
                                 quantity=line.initial_qty_gathered,
                                 product=line.product_id,
-                                partner=line.order_id.partner_shipping_id)['total_excluded']
+                                partner=line.order_id.partner_shipping_id)['total_included']
                 indexed_gathering_amount += price_subtotal
             order.indexed_gathering_amount = indexed_gathering_amount
         (self - gathering_orders).indexed_gathering_amount = 0.0
 
-    @api.depends('is_gathering', 'order_line.initial_qty_gathered', 'indexed_gathering_amount', 'gathering_amount')
+    @api.depends('is_gathering', 'order_line.initial_qty_gathered', 'indexed_gathering_amount', 'gathering_amount_with_taxes')
     def _compute_index(self):
         gathering_orders = self.filtered(
-            lambda x: x.is_gathering and x.order_line.filtered(lambda x: x.initial_qty_gathered > 0) and x.gathering_amount > 0
+            lambda x: x.is_gathering and x.order_line.filtered(lambda x: x.initial_qty_gathered > 0) and x.gathering_amount_with_taxes > 0
         )
         for order in gathering_orders:
-            order.index = (order.indexed_gathering_amount / order.gathering_amount) - 1
+            order.index = (order.indexed_gathering_amount / order.gathering_amount_with_taxes) - 1
         (self - gathering_orders).index = 0.0
 
     @api.depends('gathering_balance', 'index')
     def _compute_gathering_balance_indexed(self):
         self.gathering_balance_indexed = self.gathering_balance * (1 + self.index)
+
+    @api.depends('gathering_balance_indexed', 'indexed_gathering_amount')
+    def _compute_withdrawn_amount(self):
+        # the sale_gathering method is overridden to focus on the indexed amount
+        orders = self.filtered(lambda x: x.gathering_balance_indexed > 0)
+        for rec in orders:
+            rec.withdrawn_amount = rec.indexed_gathering_amount - rec.gathering_balance_indexed
+        (self - orders).withdrawn_amount = 0.0

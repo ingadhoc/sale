@@ -84,3 +84,19 @@ msgstr ""
 msgid ""
 "You can't modify the quantity of an added product. Please add a new line."
 msgstr ""
+
+#. module: sale_gathering_index
+#: model_terms:ir.ui.view,arch_db:sale_gathering_index.report_saleorder_document_gathering
+msgid "<strong>Update Index:</strong>"
+msgstr "<strong>Índice de actualización:</strong>"
+
+#. module: sale_gathering_index
+#. odoo-python
+#: code:addons/sale_gathering_index/models/sale_order_line.py:0
+#, python-format
+msgid ""
+"\n"
+"(Current price: $%s | Coef: %s)"
+msgstr ""
+"\n"
+"(Precio actual: $%s | Coef: %s)"
