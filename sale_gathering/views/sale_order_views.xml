@@ -19,8 +19,10 @@
                 <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Gathering Invoice" type="action" context="{'default_advance_payment_method': 'fixed', 'default_fixed_amount': gathering_amount}" invisible="not is_gathering or state != 'sale' or has_gathering_invoice"/>
             </button>
             <group name="sale_total" position="inside">
-                <field name="gathering_amount" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="not is_gathering"/>
+                <field name="gathering_amount" invisible="1"/>
+                <field name="gathering_amount_with_taxes" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="not is_gathering"/>
                 <field name="gathering_balance" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="not is_gathering"/>
+                <field name="withdrawn_amount" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="not is_gathering"/>
             </group>
             <xpath expr="//field[@name='order_line']/tree//field[@name='product_uom_qty']" position="after">
                 <field name="initial_qty_gathered" force_save="1" readonly="1" column_invisible="not parent.is_gathering"/>

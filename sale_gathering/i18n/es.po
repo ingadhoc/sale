@@ -238,3 +238,37 @@ msgid ""
 msgstr ""
 "No puede modificar el descuento de las líneas de acopio una vez confirmada "
 "la venta.\n"
+
+#. module: sale_gathering
+#: model:ir.model.fields,field_description:sale_gathering.field_sale_order_line__stock_by_location
+msgid "Stock By Location"
+msgstr "Stock por Ubicación"
+
+#. module: sale_gathering
+#. odoo-javascript
+#: code:addons/sale_gathering/static/src/widgets/qty_at_date_widget.xml:0
+#, python-format
+msgid "Stock by Location"
+msgstr "Stock por Ubicación"
+
+#. module: sale_gathering
+#. odoo-javascript
+#: code:addons/sale_gathering/static/src/widgets/qty_at_date_widget.xml:0
+#, python-format
+msgid "No stock available"
+msgstr "Sin stock disponible"
+
+#. module: sale_gathering
+#: model:ir.model.fields,field_description:sale_gathering.field_sale_order__gathering_amount_with_taxes
+msgid "Gathering Amount With Taxes"
+msgstr "Monto acopiado con impuestos"
+
+#. module: sale_gathering
+#: model:ir.model.fields,field_description:sale_gathering.field_sale_order__withdrawn_amount
+msgid "Withdrawn Amount"
+msgstr "Monto retirado"
+
+#. module: sale_gathering
+#: model_terms:ir.ui.view,arch_db:sale_gathering.document_tax_totals
+msgid "<strong>Withdrawn Amount:</strong>"
+msgstr "<strong>Monto retirado:</strong>"
