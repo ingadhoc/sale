@@ -11,6 +11,16 @@ class SaleOrderLine(models.Model):
 
     date_order = fields.Datetime("Order Date", related="order_id.date_order")
 
+    team_id = fields.Many2one(
+        'crm.team',
+        string='Sales Team',
+        related='order_id.team_id')
+
+    categ_id = fields.Many2one(
+        'product.category',
+        string='Product Category',
+        related='product_id.categ_id')
+
     @api.depends('order_id.force_invoiced_status')
     def _compute_invoice_status(self):
         """
