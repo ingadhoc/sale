@@ -70,7 +70,7 @@
                     </div>
                 </div>
             </xpath>
-            <xpath expr="//block[@name='quotation_order_setting_container']" position="after">
+            <xpath expr="//block[@name='quotation_order_setting_container']" position="inside">
                 <setting id="cancel_old_quotations" string="Cancel Old Quotations">
                     <div class="text-muted">
                         <span>Cancel quotations older than</span>
