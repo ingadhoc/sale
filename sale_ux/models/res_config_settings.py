@@ -24,9 +24,7 @@ class ResConfigSettings(models.TransientModel):
         group='base.group_user,base.group_portal',
     )
 
-    update_prices_automatically = fields.Boolean(
-        'Update Prices Automatically',
-    )
+    update_prices_automatically = fields.Boolean()
 
     move_internal_notes = fields.Boolean(
         'Mover notas internas a transferencias de stock y facturas',

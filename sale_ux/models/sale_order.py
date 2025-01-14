@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    internal_notes = fields.Html('Internal Notes')
+    internal_notes = fields.Html()
     payment_term_id = fields.Many2one(
         tracking=True,
     )
