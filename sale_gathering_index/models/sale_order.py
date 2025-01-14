@@ -4,7 +4,7 @@ from odoo import api, fields, models
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    index = fields.Float("Index", compute="_compute_index")
+    index = fields.Float(compute="_compute_index")
     gathering_balance_indexed = fields.Float(
         compute="_compute_gathering_balance_indexed",
         digits="Product Price",
