@@ -69,7 +69,7 @@ class SaleOrder(models.Model):
             invoiceable_lines = invoiceable_lines.filtered(lambda line: line.display_type not in ['line_section', 'line_note'])
         return invoiceable_lines
 
-    @api.constrains('is_gathering', 'amount_total')
+    @api.constrains("is_gathering", "amount_total")
     def _check_gathering_balance(self):
         product_precision_digits = self.env['decimal.precision'].precision_get(
             'Product Price')
@@ -77,9 +77,10 @@ class SaleOrder(models.Model):
             if float_compare(rec.gathering_balance, 0.0, precision_digits=product_precision_digits) == -1:
                 raise ValidationError(
                     _(
-                        "The gathering balance will be negative (%s), you cannot make this modification"
-                        " to the order. Order: %s" %
-                        (rec.gathering_balance, rec.name)))
+                        "The gathering balance will be negative (%s), you cannot make this modification to the order. Order: %s"
+                    )
+                    % (rec.gathering_balance, rec.name)
+                )
 
     def action_confirm(self):
         for order in self.filtered('is_gathering'):
