@@ -28,9 +28,12 @@ class PortalSummary(Controller):
             'show_invoice_detail': False,
             'lang': partner.lang,
         }
-        xls = request.env.ref(
-            'account_debt_management.account_debt_report').sudo(
-        ).with_context(report_data).render([partner.id], data=report_data)[0]
+        xls = (
+            request.env.ref("account_debt_management.account_debt_report")
+            .sudo()
+            .with_context(**report_data)
+            .render([partner.id], data=report_data)[0]
+        )
         xlshttpheaders = [
             ('Content-Type', 'application/vnd.ms-excel'),
             ('Content-Length', len(xls)),
@@ -53,9 +56,12 @@ class PortalSummary(Controller):
             'show_invoice_detail': False,
             'lang': partner.lang,
         }
-        xls = request.env.ref(
-            'account_debt_management.account_debt_report').sudo(
-        ).with_context(report_data).render([partner.id], data=report_data)[0]
+        xls = (
+            request.env.ref("account_debt_management.account_debt_report")
+            .sudo()
+            .with_context(**report_data)
+            .render([partner.id], data=report_data)[0]
+        )
         xlshttpheaders = [
             ('Content-Type', 'application/vnd.ms-excel'),
             ('Content-Length', len(xls)),
