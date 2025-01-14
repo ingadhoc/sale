@@ -30,10 +30,8 @@ class TestSaleOrderLotSelection(test_common.SingleTransactionCase):
 
     def _stock_quantity(self, product, lot, location):
         return product.with_context(
-            {
-                "lot_id": lot.id,
-                "location": location.id,
-            }
+            lot_id=lot.id,
+            location=location.id,
         ).qty_available
 
     def test_sale_order_lot_selection(self):
