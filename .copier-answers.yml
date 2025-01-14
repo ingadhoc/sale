@@ -1,0 +1,12 @@
+# Do NOT update manually; changes here will be overwritten by Copier
+_commit: 9c7972a
+_src_path: https://github.com/ingadhoc/addons-repo-template.git
+description: 'ADHOC Odoo Sale Modules
+
+
+    '
+name: sale
+odoo_version: 18.0
+pre_commit_ignore: []
+slug: ''
+
