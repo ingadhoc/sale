@@ -1,12 +1,10 @@
 {
-    'name': 'Point of Sale UX',
-    'version': "18.0.1.0.0",
-    'category': 'Point of Sale',
-    'description': """
-This module extend functionality of point of sale .
-    """,
-    'depends': [
-        'point_of_sale',
+    "name": "Point of Sale UX",
+    "version": "18.0.1.0.0",
+    "category": "Point of Sale",
+    "author": "ADHOC SA",
+    "depends": [
+        "point_of_sale",
     ],
     'data': [
         'views/pos_session_view.xml',
