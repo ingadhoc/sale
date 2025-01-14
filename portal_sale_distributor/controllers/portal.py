@@ -29,7 +29,7 @@ class PortalSummary(Controller):
         xls = (
             request.env.ref("account_debt_management.account_debt_report")
             .sudo()
-            .with_context(report_data)
+            .with_context(**report_data)
             .render([partner.id], data=report_data)[0]
         )
         xlshttpheaders = [
@@ -56,7 +56,7 @@ class PortalSummary(Controller):
         xls = (
             request.env.ref("account_debt_management.account_debt_report")
             .sudo()
-            .with_context(report_data)
+            .with_context(**report_data)
             .render([partner.id], data=report_data)[0]
         )
         xlshttpheaders = [

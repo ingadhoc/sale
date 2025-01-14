@@ -139,14 +139,18 @@ class WebsiteSalePortal(WebsiteSale):
         if not partner_sudo:  # Creation of a new address.
             is_new_address = True
             self._complete_address_values(address_values, address_type, use_delivery_as_billing, order_sudo)
-            create_context = clean_context(request.env.context)
-            create_context.update(
-                {
-                    "tracking_disable": True,
-                    "no_vat_validation": True,  # Already verified in _validate_address_values
-                }
+            clean_context(request.env.context)
+            partner_sudo = (
+                request.env["res.partner"]
+                .sudo()
+                .with_context(
+                    **{
+                        "tracking_disable": True,
+                        "no_vat_validation": True,
+                    }
+                )
+                .create(address_values)
             )
-            partner_sudo = request.env["res.partner"].sudo().with_context(create_context).create(address_values)
         elif not self._are_same_addresses(address_values, partner_sudo):
             partner_sudo.write(address_values)  # Keep the same partner if nothing changed.
 
