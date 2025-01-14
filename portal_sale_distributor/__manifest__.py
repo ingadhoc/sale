@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Portal Distributor Sale',
-    'version': "18.0.1.1.0",
+    'version': "18.0.1.2.0",
     'category': 'Tools',
     'complexity': 'easy',
     'author': 'ADHOC SA, Odoo Community Association (OCA)',
@@ -31,6 +31,8 @@
         'delivery',
         'sale_ux',
         'sale_management',
+        'spreadsheet_sale_management',
+        'sale_pdf_quote_builder',
         'portal_backend',
     ],
     'demo': [
