@@ -10,13 +10,12 @@
    :target: https://www.gnu.org/licenses/agpl
    :alt: License: AGPL-3
 
-===============
-CRM Stage Teams
-===============
+======
+CRM UX
+======
 
 This module:
 
-#. Allows to select multiple teams in one stage. Then each user is going to see the stages that the teams he belogns are allowed to see.
 #. If the option "Allow any user as salesman" is enable, it would be possible to assign any user as salesperson in leads, opportunities and teams.
 
 Installation
@@ -38,7 +37,7 @@ Usage
 
 To use this module, you need to:
 
-#. Go to ...
+#. Just use it.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
