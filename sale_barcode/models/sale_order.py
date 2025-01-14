@@ -27,7 +27,7 @@ class SaleOrder(models.Model):
         if corresponding_line:
             corresponding_line.product_uom_qty += qty
         else:
-            line = self.order_line.new(
+            self.order_line.new(
                 {
                     "product_id": product.id,
                     "product_uom_qty": qty,
