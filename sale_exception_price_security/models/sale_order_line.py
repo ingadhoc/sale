@@ -15,12 +15,10 @@ class SaleOrderLine(models.Model):
     def check_discount_ok(self):
         self.ensure_one()
         # disable constrant
-        if (self.env.user.has_group('price_security.group_only_view') and not self.product_can_modify_prices):
+        if self.env.user.has_group("price_security.group_only_view") and not self.product_can_modify_prices:
             # if something, then we have an error, not ok
             if self.env.user.check_discount(
-                    self.discount,
-                    self.order_id.pricelist_id.id,
-                    so_line=self,
-                    do_not_raise=True):
+                self.discount, self.order_id.pricelist_id.id, so_line=self, do_not_raise=True
+            ):
                 return False
         return True

@@ -6,7 +6,7 @@ from odoo import models
 
 
 class SaleExceptionConfirm(models.TransientModel):
-    _inherit = 'sale.exception.confirm'
+    _inherit = "sale.exception.confirm"
 
     def action_confirm(self):
         res = super().action_confirm()

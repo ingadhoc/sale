@@ -6,7 +6,7 @@ from odoo import models
 
 
 class BaseExceptionMethod(models.AbstractModel):
-    _inherit = 'base.exception.method'
+    _inherit = "base.exception.method"
 
     def _rule_domain(self):
         """Filter exception.rules.
@@ -14,7 +14,6 @@ class BaseExceptionMethod(models.AbstractModel):
         will be used.
         """
         domain = super()._rule_domain()
-        if self._context.get('print_exceptions', False) and \
-                self._name in ['sale.order', 'sale.order.line']:
-            domain += [('block_print', '=', True)]
+        if self._context.get("print_exceptions", False) and self._name in ["sale.order", "sale.order.line"]:
+            domain += [("block_print", "=", True)]
         return domain

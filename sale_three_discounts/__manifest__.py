@@ -18,27 +18,26 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Three Discounts',
-    'version': "18.0.1.0.0",
-    'category': 'Sales Management',
-    'sequence': 14,
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'summary': '',
-    'depends': [
-        'sale',
-        'account',
+    "name": "Sale Three Discounts",
+    "version": "18.0.1.0.0",
+    "category": "Sales Management",
+    "sequence": 14,
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "summary": "",
+    "depends": [
+        "sale",
+        "account",
     ],
-    'data': [
-        'views/sale_order_views.xml',
-        'views/account_invoice_views.xml',
-        'wizards/sale_order_discount_views.xml',
+    "data": [
+        "views/sale_order_views.xml",
+        "views/account_invoice_views.xml",
+        "wizards/sale_order_discount_views.xml",
     ],
-    'demo': [
-    ],
-    'installable': True,
-    'auto_install': False,
-    'application': False,
-    'post_init_hook': 'post_init_hook',
+    "demo": [],
+    "installable": True,
+    "auto_install": False,
+    "application": False,
+    "post_init_hook": "post_init_hook",
 }

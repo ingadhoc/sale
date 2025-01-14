@@ -18,20 +18,20 @@
 #
 ##############################################################################
 {
-    'name': 'Portal Distributor Sales Team ',
-    'version': "16.0.1.0.0",
-    'category': 'Tools',
-    'complexity': 'easy',
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'depends': [
-        'sales_team',
-        'portal_sale_distributor',
+    "name": "Portal Distributor Sales Team ",
+    "version": "16.0.1.0.0",
+    "category": "Tools",
+    "complexity": "easy",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "depends": [
+        "sales_team",
+        "portal_sale_distributor",
     ],
-    'data': [
-        'security/ir.model.access.csv',
+    "data": [
+        "security/ir.model.access.csv",
     ],
-    'installable': False,
-    'auto_install': True,
+    "installable": False,
+    "auto_install": True,
 }

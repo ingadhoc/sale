@@ -18,24 +18,20 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Order Type User Default',
-    'version': "18.0.1.0.0",
-    'category': 'Accounting',
-    'sequence': 14,
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'images': [
+    "name": "Sale Order Type User Default",
+    "version": "18.0.1.0.0",
+    "category": "Accounting",
+    "sequence": 14,
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "images": [],
+    "depends": [
+        "sale_order_type",
     ],
-    'depends': [
-        'sale_order_type',
-    ],
-    'data': [
-        'views/res_users_views.xml'
-    ],
-    'demo': [
-    ],
-    'installable': True,
-    'auto_install': False,
-    'application': False,
+    "data": ["views/res_users_views.xml"],
+    "demo": [],
+    "installable": True,
+    "auto_install": False,
+    "application": False,
 }

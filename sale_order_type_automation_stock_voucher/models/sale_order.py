@@ -2,24 +2,20 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, _
-from odoo.exceptions import UserError
+from odoo import models
 
 
 class SaleOrder(models.Model):
-    _inherit = 'sale.order'
+    _inherit = "sale.order"
 
     def assign_book_id(self):
-        for rec in self.filtered(
-                lambda x: x.type_id.picking_atomation != 'none' and
-                x.procurement_group_id):
-            pickings = rec.picking_ids.filtered(
-                lambda x: x.state not in ('done', 'cancel'))
+        for rec in self.filtered(lambda x: x.type_id.picking_atomation != "none" and x.procurement_group_id):
+            pickings = rec.picking_ids.filtered(lambda x: x.state not in ("done", "cancel"))
             if rec.type_id.book_id:
-                pickings.write({'book_id': rec.type_id.book_id.id})
+                pickings.write({"book_id": rec.type_id.book_id.id})
             for pick in pickings:
                 pick.button_validate()
-            if pickings.filtered('book_required'):
+            if pickings.filtered("book_required"):
                 return pickings.do_print_voucher()
             else:
                 return True

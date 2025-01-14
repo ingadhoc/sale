@@ -18,21 +18,21 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Order Lot Selection UX',
-    'version': "18.0.1.0.0",
-    'category': 'Sale',
-    'sequence': 14,
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'depends': [
-        'sale_order_lot_selection',
+    "name": "Sale Order Lot Selection UX",
+    "version": "18.0.1.0.0",
+    "category": "Sale",
+    "sequence": 14,
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "depends": [
+        "sale_order_lot_selection",
     ],
-    'data': [
-        'views/sale_order_views.xml',
-        'views/stock_production_lot.xml',
+    "data": [
+        "views/sale_order_views.xml",
+        "views/stock_production_lot.xml",
     ],
-    'installable': True,
-    'auto_install': False,
-    'application': False,
+    "installable": True,
+    "auto_install": False,
+    "application": False,
 }

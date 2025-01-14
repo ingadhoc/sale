@@ -7,4 +7,4 @@ from odoo import api, SUPERUSER_ID
 
 
 def _post_init_credit(env):
-    env['res.company'].search([]).write({'account_use_credit_limit':True})
+    env["res.company"].search([]).write({"account_use_credit_limit": True})

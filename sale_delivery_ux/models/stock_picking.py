@@ -6,7 +6,7 @@ from odoo import models
 
 
 class StockPicking(models.Model):
-    _inherit = 'stock.picking'
+    _inherit = "stock.picking"
 
     def _add_delivery_cost_to_so(self):
         """
@@ -20,7 +20,9 @@ class StockPicking(models.Model):
         for any reason
         """
         super()._add_delivery_cost_to_so()
-        deliver_lines = self.sale_id.order_line.filtered(lambda x: (
-            x.is_delivery and not x.qty_delivered and
-            x.product_id.type == 'service' and x.product_uom_qty == 1.0))
-        deliver_lines.update({'qty_delivered': 1.0})
+        deliver_lines = self.sale_id.order_line.filtered(
+            lambda x: (
+                x.is_delivery and not x.qty_delivered and x.product_id.type == "service" and x.product_uom_qty == 1.0
+            )
+        )
+        deliver_lines.update({"qty_delivered": 1.0})

@@ -18,12 +18,11 @@ class SaleAdvancePaymentInv(models.TransientModel):
         self = self.with_company(company.id)
         res = super()._prepare_invoice_values(order, so_line, accounts)
         if company != order.company_id.id:
-            taxes = self.product_id.taxes_id.filtered(
-                lambda r: not order.company_id or r.company_id == company)
+            taxes = self.product_id.taxes_id.filtered(lambda r: not order.company_id or r.company_id == company)
             if order.fiscal_position_id and taxes:
                 tax_ids = order.fiscal_position_id.map_tax(taxes).ids
             else:
                 tax_ids = taxes.ids
-            res['invoice_line_ids'][0][2]['tax_ids'] = [(6, 0, tax_ids)]
+            res["invoice_line_ids"][0][2]["tax_ids"] = [(6, 0, tax_ids)]
 
         return res

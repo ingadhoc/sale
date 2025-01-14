@@ -18,26 +18,26 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Order Type Automation',
-    'version': "18.0.1.0.0",
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'depends': [
-        'account',
-        'sale_order_type_ux',
+    "name": "Sale Order Type Automation",
+    "version": "18.0.1.0.0",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "depends": [
+        "account",
+        "sale_order_type_ux",
         # dependemos de este para no generar modulos puente y porque nosotros
         # queremos que el pago creado sea un payment group
-        'account_payment_pro',
-        'stock_ux',
+        "account_payment_pro",
+        "stock_ux",
     ],
-    'category': 'Sale Management',
-    'demo': [
-        'demo/sale_order_type_demo.xml',
+    "category": "Sale Management",
+    "demo": [
+        "demo/sale_order_type_demo.xml",
     ],
-    'data': [
-        'views/sale_order_type_views.xml',
+    "data": [
+        "views/sale_order_type_views.xml",
     ],
-    'installable': True,
-    'auto_install': True,
+    "installable": True,
+    "auto_install": True,
 }

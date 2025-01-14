@@ -18,21 +18,21 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Loyalty UX',
-    'version': "18.0.1.0.0",
-    'category': 'Sales',
-    'sequence': 14,
-    'summary': '',
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'depends': [
-        'sale_loyalty',
+    "name": "Sale Loyalty UX",
+    "version": "18.0.1.0.0",
+    "category": "Sales",
+    "sequence": 14,
+    "summary": "",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "depends": [
+        "sale_loyalty",
     ],
-    'data': [
-        'views/loyalty_program_views.xml',
+    "data": [
+        "views/loyalty_program_views.xml",
     ],
-    'installable': True,
-    'auto_install': False,
-    'application': False,
+    "installable": True,
+    "auto_install": False,
+    "application": False,
 }

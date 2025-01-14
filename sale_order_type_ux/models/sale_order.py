@@ -2,17 +2,17 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import api, models, fields
+from odoo import api, fields, models
 
 
 class SaleOrder(models.Model):
-    _inherit = 'sale.order'
+    _inherit = "sale.order"
 
     type_id = fields.Many2one(
         tracking=True,
     )
 
-    @api.depends('partner_shipping_id', 'partner_id', 'company_id', 'type_id')
+    @api.depends("partner_shipping_id", "partner_id", "company_id", "type_id")
     def _compute_fiscal_position_id(self):
         if self.type_id.fiscal_position_id:
             self.fiscal_position_id = self.type_id.fiscal_position_id
@@ -22,7 +22,7 @@ class SaleOrder(models.Model):
     @api.model_create_multi
     def create(self, vals):
         res = super().create(vals)
-        if res.type_id and self._context.get('website_id'):
+        if res.type_id and self._context.get("website_id"):
             res._compute_fiscal_position_id()
         return res
 
@@ -33,12 +33,16 @@ class SaleOrder(models.Model):
         company = self.type_id.journal_id.company_id
         self = self.with_company(company.id)
         if company != self.company_id:
-            res['company_id'] = company.id
-            res['partner_bank_id'] = company.partner_id.bank_ids[:1].id
-            so_fiscal_position = self.env['account.fiscal.position'].browse(res['fiscal_position_id'])
+            res["company_id"] = company.id
+            res["partner_bank_id"] = company.partner_id.bank_ids[:1].id
+            so_fiscal_position = self.env["account.fiscal.position"].browse(res["fiscal_position_id"])
             if so_fiscal_position.company_id and so_fiscal_position.company_id != company:
-                res['fiscal_position_id'] = self.env['account.fiscal.position'].with_company(
-                    company.id)._get_fiscal_position(self.partner_invoice_id).id
+                res["fiscal_position_id"] = (
+                    self.env["account.fiscal.position"]
+                    .with_company(company.id)
+                    ._get_fiscal_position(self.partner_invoice_id)
+                    .id
+                )
         return res
 
     def _compute_team_id(self):

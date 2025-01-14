@@ -18,22 +18,22 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Exception - Partner State Integration',
-    'version': "18.0.1.0.0",
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'depends': [
-        'sale_exception',
-        'partner_state',
+    "name": "Sale Exception - Partner State Integration",
+    "version": "18.0.1.0.0",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "depends": [
+        "sale_exception",
+        "partner_state",
     ],
-    'data': [
-        'data/exception_rule_data.xml',
-        'wizards/res_config_settings_views.xml',
+    "data": [
+        "data/exception_rule_data.xml",
+        "wizards/res_config_settings_views.xml",
     ],
-    'demo': [
-        'data/res_partner_demo.xml',
+    "demo": [
+        "data/res_partner_demo.xml",
     ],
-    'installable': True,
-    'auto_install': True,
+    "installable": True,
+    "auto_install": True,
 }

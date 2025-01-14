@@ -2,12 +2,10 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, fields
+from odoo import fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+    _inherit = "res.config.settings"
 
-    number_sale_order_line = fields.Boolean(
-        config_parameter='sale_order_line_number.number_sale_order_line'
-    )
+    number_sale_order_line = fields.Boolean(config_parameter="sale_order_line_number.number_sale_order_line")

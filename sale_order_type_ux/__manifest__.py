@@ -18,28 +18,26 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Order Type Ux',
-    'version': "18.0.1.0.0",
-    'category': 'Accounting',
-    'sequence': 14,
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'images': [
+    "name": "Sale Order Type Ux",
+    "version": "18.0.1.0.0",
+    "category": "Accounting",
+    "sequence": 14,
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "images": [],
+    "depends": [
+        "sale_order_type",
     ],
-    'depends': [
-        'sale_order_type',
+    "data": [
+        "data/sale_order_type.xml",
+        "security/ir.model.access.csv",
+        "views/sale_order_type_views.xml",
+        "views/sale_order_views.xml",
     ],
-    'data': [
-        'data/sale_order_type.xml',
-        'security/ir.model.access.csv',
-        'views/sale_order_type_views.xml',
-        'views/sale_order_views.xml',
-    ],
-    'demo': [
-    ],
-    'installable': True,
-    'auto_install': False,
-    'application': False,
-    'post_init_hook': 'post_init_hook',
+    "demo": [],
+    "installable": True,
+    "auto_install": False,
+    "application": False,
+    "post_init_hook": "post_init_hook",
 }

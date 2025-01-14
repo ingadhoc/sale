@@ -18,19 +18,19 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Gathering Automation',
-    'version': "18.0.1.0.0",
-    'category': 'Sales & Stock',
-    'sequence': 14,
-    'summary': '',
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'depends': [
-        'sale_gathering',
-        'sale_order_type_automation',
+    "name": "Sale Gathering Automation",
+    "version": "18.0.1.0.0",
+    "category": "Sales & Stock",
+    "sequence": 14,
+    "summary": "",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "depends": [
+        "sale_gathering",
+        "sale_order_type_automation",
     ],
-    'installable': True,
-    'auto_install': True,
-    'application': False,
+    "installable": True,
+    "auto_install": True,
+    "application": False,
 }

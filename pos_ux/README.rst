@@ -15,10 +15,10 @@ Point of Sale UX
 ================
 
 1. Setting "Billing behavior" with billing options:
-   
+
    a. **Invoice on demand**: the user can check to invoice
-   
-   b. **By default invoice**: invoice is issued by default. 
+
+   b. **By default invoice**: invoice is issued by default.
       It is allowed to change to not invoice
 
    c. **Always Invoice**: invoice is always issued
@@ -39,14 +39,14 @@ Configuration
 
 To configure this module, you need to:
 
-#. 
+#.
 
 Usage
 =====
 
 To use this module, you need to:
 
-#. 
+#.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot

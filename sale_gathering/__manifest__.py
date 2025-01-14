@@ -18,28 +18,26 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Gathering',
-    'version': "18.0.1.0.0",
-    'category': 'Sales & Stock',
-    'sequence': 14,
-    'summary': '',
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'images': [
+    "name": "Sale Gathering",
+    "version": "18.0.1.0.0",
+    "category": "Sales & Stock",
+    "sequence": 14,
+    "summary": "",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "images": [],
+    "depends": [
+        "sale",
     ],
-    'depends': [
-        'sale',
+    "data": [
+        "security/res_groups.xml",
+        "reports/report_saleorder_document.xml",
+        "reports/report_saleorder_action.xml",
+        "views/sale_order_views.xml",
     ],
-    'data': [
-        'security/res_groups.xml',
-        'reports/report_saleorder_document.xml',
-        'reports/report_saleorder_action.xml',
-        'views/sale_order_views.xml',
-    ],
-    'demo': [
-    ],
-    'installable': True,
-    'auto_install': False,
-    'application': False,
+    "demo": [],
+    "installable": True,
+    "auto_install": False,
+    "application": False,
 }
