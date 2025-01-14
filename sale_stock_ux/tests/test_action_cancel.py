@@ -48,7 +48,11 @@ class TestActionCancel(TransactionCase):
 
         # Cancelar la orden sin entregas completadas
         sale_order_without_deliveries.action_cancel()
-        wizard = self.env['sale.order.cancel'].with_context({'order_id': sale_order_without_deliveries.id}).create({'order_id': sale_order_without_deliveries.id})
+        wizard = (
+            self.env["sale.order.cancel"]
+            .with_context(order_id=sale_order_without_deliveries.id)
+            .create({"order_id": sale_order_without_deliveries.id})
+        )
         wizard.action_cancel()
 
         # Verificar el estado de la orden después de cancelar
@@ -68,7 +72,7 @@ class TestActionCancel(TransactionCase):
 
         # Cancelar la orden desde el contexto con 'cancel_from_order=True'
         sale_order.with_context(cancel_from_order=True).action_cancel()
-        wizard = self.env['sale.order.cancel'].with_context({'order_id': sale_order.id}).create({'order_id': sale_order.id})
+        wizard = self.env["sale.order.cancel"].with_context(order_id=sale_order.id).create({"order_id": sale_order.id})
         wizard.action_cancel()
 
         # Verificar el estado de la orden después de cancelar
