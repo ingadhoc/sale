@@ -28,4 +28,4 @@ class SaleOrderLine(models.Model):
             elif type_policy == "delivery":
                 line.qty_to_invoice = line.qty_delivered - line.qty_invoiced
             else:
-                raise UserError(_("Invoicing Policy %s not implemented!" % type_policy))
+                raise UserError(_("Invoicing Policy %s not implemented!") % type_policy)
