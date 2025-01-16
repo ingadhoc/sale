@@ -13,7 +13,7 @@ class WebsiteSalePortal(WebsiteSale):
     @http.route(
         '/portal/address', type='http', methods=['GET'], auth='public', website=True, sitemap=False
     )
-    def shop_address(
+    def portal_address(
         self, partner_id=None, address_type='billing', use_delivery_as_billing=None, **query_params
     ):
         """ Display the address form.
@@ -89,7 +89,7 @@ class WebsiteSalePortal(WebsiteSale):
         '/portal/address/submit', type='http', methods=['POST'], auth='public', website=True,
         sitemap=False
     )
-    def shop_address_submit(
+    def portal_address_submit(
         self, partner_id=None, address_type='billing', use_delivery_as_billing=None, callback=None,
         required_fields=None, **form_data
     ):
