@@ -6,7 +6,7 @@
 This module extend functionality of point of sale .
     """,
     'depends': [
-        'l10n_ar_pos',
+        'point_of_sale',
     ],
     'data': [
         'views/pos_session_view.xml',
