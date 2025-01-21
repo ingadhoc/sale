@@ -1,7 +1,7 @@
 # © 2016 ADHOC SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
-    'name': 'CRM UX',
+    'name': 'CRM Sale UX',
     'version': "18.0.1.0.0",
     'sequence': 14,
     'summary': '',
@@ -19,7 +19,7 @@
     ],
     'demo': [
     ],
-    'installable': False,
-    'auto_install': False,
+    'installable': True,
+    'auto_install': True,
     'application': False,
 }
