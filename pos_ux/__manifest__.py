@@ -1,6 +1,12 @@
 {
     'name': 'Point of Sale UX',
+<<<<<<< HEAD
     'version': "18.0.1.0.0",
+||||||| parent of 84c0fab7 (temp)
+    'version': "17.0.1.0.0",
+=======
+    'version': "17.0.1.1.0",
+>>>>>>> 84c0fab7 (temp)
     'category': 'Point of Sale',
     'description': """
 This module extend functionality of point of sale .
