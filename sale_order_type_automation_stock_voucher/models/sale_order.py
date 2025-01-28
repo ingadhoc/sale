@@ -8,22 +8,22 @@ from odoo import models
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    def assign_book_id(self):
-        for rec in self.filtered(lambda x: x.type_id.picking_atomation != "none" and x.procurement_group_id):
-            pickings = rec.picking_ids.filtered(lambda x: x.state not in ("done", "cancel"))
-            if rec.type_id.book_id:
-                pickings.write({"book_id": rec.type_id.book_id.id})
-            for pick in pickings:
-                pick.button_validate()
-            if pickings.filtered("book_required"):
-                return pickings.do_print_voucher()
-            else:
-                return True
+    def _process_pickings(self):
+        if self.type_id.book_id:
+            pickings = self.picking_ids.filtered(lambda x: x.state not in ("done", "cancel"))
+            pickings.write({"book_id": self.type_id.book_id.id})
+        super()._process_pickings()
 
-    def action_confirm(self):
-        res = super().action_confirm()
-        # we use this because compatibility with sale exception module
-        if isinstance(res, bool) and res:
-            # because it's needed to return actions if exists
-            res = self.assign_book_id()
+    def run_picking_automation(self):
+        res = super().run_picking_automation()
+        pickings_book_required = self.picking_ids.filtered("book_required")
+        if pickings_book_required:
+            actions = [pick.do_print_voucher() for pick in pickings_book_required]
+            return {
+                "type": "ir.actions.client",
+                "tag": "do_multi_print",
+                "params": {
+                    "reports": actions,
+                },
+            }
         return res
