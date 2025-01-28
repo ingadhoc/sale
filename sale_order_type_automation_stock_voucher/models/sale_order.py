@@ -2,41 +2,26 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, _
-from odoo.exceptions import UserError
+from odoo import models
 
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    def assign_book_id(self):
-        for rec in self.filtered(
-                lambda x: x.type_id.picking_atomation != 'none' and
-                x.procurement_group_id):
-            pickings = rec.picking_ids.filtered(
-                lambda x: x.state not in ('done', 'cancel'))
-            if rec.type_id.book_id:
-                pickings.write({'book_id': rec.type_id.book_id.id})
-            # because of ensure_one on delivery module
-            actions = []
-            for pick in pickings:
-                # append action records to print the reports of the pickings
-                #  involves
-                if pick.book_required:
-                    actions.append(pick.do_print_voucher())
-                pick.button_validate()
-            if actions:
-                return {
-                    'actions': actions,
-                    'type': 'ir.actions.act_multi',
-                }
-            else:
-                return True
+    def _process_pickings(self, pickings, rec):
+        if rec.type_id.book_id:
+            pickings.write({'book_id': rec.type_id.book_id.id})
+        super()._process_pickings(pickings, rec)
 
-    def action_confirm(self):
-        res = super().action_confirm()
-        # we use this because compatibility with sale exception module
-        if isinstance(res, bool) and res:
-            # because it's needed to return actions if exists
-            res = self.assign_book_id()
+    def run_picking_automation(self):
+        res = super().run_picking_automation()
+        pickings_book_required = self.picking_ids.filtered("book_required")
+        if pickings_book_required:
+            actions = [pick.do_print_voucher() for pick in pickings_book_required]
+            # it is required to update sale order view
+            actions.append({'type': 'ir.actions.client', 'tag': 'soft_reload'})
+            return {
+                'type': 'ir.actions.act_multi',
+                'actions': actions,
+            }
         return res
