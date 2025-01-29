@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-26 13:47+0000\n"
+"POT-Creation-Date: 2024-11-22 14:43+0000\n"
 "PO-Revision-Date: 2024-04-11 17:17+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -210,13 +210,10 @@ msgstr "La empresa de la secuencia y el almacén deben ser la misma"
 #: code:addons/sale_order_type_automation/models/sale_order.py:0
 #, python-format
 msgid ""
-"The following products are not available, we suggest to check stock or to use a sale type that force availability.\n"
+"The following products are not available, we suggest to check stock or to use a sale type thatforce availability.\n"
 "Products:\n"
 "* %s\n"
-" "
 msgstr ""
-"Los siguientes productos no están disponibles, sugerimos consultar stock o utilizar algún tipo de venta que fuerce la disponibilidad.\n"
-"Productos:\n"
 
 #. module: sale_order_type_automation
 #: model:ir.model,name:sale_order_type_automation.model_stock_picking

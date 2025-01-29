@@ -215,7 +215,7 @@ class SaleOrder(models.Model):
                 [line.quantity <= 0.0 for line in i.invoice_line_ids])
         )
         filtered_invoices.action_switch_move_type()
-        filtered_invoices.invoice_line_ids.write({'quantity': abs(line.quantity) for line in filtered_invoices.invoice_line_ids})
+        filtered_invoices.mapped('invoice_line_ids').mapped(lambda line: line.write({'quantity': abs(line.quantity)}))
         return invoices
 
     def action_preview_sale_order(self):
@@ -273,3 +273,8 @@ class SaleOrder(models.Model):
             for quotation in quotations_to_cancel:
                 quotation._action_cancel()
                 quotation.message_post(body=_("This quotation has been automatically canceled due to its expiration."))
+
+    @api.constrains('pricelist_id')
+    def _check_changes_locked_orders(self):
+        for rec in self.filtered(lambda x: x.state == 'done'):
+            raise ValidationError(_("You cannot modify already locked orders."))

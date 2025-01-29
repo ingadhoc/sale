@@ -5,19 +5,14 @@
         <field name="model">res.config.settings</field>
         <field name="inherit_id" ref="point_of_sale.res_config_settings_view_form" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='pos_invoice_journal_id']/parent::div" position="after">
-                <div class="row">
-                    <label string="billing behavior" for="pos_billing_behavior" class="col-lg-3 o_light_label"/>
-                    <field name="pos_billing_behavior"/>
-                </div>
-
-                <div class="o_setting_left_pane">
+            <setting id="pos_default_journals" position="after">
+                <setting id="pos_block_invoice_download_setting" string="Block invoice donwload">
                     <field name="pos_block_invoice_download"/>
-                </div>
-                <div class="o_setting_right_pane">
-                    <label for="pos_block_invoice_download" string="Block invoice donwload" />
-                </div>
-            </xpath>
+                </setting>
+                <setting id="pos_billing_behavior_setting">
+                   <field name="pos_billing_behavior"/>
+                </setting>
+            </setting>
         </field>
     </record>
 </odoo>

@@ -1,0 +1,40 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_loyalty_ux
+# 
+# Translators:
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-10-18 14:10+0000\n"
+"PO-Revision-Date: 2024-10-18 14:10+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
+"Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#. module: sale_loyalty_ux
+#: model:ir.model,name:sale_loyalty_ux.model_loyalty_program
+msgid "Loyalty Program"
+msgstr "Programa de fidelización"
+
+#. module: sale_loyalty_ux
+#: model:ir.model.fields,field_description:sale_loyalty_ux.field_loyalty_program__sale_domain
+msgid "Sale Domain"
+msgstr ""
+
+#. module: sale_loyalty_ux
+#: model:ir.model,name:sale_loyalty_ux.model_sale_order
+msgid "Sales Order"
+msgstr "Pedido de venta"
+
+#. module: sale_loyalty_ux
+#: model_terms:ir.ui.view,arch_db:sale_loyalty_ux.loyalty_program_view_form
+msgid "Sales domain"
+msgstr ""

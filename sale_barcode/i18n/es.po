@@ -3,21 +3,21 @@
 # 	* sale_barcode
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 13.0\n"
+"Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-11 13:02+0000\n"
-"PO-Revision-Date: 2020-07-07 01:58+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020\n"
-"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
+"POT-Creation-Date: 2025-01-17 21:10+0000\n"
+"PO-Revision-Date: 2025-01-17 15:18+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
+"Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #. module: sale_barcode
 #: model_terms:ir.ui.view,arch_db:sale_barcode.res_config_settings_view_form
@@ -28,6 +28,12 @@ msgstr "<span class=\"o_form_label\">Escáner de código de barras</span>"
 #: model:ir.model.fields,field_description:sale_barcode.field_sale_order_line__product_barcode
 msgid "Barcode"
 msgstr "Código de barras"
+
+#. module: sale_barcode
+#: model:ir.model.fields,field_description:sale_barcode.field_sale_order___barcode_scanned
+#: model:ir.model.fields,field_description:sale_barcode.field_sale_order_line___barcode_scanned
+msgid "Barcode Scanned"
+msgstr ""
 
 #. module: sale_barcode
 #: model:ir.model.fields,help:sale_barcode.field_sale_order_line__product_barcode
@@ -55,12 +61,20 @@ msgid "Sales Order Line"
 msgstr "Línea de pedido de venta"
 
 #. module: sale_barcode
+#. odoo-python
 #: code:addons/sale_barcode/models/sale_order.py:0
 #, python-format
 msgid "The barcode \"%(barcode)s\" doesn't correspond to a proper product."
 msgstr ""
 
 #. module: sale_barcode
+#: model:ir.model.fields,help:sale_barcode.field_sale_order___barcode_scanned
+#: model:ir.model.fields,help:sale_barcode.field_sale_order_line___barcode_scanned
+msgid "Value of the last barcode scanned."
+msgstr ""
+
+#. module: sale_barcode
+#. odoo-python
 #: code:addons/sale_barcode/models/sale_order.py:0
 #, python-format
 msgid "Wrong barcode"

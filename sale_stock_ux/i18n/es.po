@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-26 21:45+0000\n"
+"POT-Creation-Date: 2024-11-22 14:40+0000\n"
 "PO-Revision-Date: 2024-03-21 15:01+0000\n"
 "Last-Translator: Matias Velazquez, 2024\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -74,17 +74,6 @@ msgid ""
 msgstr ""
 "Cancelar remanente para linea \"%s\" (id %s), actualizada la cantidad de la "
 "linea desde %s a %s"
-
-#. module: sale_stock_ux
-#. odoo-python
-#: code:addons/sale_stock_ux/models/sale_order_line.py:0
-#, python-format
-msgid ""
-"Cancel remaining can't be called for Kit Products (products with a bom of "
-"type kit)."
-msgstr ""
-"La cancelación de remanentes no puede ser utilizada para Productos que "
-"tengan una lista de materiales asociada de tipo \"kit\"."
 
 #. module: sale_stock_ux
 #: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_order_form

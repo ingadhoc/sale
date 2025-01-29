@@ -14,6 +14,7 @@
 Sales Timesheet UX
 ==================
 
+* We added a warning when changing the sales order line in tasks when it has unvalidated analytical lines (timesheets)
 * When confirming a sale order with a product with Product Type = "Service" and Create on Order = "Project & Task", if the SO has an analytic account that is related to one project, then the system won't create a new project but use the analytic's account project to create the task inside.
 * When confirming a sale order with a product with Product Type = "Service" and Create on Order = "Project & Task", the project and the task will remain related to the SO and the customer will remain related to the project (stays related in the backend even though is hidden by default) when "Billable" is turned off from the project settings (works both for a new proyect and task as for a new task in an existing proyect).
 * When (and only when) "Billable" is active can't be edited. Instead adds a button to change its value with an alert message to confirm the disabling of the "Billable" option in the project settings.

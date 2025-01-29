@@ -10,9 +10,9 @@
    :target: https://www.gnu.org/licenses/agpl
    :alt: License: AGPL-3
 
-=================================================
-Website Sale Hide All Prices Product Configurator
-=================================================
+========================================
+Sale Order Type Automation Stock Voucher
+========================================
 
 This module integrate Sale Order Type Automation and Stock Voucher.
 

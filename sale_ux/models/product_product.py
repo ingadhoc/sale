@@ -24,4 +24,4 @@ class ProductProduct(models.Model):
         return super()._get_tax_included_unit_price_from_price(
             product_price_unit, currency, product_taxes, product_taxes_after_fp=product_taxes_after_fp,
             is_refund_document=is_refund_document,
-            fiscal_position=False)
+            fiscal_position=fiscal_position)
