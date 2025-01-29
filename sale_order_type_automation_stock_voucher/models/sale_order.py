@@ -16,7 +16,10 @@ class SaleOrder(models.Model):
 
     def run_picking_automation(self):
         res = super().run_picking_automation()
-        pickings_book_required = self.picking_ids.filtered("book_required")
+        orders_with_automation = self.filtered(
+            lambda so: so.type_id.picking_atomation != "none" and so.procurement_group_id
+        )
+        pickings_book_required = orders_with_automation.mapped("picking_ids").filtered("book_required")
         if pickings_book_required:
             actions = [pick.do_print_voucher() for pick in pickings_book_required]
             return {
