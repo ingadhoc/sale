@@ -34,6 +34,8 @@
             </group>
             <xpath expr="//field[@name='order_line']/list//field[@name='product_uom_qty']" position="after">
                 <field name="initial_qty_gathered" force_save="1" readonly="1" column_invisible="not parent.is_gathering"/>
+                <field name="stock_by_location" force_save="1" column_invisible="1"/>
+                <field name="is_gathering" column_invisible="1"/>
             </xpath>
         </field>
     </record>
