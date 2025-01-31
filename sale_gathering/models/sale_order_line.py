@@ -6,6 +6,8 @@ class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
     initial_qty_gathered = fields.Float(string='Initial Quantity Gathered', copy=False)
+    stock_by_location = fields.Text(compute="_compute_stock_by_location")
+    is_gathering = fields.Boolean(related="order_id.is_gathering")
 
     @api.depends('initial_qty_gathered', 'order_id.is_gathering')
     def _compute_price_unit(self):
@@ -94,3 +96,47 @@ class SaleOrderLine(models.Model):
             raise ValidationError(
                 _("Before adding quantities, you need to create and confirm the gathering invoice.")
             )
+    def _compute_qty_to_deliver(self):
+        super()._compute_qty_to_deliver()
+        for line in self.filtered(
+            lambda x: x.order_id and x.order_id.is_gathering and x.order_id.state == 'sale'
+        ):
+            line.display_qty_widget = True
+
+    @api.depends('product_template_id')
+    def _compute_stock_by_location(self):
+        lines = self.filtered(lambda x: x.order_id.state == 'sale' and x.order_id.is_gathering)
+        for line in lines:
+            if not line.product_id:
+                line.stock_by_location = ""
+                continue
+
+            stock_quants = self.env['stock.quant'].read_group(
+                domain=[
+                    ('location_id.usage', '=', 'internal'),
+                    ('product_id', '=', line.product_id.id),
+                    ('quantity', '>', 0)
+                ],
+                fields=['location_id'],
+                groupby=['location_id'],
+                lazy=False
+            )
+
+            stock_lines = []
+
+            for stock in stock_quants:
+                location_id = stock['location_id'][0]
+                location_name = stock['location_id'][1]
+
+                product = line.product_id.with_context(location=location_id)
+                free_qty = product.free_qty
+
+                if free_qty > 0:
+                    if line.product_uom and line.product_uom != line.product_id.uom_id:
+                        free_qty = line.product_id.uom_id._compute_quantity(free_qty, line.product_uom)
+
+                    stock_lines.append(f"{location_name}: {free_qty:.2f} {line.product_uom.name}")
+
+            line.stock_by_location = "\n".join(stock_lines) if stock_lines else ""
+
+        (self - lines).stock_by_location = ""
