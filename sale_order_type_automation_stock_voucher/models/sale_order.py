@@ -20,7 +20,13 @@ class SaleOrder(models.Model):
         if pickings_book_required:
             actions = [pick.do_print_voucher() for pick in pickings_book_required]
             # it is required to update sale order view
-            actions.append({'type': 'ir.actions.client', 'tag': 'soft_reload'})
+            actions.append({
+                'type': 'ir.actions.act_window',
+                'res_model': 'sale.order',
+                "views": [(False, "form")],
+                'res_id': self.id,
+                'target': 'current',
+            })
             return {
                 'type': 'ir.actions.act_multi',
                 'actions': actions,
