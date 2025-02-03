@@ -62,24 +62,7 @@ class SaleOrder(models.Model):
         if self.order_line and update_prices_automatically:
             # we need to user the same code as odoo in action_update_prices(),
             # because the "message_post" method isn't available over an onchange trigger.
-
-            # for compatibility with product_pack module
-            pack_installed = "pack_parent_line_id" in self.order_line._fields
-            if pack_installed:
-                pack_lines = self.order_line.with_context(update_prices=True, pricelist=self.pricelist_id.id).filtered(
-                    lambda l: l.product_id.pack_ok and l.product_id.pack_component_price != "ignored"
-                )
-                super(SaleOrder, self.with_context(lines_to_not_update_ids=pack_lines.ids))._recompute_prices()
-                for line in pack_lines:
-                    if line.pack_parent_line_id:
-                        continue
-                    elif line.pack_child_line_ids:
-                        if not isinstance(self.id, int):
-                            self._compute_pack_lines_prices(line)
-                        else:
-                            line.expand_pack_line(write=True)
-            else:
-                super()._recompute_prices()
+            super()._recompute_prices()
 
     @api.onchange("fiscal_position_id")
     def _onchange_fiscal_position_id(self):
@@ -158,56 +141,7 @@ class SaleOrder(models.Model):
         # avoiding execution for empty records
         if not self:
             return
-        # for compatibility with product_pack module
-        pack_installed = "pack_parent_line_id" in self.order_line._fields
-        if pack_installed:
-            pack_lines = self.order_line.with_context(update_prices=True, pricelist=self.pricelist_id.id).filtered(
-                lambda l: l.product_id.pack_ok and l.product_id.pack_component_price != "ignored"
-            )
-            super(SaleOrder, self).action_update_prices()
-            for line in pack_lines:
-                if line.pack_parent_line_id:
-                    continue
-                elif line.pack_child_line_ids:
-                    if not isinstance(self.id, int):
-                        self._compute_pack_lines_prices(line)
-                    else:
-                        line.expand_pack_line(write=True)
-        else:
-            super().action_update_prices()
-
-    def _compute_pack_lines_prices(self, line):
-        """This method is for the case when came from an onchange and the original method
-        doesn't works with _origin and the values aren't change.
-        """
-        if line.product_id.pack_ok and line.pack_type == "detailed":
-            for subline in line.product_id.get_pack_lines():
-                quantity = subline.quantity * line.product_uom_qty
-                line_vals = {
-                    "order_id": self._origin.id,
-                    "product_id": subline.product_id.id or False,
-                    "pack_depth": line.pack_depth + 1,
-                    "company_id": self.company_id.id,
-                    "pack_modifiable": line.product_id.pack_modifiable,
-                }
-                sol = line.new(line_vals)
-                sol.order_id.pricelist_id = self.pricelist_id
-                sol._onchange_product_id_warning()
-                sol.product_uom_qty = quantity
-                # sol.product_uom_change()
-                # sol._onchange_discount()
-                pack_price_types = {"totalized", "ignored"}
-                sale_discount = 0.0
-                price_unit = sol.price_unit
-                if line.product_id.pack_component_price == "detailed":
-                    sale_discount = 100.0 - ((100.0 - sol.discount) * (100.0 - subline.sale_discount) / 100.0)
-                elif (
-                    line.product_id.pack_type == "detailed" and line.product_id.pack_component_price in pack_price_types
-                ):
-                    price_unit = 0.0
-                line.pack_child_line_ids.filtered(lambda x: x.product_id.id == subline.product_id.id).update(
-                    {"price_unit": price_unit, "discount": sale_discount}
-                )
+        super().action_update_prices()
 
     def _create_invoices(self, grouped=False, final=False, date=None):
         invoices = super()._create_invoices(grouped=grouped, final=final, date=date)
