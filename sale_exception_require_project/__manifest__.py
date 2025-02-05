@@ -18,28 +18,27 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Order Require Project',
-    'version': "18.0.1.0.0",
-    'category': 'Projects & Services',
-    'sequence': 14,
-    'summary': '',
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'images': [
+    "name": "Sale Order Require Project",
+    "version": "18.0.1.0.0",
+    "category": "Projects & Services",
+    "sequence": 14,
+    "summary": "",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "images": [],
+    "depends": [
+        "sale_exception",
+        "sale_project",
     ],
-    'depends': [
-        'sale_exception',
-        'sale_project',
+    "data": [
+        "data/exception_rule_data.xml",
     ],
-    'data': [
-        'data/exception_rule_data.xml',
+    "demo": [
+        "demo/exception_rule_demo.xml",
+        "demo/sale_order_demo.xml",
     ],
-    'demo': [
-        'demo/exception_rule_demo.xml',
-        'demo/sale_order_demo.xml',
-    ],
-    'installable': True,
-    'auto_install': False,
-    'application': False,
+    "installable": True,
+    "auto_install": False,
+    "application": False,
 }

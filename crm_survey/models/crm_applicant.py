@@ -6,11 +6,8 @@ from odoo import fields, models
 class Applicant(models.Model):
     _inherit = "crm.lead"
 
-    survey_id = fields.Many2one(
-        'survey.survey', related='team_id.survey_id', string="Survey",
-        readonly=False)
-    response_id = fields.Many2one(
-        'survey.user_input', "Response", ondelete="set null")
+    survey_id = fields.Many2one("survey.survey", related="team_id.survey_id", string="Survey", readonly=False)
+    response_id = fields.Many2one("survey.user_input", "Response", ondelete="set null")
 
     def action_start_survey(self):
         self.ensure_one()
@@ -23,15 +20,13 @@ class Applicant(models.Model):
         else:
             response = self.response_id
         # grab the token of the response and start surveying
-        return self.survey_id.with_context(
-            survey_token=response.access_token).action_start_survey(response)
+        return self.survey_id.with_context(survey_token=response.access_token).action_start_survey(response)
 
     def action_print_survey(self):
-        """ If response is available then print"""
+        """If response is available then print"""
         self.ensure_one()
         if not self.response_id:
             return self.survey_id.action_print_survey()
         else:
             response = self.response_id
-            return self.survey_id.with_context(
-                survey_token=response.access_token).action_print_survey(response)
+            return self.survey_id.with_context(survey_token=response.access_token).action_print_survey(response)

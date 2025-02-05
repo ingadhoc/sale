@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, fields
+from odoo import fields, models
 
 
 class SaleGlobalDiscountWizard(models.TransientModel):
@@ -10,13 +10,12 @@ class SaleGlobalDiscountWizard(models.TransientModel):
     _description = "Sale order Global Discount Wizard"
 
     amount = fields.Float(
-        'Discount',
+        "Discount",
         required=True,
     )
 
     def confirm(self):
         self.ensure_one()
-        order = self.env['sale.order'].browse(
-            self._context.get('active_id', False))
-        order.order_line.write({'discount': self.amount})
+        order = self.env["sale.order"].browse(self._context.get("active_id", False))
+        order.order_line.write({"discount": self.amount})
         return True

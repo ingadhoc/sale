@@ -2,14 +2,14 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, fields
+from odoo import fields, models
 
 
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     ignore_exception_print = fields.Boolean(
-        'Ignore Exceptions Print',
+        "Ignore Exceptions Print",
         copy=False,
     )
 
@@ -41,12 +41,12 @@ class SaleOrder(models.Model):
     def _popup_exceptions(self):
         action = super(SaleOrder, self)._popup_exceptions()
         ctx = self._context.copy()
-        ctx.update({
-            'active_id': self.ids[0],
-            'active_ids': self.ids,
-            'active_model': self._name,
-        })
-        action.update({
-            'context': ctx
-        })
+        ctx.update(
+            {
+                "active_id": self.ids[0],
+                "active_ids": self.ids,
+                "active_model": self._name,
+            }
+        )
+        action.update({"context": ctx})
         return action

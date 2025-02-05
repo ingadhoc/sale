@@ -18,27 +18,21 @@
 #
 ##############################################################################
 {
-    'name': 'Dispatch with pre-paid',
-    'version': "16.0.1.0.0",
-    'category': 'Sales & Purchases',
-    'summary': '',
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'images': [
+    "name": "Dispatch with pre-paid",
+    "version": "16.0.1.0.0",
+    "category": "Sales & Purchases",
+    "summary": "",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "images": [],
+    "depends": ["sale_stock", "sale_order_type_ux", "sale_order_type_invoice_policy"],
+    "data": [
+        "security/res_groups.xml",
+        "views/sale_aproval.xml",
     ],
-    'depends': [
-        'sale_stock',
-        'sale_order_type_ux',
-        'sale_order_type_invoice_policy'
-    ],
-    'data': [
-        'security/res_groups.xml',
-        'views/sale_aproval.xml',
-    ],
-    'demo': [
-    ],
-    'installable': False,
-    'auto_install': False,
-    'application': False,
+    "demo": [],
+    "installable": False,
+    "auto_install": False,
+    "application": False,
 }

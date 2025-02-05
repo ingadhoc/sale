@@ -18,20 +18,20 @@
 #
 ##############################################################################
 {
-    'name': 'Portal Distributor Product Pack',
-    'version': "18.0.1.0.0",
-    'category': 'Tools',
-    'complexity': 'easy',
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'depends': [
-        'sale_product_pack',
-        'portal_sale_distributor',
+    "name": "Portal Distributor Product Pack",
+    "version": "18.0.1.0.0",
+    "category": "Tools",
+    "complexity": "easy",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "depends": [
+        "sale_product_pack",
+        "portal_sale_distributor",
     ],
-    'data': [
-        'security/ir.model.access.csv',
+    "data": [
+        "security/ir.model.access.csv",
     ],
-    'installable': True,
-    'auto_install': True,
+    "installable": True,
+    "auto_install": True,
 }

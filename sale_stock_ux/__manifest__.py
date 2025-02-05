@@ -18,41 +18,38 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Stock UX',
-    'version': "18.0.1.1.0",
-    'category': 'Sales',
-    'sequence': 14,
-    'summary': '',
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'images': [
+    "name": "Sale Stock UX",
+    "version": "18.0.1.1.0",
+    "category": "Sales",
+    "sequence": 14,
+    "summary": "",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "images": [],
+    "depends": [
+        "sale_stock",
+        "sale_ux",
+        "stock_ux",
+        "web",
     ],
-    'depends': [
-        'sale_stock',
-        'sale_ux',
-        'stock_ux',
-        'web',
+    "data": [
+        "security/ir.model.access.csv",
+        "views/sale_order_views.xml",
+        "views/sale_order_line_views.xml",
+        "views/stock_move_views.xml",
+        "wizards/sale_order_cancel_remaining.xml",
+        "wizards/stock_return_picking_views.xml",
+        "wizards/res_config_settings_views.xml",
     ],
-    'data': [
-        'security/ir.model.access.csv',
-        'views/sale_order_views.xml',
-        'views/sale_order_line_views.xml',
-        'views/stock_move_views.xml',
-        'wizards/sale_order_cancel_remaining.xml',
-        'wizards/stock_return_picking_views.xml',
-        'wizards/res_config_settings_views.xml'
-    ],
-    'assets': {
-        'web.assets_qweb': [
-            'sale_stock_ux/static/src/xml/*.xml',
+    "assets": {
+        "web.assets_qweb": [
+            "sale_stock_ux/static/src/xml/*.xml",
         ]
     },
-    'demo': [
-    ],
-    'test': [
-    ],
-    'installable': True,
-    'auto_install': True,
-    'application': False,
+    "demo": [],
+    "test": [],
+    "installable": True,
+    "auto_install": True,
+    "application": False,
 }

@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, fields, api, _
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -10,23 +10,25 @@ class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     require_purchase_order_number = fields.Boolean(
-        string='Sale Require Origin',
-        related='partner_id.require_purchase_order_number',
+        string="Sale Require Origin",
+        related="partner_id.require_purchase_order_number",
     )
     manual_purchase_order_number = fields.Char(
-        'PO Number',
+        "PO Number",
     )
     purchase_order_number = fields.Char(
-        compute='_compute_purchase_order_number',
-        inverse='_inverse_purchase_order_number',
+        compute="_compute_purchase_order_number",
+        inverse="_inverse_purchase_order_number",
     )
 
-    @api.depends('group_id', 'sale_id')
+    @api.depends("group_id", "sale_id")
     def _compute_purchase_order_number(self):
         for rec in self:
-            rec.purchase_order_number = rec.manual_purchase_order_number\
-                if rec.manual_purchase_order_number\
+            rec.purchase_order_number = (
+                rec.manual_purchase_order_number
+                if rec.manual_purchase_order_number
                 else rec.sale_id.purchase_order_number
+            )
 
     def _inverse_purchase_order_number(self):
         for rec in self:
@@ -35,10 +37,9 @@ class StockPicking(models.Model):
     def _action_done(self):
         picking_missing_po_number = self.filtered(
             lambda pick: pick.require_purchase_order_number
-            and pick.picking_type_code
-            == 'outgoing' and not pick.purchase_order_number)
+            and pick.picking_type_code == "outgoing"
+            and not pick.purchase_order_number
+        )
         if picking_missing_po_number:
-            raise UserError(_(
-                'You cannot transfer products without a Purchase'
-                ' Order Number for this partner'))
+            raise UserError(_("You cannot transfer products without a Purchase" " Order Number for this partner"))
         return super()._action_done()

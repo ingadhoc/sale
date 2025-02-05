@@ -18,24 +18,23 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Order Line Number',
-    'version': "18.0.1.0.0",
-    'category': 'Accounting',
-    'sequence': 14,
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'images': [
+    "name": "Sale Order Line Number",
+    "version": "18.0.1.0.0",
+    "category": "Accounting",
+    "sequence": 14,
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "images": [],
+    "depends": [
+        "sale",
     ],
-    'depends': [
-        'sale',
+    "data": [
+        "views/sale_order_views.xml",
+        "views/res_config_settings_views.xml",
+        "reports/sale_order.xml",
     ],
-    'data': [
-        'views/sale_order_views.xml',
-        'views/res_config_settings_views.xml',
-        'reports/sale_order.xml',
-    ],
-    'installable': True,
-    'auto_install': False,
-    'application': False,
+    "installable": True,
+    "auto_install": False,
+    "application": False,
 }

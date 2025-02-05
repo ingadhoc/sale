@@ -18,26 +18,24 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Margin Ux',
-    'version': "18.0.1.0.0",
-    'category': 'Sales & Purchases',
-    'sequence': 14,
-    'summary': '',
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'images': [
+    "name": "Sale Margin Ux",
+    "version": "18.0.1.0.0",
+    "category": "Sales & Purchases",
+    "sequence": 14,
+    "summary": "",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "images": [],
+    "depends": [
+        "sale_ux",
+        "sale_margin",
     ],
-    'depends': [
-        'sale_ux',
-        'sale_margin',
+    "data": [
+        "views/sale_order_line_views.xml",
     ],
-    'data': [
-        'views/sale_order_line_views.xml',
-    ],
-    'demo': [
-    ],
-    'installable': True,
-    'auto_install': True,
-    'application': False,
+    "demo": [],
+    "installable": True,
+    "auto_install": True,
+    "application": False,
 }

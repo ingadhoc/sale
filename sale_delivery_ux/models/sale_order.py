@@ -6,7 +6,7 @@ from odoo import models
 
 
 class SaleOrder(models.Model):
-    _inherit = 'sale.order'
+    _inherit = "sale.order"
 
     def _create_delivery_line(self, carrier, price_unit):
         """
@@ -18,5 +18,5 @@ class SaleOrder(models.Model):
         """
         sol = super()._create_delivery_line(carrier, price_unit)
         if not price_unit:
-            sol.with_context(skip_validation='product_uom_qty').write({'product_uom_qty': 0.0})
+            sol.with_context(skip_validation="product_uom_qty").write({"product_uom_qty": 0.0})
         return sol

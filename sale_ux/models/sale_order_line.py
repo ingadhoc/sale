@@ -2,26 +2,20 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, api, fields, _
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 
 class SaleOrderLine(models.Model):
-    _inherit = 'sale.order.line'
+    _inherit = "sale.order.line"
 
     date_order = fields.Datetime("Order Date", related="order_id.date_order")
 
-    team_id = fields.Many2one(
-        'crm.team',
-        string='Sales Team',
-        related='order_id.team_id')
+    team_id = fields.Many2one("crm.team", string="Sales Team", related="order_id.team_id")
 
-    categ_id = fields.Many2one(
-        'product.category',
-        string='Product Category',
-        related='product_id.categ_id')
+    categ_id = fields.Many2one("product.category", string="Product Category", related="product_id.categ_id")
 
-    @api.depends('order_id.force_invoiced_status')
+    @api.depends("order_id.force_invoiced_status")
     def _compute_invoice_status(self):
         """
         Sobreescribimos directamente el invoice status y no el qty_to_invoice
@@ -32,7 +26,7 @@ class SaleOrderLine(models.Model):
         super()._compute_invoice_status()
         for line in self:
             # solo seteamos facturado si en sale o done
-            if line.order_id.state not in ['sale', 'done']:
+            if line.order_id.state not in ["sale", "done"]:
                 continue
             if line.order_id.force_invoiced_status:
                 line.invoice_status = line.order_id.force_invoiced_status
@@ -40,20 +34,20 @@ class SaleOrderLine(models.Model):
     def action_sale_history(self):
         self.ensure_one()
         action = self.env["ir.actions.actions"]._for_xml_id("sale_ux.action_sale_order_line_usability_tree")
-        action['domain'] = [('state', 'in', ['sale', 'done']), ('product_id', '=', self.product_id.id)]
-        action['display_name'] = _("Sale History for %s", self.product_id.display_name)
-        action['context'] = {
-            'search_default_order_partner_id': self.order_partner_id.parent_id.id or self.order_partner_id.id,
-            'search_default_partner_id': 1
+        action["domain"] = [("state", "in", ["sale", "done"]), ("product_id", "=", self.product_id.id)]
+        action["display_name"] = _("Sale History for %s", self.product_id.display_name)
+        action["context"] = {
+            "search_default_order_partner_id": self.order_partner_id.parent_id.id or self.order_partner_id.id,
+            "search_default_partner_id": 1,
         }
         return action
 
     @api.model_create_multi
     def create(self, vals_list):
         lines = super().create(vals_list)
-        if lines.filtered(lambda x: x.order_id and x.order_id.state == 'done'):
+        if lines.filtered(lambda x: x.order_id and x.order_id.state == "done"):
             raise ValidationError(_("You cannot add lines to blocked sale orders."))
         return lines
 
     def _get_protected_fields(self):
-        return super()._get_protected_fields() + ['discount']
+        return super()._get_protected_fields() + ["discount"]

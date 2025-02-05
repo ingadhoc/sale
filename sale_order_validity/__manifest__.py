@@ -18,25 +18,24 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Order Validity',
-    'version': "18.0.1.1.0",
-    'category': 'Sales & Purchases',
-    'sequence': 14,
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'images': [
+    "name": "Sale Order Validity",
+    "version": "18.0.1.1.0",
+    "category": "Sales & Purchases",
+    "sequence": 14,
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "images": [],
+    "depends": [
+        "sale",
     ],
-    'depends': [
-        'sale',
+    "data": [
+        "views/sale_order_view.xml",
     ],
-    'data': [
-        'views/sale_order_view.xml',
+    "demo": [
+        "demo/res_company_demo.xml",
     ],
-    'demo': [
-        'demo/res_company_demo.xml',
-    ],
-    'installable': True,
-    'auto_install': False,
-    'application': False,
+    "installable": True,
+    "auto_install": False,
+    "application": False,
 }
