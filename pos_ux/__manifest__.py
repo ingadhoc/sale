@@ -6,16 +6,16 @@
     "depends": [
         "point_of_sale",
     ],
-    'data': [
-        'views/pos_session_view.xml',
-        'views/res_config_settings_view.xml',
+    "data": [
+        "views/pos_session_view.xml",
+        "views/res_config_settings_view.xml",
     ],
-    'assets': {
-        'point_of_sale._assets_pos': [
-            'pos_ux/static/src/**/*',
+    "assets": {
+        "point_of_sale._assets_pos": [
+            "pos_ux/static/src/**/*",
         ],
     },
-    'installable': True,
-    'auto_install': False,
-    'license': 'LGPL-3',
+    "installable": True,
+    "auto_install": False,
+    "license": "LGPL-3",
 }

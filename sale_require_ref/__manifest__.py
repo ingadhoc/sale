@@ -18,27 +18,26 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Order Require Reference on Confirmation',
-    'version': "15.0.1.0.0",
-    'category': 'Projects & Services',
-    'sequence': 14,
-    'summary': '',
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'images': [
+    "name": "Sale Order Require Reference on Confirmation",
+    "version": "15.0.1.0.0",
+    "category": "Projects & Services",
+    "sequence": 14,
+    "summary": "",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "images": [],
+    "depends": [
+        "sale_exception",
     ],
-    'depends': [
-        'sale_exception',
+    "data": [
+        "data/exception_rule_data.xml",
     ],
-    'data': [
-        'data/exception_rule_data.xml',
+    "demo": [
+        "demo/exception_rule_demo.xml",
+        "demo/sale_order_demo.xml",
     ],
-    'demo': [
-        'demo/exception_rule_demo.xml',
-        'demo/sale_order_demo.xml',
-    ],
-    'installable': False,
-    'auto_install': False,
-    'application': False,
+    "installable": False,
+    "auto_install": False,
+    "application": False,
 }

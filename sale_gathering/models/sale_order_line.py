@@ -1,23 +1,21 @@
-from odoo import models, fields, api, _
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
 
 class SaleOrderLine(models.Model):
-    _inherit = 'sale.order.line'
+    _inherit = "sale.order.line"
 
-    initial_qty_gathered = fields.Float(string='Initial Quantity Gathered', copy=False)
+    initial_qty_gathered = fields.Float(string="Initial Quantity Gathered", copy=False)
 
-    @api.depends('initial_qty_gathered', 'order_id.is_gathering')
+    @api.depends("initial_qty_gathered", "order_id.is_gathering")
     def _compute_price_unit(self):
         gathering_lines = self.filtered(lambda x: x.order_id.is_gathering and x.initial_qty_gathered > 0)
         super(SaleOrderLine, self - gathering_lines)._compute_price_unit()
 
     def _prepare_invoice_line(self, **optional_values):
         result = super()._prepare_invoice_line(**optional_values)
-        if self.is_downpayment and self._context.get(
-                'invoice_gathering', False):
-            lines = self.order_id.order_line.filtered(
-                lambda x: not x.is_downpayment and x.qty_to_invoice)
+        if self.is_downpayment and self._context.get("invoice_gathering", False):
+            lines = self.order_id.order_line.filtered(lambda x: not x.is_downpayment and x.qty_to_invoice)
             price_subtotal = 0
             for line in lines:
                 price_reduce = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
@@ -26,41 +24,46 @@ class SaleOrderLine(models.Model):
                     currency=line.currency_id,
                     quantity=line.qty_to_invoice,
                     product=line.product_id,
-                    partner=line.order_id.partner_shipping_id)['total_excluded']
-            result['price_unit'] = price_subtotal
-            result['quantity'] = -1.0
+                    partner=line.order_id.partner_shipping_id,
+                )["total_excluded"]
+            result["price_unit"] = price_subtotal
+            result["quantity"] = -1.0
         return result
 
     def _prepare_base_line_for_taxes_computation(self, **kwargs):
-        if self.env.context.get('advance_payment') and self.initial_qty_gathered > 0:
+        if self.env.context.get("advance_payment") and self.initial_qty_gathered > 0:
             self.ensure_one()
-            kwargs['quantity'] = self.initial_qty_gathered
+            kwargs["quantity"] = self.initial_qty_gathered
             return super()._prepare_base_line_for_taxes_computation(**kwargs)
         else:
             return super()._prepare_base_line_for_taxes_computation(**kwargs)
 
     def write(self, vals):
         if "discount" in vals:
-            gathering_lines = self.filtered(
-                lambda x: x.order_id.is_gathering and x.order_id.state == 'sale'
-            )
+            gathering_lines = self.filtered(lambda x: x.order_id.is_gathering and x.order_id.state == "sale")
             if gathering_lines:
                 if gathering_lines.filtered(lambda x: x.initial_qty_gathered > 0):
-                    raise UserError(_("You cannot modify the discount of the gathering lines once the sale has been confirmed.\n"))
-                if gathering_lines.filtered(lambda x: x.initial_qty_gathered == 0 and (x.qty_invoiced > 0 or x.qty_delivered > 0)):
-                    raise UserError(_("It is not possible to add discounts once the product has been invoiced or delivered."))
+                    raise UserError(
+                        _("You cannot modify the discount of the gathering lines once the sale has been confirmed.\n")
+                    )
+                if gathering_lines.filtered(
+                    lambda x: x.initial_qty_gathered == 0 and (x.qty_invoiced > 0 or x.qty_delivered > 0)
+                ):
+                    raise UserError(
+                        _("It is not possible to add discounts once the product has been invoiced or delivered.")
+                    )
         return super().write(vals)
 
-    @api.constrains('discount')
+    @api.constrains("discount")
     def _check_discount(self):
         for rec in self:
-            if rec.order_id.is_gathering and rec.state == 'sale':
+            if rec.order_id.is_gathering and rec.state == "sale":
                 if rec.is_downpayment and rec.discount > 0:
                     raise ValidationError(_("Discounts cannot be added to downpayments."))
 
                 if (
                     not self.env.user._is_superuser()
-                    and not self.env.user.has_group('sale_gathering.group_allow_redeemed_product_discounts')
+                    and not self.env.user.has_group("sale_gathering.group_allow_redeemed_product_discounts")
                     and rec.initial_qty_gathered == 0
                     and rec.discount > 0
                 ):
@@ -71,16 +74,18 @@ class SaleOrderLine(models.Model):
         for line in self.filtered(lambda x: x.order_id.is_gathering and x.qty_invoiced < 0 and x.is_downpayment):
             line.qty_invoiced = 0
 
-    @api.constrains('product_uom_qty')
+    @api.constrains("product_uom_qty")
     def _check_gathering_invoice(self):
         for rec in self.filtered(
             lambda x: (
                 x.order_id.is_gathering
-                and x.order_id.state == 'sale'
+                and x.order_id.state == "sale"
                 and x.product_uom_qty > 0
-                and not any(invoice._is_downpayment() for invoice in x.order_id.invoice_ids if invoice.state not in ('cancel', 'draft'))
+                and not any(
+                    invoice._is_downpayment()
+                    for invoice in x.order_id.invoice_ids
+                    if invoice.state not in ("cancel", "draft")
+                )
             )
         ):
-            raise ValidationError(
-                _("Before adding quantities, you need to create and confirm the gathering invoice.")
-            )
+            raise ValidationError(_("Before adding quantities, you need to create and confirm the gathering invoice."))

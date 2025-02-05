@@ -1,12 +1,11 @@
-from odoo import models, fields
+from odoo import fields, models
 
 
 class SaleOrderLine(models.Model):
-
-    _inherit = 'sale.order.line'
+    _inherit = "sale.order.line"
 
     number = fields.Integer(
-        compute='_compute_get_number',
+        compute="_compute_get_number",
     )
 
     def _compute_get_number(self):
@@ -18,7 +17,7 @@ class SaleOrderLine(models.Model):
         self.number = False
         if self and not isinstance(self[0].id, int):
             return
-        for order in self.mapped('order_id'):
+        for order in self.mapped("order_id"):
             number = 1
             for line in order.order_line.sorted("sequence"):
                 line.number = number

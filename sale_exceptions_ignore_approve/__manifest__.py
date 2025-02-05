@@ -18,26 +18,24 @@
 #
 ##############################################################################
 {
-    'name': 'Sale Exceptions Ingore Approve Directly',
-    'version': "18.0.1.0.0",
-    'category': 'Sale',
-    'sequence': 14,
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'summary': '',
-    'depends': [
-        'sale_exception',
+    "name": "Sale Exceptions Ingore Approve Directly",
+    "version": "18.0.1.0.0",
+    "category": "Sale",
+    "sequence": 14,
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "summary": "",
+    "depends": [
+        "sale_exception",
     ],
-    'external_dependencies': {
-    },
-    'data': [
-        'wizards/sale_exception_confirm_views.xml',
-        'views/sale_order_views.xml',
+    "external_dependencies": {},
+    "data": [
+        "wizards/sale_exception_confirm_views.xml",
+        "views/sale_order_views.xml",
     ],
-    'demo': [
-    ],
-    'installable': True,
-    'auto_install': False,
-    'application': False,
+    "demo": [],
+    "installable": True,
+    "auto_install": False,
+    "application": False,
 }

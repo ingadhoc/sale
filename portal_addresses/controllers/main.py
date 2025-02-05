@@ -3,20 +3,17 @@
 # directory
 ##############################################################################
 import json
+
 from odoo import http
-from odoo.http import request
 from odoo.addons.website_sale.controllers.main import WebsiteSale
+from odoo.http import request
 from odoo.tools import clean_context
 
 
 class WebsiteSalePortal(WebsiteSale):
-    @http.route(
-        '/portal/address', type='http', methods=['GET'], auth='public', website=True, sitemap=False
-    )
-    def portal_address(
-        self, partner_id=None, address_type='billing', use_delivery_as_billing=None, **query_params
-    ):
-        """ Display the address form.
+    @http.route("/portal/address", type="http", methods=["GET"], auth="public", website=True, sitemap=False)
+    def portal_address(self, partner_id=None, address_type="billing", use_delivery_as_billing=None, **query_params):
+        """Display the address form.
 
         A partner and/or an address type can be given through the query string params to specify
         which address to update or create, and its type.
@@ -31,18 +28,14 @@ class WebsiteSalePortal(WebsiteSale):
         :rtype: str
         """
         partner_id = partner_id and int(partner_id)
-        order_sudo = request.env['sale.order'].new({
-            'partner_id': request.env.user.partner_id.commercial_partner_id.id
-        })
+        order_sudo = request.env["sale.order"].new({"partner_id": request.env.user.partner_id.commercial_partner_id.id})
         # Retrieve the partner whose address to update, if any, and its address type.
         partner_sudo, address_type = self._prepare_address_update(
             order_sudo, partner_id=partner_id, address_type=address_type
         )
 
         if partner_sudo:  # If editing an existing partner.
-            use_delivery_as_billing = (
-                order_sudo.partner_shipping_id == order_sudo.partner_invoice_id
-            )
+            use_delivery_as_billing = order_sudo.partner_shipping_id == order_sudo.partner_invoice_id
 
         # Render the address form.
         address_form_values = self._prepare_address_form_values(
@@ -50,50 +43,55 @@ class WebsiteSalePortal(WebsiteSale):
             partner_sudo,
             address_type=address_type,
             use_delivery_as_billing=use_delivery_as_billing,
-            **query_params
+            **query_params,
         )
-        return request.render('portal_addresses.portal_address', address_form_values)
+        return request.render("portal_addresses.portal_address", address_form_values)
 
-
-    @http.route(['/portal/addresses'],
-                type='http', auth="public", website=True)
+    @http.route(["/portal/addresses"], type="http", auth="public", website=True)
     def portal_addresses(self, **post):
         order = request.website.sale_get_order()
-        order = request.env['sale.order'].new(
-            {'partner_id':
-             request.env.user.partner_id.commercial_partner_id.id})
+        order = request.env["sale.order"].new({"partner_id": request.env.user.partner_id.commercial_partner_id.id})
         Partner = order.partner_id.with_context(show_address=1).sudo()
         shippings = Partner.search(
-            [("id", "child_of", order.partner_id.commercial_partner_id.ids),
-             '|', ("type", "in", ["delivery", "other"]),
-             ("id", "=", order.partner_id.commercial_partner_id.id)],
-            order='id desc')
-        billings = Partner.search([
-            ("id", "child_of", order.partner_id.commercial_partner_id.ids),
-            '|', ("type", "in", ["invoice", "other"]),
-            ("id", "=", order.partner_id.commercial_partner_id.id)
-        ], order='id desc')
+            [
+                ("id", "child_of", order.partner_id.commercial_partner_id.ids),
+                "|",
+                ("type", "in", ["delivery", "other"]),
+                ("id", "=", order.partner_id.commercial_partner_id.id),
+            ],
+            order="id desc",
+        )
+        billings = Partner.search(
+            [
+                ("id", "child_of", order.partner_id.commercial_partner_id.ids),
+                "|",
+                ("type", "in", ["invoice", "other"]),
+                ("id", "=", order.partner_id.commercial_partner_id.id),
+            ],
+            order="id desc",
+        )
         values = {
-            'order': order,
-            'website_sale_order': order,
-            'delivery_addresses': shippings,
-            'billing_addresses': billings
+            "order": order,
+            "website_sale_order": order,
+            "delivery_addresses": shippings,
+            "billing_addresses": billings,
         }
         # Avoid useless rendering if called in ajax
-        if post.get('xhr'):
-            return 'ok'
-        return request.render(
-            "portal_addresses.addresses", values)
+        if post.get("xhr"):
+            return "ok"
+        return request.render("portal_addresses.addresses", values)
 
-    @http.route(
-        '/portal/address/submit', type='http', methods=['POST'], auth='public', website=True,
-        sitemap=False
-    )
+    @http.route("/portal/address/submit", type="http", methods=["POST"], auth="public", website=True, sitemap=False)
     def portal_address_submit(
-        self, partner_id=None, address_type='billing', use_delivery_as_billing=None, callback=None,
-        required_fields=None, **form_data
+        self,
+        partner_id=None,
+        address_type="billing",
+        use_delivery_as_billing=None,
+        callback=None,
+        required_fields=None,
+        **form_data,
     ):
-        """ Create or update an address.
+        """Create or update an address.
 
         If it succeeds, it returns the URL to redirect (client-side) to. If it fails (missing or
         invalid information), it highlights the problematic form input with the appropriate error
@@ -110,9 +108,7 @@ class WebsiteSalePortal(WebsiteSale):
         :return: A JSON-encoded feedback, with either the success URL or an error message.
         :rtype: str
         """
-        order_sudo = request.env['sale.order'].new({
-            'partner_id': request.env.user.partner_id.commercial_partner_id.id
-        })
+        order_sudo = request.env["sale.order"].new({"partner_id": request.env.user.partner_id.commercial_partner_id.id})
         use_delivery_as_billing = False
         partner_sudo, address_type = self._prepare_address_update(
             order_sudo, partner_id=partner_id and int(partner_id), address_type=address_type
@@ -132,10 +128,12 @@ class WebsiteSalePortal(WebsiteSale):
             **extra_form_data,
         )
         if error_messages:
-            return json.dumps({
-                'invalid_fields': list(invalid_fields | missing_fields),
-                'messages': error_messages,
-            })
+            return json.dumps(
+                {
+                    "invalid_fields": list(invalid_fields | missing_fields),
+                    "messages": error_messages,
+                }
+            )
 
         is_new_address = False
         if not partner_sudo:  # Creation of a new address.
@@ -158,26 +156,28 @@ class WebsiteSalePortal(WebsiteSale):
 
         partner_fnames = set()
         if is_main_address:  # Main address updated.
-            partner_fnames.add('partner_id')  # Force the re-computation of partner-based fields.
+            partner_fnames.add("partner_id")  # Force the re-computation of partner-based fields.
 
-        if address_type == 'billing':
-            partner_fnames.add('partner_invoice_id')
+        if address_type == "billing":
+            partner_fnames.add("partner_invoice_id")
             if is_new_address and order_sudo.only_services:
                 # The delivery address is required to make the order.
-                partner_fnames.add('partner_shipping_id')
+                partner_fnames.add("partner_shipping_id")
             callback = callback or self._get_extra_billing_info_route(order_sudo)
-        elif address_type == 'delivery':
-            partner_fnames.add('partner_shipping_id')
+        elif address_type == "delivery":
+            partner_fnames.add("partner_shipping_id")
             if use_delivery_as_billing:
-                partner_fnames.add('partner_invoice_id')
+                partner_fnames.add("partner_invoice_id")
 
         if is_new_address or order_sudo.only_services:
-            callback = callback or '/shop/checkout?try_skip_step=true'
+            callback = callback or "/shop/checkout?try_skip_step=true"
         else:
-            callback = callback or '/shop/checkout'
+            callback = callback or "/shop/checkout"
 
         self._handle_extra_form_data(extra_form_data, address_values)
 
-        return json.dumps({
-            'successUrl': callback,
-        })
+        return json.dumps(
+            {
+                "successUrl": callback,
+            }
+        )

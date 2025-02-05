@@ -1,5 +1,6 @@
-from odoo import api, models
 import logging
+
+from odoo import api, models
 
 _logger = logging.getLogger(__name__)
 
@@ -9,7 +10,9 @@ class ProductProduct(models.Model):
 
     @api.model
     def _get_tax_included_unit_price_from_price(
-        self, product_price_unit, product_taxes,
+        self,
+        product_price_unit,
+        product_taxes,
         fiscal_position=None,
         product_taxes_after_fp=None,
     ):
@@ -21,5 +24,8 @@ class ProductProduct(models.Model):
         if fiscal_position and not fiscal_position.deduct_price_included_taxes:
             fiscal_position = False
         return super()._get_tax_included_unit_price_from_price(
-            product_price_unit, product_taxes, product_taxes_after_fp=product_taxes_after_fp,
-            fiscal_position=fiscal_position)
+            product_price_unit,
+            product_taxes,
+            product_taxes_after_fp=product_taxes_after_fp,
+            fiscal_position=fiscal_position,
+        )

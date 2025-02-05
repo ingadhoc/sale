@@ -18,19 +18,19 @@
 #
 ##############################################################################
 {
-    'name': "CRM SURVEY",
-    'version': "16.0.1.0.0",
-    'category': 'Human Resources Survey',
-    'license': 'AGPL-3',
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'summary': 'Surveys',
-    'depends': ['survey', 'crm'],
-    'data': [
-        'views/crm_job_views.xml',
-        'views/crm_applicant_views.xml',
+    "name": "CRM SURVEY",
+    "version": "16.0.1.0.0",
+    "category": "Human Resources Survey",
+    "license": "AGPL-3",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "summary": "Surveys",
+    "depends": ["survey", "crm"],
+    "data": [
+        "views/crm_job_views.xml",
+        "views/crm_applicant_views.xml",
     ],
-    'installable': False,
-    'auto_install': False,
-    'application': False,
+    "installable": False,
+    "auto_install": False,
+    "application": False,
 }

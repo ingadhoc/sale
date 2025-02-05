@@ -4,29 +4,23 @@ from odoo import fields, models, tools
 
 
 class SaleLastSaleReport(models.Model):
-    _name = 'sale.last.sale.report'
-    _description = 'Last Sale Statistics'
+    _name = "sale.last.sale.report"
+    _description = "Last Sale Statistics"
     _auto = False
-    _order = 'id'
+    _order = "id"
 
-    partner_id = fields.Many2one('res.partner', 'Partner', readonly=True)
-    product_id = fields.Many2one('product.product', 'Product', readonly=True)
-    company_id = fields.Many2one('res.company', 'Company', readonly=True)
+    partner_id = fields.Many2one("res.partner", "Partner", readonly=True)
+    product_id = fields.Many2one("product.product", "Product", readonly=True)
+    company_id = fields.Many2one("res.company", "Company", readonly=True)
 
-    product_category_id = fields.Many2one(
-        'product.category',
-        'Product Category',
-        readonly=True)
+    product_category_id = fields.Many2one("product.category", "Product Category", readonly=True)
 
-    date_order = fields.Date(
-        'Order Date',
-        group_operator='max',
-        readonly=True)
+    date_order = fields.Date("Order Date", group_operator="max", readonly=True)
 
     days_since = fields.Integer(group_operator="min", readonly=True)
 
     def init(self):
-        tools.drop_view_if_exists(self.env.cr, 'sale_last_sale_report')
+        tools.drop_view_if_exists(self.env.cr, "sale_last_sale_report")
         self.env.cr.execute("""
             CREATE OR REPLACE VIEW sale_last_sale_report AS (
             SELECT

@@ -10,7 +10,7 @@
                 <attribute name="force_save">1</attribute>
             </xpath>
             <xpath expr="//group[@name='group_sales_invoicing']//field[@name='allow_billable']" position="after">
-                <button string="Deactivate Billable" name="change_allow_billable" type="object" class="btn-primary" invisible="not allow_billable"/> 
+                <button string="Deactivate Billable" name="change_allow_billable" type="object" class="btn-primary" invisible="not allow_billable"/>
             </xpath>
         </field>
     </record>

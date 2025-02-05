@@ -10,13 +10,12 @@
         "sale_timesheet",
     ],
     "data": [
-        'security/ir.model.access.csv',
-        'views/project_inherit.xml',
+        "security/ir.model.access.csv",
+        "views/project_inherit.xml",
         "wizards/res_config_settings_views.xml",
         "wizards/project_change_biillable_views.xml",
     ],
-    "demo": [
-    ],
+    "demo": [],
     "application": False,
-    'installable': True,
+    "installable": True,
 }

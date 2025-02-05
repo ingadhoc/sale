@@ -18,28 +18,23 @@
 #
 ##############################################################################
 {
-    'name': 'Portal Addresses',
-    'version': "18.0.1.0.0",
-    'category': 'Tools',
-    'complexity': 'easy',
-    'author': 'ADHOC SA, Odoo Community Association (OCA)',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'depends': [
-        'website_sale',
-        'portal_sale_distributor',
+    "name": "Portal Addresses",
+    "version": "18.0.1.0.0",
+    "category": "Tools",
+    "complexity": "easy",
+    "author": "ADHOC SA, Odoo Community Association (OCA)",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "depends": [
+        "website_sale",
+        "portal_sale_distributor",
     ],
-    'demo': [
+    "demo": [],
+    "data": [
+        "views/portal_templates.xml",
+        "views/templates.xml",
     ],
-    'data': [
-        'views/portal_templates.xml',
-        'views/templates.xml',
-    ],
-    'installable': True,
-    'auto_install': True,
-    'assets': {
-            'web.assets_frontend': [
-                '/portal_addresses/static/src/js/address.js'
-            ]
-    }
+    "installable": True,
+    "auto_install": True,
+    "assets": {"web.assets_frontend": ["/portal_addresses/static/src/js/address.js"]},
 }

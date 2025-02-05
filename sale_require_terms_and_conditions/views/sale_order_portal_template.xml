@@ -50,7 +50,7 @@
                         button.dataset['bsToggle'] = "";
                         button.style.backgroundColor = "#787878";
                         button.style.borderColor = "#787878";
-                        
+
                         input.onclick = function(){
                             if(input.checked){
                                 button.disabled = false;

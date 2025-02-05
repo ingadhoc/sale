@@ -13,8 +13,8 @@
                             Process operations faster with barcodes
                         </div>
                         <div class="content-group">
-                            <div class="mt16">                    
-                                <a href="/sale_barcode/static/img/barcodes_actions.pdf" class="fw-bold" target="_blank"> 
+                            <div class="mt16">
+                                <a href="/sale_barcode/static/img/barcodes_actions.pdf" class="fw-bold" target="_blank">
                                     <i class="fa fa-download"/> Print Sales Barcode commands
                                 </a>
                             </div>
