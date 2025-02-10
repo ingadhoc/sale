@@ -14,7 +14,7 @@
 Sale Product Pack Three Discounts
 =================================
 
-Fix handling of discounts between sale_three_discounts and sale_product_pack modules
+The module makes it so that when the pack has discounts on its components and you add it to a sales order with sale_three_discount, it shows them. These discounts always have to be shown because they are in the components of the pack.
 
 Installation
 ============
