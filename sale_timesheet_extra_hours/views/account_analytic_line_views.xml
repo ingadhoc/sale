@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+    <record id="project_task_view_form_inherit_sale_timesheet" model="ir.ui.view">
+        <field name="name">project.task.form.inherit.timesheet</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="sale_timesheet.project_task_view_form_inherit_sale_timesheet"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='timesheet_ids']/list/field[@name='unit_amount']" position="before">
+                <field name="extra_hour"/>
+                <field name="extra_hour_type" invisible="not extra_hour"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="timesheet_view_tree_user_ux" model="ir.ui.view">
+        <field name="name">account.analytic.line.tree.inherit</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="hr_timesheet.timesheet_view_tree_user"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='unit_amount']" position="before">
+                <field string="Extra Cost" readonly="1" name="extra_hour" optional="hide"  widget="boolean_toggle"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_analytic_line_tree_inherit_account_ux" model="ir.ui.view">
+        <field name="name">account.analytic.line.list.inherit</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="account.view_account_analytic_line_tree_inherit_account"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount']" position="before">
+                <field string="Extra Cost" readonly="1" name="extra_hour" optional="hide"  widget="boolean_toggle"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_analytic_line_form_ux" model="ir.ui.view">
+        <field name="name">account.analytic.line.form.inherit</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="analytic.view_account_analytic_line_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_uom_id']" position="after">
+                <field string="Extra Cost" readonly="1" name="extra_hour" widget="boolean_toggle"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

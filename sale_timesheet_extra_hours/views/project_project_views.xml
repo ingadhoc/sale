@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+    <record id="project_project_view_form" model="ir.ui.view">
+        <field name="name">project.project.form.inherit</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="sale_timesheet.project_project_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='display_cost']" position="after">
+                <field name="cost_day_extra_hour"/>
+                <field name="cost_night_extra_hour"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
