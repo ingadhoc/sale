@@ -10,7 +10,7 @@
         </xpath>
     </template>
 
-    <template id="report_saleorder_index" inherit_id="sale_gathering.document_tax_totals" priority="14">
+    <template id="sale_gathering_totals" inherit_id="sale_gathering.sale_gathering_totals">
 
         <xpath expr="//tr[2]" position="after">
             <t t-if="doc.is_gathering and doc.state not in ['draft','sent']">

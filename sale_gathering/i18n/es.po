@@ -27,14 +27,14 @@ msgid ""
 msgstr ""
 
 #. module: sale_gathering
-#: model_terms:ir.ui.view,arch_db:sale_gathering.document_tax_totals
+#: model_terms:ir.ui.view,arch_db:sale_gathering.sale_gathering_totals
 msgid "<strong>Gathering Amount:</strong>"
-msgstr ""
+msgstr "<strong>Monto acopiado:</strong>"
 
 #. module: sale_gathering
-#: model_terms:ir.ui.view,arch_db:sale_gathering.document_tax_totals
+#: model_terms:ir.ui.view,arch_db:sale_gathering.sale_gathering_totals
 msgid "<strong>Gathering Balance:</strong>"
-msgstr ""
+msgstr "<strong>Balance de acopio:</strong>"
 
 #. module: sale_gathering
 #: model:ir.model.fields,help:sale_gathering.field_sale_advance_payment_inv__advance_payment_method
@@ -244,6 +244,6 @@ msgid "Withdrawn Amount"
 msgstr "Monto retirado"
 
 #. module: sale_gathering
-#: model_terms:ir.ui.view,arch_db:sale_gathering.document_tax_totals
+#: model_terms:ir.ui.view,arch_db:sale_gathering.sale_gathering_totals
 msgid "<strong>Withdrawn Amount:</strong>"
 msgstr "<strong>Monto retirado:</strong>"

@@ -25,48 +25,43 @@
                     <t t-esc="line.qty_invoiced"/>
             </td>
         </xpath>
+
+        <xpath expr="//t[@t-call='account.document_tax_totals']" position="replace">
+            <t t-call="sale_gathering.sale_gathering_totals"/>
+        </xpath>
     </template>
 
-    <template id="document_tax_totals" inherit_id="account.document_tax_totals">
-        <xpath expr="//tr[hasclass('o_total')]" position="attributes">
-            <attribute name="t-if">not doc.is_gathering and not is_gathering</attribute>
-        </xpath>
-        <xpath expr="//t[@t-as='subtotal']" position="attributes">
-            <attribute name="t-if">not doc.is_gathering and not is_gathering</attribute>
-        </xpath>
-        <xpath expr="//tr[hasclass('o_total')]" position="after">
-            <t t-if="is_gathering and doc.is_gathering and doc.state not in ['draft','sent']">
-                <tr class="border-black o_total">
-                    <td>
-                        <strong>Gathering Amount With Taxes:</strong>
-                    </td>
-                    <td class="text-end">
-                        <span t-out="doc.gathering_amount_with_taxes or 0"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <strong>Gathering Balance:</strong>
-                    </td>
-                    <td class="text-end">
-                        <span t-out="doc.gathering_balance or 0" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
-                    </td>
-                </tr>
-                <tr class="border-black o_total">
-                    <td>
-                        <strong>Withdrawn Amount:</strong>
-                    </td>
-                    <td class="text-end">
-                        <span t-out="doc.withdrawn_amount or 0" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
-                    </td>
-                </tr>
-            </t>
-        </xpath>
+    <template id="sale_gathering_totals">
+        <t t-if="doc.is_gathering and doc.state not in ['draft','sent']">
+            <tr class="border-black o_total">
+                <td>
+                    <strong>Gathering Amount With Taxes:</strong>
+                </td>
+                <td class="text-end">
+                    <span t-out="doc.gathering_amount_with_taxes or 0"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Gathering Balance:</strong>
+                </td>
+                <td class="text-end">
+                    <span t-out="doc.gathering_balance or 0" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                </td>
+            </tr>
+            <tr class="border-black o_total">
+                <td>
+                    <strong>Withdrawn Amount:</strong>
+                </td>
+                <td class="text-end">
+                    <span t-out="doc.withdrawn_amount or 0" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                </td>
+            </tr>
+        </t>
     </template>
 
     <template id="report_saleorder_gathering_document">
         <t t-call="web.html_container">
-        <t t-set="is_gathering" t-value="True"/>
             <t t-foreach="docs" t-as="doc">
                 <t
                     t-call="sale_gathering.report_saleorder_document_gathering"

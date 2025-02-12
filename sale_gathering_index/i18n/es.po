@@ -100,3 +100,13 @@ msgid ""
 msgstr ""
 "\n"
 "(Precio actual: $%s | Coef: %s)"
+
+#. module: sale_gathering
+#: model_terms:ir.ui.view,arch_db:sale_gathering_index.sale_gathering_totals
+msgid "<strong>Indexed Gathering Amount:</strong>"
+msgstr "<strong>Monto acopiado indexado:</strong>"
+
+#. module: sale_gathering
+#: model_terms:ir.ui.view,arch_db:sale_gathering_index.sale_gathering_totals
+msgid "<strong>Gathering Balance Indexed:</strong>"
+msgstr "<strong>Balance de acopio indexado:</strong>"
