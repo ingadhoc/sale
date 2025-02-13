@@ -3,16 +3,16 @@
 # 	* sale_gathering_index
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
 # Lara Valeri, 2025
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-06 23:17+0000\n"
+"POT-Creation-Date: 2025-02-13 14:07+0000\n"
 "PO-Revision-Date: 2024-12-10 17:39+0000\n"
-"Last-Translator: Lara Valeri, 2025\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,12 +33,12 @@ msgstr ""
 #. module: sale_gathering_index
 #: model_terms:ir.ui.view,arch_db:sale_gathering_index.report_saleorder_index
 msgid "<strong>Gathering Balance Indexed:</strong>"
-msgstr "Blance de Acopio indexado "
+msgstr "Blance de Acopio indexado"
 
 #. module: sale_gathering_index
 #: model_terms:ir.ui.view,arch_db:sale_gathering_index.report_saleorder_index
 msgid "<strong>Indexed Gathering Amount:</strong>"
-msgstr "Monto Acopiado indexado "
+msgstr "Monto Acopiado indexado"
 
 #. module: sale_gathering_index
 #: model:ir.model.fields,help:sale_gathering_index.field_sale_order__gathering_balance_indexed

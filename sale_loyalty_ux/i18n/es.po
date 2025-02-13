@@ -3,16 +3,16 @@
 # 	* sale_loyalty_ux
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
 # Lara Valeri, 2025
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-10 11:50+0000\n"
+"POT-Creation-Date: 2025-02-13 14:07+0000\n"
 "PO-Revision-Date: 2024-11-14 20:32+0000\n"
-"Last-Translator: Lara Valeri, 2025\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,4 +38,4 @@ msgstr "Pedido de venta"
 #. module: sale_loyalty_ux
 #: model_terms:ir.ui.view,arch_db:sale_loyalty_ux.loyalty_program_view_form
 msgid "Sales domain"
-msgstr "Dominio de venta "
+msgstr "Dominio de venta"
