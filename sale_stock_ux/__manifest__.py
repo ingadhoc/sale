@@ -39,7 +39,6 @@
         "views/sale_order_line_views.xml",
         "views/stock_move_views.xml",
         "wizards/sale_order_cancel_remaining.xml",
-        "wizards/stock_return_picking_views.xml",
         "wizards/res_config_settings_views.xml",
     ],
     "assets": {

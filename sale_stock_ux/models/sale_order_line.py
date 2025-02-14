@@ -139,9 +139,7 @@ class SaleOrderLine(models.Model):
             # we use same method as in odoo use to delivery's
             if order_line.qty_delivered_method == "stock_move":
                 return_moves = order_line.mapped("move_ids").filtered(
-                    lambda r: (
-                        r.state == "done" and not r.scrapped and r.location_dest_id.usage != "customer" and r.to_refund
-                    )
+                    lambda r: (r.state == "done" and not r.scrapped and r.location_dest_id.usage != "customer")
                 )
                 for move in return_moves:
                     quantity_returned += move.product_uom._compute_quantity(
@@ -181,8 +179,8 @@ class SaleOrderLine(models.Model):
                             continue
                         filters = {
                             "outgoing_moves": lambda m: m.location_dest_id.usage == "customer"
-                            and (not m.origin_returned_move_id or (m.origin_returned_move_id and m.to_refund)),
-                            "incoming_moves": lambda m: m.location_dest_id.usage != "customer" and m.to_refund,
+                            and (not m.origin_returned_move_id or (m.origin_returned_move_id)),
+                            "incoming_moves": lambda m: m.location_dest_id.usage != "customer",
                         }
                         order_qty = order_line.product_uom._compute_quantity(
                             order_line.product_uom_qty, relevant_bom.product_uom_id
@@ -218,6 +216,8 @@ class SaleOrderLine(models.Model):
                 continue
             if line.product_id.invoice_policy == "order":
                 line.qty_to_invoice = line.product_uom_qty - line.quantity_returned - line.qty_invoiced
+                if line.quantity_returned:
+                    line.qty_to_invoice += line.qty_delivered
 
     @api.depends(
         "order_id.force_invoiced_status", "state", "product_uom_qty", "qty_delivered", "qty_to_invoice", "qty_invoiced"
