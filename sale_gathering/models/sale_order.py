@@ -14,9 +14,6 @@ class SaleOrder(models.Model):
         tracking=True,
         help="Balance entre la factura de acopio/anticipo y los retiros de mercaderia que realizo el cliente. Monto positivo es a favor del cliente",
     )
-    gathering_amount = fields.Float(
-        compute="_compute_gathering_amount", help="Monto, sin impuestos, acopiado inicialmente."
-    )
     gathering_amount = fields.Float(compute="_compute_gathering_amount")
     gathering_amount_with_taxes = fields.Float(compute="_compute_gathering_amount", help="Monto acopiado inicialmente.")
     has_gathering_invoice = fields.Boolean(compute="_compute_has_gathering_invoice")

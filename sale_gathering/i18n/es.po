@@ -28,14 +28,14 @@ msgid ""
 msgstr ""
 
 #. module: sale_gathering
-#: model_terms:ir.ui.view,arch_db:sale_gathering.document_tax_totals_gathering
+#: model_terms:ir.ui.view,arch_db:sale_gathering.sale_gathering_totals
 msgid "<strong>Gathering Amount:</strong>"
-msgstr "<strong>Monto del acopio:</strong>"
+msgstr "<strong>Monto acopiado:</strong>"
 
 #. module: sale_gathering
-#: model_terms:ir.ui.view,arch_db:sale_gathering.document_tax_totals_gathering
+#: model_terms:ir.ui.view,arch_db:sale_gathering.sale_gathering_totals
 msgid "<strong>Gathering Balance:</strong>"
-msgstr "<strong>Monto del acopio:</strong>"
+msgstr "<strong>Balance de acopio:</strong>"
 
 #. module: sale_gathering
 #: model:ir.model.fields,help:sale_gathering.field_sale_advance_payment_inv__advance_payment_method
@@ -150,12 +150,6 @@ msgid "Monto, sin impuestos, acopiado inicialmente."
 msgstr ""
 
 #. module: sale_gathering
-#. odoo-javascript
-#: code:addons/sale_gathering/static/src/widgets/qty_at_date_widget.xml:0
-msgid "No stock available"
-msgstr "Sin stock disponible"
-
-#. module: sale_gathering
 #: model_terms:ir.ui.view,arch_db:sale_gathering.view_sales_order_filter
 msgid "Open Gathering"
 msgstr "Acopio Abierto"
@@ -202,12 +196,6 @@ msgid "Sales Order Line"
 msgstr "Línea de pedido de venta"
 
 #. module: sale_gathering
-#. odoo-javascript
-#: code:addons/sale_gathering/static/src/widgets/qty_at_date_widget.xml:0
-msgid "Stock by Location"
-msgstr "Stock por Ubicación"
-
-#. module: sale_gathering
 #. odoo-python
 #: code:addons/sale_gathering/models/sale_order.py:0
 msgid ""
@@ -232,6 +220,19 @@ msgstr ""
 msgid "Stock By Location"
 msgstr "Stock por Ubicación"
 
+#. module: sale_gathering
+#. odoo-javascript
+#: code:addons/sale_gathering/static/src/widgets/qty_at_date_widget.xml:0
+#, python-format
+msgid "Stock by Location"
+msgstr "Stock por Ubicación"
+
+#. module: sale_gathering
+#. odoo-javascript
+#: code:addons/sale_gathering/static/src/widgets/qty_at_date_widget.xml:0
+#, python-format
+msgid "No stock available"
+msgstr "Sin stock disponible"
 
 #. module: sale_gathering
 #: model:ir.model.fields,field_description:sale_gathering.field_sale_order__gathering_amount_with_taxes
@@ -244,6 +245,6 @@ msgid "Withdrawn Amount"
 msgstr "Monto retirado"
 
 #. module: sale_gathering
-#: model_terms:ir.ui.view,arch_db:sale_gathering.document_tax_totals
+#: model_terms:ir.ui.view,arch_db:sale_gathering.sale_gathering_totals
 msgid "<strong>Withdrawn Amount:</strong>"
 msgstr "<strong>Monto retirado:</strong>"

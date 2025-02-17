@@ -9,4 +9,29 @@
             </div>
         </xpath>
     </template>
+
+    <template id="sale_gathering_totals" inherit_id="sale_gathering.sale_gathering_totals">
+
+        <xpath expr="//tr[2]" position="after">
+            <t t-if="doc.is_gathering and doc.state not in ['draft','sent']">
+                <tr class="border-black o_total">
+                    <td>
+                        <strong>Indexed Gathering Amount:</strong>
+                    </td>
+                    <td class="text-end">
+                        <span t-out="doc.indexed_gathering_amount or 0"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Gathering Balance Indexed:</strong>
+                    </td>
+                    <td class="text-end">
+                        <span t-out="doc.gathering_balance_indexed or 0"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                    </td>
+                </tr>
+            </t>
+        </xpath>
+
+    </template>
 </odoo>

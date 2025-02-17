@@ -31,16 +31,6 @@ msgstr ""
 "(Precio actual: $%s | Coef: %s%%)"
 
 #. module: sale_gathering_index
-#: model_terms:ir.ui.view,arch_db:sale_gathering_index.report_saleorder_index
-msgid "<strong>Gathering Balance Indexed:</strong>"
-msgstr "Blance de Acopio indexado"
-
-#. module: sale_gathering_index
-#: model_terms:ir.ui.view,arch_db:sale_gathering_index.report_saleorder_index
-msgid "<strong>Indexed Gathering Amount:</strong>"
-msgstr "Monto Acopiado indexado"
-
-#. module: sale_gathering_index
 #: model:ir.model.fields,help:sale_gathering_index.field_sale_order__gathering_balance_indexed
 msgid ""
 "Balance equivalente del acopio inicial actualizado por el indice de "
@@ -119,3 +109,13 @@ msgid ""
 msgstr ""
 "\n"
 "(Precio actual: $%s | Coef: %s)"
+
+#. module: sale_gathering
+#: model_terms:ir.ui.view,arch_db:sale_gathering_index.sale_gathering_totals
+msgid "<strong>Indexed Gathering Amount:</strong>"
+msgstr "<strong>Monto acopiado indexado:</strong>"
+
+#. module: sale_gathering
+#: model_terms:ir.ui.view,arch_db:sale_gathering_index.sale_gathering_totals
+msgid "<strong>Gathering Balance Indexed:</strong>"
+msgstr "<strong>Balance de acopio indexado:</strong>"
