@@ -16,12 +16,12 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: sale_gathering
-#: model_terms:ir.ui.view,arch_db:sale_gathering.document_tax_totals
+#: model_terms:ir.ui.view,arch_db:sale_gathering.sale_gathering_totals
 msgid "<strong>Gathering Amount With Taxes:</strong>"
 msgstr "<strong>Monto acopiado con impuestos:</strong>"
 
 #. module: sale_gathering
-#: model_terms:ir.ui.view,arch_db:sale_gathering.document_tax_totals
+#: model_terms:ir.ui.view,arch_db:sale_gathering.sale_gathering_totals
 msgid "<strong>Gathering Balance:</strong>"
 msgstr "<strong>Balance de Acopio:</strong>"
 
