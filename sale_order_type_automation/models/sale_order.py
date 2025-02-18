@@ -38,8 +38,9 @@ class SaleOrder(models.Model):
                         raise error
                     message = _(
                         "We couldn't validate the automatically created "
-                        "invoices (ids %s), you will need to validate them"
-                        " manually. This is what we get: %s"
+                        "invoices with ids:(%s). This is what we got: %s. "
+                        "Please complete the necessary information in "
+                        "the customer contact and validate them manually"
                     ) % (invoices.ids, error)
                     invoices.message_post(body=message)
                     rec.message_post(body=message)
