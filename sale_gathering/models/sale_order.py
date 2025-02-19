@@ -14,7 +14,6 @@ class SaleOrder(models.Model):
         tracking=True,
         help="Balance entre la factura de acopio/anticipo y los retiros de mercaderia que realizo el cliente. Monto positivo es a favor del cliente",
     )
-    gathering_amount = fields.Float(compute="_compute_gathering_amount")
     gathering_amount_with_taxes = fields.Float(compute="_compute_gathering_amount", help="Monto acopiado inicialmente.")
     has_gathering_invoice = fields.Boolean(compute="_compute_has_gathering_invoice")
     withdrawn_amount = fields.Float(
@@ -105,7 +104,6 @@ class SaleOrder(models.Model):
             lambda x: x.is_gathering and x.order_line.filtered(lambda x: x.initial_qty_gathered > 0)
         )
         for order in orders_gathering:
-            price_subtotal = 0
             price_subtotal_with_taxes = 0
             for line in order.order_line.filtered(lambda x: x.initial_qty_gathered > 0):
                 price_reduce = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
@@ -116,11 +114,8 @@ class SaleOrder(models.Model):
                     product=line.product_id,
                     partner=line.order_id.partner_shipping_id,
                 )
-                price_subtotal += subtotal["total_excluded"]
                 price_subtotal_with_taxes += subtotal["total_included"]
-            order.gathering_amount = price_subtotal
             order.gathering_amount_with_taxes = price_subtotal_with_taxes
-        (self - orders_gathering).gathering_amount = 0.0
         (self - orders_gathering).gathering_amount_with_taxes = 0.0
 
     @api.depends("is_gathering", "invoice_ids", "invoice_ids.state")
