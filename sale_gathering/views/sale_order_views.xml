@@ -16,7 +16,7 @@
             </button>
             <button name="%(sale.action_view_sale_advance_payment_inv)d" position="after">
                 <field name="has_gathering_invoice" invisible="1"/>
-                <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Gathering Invoice" type="action" context="{'default_advance_payment_method': 'percentage', 'default_amount': 100}" invisible="not is_gathering or state != 'sale' or has_gathering_invoice"/>
+                <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Gathering Invoice" type="action" context="{'default_advance_payment_method': 'fixed', 'default_fixed_amount': gathering_amount_with_taxes}" invisible="not is_gathering or state != 'sale' or has_gathering_invoice"/>
             </button>
             <group name="sale_total" position="inside">
                 <table class="float-end">
