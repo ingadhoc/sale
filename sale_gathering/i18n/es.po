@@ -3,16 +3,16 @@
 # 	* sale_gathering
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025
 # María Florencia Frigieri Parma, 2025
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-09 16:56+0000\n"
+"POT-Creation-Date: 2025-02-19 15:33+0000\n"
 "PO-Revision-Date: 2024-12-10 16:22+0000\n"
-"Last-Translator: María Florencia Frigieri Parma, 2025\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,13 +29,18 @@ msgstr ""
 
 #. module: sale_gathering
 #: model_terms:ir.ui.view,arch_db:sale_gathering.sale_gathering_totals
-msgid "<strong>Gathering Amount:</strong>"
-msgstr "<strong>Monto acopiado:</strong>"
+msgid "<strong>Gathering Amount With Taxes:</strong>"
+msgstr ""
 
 #. module: sale_gathering
 #: model_terms:ir.ui.view,arch_db:sale_gathering.sale_gathering_totals
 msgid "<strong>Gathering Balance:</strong>"
 msgstr "<strong>Balance de acopio:</strong>"
+
+#. module: sale_gathering
+#: model_terms:ir.ui.view,arch_db:sale_gathering.sale_gathering_totals
+msgid "<strong>Withdrawn Amount:</strong>"
+msgstr "<strong>Monto retirado:</strong>"
 
 #. module: sale_gathering
 #: model:ir.model.fields,help:sale_gathering.field_sale_advance_payment_inv__advance_payment_method
@@ -93,6 +98,14 @@ msgid "Discounts cannot be added to downpayments."
 msgstr "Los descuentos no pueden añadirse a los anticipos."
 
 #. module: sale_gathering
+#: model:ir.model.fields,help:sale_gathering.field_sale_order__withdrawn_amount
+msgid ""
+"El monto retirado (o solicitado) se calcula en base a la columna cantidad de"
+" las lineas de ventas, no necesariamente tienen que estar "
+"entregadas/facturadas esas lineas de venta."
+msgstr ""
+
+#. module: sale_gathering
 #: model:ir.model.fields.selection,name:sale_gathering.selection__sale_advance_payment_inv__advance_payment_method__invoice_gathering_zero
 msgid "Factura en cero descontando acopio"
 msgstr ""
@@ -106,6 +119,11 @@ msgstr "Acopio"
 #: model:ir.model.fields,field_description:sale_gathering.field_sale_order__gathering_amount
 msgid "Gathering Amount"
 msgstr "Monto Acopiado"
+
+#. module: sale_gathering
+#: model:ir.model.fields,field_description:sale_gathering.field_sale_order__gathering_amount_with_taxes
+msgid "Gathering Amount With Taxes"
+msgstr "Monto acopiado con impuestos"
 
 #. module: sale_gathering
 #: model:ir.actions.report,name:sale_gathering.action_report_saleorder_gathering
@@ -145,9 +163,15 @@ msgid "Journal Entry"
 msgstr "Asiento contable"
 
 #. module: sale_gathering
-#: model:ir.model.fields,help:sale_gathering.field_sale_order__gathering_amount
-msgid "Monto, sin impuestos, acopiado inicialmente."
+#: model:ir.model.fields,help:sale_gathering.field_sale_order__gathering_amount_with_taxes
+msgid "Monto acopiado inicialmente."
 msgstr ""
+
+#. module: sale_gathering
+#. odoo-javascript
+#: code:addons/sale_gathering/static/src/widgets/qty_at_date_widget.xml:0
+msgid "No stock available"
+msgstr "Sin stock disponible"
 
 #. module: sale_gathering
 #: model_terms:ir.ui.view,arch_db:sale_gathering.view_sales_order_filter
@@ -162,23 +186,8 @@ msgstr "Cantidad"
 
 #. module: sale_gathering
 #: model_terms:ir.ui.view,arch_db:sale_gathering.report_saleorder_document_gathering
-msgid "Quantity Delivered"
-msgstr "Cantidad entregada"
-
-#. module: sale_gathering
-#: model_terms:ir.ui.view,arch_db:sale_gathering.report_saleorder_document_gathering
 msgid "Quantity Invoiced"
 msgstr "Cantidad facturada"
-
-#. module: sale_gathering
-#: model_terms:ir.ui.view,arch_db:sale_gathering.report_saleorder_document_gathering
-msgid "Quantity Returned"
-msgstr "Cantidad devuelta"
-
-#. module: sale_gathering
-#: model:ir.model,name:sale_gathering.model_ir_actions_report
-msgid "Report Action"
-msgstr "Acción de informe"
 
 #. module: sale_gathering
 #: model:ir.model,name:sale_gathering.model_sale_advance_payment_inv
@@ -196,6 +205,17 @@ msgid "Sales Order Line"
 msgstr "Línea de pedido de venta"
 
 #. module: sale_gathering
+#: model:ir.model.fields,field_description:sale_gathering.field_sale_order_line__stock_by_location
+msgid "Stock By Location"
+msgstr "Stock por Ubicación"
+
+#. module: sale_gathering
+#. odoo-javascript
+#: code:addons/sale_gathering/static/src/widgets/qty_at_date_widget.xml:0
+msgid "Stock by Location"
+msgstr "Stock por Ubicación"
+
+#. module: sale_gathering
 #. odoo-python
 #: code:addons/sale_gathering/models/sale_order.py:0
 msgid ""
@@ -206,6 +226,11 @@ msgstr ""
 "la orden. Orden: %s"
 
 #. module: sale_gathering
+#: model:ir.model.fields,field_description:sale_gathering.field_sale_order__withdrawn_amount
+msgid "Withdrawn Amount"
+msgstr "Monto retirado"
+
+#. module: sale_gathering
 #. odoo-python
 #: code:addons/sale_gathering/models/sale_order_line.py:0
 msgid ""
@@ -214,37 +239,3 @@ msgid ""
 msgstr ""
 "No puede modificar el descuento de las líneas de acopio una vez confirmada "
 "la venta.\n"
-
-#. module: sale_gathering
-#: model:ir.model.fields,field_description:sale_gathering.field_sale_order_line__stock_by_location
-msgid "Stock By Location"
-msgstr "Stock por Ubicación"
-
-#. module: sale_gathering
-#. odoo-javascript
-#: code:addons/sale_gathering/static/src/widgets/qty_at_date_widget.xml:0
-#, python-format
-msgid "Stock by Location"
-msgstr "Stock por Ubicación"
-
-#. module: sale_gathering
-#. odoo-javascript
-#: code:addons/sale_gathering/static/src/widgets/qty_at_date_widget.xml:0
-#, python-format
-msgid "No stock available"
-msgstr "Sin stock disponible"
-
-#. module: sale_gathering
-#: model:ir.model.fields,field_description:sale_gathering.field_sale_order__gathering_amount_with_taxes
-msgid "Gathering Amount With Taxes"
-msgstr "Monto acopiado con impuestos"
-
-#. module: sale_gathering
-#: model:ir.model.fields,field_description:sale_gathering.field_sale_order__withdrawn_amount
-msgid "Withdrawn Amount"
-msgstr "Monto retirado"
-
-#. module: sale_gathering
-#: model_terms:ir.ui.view,arch_db:sale_gathering.sale_gathering_totals
-msgid "<strong>Withdrawn Amount:</strong>"
-msgstr "<strong>Monto retirado:</strong>"
