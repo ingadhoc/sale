@@ -60,11 +60,39 @@ class SaleOrder(models.Model):
             self.env["ir.config_parameter"].sudo().get_param("sale_ux.update_prices_automatically", "False")
         )
         if self.order_line and update_prices_automatically:
+<<<<<<< HEAD
             # we need to user the same code as odoo in action_update_prices(),
             # because the "message_post" method isn't available over an onchange trigger.
             super()._recompute_prices()
 
     @api.onchange("fiscal_position_id")
+||||||| parent of 3bdde4af (temp)
+            # we need to user the same code as odoo in action_update_prices(),
+            # because the "message_post" method isn't available over an onchange trigger.
+
+            # for compatibility with product_pack module
+            pack_installed = 'pack_parent_line_id' in self.order_line._fields
+            if pack_installed:
+                pack_lines = self.order_line.with_context(update_prices=True, pricelist=self.pricelist_id.id).filtered(
+                    lambda l: l.product_id.pack_ok and l.product_id.pack_component_price != 'ignored')
+                super(SaleOrder, self.with_context(lines_to_not_update_ids=pack_lines.ids))._recompute_prices()
+                for line in pack_lines:
+                    if line.pack_parent_line_id:
+                        continue
+                    elif line.pack_child_line_ids:
+                        if not isinstance(self.id, int):
+                            self._compute_pack_lines_prices(line)
+                        else:
+                            line.expand_pack_line(write=True)
+            else:
+                super()._recompute_prices()
+
+    @api.onchange('fiscal_position_id')
+=======
+            super()._recompute_prices()
+
+    @api.onchange('fiscal_position_id')
+>>>>>>> 3bdde4af (temp)
     def _onchange_fiscal_position_id(self):
         """
         No utilizamos el método action_update_taxes() directamente porque no funciona
