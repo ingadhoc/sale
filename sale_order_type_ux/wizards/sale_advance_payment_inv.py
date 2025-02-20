@@ -17,12 +17,16 @@ class SaleAdvancePaymentInv(models.TransientModel):
         company = order.type_id.journal_id.company_id
         self = self.with_company(company.id)
         res = super()._prepare_invoice_values(order, so_line, accounts)
-        if company != order.company_id.id:
-            taxes = self.product_id.taxes_id.filtered(lambda r: not order.company_id or r.company_id == company)
-            if order.fiscal_position_id and taxes:
-                tax_ids = order.fiscal_position_id.map_tax(taxes).ids
-            else:
-                tax_ids = taxes.ids
-            res["invoice_line_ids"][0][2]["tax_ids"] = [(6, 0, tax_ids)]
+        if company != order.company_id:
+            for line_downpayment in so_line.filtered("is_downpayment"):
+                tax = line_downpayment.tax_id
+                if order.fiscal_position_id and tax:
+                    tax_ids = order.fiscal_position_id.map_tax(tax).ids
+                else:
+                    tax_ids = tax.ids
+
+                for line in res["invoice_line_ids"]:
+                    if line[2]["is_downpayment"] and line[2]["sale_line_ids"][0][1] == line_downpayment.id:
+                        line[2]["tax_ids"] = [(6, 0, tax_ids)]
 
         return res
