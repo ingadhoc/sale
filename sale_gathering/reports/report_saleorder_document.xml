@@ -26,7 +26,17 @@
             </td>
         </xpath>
 
+<<<<<<< HEAD
         <xpath expr="//t[@t-call='sale.document_tax_totals']" position="replace">
+||||||| parent of 8dd4cad2 (temp)
+        <xpath expr="//t[@t-call='account.document_tax_totals']" position="replace">
+=======
+        <xpath expr="//td[@name='td_section_subtotal']" position="attributes">
+            <attribute name="t-if">not doc.is_gathering</attribute>
+        </xpath>
+
+        <xpath expr="//t[@t-call='account.document_tax_totals']" position="replace">
+>>>>>>> 8dd4cad2 (temp)
             <t t-call="sale_gathering.sale_gathering_totals"/>
         </xpath>
     </template>
