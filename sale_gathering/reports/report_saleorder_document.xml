@@ -26,6 +26,10 @@
             </td>
         </xpath>
 
+        <xpath expr="//td[@name='td_section_subtotal']" position="attributes">
+            <attribute name="t-if">not doc.is_gathering</attribute>
+        </xpath>
+
         <xpath expr="//t[@t-call='account.document_tax_totals']" position="replace">
             <t t-call="sale_gathering.sale_gathering_totals"/>
         </xpath>
