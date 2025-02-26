@@ -21,3 +21,8 @@ class StockReturnPicking(models.TransientModel):
         except KeyError:
             pass
         return result
+
+    def action_create_exchanges(self):
+        action = super().action_create_exchanges()
+        self.picking_id.return_ids.move_ids.write({"to_redeliver": True})
+        return action

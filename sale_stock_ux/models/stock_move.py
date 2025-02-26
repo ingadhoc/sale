@@ -12,6 +12,10 @@ class StockMove(models.Model):
         related="group_id.sale_id",
     )
 
+    to_redeliver = fields.Boolean(
+        default=False, help="If true, then the returned quantities on the SO line will not be imputed"
+    )
+
     def _get_new_picking_values(self):
         """return create values for new picking that will be linked with group
         of moves in self.

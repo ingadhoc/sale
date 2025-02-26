@@ -7,16 +7,15 @@
         <field name="arch" type="xml">
             <field name="product_return_moves" position="before">
                 <div class="alert alert-info" role="alert" style="margin-bottom:0px;">
-                    <b>Importante</b>: si está haciendo un movimiento inverso relacionado a un Pedido de Venta o de Compra, entonces debe prestar atención al campo <b>"Para Abonar (actualizar OC/OV)"</b>, donde, si:
+                    <b>Importante</b>: si está haciendo un movimiento inverso relacionado a un Pedido de Venta o de Compra, entonces debe tener en cuenta qué acción ejecutar al devolver:
                     <ul>
                         <li>
-                            <b>Está marcado</b>: entonces <b>se va</b> a actualizar la OC/OV considerando que los productos devueltos no se van a volver a entregar, y por ende, permitiendo hacer una nota de crédito si los items ya fueron facturados, o tener en cuenta esta devolución al hacer la factura.
+                            <b>Devolver y Devolver Todo</b>: Se modificará la OV/OC, disminuyendo las cantidades a facturar. Este caso implica que los productos devueltos no se van a volver a entregar.
                         </li>
                         <li>
-                            <b>No está marcado</b>: entonces <b>no se va</b> a actualizar la OC/OV. Esto es común, por ejemplo, si se devuelve mercadería defectuosa y se pretende hacer una nueva entrega de la misma.
+                            <b>Devolución para Cambio</b>: No se modificará la OV/OC ya que se entiende que se volverán a entregar/recibir los productos devueltos. Esta acción generará automáticamente 2 movimientos: Uno para hacer la devolución y el otro para volver a entregar o recibir el producto (según corresponda)".
                         </li>
                     </ul>
-                    Si la devolución no está ligada a una OC/OV entonces este campo no repercute en nada.
                 </div>
             </field>
             <field name="to_refund" position="attributes">
@@ -25,7 +24,7 @@
                 <!-- always show the button -->
                 <attribute name="groups"></attribute>
                 <!-- porque la traducción no se actualiza -->
-                <attribute name="string">Para Abonar (actualizar OC/OV)</attribute>
+                <attribute name="column_invisible">1</attribute>
             </field>
         </field>
     </record>
