@@ -19,7 +19,13 @@
 ##############################################################################
 {
     'name': 'Sale Gathering',
+<<<<<<< HEAD
     'version': "17.0.1.5.0",
+||||||| parent of 536eba78 (temp)
+    'version': "16.0.1.7.0",
+=======
+    'version': "16.0.1.8.0",
+>>>>>>> 536eba78 (temp)
     'category': 'Sales & Stock',
     'sequence': 14,
     'summary': '',
