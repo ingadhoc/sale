@@ -114,4 +114,29 @@
             </xpath>
         </field>
     </record>
+
+    <record id="sale_order_view_search_inherit_quotation_new" model="ir.ui.view">
+        <field name="name">sale.order.search.inherit.quotation.new</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='my_quotation']" position="replace">
+                <filter string="My Quotations" name="my_quotation"
+                        domain="[('create_uid', '=', uid), ('state', 'in', ['draft', 'sent'])]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- <record id="view_sales_order_filter_inherit" model="ir.ui.view">
+        <field name="name">sale.order.list.select.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='my_sale_orders_filter']" position="attributes">
+                <attribute name="domain">[('create_uid', '=', uid), ('state', '=', 'sale')]</attribute>
+                <attribute name="default">1</attribute>
+            </xpath>
+        </field>
+    </record> -->
+
 </odoo>
