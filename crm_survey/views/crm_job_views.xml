@@ -9,7 +9,7 @@
                 <label for="survey_id" groups="base.group_user"/>
                 <div groups="base.group_user" class="o_row">
                     <field name="survey_id"/>
-                    <button string="Display Interview Form" name="action_print_survey" type="object" attrs="{'invisible':[('survey_id','=',False)]}" class="oe_link"/>
+                    <button string="Display Interview Form" name="action_print_survey" type="object" invisible="not survey_id" class="oe_link"/>
                 </div>
             </group>
         </field>

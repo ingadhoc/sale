@@ -10,9 +10,9 @@
    :target: https://www.gnu.org/licenses/agpl
    :alt: License: AGPL-3
 
-======
-CRM UX
-======
+==========
+CRM Survey
+==========
 
 This adds some features to CRM of odoo:
 

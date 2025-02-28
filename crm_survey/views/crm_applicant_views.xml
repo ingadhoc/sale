@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="crm_case_tree_view_survey_inherit" model="ir.ui.view">
-        <field name="name">crm.lead.tree.inherit</field>
+        <field name="name">crm.lead.list.inherit</field>
         <field name="model">crm.lead</field>
         <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
         <field name="arch" type="xml">
@@ -24,7 +24,7 @@
                     type="object"
                     help="Make a survey"
                     context="{'survey_id': survey_id}"
-                    attrs="{'invisible':[('survey_id','=',False)]}">
+                    invisible="not survey_id">
                     <div class="o_field_widget o_stat_info">
                         <span class="o_stat_text">Start</span>
                         <span class="o_stat_text">Interview</span>
@@ -35,7 +35,7 @@
                     icon="fa-print"
                     type="object"
                     help="Print interview report"
-                    attrs="{'invisible':[('survey_id','=',False)]}">
+                    invisible="not survey_id">
                     <div class="o_field_widget o_stat_info">
                         <span class="o_stat_text">Print</span>
                         <span class="o_stat_text">Interview</span>
