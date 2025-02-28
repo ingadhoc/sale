@@ -18,8 +18,8 @@
 #
 ##############################################################################
 {
-    "name": "CRM SURVEY",
-    "version": "16.0.1.0.0",
+    "name": "CRM Survey",
+    "version": "18.0.1.0.0",
     "category": "Human Resources Survey",
     "license": "AGPL-3",
     "author": "ADHOC SA",
@@ -30,7 +30,7 @@
         "views/crm_job_views.xml",
         "views/crm_applicant_views.xml",
     ],
-    "installable": False,
+    "installable": True,
     "auto_install": False,
     "application": False,
 }
