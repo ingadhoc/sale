@@ -1,0 +1,98 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_timesheet_extra_hours
+# 
+# Translators:
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025
+# bafadhoc, 2025
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-02-28 20:36+0000\n"
+"PO-Revision-Date: 2025-02-28 13:49+0000\n"
+"Last-Translator: bafadhoc, 2025\n"
+"Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model,name:sale_timesheet_extra_hours.model_account_analytic_line
+msgid "Analytic Line"
+msgstr "Línea analítica"
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model.fields,field_description:sale_timesheet_extra_hours.field_hr_employee__day_extra_hour_coef
+msgid "Coefficient of an extra hour by day"
+msgstr "Coeficiente de Hora Extra Diurna"
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model.fields,field_description:sale_timesheet_extra_hours.field_hr_employee__night_extra_hour_coef
+msgid "Coefficient of an extra hour by night"
+msgstr "Coeficiente de Hora Extra Noctura/Feriados"
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model.fields,field_description:sale_timesheet_extra_hours.field_project_sale_line_employee_map__cost_day_extra_hour
+msgid "Cost Day Extra Hour"
+msgstr "Costo de Hora Extra Diurna"
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model.fields,field_description:sale_timesheet_extra_hours.field_project_sale_line_employee_map__cost_night_extra_hour
+msgid "Cost Night Extra Hour"
+msgstr "Costo de Hora Extra Nocturna"
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model.fields,field_description:sale_timesheet_extra_hours.field_hr_employee__day_extra_hour_cost
+msgid "Cost of an extra hour by day"
+msgstr "Coeficiente de Hora Extra Diurna"
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model.fields,field_description:sale_timesheet_extra_hours.field_hr_employee__night_extra_hour_cost
+msgid "Cost of an extra hour by night"
+msgstr "Coeficiente de Hora Extra Noctura/Feriados"
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model.fields.selection,name:sale_timesheet_extra_hours.selection__account_analytic_line__extra_hour_type__day
+msgid "Day"
+msgstr "Diurna"
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model,name:sale_timesheet_extra_hours.model_hr_employee
+msgid "Employee"
+msgstr "Empleado"
+
+#. module: sale_timesheet_extra_hours
+#: model_terms:ir.ui.view,arch_db:sale_timesheet_extra_hours.timesheet_view_tree_user_ux
+#: model_terms:ir.ui.view,arch_db:sale_timesheet_extra_hours.view_account_analytic_line_form_ux
+#: model_terms:ir.ui.view,arch_db:sale_timesheet_extra_hours.view_account_analytic_line_tree_inherit_account_ux
+msgid "Extra Cost"
+msgstr "Costo Extra"
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model.fields,field_description:sale_timesheet_extra_hours.field_account_analytic_line__extra_hour_type
+msgid "Extra Hour Type"
+msgstr "Tipo de Hora Extra"
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model.fields,field_description:sale_timesheet_extra_hours.field_account_analytic_line__extra_hour
+msgid "Extra Hour?"
+msgstr "Hora Extra?"
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model.fields.selection,name:sale_timesheet_extra_hours.selection__account_analytic_line__extra_hour_type__holiday
+msgid "Holiday"
+msgstr "Feriado"
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model.fields.selection,name:sale_timesheet_extra_hours.selection__account_analytic_line__extra_hour_type__night
+msgid "Night"
+msgstr "Noche"
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model,name:sale_timesheet_extra_hours.model_project_sale_line_employee_map
+msgid "Project Sales line, employee mapping"
+msgstr "Línea de ventas de proyectos, mapeo de empleados"
