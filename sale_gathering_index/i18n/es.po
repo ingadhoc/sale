@@ -3,15 +3,15 @@
 # 	* sale_gathering_index
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-16 19:26+0000\n"
+"POT-Creation-Date: 2025-02-12 16:22+0000\n"
 "PO-Revision-Date: 2024-09-16 19:26+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,14 +20,35 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #. module: sale_gathering_index
-#: model_terms:ir.ui.view,arch_db:sale_gathering_index.report_saleorder_index
-msgid "<strong>Gathering Balance Indexed:</strong>"
+#. odoo-python
+#: code:addons/sale_gathering_index/models/sale_order_line.py:0
+#, python-format
+msgid ""
+"\n"
+"(Current price: $%s | Coef: %s)"
+msgstr ""
+"\n"
+"(Precio actual: $%s | Coef: %s)"
+
+#. module: sale_gathering_index
+#: model_terms:ir.ui.view,arch_db:sale_gathering_index.report_saleorder_document_gathering
+msgid "% = <strong>Coef:</strong>"
 msgstr ""
 
 #. module: sale_gathering_index
-#: model_terms:ir.ui.view,arch_db:sale_gathering_index.report_saleorder_index
+#: model_terms:ir.ui.view,arch_db:sale_gathering_index.sale_gathering_totals
+msgid "<strong>Gathering Balance Indexed:</strong>"
+msgstr "<strong>Balance de acopio indexado:</strong>"
+
+#. module: sale_gathering_index
+#: model_terms:ir.ui.view,arch_db:sale_gathering_index.sale_gathering_totals
 msgid "<strong>Indexed Gathering Amount:</strong>"
-msgstr ""
+msgstr "<strong>Monto acopiado indexado:</strong>"
+
+#. module: sale_gathering_index
+#: model_terms:ir.ui.view,arch_db:sale_gathering_index.report_saleorder_document_gathering
+msgid "<strong>Update Index:</strong>"
+msgstr "<strong>Índice de actualización:</strong>"
 
 #. module: sale_gathering_index
 #: model:ir.model.fields,help:sale_gathering_index.field_sale_order__gathering_balance_indexed
@@ -84,29 +105,3 @@ msgstr ""
 msgid ""
 "You can't modify the quantity of an added product. Please add a new line."
 msgstr ""
-
-#. module: sale_gathering_index
-#: model_terms:ir.ui.view,arch_db:sale_gathering_index.report_saleorder_document_gathering
-msgid "<strong>Update Index:</strong>"
-msgstr "<strong>Índice de actualización:</strong>"
-
-#. module: sale_gathering_index
-#. odoo-python
-#: code:addons/sale_gathering_index/models/sale_order_line.py:0
-#, python-format
-msgid ""
-"\n"
-"(Current price: $%s | Coef: %s)"
-msgstr ""
-"\n"
-"(Precio actual: $%s | Coef: %s)"
-
-#. module: sale_gathering
-#: model_terms:ir.ui.view,arch_db:sale_gathering_index.sale_gathering_totals
-msgid "<strong>Indexed Gathering Amount:</strong>"
-msgstr "<strong>Monto acopiado indexado:</strong>"
-
-#. module: sale_gathering
-#: model_terms:ir.ui.view,arch_db:sale_gathering_index.sale_gathering_totals
-msgid "<strong>Gathering Balance Indexed:</strong>"
-msgstr "<strong>Balance de acopio indexado:</strong>"
