@@ -7,6 +7,7 @@
         <field name="arch" type="xml">
             <field name="payment_term_id" position="after">
                 <field name="index" invisible="not is_gathering" widget="percentage"/>
+                <field name="coef" invisible="not is_gathering"/>
             </field>
             <xpath expr="//field[@name='order_line']/list//field[@name='price_unit']" position="attributes">
                 <attribute name="readonly">qty_invoiced &gt; 0 or (parent.is_gathering and state == 'sale')</attribute>

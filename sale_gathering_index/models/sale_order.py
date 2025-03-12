@@ -4,7 +4,15 @@ from odoo import api, fields, models
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    index = fields.Float(compute="_compute_index")
+    index = fields.Float(
+        compute="_compute_index",
+        help="Variación de precio promedio de los productos acopiados. El mismo se calcula ponderando por cantidades acopiadas.",
+    )
+    coef = fields.Float(
+        compute="_compute_index",
+        digits=(12, 4),
+        help="Coeficiente inverso que se utiliza para estimar el precio de un producto canjeado a la fecha de confirmación del acopio. Para calcular el precio se toma el precio actual del producto y se lo divide por este coeficiente.",
+    )
     gathering_balance_indexed = fields.Float(
         compute="_compute_gathering_balance_indexed",
         digits="Product Price",
@@ -57,7 +65,9 @@ class SaleOrder(models.Model):
         )
         for order in gathering_orders:
             order.index = (order.indexed_gathering_amount / order.gathering_amount_with_taxes) - 1
+            order.coef = order.index + 1
         (self - gathering_orders).index = 0.0
+        (self - gathering_orders).coef = 0.0
 
     @api.depends("gathering_balance", "index")
     def _compute_gathering_balance_indexed(self):
