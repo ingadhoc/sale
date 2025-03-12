@@ -57,7 +57,6 @@ class SaleOrderLine(models.Model):
                 product_price_unit=price,
                 product_currency=line.currency_id
             )
-            coefficient = 1 / (line.order_id.index + 1)
             line.name += _(
                 "\n(Current price: $%s | Coef: %s)"
-            ) % (line_price, round(coefficient, 4))
+            ) % (line_price, round(line.order_id.coef, 4))
