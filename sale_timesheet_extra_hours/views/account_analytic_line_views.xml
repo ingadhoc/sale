@@ -20,6 +20,8 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='unit_amount']" position="before">
                 <field string="Extra Cost" readonly="1" name="extra_hour" optional="hide"  widget="boolean_toggle"/>
+                <field string="Extra Hour Type" readonly="1" name="extra_hour_type" invisible="not extra_hour" optional="hide"/>
+                <field string="Cost Per Hour" readonly="1" name="cost" optional="hide"/>
             </xpath>
         </field>
     </record>
@@ -31,6 +33,8 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='amount']" position="before">
                 <field string="Extra Cost" readonly="1" name="extra_hour" optional="hide"  widget="boolean_toggle"/>
+                <field string="Extra Hour Type" readonly="1" name="extra_hour_type" invisible="not extra_hour" optional="hide"/>
+                <field string="Cost Per Hour" readonly="1" name="cost" optional="hide"/>
             </xpath>
         </field>
     </record>
@@ -41,8 +45,20 @@
         <field name="inherit_id" ref="analytic.view_account_analytic_line_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='product_uom_id']" position="after">
-                <field string="Extra Cost" readonly="1" name="extra_hour" widget="boolean_toggle"/>
+                <field string="Extra Cost" name="extra_hour" widget="boolean_toggle"/>
+                <field string="Extra Hour Type" name="extra_hour_type" invisible="not extra_hour"/>
             </xpath>
         </field>
     </record>
+    <record id="hr_timesheet_line_form_ux" model="ir.ui.view">
+            <field name="name">account.analytic.line.form.inherit</field>
+            <field name="model">account.analytic.line</field>
+            <field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='unit_amount']" position="after">
+                    <field name="extra_hour" widget="boolean_toggle"/>
+                    <field name="extra_hour_type" invisible="not extra_hour"/>
+                </xpath>
+            </field>
+        </record>
 </odoo>

@@ -1,7 +1,7 @@
 {
     "name": "Sales Timesheet Extra Hours",
     "summary": "",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.1.0",
     "website": "www.adhoc.com.ar",
     "license": "AGPL-3",
     "author": "ADHOC SA",
