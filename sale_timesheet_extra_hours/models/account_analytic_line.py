@@ -13,24 +13,30 @@ class AccountAnalyticLine(models.Model):
         default="day",
     )
 
+    cost = fields.Float()
+
     def _hourly_cost(self):
+        if self.cost != 0.0:
+            return self.cost
         if self.project_id.pricing_type == "fixed_rate":
             self.ensure_one()
             if self.extra_hour:
                 if self.extra_hour_type == "day":
-                    return self.employee_id.day_extra_hour_cost
+                    self.cost = self.employee_id.day_extra_hour_cost
                 else:
-                    return self.employee_id.night_extra_hour_cost
+                    self.cost = self.employee_id.night_extra_hour_cost
             else:
-                return self.employee_id.hourly_cost or 0.0
+                self.cost = self.employee_id.hourly_cost or 0.0
+            return self.cost
         if self.project_id.pricing_type == "employee_rate":
             mapping_entry = self._get_employee_mapping_entry()
             if mapping_entry:
                 if self.extra_hour:
                     if self.extra_hour_type == "day":
-                        return mapping_entry.cost_day_extra_hour
+                        self.cost = mapping_entry.cost_day_extra_hour
                     else:
-                        return mapping_entry.cost_night_extra_hour
+                        self.cost = mapping_entry.cost_night_extra_hour
                 else:
-                    return mapping_entry.cost or 0.0
+                    self.cost = mapping_entry.cost or 0.0
+            return self.cost
         return super()._hourly_cost()
