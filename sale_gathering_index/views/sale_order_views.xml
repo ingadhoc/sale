@@ -7,6 +7,7 @@
         <field name="arch" type="xml">
             <field name="payment_term_id" position="after">
                 <field name="index" attrs="{'invisible': [('is_gathering', '=', False)]}" widget="percentage"/>
+                <field name="coef" attrs="{'invisible': [('is_gathering', '=', False)]}"/>
             </field>
             <xpath expr="//field[@name='order_line']/tree//field[@name='name']" position="attributes">
                 <attribute name="attrs">{'readonly': [('parent.is_gathering', '=', True), ('display_type', 'not in', ['line_section', 'line_note'])]}</attribute>
