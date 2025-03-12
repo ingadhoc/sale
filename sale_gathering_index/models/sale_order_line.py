@@ -75,5 +75,4 @@ class SaleOrderLine(models.Model):
                 product_taxes=line.product_id.taxes_id.filtered(lambda tax: tax.company_id == line.env.company),
                 fiscal_position=line.order_id.fiscal_position_id,
             )
-            coefficient = 1 / (line.order_id.index + 1)
-            line.name += _("\n(Current price: $%s | Coef: %s)") % (price_unit, round(coefficient, 4))
+            line.name += _("\n(Current price: $%s | Coef: %s)") % (price_unit, round(line.order_id.coef, 4))

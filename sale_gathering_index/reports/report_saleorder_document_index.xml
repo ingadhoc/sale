@@ -5,7 +5,7 @@
     >
         <xpath expr="//div[@id='informations']" position="after">
             <div class="row">
-                <strong>Update Index:</strong> <span t-esc="round(doc.index * 100, 2)"/> <span>% = <strong>Coef:</strong>  <span t-esc="round(doc.index + 1, 4)"/> </span>
+                <strong>Update Index:</strong> <span t-esc="round(doc.index * 100, 2)"/> <span>% | <strong>Coef:</strong>  <span t-esc="round(doc.coef, 4)"/> </span>
             </div>
         </xpath>
     </template>
