@@ -1,4 +1,4 @@
-from odoo import _, api, fields, models
+from odoo import Command, _, api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools import float_compare
 
@@ -93,11 +93,16 @@ class SaleOrder(models.Model):
                     % (rec.gathering_balance, rec.name)
                 )
 
-    def action_confirm(self):
+    def _action_confirm(self):
         for order in self.filtered("is_gathering"):
+            lines_commands = []
             for line in order.order_line:
-                line.write({"initial_qty_gathered": line.product_uom_qty, "product_uom_qty": 0})
-        return super().action_confirm()
+                lines_commands.append(
+                    Command.update(line.id, {"initial_qty_gathered": line.product_uom_qty, "product_uom_qty": 0})
+                )
+            if lines_commands:
+                order.write({"order_line": lines_commands})
+        return super()._action_confirm()
 
     @api.depends("order_line.initial_qty_gathered", "is_gathering")
     def _compute_gathering_amount(self):
