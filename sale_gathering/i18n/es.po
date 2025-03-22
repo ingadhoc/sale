@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-19 15:33+0000\n"
+"POT-Creation-Date: 2025-03-20 23:40+0000\n"
 "PO-Revision-Date: 2024-12-10 16:22+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -114,11 +114,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_gathering.view_sales_order_filter
 msgid "Gathering"
 msgstr "Acopio"
-
-#. module: sale_gathering
-#: model:ir.model.fields,field_description:sale_gathering.field_sale_order__gathering_amount
-msgid "Gathering Amount"
-msgstr "Monto Acopiado"
 
 #. module: sale_gathering
 #: model:ir.model.fields,field_description:sale_gathering.field_sale_order__gathering_amount_with_taxes
