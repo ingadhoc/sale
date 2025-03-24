@@ -5,24 +5,35 @@
         id="sale_menu"
         name="Sales"
         groups="group_portal_backend_distributor"
-        web_icon="sale_management,static/description/icon.png"
-        />
+        web_icon="sale_management,static/description/icon.png">
 
-    <menuitem
-        id="quotations"
-        name="Quotations"
-        action="sale.action_quotations"
-        parent="sale_menu"
-        sequence="10"
-        />
+        <menuitem id="sale_order_menu"
+            name="Order"
+            sequence="10">
 
-    <menuitem
-        id="sale_order"
-        name="Sales Order"
-        action="sale.action_orders"
-        parent="sale_menu"
-        sequence="20"
-        />
+            <menuitem
+                id="sale_order"
+                name="Order"
+                action="sale.action_orders"
+                sequence="10"
+                />
+
+            <menuitem
+                id="quotations"
+                name="My Quotations"
+                action="sale.action_quotations"
+                sequence="20"
+                />
+
+            <menuitem
+                id="order_lines"
+                name="Sale Order Lines"
+                action="sale_ux.action_sale_order_line_usability_tree"
+                sequence="30"
+                />
+
+        </menuitem>
+    </menuitem>
 
     <record id="view_order_form" model="ir.ui.view">
         <field name="name">sale.order.inherit</field>
@@ -111,6 +122,20 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='order_line']/list//field[@name='product_can_modify_prices']" position="attributes">
                 <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_order_view_search_inherit_quotation_new" model="ir.ui.view">
+        <field name="name">portal_sale_distributor.view_search_inherit_quotation_new</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_ux.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='draft']" position="attributes">
+                <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
+            </xpath>
+            <xpath expr="//filter[@name='my_sale_orders_filter']" position="after">
+                <filter string="My Quotations" name="my_quotation_portal" domain="[('create_uid', '=', uid), ('state', 'in', ['draft', 'sent'])]" groups="portal_sale_distributor.group_portal_backend_distributor"/>
             </xpath>
         </field>
     </record>
