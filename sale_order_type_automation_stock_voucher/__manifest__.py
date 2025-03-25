@@ -19,13 +19,13 @@
 ##############################################################################
 {
     "name": "Sale Order Type Automation Stock Voucher",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.1.0",
     "author": "ADHOC SA",
     "website": "www.adhoc.com.ar",
     "license": "AGPL-3",
     "depends": [
         "stock_voucher",
-        "sale_order_type_automation",
+        "sale_order_type_ux",
     ],
     "category": "Sale Management",
     "data": [

@@ -5,7 +5,7 @@
         <field name="model">sale.order.type</field>
         <field name="inherit_id" ref="sale_order_type.sot_sale_order_type_form_view"/>
         <field name="arch" type="xml">
-            <field name="picking_atomation" position="after">
+            <field name="pricelist_id" position="after">
                 <field name="book_id"/>
              </field>
         </field>
