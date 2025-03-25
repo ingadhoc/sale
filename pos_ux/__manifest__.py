@@ -1,6 +1,6 @@
 {
     'name': 'Point of Sale UX',
-    'version': "17.0.1.2.0",
+    'version': "17.0.1.3.0",
     'category': 'Point of Sale',
     'description': """
 This module extend functionality of point of sale .

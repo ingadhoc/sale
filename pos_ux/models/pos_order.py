@@ -11,6 +11,6 @@ class PosOrder(models.Model):
 
     def _generate_pos_order_invoice(self):
         if self._context.get('from_process_order'):
-            return super(PosOrder, self.filtered(lambda x: not x.session_id.invoice_contingency))._generate_pos_order_invoice()
+            return super(PosOrder, self.filtered(lambda x: not x.session_id.invoice_contingency).with_context(allow_no_partner=True))._generate_pos_order_invoice()
         else:
-            return super()._generate_pos_order_invoice()
+            return super(PosOrder, self.with_context(allow_no_partner=True))._generate_pos_order_invoice()

@@ -13,7 +13,7 @@
                     invisible="invoice_contingency or state not in ['opening_control', 'opened']"/>
                 <button name="action_unset_invoice_contingency" type="object" string="Exit contingency mode"
                     invisible="not invoice_contingency or state not in ['opening_control', 'opened']"/>
-                <button name="action_generate_invoices" type="object" string="Create invoices"/>
+                <button name="action_generate_invoices" type="object" string="Create invoices" invisible = "state == 'closed'"/>
             </button>
         </field>
     </record>
