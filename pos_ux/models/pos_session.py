@@ -9,7 +9,9 @@ class PosSession(models.Model):
     )
 
     def action_generate_invoices(self):
-        self.order_ids.filtered(lambda x: x.state == "paid" and not x.account_move)._generate_pos_order_invoice()
+        self.order_ids.filtered(lambda x: x.state == "paid" and not x.account_move).with_context(
+            allow_no_partner=True
+        )._generate_pos_order_invoice()
 
     def pos_toogle_contingency_mode(self):
         self.ensure_one()
