@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Sale Gathering Index",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.1.0",
     "category": "Sales & Stock",
     "sequence": 14,
     "summary": "",
