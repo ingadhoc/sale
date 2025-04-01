@@ -28,6 +28,7 @@ class AccountMove(models.Model):
         res = super(AccountMove, self).action_post()
         downpayment_lines = self.line_ids.sale_line_ids.filtered(lambda l: l.is_downpayment and not l.display_type)
         for downpayment_line in downpayment_lines:
+            # When change currency in downpayment
             if self.currency_id != downpayment_line.currency_id:
                 downpayment_line.price_unit = self.currency_id._convert(
                     downpayment_line.price_unit,
@@ -35,4 +36,7 @@ class AccountMove(models.Model):
                     self.company_id,
                     self.invoice_date or fields.Date.today(),
                 )
+            # When change company in downpayment
+            if downpayment_line.company_id != self.company_id:
+                downpayment_line.with_company(downpayment_line.company_id.id)._compute_tax_ids()
         return res
