@@ -24,4 +24,3 @@ class AccountMove(models.Model):
                 self._compute_currency_rate()
         if self.state == 'draft' and self._get_last_sequence(lock=False) and self.name and self.name != '/':
             self.name = '/'
-
