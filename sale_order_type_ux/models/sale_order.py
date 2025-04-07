@@ -33,11 +33,26 @@ class SaleOrder(models.Model):
         company = self.type_id.journal_id.company_id
         self = self.with_company(company.id)
         if company != self.company_id:
+<<<<<<< HEAD
             res["company_id"] = company.id
             res["partner_bank_id"] = company.partner_id.bank_ids[:1].id
             # agregamos para que recompute term y cond si la nueva compañia los tiene por defecto
             del res["narration"]
             so_fiscal_position = self.env["account.fiscal.position"].browse(res["fiscal_position_id"])
+||||||| parent of aeaa3849 (temp)
+            res['company_id'] = company.id
+            res['partner_bank_id'] = company.partner_id.bank_ids[:1].id
+            #agregamos para que recompute term y cond si la nueva compañia los tiene por defecto
+            del(res['narration'])
+            so_fiscal_position = self.env['account.fiscal.position'].browse(res['fiscal_position_id'])
+=======
+            res['company_id'] = company.id
+            res['partner_bank_id'] = company.partner_id.bank_ids[:1].id
+            #agregamos para que recompute term y cond si la nueva compañia los tiene por defecto
+            if res['narration']:
+                del(res['narration'])
+            so_fiscal_position = self.env['account.fiscal.position'].browse(res['fiscal_position_id'])
+>>>>>>> aeaa3849 (temp)
             if so_fiscal_position.company_id and so_fiscal_position.company_id != company:
                 res["fiscal_position_id"] = (
                     self.env["account.fiscal.position"]
