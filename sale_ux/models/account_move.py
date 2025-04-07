@@ -38,5 +38,5 @@ class AccountMove(models.Model):
                 )
             # When change company in downpayment
             if downpayment_line.company_id != self.company_id:
-                downpayment_line.with_company(downpayment_line.company_id.id)._compute_tax_ids()
+                downpayment_line.with_company(downpayment_line.company_id.id)._compute_tax_id()
         return res
