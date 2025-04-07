@@ -17,7 +17,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
         company = order.type_id.journal_id.company_id
         self = self.with_company(company.id)
         res = super()._prepare_invoice_values(order, so_line)
-        if company != order.company_id.id:
+        if company.id != order.company_id.id:
             taxes = self.product_id.taxes_id.filtered(
                 lambda r: not order.company_id or r.company_id == company)
             if order.fiscal_position_id and taxes:
