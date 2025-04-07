@@ -2,11 +2,17 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, api
+from odoo import models, api, fields
 
 
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
+
+    # Quitamos el check_company ya que no permitira 
+    # realizar un cambio de compañia entre la venta y su factura de anticipo
+    tax_id = fields.Many2many(
+        check_company=False
+    )
 
     def _prepare_invoice_line(self, **optional_values):
         """
