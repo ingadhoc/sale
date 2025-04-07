@@ -30,3 +30,9 @@ class SaleAdvancePaymentInv(models.TransientModel):
                         line[2]["tax_ids"] = [(6, 0, tax_ids)]
 
         return res
+
+    def _prepare_down_payment_product_values(self):
+        res = super()._prepare_down_payment_product_values()
+        if res["company_id"]:
+            res["company_id"] = False
+        return res
