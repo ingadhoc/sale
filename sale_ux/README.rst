@@ -37,7 +37,7 @@ Several Improvements to sales:
 #. Do not use fiscal positions on prices. By default, when using fiscal position and taxes included on the price on sale orders, the price used on the sale line will be the price without the tax being replaced. We added the possibility to take that functionality, or not, with the setting "deduct price-included taxes" in fiscal positions. There are some issues where this is already discussed in odoo standard. For eg. https://github.com/odoo/odoo/issues/66875
 #. Makes the "update prices" button visible.
 #. Show product image on report
-#. Add a setting for automatic cancellation of quotations.
+#. Add a setting for automatic cancellation of quotations
 #. Modifying the discount, adding lines and changing the price list of a blocked sales order is prevented. This error occurs when working in the same form view in more than one tab at the same time.
 #. Add an action to confirm multiple sales or subscriptions from the list view. To confirm them, select the sales or subscriptions, and in the actions menu, look for 'confirm sale order'.
 
