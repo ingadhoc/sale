@@ -105,20 +105,18 @@ class SaleOrder(models.Model):
             lambda x: x.is_gathering and x.order_line.filtered(lambda x: x.initial_qty_gathered > 0)
         )
         for order in orders_gathering:
-            price_subtotal = 0
-            price_subtotal_with_taxes = 0
-            for line in order.order_line.filtered(lambda x: x.initial_qty_gathered > 0):
-                price_reduce = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
-                subtotal = line.tax_id.compute_all(
-                                price_reduce,
-                                currency=line.currency_id,
-                                quantity=line.initial_qty_gathered,
-                                product=line.product_id,
-                                partner=line.order_id.partner_shipping_id)
-                price_subtotal += subtotal['total_excluded']
-                price_subtotal_with_taxes += subtotal['total_included']
-            order.gathering_amount = price_subtotal
-            order.gathering_amount_with_taxes = price_subtotal_with_taxes
+            tax_totals = order.env['account.tax']._compute_taxes([
+                {
+                    **line._convert_to_tax_base_line_dict(),
+                    'quantity': (
+                        line.initial_qty_gathered
+                    )
+                }
+                for line in order.order_line.filtered(lambda x: x.initial_qty_gathered > 0)
+            ])
+            totals = list(tax_totals['totals'].values())[0]
+            order.gathering_amount = totals['amount_untaxed']
+            order.gathering_amount_with_taxes = totals['amount_untaxed'] + totals['amount_tax']
         (self - orders_gathering).gathering_amount = 0.0
         (self - orders_gathering).gathering_amount_with_taxes = 0.0
 
