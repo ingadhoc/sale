@@ -32,64 +32,65 @@ class ResPartner(models.Model):
     @api.depends_context('company')
     def _compute_credit_with_confirmed_orders(self):
         # Sets 0 when use_partner_credit_limit is not set avoiding unnecessary overloads
-        if not self.use_partner_credit_limit:
-                self.credit_with_confirmed_orders = 0
-        else:
-            domain = [
-                    ('order_id.partner_id.commercial_partner_id', '=', self.commercial_partner_id.id),
-                    # buscamos las que estan a facturar o las no ya que nos interesa
-                    # la cantidad total y no solo la facturada. Esta busqueda ayuda
-                    # a que no busquemos en todo lo que ya fue facturado al dope
-                    ('invoice_status', 'in', ['to invoice', 'no']),
-                    ('order_id.state', 'in', ['sale', 'done']),
-                ]
-            order_lines = self.env['sale.order.line'].sudo().search(domain)
+        for rec in self:
+            if not rec.use_partner_credit_limit:
+                    rec.credit_with_confirmed_orders = 0
+            else:
+                domain = [
+                        ('order_id.partner_id.commercial_partner_id', '=', rec.commercial_partner_id.id),
+                        # buscamos las que estan a facturar o las no ya que nos interesa
+                        # la cantidad total y no solo la facturada. Esta busqueda ayuda
+                        # a que no busquemos en todo lo que ya fue facturado al dope
+                        ('invoice_status', 'in', ['to invoice', 'no']),
+                        ('order_id.state', 'in', ['sale', 'done']),
+                    ]
+                order_lines = rec.env['sale.order.line'].sudo().search(domain)
 
-            # We sum from all the sale orders that are aproved, the sale order
-            # lines that are not yet invoiced
-            to_invoice_amount = 0.0
-            for line in order_lines:
-                # not_invoiced is different from native qty_to_invoice because
-                # the last one only consider to_invoice lines the ones
-                # that has been delivered or are ready to invoice regarding
-                # the invoicing policy. Not_invoiced consider all
-                not_invoiced = line.product_uom_qty - line.qty_invoiced
-                if self.env['sale.order.line']._fields.get('quantity_returned'):
-                    not_invoiced -= line.quantity_returned
-                price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
-                taxes = line.tax_id.compute_all(
-                    price, line.order_id.currency_id,
-                    not_invoiced,
-                    product=line.product_id, partner=line.order_id.partner_id)
-                total = taxes['total_included']
-                if line.order_id.currency_id != line.company_id.currency_id:
-                    total = line.order_id.currency_id._convert(
-                        taxes['total_included'], line.company_id.currency_id, line.company_id, fields.Date.today())
-                to_invoice_amount += total
+                # We sum from all the sale orders that are aproved, the sale order
+                # lines that are not yet invoiced
+                to_invoice_amount = 0.0
+                for line in order_lines:
+                    # not_invoiced is different from native qty_to_invoice because
+                    # the last one only consider to_invoice lines the ones
+                    # that has been delivered or are ready to invoice regarding
+                    # the invoicing policy. Not_invoiced consider all
+                    not_invoiced = line.product_uom_qty - line.qty_invoiced
+                    if rec.env['sale.order.line']._fields.get('quantity_returned'):
+                        not_invoiced -= line.quantity_returned
+                    price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
+                    taxes = line.tax_id.compute_all(
+                        price, line.order_id.currency_id,
+                        not_invoiced,
+                        product=line.product_id, partner=line.order_id.partner_id)
+                    total = taxes['total_included']
+                    if line.order_id.currency_id != line.company_id.currency_id:
+                        total = line.order_id.currency_id._convert(
+                            taxes['total_included'], line.company_id.currency_id, line.company_id, fields.Date.today())
+                    to_invoice_amount += total
 
-            domain = [
-                    ('move_id.partner_id.commercial_partner_id', '=', self.commercial_partner_id.id),
-                    ('move_id.move_type', 'in', ['out_invoice', 'out_refund']),
-                    ('move_id.state', '=', 'draft'),
-                    '|',('sale_line_ids', '=', False),
-                    ('sale_line_ids.order_id.invoice_status', '=', 'invoiced')]
-            draft_invoice_lines = self.env['account.move.line'].sudo().search(domain)
-            draft_invoice_lines_amount = 0.0
-            for line in draft_invoice_lines:
-                price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
-                taxes = line.tax_ids.compute_all(
-                    price, line.move_id.currency_id,
-                    line.quantity,
-                    product=line.product_id, partner=line.move_id.partner_id)
-                total = taxes['total_included']
-                if line.move_id.currency_id != line.company_id.currency_id:
-                    total = line.move_id.currency_id._convert(
-                        taxes['total_included'], line.company_id.currency_id, line.company_id, fields.Date.today())
-                draft_invoice_lines_amount += total
+                domain = [
+                        ('move_id.partner_id.commercial_partner_id', '=', rec.commercial_partner_id.id),
+                        ('move_id.move_type', 'in', ['out_invoice', 'out_refund']),
+                        ('move_id.state', '=', 'draft'),
+                        '|',('sale_line_ids', '=', False),
+                        ('sale_line_ids.order_id.invoice_status', '=', 'invoiced')]
+                draft_invoice_lines = rec.env['account.move.line'].sudo().search(domain)
+                draft_invoice_lines_amount = 0.0
+                for line in draft_invoice_lines:
+                    price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
+                    taxes = line.tax_ids.compute_all(
+                        price, line.move_id.currency_id,
+                        line.quantity,
+                        product=line.product_id, partner=line.move_id.partner_id)
+                    total = taxes['total_included']
+                    if line.move_id.currency_id != line.company_id.currency_id:
+                        total = line.move_id.currency_id._convert(
+                            taxes['total_included'], line.company_id.currency_id, line.company_id, fields.Date.today())
+                    draft_invoice_lines_amount += total
 
-            total_credit = 0.0
-            for company in self.env['res.company'].search([]):
-                credit = self.sudo().with_company(company).credit
-                total_credit += company.currency_id._convert(credit, self.env.company.currency_id, self.env.company, fields.Date.today())
+                total_credit = 0.0
+                for company in rec.env['res.company'].search([]):
+                    credit = rec.sudo().with_company(company).credit
+                    total_credit += company.currency_id._convert(credit, rec.env.company.currency_id, rec.env.company, fields.Date.today())
 
-            self.credit_with_confirmed_orders = to_invoice_amount + draft_invoice_lines_amount + total_credit
+                rec.credit_with_confirmed_orders = to_invoice_amount + draft_invoice_lines_amount + total_credit
