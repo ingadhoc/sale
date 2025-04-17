@@ -17,7 +17,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
         company = order.type_id.journal_id.company_id
         self = self.with_company(company.id)
         res = super()._prepare_invoice_values(order, so_line, accounts)
-        if company.id != order.company_id:
+        if company.id != order.company_id.id:
             for line_downpayment in so_line.filtered("is_downpayment"):
                 tax = line_downpayment.tax_id
                 if order.fiscal_position_id and tax:
