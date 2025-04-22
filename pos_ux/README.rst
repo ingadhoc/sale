@@ -29,7 +29,7 @@ Point of Sale UX
 
 4. Makes the "receivable account" of payment methods mandatory
 
-5. If a payment method does not have a "reivable account" defined, it will not allow you to log in to the POS.
+5. If a payment method does not have a "receivable account" and "outstanding account" defined, it will not allow you to log in to the POS.
 
 
 Installation

@@ -29,4 +29,21 @@ class PosConfig(models.Model):
                     )
                     % payment_method_names
                 )
+
+            payment_method_without_outstanding_account = config.payment_method_ids.filtered(
+                lambda method: method.journal_id.type == "bank"
+                and not method.outstanding_account_id
+                and not any(line.payment_account_id for line in method.journal_id.inbound_payment_method_line_ids)
+            )
+            if payment_method_without_outstanding_account:
+                payment_method_without_outstanding_account_names = ", ".join(
+                    payment_method_without_outstanding_account.mapped("name")
+                )
+                raise UserError(
+                    _(
+                        "No se puede completar la operación: falta definir la cuenta pendiente en los siguientes métodos de pago: %s"
+                    )
+                    % payment_method_without_outstanding_account_names
+                )
+
         return super().open_ui()
