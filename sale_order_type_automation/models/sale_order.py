@@ -79,7 +79,7 @@ class SaleOrder(models.Model):
                     )
 
                 for op in pick.move_line_ids:
-                    op.quantity = op.quantity_product_uom
+                    op.with_context(sale_automation=True).quantity = op.quantity_product_uom
 
             pick.button_validate()
         if self.picking_ids.filtered(lambda x: x.state not in ("done", "cancel")):
