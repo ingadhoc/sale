@@ -89,7 +89,7 @@ class SaleOrder(models.Model):
                     ) % '\n* '.join(x.name for x in products))
 
                 for op in pick.move_line_ids:
-                    op.quantity = op.quantity_product_uom
+                    op.with_context(sale_automation=True).quantity = op.quantity_product_uom
 
             pick.button_validate()
 
