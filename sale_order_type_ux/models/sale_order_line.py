@@ -30,7 +30,21 @@ class SaleOrderLine(models.Model):
                 .with_company(company.id)
                 ._get_fiscal_position(self.order_id.partner_id, self.order_id.partner_shipping_id)
             )
-            taxes = self.product_id.taxes_id.filtered(lambda r: company == r.company_id)
-            taxes = fpos.map_tax(taxes) if fpos else taxes
+            correct_company_tax = self.env["account.tax"].search(
+                [
+                    ("company_id", "=", company.id),
+                    ("type_tax_use", "=", self.tax_id.type_tax_use),
+                    ("company_price_include", "=", self.tax_id.company_price_include),
+                    ("amount", "=", self.tax_id.amount),
+                    ("amount_type", "=", self.amount_type),
+                ]
+            )
+            taxes = (
+                self.product_id.taxes_id.filtered(lambda r: company == r.company_id)
+                if self.product_id
+                else correct_company_tax
+            )
+            if fpos and taxes:
+                taxes = fpos.map_tax(taxes) if fpos else taxes
             res["tax_ids"] = [(6, 0, taxes.ids)]
         return res
