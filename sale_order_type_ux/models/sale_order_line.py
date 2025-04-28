@@ -36,7 +36,7 @@ class SaleOrderLine(models.Model):
                     ("type_tax_use", "=", self.tax_id.type_tax_use),
                     ("company_price_include", "=", self.tax_id.company_price_include),
                     ("amount", "=", self.tax_id.amount),
-                    ("amount_type", "=", self.amount_type),
+                    ("amount_type", "=", self.tax_id.amount_type),
                 ]
             )
             taxes = (
