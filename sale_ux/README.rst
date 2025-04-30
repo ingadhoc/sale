@@ -25,6 +25,8 @@ Several Improvements to sales:
 #. Allow cancel sales orders in locked state and unlock it after cancelling
 #. Fix in button "Create invoice" in sale orders, to create a refund invoice if the sale order amount it's zero and the line's quantities are negative (because of a return).
 #. Block cancellation of a sale order if there is a related invoice in a state different from "draft" or "cancel".
+   Customer invoices (out_invoice) are excluded if they have been reversed.
+   Customer debit notes (out_debit) are excluded if they are fully paid.
 #. Customer Preview" button in sale orders, opens the online quotation in a new tab.
 #. We rename the field price_subtotal and price_total to "Subtotal" and "Total" respectively in sale.order.form
 #. Add option in Sales settings to update prices automatically.
