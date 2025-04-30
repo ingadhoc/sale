@@ -80,7 +80,16 @@ class SaleOrder(models.Model):
         moves = invoice_lines.mapped("move_id").filtered(
             lambda x: x.move_type in ("out_invoice", "out_refund") and x.state not in ["cancel", "draft"]
         )
-        if moves:
+        # Check that all invoices are reversed and belong to this sale order
+        invoices = moves.filtered(lambda m: m.move_type == "out_invoice")
+        valid_invoices = all(inv.payment_state == "reversed" and inv.invoice_origin == self.name for inv in invoices)
+        # Check that all refunds are paid and belong to this sale order
+        if valid_invoices:
+            refunds = moves.filtered(lambda m: m.move_type == "out_refund")
+            valid_refunds = all(ref.payment_state == "paid" and ref.invoice_origin == self.name for ref in refunds)
+            valid_invoices = valid_refunds if refunds else False
+
+        if moves and not (valid_invoices):
             raise UserError(_("Unable to cancel this sale order. You must first " "cancel related bills and pickings."))
         if any(order.locked for order in self):
             # No encontre otra forma de evitar el raise usererror que impide que ordenes se cancelen si el pedido está bloqueado
