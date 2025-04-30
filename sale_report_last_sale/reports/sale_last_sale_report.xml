@@ -1,17 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
     <record id="view_sale_last_sale_report_tree" model="ir.ui.view">
-        <field name="name">sale.last.sale.report.tree</field>
+        <field name="name">sale.last.sale.report.list</field>
         <field name="model">sale.last.sale.report</field>
         <field name="arch" type="xml">
-            <tree string="Last Sale Analysis">
+            <list string="Last Sale Analysis">
                 <field name="partner_id"/>
                 <field name="product_category_id"/>
                 <field name="product_id"/>
                 <field name="date_order"/>
                 <field name="days_since"/>
-            </tree>
+            </list>
         </field>
     </record>
 

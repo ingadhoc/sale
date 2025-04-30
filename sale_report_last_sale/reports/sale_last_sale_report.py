@@ -15,9 +15,9 @@ class SaleLastSaleReport(models.Model):
 
     product_category_id = fields.Many2one("product.category", "Product Category", readonly=True)
 
-    date_order = fields.Date("Order Date", group_operator="max", readonly=True)
+    date_order = fields.Date("Order Date", aggregator="max", readonly=True)
 
-    days_since = fields.Integer(group_operator="min", readonly=True)
+    days_since = fields.Integer(aggregator="min", readonly=True)
 
     def init(self):
         tools.drop_view_if_exists(self.env.cr, "sale_last_sale_report")
