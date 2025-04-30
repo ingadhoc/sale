@@ -90,7 +90,14 @@ class SaleOrder(models.Model):
     def action_cancel(self):
         invoice_lines = self.sudo().env["account.move.line"].search([('sale_line_ids', 'in', self.order_line.ids)])
         moves = invoice_lines.mapped('move_id').filtered(
-            lambda x: x.move_type in ('out_invoice', 'out_refund') and x.state not in ['cancel', 'draft']
+            lambda x: x.move_type in ('out_invoice', 'out_debit') 
+            and x.state not in ['cancel', 'draft']
+            and not (
+                # When out_invoice should not be reversed
+                (x.move_type == 'out_invoice' and x.payment_state == 'reversed') or
+                # When out_debit should not be paid
+                (x.move_type == 'out_debit' and x.payment_state == 'paid')
+            )
         )
         if moves:
             raise UserError(_(
