@@ -65,7 +65,7 @@ class SaleOrderLine(models.Model):
                 line.discount3 = 0.0
 
     @api.onchange("product_id")
-    def _onchange_product(self):
+    def _onchange_products(self):
         self.with_context(onchange_product=True)._compute_discounts()
 
     def _prepare_invoice_line(self, **optional_values):
