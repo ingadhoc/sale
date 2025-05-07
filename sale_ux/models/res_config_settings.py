@@ -6,7 +6,7 @@ class ResConfigSettings(models.TransientModel):
     _inherit = "res.config.settings"
 
     analytic_account_without_company = fields.Boolean(
-        "Crear cuenta analitica sin compañía", config_parameter="sale_ux.analytic_account_without_company"
+        "Crear proyecto y cuenta analitica sin compañia", config_parameter="sale_ux.analytic_account_without_company"
     )
     group_allow_any_user_as_salesman = fields.Boolean(
         "Allow any user as salesman", implied_group="sale_ux.group_allow_any_user_as_salesman"
