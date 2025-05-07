@@ -180,22 +180,12 @@ class SaleOrder(models.Model):
             name = self.name
             if prefix:
                 name = prefix + ": " + self.name
-            plan = self.env["account.analytic.plan"].sudo().search([], limit=1)
-            if not plan:
-                plan = (
-                    self.env["account.analytic.plan"]
-                    .sudo()
-                    .create(
-                        {
-                            "name": "Default",
-                        }
-                    )
-                )
+            project_plan, _other_plans = self.env["account.analytic.plan"]._get_all_plans()
             return {
                 "name": name,
                 "code": self.client_order_ref,
                 "company_id": False,
-                "plan_id": plan.id,
+                "plan_id": project_plan.id,
                 "partner_id": self.partner_id.id,
             }
         return super(SaleOrder, self)._prepare_analytic_account_data(prefix=prefix)
