@@ -3,19 +3,19 @@
 # 	* sale_ux
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
 # Rocio Vega, 2024
 # María Florencia Frigieri Parma, 2025
 # Franco Leyes, 2025
 # Matias Peralta, 2025
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-06 23:21+0000\n"
+"POT-Creation-Date: 2025-05-08 20:30+0000\n"
 "PO-Revision-Date: 2024-11-11 12:22+0000\n"
-"Last-Translator: Matias Peralta, 2025\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -40,8 +40,8 @@ msgstr "<strong>Ventas</strong>"
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
-msgid "Al confirmar ventas, crear cuenta analitica sin compañía."
-msgstr "Al confirmar ventas, crear cuenta analitica sin compañía."
+msgid "Al confirmar ventas, crear un proyecto sin compañía."
+msgstr ""
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__group_allow_any_user_as_salesman
@@ -120,7 +120,7 @@ msgstr "Confirmar pedido de venta"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__analytic_account_without_company
-msgid "Crear cuenta analitica sin compañía"
+msgid "Crear proyecto y cuenta analitica sin compañia"
 msgstr "Crear cuenta analitica sin compañía"
 
 #. module: sale_ux
