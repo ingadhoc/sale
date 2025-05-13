@@ -134,3 +134,7 @@ class SaleOrderLine(models.Model):
             line.stock_by_location = "\n".join(stock_lines) if stock_lines else ""
 
         (self - lines).stock_by_location = ""
+
+    def _compute_discount(self):
+        lines = self.filtered(lambda x: not (x.order_id.pricelist_id and x.pricelist_item_id._show_discount()))
+        super(SaleOrderLine, self - lines)._compute_discount()
