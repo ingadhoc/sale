@@ -11,8 +11,6 @@
                 <field name="date_order" nolabel="1" groups="sales_team.group_sale_manager" readonly="0" invisible="state in ['sale', 'cancel'] or locked"/>
             </field>
 
-            <field name="date_order" position="replace"/>
-
             <field name="validity_date" position="after">
                 <field name="validity_days" readonly="state not in ['draft', 'sent']"/>
             </field>
@@ -29,10 +27,6 @@
                     invisible="state not in ['draft', 'sent']"/>
                 </div>
             </field>
-            <xpath expr="//div[hasclass('o_td_label') and @groups='base.group_no_one']" position="attributes">
-                <!-- Eliminamos el atributo 'groups' -->
-                <attribute name="groups"/>
-            </xpath>
         </field>
     </record>
 </odoo>
