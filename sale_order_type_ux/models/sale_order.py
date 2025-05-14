@@ -60,3 +60,15 @@ class SaleOrder(models.Model):
     def _onchange_team_id(self):
         if self.type_id and self.type_id.team_id:
             self.team_id = self.type_id.team_id
+
+    def _create_invoices(self, grouped=False, final=False, date=None):
+        """
+        Overrides the `_create_invoices` method to ensure that taxes are correctly computed
+        for the company of the invoice. In cases where the company has a localization
+        (e.g., l10n_ar), this ensures that the taxes from `l10n_ar_tax_ids` are applied.
+        """
+        invoices = super()._create_invoices(grouped=grouped, final=final, date=date)
+        for line in invoices.invoice_line_ids:
+            if line.company_id != self.company_id:
+                line.tax_ids = line._get_computed_taxes()
+        return invoices
