@@ -19,21 +19,23 @@ class SaleAdvancePaymentInv(models.TransientModel):
         res = super()._prepare_invoice_values(order, so_line, accounts)
         if company.id != order.company_id.id:
             for line_downpayment in so_line.filtered("is_downpayment"):
-                tax = line_downpayment.tax_id
+                taxes = line_downpayment.tax_id
                 # Buscamos el correcto tax para la compañia sobre la cual estoy facturando, siendo
                 # esta distinta a la de la sale order line
-                correct_company_tax = self.env["account.tax"].search(
+                correct_company_taxes = self.env["account.tax"].search(
                     [
                         ("company_id", "=", company.id),
-                        ("type_tax_use", "=", tax.type_tax_use),
-                        ("company_price_include", "=", tax.company_price_include),
-                        ("amount", "=", tax.amount),
+                        ("type_tax_use", "in", taxes.mapped("type_tax_use")),
+                        ("company_price_include", "in", taxes.mapped("company_price_include")),
+                        ("amount", "in", taxes.mapped("amount")),
+                        ("amount_type", "in", taxes.mapped("amount_type")),
                     ]
                 )
-                if order.fiscal_position_id and correct_company_tax:
-                    tax_ids = order.fiscal_position_id.map_tax(correct_company_tax).ids
+
+                if order.fiscal_position_id and correct_company_taxes:
+                    tax_ids = order.fiscal_position_id.map_tax(correct_company_taxes).ids
                 else:
-                    tax_ids = correct_company_tax.ids or False
+                    tax_ids = correct_company_taxes.ids
 
                 for line in res["invoice_line_ids"]:
                     if line[2]["is_downpayment"] and line[2]["sale_line_ids"][0][1] == line_downpayment.id:
