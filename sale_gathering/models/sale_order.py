@@ -1,5 +1,5 @@
 from odoo import Command, _, api, fields, models
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 from odoo.tools import float_compare
 
 
@@ -95,7 +95,7 @@ class SaleOrder(models.Model):
     def _action_confirm(self):
         for order in self.filtered("is_gathering"):
             lines_commands = []
-            for line in order.order_line:
+            for line in order.order_line.filtered(lambda l: l.product_uom_qty > 0):
                 lines_commands.append(
                     Command.update(line.id, {"initial_qty_gathered": line.product_uom_qty, "product_uom_qty": 0})
                 )
@@ -141,3 +141,24 @@ class SaleOrder(models.Model):
         for rec in orders:
             rec.withdrawn_amount = rec.gathering_amount_with_taxes - rec.gathering_balance
         (self - orders).withdrawn_amount = 0.0
+
+    def write(self, values):
+        protected_fields = self._get_protected_fields()
+        if any(state in ["sale", "done"] for state in self.mapped("state")) and any(
+            f in values.keys() for f in protected_fields
+        ):
+            protected_fields_modified = list(set(protected_fields) & set(values.keys()))
+            fields = (
+                self.env["ir.model.fields"]
+                .sudo()
+                .search([("name", "in", protected_fields_modified), ("model", "=", self._name)])
+            )
+            if fields:
+                raise UserError(
+                    _("It is forbidden to modify the following fields in a confirmed order:\n%s")
+                    % "\n".join(fields.mapped("field_description"))
+                )
+        return super().write(values)
+
+    def _get_protected_fields(self):
+        return ["is_gathering"]

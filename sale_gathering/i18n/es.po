@@ -234,3 +234,14 @@ msgid ""
 msgstr ""
 "No puede modificar el descuento de las líneas de acopio una vez confirmada "
 "la venta.\n"
+
+#. module: sale
+#. odoo-python
+#: code:addons/sale/models/sale_order.py:0
+#, python-format
+msgid ""
+"It is forbidden to modify the following fields in a confirmed order:\n"
+"%s"
+msgstr ""
+"Está prohibido modificar los siguientes campos en un pedido bloqueado:\n"
+"%s"
