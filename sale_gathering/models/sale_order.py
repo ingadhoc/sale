@@ -1,8 +1,7 @@
 from odoo import models, fields, api, _
 from odoo.tools import float_compare
 from odoo.exceptions import ValidationError
-from odoo.osv import expression
-
+from odoo.exceptions import UserError
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
@@ -90,14 +89,12 @@ class SaleOrder(models.Model):
                         (rec.gathering_balance, rec.name)))
 
     def _action_confirm(self):
-        for order in self.filtered('is_gathering'):
-            for line in order.order_line:
-                line.write({
-                    'initial_qty_gathered': line.product_uom_qty,
-                    'product_uom_qty': 0
-                })
-        res = super(SaleOrder, self)._action_confirm()
-        return res
+        for line in self.filtered(lambda x: x.is_gathering and x.order_line.filtered(lambda x: x.product_uom_qty > 0)).mapped('order_line'):
+            line.write({
+                'initial_qty_gathered': line.product_uom_qty,
+                'product_uom_qty': 0
+            })
+        return super(SaleOrder, self)._action_confirm()
 
     @api.depends('order_line.initial_qty_gathered', 'is_gathering')
     def _compute_gathering_amount(self):
@@ -147,3 +144,20 @@ class SaleOrder(models.Model):
         for rec in orders:
             rec.withdrawn_amount = rec.gathering_amount_with_taxes - rec.gathering_balance
         (self - orders).withdrawn_amount = 0.0
+
+    def write(self, values):
+        protected_fields = self._get_protected_fields()
+        if any(state in ['sale', 'done'] for state in self.mapped('state')) and any(f in values.keys() for f in protected_fields):
+            protected_fields_modified = list(set(protected_fields) & set(values.keys()))
+            fields = self.env['ir.model.fields'].sudo().search([
+                ('name', 'in', protected_fields_modified), ('model', '=', self._name)
+            ])
+            if fields:
+                raise UserError(
+                    _('It is forbidden to modify the following fields in a confirmed order:\n%s')
+                    % '\n'.join(fields.mapped('field_description'))
+                )
+        return super().write(values)
+
+    def _get_protected_fields(self):
+        return ['is_gathering']
