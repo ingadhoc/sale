@@ -10,13 +10,13 @@ class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
     discount1 = fields.Float(
-        "Disc. 1 (%)", digits="Discount", compute="_compute_discounts", precompute=True, store=True, readonly=False
+        "Disc. 1 (%)", digits="Discount", compute="_compute_discount", precompute=True, store=True, readonly=False
     )
     discount2 = fields.Float(
-        "Disc. 2 (%)", digits="Discount", compute="_compute_discounts", precompute=True, store=True, readonly=False
+        "Disc. 2 (%)", digits="Discount", compute="_compute_discount", precompute=True, store=True, readonly=False
     )
     discount3 = fields.Float(
-        "Disc. 3 (%)", digits="Discount", compute="_compute_discounts", precompute=True, store=True, readonly=False
+        "Disc. 3 (%)", digits="Discount", compute="_compute_discount", precompute=True, store=True, readonly=False
     )
     discount = fields.Float(readonly=True)
 
@@ -33,40 +33,23 @@ class SaleOrderLine(models.Model):
             if error:
                 raise ValidationError(_(",".join(error) + " must be less or equal than 100"))
 
-    @api.depends("discount1", "discount2", "discount3")
     def _compute_discount(self):
-        context = self._context
-        for line in self:
-            show_discount = line.pricelist_item_id._show_discount()
-            if (
-                (context.get("recompute_prices") and show_discount)
-                or context.get("onchange_product")
-                or context.get("website_id")
-            ):
-                super(SaleOrderLine, line)._compute_discount()
-            else:
-                discount_factor = 1.0
-                for discount in [line.discount1, line.discount2, line.discount3]:
-                    discount_factor *= (100.0 - discount) / 100.0
-                line.discount = 100.0 - (discount_factor * 100.0)
-
-    @api.depends("discount")
-    def _compute_discounts(self):
-        for line in self:
-            context = dict(self._context)
-            show_discount = line.pricelist_item_id._show_discount()
-            if (
-                (context.get("recompute_prices") and show_discount)
-                or context.get("onchange_product")
-                or context.get("website_id")
-            ):
+        # we do not want override discounts if the pricelist is configured to include the discount in the price.
+        lines_show_discount = self.filtered(lambda x: x.order_id.pricelist_id and x.pricelist_item_id._show_discount())
+        super(SaleOrderLine, lines_show_discount)._compute_discount()
+        if self.env.context.get("recompute_prices") or lines_show_discount:
+            for line in self:
                 line.discount1 = line.discount
                 line.discount2 = 0.0
                 line.discount3 = 0.0
 
-    @api.onchange("product_id")
-    def _onchange_products(self):
-        self.with_context(onchange_product=True)._compute_discounts()
+    @api.onchange("discount1", "discount2", "discount3")
+    def _onchange_discounts(self):
+        for line in self:
+            discount_factor = 1.0
+            for discount in [line.discount1, line.discount2, line.discount3]:
+                discount_factor *= (100.0 - discount) / 100.0
+            line.discount = 100.0 - (discount_factor * 100.0)
 
     def _prepare_invoice_line(self, **optional_values):
         res = super()._prepare_invoice_line(**optional_values)
