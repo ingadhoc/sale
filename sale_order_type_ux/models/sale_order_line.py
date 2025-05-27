@@ -23,28 +23,36 @@ class SaleOrderLine(models.Model):
         res = super()._prepare_invoice_line(**optional_values)
 
         if company != self.company_id:
-            # Because we not have the access to the invoice, we obtain the fiscal position who
-            # has the invoice really
-            fpos = (
-                self.env["account.fiscal.position"]
-                .with_company(company.id)
-                ._get_fiscal_position(self.order_id.partner_id, self.order_id.partner_shipping_id)
-            )
-            correct_company_taxes = self.env["account.tax"].search(
-                [
-                    ("company_id", "=", company.id),
-                    ("type_tax_use", "in", self.tax_id.mapped("type_tax_use")),
-                    ("company_price_include", "in", self.tax_id.mapped("company_price_include")),
-                    ("amount", "in", self.tax_id.mapped("amount")),
-                    ("amount_type", "in", self.tax_id.mapped("amount_type")),
-                ]
-            )
-            taxes = (
-                self.product_id.taxes_id.filtered(lambda r: company == r.company_id)
-                if self.product_id
-                else correct_company_taxes
-            )
-            if fpos and taxes:
+            if self.product_id == self.company_id.sale_discount_product_id:
+                taxes = self._get_change_company_line_discount_tax(company=company)
+            else:
+                # Because we not have the access to the invoice, we obtain the fiscal position who
+                # has the invoice really
+                fpos = (
+                    self.env["account.fiscal.position"]
+                    .with_company(company.id)
+                    ._get_fiscal_position(self.order_id.partner_id, self.order_id.partner_shipping_id)
+                )
+                taxes = self.product_id.taxes_id.filtered(lambda r: company == r.company_id)
                 taxes = fpos.map_tax(taxes) if fpos else taxes
+
             res["tax_ids"] = [(6, 0, taxes.ids)]
         return res
+
+    def _get_change_company_line_discount_tax(self, company=None):
+        tax_ids = self.env["account.tax"].browse(self.tax_id.ids)
+        taxes = self.env["account.tax"]
+        for tax in tax_ids:
+            new_tax = self.env["account.tax"].search(
+                [
+                    ("type_tax_use", "=", tax.type_tax_use),
+                    ("amount", "=", tax.amount),
+                    ("active", "=", True),
+                    ("company_id", "=", company.id),
+                ],
+                limit=1,
+            )
+            if new_tax:
+                taxes += new_tax
+
+        return taxes
