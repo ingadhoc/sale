@@ -68,7 +68,9 @@ class SaleOrder(models.Model):
         (e.g., l10n_ar), this ensures that the taxes from `l10n_ar_tax_ids` are applied.
         """
         invoices = super()._create_invoices(grouped=grouped, final=final, date=date)
-        for line in invoices.invoice_line_ids:
+        for line in invoices.invoice_line_ids.filtered(
+            lambda x: x.product_id != self.company_id.sale_discount_product_id
+        ):
             if line.company_id != self.company_id:
                 line.tax_ids = line._get_computed_taxes()
         return invoices
