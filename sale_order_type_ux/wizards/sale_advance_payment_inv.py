@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models
+from odoo import _, models
 
 
 class SaleAdvancePaymentInv(models.TransientModel):
@@ -33,3 +33,14 @@ class SaleAdvancePaymentInv(models.TransientModel):
         if res['company_id']:
             res['company_id'] = False
         return res
+
+    def _create_invoices(self, sale_orders):
+        # if discount product has a company associated, we need to remove it before changing the company in invoice
+        if self.mapped('sale_order_ids.type_id.journal_id.company_id') != self.mapped('sale_order_ids.company_id'):
+            discount_lines = self.mapped('sale_order_ids.order_line').filtered(
+                lambda x: x.product_id and x.product_id.name == _('Discount')
+            )
+            if discount_lines and discount_lines.product_id.company_id:
+                discount_lines[0].product_id.write({'company_id': False})
+
+        return super(SaleAdvancePaymentInv, self)._create_invoices(sale_orders=sale_orders)
