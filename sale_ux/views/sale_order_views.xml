@@ -65,6 +65,9 @@
         <field name="priority" eval="99"/>
         <field name="inherit_id" ref="sale.view_order_tree"/>
         <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="banner_route">/onboarding/sale_quotation</attribute>
+            </xpath>
             <field name="partner_id" position="after">
                 <field groups="sale_ux.group_reference_on_tree_and_main_form" name="client_order_ref"/>
             </field>

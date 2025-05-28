@@ -16,7 +16,7 @@ Sale UX
 
 Several Improvements to sales:
 
-#. Make sale quotations menu not visible.
+#. Make sale quotations menu not visible (sale onboarding is added in the orders button).
 #. Hide sale invoicing menu (you can already filter on sales orders menu)
 #. Add filters in the sale order view
 #. Make sale orders menu show all sale records (quotations, and confirmed ones). Make that, by default, links to sale orders shows "sale" data and not only "quotation" data.
