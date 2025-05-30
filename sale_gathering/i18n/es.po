@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-20 23:40+0000\n"
+"POT-Creation-Date: 2025-05-29 19:45+0000\n"
 "PO-Revision-Date: 2024-12-10 16:22+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -145,6 +145,16 @@ msgstr "Es Acopio?"
 
 #. module: sale_gathering
 #. odoo-python
+#: code:addons/sale_gathering/models/sale_order.py:0
+msgid ""
+"It is forbidden to modify the following fields in a confirmed order:\n"
+"%s"
+msgstr ""
+"Está prohibido modificar los siguientes campos en un pedido bloqueado:\n"
+"%s"
+
+#. module: sale_gathering
+#. odoo-python
 #: code:addons/sale_gathering/models/sale_order_line.py:0
 msgid ""
 "It is not possible to add discounts once the product has been invoiced or "
@@ -234,14 +244,3 @@ msgid ""
 msgstr ""
 "No puede modificar el descuento de las líneas de acopio una vez confirmada "
 "la venta.\n"
-
-#. module: sale
-#. odoo-python
-#: code:addons/sale/models/sale_order.py:0
-#, python-format
-msgid ""
-"It is forbidden to modify the following fields in a confirmed order:\n"
-"%s"
-msgstr ""
-"Está prohibido modificar los siguientes campos en un pedido bloqueado:\n"
-"%s"
