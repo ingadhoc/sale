@@ -37,7 +37,7 @@ Usage
 
 To use this module, you need to:
 
-#. Log in with a user with the portal distributor group
+#. Log in with a user with the portal distributor group.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot

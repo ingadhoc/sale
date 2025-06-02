@@ -51,9 +51,6 @@
             <button name="action_view_invoice" position="attributes">
                 <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
             </button>
-            <field name="validity_date" position="attributes">
-                <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
-            </field>
             <field name="validity_date" position="after">
                 <field name="validity_date" invisible="state in ('draft', 'sent')" groups="portal_sale_distributor.group_portal_backend_distributor"/>
             </field>
