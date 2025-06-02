@@ -41,6 +41,7 @@
 
             <xpath expr="//page/field[@name='order_line']/list/field[@name='product_uom_qty']" position="after">
                 <field name="total_reserved_quantity" column_invisible="True"/>
+                <field name="stock_by_location" force_save="1" column_invisible="1"/>
             </xpath>
         </field>
     </record>

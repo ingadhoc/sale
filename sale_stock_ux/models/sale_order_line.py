@@ -38,6 +38,8 @@ class SaleOrderLine(models.Model):
 
     total_reserved_quantity = fields.Float(compute="_compute_total_reserved_quantity")
 
+    stock_by_location = fields.Text(compute="_compute_stock_by_location")
+
     @api.depends("product_id", "product_uom_qty")
     def _compute_total_reserved_quantity(self):
         for line in self:
@@ -93,7 +95,7 @@ class SaleOrderLine(models.Model):
             #         'You should correct invoice or ask for a refund'))
             rec.product_uom_qty = rec.qty_delivered
             rec.order_id.message_post(
-                body=_('Cancel remaining call for line "%s" (id %s), line ' "qty updated from %s to %s")
+                body=_('Cancel remaining call for line "%s" (id %s), line qty updated from %s to %s')
                 % (rec.name, rec.id, old_product_uom_qty, rec.product_uom_qty)
             )
 
@@ -245,3 +247,40 @@ class SaleOrderLine(models.Model):
                     line.invoice_status = "invoiced"
                 else:
                     line.invoice_status = "no"
+
+    @api.depends("product_template_id")
+    def _compute_stock_by_location(self):
+        for line in self:
+            if not line.product_id:
+                line.stock_by_location = ""
+                continue
+
+            stock_quants = self.env["stock.quant"].read_group(
+                domain=[
+                    ("location_id.usage", "=", "internal"),
+                    ("product_id", "=", line.product_id.id),
+                    ("quantity", ">", 0),
+                ],
+                fields=["location_id"],
+                groupby=["location_id"],
+                lazy=False,
+            )
+
+            stock_lines = []
+
+            for stock in stock_quants:
+                location_id = stock["location_id"][0]
+                location_name = stock["location_id"][1]
+
+                product = line.product_id.with_context(location=location_id)
+                free_qty = product.free_qty
+
+                if free_qty > 0:
+                    if line.product_uom and line.product_uom != line.product_id.uom_id:
+                        free_qty = line.product_id.uom_id._compute_quantity(free_qty, line.product_uom)
+
+                    stock_lines.append(f"{location_name}: {free_qty:.2f} {line.product_uom.name}")
+
+            line.stock_by_location = "\n".join(stock_lines) if stock_lines else ""
+
+        (self - self).stock_by_location = ""

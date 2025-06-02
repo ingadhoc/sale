@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Sale Stock UX",
-    "version": "18.0.1.1.0",
+    "version": "18.0.1.2.0",
     "category": "Sales",
     "sequence": 14,
     "summary": "",
@@ -45,7 +45,10 @@
     "assets": {
         "web.assets_qweb": [
             "sale_stock_ux/static/src/xml/*.xml",
-        ]
+        ],
+        "web.assets_backend": [
+            "sale_stock_ux/static/src/widgets/qty_at_date_widget.xml",
+        ],
     },
     "demo": [],
     "test": [],

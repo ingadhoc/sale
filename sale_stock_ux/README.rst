@@ -29,6 +29,7 @@ Several Improvements to sales:
 #. Add procurement group field on sale orders for technical features.
 #. Add selection field to force "Delivery" status of a sale order, available only for admin with tecH features.
 #. Add parameter in settings to propagate the UoM from the sale order to the picking.
+#. Add the information of the stock available by location in the forecast widget at the sale order line.
 
 IMPORTANT:
 ----------

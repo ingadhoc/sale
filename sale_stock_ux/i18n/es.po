@@ -318,3 +318,9 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_sales_order_filter
 msgid "With Returns"
 msgstr "Con devoluciones"
+
+#. module: sale_stock_ux
+#. odoo-javascript
+#: code:addons/sale_stock_ux/static/src/widgets/qty_at_date_widget.xml:0
+msgid "Stock by Location"
+msgstr "Stock por Ubicación"
