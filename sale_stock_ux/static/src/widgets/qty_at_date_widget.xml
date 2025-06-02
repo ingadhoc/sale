@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates xml:space="preserve">
+
+    <t t-name="sale_stock_ux.QtyAtDate" t-inherit="sale_stock.QtyAtDate" t-inherit-mode="extension">
+
+        <xpath expr="//a" position="attributes">
+            <attribute name="t-if">
+                props.record.data.state != 'sale'
+            </attribute>
+        </xpath>
+
+        <xpath expr="//a" position="after">
+            <a t-if="props.record.data.state == 'sale'"
+                t-att-tabindex="props.record.data.display_qty_widget ? '0' : '-1'"
+                t-on-click="showPopup"
+                t-att-class="!props.record.data.display_qty_widget ? 'invisible' : ''"
+                t-attf-class="fa fa-area-chart cursor-pointer {{ props.record.data.stock_by_location ? '' : 'text-danger' }}"
+            />
+        </xpath>
+
+    </t>
+
+    <t t-name="sale_stock_ux.QtyAtDatePopover" t-inherit="sale_stock.QtyAtDatePopover" t-inherit-mode="extension">
+
+        <xpath expr="//td[strong/text()='Reserved']/ancestor::t[1]" position="replace">
+            <t t-if="props.record.data.stock_by_location">
+                <tr>
+                    <th class="text-start">Stock by Location</th>
+                    <th class="text-end">Quantity</th>
+                </tr>
+                <t t-if="props.record.data.stock_by_location.includes(':')">
+                    <t t-foreach="props.record.data.stock_by_location.split('\n')" t-as="line" t-key="line">
+                        <tr>
+                            <td class="text-start">
+                                <span t-out="line.split(':')[0]"/>
+                            </td>
+                            <td class="text-end text-nowrap">
+                                <span t-out="line.split(':')[1]"/>
+                            </td>
+                        </tr>
+                    </t>
+                </t>
+            </t>
+            <t t-else="">
+                <tr>
+                    <td>No stock available</td>
+                </tr>
+            </t>
+        </xpath>
+
+    </t>
+
+</templates>
