@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Sale Gathering",
-    "version": "18.0.1.5.0",
+    "version": "18.0.1.6.0",
     "category": "Sales & Stock",
     "sequence": 14,
     "summary": "",
@@ -37,11 +37,6 @@
         "views/sale_order_views.xml",
     ],
     "demo": [],
-    "assets": {
-        "web.assets_backend": [
-            "sale_gathering/static/src/**/*",
-        ],
-    },
     "installable": True,
     "auto_install": False,
     "application": False,
