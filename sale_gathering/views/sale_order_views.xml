@@ -5,6 +5,11 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
+            <div name="button_box" position="before">
+                <div class="ribbon ribbon-top-right" invisible="not is_gathering">
+                    <span class="bg-warning">Acopio</span>
+                </div>
+            </div>
             <field name="client_order_ref" position="before">
                 <field name="is_gathering" readonly="state in ['done', 'sale']"/>
             </field>
