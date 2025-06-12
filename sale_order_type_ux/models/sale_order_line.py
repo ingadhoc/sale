@@ -25,7 +25,7 @@ class SaleOrderLine(models.Model):
         res = super()._prepare_invoice_line(**optional_values)
 
         if company != self.company_id:
-            if self.product_id and self.product_id.name == _('Discount'):
+            if self.product_id == self.company_id.sale_discount_product_id:
                 taxes = self._get_change_company_line_discount_tax(company=company)
             else:
                 # Because we not have the access to the invoice, we obtain the fiscal position who
