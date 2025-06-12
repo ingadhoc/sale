@@ -23,6 +23,7 @@ class SaleOrderLine(models.Model):
         res = super()._prepare_invoice_line(**optional_values)
 
         if company != self.company_id:
+<<<<<<< HEAD
             # Because we not have the access to the invoice, we obtain the fiscal position who
             # has the invoice really
             fpos = (
@@ -45,6 +46,31 @@ class SaleOrderLine(models.Model):
                 else correct_company_taxes
             )
             if fpos and taxes:
+||||||| parent of 66bae992 (temp)
+            if self.product_id and self.product_id.name == _('Discount'):
+                taxes = self._get_change_company_line_discount_tax(company=company)
+            else:
+                # Because we not have the access to the invoice, we obtain the fiscal position who
+                # has the invoice really
+                fpos = self.env['account.fiscal.position'].with_company(
+                    company.id)._get_fiscal_position(
+                    self.order_id.partner_id,
+                    self.order_id.partner_shipping_id)
+                taxes = self.product_id.taxes_id.filtered(
+                    lambda r: company == r.company_id)
+=======
+            if self.product_id == self.company_id.sale_discount_product_id:
+                taxes = self._get_change_company_line_discount_tax(company=company)
+            else:
+                # Because we not have the access to the invoice, we obtain the fiscal position who
+                # has the invoice really
+                fpos = self.env['account.fiscal.position'].with_company(
+                    company.id)._get_fiscal_position(
+                    self.order_id.partner_id,
+                    self.order_id.partner_shipping_id)
+                taxes = self.product_id.taxes_id.filtered(
+                    lambda r: company == r.company_id)
+>>>>>>> 66bae992 (temp)
                 taxes = fpos.map_tax(taxes) if fpos else taxes
             res["tax_ids"] = [(6, 0, taxes.ids)]
         return res
