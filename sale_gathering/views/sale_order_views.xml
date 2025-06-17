@@ -26,17 +26,17 @@
             <group name="sale_total" position="inside">
                 <table class="float-end">
                     <tbody>
-                        <tr>
+                        <tr invisible="not is_gathering">
                             <td> <label for="gathering_amount_with_taxes"/> </td>
-                            <td> <field name="gathering_amount_with_taxes" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="not is_gathering"/> </td>
+                            <td> <field name="gathering_amount_with_taxes" widget="monetary" options="{'currency_field': 'currency_id'}"/> </td>
                         </tr>
-                        <tr>
+                        <tr invisible="not is_gathering">
                             <td> <label for="gathering_balance"/> </td>
-                            <td> <field name="gathering_balance" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="not is_gathering"/> </td>
+                            <td> <field name="gathering_balance" widget="monetary" options="{'currency_field': 'currency_id'}"/> </td>
                         </tr>
-                        <tr>
+                        <tr invisible="not is_gathering">
                             <td> <label for="withdrawn_amount"/> </td>
-                            <td> <field name="withdrawn_amount" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="not is_gathering"/> </td>
+                            <td> <field name="withdrawn_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/> </td>
                         </tr>
                     </tbody>
                 </table>
