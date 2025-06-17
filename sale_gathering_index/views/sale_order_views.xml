@@ -13,13 +13,17 @@
                 <attribute name="readonly">qty_invoiced &gt; 0 or (parent.is_gathering and state == 'sale')</attribute>
             </xpath>
             <xpath expr="//group[@name='sale_total']/table/tbody" position="inside">
-                <tr>
-                    <td> <label for="indexed_gathering_amount"/> </td>
-                    <td> <field name="indexed_gathering_amount" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="not is_gathering"/> </td>
+                <tr invisible="not is_gathering">
+                    <td><label for="indexed_gathering_amount"/></td>
+                    <td>
+                        <field name="indexed_gathering_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                    </td>
                 </tr>
-                <tr>
-                    <td> <label for="gathering_balance_indexed"/> </td>
-                    <td> <field name="gathering_balance_indexed" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="not is_gathering"/> </td>
+                <tr invisible="not is_gathering">
+                    <td><label for="gathering_balance_indexed"/></td>
+                    <td>
+                        <field name="gathering_balance_indexed" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                    </td>
                 </tr>
             </xpath>
         </field>
