@@ -13,6 +13,9 @@
 
             <field name="validity_date" position="after">
                 <field name="validity_days" readonly="state not in ['draft', 'sent']"/>
+                <div class="o_td_label" groups="!base.group_no_one" invisible="state in ['sale', 'cancel']">
+                    <label for="date_order" string="Quotation Date"/>
+                </div>
             </field>
 
             <field name="validity_date" position="replace">
