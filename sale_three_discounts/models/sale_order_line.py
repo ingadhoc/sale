@@ -10,13 +10,13 @@ class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
     discount1 = fields.Float(
-        "Discount 1 (%)", digits="Discount", compute="_compute_discounts", precompute=True, store=True, readonly=False
+        "Disc. 1 (%)", digits="Discount", compute="_compute_discounts", precompute=True, store=True, readonly=False
     )
     discount2 = fields.Float(
-        "Discount 2 (%)", digits="Discount", compute="_compute_discounts", precompute=True, store=True, readonly=False
+        "Disc. 2 (%)", digits="Discount", compute="_compute_discounts", precompute=True, store=True, readonly=False
     )
     discount3 = fields.Float(
-        "Discount 3 (%)", digits="Discount", compute="_compute_discounts", precompute=True, store=True, readonly=False
+        "Disc. 3 (%)", digits="Discount", compute="_compute_discounts", precompute=True, store=True, readonly=False
     )
     discount = fields.Float(readonly=True)
 
