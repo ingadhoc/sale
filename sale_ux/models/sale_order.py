@@ -225,3 +225,36 @@ class SaleOrder(models.Model):
     def _check_changes_locked_orders(self):
         for rec in self.filtered(lambda x: x.state == "done"):
             raise ValidationError(_("You cannot modify already locked orders."))
+
+    def get_update_included_pdf_params(self):
+        result = super().get_update_included_pdf_params()
+        auto_select_enabled = (
+            self.env["ir.config_parameter"].sudo().get_param("sale_ux.auto_select_all_documents", "False") == "True"
+        )
+        if not auto_select_enabled:
+            return result
+
+        if self.available_product_document_ids and not self.quotation_document_ids:
+            self.quotation_document_ids = self.available_product_document_ids
+            selected_headers = self.quotation_document_ids.filtered(lambda d: d.document_type == "header")
+            selected_footers = self.quotation_document_ids.filtered(lambda d: d.document_type == "footer")
+
+            for header in result.get("headers", {}).get("files", []):
+                if any(h.id == header["id"] for h in selected_headers):
+                    header["is_selected"] = True
+
+            for footer in result.get("footers", {}).get("files", []):
+                if any(f.id == footer["id"] for f in selected_footers):
+                    footer["is_selected"] = True
+
+        for line in self.order_line:
+            if line.available_product_document_ids and not line.product_document_ids:
+                line.product_document_ids = line.available_product_document_ids
+
+        for line_data in result.get("lines", []):
+            line = self.order_line.filtered(lambda l: l.id == line_data["id"])
+            if line and line.product_document_ids:
+                for doc in line_data.get("files", []):
+                    if any(d.id == doc["id"] for d in line.product_document_ids):
+                        doc["is_selected"] = True
+        return result

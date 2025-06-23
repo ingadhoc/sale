@@ -43,6 +43,12 @@ class ResConfigSettings(models.TransientModel):
         help="Number of days to keep quotations before cancelling them.",
         default=30,
     )
+    auto_select_all_documents = fields.Boolean(
+        string="Auto-select all documents",
+        config_parameter="sale_ux.auto_select_all_documents",
+        help="Automatically select all available documents from PDF Quote Builder.",
+        default=False,
+    )
 
     def get_values(self):
         res = super(ResConfigSettings, self).get_values()

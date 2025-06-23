@@ -42,6 +42,7 @@ Several Improvements to sales:
 #. Modifying the discount, adding lines and changing the price list of a blocked sales order is prevented. This error occurs when working in the same form view in more than one tab at the same time.
 #. Add an action to confirm multiple sales or subscriptions from the list view. To confirm them, select the sales or subscriptions, and in the actions menu, look for 'confirm sale order'.
 #. We prevent the discount from being overwritten to 0 on lines where a pricelist discount exists but is not displayed.
+#. Add setting to automatically select all available documents from PDF Quote Builder.
 
 Installation
 ============
