@@ -69,6 +69,15 @@
                         Al confirmar ventas, crear un proyecto sin compañía.
                     </div>
                 </div>
+                <div class="mt16">
+                    <div>
+                        <field name="auto_select_all_documents"/>
+                        <label for="auto_select_all_documents"/>
+                    </div>
+                    <div class="text-muted">
+                        Automatically select all available documents from PDF Quote Builder.
+                    </div>
+                </div>
             </xpath>
             <xpath expr="//block[@name='quotation_order_setting_container']" position="inside">
                 <setting id="cancel_old_quotations" string="Cancel Old Quotations">
