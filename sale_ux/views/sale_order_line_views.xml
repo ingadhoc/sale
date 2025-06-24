@@ -44,7 +44,7 @@
                 <field name="name"/>
                 <field name="order_partner_id"/>
                 <field name="product_id" groups="base.group_no_one" optional="hide"/>
-                <field name="analytic_distribution" groups="analytic.group_analytic_accounting" widget="analytic_distribution" options="{'color_field': 'color'}" optional="hide"/>
+                <field name="analytic_distribution" groups="analytic.group_analytic_accounting" widget="analytic_distribution" options="{'color_field': 'color'}" optional="hide" readonly="1"/>
                 <field name="categ_id" optional="hide"/>
                 <field name="team_id" optional="hide"/>
                 <field name="salesman_id" optional="hide"/>
