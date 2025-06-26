@@ -57,7 +57,7 @@
             <filter domain="[('invoice_status','=','to invoice')]" position="before">
                 <separator/>
                 <filter name="with_returns" string="With Returns" domain="[('with_returns','=', True)]" help="Pedidos de venta con devoluciones facturables"/>
-                <filter name="to_deliver" string="To Deliver" domain="['|', ('delivery_status','=', 'partial'), ('delivery_status','=', 'pending')]" help="Sale orders that include lines not delivered."/>
+                <filter name="to_deliver" string="To Deliver" domain="['|', '|', ('delivery_status','=', 'partial'), ('delivery_status','=', 'pending'), ('delivery_status','=', 'started')]" help="Sale orders that include lines not delivered."/>
                 <filter name="delivered" string="Fully Delivered" domain="[('delivery_status','=', 'full')]" help="Sale orders with all lines delivered."/>
                 <separator/>
             </filter>
