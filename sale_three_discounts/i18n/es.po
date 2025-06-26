@@ -37,22 +37,22 @@ msgstr "Descuento (%)"
 #: model:ir.model.fields,field_description:sale_three_discounts.field_account_move_line__discount1
 #: model:ir.model.fields,field_description:sale_three_discounts.field_sale_order_discount__discount1
 #: model:ir.model.fields,field_description:sale_three_discounts.field_sale_order_line__discount1
-msgid "Discount 1 (%)"
-msgstr "Descuento 1 (%)"
+msgid "Disc. 1 (%)"
+msgstr "Desc. 1 (%)"
 
 #. module: sale_three_discounts
 #: model:ir.model.fields,field_description:sale_three_discounts.field_account_move_line__discount2
 #: model:ir.model.fields,field_description:sale_three_discounts.field_sale_order_discount__discount2
 #: model:ir.model.fields,field_description:sale_three_discounts.field_sale_order_line__discount2
-msgid "Discount 2 (%)"
-msgstr "Descuento 2 (%)"
+msgid "Disc. 2 (%)"
+msgstr "Desc. 2 (%)"
 
 #. module: sale_three_discounts
 #: model:ir.model.fields,field_description:sale_three_discounts.field_account_move_line__discount3
 #: model:ir.model.fields,field_description:sale_three_discounts.field_sale_order_discount__discount3
 #: model:ir.model.fields,field_description:sale_three_discounts.field_sale_order_line__discount3
-msgid "Discount 3 (%)"
-msgstr "Descuento 3 (%)"
+msgid "Disc. 3 (%)"
+msgstr "Desc. 3 (%)"
 
 #. module: sale_three_discounts
 #: model:ir.model,name:sale_three_discounts.model_sale_order_discount
