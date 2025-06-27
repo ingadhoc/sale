@@ -25,15 +25,14 @@ class SaleOrderLine(models.Model):
 
     delivery_status = fields.Selection(
         [
-            ("no", "Nothing to deliver"),
             ("to deliver", "To Deliver"),
+            ("partial", "Partially Delivered"),
             ("full", "Fully Delivered"),
         ],
         compute="_compute_delivery_status",
         store=True,
         readonly=True,
         copy=False,
-        default="no",
     )
 
     total_reserved_quantity = fields.Float(compute="_compute_total_reserved_quantity")
@@ -56,23 +55,34 @@ class SaleOrderLine(models.Model):
 
     @api.depends("order_id.state", "qty_delivered", "product_uom_qty", "order_id.force_delivery_status")
     def _compute_delivery_status(self):
+        """
+        Compute delivery status for order lines considering both storable products and services.
+        Services are considered delivered based on qty_delivered field.
+        """
         precision = self.env["decimal.precision"].precision_get("Product Unit of Measure")
         for line in self:
             if line.state not in ("sale", "done"):
-                line.delivery_status = "no"
+                line.delivery_status = False
                 continue
 
             if line.order_id.force_delivery_status:
                 line.delivery_status = line.order_id.force_delivery_status
                 continue
 
-            if float_compare(line.all_qty_delivered, line.product_uom_qty, precision_digits=precision) == -1:
-                delivery_status = "to deliver"
-            elif float_compare(line.all_qty_delivered, line.product_uom_qty, precision_digits=precision) >= 0:
-                delivery_status = "full"
+            if line.product_id.type == "service":
+                if float_compare(line.qty_delivered, line.product_uom_qty, precision_digits=precision) >= 0:
+                    line.delivery_status = "full"
+                elif float_compare(line.qty_delivered, 0.0, precision_digits=precision) > 0:
+                    line.delivery_status = "partial"
+                else:
+                    line.delivery_status = "to deliver"
             else:
-                delivery_status = "no"
-            line.delivery_status = delivery_status
+                if float_compare(line.all_qty_delivered, line.product_uom_qty, precision_digits=precision) >= 0:
+                    line.delivery_status = "full"
+                elif float_compare(line.all_qty_delivered, 0.0, precision_digits=precision) > 0:
+                    line.delivery_status = "partial"
+                else:
+                    line.delivery_status = "to deliver"
 
     def button_cancel_remaining(self):
         # la cancelación de kits no está bien resuelta ya que odoo solo computa
