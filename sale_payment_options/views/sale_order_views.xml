@@ -1,0 +1,25 @@
+<odoo>
+    <record id="view_order_form_inherit_payment_options" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.payment.options</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Payment Options" groups="base.group_user">
+                    <group>
+                        <group>
+                            <field name="payment_option_template_id" string="Payment Option Template" readonly="state == 'sale'"/>
+                            <button name="action_open_payment_option_wizard" type="object" string="Add Payment Option" class="oe_highlight" invisible="state == 'sale'"/>
+                        </group>
+                        <field name="payment_option_ids" force_save="1">
+                            <list create="false" editable="bottom">
+                                <field name="sequence" widget="handle"/>
+                                <field name="options_json_rendered" string="Details"/>
+                            </list>
+                        </field>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+</odoo>

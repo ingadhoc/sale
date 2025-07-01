@@ -1,0 +1,9 @@
+th[data-name="options_json_rendered"],
+td[data-name="options_json_rendered"] {
+    width: 80% !important;
+}
+
+th[data-name="sequence"],
+td[data-name="sequence"] {
+    width: 10% !important;
+}

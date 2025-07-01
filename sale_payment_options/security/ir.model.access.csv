@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_payment_option,sale.payment.option,model_sale_payment_option,base.group_user,1,1,1,1
+access_sale_payment_option_template,sale.payment.option.template,model_sale_payment_option_template,base.group_user,1,1,1,1
+access_sale_payment_option_wizard,sale.payment.option.wizard,model_sale_payment_option_wizard,base.group_user,1,1,1,1
+access_sale_payment_option_wizard_line,sale.payment.option.wizard.line,model_sale_payment_option_wizard_line,base.group_user,1,1,1,1

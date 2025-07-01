@@ -1,0 +1,47 @@
+<odoo>
+    <record id="view_sale_payment_option_template_list" model="ir.ui.view">
+        <field name="name">sale.payment.option.template.tree</field>
+        <field name="model">sale.payment.option.template</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_sale_payment_option_template_form" model="ir.ui.view">
+        <field name="name">sale.payment.option.template.form</field>
+        <field name="model">sale.payment.option.template</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_payment_option_wizard" type="object" string="Add Payment Option" class="oe_highlight"/>
+                    </div>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <field name="payment_option_ids">
+                        <list create="false" editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="options_json_rendered" string="Details"/>
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sale_payment_option_template" model="ir.actions.act_window">
+        <field name="name">Payment Option Templates</field>
+        <field name="res_model">sale.payment.option.template</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create payment option templates to reuse payment configurations in sales orders.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_sale_payment_option_template" name="Payment Option Templates" parent="sale.menu_sale_config" sequence="100" action="action_sale_payment_option_template"/>
+</odoo>
