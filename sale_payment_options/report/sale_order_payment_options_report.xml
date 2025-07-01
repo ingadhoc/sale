@@ -1,0 +1,67 @@
+<odoo>
+    <template id="report_saleorder_payment_options">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="sale_payment_options.report_saleorder_payment_options_document" t-lang="doc.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_saleorder_payment_options_document" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//div[@name='so_total_summary']" position="attributes">
+            <attribute name="style">display: none;</attribute>
+        </xpath>
+        <xpath expr="//div[@name='so_total_summary']" position="after">
+            <t t-if="doc.payment_option_ids">
+                <h3>Payment Options</h3>
+                <div>
+                    <table class="o_has_total_table table o_main_table table-borderless">
+                        <thead style="display: table-row-group">
+                            <tr>
+                                <th class="text-start">Op.</th>
+                                <th class="text-start">% OV</th>
+                                <th class="text-end text-nowrap">Installment plan</th>
+                                <th class="text-end">Surcharge</th>
+                                <th class="text-end">Subtotal</th>
+                                <th class="text-end">Total per installment</th>
+                                <th class="text-end">Installment quantity</th>
+                            </tr>
+                        </thead>
+                        <t t-set="op_index" t-value="1"/>
+                        <t t-foreach="doc.payment_option_ids" t-as="opt">
+                            <t>
+                                <tr>
+                                    <td colspan="7" style="border-top:1px solid #111827"></td>
+                                </tr>
+                            </t>
+                            <tbody>
+                                <t t-set="subtotal" t-value="0"/>
+                                <t t-set="rowspan" t-value="len(opt.options_json) if opt.options_json else 1"/>
+                                <t t-foreach="opt.options_json" t-as="item" t-index="item_index">
+                                    <tr>
+                                        <td class="text-start" t-if="item_index == 0" t-att-rowspan="rowspan"><t t-esc="op_index"/></td>
+                                        <td class="text-start" t-if="item_index != 0" style="display:none"></td> <!-- The following hidden cell is used to keep table alignment when using rowspan for the index column. -->
+                                        <td class="text-start"><t t-esc="item.get('percentage')"/>%</td>
+                                        <td class="text-end text-nowrap"><t t-esc="item.get('card_installment')"/></td>
+                                        <td class="text-end"><t t-esc="item.get('surcharge')"/>%</td>
+                                        <td class="text-end"><t t-esc="item.get('subtotal')"/></td>
+                                        <td class="text-end"><t t-esc="item.get('total_per_installment')"/></td>
+                                        <td class="text-end"><t t-esc="item.get('installment_qty')"/></td>
+                                    </tr>
+                                    <t t-set="subtotal" t-value="subtotal + item.get('subtotal')"/>
+                                </t>
+                                <tr class="fw-bold">
+                                    <td colspan="4" class="text-end">Total</td>
+                                    <td class="text-end"><span t-esc="'%.2f' % subtotal"/></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <t t-set="op_index" t-value="op_index + 1"/>
+                            </tbody>
+                        </t>
+                    </table>
+                </div>
+            </t>
+        </xpath>
+    </template>
+</odoo>

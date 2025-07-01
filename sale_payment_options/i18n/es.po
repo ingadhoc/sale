@@ -1,0 +1,299 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_payment_options
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-06-30 23:42+0000\n"
+"PO-Revision-Date: 2025-06-30 23:42+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_payment_options
+#: model_terms:ir.ui.view,arch_db:sale_payment_options.report_saleorder_payment_options_document
+msgid "% OV"
+msgstr "% OV"
+
+#. module: sale_payment_options
+#: model:ir.actions.report,print_report_name:sale_payment_options.action_report_saleorder_payment_options
+msgid "(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Order - %s' % (object.name)"
+msgstr "(object.state in ('draft', 'sent') and 'Presupuesto - %s' % (object.name)) or 'Pedido - %s' % (object.name)"
+
+#. module: sale_payment_options
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_template__active
+msgid "Active"
+msgstr "Activo"
+
+#. module: sale_payment_options
+#: model_terms:ir.ui.view,arch_db:sale_payment_options.view_order_form_inherit_payment_options
+#: model_terms:ir.ui.view,arch_db:sale_payment_options.view_sale_payment_option_template_form
+msgid "Add Payment Option"
+msgstr "Agregar opción de pago"
+
+#. module: sale_payment_options
+#: model_terms:ir.ui.view,arch_db:sale_payment_options.view_sale_payment_option_wizard_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: sale_payment_options
+#: model_terms:ir.ui.view,arch_db:sale_payment_options.view_sale_payment_option_wizard_form
+msgid "Confirm"
+msgstr "Confirmar"
+
+#. module: sale_payment_options
+#: model_terms:ir.actions.act_window,help:sale_payment_options.action_sale_payment_option_template
+msgid "Create payment option templates to reuse payment configurations in sales orders."
+msgstr "Cree plantillas de opciones de pago para reutilizar configuraciones de pago en los pedidos de venta."
+
+#. module: sale_payment_options
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option__create_uid
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_template__create_uid
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard__create_uid
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard_line__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: sale_payment_options
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option__create_date
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_template__create_date
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard__create_date
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard_line__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: sale_payment_options
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard__currency_id
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard_line__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: sale_payment_options
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option__options_json_rendered
+#: model_terms:ir.ui.view,arch_db:sale_payment_options.view_order_form_inherit_payment_options
+#: model_terms:ir.ui.view,arch_db:sale_payment_options.view_sale_payment_option_template_form
+msgid "Details"
+msgstr "Detalles"
+
+#. module: sale_payment_options
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option__display_name
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_template__display_name
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard__display_name
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard_line__display_name
+msgid "Display Name"
+msgstr "Nombre"
+
+#. module: sale_payment_options
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard_line__installment_qty
+msgid "Divisor"
+msgstr "Divisor"
+
+#. module: sale_payment_options
+#: model:ir.model.fields,help:sale_payment_options.field_sale_payment_option_wizard_line__surcharge_coefficient
+msgid "Factor a aplicar sobre el monto total para calcular el cargo financiero. Por ejemplo el formato para el recargo de un 6% se aplica con el valor 1.06."
+msgstr "Factor a aplicar sobre el monto total para calcular el cargo financiero. Por ejemplo, el formato para el recargo de un 6% se aplica con el valor 1.06."
+
+#. module: sale_payment_options
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option__id
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_template__id
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard__id
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard_line__id
+msgid "ID"
+msgstr "ID"
+
+#. module: sale_payment_options
+#: model_terms:ir.ui.view,arch_db:sale_payment_options.view_sale_payment_option_wizard_form
+msgid "Installment"
+msgstr "Cuota"
+
+#. module: sale_payment_options
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard_line__card_installment_id
+#: model_terms:ir.ui.view,arch_db:sale_payment_options.report_saleorder_payment_options_document
+msgid "Installment Plan"
+msgstr "Plan de cuotas"
+
+#. module: sale_payment_options
+#: model_terms:ir.ui.view,arch_db:sale_payment_options.report_saleorder_payment_options_document
+msgid "Installment quantity"
+msgstr "Cantidad de cuotas"
+
+#. module: sale_payment_options
+#. odoo-python
+#: code:addons/odoo/odoo/addons/sale_payment_options/models/sale_order.py:0
+#: code:addons/sale_payment_options/models/sale_order.py:0
+msgid "Invalid configuration"
+msgstr "Configuración inválida"
+
+#. module: sale_payment_options
+#. odoo-python
+#: code:addons/sale_payment_options/models/sale_order.py:0
+msgid "Invalid Template Configuration"
+msgstr "Configuración de plantilla inválida"
+
+#. module: sale_payment_options
+#. odoo-python
+#: code:addons/sale_payment_options/models/sale_order.py:0
+msgid "The following options don't sum to 100%%:\n%s"
+msgstr "Las siguientes opciones no suman 100%%:\n%s"
+
+#. module: sale_payment_options
+#. odoo-python
+#: code:addons/sale_payment_options/models/sale_order.py:0
+msgid "The following payment options have invalid percentage totals (must be exactly 100%%):\n%s"
+msgstr "Las siguientes opciones de pago tienen totales de porcentaje inválidos (deben ser exactamente 100%%):\n%s"
+
+#. module: sale_payment_options
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option__write_uid
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_template__write_uid
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard__write_uid
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard_line__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: sale_payment_options
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option__write_date
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_template__write_date
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard__write_date
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard_line__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: sale_payment_options
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_template__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: sale_payment_options
+#: model:ir.model.fields,help:sale_payment_options.field_sale_payment_option_wizard_line__installment_qty
+msgid "Número por el cual se dividirá el total de cuotas que pagará el usuario final"
+msgstr "Número por el cual se dividirá el total de cuotas que pagará el usuario final"
+
+#. module: sale_payment_options
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option__options_json
+msgid "Options Json"
+msgstr "Opciones Json"
+
+#. module: sale_payment_options
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard__total
+msgid "Order Total"
+msgstr "Total del pedido"
+
+#. module: sale_payment_options
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard__line_ids
+msgid "Payment Lines"
+msgstr "Líneas de pago"
+
+#. module: sale_payment_options
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_order__payment_option_template_id
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option__payment_option_template_id
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard__payment_option_template_id
+#: model_terms:ir.ui.view,arch_db:sale_payment_options.view_order_form_inherit_payment_options
+msgid "Payment Option Template"
+msgstr "Plantilla de opción de pago"
+
+#. module: sale_payment_options
+#: model:ir.actions.act_window,name:sale_payment_options.action_sale_payment_option_template
+#: model:ir.ui.menu,name:sale_payment_options.menu_sale_payment_option_template
+msgid "Payment Option Templates"
+msgstr "Plantillas de opciones de pago"
+
+#. module: sale_payment_options
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_order__payment_option_ids
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_template__payment_option_ids
+#: model_terms:ir.ui.view,arch_db:sale_payment_options.report_saleorder_payment_options_document
+#: model_terms:ir.ui.view,arch_db:sale_payment_options.view_order_form_inherit_payment_options
+msgid "Payment Options"
+msgstr "Opciones de pago"
+
+#. module: sale_payment_options
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard_line__percentage
+msgid "Percentage"
+msgstr "Porcentaje"
+
+#. module: sale_payment_options
+#: model:ir.actions.report,name:sale_payment_options.action_report_saleorder_payment_options
+msgid "Quotation / Order (Payment Options)"
+msgstr "Presupuesto / Pedido (Opciones de pago)"
+
+#. module: sale_payment_options
+#: model:ir.model,name:sale_payment_options.model_sale_payment_option
+msgid "Sale payment option"
+msgstr "Opción de pago de venta"
+
+#. module: sale_payment_options
+#: model:ir.model,name:sale_payment_options.model_sale_payment_option_template
+msgid "Sale payment option template"
+msgstr "Plantilla de opción de pago de venta"
+
+#. module: sale_payment_options
+#: model:ir.model,name:sale_payment_options.model_sale_payment_option_wizard
+msgid "Sale payment option wizard"
+msgstr "Asistente de opción de pago de venta"
+
+#. module: sale_payment_options
+#: model:ir.model,name:sale_payment_options.model_sale_payment_option_wizard_line
+msgid "Sale payment option wizard line"
+msgstr "Línea de asistente de opción de pago de venta"
+
+#. module: sale_payment_options
+#: model:ir.model,name:sale_payment_options.model_sale_order
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option__sale_order_id
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard__sale_order_id
+msgid "Sales Order"
+msgstr "Orden de venta"
+
+#. module: sale_payment_options
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option__sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: sale_payment_options
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard_line__subtotal
+#: model_terms:ir.ui.view,arch_db:sale_payment_options.report_saleorder_payment_options_document
+msgid "Subtotal"
+msgstr "Subtotal"
+
+#. module: sale_payment_options
+#: model_terms:ir.ui.view,arch_db:sale_payment_options.report_saleorder_payment_options_document
+msgid "Surcharge"
+msgstr "Recargo"
+
+#. module: sale_payment_options
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard_line__surcharge_coefficient
+msgid "Surcharge Coefficient"
+msgstr "Coeficiente de recargo"
+
+#. module: sale_payment_options
+#. odoo-python
+#: code:addons/odoo/odoo/addons/sale_payment_options/wizard/sale_payment_option_wizard.py:0
+#: code:addons/sale_payment_options/wizard/sale_payment_option_wizard.py:0
+msgid "The sum of the percentages must be exactly 100."
+msgstr "La suma de los porcentajes debe ser exactamente 100."
+
+#. module: sale_payment_options
+#. odoo-python
+#: code:addons/odoo/odoo/addons/sale_payment_options/models/sale_order.py:0
+#: code:addons/sale_payment_options/models/sale_order.py:0
+msgid "The sum of the percentages of each template option must be exactly 100%."
+msgstr "La suma de los porcentajes de cada opción de plantilla debe ser exactamente 100%."
+
+#. module: sale_payment_options
+#: model_terms:ir.ui.view,arch_db:sale_payment_options.report_saleorder_payment_options_document
+msgid "Total"
+msgstr "Total"
+
+#. module: sale_payment_options
+#: model_terms:ir.ui.view,arch_db:sale_payment_options.report_saleorder_payment_options_document
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard_line__total_per_installment
+msgid "Total per installment"
+msgstr "Total por cuota"
+
+#. module: sale_payment_options
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard_line__wizard_id
+msgid "Wizard"
+msgstr "Asistente"

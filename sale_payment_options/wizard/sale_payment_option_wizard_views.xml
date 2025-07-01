@@ -1,0 +1,27 @@
+<odoo>
+    <record id="view_sale_payment_option_wizard_form" model="ir.ui.view">
+        <field name="name">sale.payment.option.wizard.form</field>
+        <field name="model">sale.payment.option.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="sale_order_id" invisible="1"/>
+                <field name="payment_option_template_id" invisible="1"/>
+                <field name="total" invisible="1"/>
+                <field name="line_ids">
+                    <list editable="bottom">
+                        <field name="card_installment_id"/>
+                        <field name="percentage" widget="percentage"/>
+                        <field name="surcharge_coefficient"/>
+                        <field name="installment_qty" string="Installment"/>
+                        <field name="subtotal" column_invisible="parent.payment_option_template_id"/>
+                        <field name="total_per_installment" column_invisible="parent.payment_option_template_id"/>
+                    </list>
+                </field>
+                <footer>
+                    <button string="Confirm" type="object" name="confirm" class="btn-primary"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
