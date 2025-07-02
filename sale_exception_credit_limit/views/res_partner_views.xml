@@ -5,12 +5,12 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="account.view_partner_property_form"/>
         <field name="arch" type="xml">
-            <field name="credit" position="attributes">
+            <!-- <field name="credit" position="attributes">
                 <attribute name="invisible">1</attribute>
-            </field>
-            <field name="credit" position="after">
+            </field> -->
+            <!-- <field name="credit" position="after">
                 <field name="credit_with_confirmed_orders" invisible="not use_partner_credit_limit"/>
-            </field>
+            </field> -->
             <form>
                 <field name="user_credit_config" invisible="1"/>
             </form>
