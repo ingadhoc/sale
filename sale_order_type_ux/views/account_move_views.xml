@@ -1,0 +1,14 @@
+<odoo>
+
+    <record id="view_move_form_sale_order_type" model="ir.ui.view">
+        <field name="model">account.move</field>
+        <field name="name">account.move.form</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+        <field name="sale_type_id" position="attributes">
+            <attribute name="domain">['|',('journal_id.company_id', '=', company_id), ('journal_id', '=', False)]</attribute>
+        </field>
+        </field>
+    </record>
+
+</odoo>
