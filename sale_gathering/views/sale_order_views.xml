@@ -44,6 +44,9 @@
             <xpath expr="//field[@name='order_line']/list//field[@name='product_uom_qty']" position="after">
                 <field name="initial_qty_gathered" force_save="1" readonly="1" column_invisible="not parent.is_gathering"/>
             </xpath>
+            <field name="tax_totals" position="attributes">
+                <attribute name="invisible">is_gathering and state == 'sale'</attribute>
+            </field>
         </field>
     </record>
 
