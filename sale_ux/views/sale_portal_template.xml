@@ -4,6 +4,18 @@
         <xpath expr="//section[@t-if='sale_order.payment_term_id']//span" position="before">
             <span t-field="sale_order.payment_term_id"/>
         </xpath>
+        <tbody id="sale_info_table" position="inside">
+            <tr groups="sale_ux.group_delivery_date_on_report_online">
+                <th class="ps-0 pb-0">Delivery Date:</th>
+                <td class="w-100 pb-0 text-wrap">
+                    <t t-if="sale_order.commitment_date">
+                        <span t-field="sale_order.commitment_date"/>
+                    </t>
+                    <t t-else="">
+                        <span t-field="sale_order.expected_date"/>
+                    </t>
+                </td>
+            </tr>
+        </tbody>
     </template>
-
 </odoo>

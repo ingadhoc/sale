@@ -88,6 +88,9 @@
                     </div>
                     <strong>Sales</strong> <field name="cancel_old_quotations" style="margin-left:5px;"/>
                 </setting>
+                <setting id="group_delivery_date" help="Shows the delivery date field in the budget report and in the online budget." title="Shows the delivery date field in the budget report and in the online budget.">
+                    <field name="group_delivery_date"/>
+                </setting>
             </xpath>
         </field>
     </record>

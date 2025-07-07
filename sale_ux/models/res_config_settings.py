@@ -49,6 +49,10 @@ class ResConfigSettings(models.TransientModel):
         help="Automatically select all available documents from PDF Quote Builder.",
         default=False,
     )
+    group_delivery_date = fields.Boolean(
+        "Show Delivery Date in Quotations report and online budget",
+        implied_group="sale_ux.group_delivery_date_on_report_online",
+    )
 
     def get_values(self):
         res = super(ResConfigSettings, self).get_values()
