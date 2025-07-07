@@ -9,6 +9,12 @@
                 <img t-if="doc.env['ir.config_parameter'].sudo().get_param('sale_ux.show_product_image_on_report') and line.product_id.image_256" t-att-src="image_data_uri(line.product_id.image_256)" style="height:50px !important;width:50px !important;"/>
             </td>
         </xpath>
+        <div id="informations" position="inside">
+            <div t-if="doc.user_id.name" class="col" groups="sale_ux.group_delivery_date_on_report_online">
+                <strong>Delivery Date</strong>
+                 <div t-out="doc.commitment_date or doc.expected_date" t-options='{"widget": "date"}'/>
+            </div>
+        </div>
     </template>
     <template id="report_report_saleorder_document_inherit_sale_management" inherit_id="sale_management.report_saleorder_document_inherit_sale_management">
         <xpath expr="//table//tr/td[@name='th_option_name']" position="before">

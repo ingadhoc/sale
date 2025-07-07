@@ -550,3 +550,13 @@ msgstr "No puedes modificar pedidos de venta ya bloqueados."
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
 msgid "or"
 msgstr "o"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.report_saleorder
+msgid "Delivery Date"
+msgstr "Fecha de Entrega"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_portal_content
+msgid "Delivery Date:"
+msgstr "Fecha de Entrega:"
