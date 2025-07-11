@@ -53,3 +53,20 @@ class SaleAdvancePaymentInv(models.TransientModel):
                 discount_lines[0].product_id.write({"company_id": False})
 
         return super(SaleAdvancePaymentInv, self)._create_invoices(sale_orders=sale_orders)
+
+    def _prepare_down_payment_lines_values(self, order):
+        down_payment_values, accounts = super()._prepare_down_payment_lines_values(order)
+        order_lines = order.order_line.filtered(lambda l: not l.display_type and not l.is_downpayment)
+        company = order.type_id.journal_id.company_id
+        correct_accounts = []
+        if company != order.company_id:
+            for line in order_lines:
+                product_account = (
+                    line["product_id"]
+                    .product_tmpl_id.with_company(company.id)
+                    .get_product_accounts(fiscal_pos=order.fiscal_position_id)
+                )
+                product_accounts = product_account.get("downpayment") or product_account.get("income")
+                correct_accounts.append(product_accounts)
+            accounts = correct_accounts
+        return down_payment_values, accounts
