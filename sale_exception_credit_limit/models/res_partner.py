@@ -36,57 +36,19 @@ class ResPartner(models.Model):
         return super().write(vals)
 
     def _credit_debit_get(self):
-        # Redefinimos método para que obtenga facturas en borrador.
-        if not self.ids:
-            self.debit = False
-            self.credit = False
-            return
-
-        query = self.env["account.move.line"]._where_calc(
-            [("parent_state", "=", "posted"), ("company_id", "child_of", self.env.company.root_id.id)]
-        )
-        self.env["account.move.line"].flush_model(
-            ["account_id", "amount_residual", "company_id", "parent_state", "partner_id", "reconciled"]
-        )
-        self.env["account.account"].flush_model(["account_type"])
-
-        sql = SQL(
-            """
-            SELECT account_move_line.partner_id, a.account_type, SUM(account_move_line.amount_residual)
-            FROM %s
-            LEFT JOIN account_account a ON (account_move_line.account_id=a.id)
-            WHERE a.account_type IN ('asset_receivable','liability_payable')
-            AND account_move_line.partner_id IN %s
-            AND account_move_line.reconciled IS NOT TRUE
-            AND %s
-            GROUP BY account_move_line.partner_id, a.account_type
-            """,
-            query.from_clause,
-            tuple(self.ids),
-            query.where_clause or SQL("TRUE"),
-        )
-
-        credit_map = {}
-        debit_map = {}
-
-        for pid, account_type, val in self.env.execute_query(sql):
-            if account_type == "asset_receivable":
-                credit_map[pid] = val
-            elif account_type == "liability_payable":
-                debit_map[pid] = -val
-
-        draft_moves = self.env["account.move"].search(
-            [
-                ("state", "=", "draft"),
-                ("move_type", "in", ["out_invoice", "out_refund"]),
-                ("partner_id", "in", self.ids),
-                ("company_id", "child_of", self.env.company.root_id.id),
-            ]
-        )
-        for move in draft_moves:
-            pid = move.partner_id.id
-            credit_map[pid] = credit_map.get(pid, 0.0) + move.amount_total_signed
-
+        super()._credit_debit_get()
+        credit_map = {
+            res['partner_id'][0]: res['amount_total_signed']
+            for res in self.env['account.move'].read_group(
+                [
+                    ("state", "=", "draft"),
+                    ("move_type", "in", ["out_invoice", "out_refund"]),
+                    ("partner_id", "in", self.ids),
+                    ("company_id", "child_of", self.env.company.root_id.id),
+                ],
+                ["amount_total_signed"],
+                ["partner_id"]
+            ) if res['partner_id']
+        }
         for partner in self:
-            partner.credit = credit_map.get(partner.id, 0.0)
-            partner.debit = debit_map.get(partner.id, 0.0)
+            partner.credit = partner.credit + credit_map.get(partner.id, 0.0)
