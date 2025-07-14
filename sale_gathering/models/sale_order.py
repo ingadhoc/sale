@@ -55,7 +55,7 @@ class SaleOrder(models.Model):
                 total_amount_to_invoice_invoiced += line.tax_id.compute_all(
                     price_reduce,
                     currency=line.currency_id,
-                    quantity=line.qty_to_invoice + line.qty_invoiced - line.quantity_returned,
+                    quantity=line.qty_to_invoice + line.qty_invoiced,
                     product=line.product_id,
                     partner=line.order_id.partner_shipping_id,
                 )["total_included"]
