@@ -3,16 +3,17 @@
 # 	* sale_stock_ux
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025
 # María Florencia Frigieri Parma, 2025
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025
+# Matias Velazquez, 2025
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-06 23:21+0000\n"
+"POT-Creation-Date: 2025-07-15 20:07+0000\n"
 "PO-Revision-Date: 2024-11-13 15:07+0000\n"
-"Last-Translator: María Florencia Frigieri Parma, 2025\n"
+"Last-Translator: Matias Velazquez, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -165,6 +166,12 @@ msgid "Mass cancellation of remaining quantities"
 msgstr "Cancelación masiva de las cantidades remanentes"
 
 #. module: sale_stock_ux
+#. odoo-javascript
+#: code:addons/sale_stock_ux/static/src/widgets/qty_at_date_widget.xml:0
+msgid "No stock available"
+msgstr "Sin stock disponible"
+
+#. module: sale_stock_ux
 #: model:ir.model.fields.selection,name:sale_stock_ux.selection__sale_order__delivery_status__no
 #: model:ir.model.fields.selection,name:sale_stock_ux.selection__sale_order__force_delivery_status__no
 msgid "Nothing to Deliver"
@@ -206,6 +213,12 @@ msgstr "Remitos"
 #: model:ir.model.fields,field_description:sale_stock_ux.field_res_config_settings__propagate_uom
 msgid "Propagate Unit of Measure"
 msgstr "Propagar unidad de medida"
+
+#. module: sale_stock_ux
+#. odoo-javascript
+#: code:addons/sale_stock_ux/static/src/widgets/qty_at_date_widget.xml:0
+msgid "Quantity"
+msgstr "Cantidad"
 
 #. module: sale_stock_ux
 #. odoo-javascript
@@ -268,9 +281,20 @@ msgid ""
 msgstr ""
 
 #. module: sale_stock_ux
+#: model:ir.model.fields,field_description:sale_stock_ux.field_sale_order_line__stock_by_location
+msgid "Stock By Location"
+msgstr "Stock por Ubicación"
+
+#. module: sale_stock_ux
 #: model:ir.model,name:sale_stock_ux.model_stock_move
 msgid "Stock Move"
 msgstr "Movimiento de stock"
+
+#. module: sale_stock_ux
+#. odoo-javascript
+#: code:addons/sale_stock_ux/static/src/widgets/qty_at_date_widget.xml:0
+msgid "Stock by Location"
+msgstr "Stock por Ubicación"
 
 #. module: sale_stock_ux
 #: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_order_form
@@ -318,9 +342,3 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_sales_order_filter
 msgid "With Returns"
 msgstr "Con devoluciones"
-
-#. module: sale_stock_ux
-#. odoo-javascript
-#: code:addons/sale_stock_ux/static/src/widgets/qty_at_date_widget.xml:0
-msgid "Stock by Location"
-msgstr "Stock por Ubicación"

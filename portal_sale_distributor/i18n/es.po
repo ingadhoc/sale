@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-24 14:25+0000\n"
+"POT-Creation-Date: 2025-07-03 05:09+0000\n"
 "PO-Revision-Date: 2024-11-14 16:04+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -162,6 +162,11 @@ msgid "Pricelist Rule"
 msgstr "Regla de la lista de precios"
 
 #. module: portal_sale_distributor
+#: model_terms:ir.ui.view,arch_db:portal_sale_distributor.product_template_view_form
+msgid "Product"
+msgstr ""
+
+#. module: portal_sale_distributor
 #: model:ir.model,name:portal_sale_distributor.model_product_document
 msgid "Product Document"
 msgstr "Documento del producto"
@@ -195,3 +200,8 @@ msgstr "Pedido de venta"
 #: model:ir.model,name:portal_sale_distributor.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Línea de pedido de venta"
+
+#. module: portal_sale_distributor
+#: model_terms:ir.ui.view,arch_db:portal_sale_distributor.product_template_view_form
+msgid "e.g. Cheese Burger"
+msgstr ""

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-21 21:42+0000\n"
+"POT-Creation-Date: 2025-07-03 05:12+0000\n"
 "PO-Revision-Date: 2024-12-30 17:44+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -88,6 +88,22 @@ msgstr ""
 #. module: pos_ux
 #: model:ir.model.fields.selection,name:pos_ux.selection__pos_config__billing_behavior__on_demand
 msgid "Invoice on demand"
+msgstr ""
+
+#. module: pos_ux
+#. odoo-python
+#: code:addons/pos_ux/models/pos_config.py:0
+msgid ""
+"No se puede completar la operación: falta definir cuenta intermediaria en "
+"los siguientes métodos de pago: %s"
+msgstr ""
+
+#. module: pos_ux
+#. odoo-python
+#: code:addons/pos_ux/models/pos_config.py:0
+msgid ""
+"No se puede completar la operación: falta definir la cuenta pendiente en los"
+" siguientes métodos de pago: %s"
 msgstr ""
 
 #. module: pos_ux
