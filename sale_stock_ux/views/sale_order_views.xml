@@ -28,7 +28,7 @@
                         icon="fa-ban"
                         confirm="This will set line quantity equal to delivery qty and will cancel remaining moves. This can not be undone. Are you sure you want to continue?"
                         invisible="delivery_status != 'to deliver'"
-                        groups="sales_team.group_sale_salesman"
+                        groups="stock_ux.allow_picking_cancellation"
                         context="{'cancel_from_order': True}"/>
             </xpath>
             <group name="sale_info">
