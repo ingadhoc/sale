@@ -29,10 +29,16 @@ class SaleOrder(models.Model):
             lambda so: so.require_purchase_order_number and not so.purchase_order_number
         )
         if sale_order_missing_po_number:
-            raise UserError(_("You cannot confirm a sales order without a" " Purchase Order Number for this partner"))
+            raise UserError(_("You cannot confirm a sales order without a Purchase Order Number for this partner"))
         return super().action_confirm()
 
     def _create_invoices(self, grouped=False, final=False, date=None):
         moves = super()._create_invoices(grouped, final, date)
-        moves.purchase_order_number = ", ".join([x for x in self.mapped("purchase_order_number") if x] or [])
+        origin_map = {order.name: order.purchase_order_number for order in self}
+        for move in moves:
+            if not move.invoice_origin:
+                continue
+            origins = move.invoice_origin.split(", ")
+            po_numbers = [origin_map.get(o) for o in origins if origin_map.get(o)]
+            move.purchase_order_number = ", ".join(po_numbers)
         return moves
