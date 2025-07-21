@@ -18,7 +18,7 @@ This module incorporates the following features:
 
 * Field "purchase order number" on sale order, picking and invoice.
 * Validate that the field is in these documents if the partner has the field "required number of PO".
-* Purchase order number must be unique per partner.
+* Purchase order number must be unique per partner
 
 Installation
 ============
