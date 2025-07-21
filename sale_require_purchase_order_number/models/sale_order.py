@@ -34,5 +34,17 @@ class SaleOrder(models.Model):
 
     def _create_invoices(self, grouped=False, final=False, date=None):
         moves = super()._create_invoices(grouped, final, date)
+<<<<<<< HEAD
         moves.purchase_order_number = ", ".join([x for x in self.mapped("purchase_order_number") if x] or [])
+||||||| parent of b542a151 (temp)
+        moves.purchase_order_number = ', '.join([x for x in self.mapped('purchase_order_number') if x ] or [])
+=======
+        origin_map = {order.name: order.purchase_order_number for order in self}
+        for move in moves:
+            if not move.invoice_origin:
+                continue
+            origins = move.invoice_origin.split(", ")
+            po_numbers = [origin_map.get(o) for o in origins if origin_map.get(o)]
+            move.purchase_order_number = ", ".join(po_numbers)
+>>>>>>> b542a151 (temp)
         return moves
