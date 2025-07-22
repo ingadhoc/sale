@@ -31,7 +31,7 @@ class AccountMoveLine(models.Model):
 
     @api.depends('discount1', 'discount2', 'discount3')
     def _compute_discount(self):
-        for line in self:
+        for line in self.filtered(lambda x: x.move_type not in ('in_invoice', 'in_refund')):
             discount_factor = 1.0
             for discount in [line.discount1, line.discount2, line.discount3]:
                 discount_factor *= (100.0 - discount) / 100.0
