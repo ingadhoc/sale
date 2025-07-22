@@ -18,7 +18,6 @@ class SaleOrderLine(models.Model):
     discount3 = fields.Float(
         "Disc. 3 (%)", digits="Discount", compute="_compute_discount", precompute=True, store=True, readonly=False
     )
-    discount = fields.Float(readonly=True)
 
     @api.constrains("discount1", "discount2", "discount3")
     def check_discount_validity(self):
