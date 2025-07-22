@@ -78,6 +78,7 @@ class SaleOrderLine(models.Model):
             line.delivery_status = delivery_status
 
     def button_cancel_remaining(self):
+        self = self.with_context(cancel_remaining=True)
         # la cancelación de kits no está bien resuelta ya que odoo solo computa
         # la cantidad entregada cuando todo el kit se entregó. Cuestión que,
         # por ahora, desactivamos la cancelación de kits
@@ -251,3 +252,9 @@ class SaleOrderLine(models.Model):
                     line.invoice_status = 'invoiced'
                 else:
                     line.invoice_status = 'no'
+
+    def _compute_discount(self):
+        if self.env.context.get("cancel_remaining"):
+            # We don't want to recompute the discount when canceling remaining
+            return
+        super()._compute_discount()
