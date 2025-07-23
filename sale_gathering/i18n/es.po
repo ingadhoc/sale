@@ -35,7 +35,7 @@ msgstr ""
 #. module: sale_gathering
 #: model_terms:ir.ui.view,arch_db:sale_gathering.sale_gathering_totals
 msgid "<strong>Gathering Amount With Taxes:</strong>"
-msgstr ""
+msgstr "<strong>Monto acopiado con impuestos:</strong>"
 
 #. module: sale_gathering
 #: model_terms:ir.ui.view,arch_db:sale_gathering.sale_gathering_totals
