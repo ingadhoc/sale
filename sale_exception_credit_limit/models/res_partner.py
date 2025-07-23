@@ -2,9 +2,10 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
+from collections import defaultdict
+
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
-from odoo.tools import SQL
 
 
 class ResPartner(models.Model):
@@ -37,18 +38,36 @@ class ResPartner(models.Model):
 
     def _credit_debit_get(self):
         super()._credit_debit_get()
+        # Esto busca fact en borrador
         credit_map = {
-            res['partner_id'][0]: res['amount_total_signed']
-            for res in self.env['account.move'].read_group(
+            res["partner_id"][0]: res["amount_total_signed"]
+            for res in self.env["account.move"].read_group(
                 [
                     ("state", "=", "draft"),
                     ("move_type", "in", ["out_invoice", "out_refund"]),
                     ("partner_id", "in", self.ids),
-                    ("company_id", "child_of", self.env.company.root_id.id),
+                    ("company_id", "in", self.env.companies.ids),
                 ],
                 ["amount_total_signed"],
-                ["partner_id"]
-            ) if res['partner_id']
+                ["partner_id"],
+            )
+            if res["partner_id"]
         }
+        sale_map = defaultdict(float)
+
+        # Esto busca lineas pendientes de facturar pero confirm
+        sale_lines = self.env["sale.order.line"].search(
+            [
+                ("order_id.state", "=", "sale"),
+                ("order_id.partner_id", "in", self.ids),
+                ("order_id.invoice_status", "in", ["no", "to invoice", "partial"]),
+                ("company_id", "in", self.env.companies.ids),
+            ]
+        )
+
+        for line in sale_lines:
+            partner_id = line.order_id.partner_id.id
+            sale_map[partner_id] += line.price_total
+
         for partner in self:
-            partner.credit = partner.credit + credit_map.get(partner.id, 0.0)
+            partner.credit += credit_map.get(partner.id, 0.0) + sale_map.get(partner.id, 0.0)
