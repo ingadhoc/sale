@@ -20,6 +20,10 @@
                     </td>
                 </tr>
                 <tr invisible="not is_gathering">
+                    <td> <label for="indexed_withdrawn_amount"/> </td>
+                    <td> <field name="indexed_withdrawn_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/> </td>
+                </tr>
+                <tr invisible="not is_gathering">
                     <td><label for="gathering_balance_indexed"/></td>
                     <td>
                         <field name="gathering_balance_indexed" widget="monetary" options="{'currency_field': 'currency_id'}"/>

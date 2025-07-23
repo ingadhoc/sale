@@ -12,7 +12,7 @@
 
     <template id="sale_gathering_totals" inherit_id="sale_gathering.sale_gathering_totals">
 
-        <xpath expr="//tr[2]" position="after">
+        <xpath expr="//tr[3]" position="after">
             <t t-if="doc.is_gathering and doc.state not in ['draft','sent']">
                 <tr class="border-black o_total">
                     <td>
@@ -24,7 +24,15 @@
                 </tr>
                 <tr>
                     <td>
-                        <strong>Gathering Balance Indexed:</strong>
+                        <strong>Indexed Withdrawn Amount:</strong>
+                    </td>
+                    <td class="text-end">
+                        <span t-out="doc.indexed_withdrawn_amount or 0" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Indexed Gathering Balance:</strong>
                     </td>
                     <td class="text-end">
                         <span t-out="doc.gathering_balance_indexed or 0"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>

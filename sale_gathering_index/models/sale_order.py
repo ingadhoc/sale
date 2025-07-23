@@ -14,6 +14,7 @@ class SaleOrder(models.Model):
         help="Coeficiente inverso que se utiliza para estimar el precio de un producto canjeado a la fecha de confirmación del acopio. Para calcular el precio se toma el precio actual del producto y se lo divide por este coeficiente.",
     )
     gathering_balance_indexed = fields.Float(
+        string="Indexed Gathering Balance",
         compute="_compute_gathering_balance_indexed",
         digits="Product Price",
         help="Balance equivalente del acopio inicial actualizado por el indice de inflacion calculado en este acopio",
@@ -22,6 +23,9 @@ class SaleOrder(models.Model):
         compute="_compute_indexed_gathering_amount",
         digits="Product Price",
         help="Monto equivalente del acopio inicial actualizado por el indice de inflacion calculado en este acopio",
+    )
+    indexed_withdrawn_amount = fields.Float(
+        compute="_compute_indexed_withdrawn_amount",
     )
 
     @api.depends("order_line.product_id.list_price")
@@ -74,9 +78,8 @@ class SaleOrder(models.Model):
         self.gathering_balance_indexed = self.gathering_balance * (1 + self.index)
 
     @api.depends("gathering_balance_indexed", "indexed_gathering_amount")
-    def _compute_withdrawn_amount(self):
-        # the sale_gathering method is overridden to focus on the indexed amount
+    def _compute_indexed_withdrawn_amount(self):
         orders = self.filtered(lambda x: x.gathering_balance_indexed > 0)
         for rec in orders:
-            rec.withdrawn_amount = rec.indexed_gathering_amount - rec.gathering_balance_indexed
-        (self - orders).withdrawn_amount = 0.0
+            rec.indexed_withdrawn_amount = rec.indexed_gathering_amount - rec.gathering_balance_indexed
+        (self - orders).indexed_withdrawn_amount = 0.0

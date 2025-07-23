@@ -50,18 +50,18 @@
             </tr>
             <tr>
                 <td>
-                    <strong>Gathering Balance:</strong>
-                </td>
-                <td class="text-end">
-                    <span t-out="doc.gathering_balance or 0" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
-                </td>
-            </tr>
-            <tr class="border-black o_total">
-                <td>
                     <strong>Withdrawn Amount:</strong>
                 </td>
                 <td class="text-end">
                     <span t-out="doc.withdrawn_amount or 0" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Gathering Balance:</strong>
+                </td>
+                <td class="text-end">
+                    <span t-out="doc.gathering_balance or 0" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                 </td>
             </tr>
         </t>
