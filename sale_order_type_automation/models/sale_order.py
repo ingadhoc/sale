@@ -58,7 +58,7 @@ class SaleOrder(models.Model):
             rec._process_pickings()
         return True
 
-    def _process_pickings(self):
+    def _process_pickings(self, prev_pending=None):
         self.ensure_one()
         pickings = self.picking_ids.filtered(lambda x: x.state not in ("done", "cancel"))
         pickings.action_assign()
@@ -82,8 +82,10 @@ class SaleOrder(models.Model):
                     op.with_context(sale_automation=True).quantity = op.quantity_product_uom
 
             pick.button_validate()
-        if self.picking_ids.filtered(lambda x: x.state not in ("done", "cancel")):
-            self._process_pickings()
+        if pending := self.picking_ids.filtered(lambda x: x.state not in ("done", "cancel")):
+            # to avoid recursion
+            if pending and pending != (prev_pending or set()):
+                self._process_pickings(prev_pending=pending)
 
     def action_confirm(self):
         res = super().action_confirm()
