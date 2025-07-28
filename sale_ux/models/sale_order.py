@@ -258,3 +258,14 @@ class SaleOrder(models.Model):
                     if any(d.id == doc["id"] for d in line.product_document_ids):
                         doc["is_selected"] = True
         return result
+
+    def copy(self, default=None):
+        default = dict(default or {})
+        new_orders = super().copy(default)
+        bodies = {}
+        for old_order, new_order in zip(self, new_orders):
+            bodies[new_order.id] = (
+                "" if not old_order else _("This sale order was duplicated from %s", old_order._get_html_link())
+            )
+        new_orders._message_log_batch(bodies=bodies)
+        return new_orders

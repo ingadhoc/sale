@@ -44,6 +44,7 @@ Several Improvements to sales:
 #. We prevent the discount from being overwritten to 0 on lines where a pricelist discount exists but is not displayed.
 #. Add setting to automatically select all available documents from PDF Quote Builder.
 #. Add the field "Amount to Invoice" in the sale order list view.
+#. When duplicating a Sale Order, a message is logged in the new order indicating the origin.
 
 Installation
 ============
