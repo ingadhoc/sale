@@ -112,6 +112,9 @@
             <field name="invoice_status" position="before">
                 <field name="state" decoration-success="state == 'sale'" decoration-info="state in ['draft', 'sent']" decoration-danger="state == 'cancel'" widget="badge"/>
             </field>
+            <field name="invoice_status" position="after">
+                <field name="amount_to_invoice" optional="hide"/>
+            </field>
             <field name="date_order" position="before">
                 <field name="create_date" widget="date" optional="hide"/>
             </field>
