@@ -43,6 +43,7 @@ Several Improvements to sales:
 #. Add an action to confirm multiple sales or subscriptions from the list view. To confirm them, select the sales or subscriptions, and in the actions menu, look for 'confirm sale order'.
 #. We prevent the discount from being overwritten to 0 on lines where a pricelist discount exists but is not displayed.
 #. Add setting to automatically select all available documents from PDF Quote Builder.
+#. Add the field "Amount to Invoice" in the sale order list view.
 
 Installation
 ============
