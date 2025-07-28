@@ -196,6 +196,7 @@ msgstr "Deducir impuestos incluidos en el precio"
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_portal_content
+#: model_terms:ir.ui.view,arch_db:sale_ux.report_saleorder
 msgid "Delivery Date:"
 msgstr "Fecha de Entrega:"
 
@@ -572,3 +573,9 @@ msgstr "No puedes modificar pedidos de venta ya bloqueados."
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
 msgid "or"
 msgstr "o"
+
+#. module: sale_ux
+#. odoo-python
+#: code:addons/sale_ux/models/sale_order.py:0
+msgid "This sale order was duplicated from %s"
+msgstr "Esta orden fue duplicada de %s"
