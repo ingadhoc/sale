@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-23 19:11+0000\n"
+"POT-Creation-Date: 2025-07-29 14:17+0000\n"
 "PO-Revision-Date: 2024-11-11 12:22+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -32,6 +32,11 @@ msgstr "<span>Cancelar presupuestos mayores que</span>"
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
 msgid "<span>days.</span>"
 msgstr "<span>días.</span>"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.report_saleorder
+msgid "<strong>Delivery Date</strong>"
+msgstr ""
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
@@ -188,6 +193,11 @@ msgstr "Los días para mantener los presupuestos deben ser mayor que 0."
 #: model:ir.model.fields,field_description:sale_ux.field_account_fiscal_position__deduct_price_included_taxes
 msgid "Deduct Price-Included Taxes"
 msgstr "Deducir impuestos incluidos en el precio"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_portal_content
+msgid "Delivery Date:"
+msgstr "Fecha de Entrega:"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__amount
@@ -430,6 +440,12 @@ msgid "Sales Team"
 msgstr "Equipo de venta"
 
 #. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__group_delivery_date
+#: model:res.groups,name:sale_ux.group_delivery_date_on_report_online
+msgid "Show Delivery Date in Quotations report and online budget"
+msgstr ""
+
+#. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__show_product_image_on_report
 msgid "Show Product Image"
 msgstr "Mostrar Imagen del Producto"
@@ -450,6 +466,12 @@ msgid "Show client reference in list view and in main section of form view"
 msgstr ""
 "Mostrar la referencia del cliente en la vista de lista y en el encabezado de"
 " la vista de formulario de la OV"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
+msgid ""
+"Shows the delivery date field in the budget report and in the online budget."
+msgstr ""
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
@@ -550,13 +572,3 @@ msgstr "No puedes modificar pedidos de venta ya bloqueados."
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
 msgid "or"
 msgstr "o"
-
-#. module: sale_ux
-#: model_terms:ir.ui.view,arch_db:sale_ux.report_saleorder
-msgid "Delivery Date"
-msgstr "Fecha de Entrega"
-
-#. module: sale_ux
-#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_portal_content
-msgid "Delivery Date:"
-msgstr "Fecha de Entrega:"
