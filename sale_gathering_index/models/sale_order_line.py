@@ -44,10 +44,12 @@ class SaleOrderLine(models.Model):
     def _reset_price_unit(self):
         super()._reset_price_unit()
         if self.is_gathering and self.order_id.state == "sale" and self.initial_qty_gathered == 0:
-            self.update({
-                'price_unit':  self.price_unit / self.order_id.coef,
-                'technical_price_unit':  self.price_unit / self.order_id.coef,
-            })
+            self.update(
+                {
+                    "price_unit": self.price_unit / self.order_id.coef,
+                    "technical_price_unit": self.price_unit / self.order_id.coef,
+                }
+            )
 
     def _compute_name(self):
         super()._compute_name()
