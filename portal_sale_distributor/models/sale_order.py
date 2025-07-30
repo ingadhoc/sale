@@ -87,3 +87,15 @@ class SaleOrder(models.Model):
     def action_update_prices(self):
         self = self.sudo()
         super().action_update_prices()
+    
+    def name_get(self):
+        """Asegurar que los usuarios portal vean el nombre correcto"""
+        if self.env.user.has_group('portal_sale_distributor.group_portal_backend_distributor'):
+            result = []
+            for order in self:
+                # Sudo para leer el nombre generado por la secuencia
+                sudo_order = order.sudo()
+                name = sudo_order.name
+                result.append((order.id, name))
+            return result
+        return super().name_get()
