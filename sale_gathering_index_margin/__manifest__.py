@@ -18,6 +18,7 @@
 #
 ##############################################################################
 {
+<<<<<<< HEAD:sale_gathering_index_margin/__manifest__.py
     "name": "Sale Gathering Index Margin",
     "version": "18.0.1.0.0",
     "category": "Sales & Stock",
@@ -29,8 +30,50 @@
     "depends": [
         "sale_gathering_index",
         "sale_margin",
+||||||| parent of 2f52a143 (temp):portal_sale_distributor_l10n_ar_sale/__manifest__.py
+    'name': 'Portal Distributor l10n_ar Sale',
+    'version': "17.0.1.0.0",
+    'category': 'Tools',
+    'complexity': 'easy',
+    'author': 'ADHOC SA',
+    'website': 'www.adhoc.com.ar',
+    'license': 'AGPL-3',
+    'depends': [
+        'l10n_ar_sale',
+        'portal_sale_distributor',
+=======
+    'name': 'Portal Distributor l10n_ar Sale',
+    'version': "17.0.1.1.0",
+    'category': 'Tools',
+    'complexity': 'easy',
+    'author': 'ADHOC SA',
+    'website': 'www.adhoc.com.ar',
+    'license': 'AGPL-3',
+    'depends': [
+        'l10n_ar_sale',
+        'portal_sale_distributor',
+>>>>>>> 2f52a143 (temp):portal_sale_distributor_l10n_ar_sale/__manifest__.py
     ],
+<<<<<<< HEAD:sale_gathering_index_margin/__manifest__.py
     "installable": True,
     "auto_install": True,
     "application": False,
+||||||| parent of 2f52a143 (temp):portal_sale_distributor_l10n_ar_sale/__manifest__.py
+    'demo': [
+    ],
+    'data': [
+        'security/ir.model.access.csv',
+    ],
+    'installable': True,
+    'auto_install': True,
+=======
+    'demo': [
+    ],
+    'data': [
+        'security/ir.model.access.csv',
+        'views/portal_sale_views.xml',
+    ],
+    'installable': True,
+    'auto_install': True,
+>>>>>>> 2f52a143 (temp):portal_sale_distributor_l10n_ar_sale/__manifest__.py
 }
