@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Portal Distributor l10n_ar Sale',
-    'version': "17.0.1.0.0",
+    'version': "17.0.1.1.0",
     'category': 'Tools',
     'complexity': 'easy',
     'author': 'ADHOC SA',
@@ -33,6 +33,7 @@
     ],
     'data': [
         'security/ir.model.access.csv',
+        'views/portal_sale_views.xml',
     ],
     'installable': True,
     'auto_install': True,
