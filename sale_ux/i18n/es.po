@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-29 14:17+0000\n"
+"POT-Creation-Date: 2025-08-06 15:38+0000\n"
 "PO-Revision-Date: 2024-11-11 12:22+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -196,7 +196,6 @@ msgstr "Deducir impuestos incluidos en el precio"
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_portal_content
-#: model_terms:ir.ui.view,arch_db:sale_ux.report_saleorder
 msgid "Delivery Date:"
 msgstr "Fecha de Entrega:"
 
@@ -519,6 +518,12 @@ msgstr ""
 "Esta cotización ha sido cancelada automáticamente debido a su vencimiento."
 
 #. module: sale_ux
+#. odoo-python
+#: code:addons/sale_ux/models/sale_order.py:0
+msgid "This sale order was duplicated from %s"
+msgstr "Esta orden fue duplicada de %s"
+
+#. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_usability_tree
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_order_form
 msgid "Total"
@@ -573,9 +578,3 @@ msgstr "No puedes modificar pedidos de venta ya bloqueados."
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
 msgid "or"
 msgstr "o"
-
-#. module: sale_ux
-#. odoo-python
-#: code:addons/sale_ux/models/sale_order.py:0
-msgid "This sale order was duplicated from %s"
-msgstr "Esta orden fue duplicada de %s"

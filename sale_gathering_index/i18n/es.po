@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-03 04:50+0000\n"
+"POT-Creation-Date: 2025-08-06 14:01+0000\n"
 "PO-Revision-Date: 2024-12-10 17:39+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -37,13 +37,18 @@ msgstr ""
 
 #. module: sale_gathering_index
 #: model_terms:ir.ui.view,arch_db:sale_gathering_index.sale_gathering_totals
+msgid "<strong>Indexed Gathering Amount:</strong>"
+msgstr "<strong>Monto acopiado indexado:</strong>"
+
+#. module: sale_gathering_index
+#: model_terms:ir.ui.view,arch_db:sale_gathering_index.sale_gathering_totals
 msgid "<strong>Indexed Gathering Balance:</strong>"
 msgstr "<strong>Balance de acopio indexado:</strong>"
 
 #. module: sale_gathering_index
 #: model_terms:ir.ui.view,arch_db:sale_gathering_index.sale_gathering_totals
-msgid "<strong>Indexed Gathering Amount:</strong>"
-msgstr "<strong>Monto acopiado indexado:</strong>"
+msgid "<strong>Indexed Withdrawn Amount:</strong>"
+msgstr "<strong>Monto retirado indexado:</strong>"
 
 #. module: sale_gathering_index
 #: model_terms:ir.ui.view,arch_db:sale_gathering_index.report_saleorder_document_gathering
@@ -71,11 +76,6 @@ msgid ""
 msgstr ""
 
 #. module: sale_gathering_index
-#: model:ir.model.fields,field_description:sale_gathering_index.field_sale_order__gathering_balance_indexed
-msgid "Indexed Gathering Balance"
-msgstr "Balance de acopio indexado"
-
-#. module: sale_gathering_index
 #: model:ir.model.fields,field_description:sale_gathering_index.field_sale_order__index
 msgid "Index"
 msgstr "Índice"
@@ -84,6 +84,16 @@ msgstr "Índice"
 #: model:ir.model.fields,field_description:sale_gathering_index.field_sale_order__indexed_gathering_amount
 msgid "Indexed Gathering Amount"
 msgstr "Monto Acopiado indexado"
+
+#. module: sale_gathering_index
+#: model:ir.model.fields,field_description:sale_gathering_index.field_sale_order__gathering_balance_indexed
+msgid "Indexed Gathering Balance"
+msgstr "Balance de acopio indexado"
+
+#. module: sale_gathering_index
+#: model:ir.model.fields,field_description:sale_gathering_index.field_sale_order__indexed_withdrawn_amount
+msgid "Indexed Withdrawn Amount"
+msgstr "Monto retirado indexado"
 
 #. module: sale_gathering_index
 #: model:ir.model.fields,help:sale_gathering_index.field_sale_order__indexed_gathering_amount
@@ -133,13 +143,3 @@ msgid ""
 msgstr ""
 "No puedes modificar la cantidad de un producto agregado. Por favor, añade "
 "una nueva línea."
-
-#. module: sale_gathering_index
-#: model:ir.model.fields,field_description:sale_gathering_index.field_sale_order__indexed_withdrawn_amount
-msgid "Indexed Withdrawn Amount"
-msgstr "Monto retirado indexado"
-
-#. module: sale_gathering_index
-#: model_terms:ir.ui.view,arch_db:sale_gathering_index.sale_gathering_totals
-msgid "<strong>Indexed Withdrawn Amount:</strong>"
-msgstr "<strong>Monto retirado indexado:</strong>"
