@@ -61,31 +61,30 @@ class SaleOrder(models.Model):
     def _process_pickings(self, prev_pending=None):
         self.ensure_one()
         pickings = self.picking_ids.filtered(lambda x: x.state not in ("done", "cancel"))
-        pickings.action_assign()
-        products = []
-        for pick in pickings:
+        for pick in pickings.sorted(lambda p: p.picking_type_id.sequence):
+            pick.action_assign()
             if self.type_id.picking_atomation == "validate":
                 pick.new_force_availability()
             elif self.type_id.picking_atomation == "validate_no_force":
-                products.extend(move.product_id for move in pick.move_ids if move.state != "assigned")
+                products = [move.product_id for move in pick.move_ids if move.state != "assigned"]
                 if products:
                     raise UserError(
                         _(
                             "The following products are not available, we "
-                            "suggest to check stock or to use a sale type that"
-                            "force availability.\nProducts:\n* %s\n"
+                            "suggest to check stock or to use a sale type that "
+                            "forces availability.\nProducts:\n* %s\n"
                         )
                         % "\n* ".join(x.name for x in products)
                     )
-
                 for op in pick.move_line_ids:
                     op.with_context(sale_automation=True).quantity = op.quantity_product_uom
-
             pick.button_validate()
-        if pending := self.picking_ids.filtered(lambda x: x.state not in ("done", "cancel")):
-            # to avoid recursion
-            if pending and pending != (prev_pending or set()):
-                self._process_pickings(prev_pending=pending)
+            pending_after = self.picking_ids.filtered(lambda x: x.state not in ("done", "cancel"))
+            if pending_after:
+                pending_after.action_assign()
+        pending_final = self.picking_ids.filtered(lambda x: x.state not in ("done", "cancel"))
+        if pending_final and pending_final != (prev_pending or set()):
+            self._process_pickings(prev_pending=pending_final)
 
     def action_confirm(self):
         res = super().action_confirm()
