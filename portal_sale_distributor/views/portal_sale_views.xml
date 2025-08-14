@@ -51,6 +51,9 @@
             <button name="action_view_invoice" position="attributes">
                 <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
             </button>
+            <field name="partner_id" position="after">
+                <field name="sale_order_template_id" readonly="state in ('sale')" groups="portal_sale_distributor.group_portal_backend_distributor" options="{'no_create': True, 'no_open': True}"/>
+            </field>
             <field name="validity_date" position="after">
                 <field name="validity_date" invisible="state in ('draft', 'sent')" groups="portal_sale_distributor.group_portal_backend_distributor"/>
             </field>
@@ -89,9 +92,6 @@
             <button name="action_open_discount_wizard" position="attributes">
                 <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
             </button>
-            <field name="sale_order_template_id" position="attributes">
-                <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
-            </field>
             <xpath expr="//field[@name='order_line']/list//field[@name='product_uom'][2]" position="attributes">
                 <attribute name="groups">uom.group_uom,portal_sale_distributor.group_portal_backend_distributor</attribute>
             </xpath>
