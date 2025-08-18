@@ -4,7 +4,7 @@
 ##############################################################################
 from datetime import timedelta
 
-from odoo import _, api, fields, models
+from odoo import Command, _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 from odoo.tools import float_is_zero
 from odoo.tools.safe_eval import safe_eval
@@ -288,6 +288,8 @@ class SaleOrder(models.Model):
                 "" if not old_order else _("This sale order was duplicated from %s", old_order._get_html_link())
             )
         new_orders._message_log_batch(bodies=bodies)
+        for line_to_clean in new_orders.mapped("order_line").filtered(lambda x: False in x.mapped("tax_id.active")):
+            line_to_clean.tax_id = [Command.unlink(x.id) for x in line_to_clean.tax_id.filtered(lambda x: not x.active)]
         return new_orders
 
     @api.depends("force_invoiced_status")
