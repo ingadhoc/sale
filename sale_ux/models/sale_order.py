@@ -4,7 +4,7 @@
 ##############################################################################
 from datetime import timedelta
 
-from odoo import _, api, fields, models
+from odoo import Command, _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 from odoo.tools import float_is_zero
 from odoo.tools.safe_eval import safe_eval
@@ -149,8 +149,10 @@ class SaleOrder(models.Model):
         invoices = super()._create_invoices(grouped=grouped, final=final, date=date)
         precision = self.env["decimal.precision"].precision_get("Product Unit of Measure")
         filtered_invoices = invoices.filtered(
-            lambda i: float_is_zero(i.amount_total, precision_digits=precision)
-            and all([line.quantity <= 0.0 for line in i.invoice_line_ids])
+            lambda i: (
+                float_is_zero(i.amount_total, precision_digits=precision)
+                and all([line.quantity <= 0.0 for line in i.invoice_line_ids])
+            )
         )
         filtered_invoices.action_switch_move_type()
         filtered_invoices.mapped("invoice_line_ids").mapped(lambda line: line.write({"quantity": abs(line.quantity)}))
@@ -262,6 +264,10 @@ class SaleOrder(models.Model):
                 "" if not old_order else _("This sale order was duplicated from %s", old_order._get_html_link())
             )
         new_orders._message_log_batch(bodies=bodies)
+        for line_to_clean in new_orders.mapped("order_line").filtered(lambda x: False in x.mapped("tax_ids.active")):
+            line_to_clean.tax_ids = [
+                Command.unlink(x.id) for x in line_to_clean.tax_ids.filtered(lambda x: not x.active)
+            ]
         return new_orders
 
     @api.depends("force_invoiced_status")
