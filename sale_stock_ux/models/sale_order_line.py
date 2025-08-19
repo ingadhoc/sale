@@ -83,7 +83,14 @@ class SaleOrderLine(models.Model):
             # For product pack compatibility to cancel all of componept in case the product parent is cancel
             if pack_enable and rec.product_id.pack_ok and rec.pack_type == "detailed" and rec.pack_child_line_ids:
                 rec.pack_child_line_ids.with_context(cancel_from_order=True).button_cancel_remaining()
+
             old_product_uom_qty = rec.product_uom_qty
+
+            # Resetear printed=False en pickings asociados para evitar contra-entregas
+            printed_pickings = rec.move_ids.mapped("picking_id").filtered("printed")
+            if printed_pickings:
+                printed_pickings.write({"printed": False})
+
             # Al final permitimos cancelar igual porque es necesario, por ej,
             # si no se va a entregar y ya está facturado y se quiere hacer
             # la nota de crédito. además se puede volver a subir la cantidad
