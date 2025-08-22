@@ -29,6 +29,26 @@ class SaleOrder(models.Model):
         store=True,
         compute_sudo=True,
     )
+    amount_uninvoiced = fields.Monetary(
+        string="Un-invoiced",
+        compute="_compute_amount_uninvoiced",
+        help="Uninvoiced amount, regardless of invoice policy.",
+    )
+    amount_to_invoice = fields.Monetary(
+        help="Total amount available for invoicing according to the invoice policy for each sale order line."
+        "Down payments are not included in this calculation."
+    )
+
+    @api.depends("invoice_ids.state", "currency_id", "amount_total")
+    def _compute_amount_uninvoiced(self):
+        for order in self:
+            if order.invoice_status == "invoiced" or order.state != "sale":
+                order.amount_uninvoiced = 0.0
+                continue
+            invoices = order.invoice_ids.filtered(
+                lambda x: x.state == "posted" or x.payment_state == "invoicing_legacy"
+            )
+            order.amount_uninvoiced = order.amount_total - invoices._get_sale_order_invoiced_amount(order)
 
     def _prepare_invoice(self):
         vals = super(SaleOrder, self)._prepare_invoice()
