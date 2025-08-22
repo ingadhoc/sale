@@ -584,3 +584,22 @@ msgstr "No puedes modificar pedidos de venta ya bloqueados."
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
 msgid "or"
 msgstr "o"
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order__amount_uninvoiced
+msgid "Un-invoiced"
+msgstr "No facturado"
+
+#. module: sale_ux
+#: model:ir.model.fields,help:sale_ux.field_sale_order__amount_uninvoiced
+msgid "Uninvoiced amount, regardless of invoice policy."
+msgstr "Importe no facturado, independientemente de la política de facturación."
+
+#. module: sale_ux
+#: model:ir.model.fields,help:sale_ux.field_sale_order__amount_to_invoice
+msgid ""
+"Total amount available for invoicing according to the invoice policy for each sale order line."
+"Down payments are not included in this calculation."
+msgstr ""
+"Importe total disponible para facturación según la política de facturación de cada línea de pedido de venta."
+"Los anticipos no están incluidos en este cálculo."
