@@ -15,15 +15,22 @@ class IrDefault(models.Model):
         return res
 
     def get_default_pricelist(self):
+        # Si es publico/portal evitamos el método
+        if self.env.user._is_public():
+            return
         field = self.env["ir.model.fields"]._get("res.partner", "specific_property_product_pricelist")
-        default = self.env["ir.default"].search(
-            [
-                ("field_id", "=", field.id),
-                ("user_id", "=", self.env.context.get("uid", self.env.user.id)),
-                ("json_value", "!=", False),
-                ("company_id", "in", [self.env.company.id, False]),
-            ],
-            limit=1,
-            order="company_id desc",
+        default = (
+            self.env["ir.default"]
+            .sudo()
+            .search(
+                [
+                    ("field_id", "=", field.id),
+                    ("user_id", "=", self.env.context.get("uid", self.env.user.id)),
+                    ("json_value", "!=", False),
+                    ("company_id", "in", [self.env.company.id, False]),
+                ],
+                limit=1,
+                order="company_id desc",
+            )
         )
         return json.loads(default.json_value) if default else None
