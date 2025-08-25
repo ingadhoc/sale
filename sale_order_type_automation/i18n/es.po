@@ -165,7 +165,7 @@ msgstr "Automatización de entregas"
 #. module: sale_order_type_automation
 #: model:sale.order.type,name:sale_order_type_automation.sale_order_type_validate_picking_automation
 msgid "Picking Automation (Validate)"
-msgstr "Automatización de entregegas (Validate)"
+msgstr "Automatización de entregas (Validar)"
 
 #. module: sale_order_type_automation
 #: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type__picking_atomation
