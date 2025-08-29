@@ -12,8 +12,19 @@ class AccountMove(models.Model):
     @api.depends("sale_type_id")
     def _compute_sale_type_id(self):
         super()._compute_sale_type_id()
-        if self.sale_type_id.journal_id:
-            self._onchange_journal()
+        for record in self:
+            if record.sale_type_id.journal_id:
+                record._onchange_journal()
+            if record.sale_type_id.journal_id.company_id.id not in record.env.companies.ids and not record.partner_id:
+                record.sale_type_id = self.env["sale.order.type"].search(
+                    [
+                        ("company_id", "in", [record.company_id.id, False]),
+                        "|",
+                        ("journal_id", "=", False),
+                        ("journal_id.company_id", "=", record.company_id.id),
+                    ],
+                    limit=1,
+                )
 
     @api.onchange("journal_id")
     def _onchange_journal(self):
