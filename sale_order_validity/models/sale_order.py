@@ -45,22 +45,6 @@ class SaleOrder(models.Model):
                     % rec.company_id.quotation_validity_days
                 )
 
-    @api.constrains("validity_date", "date_order")
-    def _check_validity_date(self):
-        for rec in self.filtered(lambda r: r.validity_date and r.date_order):
-            max_validity_date = rec.date_order.date() + timedelta(days=rec.company_id.quotation_validity_days)
-            if rec.validity_date > max_validity_date:
-                raise UserError(
-                    _(
-                        "The validity date (%s) exceeds the maximum allowed (%s) based on the company's quotation settings (%i days)."
-                    )
-                    % (
-                        rec.validity_date.strftime("%Y-%m-%d"),
-                        max_validity_date.strftime("%Y-%m-%d"),
-                        rec.company_id.quotation_validity_days,
-                    )
-                )
-
     def action_confirm(self):
         for rec in self.filtered("is_expired"):
             raise UserError(
