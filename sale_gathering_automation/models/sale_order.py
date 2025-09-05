@@ -3,6 +3,7 @@
 # directory
 ##############################################################################
 from odoo import _, models
+from odoo.fields import Command
 
 
 class SaleOrder(models.Model):
@@ -12,6 +13,39 @@ class SaleOrder(models.Model):
         gathering_lines = self.filtered("is_gathering")
         super(SaleOrder, gathering_lines.with_context(invoice_gathering=True)).run_invoicing_atomation()
         super(SaleOrder, self - gathering_lines).run_invoicing_atomation()
+
+    def _has_quantity_changes(self, values):
+        if "order_line" not in values:
+            return False
+
+        for command in values["order_line"]:
+            if not isinstance(command, (list, tuple)) or len(command) != 3:
+                continue
+
+            cmd_type, _, cmd_values = command
+            if cmd_type == Command.CREATE and isinstance(cmd_values, dict):
+                if "product_uom_qty" in cmd_values:
+                    return True
+
+            elif cmd_type == Command.UPDATE and isinstance(cmd_values, dict):
+                if "product_uom_qty" in cmd_values:
+                    return True
+
+        return False
+
+    def write(self, values):
+        res = super().write(values)
+        orders_to_automate = self.filtered(
+            lambda o: o.is_gathering
+            and o.type_id
+            and (o.type_id.invoicing_atomation != "none" or o.type_id.picking_atomation != "none")
+        )
+        if orders_to_automate and self._has_quantity_changes(values):
+            orders_picking_automation = orders_to_automate.filtered(lambda o: o.type_id.picking_atomation != "none")
+            orders_picking_automation.run_picking_automation()
+            (orders_to_automate - orders_picking_automation).run_invoicing_atomation()
+
+        return res
 
     def action_confirm(self):
         res = super().action_confirm()
