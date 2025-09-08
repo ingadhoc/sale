@@ -13,24 +13,6 @@ class SaleOrderLine(models.Model):
         gathering_lines = self.filtered(lambda x: x.is_gathering and x.initial_qty_gathered > 0)
         super(SaleOrderLine, self - gathering_lines)._compute_price_unit()
 
-    def _prepare_invoice_line(self, **optional_values):
-        result = super()._prepare_invoice_line(**optional_values)
-        if self.is_downpayment and self._context.get("invoice_gathering", False):
-            lines = self.order_id.order_line.filtered(lambda x: not x.is_downpayment and x.qty_to_invoice)
-            price_subtotal = 0
-            for line in lines:
-                price_reduce = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
-                price_subtotal += line.tax_id.compute_all(
-                    price_reduce,
-                    currency=line.currency_id,
-                    quantity=line.qty_to_invoice,
-                    product=line.product_id,
-                    partner=line.order_id.partner_shipping_id,
-                )["total_excluded"]
-            result["price_unit"] = price_subtotal
-            result["quantity"] = -1.0
-        return result
-
     def _prepare_base_line_for_taxes_computation(self, **kwargs):
         if self.env.context.get("advance_payment") and self.initial_qty_gathered > 0:
             self.ensure_one()

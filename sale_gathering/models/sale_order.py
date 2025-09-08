@@ -162,3 +162,23 @@ class SaleOrder(models.Model):
 
     def _get_protected_fields(self):
         return ["is_gathering"]
+
+    def _create_account_invoices(self, invoice_vals_list, final):
+        invoices = super()._create_account_invoices(invoice_vals_list, final)
+        if self._context.get("invoice_gathering"):
+            for invoice in invoices:
+                downpayment_lines = invoice.invoice_line_ids.filtered("is_downpayment")
+                if downpayment_lines:
+                    regular_lines = invoice.invoice_line_ids.filtered(
+                        lambda l: not l.is_downpayment and l.display_type == "product"
+                    )
+                    for downpayment_line in downpayment_lines:
+                        matching_regular_lines = regular_lines.filtered(lambda l: l.tax_ids == downpayment_line.tax_ids)
+                        amount_for_this_tax_group = sum(matching_regular_lines.mapped("price_subtotal"))
+                        downpayment_line.write(
+                            {
+                                "price_unit": amount_for_this_tax_group,
+                                "quantity": -1.0,
+                            }
+                        )
+        return invoices
