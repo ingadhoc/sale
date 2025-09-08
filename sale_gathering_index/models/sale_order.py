@@ -46,15 +46,7 @@ class SaleOrder(models.Model):
                     product_price_unit=price,
                     product_currency=line.currency_id,
                 )
-                price_reduce = line_price * (1 - (line.discount or 0.0) / 100.0)
-                price_subtotal = line.tax_id.compute_all(
-                    price_reduce,
-                    currency=line.currency_id,
-                    quantity=line.initial_qty_gathered,
-                    product=line.product_id,
-                    partner=line.order_id.partner_shipping_id,
-                )["total_included"]
-                indexed_gathering_amount += price_subtotal
+                indexed_gathering_amount += line._get_tax_included_amount(line.initial_qty_gathered, price=line_price)
             order.indexed_gathering_amount = indexed_gathering_amount
         (self - gathering_orders).indexed_gathering_amount = 0.0
 

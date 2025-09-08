@@ -41,24 +41,13 @@ class SaleOrder(models.Model):
         for order in orders_gathering:
             total_downpayment_amount = 0
             for line in order.order_line.filtered("is_downpayment"):
-                total_downpayment_amount += line.tax_id.with_context(round=False).compute_all(
-                    line.price_unit,
-                    currency=line.currency_id,
-                    quantity=1,
-                    product=line.product_id,
-                    partner=line.order_id.partner_shipping_id,
-                )["total_included"]
+                total_downpayment_amount += line._get_tax_included_amount(1)
 
             total_amount_to_invoice_invoiced = 0
             for line in order.order_line.filtered(lambda x: not x.is_downpayment):
-                price_reduce = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
-                total_amount_to_invoice_invoiced += line.tax_id.compute_all(
-                    price_reduce,
-                    currency=line.currency_id,
-                    quantity=line.qty_to_invoice + line.qty_invoiced,
-                    product=line.product_id,
-                    partner=line.order_id.partner_shipping_id,
-                )["total_included"]
+                total_amount_to_invoice_invoiced += line._get_tax_included_amount(
+                    line.qty_to_invoice + line.qty_invoiced
+                )
 
             order.gathering_balance = total_downpayment_amount - total_amount_to_invoice_invoiced
 
@@ -111,15 +100,7 @@ class SaleOrder(models.Model):
         for order in orders_gathering:
             price_subtotal_with_taxes = 0
             for line in order.order_line.filtered(lambda x: x.initial_qty_gathered > 0):
-                price_reduce = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
-                subtotal = line.tax_id.compute_all(
-                    price_reduce,
-                    currency=line.currency_id,
-                    quantity=line.initial_qty_gathered,
-                    product=line.product_id,
-                    partner=line.order_id.partner_shipping_id,
-                )
-                price_subtotal_with_taxes += subtotal["total_included"]
+                price_subtotal_with_taxes += line._get_tax_included_amount(line.initial_qty_gathered)
             order.gathering_amount_with_taxes = price_subtotal_with_taxes
         (self - orders_gathering).gathering_amount_with_taxes = 0.0
 

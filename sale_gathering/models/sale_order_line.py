@@ -19,14 +19,7 @@ class SaleOrderLine(models.Model):
             lines = self.order_id.order_line.filtered(lambda x: not x.is_downpayment and x.qty_to_invoice)
             price_subtotal = 0
             for line in lines:
-                price_reduce = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
-                price_subtotal += line.tax_id.compute_all(
-                    price_reduce,
-                    currency=line.currency_id,
-                    quantity=line.qty_to_invoice,
-                    product=line.product_id,
-                    partner=line.order_id.partner_shipping_id,
-                )["total_excluded"]
+                price_subtotal += line._get_tax_included_amount(line.qty_to_invoice)
             result["price_unit"] = price_subtotal
             result["quantity"] = -1.0
         return result
@@ -95,3 +88,13 @@ class SaleOrderLine(models.Model):
         super()._compute_qty_to_deliver()
         for line in self.filtered(lambda x: x.order_id and x.is_gathering and x.order_id.state == "sale"):
             line.display_qty_widget = True
+
+    def _get_tax_included_amount(self, quantity, price=None):
+        "Helper method to compute tax included amount for a given quantity"
+        self.ensure_one()
+        base_line = self._prepare_base_line_for_taxes_computation()
+        base_line["quantity"] = quantity
+        if price is not None:
+            base_line["price_unit"] = price
+        self.env["account.tax"]._add_tax_details_in_base_line(base_line, self.company_id)
+        return base_line["tax_details"]["raw_total_included_currency"]
