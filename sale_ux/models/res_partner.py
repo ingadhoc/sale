@@ -19,6 +19,13 @@ class ResPartner(models.Model):
             if "specific_property_product_pricelist" not in vals:
                 default_pricelist_id = vals.get("property_product_pricelist")
 
+                if not default_pricelist_id:
+                    default_pricelist_id = (
+                        self.env["ir.default"]
+                        ._get_model_defaults(self._name)
+                        .get("specific_property_product_pricelist", False)
+                    )
+
                 if default_pricelist_id:
                     if default_pricelist_id != pricelist.id:
                         partner.specific_property_product_pricelist = default_pricelist_id
