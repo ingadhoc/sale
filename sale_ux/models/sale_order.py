@@ -289,3 +289,9 @@ class SaleOrder(models.Model):
             )
         new_orders._message_log_batch(bodies=bodies)
         return new_orders
+
+    @api.depends("force_invoiced_status")
+    def _compute_amount_to_invoice(self):
+        remaining = self - self.filtered("force_invoiced_status")
+        (self - remaining).write({"amount_to_invoice": 0.0})
+        super(SaleOrder, remaining)._compute_amount_to_invoice()
