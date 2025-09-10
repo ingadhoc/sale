@@ -15,8 +15,9 @@ class AccountMove(models.Model):
         partner_id = record.partner_id.commercial_partner_id
         credit_to_invoice = partner_id.credit_to_invoice - exclude_amount
         ## Cambiamos credit por credit_with_confirmed_orders.
-        total_credit = partner_id.credit_with_confirmed_orders - partner_id.credit_to_invoice + credit_to_invoice + current_amount
-        ##
+        total_credit = partner_id.credit_with_confirmed_orders - partner_id.credit_to_invoice + credit_to_invoice
+        if not isinstance(record, self.__class__):
+            total_credit += current_amount
         if not partner_id.credit_limit or total_credit <= partner_id.credit_limit:
             return ''
         msg = _(
