@@ -15,7 +15,11 @@ class AccountMove(models.Model):
         for record in self:
             if record.sale_type_id.journal_id:
                 record._onchange_journal()
-            if record.sale_type_id.journal_id.company_id.id not in record.env.companies.ids and not record.partner_id:
+            if (
+                record.sale_type_id
+                and record.sale_type_id.journal_id.company_id.id not in record.env.companies.ids
+                and not record.partner_id
+            ):
                 record.sale_type_id = self.env["sale.order.type"].search(
                     [
                         ("company_id", "in", [record.company_id.id, False]),
