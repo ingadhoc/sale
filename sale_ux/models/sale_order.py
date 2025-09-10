@@ -210,3 +210,9 @@ class SaleOrder(models.Model):
     def _check_changes_locked_orders(self):
         for rec in self.filtered(lambda x: x.state == 'done'):
             raise ValidationError(_("You cannot modify already locked orders."))
+
+    @api.depends('force_invoiced_status')
+    def _compute_amount_to_invoice(self):
+        remaining = self - self.filtered("force_invoiced_status")
+        (self - remaining).write({'amount_to_invoice': 0.0})
+        super(SaleOrder, remaining)._compute_amount_to_invoice()
