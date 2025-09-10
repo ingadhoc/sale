@@ -42,7 +42,7 @@ class ResPartner(models.Model):
                         ('move_id.state', '=', 'draft'),
                         '|',('sale_line_ids', '=', False),
                         ('sale_line_ids.order_id.invoice_status', '=', 'invoiced')]
-                draft_invoice_lines = rec.env['account.move.line'].search(domain)
+                draft_invoice_lines = rec.env['account.move.line'].sudo().search(domain)
                 draft_invoice_lines_amount = 0.0
                 for line in draft_invoice_lines:
                     price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
@@ -56,4 +56,18 @@ class ResPartner(models.Model):
                             taxes['total_included'], line.company_id.currency_id, line.company_id, fields.Date.today())
                     draft_invoice_lines_amount += total
 
-                rec.credit_with_confirmed_orders = draft_invoice_lines_amount + rec.credit + rec.credit_to_invoice
+                company_id = self.env.company
+                total_credit = 0.0
+                total_credit_to_invoice = 0.0
+                for company in rec.env["res.company"].search([]):
+                    credit = rec.sudo().with_company(company).credit
+                    total_credit += company.currency_id._convert(
+                        credit, company_id.currency_id, company_id, fields.Date.today()
+                    )
+
+                    credit_to_invoice = rec.sudo().with_company(company).credit_to_invoice
+                    total_credit_to_invoice += company.currency_id._convert(
+                        credit_to_invoice, company_id.currency_id, company_id, fields.Date.today()
+                    )
+
+                rec.credit_with_confirmed_orders = draft_invoice_lines_amount + total_credit + total_credit_to_invoice
