@@ -45,6 +45,7 @@ class ResPartner(models.Model):
                 company_id = self.env.company
 
                 domain = [
+<<<<<<< 04d7143645b50c5b8060d1c96f4c6080d0eebe39
                     ("order_id.partner_id.commercial_partner_id", "=", rec.commercial_partner_id.id),
                     # We look for order lines that are to be invoiced or not yet invoiced, since we are interested
                     # in the total amount, not just the invoiced part. This search helps avoid including fully invoiced orders.
@@ -87,6 +88,21 @@ class ResPartner(models.Model):
                     ("sale_line_ids.order_id.invoice_status", "=", "invoiced"),
                 ]
                 draft_invoice_lines = rec.env["account.move.line"].sudo().search(domain)
+||||||| 17ef70458907bd8d345e9873ca64ec8c2e593a2b
+                        ('move_id.partner_id.commercial_partner_id', '=', rec.commercial_partner_id.id),
+                        ('move_id.move_type', 'in', ['out_invoice', 'out_refund']),
+                        ('move_id.state', '=', 'draft'),
+                        '|',('sale_line_ids', '=', False),
+                        ('sale_line_ids.order_id.invoice_status', '=', 'invoiced')]
+                draft_invoice_lines = rec.env['account.move.line'].search(domain)
+=======
+                        ('move_id.partner_id.commercial_partner_id', '=', rec.commercial_partner_id.id),
+                        ('move_id.move_type', 'in', ['out_invoice', 'out_refund']),
+                        ('move_id.state', '=', 'draft'),
+                        '|',('sale_line_ids', '=', False),
+                        ('sale_line_ids.order_id.invoice_status', '=', 'invoiced')]
+                draft_invoice_lines = rec.env['account.move.line'].sudo().search(domain)
+>>>>>>> 0018e12befc513a5a3f7df006059cf03146d4b20
                 draft_invoice_lines_amount = 0.0
                 for line in draft_invoice_lines:
                     price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
@@ -104,6 +120,7 @@ class ResPartner(models.Model):
                         )
                     draft_invoice_lines_amount += total
 
+<<<<<<< 04d7143645b50c5b8060d1c96f4c6080d0eebe39
                 # Sum the credit for all companies, converting to the current company currency
                 total_credit = 0.0
                 for company in rec.env["res.company"].search([]):
@@ -113,3 +130,22 @@ class ResPartner(models.Model):
                     )
 
                 rec.credit_with_confirmed_orders = to_invoice_amount + draft_invoice_lines_amount + total_credit
+||||||| 17ef70458907bd8d345e9873ca64ec8c2e593a2b
+                rec.credit_with_confirmed_orders = draft_invoice_lines_amount + rec.credit + rec.credit_to_invoice
+=======
+                company_id = self.env.company
+                total_credit = 0.0
+                total_credit_to_invoice = 0.0
+                for company in rec.env["res.company"].search([]):
+                    credit = rec.sudo().with_company(company).credit
+                    total_credit += company.currency_id._convert(
+                        credit, company_id.currency_id, company_id, fields.Date.today()
+                    )
+
+                    credit_to_invoice = rec.sudo().with_company(company).credit_to_invoice
+                    total_credit_to_invoice += company.currency_id._convert(
+                        credit_to_invoice, company_id.currency_id, company_id, fields.Date.today()
+                    )
+
+                rec.credit_with_confirmed_orders = draft_invoice_lines_amount + total_credit + total_credit_to_invoice
+>>>>>>> 0018e12befc513a5a3f7df006059cf03146d4b20
