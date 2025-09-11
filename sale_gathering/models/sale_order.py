@@ -82,9 +82,8 @@ class SaleOrder(models.Model):
 
     @api.constrains("is_gathering", "amount_total")
     def _check_gathering_balance(self):
-        product_precision_digits = self.env["decimal.precision"].precision_get("Product Price")
         for rec in self.filtered("is_gathering"):
-            if float_compare(rec.gathering_balance, 0.0, precision_digits=product_precision_digits) == -1:
+            if rec.gathering_balance < -1:
                 raise ValidationError(
                     _(
                         "The gathering balance will be negative (%s), you cannot make this modification to the order. Order: %s"
