@@ -167,16 +167,29 @@ class SaleOrder(models.Model):
         if self._context.get("invoice_gathering"):
             for invoice in invoices:
                 downpayment_lines = invoice.invoice_line_ids.filtered("is_downpayment")
-                if downpayment_lines:
-                    regular_lines = invoice.invoice_line_ids.filtered(
-                        lambda l: not l.is_downpayment and l.display_type == "product"
-                    )
-                    for downpayment_line in downpayment_lines:
-                        matching_regular_lines = regular_lines.filtered(lambda l: l.tax_ids == downpayment_line.tax_ids)
-                        amount_for_this_tax_group = sum(matching_regular_lines.mapped("price_subtotal"))
+                if not downpayment_lines:
+                    continue
+
+                regular_lines = invoice.invoice_line_ids.filtered(
+                    lambda l: not l.is_downpayment and l.display_type == "product"
+                )
+                if not regular_lines:
+                    continue
+
+                tax_groups = {}
+                for line in regular_lines:
+                    if line.sale_line_ids:
+                        tax_key = frozenset(line.sale_line_ids.tax_id.ids)
+                        tax_groups.setdefault(tax_key, 0.0)
+                        tax_groups[tax_key] += line.price_subtotal
+
+                for downpayment_line in downpayment_lines:
+                    if downpayment_line.sale_line_ids:
+                        downpayment_tax_key = frozenset(downpayment_line.sale_line_ids.tax_id.ids)
+                        amount = tax_groups.get(downpayment_tax_key, 0.0)
                         downpayment_line.write(
                             {
-                                "price_unit": amount_for_this_tax_group,
+                                "price_unit": amount,
                                 "quantity": -1.0,
                             }
                         )
