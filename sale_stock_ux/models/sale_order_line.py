@@ -98,6 +98,16 @@ class SaleOrderLine(models.Model):
                 body=_('Cancel remaining call for line "%s" (id %s), line qty updated from %s to %s')
                 % (rec.name, rec.id, old_product_uom_qty, rec.product_uom_qty)
             )
+            # Luego de la migracion pueden quedar movimientos de dos pasos que no puede
+            # cancelarse correctamente.
+            # los cancelamos si luego  de bajar la cnatidad quedan activos
+            # si solo es uno lo mantengo
+            internal_move_ids = rec.move_ids.filtered(lambda x: x.state not in ("cancel", "done") and x.location_dest_id.usage == "internal")
+            if internal_move_ids:
+                second_move = internal_move_ids.move_orig_ids.filtered(lambda x: x.state not in ("cancel", "done") and x.location_dest_id.usage == "internal")
+                if second_move:
+                    internal_move_ids._action_cancel()
+                    second_move._action_cancel()
 
     @api.onchange("product_uom_qty")
     def _onchange_product_uom_qty(self):
