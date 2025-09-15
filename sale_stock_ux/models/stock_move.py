@@ -26,14 +26,21 @@ class StockMove(models.Model):
         Agregamos un HACK para que si esta instalado secondary unit sea recomputada en la creacion de
         movimientos de stock.
         TODO: Solo deberia impactar en movimientos de salida (uno o mas pasos)
+        TODO: Esto puede ser un problema si usamos unidades secundarias independientes pero por ahora
+        lo dejamos asi porque calcular cuanto de una unidad secundaria corresponde a la cantidad devuelta
+        es complejo.
         """
         for vals in vals_list:
-            if vals.get("sale_line_id"):
-                sale_line_qty_ret = self.env["sale.order.line"].browse(vals["sale_line_id"]).quantity_returned
-                vals["product_uom_qty"] -= sale_line_qty_ret
-                if "secondary_uom_qty" in vals:
-                    del vals["secondary_uom_qty"]
+            # # Nos aseguramos antes de restar que la rule_id es la primera de la ruta que estoy planificando
+            # is_first_rule = self.env["stock.rule"].browse(vals.get("rule_id")).route_id.rule_ids[:1].id == vals.get(
+            #     "rule_id"
+            # )
 
+            # if vals.get("sale_line_id") and not vals.get("origin_returned_move_id") and is_first_rule:
+            #     sale_line_qty_ret = self.env["sale.order.line"].browse(vals["sale_line_id"]).quantity_returned
+            #     vals["product_uom_qty"] -= sale_line_qty_ret
+            if vals.get("sale_line_id") and vals.get("secondary_uom_qty"):
+                del vals["secondary_uom_qty"]
         return super().create(vals_list)
 
     def _get_new_picking_values(self):
