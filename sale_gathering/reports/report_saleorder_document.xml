@@ -8,6 +8,7 @@
     >
         <xpath expr="//th[@name='th_priceunit']" position="before">
             <th class="text-end" t-if="doc.is_gathering and doc.state not in ['draft','sent']">Initial Quantity Gathered</th>
+            <th class="text-end" t-if="doc.is_gathering and doc.state not in ['draft','sent']">Quantity Delivered</th>
             <th class="text-end" t-if="doc.is_gathering and doc.state not in ['draft','sent']">Quantity Invoiced</th>
         </xpath>
 
