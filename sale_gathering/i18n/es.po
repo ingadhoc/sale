@@ -188,6 +188,11 @@ msgid "Quantity Invoiced"
 msgstr "Cantidad facturada"
 
 #. module: sale_gathering
+#: model_terms:ir.ui.view,arch_db:sale_gathering.report_saleorder_document_gathering
+msgid "Quantity Delivered"
+msgstr "Cantidad entregada"
+
+#. module: sale_gathering
 #: model:ir.model,name:sale_gathering.model_sale_advance_payment_inv
 msgid "Sales Advance Payment Invoice"
 msgstr "Pago anticipado para factura de ventas"
