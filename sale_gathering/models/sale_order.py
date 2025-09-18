@@ -186,7 +186,30 @@ class SaleOrder(models.Model):
                 for downpayment_line in downpayment_lines:
                     if downpayment_line.sale_line_ids:
                         downpayment_tax_key = frozenset(downpayment_line.sale_line_ids.tax_id.ids)
-                        amount = tax_groups.get(downpayment_tax_key, 0.0)
+                        base_amount = tax_groups.get(downpayment_tax_key, 0.0)
+                        if base_amount:
+                            original_price_unit = downpayment_line.price_unit
+                            downpayment_line.price_unit = base_amount
+
+                            base_lines, _ = invoice._get_rounded_base_and_tax_lines()
+                            non_downpayment_base_lines = [
+                                line
+                                for line in base_lines
+                                if line.get("record") and not getattr(line["record"], "is_downpayment", False)
+                            ]
+                            tax_totals = self.env["account.tax"]._get_tax_totals_summary(
+                                base_lines=non_downpayment_base_lines,
+                                currency=invoice.currency_id,
+                                company=invoice.company_id,
+                                cash_rounding=invoice.invoice_cash_rounding_id,
+                            )
+
+                            downpayment_line.price_unit = original_price_unit
+
+                            amount = tax_totals.get("base_amount_currency", base_amount)
+                        else:
+                            amount = 0.0
+
                         downpayment_line.write(
                             {
                                 "price_unit": amount,
