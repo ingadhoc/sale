@@ -15,32 +15,11 @@ class SaleAdvancePaymentInv(models.TransientModel):
         if not order.type_id.journal_id:
             return super()._prepare_invoice_values(order, so_line, accounts)
         company = order.type_id.journal_id.company_id
-        self = self.with_company(company.id)
+
         res = super()._prepare_invoice_values(order, so_line, accounts)
-        if company.id != order.company_id.id:
-            for line_downpayment in so_line.filtered("is_downpayment"):
-                taxes = line_downpayment.tax_id
-                # Buscamos el correcto tax para la compañia sobre la cual estoy facturando, siendo
-                # esta distinta a la de la sale order line
-                correct_company_taxes = self.env["account.tax"].search(
-                    [
-                        ("company_id", "=", company.id),
-                        ("type_tax_use", "in", taxes.mapped("type_tax_use")),
-                        ("company_price_include", "in", taxes.mapped("company_price_include")),
-                        ("amount", "in", taxes.mapped("amount")),
-                        ("amount_type", "in", taxes.mapped("amount_type")),
-                    ]
-                )
-
-                if order.fiscal_position_id and correct_company_taxes:
-                    tax_ids = order.fiscal_position_id.map_tax(correct_company_taxes).ids
-                else:
-                    tax_ids = correct_company_taxes.ids
-
-                for line in res["invoice_line_ids"]:
-                    if line[2]["is_downpayment"] and line[2]["sale_line_ids"][0][1] == line_downpayment.id:
-                        line[2]["tax_ids"] = [(6, 0, tax_ids)]
-
+        journal = self.env["account.journal"].browse(res.get("journal_id")) if res.get("journal_id") else False
+        if company.id != order.company_id.id and journal and journal.company_id.id != order.company_id.id:
+            res.pop("journal_id")
         return res
 
     def _create_invoices(self, sale_orders):
@@ -51,22 +30,17 @@ class SaleAdvancePaymentInv(models.TransientModel):
             )
             if discount_lines and discount_lines.product_id.company_id:
                 discount_lines[0].product_id.write({"company_id": False})
-
-        return super(SaleAdvancePaymentInv, self)._create_invoices(sale_orders=sale_orders)
-
-    def _prepare_down_payment_lines_values(self, order):
-        down_payment_values, accounts = super()._prepare_down_payment_lines_values(order)
-        order_lines = order.order_line.filtered(lambda l: not l.display_type and not l.is_downpayment)
-        company = order.type_id.journal_id.company_id
-        correct_accounts = []
-        if company != order.company_id:
-            for line in order_lines:
-                product_account = (
-                    line["product_id"]
-                    .product_tmpl_id.with_company(company.id)
-                    .get_product_accounts(fiscal_pos=order.fiscal_position_id)
+        res = super()._create_invoices(sale_orders)
+        if sale_orders.type_id.journal_id:
+            company = sale_orders.type_id.journal_id.company_id
+            if company.id != sale_orders.company_id.id:
+                acc = self.env["account.change.company"].create(
+                    {
+                        "move_id": res.id,
+                        "company_ids": [sale_orders.company_id.id, company.id],
+                        "company_id": company.id,
+                        "journal_id": sale_orders.type_id.journal_id.id,
+                    }
                 )
-                product_accounts = product_account.get("downpayment") or product_account.get("income")
-                correct_accounts.append(product_accounts)
-            accounts = correct_accounts
-        return down_payment_values, accounts
+                acc.change_company()
+        return res
