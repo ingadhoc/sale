@@ -36,20 +36,4 @@ class AccountMove(models.Model):
                     self.company_id,
                     self.invoice_date or fields.Date.today(),
                 )
-            # When change company in downpayment
-            if downpayment_line.company_id != self.company_id:
-                taxes = downpayment_line.tax_id
-                # Buscamos el correcto tax para la compañia sobre la cual estoy vendiendo, siendo
-                # esta distinta a la de la factura de anticipo
-                correct_company_tax = self.env["account.tax"].search(
-                    [
-                        ("company_id", "=", downpayment_line.company_id.id),
-                        ("type_tax_use", "in", taxes.mapped("type_tax_use")),
-                        ("company_price_include", "in", taxes.mapped("company_price_include")),
-                        ("amount", "in", taxes.mapped("amount")),
-                        ("amount_type", "in", taxes.mapped("amount_type")),
-                    ]
-                )
-                tax = correct_company_tax or False
-                downpayment_line.tax_id = tax
         return res

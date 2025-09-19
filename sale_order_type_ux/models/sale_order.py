@@ -31,21 +31,16 @@ class SaleOrder(models.Model):
             return super()._prepare_invoice()
         res = super()._prepare_invoice()
         company = self.type_id.journal_id.company_id
-        self = self.with_company(company.id)
+        # self = self.with_company(company.id)
+        journal = self.env["account.journal"].browse(res.get("journal_id")) if res.get("journal_id") else False
         if company != self.company_id:
-            res["company_id"] = company.id
             res["partner_bank_id"] = company.partner_id.bank_ids[:1].id
             # agregamos para que recompute term y cond si la nueva compañia los tiene por defecto
             if "narration" in res and not res["narration"]:
                 del res["narration"]
-            so_fiscal_position = self.env["account.fiscal.position"].browse(res["fiscal_position_id"])
-            if not so_fiscal_position or (so_fiscal_position.company_id and so_fiscal_position.company_id != company):
-                res["fiscal_position_id"] = (
-                    self.env["account.fiscal.position"]
-                    .with_company(company.id)
-                    ._get_fiscal_position(self.partner_invoice_id)
-                    .id
-                )
+
+            if journal and journal.company_id.id != self.company_id.id:
+                res.pop("journal_id")
         return res
 
     def _compute_team_id(self):
@@ -68,9 +63,16 @@ class SaleOrder(models.Model):
         (e.g., l10n_ar), this ensures that the taxes from `l10n_ar_tax_ids` are applied.
         """
         invoices = super()._create_invoices(grouped=grouped, final=final, date=date)
-        for line in invoices.invoice_line_ids.filtered(
-            lambda x: x.product_id != self.company_id.sale_discount_product_id
-        ):
-            if line.company_id != self.company_id:
-                line.tax_ids = line._get_computed_taxes()
+        for line in invoices.filtered("sale_type_id.journal_id"):
+            company = self.type_id.journal_id.company_id
+            if line.company_id != company:
+                acc = self.env["account.change.company"].create(
+                    {
+                        "move_id": line.id,
+                        "company_ids": [self.company_id.id, company.id],
+                        "company_id": company.id,
+                        "journal_id": self.type_id.journal_id.id,
+                    }
+                )
+                acc.change_company()
         return invoices

@@ -4,4 +4,5 @@
 ##############################################################################
 from . import models
 from . import wizards
-from .hooks import post_init_hook
+from .hooks import post_init_hook, uninstall_hook
+from .monkey_patches import monkey_patches
