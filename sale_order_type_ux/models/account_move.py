@@ -17,6 +17,7 @@ class AccountMove(models.Model):
                 record._onchange_journal()
             if (
                 record.sale_type_id
+                and record.sale_type_id.journal_id
                 and record.sale_type_id.journal_id.company_id.id not in record.env.companies.ids
                 and not record.partner_id
             ):

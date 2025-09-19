@@ -31,21 +31,16 @@ class SaleOrder(models.Model):
             return super()._prepare_invoice()
         res = super()._prepare_invoice()
         company = self.type_id.journal_id.company_id
-        self = self.with_company(company.id)
+        # self = self.with_company(company.id)
+        journal = self.env["account.journal"].browse(res.get("journal_id")) if res.get("journal_id") else False
         if company != self.company_id:
-            res["company_id"] = company.id
             res["partner_bank_id"] = company.partner_id.bank_ids[:1].id
             # agregamos para que recompute term y cond si la nueva compañia los tiene por defecto
             if "narration" in res and not res["narration"]:
                 del res["narration"]
-            so_fiscal_position = self.env["account.fiscal.position"].browse(res["fiscal_position_id"])
-            if not so_fiscal_position or (so_fiscal_position.company_id and so_fiscal_position.company_id != company):
-                res["fiscal_position_id"] = (
-                    self.env["account.fiscal.position"]
-                    .with_company(company.id)
-                    ._get_fiscal_position(self.partner_invoice_id)
-                    .id
-                )
+
+            if journal and journal.company_id.id != self.company_id.id:
+                res.pop("journal_id")
         return res
 
     def _compute_team_id(self):
