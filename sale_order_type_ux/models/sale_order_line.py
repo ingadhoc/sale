@@ -13,46 +13,25 @@ class SaleOrderLine(models.Model):
     tax_id = fields.Many2many(check_company=False)
 
     def _prepare_invoice_line(self, **optional_values):
-        """
-        Forzamos compania de diario de sale type
-        """
-        if not self.order_id.type_id.journal_id:
-            return super()._prepare_invoice_line(**optional_values)
-        company = self.order_id.type_id.journal_id.company_id
-        self = self.with_company(company.id)
         res = super()._prepare_invoice_line(**optional_values)
-
-        if company != self.company_id:
-            if self.product_id == self.company_id.sale_discount_product_id:
-                taxes = self._get_change_company_line_discount_tax(company=company)
-            else:
-                # Because we not have the access to the invoice, we obtain the fiscal position who
-                # has the invoice really
-                fpos = (
-                    self.env["account.fiscal.position"]
-                    .with_company(company.id)
-                    ._get_fiscal_position(self.order_id.partner_id, self.order_id.partner_shipping_id)
-                )
-                taxes = self.product_id.taxes_id.filtered(lambda r: company == r.company_id)
-                taxes = fpos.map_tax(taxes) if fpos else taxes
-
-            res["tax_ids"] = [(6, 0, taxes.ids)]
-        return res
-
-    def _get_change_company_line_discount_tax(self, company=None):
-        tax_ids = self.env["account.tax"].browse(self.tax_id.ids)
-        taxes = self.env["account.tax"]
-        for tax in tax_ids:
-            new_tax = self.env["account.tax"].search(
-                [
-                    ("type_tax_use", "=", tax.type_tax_use),
-                    ("amount", "=", tax.amount),
-                    ("active", "=", True),
-                    ("company_id", "=", company.id),
-                ],
-                limit=1,
+        # Fix multicompañía:
+        # Cuando se cambia la compañía de una factura de anticipo (ya sea con el wizard de "change company"
+        # o mediante el sale order type), Odoo reutiliza la cuenta contable de esa factura de anticipo
+        # para las siguientes facturas.
+        # El problema es que el cambio de compañía recién se aplica al crear la factura en borrador,
+        # por lo que la cuenta tomada no coincide con la compañía actual (de la venta).
+        # Para evitarlo, se fuerza la cuenta que hubiera correspondido sin el cambio de compañía;
+        # luego, el wizard se encarga de ajustar las cuentas según corresponda.
+        downpayment_lines = self.invoice_lines.filtered("is_downpayment")
+        account_id = res.get("account_id") and self.env["account.account"].browse(res["account_id"]) or None
+        if (
+            self.is_downpayment
+            and downpayment_lines
+            and account_id
+            and self.company_id.id not in account_id.company_ids.ids
+        ):
+            account_id = self.env["account.change.company"]._get_change_downpayment_account(
+                self.company_id, self.invoice_lines, self.order_id.fiscal_position_id
             )
-            if new_tax:
-                taxes += new_tax
-
-        return taxes
+            res["account_id"] = account_id.id
+        return res
