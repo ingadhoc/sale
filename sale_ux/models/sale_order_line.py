@@ -58,27 +58,3 @@ class SaleOrderLine(models.Model):
             and not (x.order_id.pricelist_id and x.pricelist_item_id._show_discount())
         )
         super(SaleOrderLine, self - lines)._compute_discount()
-
-    def _prepare_invoice_line(self, **optional_values):
-        res = super()._prepare_invoice_line(**optional_values)
-        # Fix multicompañía: si se cambia la compañía de una factura de anticipo con el wizard de change company,
-        # luego al facturar el resto se puede usar una cuenta contable de la compañía incorrecta.
-
-        downpayment_lines = self.invoice_lines.filtered("is_downpayment")
-        account_id = res.get("account_id") and self.env["account.account"].browse(res["account_id"]) or None
-
-        if (
-            self.is_downpayment
-            and downpayment_lines
-            and account_id
-            and self.company_id.id not in account_id.company_ids.ids
-        ):
-            invoiceable_products = self.order_id._get_invoiceable_lines().mapped("product_id")
-            product_accounts = invoiceable_products.product_tmpl_id.get_product_accounts(
-                fiscal_pos=self.order_id.fiscal_position_id
-            )
-            new_account = product_accounts.get("downpayment") or product_accounts.get("income")
-            if new_account:
-                res["account_id"] = new_account.id
-
-        return res
