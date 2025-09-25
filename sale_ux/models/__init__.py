@@ -12,3 +12,4 @@ from . import account_fiscal_position
 from . import res_partner
 from . import crm_team
 from . import ir_default
+from . import fields
