@@ -34,7 +34,7 @@
         "views/res_config_settings_views.xml",
         "reports/sale_order.xml",
     ],
-    "installable": True,
+    'installable': False,
     "auto_install": False,
     "application": False,
 }
