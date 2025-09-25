@@ -36,7 +36,7 @@
         "wizards/res_config_settings_view.xml",
     ],
     "demo": [],
-    "installable": True,
+    'installable': False,
     "auto_install": False,
     "application": False,
 }

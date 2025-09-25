@@ -15,7 +15,7 @@
             "pos_ux/static/src/**/*",
         ],
     },
-    "installable": True,
+    'installable': False,
     "auto_install": False,
     "license": "LGPL-3",
 }

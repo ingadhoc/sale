@@ -32,7 +32,7 @@
     "data": [
         "views/loyalty_program_views.xml",
     ],
-    "installable": True,
+    'installable': False,
     "auto_install": True,
     "application": False,
 }

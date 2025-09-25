@@ -31,6 +31,6 @@
         "data/exception_rule_data.xml",
     ],
     "demo": [],
-    "installable": True,
+    'installable': False,
     "auto_install": True,
 }

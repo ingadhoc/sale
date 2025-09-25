@@ -45,6 +45,6 @@
         "views/sale_report_templates.xml",
         "views/product_template_views.xml",
     ],
-    "installable": True,
+    'installable': False,
     "auto_install": False,
 }
