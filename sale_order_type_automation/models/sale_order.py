@@ -32,6 +32,12 @@ class SaleOrder(models.Model):
                     rec.env.cr.commit()
                 try:
                     invoices.sudo().action_post()
+                    if (
+                        invoices.name
+                        and not invoices.line_ids.mapped("move_name")
+                        and invoices.name not in invoices.line_ids.mapped("move_name")
+                    ):
+                        invoices.env.add_to_compute(invoices.line_ids._fields["move_name"], invoices.line_ids)
                 except Exception as error:
                     rec.env.cr.rollback()
                     if not self._context.get("commit_invoice_automation"):
