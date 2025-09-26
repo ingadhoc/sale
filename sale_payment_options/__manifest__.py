@@ -34,7 +34,7 @@
         "report/sale_order_payment_options_report.xml",
         "report/ir_actions_report.xml",
     ],
-    'installable': False,
+    "installable": False,
     "application": False,
     "auto_install": False,
     "assets": {

@@ -33,6 +33,6 @@
         "views/res_config_settings_views.xml",
     ],
     "demo": ["demo/res_partner_demo.xml"],
-    'installable': False,
+    "installable": False,
     "post_init_hook": "_post_init_credit",
 }

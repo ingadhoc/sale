@@ -29,6 +29,6 @@
         "sale_product_pack",
     ],
     "data": [],
-    'installable': False,
+    "installable": False,
     "auto_install": True,
 }

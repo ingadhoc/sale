@@ -32,7 +32,7 @@
         "views/sale_aproval.xml",
     ],
     "demo": [],
-    'installable': False,
+    "installable": False,
     "auto_install": False,
     "application": False,
 }

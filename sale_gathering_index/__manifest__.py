@@ -30,7 +30,7 @@
     "depends": ["sale_gathering"],
     "data": ["views/sale_order_views.xml", "reports/report_saleorder_document_index.xml"],
     "demo": [],
-    'installable': False,
+    "installable": False,
     "auto_install": False,
     "application": False,
 }

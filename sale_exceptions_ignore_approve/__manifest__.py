@@ -34,7 +34,7 @@
         "views/sale_order_views.xml",
     ],
     "demo": [],
-    'installable': False,
+    "installable": False,
     "auto_install": False,
     "application": False,
 }

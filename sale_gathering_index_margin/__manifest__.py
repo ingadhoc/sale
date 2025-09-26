@@ -30,7 +30,7 @@
         "sale_gathering_index",
         "sale_margin",
     ],
-    'installable': False,
+    "installable": False,
     "auto_install": True,
     "application": False,
 }
