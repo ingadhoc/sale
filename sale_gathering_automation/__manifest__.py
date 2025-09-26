@@ -30,7 +30,7 @@
         "sale_gathering",
         "sale_order_type_automation",
     ],
-    'installable': False,
+    "installable": False,
     "auto_install": True,
     "application": False,
 }

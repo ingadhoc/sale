@@ -18,7 +18,7 @@
         ],
     },
     "demo": [],
-    'installable': False,
+    "installable": False,
     "auto_install": False,
     "application": False,
 }

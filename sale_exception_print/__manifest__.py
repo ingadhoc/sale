@@ -28,7 +28,7 @@
     ],
     "data": ["views/exception_rule_views.xml"],
     "demo": [],
-    'installable': False,
+    "installable": False,
     "auto_install": False,
     "application": False,
 }

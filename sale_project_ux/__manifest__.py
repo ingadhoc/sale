@@ -34,7 +34,7 @@
     ],
     "data": [],
     "demo": [],
-    'installable': False,
+    "installable": False,
     "auto_install": True,
     "application": False,
 }

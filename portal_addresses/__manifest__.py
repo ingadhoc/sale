@@ -34,7 +34,7 @@
         "views/portal_templates.xml",
         "views/templates.xml",
     ],
-    'installable': False,
+    "installable": False,
     "auto_install": True,
     "assets": {"web.assets_frontend": ["/portal_addresses/static/src/js/address.js"]},
 }
