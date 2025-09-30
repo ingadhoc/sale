@@ -72,8 +72,13 @@ class SaleOrder(models.Model):
             lambda x: x.is_gathering
             and float_compare(x.gathering_balance, 0.0, precision_digits=product_precision_digits) >= 0
         ):
-            for line in rec.order_line.filtered("is_downpayment"):
-                if final:
+            for line in rec.order_line:
+                if line.is_downpayment and final:
+                    invoiceable_lines |= line
+                # Cuando es una devolución y no estamos agregando final=True lo nativo de Odoo no estaba agregando la línea y por lo tanto
+                # no se hace nada. Adicionalmente esto solo quiero que me entre para el caso de las líneas que tienen cantidad negativa
+                # por devolución y no cantidad negativa por anticipo (caso primer factura)
+                elif line.qty_to_invoice < 0 and not final and not line.is_downpayment:
                     invoiceable_lines |= line
             invoiceable_lines = invoiceable_lines.filtered(
                 lambda line: line.display_type not in ["line_section", "line_note"]
@@ -136,7 +141,7 @@ class SaleOrder(models.Model):
 
     @api.depends("gathering_balance", "gathering_amount_with_taxes")
     def _compute_withdrawn_amount(self):
-        orders = self.filtered(lambda x: x.gathering_balance > 0)
+        orders = self.filtered("is_gathering")
         for rec in orders:
             rec.withdrawn_amount = rec.gathering_amount_with_taxes - rec.gathering_balance
         (self - orders).withdrawn_amount = 0.0
@@ -162,6 +167,28 @@ class SaleOrder(models.Model):
     def _get_protected_fields(self):
         return ["is_gathering"]
 
+    def _create_invoices(self, grouped=False, final=False, date=None):
+        if self.env.context.get("invoice_gathering"):
+            split_invoice_and_credit_note = bool(
+                self.env["ir.config_parameter"].sudo().get_param("sale_gathering.split_invoice_and_credit_note", "True")
+            )
+            if split_invoice_and_credit_note:
+                # Tenemos que enviar el contexto cuando es una devolución para que luego me lo cambie a nota de crédito
+                pickings = self.env["stock.picking"].browse(self.env.context.get("picking_ids"))
+                if pickings.mapped("return_id"):
+                    self = self.with_context(invoice_gathering=True)
+                invoices = super(SaleOrder, self)._create_invoices(final=False, grouped=grouped, date=date)
+                for invoice in invoices:
+                    credit_note = super(
+                        SaleOrder, self.with_context(gathering_invoice=invoice, invoice_gathering=True)
+                    )._create_invoices(final=True, grouped=grouped, date=date)
+                    credit_note.reversed_entry_id = invoice
+                    invoices += credit_note
+            else:
+                invoices = super()._create_invoices(final=True, grouped=grouped, date=date)
+            return invoices
+        return super()._create_invoices()
+
     def _create_account_invoices(self, invoice_vals_list, final):
         invoices = super()._create_account_invoices(invoice_vals_list, final)
         if self._context.get("invoice_gathering"):
@@ -170,7 +197,9 @@ class SaleOrder(models.Model):
                 if not downpayment_lines:
                     continue
 
-                regular_lines = invoice.invoice_line_ids.filtered(
+                # Si viene por contexto uso esa factura (es porque se hizo el split FC + NC) y sino uso invoices
+                gathering_invoice = self._context.get("gathering_invoice", invoice)
+                regular_lines = gathering_invoice.invoice_line_ids.filtered(
                     lambda l: not l.is_downpayment and l.display_type == "product"
                 )
                 if not regular_lines:
@@ -186,34 +215,20 @@ class SaleOrder(models.Model):
                 for downpayment_line in downpayment_lines:
                     if downpayment_line.sale_line_ids:
                         downpayment_tax_key = frozenset(downpayment_line.sale_line_ids.tax_id.ids)
-                        base_amount = tax_groups.get(downpayment_tax_key, 0.0)
-                        if base_amount:
-                            original_price_unit = downpayment_line.price_unit
-                            downpayment_line.price_unit = base_amount
-
-                            base_lines, _ = invoice._get_rounded_base_and_tax_lines()
-                            non_downpayment_base_lines = [
-                                line
-                                for line in base_lines
-                                if line.get("record") and not getattr(line["record"], "is_downpayment", False)
-                            ]
-                            tax_totals = self.env["account.tax"]._get_tax_totals_summary(
-                                base_lines=non_downpayment_base_lines,
-                                currency=invoice.currency_id,
-                                company=invoice.company_id,
-                                cash_rounding=invoice.invoice_cash_rounding_id,
-                            )
-
-                            downpayment_line.price_unit = original_price_unit
-
-                            amount = tax_totals.get("base_amount_currency", base_amount)
-                        else:
-                            amount = 0.0
-
+                        amount_for_this_tax_group = tax_groups.get(downpayment_tax_key, 0.0)
                         downpayment_line.write(
                             {
-                                "price_unit": amount,
-                                "quantity": -1.0,
+                                "price_unit": amount_for_this_tax_group,
+                                "quantity": 1.0,
                             }
                         )
+
+                # Cuando es una devolución no tengo que cambiar a nota de crédito ya que el anticipo debe ser una factura
+                pickings = self.env["stock.picking"].browse(self.env.context.get("picking_ids"))
+                if self.env.context.get("gathering_invoice") and not pickings.mapped("return_id"):
+                    invoice.action_switch_move_type()
+            # Cuando es una devolución la cantidad total de la factura es negativa (y nativamente no lo cambia a NC debido a que tenemos final=False)
+            # y nosotros lo tenemos que cambiar a NC porque sino no deja validar la factura
+            if not final and (moves_to_switch := invoices.sudo().filtered(lambda m: m.amount_total < 0)):
+                moves_to_switch.action_switch_move_type()
         return invoices
