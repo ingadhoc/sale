@@ -2,7 +2,8 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class SaleAdvancePaymentInvWizard(models.TransientModel):
@@ -18,8 +19,18 @@ class SaleAdvancePaymentInvWizard(models.TransientModel):
     def create_invoices(self):
         sale_orders = self.env["sale.order"].browse(self._context.get("active_ids", []))
         if self.advance_payment_method == "invoice_gathering_zero":
-            invoices = sale_orders.with_context(invoice_gathering=True)._create_invoices(final=True)
+            invoices = sale_orders.with_context(invoice_gathering=True)._create_invoices()
+            return self.sale_order_ids.action_view_invoice(invoices=invoices)
         else:
-            self = self.with_context(advance_payment=True)
             return super().create_invoices()
-        return self.sale_order_ids.action_view_invoice(invoices=invoices)
+
+    # TODO seria ideal esto llevarlo a UX y que no se muestre la opción directamente
+    @api.constrains("advance_payment_method")
+    def _check_payment_method(self):
+        if self.advance_payment_method == "invoice_gathering_zero":
+            sale_orders = self.env["sale.order"].browse(self._context.get("active_ids", []))
+            invalid_orders = sale_orders.filtered(lambda so: not so.is_gathering)
+            if invalid_orders:
+                raise ValidationError(
+                    _("The 'Factura en cero descontando acopio' method can only be used for gathering sales.")
+                )
