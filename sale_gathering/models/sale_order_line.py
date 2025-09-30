@@ -14,7 +14,7 @@ class SaleOrderLine(models.Model):
         super(SaleOrderLine, self - gathering_lines)._compute_price_unit()
 
     def _prepare_base_line_for_taxes_computation(self, **kwargs):
-        if self.env.context.get("advance_payment") and self.initial_qty_gathered > 0:
+        if self.initial_qty_gathered > 0:
             self.ensure_one()
             kwargs["quantity"] = self.initial_qty_gathered
             return super()._prepare_base_line_for_taxes_computation(**kwargs)
