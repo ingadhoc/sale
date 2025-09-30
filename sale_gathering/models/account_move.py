@@ -24,3 +24,20 @@ class AccountMove(models.Model):
                 }
             )
         return res
+
+    def _post(self, soft=True):
+        # Odoo only auto-reconciles when credit note is posted after invoice, not vice versa
+        result = super()._post(soft=soft)
+        for move in self.filtered(lambda m: m.state == "posted" and m.move_type == "out_invoice"):
+            is_gathering_sale = any(
+                line.sale_line_ids.order_id.is_gathering for line in move.invoice_line_ids if line.sale_line_ids
+            )
+            if not is_gathering_sale:
+                continue
+            credit_notes = self.env["account.move"].search(
+                [("reversed_entry_id", "=", move.id), ("state", "=", "posted"), ("move_type", "=", "out_refund")],
+                limit=1,
+            )
+            if credit_notes:
+                move._reconcile_reversed_moves(credit_notes, False)
+        return result
