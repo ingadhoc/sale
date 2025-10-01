@@ -53,7 +53,10 @@ class SaleOrderLine(models.Model):
         return super()._get_protected_fields() + ["discount"]
 
     def _compute_discount(self):
-        lines = self.filtered(lambda x: not (x.order_id.pricelist_id and x.pricelist_item_id._show_discount()))
+        lines = self.filtered(
+            lambda x: x.order_id.state == "sale"
+            and not (x.order_id.pricelist_id and x.pricelist_item_id._show_discount())
+        )
         super(SaleOrderLine, self - lines)._compute_discount()
 
     def _prepare_invoice_line(self, **optional_values):
