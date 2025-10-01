@@ -33,10 +33,15 @@ class SaleOrderLine(models.Model):
                 raise ValidationError(_(",".join(error) + " must be less or equal than 100"))
 
     def _compute_discount(self):
-        # we do not want override discounts if the pricelist is configured to include the discount in the price.
-        lines_show_discount = self.filtered(lambda x: x.order_id.pricelist_id and x.pricelist_item_id._show_discount())
-        super(SaleOrderLine, lines_show_discount)._compute_discount()
-        if self.env.context.get("recompute_prices") or lines_show_discount:
+        # we do not want override discounts if the pricelist is configured to include the discount in the price
+        # in SO confirmed.
+        lines = self.filtered(
+            lambda x: x.order_id.state == "sale"
+            and not (x.order_id.pricelist_id and x.pricelist_item_id._show_discount())
+        )
+        lines_to_update = self - lines
+        super(SaleOrderLine, lines_to_update)._compute_discount()
+        if self.env.context.get("recompute_prices") or lines_to_update:
             for line in self:
                 line.discount1 = line.discount
                 line.discount2 = 0.0
