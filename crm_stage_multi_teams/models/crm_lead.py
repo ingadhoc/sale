@@ -9,7 +9,7 @@ class Lead(models.Model):
     )
 
     def _read_group_stage_ids(self, stages, domain):
-        team_id = self._context.get("default_team_id")
+        team_id = self.env.context.get("default_team_id")
         if team_id:
             search_domain = [
                 "|",
