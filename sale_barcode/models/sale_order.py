@@ -10,6 +10,11 @@ class SaleOrder(models.Model):
     _inherit = ["sale.order", "barcodes.barcode_events_mixin"]
 
     def on_barcode_scanned(self, barcode):
+        # Skip system commands (let barcode_handlers.js handle them)
+        if barcode.startswith(("OCD", "OBT")):
+            return
+
+        # Handle products only
         product = self.env["product.product"].search([("barcode", "=", barcode)])
         if product:
             self._add_product(product)

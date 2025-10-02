@@ -5,23 +5,21 @@
         <field name="model">res.config.settings</field>
         <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//block[@name='quotation_order_setting_container']" position="inside">
-                <div class="col-xs-12 col-md-6 o_setting_box">
-                    <div class="o_setting_right_pane">
-                        <span class="o_form_label">Barcode Scanner</span>
-                        <div class="text-muted">
-                            Process operations faster with barcodes
-                        </div>
+            <block name="invoicing_setting_container" position="after">
+                <block title="Barcode Operations" name="barcode_setting_container">
+                    <setting id="barcode_scanner_setting"
+                             string="Barcode Scanner"
+                             help="Process operations faster with barcodes">
                         <div class="content-group">
                             <div class="mt16">
                                 <a href="/sale_barcode/static/img/barcodes_actions.pdf" class="fw-bold" target="_blank">
-                                    <i class="fa fa-download"/> Print Sales Barcode commands
+                                    <i class="fa fa-download"/> Print Sales Barcode Commands
                                 </a>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </xpath>
+                    </setting>
+                </block>
+            </block>
         </field>
     </record>
 
