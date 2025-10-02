@@ -16,13 +16,10 @@ class SaleOrder(models.Model):
     )
     purchase_order_number = fields.Char(copy=False)
 
-    _sql_constraints = [
-        (
-            "purchase_order_number_uniq",
-            "unique (purchase_order_number, partner_id)",
-            "The Purchase Order Number must be unique!",
-        )
-    ]
+    _purchase_order_number_uniq = models.Constraint(
+        "unique (purchase_order_number, partner_id)",
+        "The Purchase Order Number must be unique!",
+    )
 
     def action_confirm(self):
         sale_order_missing_po_number = self.filtered(

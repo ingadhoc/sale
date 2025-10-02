@@ -21,7 +21,7 @@ class StockPicking(models.Model):
         inverse="_inverse_purchase_order_number",
     )
 
-    @api.depends("group_id", "sale_id")
+    @api.depends("sale_id")
     def _compute_purchase_order_number(self):
         for rec in self:
             rec.purchase_order_number = (
@@ -41,5 +41,5 @@ class StockPicking(models.Model):
             and not pick.purchase_order_number
         )
         if picking_missing_po_number:
-            raise UserError(_("You cannot transfer products without a Purchase" " Order Number for this partner"))
+            raise UserError(_("You cannot transfer products without a Purchase Order Number for this partner"))
         return super()._action_done()
