@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Sale UX",
-    "version": "18.0.1.11.0",
+    "version": "19.0.1.0.0",
     "category": "Sales",
     "sequence": 14,
     "summary": "",
@@ -49,7 +49,7 @@
         "data/ir_cron.xml",
     ],
     "demo": [],
-    "installable": False,
+    "installable": True,
     "auto_install": False,
     "application": False,
 }

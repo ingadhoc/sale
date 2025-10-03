@@ -52,7 +52,7 @@
                 <field name="product_uom_qty" string="Qty"/>
                 <field name="qty_invoiced"/>
                 <field name="qty_to_invoice" optional="hide"/>
-                <field name="product_uom" string="Unit of Measure" groups="uom.group_uom" optional="hide"/>
+                <field name="product_uom_id" string="Unit of Measure" groups="uom.group_uom" optional="hide"/>
                 <field name="untaxed_amount_invoiced" optional="hide"/>
                 <field name="untaxed_amount_to_invoice" optional="hide"/>
                 <field name="price_subtotal" sum="Total" widget="monetary"/>
