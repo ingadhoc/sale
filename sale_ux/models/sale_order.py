@@ -61,8 +61,8 @@ class SaleOrder(models.Model):
         if "narration" in vals and not propagate_note:
             vals.pop("narration")
         company = (
-            self._context.get("force_company", False)
-            and self.env["res.company"].browse(self._context.get("force_company"))
+            self.env.context.get("force_company", False)
+            and self.env["res.company"].browse(self.env.context.get("force_company"))
             or self.env.company
         )
         if (
@@ -92,7 +92,7 @@ class SaleOrder(models.Model):
         """
         self.ensure_one()
         lines_to_recompute = self.order_line.filtered(lambda line: not line.display_type)
-        lines_to_recompute._compute_tax_id()
+        lines_to_recompute._compute_tax_ids()
         self.show_update_fpos = False
 
     def action_cancel(self):
@@ -110,38 +110,9 @@ class SaleOrder(models.Model):
             valid_invoices = valid_refunds if refunds else False
 
         if moves and not (valid_invoices):
-            raise UserError(_("Unable to cancel this sale order. You must first " "cancel related bills and pickings."))
+            raise UserError(_("Unable to cancel this sale order. You must first cancel related bills and pickings."))
         if any(order.locked for order in self):
-            # No encontre otra forma de evitar el raise usererror que impide que ordenes se cancelen si el pedido está bloqueado
-            cancel_warning = self._show_cancel_wizard()
-            if cancel_warning:
-                self.ensure_one()
-                template_id = self.env["ir.model.data"]._xmlid_to_res_id(
-                    "sale.mail_template_sale_cancellation", raise_if_not_found=False
-                )
-                lang = self.env.context.get("lang")
-                template = self.env["mail.template"].browse(template_id)
-                if template.lang:
-                    lang = template._render_lang(self.ids)[self.id]
-                ctx = {
-                    "default_template_id": template_id,
-                    "default_order_id": self.id,
-                    "mark_so_as_canceled": True,
-                    "default_email_layout_xmlid": "mail.mail_notification_layout_with_responsible_signature",
-                    "model_description": self.with_context(lang=lang).type_name,
-                }
-                self.action_unlock()
-                return {
-                    "name": _("Cancel %s", self.type_name),
-                    "view_mode": "form",
-                    "res_model": "sale.order.cancel",
-                    "view_id": self.env.ref("sale.sale_order_cancel_view_form").id,
-                    "type": "ir.actions.act_window",
-                    "context": ctx,
-                    "target": "new",
-                }
-            else:
-                return self._action_cancel()
+            return self._action_cancel()
         else:
             return super().action_cancel()
 
@@ -163,7 +134,7 @@ class SaleOrder(models.Model):
 
     def _get_update_prices_lines(self):
         lines = super()._get_update_prices_lines()
-        lines_to_not_update_ids = self._context.get("lines_to_not_update_ids", [])
+        lines_to_not_update_ids = self.env.context.get("lines_to_not_update_ids", [])
         return lines.filtered(lambda l: l.id not in lines_to_not_update_ids)
 
     def action_update_prices(self):
@@ -231,7 +202,7 @@ class SaleOrder(models.Model):
                 ("state", "in", ["draft", "sent"]),
                 ("date_order", "<", oldest_date),
             ]
-            if cancel_old_quotations and self._context.get("website_installed") and not website:
+            if cancel_old_quotations and self.env.context.get("website_installed") and not website:
                 # s.o que no tienen website
                 domain = domain + [("website_id", "=", False)]
             elif not cancel_old_quotations and website:
@@ -254,8 +225,8 @@ class SaleOrder(models.Model):
         if not auto_select_enabled:
             return result
 
-        if self.available_product_document_ids and not self.quotation_document_ids:
-            self.quotation_document_ids = self.available_product_document_ids
+        if self.available_quotation_document_ids and not self.quotation_document_ids:
+            self.quotation_document_ids = self.available_quotation_document_ids
             selected_headers = self.quotation_document_ids.filtered(lambda d: d.document_type == "header")
             selected_footers = self.quotation_document_ids.filtered(lambda d: d.document_type == "footer")
 
@@ -277,6 +248,7 @@ class SaleOrder(models.Model):
                 for doc in line_data.get("files", []):
                     if any(d.id == doc["id"] for d in line.product_document_ids):
                         doc["is_selected"] = True
+
         return result
 
     def copy(self, default=None):

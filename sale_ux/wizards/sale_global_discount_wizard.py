@@ -16,6 +16,6 @@ class SaleGlobalDiscountWizard(models.TransientModel):
 
     def confirm(self):
         self.ensure_one()
-        order = self.env["sale.order"].browse(self._context.get("active_id", False))
+        order = self.env["sale.order"].browse(self.env.context.get("active_id", False))
         order.order_line.write({"discount": self.amount})
         return True

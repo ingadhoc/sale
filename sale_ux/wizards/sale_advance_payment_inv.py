@@ -26,7 +26,7 @@ class SaleAdvancePaymentInvWizard(models.TransientModel):
     def _inverse_amount_total(self):
         self.ensure_one()
         sale_obj = self.env["sale.order"]
-        order = sale_obj.browse(self._context.get("active_ids"))[0]
+        order = sale_obj.browse(self.env.context.get("active_ids"))[0]
         tax_percent = 0.0
         for tax in self.tax_ids.filtered(lambda x: not x.price_include):
             if tax.amount_type == "percent":
@@ -49,7 +49,7 @@ class SaleAdvancePaymentInvWizard(models.TransientModel):
         then restoring tax.price_include = False.
         """
         sale_obj = self.env["sale.order"]
-        order = sale_obj.browse(self._context.get("active_ids"))[0]
+        order = sale_obj.browse(self.env.context.get("active_ids"))[0]
 
         if self.tax_ids:
             taxes = self.tax_ids.compute_all(

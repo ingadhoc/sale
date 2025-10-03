@@ -39,7 +39,7 @@
                         <label for="move_internal_notes"/>
                     </div>
                     <div class="text-muted">
-                        Si marca esta opción y hay un valor definido en las "notas internas", el mismo se va a copiar en las facturas o transferencias que se generen desde esta venta.
+                        Si marca esta opción y hay un valor definido en las "notas internas", el mismo se va a copiar en las facturas que se generen desde esta venta.
                     </div>
                 </div>
                 <div class="mt16">
@@ -48,7 +48,7 @@
                         <label for="move_note"/>
                     </div>
                     <div class="text-muted">
-                        Si marca esta opción y hay un valor definido en "términos y condiciones", el mismo se va a copiar en las facturas o transferencias que se generen desde esta venta.
+                        Si marca esta opción y hay un valor definido en "términos y condiciones", el mismo se va a copiar en las facturas que se generen desde esta venta.
                     </div>
                 </div>
                 <div class="mt16">

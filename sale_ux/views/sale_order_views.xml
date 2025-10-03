@@ -149,6 +149,7 @@
     <!-- make sales orders action show all sale.order records -->
     <record id="sale.action_orders" model="ir.actions.act_window">
         <field name="domain">[]</field>
+        <field name="context">{}</field>
     </record>
 
     <!--Hide Quotations Menu -->
