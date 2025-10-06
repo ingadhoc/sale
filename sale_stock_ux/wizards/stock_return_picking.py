@@ -2,7 +2,8 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import api, models
+from odoo import _, api, models
+from odoo.exceptions import UserError
 
 
 class StockReturnPicking(models.TransientModel):
@@ -21,3 +22,24 @@ class StockReturnPicking(models.TransientModel):
         except KeyError:
             pass
         return result
+
+    def action_create_exchanges(self):
+        if self.filtered(lambda m: m.product_return_moves.to_refund):
+            raise UserError(_("You cannot create exchanges for moves without refunds."))
+        return super(StockReturnPicking, self.with_context(is_exchange_move=True)).action_create_exchanges()
+
+
+class StockReturnPickingLine(models.TransientModel):
+    _inherit = "stock.return.picking.line"
+
+    def _prepare_move_default_values(self, new_picking):
+        vals = super()._prepare_move_default_values(new_picking)
+        if self.env.context.get("is_exchange_move"):
+            vals["is_exchange_move"] = True
+        return vals
+
+    def _prepare_picking_default_values_based_on(self, picking):
+        vals = super()._prepare_picking_default_values_based_on(picking)
+        if self.env.context.get("is_exchange_move"):
+            vals["is_exchange_move"] = True
+        return vals
