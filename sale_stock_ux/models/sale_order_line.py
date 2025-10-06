@@ -54,6 +54,32 @@ class SaleOrderLine(models.Model):
         for rec in self:
             rec.all_qty_delivered = rec.qty_delivered + rec.quantity_returned
 
+    def _get_qty_procurement(self, previous_product_uom_qty=False):
+        qty = super()._get_qty_procurement(previous_product_uom_qty=previous_product_uom_qty)
+        outgoing_moves, incoming_moves = self._get_outgoing_incoming_moves(strict=False)
+        for move in outgoing_moves.filtered(lambda m: m.is_exchange_move):
+            qty_to_compute = move.quantity if move.state == "done" else move.product_uom_qty
+            qty -= move.product_uom._compute_quantity(qty_to_compute, self.product_uom, rounding_method="HALF-UP")
+        for move in incoming_moves.filtered(lambda m: m.is_exchange_move):
+            qty_to_compute = move.quantity if move.state == "done" else move.product_uom_qty
+            qty += move.product_uom._compute_quantity(qty_to_compute, self.product_uom, rounding_method="HALF-UP")
+        return qty
+
+    @api.depends()
+    def _compute_qty_delivered(self):
+        super()._compute_qty_delivered()
+        for line in self:
+            if line.qty_delivered_method == "stock_move":
+                outgoing_moves, incoming_moves = line._get_outgoing_incoming_moves()
+                for move in outgoing_moves.filtered(lambda m: m.is_exchange_move and m.state == "done"):
+                    line.qty_delivered -= move.product_uom._compute_quantity(
+                        move.quantity, line.product_uom, rounding_method="HALF-UP"
+                    )
+                for move in incoming_moves.filtered(lambda m: m.is_exchange_move and m.state == "done"):
+                    line.qty_delivered += move.product_uom._compute_quantity(
+                        move.quantity, line.product_uom, rounding_method="HALF-UP"
+                    )
+
     @api.depends("order_id.state", "qty_delivered", "product_uom_qty", "order_id.force_delivery_status")
     def _compute_delivery_status(self):
         precision = self.env["decimal.precision"].precision_get("Product Unit of Measure")
