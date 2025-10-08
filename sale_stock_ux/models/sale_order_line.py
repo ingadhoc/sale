@@ -152,7 +152,8 @@ class SaleOrderLine(models.Model):
                         r.state == "done" and not r.scrapped and r.location_dest_id.usage != "customer" and r.to_refund
                     )
                 )
-                for move in return_moves:
+                # In multi-step deliveries, we need to avoid counting the same return multiple times
+                for move in return_moves.filtered(lambda m: m.location_id.usage == "customer"):
                     quantity_returned += move.product_uom._compute_quantity(
                         move.product_uom_qty, order_line.product_uom
                     )
