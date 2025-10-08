@@ -46,7 +46,7 @@
 
                 <filter name="this_year" string="This year" domain="[('date_order', '&gt;=', context_today().strftime('%Y-01-01'))]"/>
 
-                <group expand="1" string="Group By...">
+                <group>
                     <filter string="Partner" name="partner" context="{'group_by':'partner_id'}"/>
                     <filter string="Product" name="product" context="{'group_by':'product_id'}"/>
                     <filter string="Product Category" name="category_product" context="{'group_by':'product_category_id'}"/>
@@ -72,7 +72,7 @@
         <field name="binding_type">action</field>
         <field name="binding_view_types">form</field>
         <field name="context">{'search_default_partner_id': active_ids or [active_id]}</field>
-        <field name="groups_id" eval="[(6,0,[ref('sales_team.group_sale_salesman')])]" />
+        <field name="group_ids" eval="[(6,0,[ref('sales_team.group_sale_salesman')])]" />
     </record>
 
 </odoo>
