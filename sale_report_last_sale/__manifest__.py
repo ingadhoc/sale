@@ -3,7 +3,7 @@
 {
     "name": "Sale Report Last Sale",
     "summary": "Adds a report view to show how many days " "have passed since a partner ordered a product",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "depends": [
         "sale",
     ],
@@ -15,5 +15,5 @@
         "security/ir_rule.xml",
     ],
     "category": "Sale",
-    "installable": False,
+    "installable": True,
 }
