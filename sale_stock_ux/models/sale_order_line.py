@@ -65,7 +65,6 @@ class SaleOrderLine(models.Model):
             if line.order_id.force_delivery_status:
                 line.delivery_status = line.order_id.force_delivery_status
                 continue
-
             if float_compare(line.all_qty_delivered, line.product_uom_qty, precision_digits=precision) == -1:
                 delivery_status = "to deliver"
             elif float_compare(line.all_qty_delivered, line.product_uom_qty, precision_digits=precision) >= 0:
@@ -149,7 +148,10 @@ class SaleOrderLine(models.Model):
             if order_line.qty_delivered_method == "stock_move":
                 return_moves = order_line.mapped("move_ids").filtered(
                     lambda r: (
-                        r.state == "done" and not r.scrapped and r.location_dest_id.usage != "customer" and r.to_refund
+                        r.state == "done"
+                        and not r.scrapped
+                        and r.location_dest_id.usage != "customer"
+                        and not r.to_redeliver
                     )
                 )
                 # In multi-step deliveries, we need to avoid counting the same return multiple times
@@ -191,8 +193,8 @@ class SaleOrderLine(models.Model):
                             continue
                         filters = {
                             "outgoing_moves": lambda m: m.location_dest_id.usage == "customer"
-                            and (not m.origin_returned_move_id or (m.origin_returned_move_id and m.to_refund)),
-                            "incoming_moves": lambda m: m.location_dest_id.usage != "customer" and m.to_refund,
+                            and (not m.origin_returned_move_id or (m.origin_returned_move_id and not m.to_redeliver)),
+                            "incoming_moves": lambda m: m.location_dest_id.usage != "customer" and not m.to_redeliver,
                         }
                         order_qty = order_line.product_uom._compute_quantity(
                             order_line.product_uom_qty, relevant_bom.product_uom_id
