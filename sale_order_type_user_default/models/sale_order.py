@@ -11,7 +11,7 @@ class SaleOrder(models.Model):
     def _compute_sale_type_id(self):
         sales = self.env["sale.order"]
         user_type = self.env.user.default_sale_order_type_id
-        if user_type and isinstance(self.id, models.NewId):
+        if user_type and isinstance(self.id, api.NewId):
             for rec in self:
                 # use default user type if:
                 # 1. type dont have company or is same as sale order
