@@ -40,7 +40,7 @@ class SaleOrder(models.Model):
     # pop up of exceptions
     def _popup_exceptions(self):
         action = super(SaleOrder, self)._popup_exceptions()
-        ctx = self._context.copy()
+        ctx = self.env.context.copy()
         ctx.update(
             {
                 "active_id": self.ids[0],

@@ -14,6 +14,6 @@ class BaseExceptionMethod(models.AbstractModel):
         will be used.
         """
         domain = super()._rule_domain()
-        if self._context.get("print_exceptions", False) and self._name in ["sale.order", "sale.order.line"]:
+        if self.env.context.get("print_exceptions", False) and self._name in ["sale.order", "sale.order.line"]:
             domain += [("block_print", "=", True)]
         return domain
