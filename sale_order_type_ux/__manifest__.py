@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Sale Order Type Ux",
-    "version": "18.0.1.3.0",
+    "version": "19.0.1.0.0",
     "category": "Accounting",
     "sequence": 14,
     "author": "ADHOC SA",
@@ -28,20 +28,16 @@
     "images": [],
     "depends": [
         "sale_order_type",
-        "account_multicompany_ux",
     ],
     "data": [
         "data/sale_order_type.xml",
         "security/ir.model.access.csv",
         "views/sale_order_type_views.xml",
         "views/sale_order_views.xml",
-        "views/account_move_views.xml",
     ],
     "demo": [],
-    "installable": False,
+    "installable": True,
     "auto_install": False,
     "application": False,
     "post_init_hook": "post_init_hook",
-    "post_load": "monkey_patches",
-    "uninstall_hook": "uninstall_hook",
 }

@@ -27,8 +27,6 @@ class SaleOrderTypology(models.Model):
         "automatically detected or setted on the partner",
     )
 
-    journal_id = fields.Many2one(domain="[('type', '=', 'sale')]", check_company=False)
-
     warehouse_id = fields.Many2one(
         help="This field will not be considered for sales coming from eCommerce. You should configure it directly in Settings > Website."
     )
