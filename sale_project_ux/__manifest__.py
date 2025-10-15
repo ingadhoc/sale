@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Sale Project UX",
-    "version": "18.0.1.1.0",
+    "version": "19.0.1.0.0",
     "category": "Sales",
     "sequence": 14,
     "summary": "",
@@ -34,7 +34,7 @@
     ],
     "data": [],
     "demo": [],
-    "installable": False,
+    "installable": True,
     "auto_install": True,
     "application": False,
 }
