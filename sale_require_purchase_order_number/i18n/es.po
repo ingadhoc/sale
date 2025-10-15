@@ -3,15 +3,15 @@
 # 	* sale_require_purchase_order_number
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-14 16:42+0000\n"
-"PO-Revision-Date: 2024-11-14 20:34+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
+"POT-Creation-Date: 2025-10-15 14:27+0000\n"
+"PO-Revision-Date: 2025-10-15 14:27+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -32,6 +32,22 @@ msgstr ""
 #: model:ir.model,name:sale_require_purchase_order_number.model_res_partner
 msgid "Contact"
 msgstr "Contacto"
+
+#. module: sale_require_purchase_order_number
+#: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_account_move__display_name
+#: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_res_partner__display_name
+#: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_sale_order__display_name
+#: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_stock_picking__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: sale_require_purchase_order_number
+#: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_account_move__id
+#: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_res_partner__id
+#: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_sale_order__id
+#: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_stock_picking__id
+msgid "ID"
+msgstr ""
 
 #. module: sale_require_purchase_order_number
 #: model:ir.model.fields,help:sale_require_purchase_order_number.field_sale_order__require_purchase_order_number
