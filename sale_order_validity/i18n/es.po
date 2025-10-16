@@ -3,15 +3,15 @@
 # 	* sale_order_validity
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-14 16:41+0000\n"
-"PO-Revision-Date: 2024-11-14 19:10+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
+"POT-Creation-Date: 2025-10-15 16:25+0000\n"
+"PO-Revision-Date: 2025-10-15 16:25+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -35,9 +35,19 @@ msgstr ""
 "Validez del pedido, después de eso no podrá firmar y pagar el presupuesto."
 
 #. module: sale_order_validity
+#: model:ir.model.fields,field_description:sale_order_validity.field_sale_order__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: sale_order_validity
 #: model:ir.model.fields,field_description:sale_order_validity.field_sale_order__validity_date
 msgid "Expiration"
 msgstr "Vencimiento"
+
+#. module: sale_order_validity
+#: model:ir.model.fields,field_description:sale_order_validity.field_sale_order__id
+msgid "ID"
+msgstr ""
 
 #. module: sale_order_validity
 #: model:ir.model.fields,field_description:sale_order_validity.field_sale_order__date_order
@@ -58,14 +68,6 @@ msgstr "Pedido de venta"
 #: model:ir.model.fields,help:sale_order_validity.field_sale_order__validity_days
 msgid "Set days of validity for Sales Order"
 msgstr "Establece los días de validez del pedido de venta"
-
-#. module: sale_order_validity
-#. odoo-python
-#: code:addons/sale_order_validity/models/sale_order.py:0
-msgid ""
-"The validity date (%s) exceeds the maximum allowed (%s) based on the "
-"company's quotation settings (%i days)."
-msgstr ""
 
 #. module: sale_order_validity
 #: model_terms:ir.ui.view,arch_db:sale_order_validity.view_order_form_validity

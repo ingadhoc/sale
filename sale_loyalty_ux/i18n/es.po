@@ -3,15 +3,14 @@
 # 	* sale_loyalty_ux
 # 
 # Translators:
-# Lara Valeri, 2025
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-03 04:50+0000\n"
-"PO-Revision-Date: 2024-11-14 20:32+0000\n"
+"POT-Creation-Date: 2025-10-15 16:25+0000\n"
+"PO-Revision-Date: 2025-10-15 16:25+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -19,6 +18,18 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Language: es\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#. module: sale_loyalty_ux
+#: model:ir.model.fields,field_description:sale_loyalty_ux.field_loyalty_program__display_name
+#: model:ir.model.fields,field_description:sale_loyalty_ux.field_sale_order__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: sale_loyalty_ux
+#: model:ir.model.fields,field_description:sale_loyalty_ux.field_loyalty_program__id
+#: model:ir.model.fields,field_description:sale_loyalty_ux.field_sale_order__id
+msgid "ID"
+msgstr ""
 
 #. module: sale_loyalty_ux
 #: model:ir.model,name:sale_loyalty_ux.model_loyalty_program
