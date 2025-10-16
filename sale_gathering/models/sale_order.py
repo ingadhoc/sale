@@ -1,6 +1,5 @@
 from odoo import Command, _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
-from odoo.tools import float_compare
 
 
 class SaleOrder(models.Model):
@@ -67,11 +66,7 @@ class SaleOrder(models.Model):
     def _get_invoiceable_lines(self, final=False):
         """Return the invoiceable lines for order `self`."""
         invoiceable_lines = super()._get_invoiceable_lines(final=final)
-        product_precision_digits = self.env["decimal.precision"].precision_get("Product Price")
-        for rec in self.filtered(
-            lambda x: x.is_gathering
-            and float_compare(x.gathering_balance, 0.0, precision_digits=product_precision_digits) >= 0
-        ):
+        for rec in self.filtered(lambda x: x.is_gathering and x.gathering_balance >= -1.0):
             for line in rec.order_line.filtered("is_downpayment"):
                 if final:
                     invoiceable_lines |= line
