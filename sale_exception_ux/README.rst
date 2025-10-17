@@ -10,11 +10,12 @@
    :target: https://www.gnu.org/licenses/agpl
    :alt: License: AGPL-3
 
-=======================================
-Sale Exceptions Ingore Approve Directly
-=======================================
+=================
+Sale Exception UX
+=================
 
-When Ignoring a sale Exception, approve directly the sale order
+* Hides the exception field from the sale order list view by making it optional="hide"
+* Restricts the ability to ignore exceptions to only sales managers
 
 Installation
 ============
@@ -33,9 +34,10 @@ To configure this module, you need to:
 Usage
 =====
 
-To use this module, you need to:
+To use this module:
 
-#. When Ignoring a sale Exception, approve directly the sale order.
+#. The exception field in the sale order list view will be hidden by default.
+#. Only users with sales manager or exception rule manager permissions can ignore exceptions.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot

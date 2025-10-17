@@ -18,8 +18,8 @@
 #
 ##############################################################################
 {
-    "name": "Sale Exceptions Ingore Approve Directly",
-    "version": "18.0.1.0.0",
+    "name": "Sale Exception UX",
+    "version": "19.0.1.0.0",
     "category": "Sale",
     "sequence": 14,
     "author": "ADHOC SA",
@@ -29,13 +29,10 @@
     "depends": [
         "sale_exception",
     ],
-    "external_dependencies": {},
     "data": [
-        "wizards/sale_exception_confirm_views.xml",
         "views/sale_order_views.xml",
     ],
-    "demo": [],
-    "installable": False,
+    "installable": True,
     "auto_install": False,
     "application": False,
 }
