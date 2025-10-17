@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-22 18:42+0000\n"
+"POT-Creation-Date: 2025-10-17 16:26+0000\n"
 "PO-Revision-Date: 2024-11-11 12:22+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -299,6 +299,16 @@ msgid "Invoiced"
 msgstr "Facturado"
 
 #. module: sale_ux
+#. odoo-python
+#: code:addons/sale_ux/models/sale_order.py:0
+msgid ""
+"It is forbidden to modify the following fields in a confirmed order:\n"
+"%s"
+msgstr ""
+"Está prohibido modificar los siguientes campos en un pedido confirmado:\n"
+"%s"
+
+#. module: sale_ux
 #: model:ir.model,name:sale_ux.model_account_move
 msgid "Journal Entry"
 msgstr "Asiento contable"
@@ -396,12 +406,6 @@ msgstr "Historial de ventas para %s"
 #: model:ir.model.fields,field_description:sale_ux.field_account_move__sale_order_ids
 msgid "Sale Order"
 msgstr "Pedido de venta"
-
-#. module: sale_ux
-#. odoo-python
-#: code:addons/sale_ux/models/sale_order.py:0
-msgid "It is forbidden to modify the following fields in a confirmed order:\n%s"
-msgstr "Está prohibido modificar los siguientes campos en un pedido confirmado:\n%s"
 
 #. module: sale_ux
 #: model:ir.actions.act_window,name:sale_ux.action_sale_order_line_usability_tree
