@@ -63,7 +63,7 @@ class ResPartner(models.Model):
                     if rec.env["sale.order.line"]._fields.get("quantity_returned"):
                         not_invoiced -= line.quantity_returned
                     price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
-                    taxes = line.tax_id.compute_all(
+                    taxes = line.tax_ids.compute_all(
                         price,
                         line.order_id.currency_id,
                         not_invoiced,

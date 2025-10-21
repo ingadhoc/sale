@@ -3,7 +3,7 @@
 # directory
 ##############################################################################
 from . import models
-from odoo import api, SUPERUSER_ID
+from odoo import api
 
 
 def _post_init_credit(env):
