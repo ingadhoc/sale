@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Sale Exception Credit Limit",
-    "version": "18.0.1.1.0",
+    "version": "19.0.1.0.0",
     "author": "ADHOC SA",
     "website": "www.adhoc.com.ar",
     "license": "AGPL-3",
@@ -33,6 +33,6 @@
         "views/res_config_settings_views.xml",
     ],
     "demo": ["demo/res_partner_demo.xml"],
-    "installable": False,
+    "installable": True,
     "post_init_hook": "_post_init_credit",
 }
