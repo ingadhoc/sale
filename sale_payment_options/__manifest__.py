@@ -20,7 +20,7 @@
 {
     "name": "Sale Payment Options",
     "summary": "Manage and display payment options on quotations and sales orders.",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "category": "Sales",
     "author": "ADHOC SA",
     "website": "www.adhoc.com.ar",
@@ -34,7 +34,7 @@
         "report/sale_order_payment_options_report.xml",
         "report/ir_actions_report.xml",
     ],
-    "installable": False,
+    "installable": True,
     "application": False,
     "auto_install": False,
     "assets": {
