@@ -23,6 +23,11 @@ class TestActionCancel(TransactionCase):
             }
         )
 
+        # Hack: Desactivar reglas de excepción si el módulo está instalado (para evitar error en runbot)
+        sale_exception_installed = self.env["sale.order"]._fields.get("ignore_exception")
+        if sale_exception_installed:
+            self.env["exception.rule"].search([("active", "=", True)]).write({"active": False})
+
         # Confirmar la orden de venta
         self.sale_order.action_confirm()
 
