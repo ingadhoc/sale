@@ -71,3 +71,6 @@ class SaleOrder(models.Model):
             raise UserError(
                 _('Only users with "%s / %s" can Set Delivered manually') % (group.category_id.name, group.name)
             )
+
+    def _get_protected_fields(self):
+        return super()._get_protected_fields() + ["picking_policy", "warehouse_id"]

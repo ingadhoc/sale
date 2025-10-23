@@ -302,10 +302,10 @@ msgstr "Facturado"
 #. odoo-python
 #: code:addons/sale_ux/models/sale_order.py:0
 msgid ""
-"It is forbidden to modify the following fields in a confirmed order:\n"
+"It is forbidden to modify the following fields in a locked order:\n"
 "%s"
 msgstr ""
-"Está prohibido modificar los siguientes campos en un pedido confirmado:\n"
+"Está prohibido modificar los siguientes campos en un pedido bloqueado:\n"
 "%s"
 
 #. module: sale_ux

@@ -136,6 +136,10 @@ class SaleOrder(models.Model):
             rec.withdrawn_amount = rec.gathering_amount_with_taxes - rec.gathering_balance
         (self - orders).withdrawn_amount = 0.0
 
+    def lock_sale_order(self):
+        res = super().lock_sale_order()
+        return res if not self.is_gathering else self.state == "sale"
+
     def _get_protected_fields(self):
         return super()._get_protected_fields() + ["is_gathering"]
 

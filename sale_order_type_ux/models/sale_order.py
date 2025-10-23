@@ -74,3 +74,6 @@ class SaleOrder(models.Model):
             if line.company_id != self.company_id:
                 line.tax_ids = line._get_computed_taxes()
         return invoices
+
+    def _get_protected_fields(self):
+        return super()._get_protected_fields() + ["type_id"]
