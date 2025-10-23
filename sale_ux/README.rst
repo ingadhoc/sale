@@ -47,6 +47,7 @@ Several Improvements to sales:
 #. When duplicating a Sale Order, a message is logged in the new order indicating the origin.
 #. Allows selecting default values to assign price lists by companies and by user with the field `specific_property_product_pricelist`. It also ensures that when creating a contact, if it is not defined, it will not be set for the company you are currently on (we consider this to be an Odoo bug).
 #. Add the field "Un-invoiced" (amount_uninvoiced) in the sale order to show the uninvoiced amount.
+#. Prevents writing in certain fields in blocked sales orders
 
 Installation
 ============
