@@ -296,17 +296,21 @@ class SaleOrder(models.Model):
         (self - remaining).write({"amount_to_invoice": 0.0})
         super(SaleOrder, remaining)._compute_amount_to_invoice()
 
+    def lock_sale_order(self):
+        self.ensure_one()
+        return self.locked
+
     def _get_protected_fields(self):
         """Give the fields that should not be modified on a SO.
         :returns: list of field names
         :rtype: list
         """
-        return ["partner_id"]
+        return ["partner_id", "partner_invoice_id", "partner_shipping_id", "pricelist_id"]
 
     def write(self, vals):
-        # Prevent writing on confirmed SOs.
+        # Prevent writing on locked SOs.
         protected_fields = self._get_protected_fields()
-        if any(order.state == "sale" for order in self) and any(f in vals for f in protected_fields):
+        if any(order.lock_sale_order() for order in self) and any(f in vals for f in protected_fields):
             protected_fields_modified = list(set(protected_fields) & set(vals.keys()))
             fields = (
                 self.env["ir.model.fields"]
@@ -316,7 +320,7 @@ class SaleOrder(models.Model):
             if fields:
                 raise UserError(
                     _(
-                        "It is forbidden to modify the following fields in a confirmed order:\n%s",
+                        "It is forbidden to modify the following fields in a locked order:\n%s",
                         "\n".join(fields.mapped("field_description")),
                     )
                 )
