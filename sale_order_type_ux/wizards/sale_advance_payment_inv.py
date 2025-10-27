@@ -43,4 +43,5 @@ class SaleAdvancePaymentInv(models.TransientModel):
                     }
                 )
                 acc.change_company()
+                res.partner_bank_id = company.partner_id.bank_ids[:1].id
         return res
