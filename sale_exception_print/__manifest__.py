@@ -27,6 +27,11 @@
         "sale_exception",
     ],
     "data": ["views/exception_rule_views.xml"],
+    "assets": {
+        "web.assets_backend": [
+            "sale_exception_print/static/src/js/sale_exception_print.js",
+        ],
+    },
     "demo": [],
     "installable": True,
     "auto_install": False,
