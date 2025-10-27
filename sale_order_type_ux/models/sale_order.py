@@ -34,7 +34,6 @@ class SaleOrder(models.Model):
         # self = self.with_company(company.id)
         journal = self.env["account.journal"].browse(res.get("journal_id")) if res.get("journal_id") else False
         if company != self.company_id:
-            res["partner_bank_id"] = company.partner_id.bank_ids[:1].id
             # agregamos para que recompute term y cond si la nueva compañia los tiene por defecto
             if "narration" in res and not res["narration"]:
                 del res["narration"]
@@ -75,6 +74,7 @@ class SaleOrder(models.Model):
                     }
                 )
                 acc.change_company()
+                invoice.partner_bank_id = company.partner_id.bank_ids[:1].id
         return invoices
 
     def _get_protected_fields(self):
