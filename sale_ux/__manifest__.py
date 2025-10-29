@@ -31,6 +31,7 @@
         "sale",
         "account_ux",
         "sale_management",
+        "account_multicompany_ux",
     ],
     "data": [
         "wizards/sale_global_discount_wizard_views.xml",
