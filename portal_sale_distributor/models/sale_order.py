@@ -11,7 +11,10 @@ class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     activity_date_deadline = fields.Date(
-        groups="base.group_user," "portal_sale_distributor.group_portal_backend_distributor"
+        groups="base.group_user,portal_sale_distributor.group_portal_backend_distributor"
+    )
+    message_partner_ids = fields.Many2many(
+        groups="base.group_user,portal_sale_distributor.group_portal_backend_distributor"
     )
 
     def action_confirm_distributor(self):
@@ -29,14 +32,6 @@ class SaleOrder(models.Model):
             )
             self = self.sudo()
             return self.action_confirm()
-
-    @api.onchange("partner_id")
-    def _onchange_partner_id_warning(self):
-        """desactivamos warning para portal distributor"""
-        if self.env.user.has_group("portal_sale_distributor.group_portal_backend_distributor"):
-            return {}
-        else:
-            return super()._onchange_partner_id_warning()
 
     @api.model
     def _get_view(self, view_id=None, view_type="form", **options):
@@ -58,7 +53,7 @@ class SaleOrder(models.Model):
                 + arch.xpath("//field[@name='discount1']")
                 + arch.xpath("//field[@name='discount2']")
                 + arch.xpath("//field[@name='discount3']")
-                + arch.xpath("//field[@name='tax_id']")
+                + arch.xpath("//field[@name='tax_ids']")
                 + arch.xpath("//field[@name='validity_days']")
             )
             for node in readonly_fields:

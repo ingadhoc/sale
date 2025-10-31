@@ -11,3 +11,4 @@ from . import res_config_settings
 from . import product_document
 from . import partner
 from . import product_pricelist_item
+from . import quotation_document
