@@ -92,10 +92,13 @@
             <button name="action_open_discount_wizard" position="attributes">
                 <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
             </button>
-            <xpath expr="//field[@name='order_line']/list//field[@name='product_uom'][2]" position="attributes">
-                <attribute name="groups">uom.group_uom,portal_sale_distributor.group_portal_backend_distributor</attribute>
-            </xpath>
             <xpath expr="//field[@name='order_line']/list//field[@name='customer_lead']" position="attributes">
+                <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
+            </xpath>
+            <xpath expr="//page[@name='pdf_quote_builder']" position="inside">
+                <field name="quotation_document_ids" invisible="1"/>
+            </xpath>
+            <xpath expr="//page[@name='pdf_quote_builder']" position="attributes">
                 <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
             </xpath>
         </field>
