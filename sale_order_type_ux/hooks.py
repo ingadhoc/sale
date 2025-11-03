@@ -7,8 +7,16 @@ from odoo.addons.sale_order_type.models.account_move import AccountMove
 
 def post_init_hook(env):
     default_sale_order_type = env.ref("sale_order_type_ux.default_sale_order_type")
-    sale_orders = env["sale.order"].search([("state", "in", ["sale", "done"])])
-    sale_orders.write({"type_id": default_sale_order_type.id})
+    # usamos SQL directo para bypasear validaciones de Python (ej: sale_ux locked constraint)
+    env.cr.execute(
+        """
+        UPDATE sale_order
+        SET type_id = %s
+        WHERE state IN ('sale', 'done')
+          AND type_id IS NULL
+    """,
+        (default_sale_order_type.id,),
+    )
 
 
 def _revert_method(cls, name):
