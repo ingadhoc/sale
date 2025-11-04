@@ -9,9 +9,9 @@ class ProductionLot(models.Model):
     _inherit = "stock.lot"
 
     def _compute_display_name(self):
-        if not self._context.get("from_sale_line", False) or not self._context.get("warehouse_id", False):
+        if not self.env.context.get("from_sale_line", False) or not self.env.context.get("warehouse_id", False):
             return super()._compute_display_name()
-        location = self.env["stock.warehouse"].browse(self._context.get("warehouse_id", [])).lot_stock_id
+        location = self.env["stock.warehouse"].browse(self.env.context.get("warehouse_id", [])).lot_stock_id
         for rec in self:
             quants = rec.quant_ids.filtered(
                 lambda x: x.location_id == location or x.location_id.location_id == location
