@@ -11,7 +11,7 @@ class TaskStopRunningTimersConfirmation(models.TransientModel):
 
     @api.model
     def default_sale_order_line_ids(self):
-        return self.env["sale.order"].browse(self._context.get("active_ids", [])).mapped("order_line")
+        return self.env["sale.order"].browse(self.env.context.get("active_ids", [])).mapped("order_line")
 
     def action_confirm(self):
         self.sale_order_line_ids.filtered(lambda x: x.delivery_status == "to deliver").with_context(
