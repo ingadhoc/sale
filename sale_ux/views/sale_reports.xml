@@ -16,7 +16,7 @@
         </xpath>
         <xpath expr="//td[@name='td_option_name']" position="before">
             <td t-if="doc.env['ir.config_parameter'].sudo().get_param('sale_ux.show_product_image_on_report') and any(x.image_256 for x in doc.sale_order_option_ids.mapped('product_id'))" name="td_image" class="text-center">
-                <img t-if="doc.env['ir.config_parameter'].sudo().get_param('sale_ux.show_product_image_on_report') and line.product_id.image_256" t-att-src="image_data_uri(line.product_id.image_256)" style="max-width: 50px; max-height: 50px;"/>
+                <img t-if="doc.env['ir.config_parameter'].sudo().get_param('sale_ux.show_product_image_on_report') and line.product_id.image_256" t-att-src="image_data_uri(option.product_id.image_256)" style="max-width: 50px; max-height: 50px;"/>
             </td>
         </xpath>
     </template>
