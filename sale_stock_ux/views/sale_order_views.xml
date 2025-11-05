@@ -35,10 +35,6 @@
                 <field name="force_delivery_status" groups="base.group_no_one"/>
             </group>
 
-            <field name="picking_policy" position="after">
-                <field name="procurement_group_id" groups="base.group_no_one"/>
-            </field>
-
             <xpath expr="//page/field[@name='order_line']/list/field[@name='product_uom_qty']" position="after">
                 <field name="total_reserved_quantity" column_invisible="True"/>
                 <field name="stock_by_location" force_save="1" column_invisible="1"/>

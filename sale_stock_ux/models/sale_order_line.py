@@ -157,7 +157,7 @@ class SaleOrderLine(models.Model):
     @api.depends(
         "qty_delivered_method",
         "move_ids.state",
-        "move_ids.scrapped",
+        "move_ids.scrap_id",
         "move_ids.product_uom_qty",
         "move_ids.product_uom",
     )
@@ -168,13 +168,13 @@ class SaleOrderLine(models.Model):
             if order_line.qty_delivered_method == "stock_move":
                 return_moves = order_line.mapped("move_ids").filtered(
                     lambda r: (
-                        r.state == "done" and not r.scrapped and r.location_dest_id.usage != "customer" and r.to_refund
+                        r.state == "done" and not r.scrap_id and r.location_dest_id.usage != "customer" and r.to_refund
                     )
                 )
                 # In multi-step deliveries, we need to avoid counting the same return multiple times
                 for move in return_moves.filtered(lambda m: m.location_id.usage == "customer"):
                     quantity_returned += move.product_uom._compute_quantity(
-                        move.product_uom_qty, order_line.product_uom
+                        move.product_uom_qty, order_line.product_uom_id
                     )
                 bom_enable = "bom_ids" in self.env["product.template"]._fields
                 if bom_enable:
@@ -303,10 +303,10 @@ class SaleOrderLine(models.Model):
                 free_qty = product.free_qty
 
                 if free_qty > 0:
-                    if line.product_uom and line.product_uom != line.product_id.uom_id:
-                        free_qty = line.product_id.uom_id._compute_quantity(free_qty, line.product_uom)
+                    if line.product_uom_id and line.product_uom_id != line.product_id.uom_id:
+                        free_qty = line.product_id.uom_id._compute_quantity(free_qty, line.uom_id)
 
-                    stock_lines.append(f"{location_name}: {free_qty:.2f} {line.product_uom.name}")
+                    stock_lines.append(f"{location_name}: {free_qty:.2f} {line.product_uom_id.name}")
 
             line.stock_by_location = "\n".join(stock_lines) if stock_lines else ""
 

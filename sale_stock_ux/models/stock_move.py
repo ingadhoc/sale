@@ -9,7 +9,7 @@ class StockMove(models.Model):
     _inherit = "stock.move"
 
     sale_id = fields.Many2one(
-        related="group_id.sale_id",
+        related="sale_line_id.order_id",
     )
     is_exchange_move = fields.Boolean()
 
@@ -42,7 +42,7 @@ class StockMove(models.Model):
         """
         res = super()._get_new_picking_values()
         values = {}
-        sale = self.mapped("group_id.sale_id")
+        sale = self.mapped("sale_line_id.order_id")
         propagate_internal_notes = (
             self.env["ir.config_parameter"].sudo().get_param("sale.propagate_internal_notes") == "True"
         )
