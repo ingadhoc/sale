@@ -41,7 +41,7 @@ class SaleOrder(models.Model):
         for order in orders_gathering:
             total_downpayment_amount = 0
             for line in order.order_line.filtered("is_downpayment"):
-                total_downpayment_amount += line.tax_id.with_context(round=False).compute_all(
+                total_downpayment_amount += line.tax_ids.with_context(round=False).compute_all(
                     line.price_unit,
                     currency=line.currency_id,
                     quantity=1,
@@ -52,7 +52,7 @@ class SaleOrder(models.Model):
             total_amount_to_invoice_invoiced = 0
             for line in order.order_line.filtered(lambda x: not x.is_downpayment):
                 price_reduce = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
-                total_amount_to_invoice_invoiced += line.tax_id.compute_all(
+                total_amount_to_invoice_invoiced += line.tax_ids.compute_all(
                     price_reduce,
                     currency=line.currency_id,
                     quantity=line.qty_to_invoice + line.qty_invoiced,
@@ -111,7 +111,7 @@ class SaleOrder(models.Model):
             price_subtotal_with_taxes = 0
             for line in order.order_line.filtered(lambda x: x.initial_qty_gathered > 0):
                 price_reduce = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
-                subtotal = line.tax_id.compute_all(
+                subtotal = line.tax_ids.compute_all(
                     price_reduce,
                     currency=line.currency_id,
                     quantity=line.initial_qty_gathered,
@@ -185,14 +185,14 @@ class SaleOrder(models.Model):
     def _create_account_invoices(self, invoice_vals_list, final):
         """Actualizacion de importes de acopio cuando facturas involucra acopios"""
         invoices = super()._create_account_invoices(invoice_vals_list, final)
-        if self._context.get("invoice_gathering"):
+        if self.env.context.get("invoice_gathering"):
             for invoice in invoices:
                 downpayment_lines = invoice.invoice_line_ids.filtered("is_downpayment")
                 if not downpayment_lines:
                     continue
 
                 # Si viene por contexto uso esa factura (es porque se hizo el split FC + NC) y sino uso invoices
-                gathering_invoice = self._context.get("gathering_invoice", invoice)
+                gathering_invoice = self.env.context.get("gathering_invoice", invoice)
                 regular_lines = gathering_invoice.invoice_line_ids.filtered(
                     lambda l: not l.is_downpayment and l.display_type == "product"
                 )
@@ -202,13 +202,13 @@ class SaleOrder(models.Model):
                 tax_groups = {}
                 for line in regular_lines:
                     if line.sale_line_ids:
-                        tax_key = frozenset(line.sale_line_ids.tax_id.ids)
+                        tax_key = frozenset(line.sale_line_ids.tax_ids.ids)
                         tax_groups.setdefault(tax_key, 0.0)
                         tax_groups[tax_key] += line.price_subtotal
 
                 for downpayment_line in downpayment_lines:
                     if downpayment_line.sale_line_ids:
-                        downpayment_tax_key = frozenset(downpayment_line.sale_line_ids.tax_id.ids)
+                        downpayment_tax_key = frozenset(downpayment_line.sale_line_ids.tax_ids.ids)
                         amount_for_this_tax_group = tax_groups.get(downpayment_tax_key, 0.0)
                         if amount_for_this_tax_group < 0.0:
                             sign = -1.0

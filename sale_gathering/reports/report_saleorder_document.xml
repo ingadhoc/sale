@@ -16,7 +16,7 @@
             <attribute name="style"></attribute>
         </xpath>
 
-        <xpath expr="//td[@name='td_priceunit']" position="before">
+        <xpath expr="//td[@name='td_product_priceunit']" position="before">
             <td class="text-end" t-if="doc.is_gathering and doc.state not in ['draft','sent']">
                 <span t-if="line.initial_qty_gathered &gt; 0">
                     <t t-esc="line.initial_qty_gathered"/>
@@ -30,7 +30,7 @@
             </td>
         </xpath>
 
-        <xpath expr="//td[@name='td_section_subtotal']" position="attributes">
+        <xpath expr="//td[@name='td_product_subtotal']" position="attributes">
             <attribute name="t-if">not doc.is_gathering</attribute>
         </xpath>
 
