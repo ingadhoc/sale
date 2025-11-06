@@ -36,14 +36,15 @@ class SaleOrder(models.Model):
     def write(self, values):
         res = super().write(values)
         orders_to_automate = self.filtered(
-            lambda o: o.is_gathering
-            and o.type_id
-            and (o.type_id.invoicing_atomation != "none" or o.type_id.picking_atomation != "none")
+            lambda o: o.is_gathering and o.type_id and o.type_id.picking_atomation != "none"
         )
         if orders_to_automate and self._has_quantity_changes(values):
             orders_picking_automation = orders_to_automate.filtered(lambda o: o.type_id.picking_atomation != "none")
             orders_picking_automation.run_picking_automation()
-            (orders_to_automate - orders_picking_automation).run_invoicing_atomation()
+            # no corremos la automatización de facturacion porque en gathering nos parece muy invasivo, guardar termina
+            # facturando automáticammente. Además deberíamos arreglar que no facture el gathering ni bien
+            # se confirma la venta. La idea es recomendar que para gathering con factura automática se use segun entrega
+            # (orders_to_automate - orders_picking_automation).run_invoicing_atomation()
 
         return res
 
@@ -65,7 +66,7 @@ class SaleOrder(models.Model):
                     )
                 )
                 advance_payment_wizard._check_amount_is_positive()
-                invoices = advance_payment_wizard.with_context(advance_payment=True)._create_invoices(order)
+                invoices = advance_payment_wizard._create_invoices(order)
                 if invoices and order.type_id.invoicing_atomation == "validate_invoice":
                     try:
                         invoices.sudo().action_post()

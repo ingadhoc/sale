@@ -67,7 +67,9 @@ class SaleOrderLine(models.Model):
                 and not any(
                     invoice._is_downpayment()
                     for invoice in x.order_id.invoice_ids
-                    if invoice.state not in ("cancel", "draft")
+                    if invoice.move_type == "out_invoice"
+                    and invoice.state not in ("cancel", "draft")
+                    and invoice.payment_state in ("paid", "in_payment")
                 )
             )
         ):
