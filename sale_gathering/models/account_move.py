@@ -12,14 +12,14 @@ class AccountMove(models.Model):
         sale_lines_data = []
         for move_line in down_payment_lines:
             for sale_line in move_line.sale_line_ids:
-                sale_lines_data.append((sale_line, sale_line.tax_id, sale_line.price_unit))
+                sale_lines_data.append((sale_line, sale_line.tax_ids.ids, sale_line.price_unit))
 
         res = super().action_post()
 
-        for sale_line, tax_id, price_unit in sale_lines_data:
+        for sale_line, tax_ids, price_unit in sale_lines_data:
             sale_line.write(
                 {
-                    "tax_id": tax_id,
+                    "tax_ids": [(6, 0, tax_ids)],
                     "price_unit": price_unit,
                 }
             )
