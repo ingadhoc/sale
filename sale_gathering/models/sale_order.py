@@ -89,6 +89,10 @@ class SaleOrder(models.Model):
 
     def _action_confirm(self):
         for order in self.filtered("is_gathering"):
+            if not order.amount_total:
+                raise ValidationError(
+                    _("You cannot confirm a gathering order (%s) with a total amount of 0.") % order.name
+                )
             lines_commands = []
             for line in order.order_line.filtered(lambda l: l.product_uom_qty > 0):
                 lines_commands.append(
@@ -147,7 +151,9 @@ class SaleOrder(models.Model):
     def _create_invoices(self, grouped=False, final=False, date=None):
         if self.env.context.get("invoice_gathering"):
             split_invoice_and_credit_note = str2bool(
-                self.env["ir.config_parameter"].sudo().get_param("sale_gathering.split_invoice_and_credit_note", "True")
+                self.env["ir.config_parameter"]
+                .sudo()
+                .get_param("sale_gathering.split_invoice_and_credit_note", "False")
             )
             if split_invoice_and_credit_note:
                 downpayment_invoice = super()._create_invoices(final=True, grouped=grouped, date=date)
