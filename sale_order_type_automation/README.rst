@@ -17,6 +17,7 @@ Sale Order Type Automation
 #. Add to sale order type this options to be executed automatically on sale order confirmation and picking confimation:
 
     * Create / Validate Invoice
+      * New domain to filter invoices for automatic validation. So, if this filter does NOT find the invoices, they stay in drafts status.
     * Create / Validate Payment
     * Confirm picking and products transfer (only on sale order confirmation)
 
