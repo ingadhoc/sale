@@ -15,6 +15,7 @@
                 <group string="Automations">
                     <field name="picking_atomation"/>
                     <field name="invoicing_atomation"/>
+                    <field name="invoice_validate_domain" widget="domain" options="{'model': 'account.move', 'allow_expressions': True, 'no_create': True, 'in_dialog': False, 'foldable': True}" invisible="invoicing_atomation != 'validate_invoice'"/>
                     <field name="payment_atomation"/>
                     <field name="payment_journal_id" required="payment_atomation != 'none'"/>
                     <field name="set_done_on_confirmation" invisible="auto_done_setting"/>

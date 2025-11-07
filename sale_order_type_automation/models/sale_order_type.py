@@ -95,6 +95,11 @@ class SaleOrderType(models.Model):
         compute="_compute_auto_done_setting",
     )
 
+    invoice_validate_domain = fields.Char(
+        string="Invoice Validation Domain",
+        help="Domain to filter invoices for automatic validation. So, if this filter does NOT find the invoices, they stay in drafts status.",
+    )
+
     @api.depends("payment_atomation")
     def _compute_payment_journal_id(self):
         for rec in self.filtered(lambda x: x.payment_atomation == "none"):
