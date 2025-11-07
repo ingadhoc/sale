@@ -2,8 +2,13 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import _, models
+from odoo import _, fields, models
 from odoo.exceptions import UserError
+from odoo.tools.safe_eval import (
+    datetime as safe_eval_datetime,
+    dateutil as safe_eval_dateutil,
+    safe_eval,
+)
 
 
 class SaleOrder(models.Model):
@@ -31,8 +36,20 @@ class SaleOrder(models.Model):
                 if self._context.get("commit_invoice_automation"):
                     rec.env.cr.commit()
                 try:
-                    invoices.sudo().action_post()
-                    for invoice in invoices:  # to avoid "expected singleton" error
+                    if rec.type_id.invoice_validate_domain:
+                        domain = safe_eval(
+                            rec.type_id.invoice_validate_domain,
+                            {
+                                "datetime": safe_eval_datetime,
+                                "context_today": lambda: fields.Date.context_today(self),
+                                "relativedelta": safe_eval_dateutil.relativedelta.relativedelta,
+                            },
+                        )
+                        invoices_to_validate = invoices.filtered_domain(domain)
+                    else:
+                        invoices_to_validate = invoices
+                    invoices_to_validate.sudo().action_post()
+                    for invoice in invoices_to_validate:  # to avoid "expected singleton" error
                         if (
                             invoice.name
                             and not invoice.line_ids.mapped("move_name")
