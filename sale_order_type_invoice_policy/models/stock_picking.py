@@ -34,9 +34,9 @@ class StockPicking(models.Model):
         prepaid_unpaid = self.sudo().filtered(
             lambda x: x.sale_id.type_id.invoice_policy == "prepaid" and not x._check_sale_paid()
         )
-        if prepaid_unpaid and self._context.get("prepaid_raise"):
+        if prepaid_unpaid and self.env.context.get("prepaid_raise"):
             raise UserError(_(msg))
-        elif prepaid_unpaid and not self._context.get("prepaid_raise"):
+        elif prepaid_unpaid and not self.env.context.get("prepaid_raise"):
             self -= prepaid_unpaid
             # do not call super if not self because it raise an error
             if not self:
