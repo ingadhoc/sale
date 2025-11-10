@@ -15,7 +15,7 @@
         <field name="name">Service on demand</field>
         <field name="product_id" ref="product.product_product_1"/>
         <field name="product_uom_qty">24</field>
-        <field name="product_uom" ref="uom.product_uom_hour"/>
+        <field name="product_uom_id" ref="uom.product_uom_hour"/>
         <field name="price_unit">75.00</field>
     </record>
 
@@ -24,7 +24,7 @@
         <field name="name">On Site Assistance</field>
         <field name="product_id" ref="product.product_product_2"/>
         <field name="product_uom_qty">30</field>
-        <field name="product_uom" ref="uom.product_uom_hour"/>
+        <field name="product_uom_id" ref="uom.product_uom_hour"/>
         <field name="price_unit">38.25</field>
     </record>
 
@@ -43,7 +43,7 @@
         <field name="name">Service on demand</field>
         <field name="product_id" ref="product.product_product_1"/>
         <field name="product_uom_qty">24</field>
-        <field name="product_uom" ref="uom.product_uom_hour"/>
+        <field name="product_uom_id" ref="uom.product_uom_hour"/>
         <field name="price_unit">75.00</field>
     </record>
 
@@ -52,7 +52,7 @@
         <field name="name">On Site Assistance</field>
         <field name="product_id" ref="product.product_product_2"/>
         <field name="product_uom_qty">30</field>
-        <field name="product_uom" ref="uom.product_uom_hour"/>
+        <field name="product_uom_id" ref="uom.product_uom_hour"/>
         <field name="price_unit">38.25</field>
     </record>
 
