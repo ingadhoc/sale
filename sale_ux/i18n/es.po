@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-29 16:03+0000\n"
+"POT-Creation-Date: 2025-11-12 14:32+0000\n"
 "PO-Revision-Date: 2025-10-29 16:03+0000\n"
 "Last-Translator: ADHOC - Bot <transbot@adhoc.com.ar>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -180,11 +180,6 @@ msgid "Deduct Price-Included Taxes"
 msgstr "Deducir impuestos incluidos en el precio"
 
 #. module: sale_ux
-#: model:ir.model,name:sale_ux.model_ir_default
-msgid "Default Values"
-msgstr "Valores por defecto"
-
-#. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_portal_content
 msgid "Delivery Date:"
 msgstr "Fecha de Entrega:"
@@ -199,7 +194,6 @@ msgstr "Descuento"
 #: model:ir.model.fields,field_description:sale_ux.field_account_fiscal_position__display_name
 #: model:ir.model.fields,field_description:sale_ux.field_account_move__display_name
 #: model:ir.model.fields,field_description:sale_ux.field_crm_team__display_name
-#: model:ir.model.fields,field_description:sale_ux.field_ir_default__display_name
 #: model:ir.model.fields,field_description:sale_ux.field_product_product__display_name
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:sale_ux.field_res_partner__display_name
@@ -255,7 +249,6 @@ msgstr "Ocultar líneas canceladas"
 #: model:ir.model.fields,field_description:sale_ux.field_account_fiscal_position__id
 #: model:ir.model.fields,field_description:sale_ux.field_account_move__id
 #: model:ir.model.fields,field_description:sale_ux.field_crm_team__id
-#: model:ir.model.fields,field_description:sale_ux.field_ir_default__id
 #: model:ir.model.fields,field_description:sale_ux.field_product_product__id
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__id
 #: model:ir.model.fields,field_description:sale_ux.field_res_partner__id
