@@ -24,8 +24,8 @@ class StockReturnPicking(models.TransientModel):
         return result
 
     def action_create_exchanges(self):
-        if self.filtered(lambda m: m.product_return_moves.to_refund):
-            raise UserError(_("You cannot create exchanges for moves without refunds."))
+        if any(self.product_return_moves.mapped("to_refund")):
+            raise UserError(_("You cannot create exchanges for return lines marked to refund."))
         return super(StockReturnPicking, self.with_context(is_exchange_move=True)).action_create_exchanges()
 
 
