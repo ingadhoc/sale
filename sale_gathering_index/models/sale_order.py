@@ -47,7 +47,7 @@ class SaleOrder(models.Model):
                     product_currency=line.currency_id,
                 )
                 price_reduce = line_price * (1 - (line.discount or 0.0) / 100.0)
-                price_subtotal = line.tax_id.compute_all(
+                price_subtotal = line.tax_ids.compute_all(
                     price_reduce,
                     currency=line.currency_id,
                     quantity=line.initial_qty_gathered,
