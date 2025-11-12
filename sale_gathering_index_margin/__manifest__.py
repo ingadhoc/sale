@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Sale Gathering Index Margin",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "category": "Sales & Stock",
     "sequence": 14,
     "summary": "",
@@ -30,7 +30,7 @@
         "sale_gathering_index",
         "sale_margin",
     ],
-    "installable": False,
+    "installable": True,
     "auto_install": True,
     "application": False,
 }
