@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Sale Gathering Index",
-    "version": "18.0.1.4.0",
+    "version": "19.0.1.0.0",
     "category": "Sales & Stock",
     "sequence": 14,
     "summary": "",
@@ -30,7 +30,7 @@
     "depends": ["sale_gathering"],
     "data": ["views/sale_order_views.xml", "reports/report_saleorder_document_index.xml"],
     "demo": [],
-    "installable": False,
+    "installable": True,
     "auto_install": False,
     "application": False,
 }
