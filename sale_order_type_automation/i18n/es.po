@@ -3,15 +3,15 @@
 # 	* sale_order_type_automation
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025
+# ADHOC - Bot <transbot@adhoc.com.ar>, 2025
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-08 19:11+0000\n"
-"PO-Revision-Date: 2024-11-21 14:40+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
+"POT-Creation-Date: 2025-11-13 16:28+0000\n"
+"PO-Revision-Date: 2025-11-13 16:28+0000\n"
+"Last-Translator: ADHOC - Bot <transbot@adhoc.com.ar>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -56,9 +56,34 @@ msgid "Create Invoice"
 msgstr "Crear factura"
 
 #. module: sale_order_type_automation
+#: model:ir.model.fields,field_description:sale_order_type_automation.field_account_move__display_name
+#: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_advance_payment_inv__display_name
+#: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order__display_name
+#: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type__display_name
+#: model:ir.model.fields,field_description:sale_order_type_automation.field_stock_picking__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: sale_order_type_automation
+#: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type__invoice_validate_domain
+msgid ""
+"Domain to filter invoices for automatic validation. So, if this filter does "
+"NOT find the invoices, they stay in drafts status."
+msgstr ""
+
+#. module: sale_order_type_automation
 #: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type__sequence_id
 msgid "Entry Sequence"
 msgstr "Secuencia de entrada"
+
+#. module: sale_order_type_automation
+#: model:ir.model.fields,field_description:sale_order_type_automation.field_account_move__id
+#: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_advance_payment_inv__id
+#: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order__id
+#: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type__id
+#: model:ir.model.fields,field_description:sale_order_type_automation.field_stock_picking__id
+msgid "ID"
+msgstr ""
 
 #. module: sale_order_type_automation
 #. odoo-python
@@ -69,12 +94,12 @@ msgstr "Si elige una automatización de pagos, se requiere el Diario de pagos"
 #. module: sale_order_type_automation
 #: model:sale.order.type,name:sale_order_type_automation.sale_order_type_create_invoice_automation
 msgid "Invoice Automation (Create)"
-msgstr "Automatización de facturas (Crear)"
+msgstr ""
 
 #. module: sale_order_type_automation
 #: model:sale.order.type,name:sale_order_type_automation.sale_order_type_validate_invoice_automation
 msgid "Invoice Automation (Validate)"
-msgstr "Automatización de facturas (Validar)"
+msgstr ""
 
 #. module: sale_order_type_automation
 #: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type__invoice_company_id
@@ -87,6 +112,11 @@ msgstr "Empresa de facturas"
 msgid "Invoice Journal and Payment Journal must be of the same company"
 msgstr ""
 "El diario de facturas y el diario de pagos deben ser de la misma empresa"
+
+#. module: sale_order_type_automation
+#: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type__invoice_validate_domain
+msgid "Invoice Validation Domain"
+msgstr ""
 
 #. module: sale_order_type_automation
 #: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type__invoicing_atomation
@@ -155,7 +185,7 @@ msgstr "Diario de pago"
 #. module: sale_order_type_automation
 #: model:sale.order.type,name:sale_order_type_automation.sale_order_type_validate_picking_and_invoice_automation
 msgid "Picking And Invoice Automation (Validate)"
-msgstr "Automatización de entregas y facturas (Validar)"
+msgstr ""
 
 #. module: sale_order_type_automation
 #: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type__picking_atomation
@@ -165,7 +195,7 @@ msgstr "Automatización de entregas"
 #. module: sale_order_type_automation
 #: model:sale.order.type,name:sale_order_type_automation.sale_order_type_validate_picking_automation
 msgid "Picking Automation (Validate)"
-msgstr "Automatización de entregas (Validar)"
+msgstr ""
 
 #. module: sale_order_type_automation
 #: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type__picking_atomation
@@ -211,7 +241,7 @@ msgstr ""
 #. module: sale_order_type_automation
 #: model:ir.model,name:sale_order_type_automation.model_stock_picking
 msgid "Transfer"
-msgstr "Transferir"
+msgstr "Traslado"
 
 #. module: sale_order_type_automation
 #: model:ir.model,name:sale_order_type_automation.model_sale_order_type
