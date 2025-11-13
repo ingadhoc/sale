@@ -33,7 +33,7 @@ class SaleOrder(models.Model):
             if not invoices:
                 continue
             if rec.type_id.invoicing_atomation == "validate_invoice":
-                if self._context.get("commit_invoice_automation"):
+                if self.env.context.get("commit_invoice_automation"):
                     rec.env.cr.commit()
                 try:
                     if rec.type_id.invoice_validate_domain:
@@ -58,7 +58,7 @@ class SaleOrder(models.Model):
                             invoice.env.add_to_compute(invoice.line_ids._fields["move_name"], invoice.line_ids)
                 except Exception as error:
                     rec.env.cr.rollback()
-                    if not self._context.get("commit_invoice_automation"):
+                    if not self.env.context.get("commit_invoice_automation"):
                         raise error
                     message = _(
                         "We couldn't validate the automatically created "
@@ -78,7 +78,7 @@ class SaleOrder(models.Model):
             and x.product_id.expense_policy == "no"
         ):
             order_line.qty_delivered = order_line.product_uom_qty
-        for rec in self.filtered(lambda x: x.type_id.picking_atomation != "none" and x.procurement_group_id):
+        for rec in self.filtered(lambda x: x.type_id.picking_atomation != "none" and x.picking_ids):
             rec._process_pickings()
         return True
 
@@ -119,10 +119,4 @@ class SaleOrder(models.Model):
             self.sudo().run_invoicing_atomation()
             if self.type_id.set_done_on_confirmation:
                 self.action_lock()
-        return res
-
-    def _prepare_invoice(self):
-        res = super()._prepare_invoice()
-        if (self.type_id.payment_atomation != "none") and self.type_id.payment_journal_id:
-            res["pay_now_journal_id"] = self.type_id.payment_journal_id.id
         return res
