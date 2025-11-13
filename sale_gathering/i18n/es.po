@@ -74,11 +74,11 @@ msgstr ""
 #. odoo-python
 #: code:addons/sale_gathering/models/sale_order_line.py:0
 msgid ""
-"Before adding quantities, you need to create and confirm the gathering "
+"Before adding quantities, you need to create, confirm and pay the gathering "
 "invoice."
 msgstr ""
-"Antes de agregar cantidades, es necesario crear y confirmar la factura de "
-"acopio."
+"Antes de agregar cantidades, es necesario crear, confirmar y pagar la "
+"factura de acopio."
 
 #. module: sale_gathering
 #. odoo-python
