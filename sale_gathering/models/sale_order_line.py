@@ -73,7 +73,9 @@ class SaleOrderLine(models.Model):
                 )
             )
         ):
-            raise ValidationError(_("Before adding quantities, you need to create and confirm the gathering invoice."))
+            raise ValidationError(
+                _("Before adding quantities, you need to create, confirm and pay the gathering invoice.")
+            )
 
     def _compute_qty_to_deliver(self):
         super()._compute_qty_to_deliver()
