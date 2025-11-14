@@ -26,8 +26,7 @@ class SaleOrder(models.Model):
         "state",
         "order_line.product_id",
         "order_line.price_unit",
-        "order_line.qty_invoiced",
-        "order_line.qty_to_invoice",
+        "order_line.product_uom_qty",
         "order_line.is_downpayment",
         "order_line.quantity_returned",
     )
@@ -49,18 +48,18 @@ class SaleOrder(models.Model):
                     partner=line.order_id.partner_shipping_id,
                 )["total_included"]
 
-            total_amount_to_invoice_invoiced = 0
+            total_amount = 0
             for line in order.order_line.filtered(lambda x: not x.is_downpayment):
                 price_reduce = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
-                total_amount_to_invoice_invoiced += line.tax_id.compute_all(
+                total_amount += line.tax_id.compute_all(
                     price_reduce,
                     currency=line.currency_id,
-                    quantity=line.qty_to_invoice + line.qty_invoiced,
+                    quantity=line.product_uom_qty - line.quantity_returned,
                     product=line.product_id,
                     partner=line.order_id.partner_shipping_id,
                 )["total_included"]
 
-            order.gathering_balance = total_downpayment_amount - total_amount_to_invoice_invoiced
+            order.gathering_balance = total_downpayment_amount - total_amount
 
         (self - orders_gathering).gathering_balance = 0
 
