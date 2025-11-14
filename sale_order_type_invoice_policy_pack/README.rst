@@ -10,9 +10,9 @@
    :target: https://www.gnu.org/licenses/agpl
    :alt: License: AGPL-3
 
-=====================================
+===================================
 Sale Order Type Invoice Policy Pack
-=====================================
+===================================
 
 This module adjusts the invoicing policy for product packs when the sale order type has a "delivery" policy.
 

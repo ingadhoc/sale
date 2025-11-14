@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Sale Order Type Invoice Policy Pack",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "category": "Sales",
     "author": "ADHOC SA",
     "website": "www.adhoc.com.ar",
@@ -29,6 +29,6 @@
         "sale_product_pack",
     ],
     "data": [],
-    "installable": False,
+    "installable": True,
     "auto_install": True,
 }
