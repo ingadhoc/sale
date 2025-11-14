@@ -3,16 +3,15 @@
 # 	* sale_gathering
 # 
 # Translators:
-# María Florencia Frigieri Parma, 2025
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025
+# ADHOC - Bot <transbot@adhoc.com.ar>, 2025
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-24 14:21+0000\n"
-"PO-Revision-Date: 2024-12-10 16:22+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
+"POT-Creation-Date: 2025-11-13 20:54+0000\n"
+"PO-Revision-Date: 2025-11-13 20:54+0000\n"
+"Last-Translator: ADHOC - Bot <transbot@adhoc.com.ar>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -103,6 +102,14 @@ msgid "Discounts cannot be added to downpayments."
 msgstr "Los descuentos no pueden añadirse a los anticipos."
 
 #. module: sale_gathering
+#: model:ir.model.fields,field_description:sale_gathering.field_account_move__display_name
+#: model:ir.model.fields,field_description:sale_gathering.field_sale_advance_payment_inv__display_name
+#: model:ir.model.fields,field_description:sale_gathering.field_sale_order__display_name
+#: model:ir.model.fields,field_description:sale_gathering.field_sale_order_line__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: sale_gathering
 #: model:ir.model.fields,help:sale_gathering.field_sale_order__withdrawn_amount
 msgid ""
 "El monto retirado (o solicitado) se calcula en base a la columna cantidad de"
@@ -137,6 +144,14 @@ msgid "Has Gathering Invoice"
 msgstr "Tiene Factura de Acopio"
 
 #. module: sale_gathering
+#: model:ir.model.fields,field_description:sale_gathering.field_account_move__id
+#: model:ir.model.fields,field_description:sale_gathering.field_sale_advance_payment_inv__id
+#: model:ir.model.fields,field_description:sale_gathering.field_sale_order__id
+#: model:ir.model.fields,field_description:sale_gathering.field_sale_order_line__id
+msgid "ID"
+msgstr "ID (identificación)"
+
+#. module: sale_gathering
 #: model:ir.model.fields,field_description:sale_gathering.field_sale_order_line__initial_qty_gathered
 #: model_terms:ir.ui.view,arch_db:sale_gathering.report_saleorder_document_gathering
 msgid "Initial Quantity Gathered"
@@ -147,16 +162,6 @@ msgstr "Cantidad Inicial Acopiada"
 #: model:ir.model.fields,field_description:sale_gathering.field_sale_order_line__is_gathering
 msgid "Is Gathering?"
 msgstr "Es Acopio?"
-
-#. module: sale_gathering
-#. odoo-python
-#: code:addons/sale_gathering/models/sale_order.py:0
-msgid ""
-"It is forbidden to modify the following fields in a confirmed order:\n"
-"%s"
-msgstr ""
-"Está prohibido modificar los siguientes campos en un pedido bloqueado:\n"
-"%s"
 
 #. module: sale_gathering
 #. odoo-python
@@ -209,6 +214,14 @@ msgstr "Línea de pedido de venta"
 
 #. module: sale_gathering
 #. odoo-python
+#: code:addons/sale_gathering/wizards/sale_advance_payment_inv.py:0
+msgid ""
+"The 'Factura en cero descontando acopio' method can only be used for "
+"gathering sales."
+msgstr ""
+
+#. module: sale_gathering
+#. odoo-python
 #: code:addons/sale_gathering/models/sale_order.py:0
 msgid ""
 "The gathering balance will be negative (%s), you cannot make this "
@@ -221,6 +234,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_gathering.field_sale_order__withdrawn_amount
 msgid "Withdrawn Amount"
 msgstr "Monto retirado"
+
+#. module: sale_gathering
+#. odoo-python
+#: code:addons/sale_gathering/models/sale_order.py:0
+msgid "You cannot confirm a gathering order (%s) with a total amount of 0."
+msgstr ""
 
 #. module: sale_gathering
 #. odoo-python
