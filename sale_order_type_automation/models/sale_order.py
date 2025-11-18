@@ -21,19 +21,19 @@ class SaleOrder(models.Model):
             # we take into account if there are any transaction finish from the e-commerce
             #  and not continue with the automation in this case
             if (
-                self.transaction_ids
-                and self.env["ir.config_parameter"].sudo().get_param("sale.automatic_invoice")
-                and any([True if transaction.state == "done" else False for transaction in self.transaction_ids])
+                rec.transaction_ids
+                and rec.env["ir.config_parameter"].sudo().get_param("sale.automatic_invoice")
+                and any([True if transaction.state == "done" else False for transaction in rec.transaction_ids])
             ):
                 continue
             # a list is returned but only one invoice should be returned
             # usamos final para que reste adelantos y tmb por ej
             # por si se usa el modulo de facturar las returns
-            invoices = self._create_invoices(final=True)
+            invoices = rec._create_invoices(final=True)
             if not invoices:
                 continue
             if rec.type_id.invoicing_atomation == "validate_invoice":
-                if self.env.context.get("commit_invoice_automation"):
+                if rec.env.context.get("commit_invoice_automation"):
                     rec.env.cr.commit()
                 try:
                     if rec.type_id.invoice_validate_domain:
@@ -41,7 +41,7 @@ class SaleOrder(models.Model):
                             rec.type_id.invoice_validate_domain,
                             {
                                 "datetime": safe_eval_datetime,
-                                "context_today": lambda: fields.Date.context_today(self),
+                                "context_today": lambda: fields.Date.context_today(rec),
                                 "relativedelta": safe_eval_dateutil.relativedelta.relativedelta,
                             },
                         )
@@ -58,7 +58,7 @@ class SaleOrder(models.Model):
                             invoice.env.add_to_compute(invoice.line_ids._fields["move_name"], invoice.line_ids)
                 except Exception as error:
                     rec.env.cr.rollback()
-                    if not self.env.context.get("commit_invoice_automation"):
+                    if not rec.env.context.get("commit_invoice_automation"):
                         raise error
                     message = _(
                         "We couldn't validate the automatically created "
