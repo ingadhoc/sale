@@ -31,15 +31,15 @@ class SaleAdvancePaymentInv(models.TransientModel):
             if discount_lines and discount_lines.product_id.company_id:
                 discount_lines[0].product_id.write({"company_id": False})
         res = super()._create_invoices(sale_orders)
-        if sale_orders.type_id.journal_id:
-            company = sale_orders.type_id.journal_id.company_id
-            if company.id != sale_orders.company_id.id:
+        for rec in res.filtered(lambda x: x.sale_type_id.journal_id):
+            company = rec.sale_type_id.journal_id.company_id
+            if company.id != rec.company_id.id:
                 acc = self.env["account.change.company"].create(
                     {
-                        "move_id": res.id,
-                        "company_ids": [sale_orders.company_id.id, company.id],
+                        "move_id": rec.id,
+                        "company_ids": [rec.company_id.id, company.id],
                         "company_id": company.id,
-                        "journal_id": sale_orders.type_id.journal_id.id,
+                        "journal_id": rec.sale_type_id.journal_id.id,
                     }
                 )
                 acc.change_company()
