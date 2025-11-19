@@ -60,8 +60,22 @@ class SaleOrder(models.Model):
         Overrides the `_create_invoices` method to ensure that taxes are correctly computed
         for the company of the invoice. In cases where the company has a localization
         (e.g., l10n_ar), this ensures that the taxes from `l10n_ar_tax_ids` are applied.
+
+        Also creates separate invoices for each sale order type when multiple types are present.
         """
-        invoices = super()._create_invoices(grouped=grouped, final=final, date=date)
+        # If we have multiple order types and not explicitly grouped, create separate invoices per type
+        if len(self.mapped("type_id")) > 1 and not grouped:
+            all_invoices = self.env["account.move"]
+            for order_type in self.mapped("type_id"):
+                orders_with_type = self.filtered(lambda x: x.type_id.id == order_type.id)
+                type_invoices = super(SaleOrder, orders_with_type)._create_invoices(
+                    grouped=grouped, final=final, date=date
+                )
+                all_invoices |= type_invoices
+            invoices = all_invoices
+        else:
+            invoices = super()._create_invoices(grouped=grouped, final=final, date=date)
+
         for invoice in invoices.filtered("sale_type_id.journal_id"):
             company = invoice.sale_type_id.journal_id.company_id
             if invoice.company_id != company:
