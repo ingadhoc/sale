@@ -34,3 +34,9 @@ class SaleAdvancePaymentInvWizard(models.TransientModel):
                 raise ValidationError(
                     _("The 'Factura en cero descontando acopio' method can only be used for gathering sales.")
                 )
+
+    def _create_invoices(self, sale_orders):
+        invoice = super()._create_invoices(sale_orders)
+        if invoice.invoice_line_ids.is_downpayment:
+            invoice.write({"ref": "Acopio"})
+        return invoice
