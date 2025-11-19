@@ -175,8 +175,10 @@ class SaleOrder(models.Model):
                         moves_to_switch.action_switch_move_type()
                 if downpayment_invoice.move_type == "out_refund":
                     downpayment_invoice.reversed_entry_id = products_invoice
+                    invoices.write({"ref": "Canje"})
                 else:
                     products_invoice.reversed_entry_id = downpayment_invoice
+                    invoices.write({"ref": "Devolución Canje"})
             else:
                 invoices = super()._create_invoices(final=True, grouped=grouped, date=date)
             return invoices
