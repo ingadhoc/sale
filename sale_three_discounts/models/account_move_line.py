@@ -29,8 +29,26 @@ class AccountMoveLine(models.Model):
 
     @api.depends("discount1", "discount2", "discount3")
     def _compute_discount(self):
-        for line in self.filtered(lambda x: x.move_type not in ("in_invoice", "in_refund")):
+        for line in self:
             discount_factor = 1.0
             for discount in [line.discount1, line.discount2, line.discount3]:
                 discount_factor *= (100.0 - discount) / 100.0
             line.discount = 100.0 - (discount_factor * 100.0)
+
+    @api.model
+    def _get_multiple_discount_field_names(self):
+        return ["discount1", "discount2", "discount3"]
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get("discount") and not any(vals.get(field) for field in self._get_multiple_discount_field_names()):
+                vals["discount1"] = vals.pop("discount")
+        return super().create(vals_list)
+
+    def write(self, vals):
+        discount_fields = self._get_multiple_discount_field_names()
+        if "discount" in vals:
+            vals["discount1"] = vals.pop("discount")
+            vals.update({field: 0 for field in discount_fields[1:]})
+        return super().write(vals)
