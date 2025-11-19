@@ -27,7 +27,18 @@ class AccountMove(models.Model):
 
     def _post(self, soft=True):
         # Odoo only auto-reconciles when credit note is posted after invoice, not vice versa
+
+        reversed_entries = {}
+        # Temporarily unlink reversed_entry_id to avoid validation error when posting invoices with afip connecting journal
+        # as the reversed entry is still in draft state and l10n_latam_document_number is not set yet, this leads to a validation error.
+        for move in self.filtered(lambda m: m.reversed_entry_id and m.reversed_entry_id.state == "draft"):
+            reversed_entries[move] = move.reversed_entry_id
+            move.reversed_entry_id = False
         result = super()._post(soft=soft)
+
+        for move, rev in reversed_entries.items():
+            move.reversed_entry_id = rev
+
         for move in self.filtered(lambda m: m.state == "posted" and m.move_type == "out_invoice"):
             is_gathering_sale = any(
                 line.sale_line_ids.order_id.is_gathering for line in move.invoice_line_ids if line.sale_line_ids
