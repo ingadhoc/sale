@@ -8,7 +8,7 @@
         <t t-call="website_sale.checkout_layout" position="attributes">
             <attribute name="t-call">portal_addresses.portal_checkout_layout</attribute>
         </t>
-        <t t-call="website_sale.billing_address_row" position="attributes">
+        <t t-call="website_sale.billing_address_list" position="attributes">
             <attribute name="t-call">portal_addresses.portal_billing_address_row</attribute>
         </t>
     </template>
@@ -16,23 +16,23 @@
     <template id="portal_checkout_layout" inherit_id="website_sale.checkout_layout" primary="True">
         <t t-call="website_sale.wizard_checkout" position="replace"/>
         <t t-call="website_sale.navigation_buttons" position="replace"/>
-        <xpath expr="//div[@id='o_cart_summary']" position="replace"></xpath>
+        <xpath expr="//t[@t-call='website_sale.shorter_cart_summary']" position="replace"></xpath>
         <t t-call="website_sale.navigation_buttons" position="replace"/>
     </template>
 
-    <template id="portal_delivery_address_row" inherit_id="website_sale.delivery_address_row" primary="True">
-        <t t-call="website_sale.address_row" position="attributes">
+    <template id="portal_delivery_address_row" inherit_id="website_sale.delivery_address_list" primary="True">
+        <t t-call="website_sale.address_list" position="attributes">
             <attribute name="t-call">portal_addresses.portal_address_row</attribute>
         </t>
     </template>
 
-    <template id="portal_billing_address_row" inherit_id="website_sale.billing_address_row" primary="True">
-        <t t-call="website_sale.address_row" position="attributes">
+    <template id="portal_billing_address_row" inherit_id="website_sale.billing_address_list" primary="True">
+        <t t-call="website_sale.address_list" position="attributes">
             <attribute name="t-call">portal_addresses.portal_address_row</attribute>
         </t>
     </template>
 
-    <template id="portal_address_row" inherit_id="website_sale.address_row" primary="True">
+    <template id="portal_address_row" inherit_id="website_sale.address_list" primary="True">
          <t t-if="is_invoice" position="replace">
             <t t-if="is_invoice">
                <t t-set="new_address_href" t-valuef="/portal/address?address_type=billing"/>
