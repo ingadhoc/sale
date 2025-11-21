@@ -1,0 +1,121 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_timesheet_extra_hours
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-21 12:13+0000\n"
+"PO-Revision-Date: 2025-11-21 12:13+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model,name:sale_timesheet_extra_hours.model_account_analytic_line
+msgid "Analytic Line"
+msgstr ""
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model.fields,field_description:sale_timesheet_extra_hours.field_hr_employee__day_extra_hour_coef
+msgid "Coefficient of an extra hour by day"
+msgstr ""
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model.fields,field_description:sale_timesheet_extra_hours.field_hr_employee__night_extra_hour_coef
+msgid "Coefficient of an extra hour by night"
+msgstr ""
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model.fields,field_description:sale_timesheet_extra_hours.field_account_analytic_line__cost
+msgid "Cost"
+msgstr ""
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model.fields,field_description:sale_timesheet_extra_hours.field_project_sale_line_employee_map__cost_day_extra_hour
+msgid "Cost Day Extra Hour"
+msgstr ""
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model.fields,field_description:sale_timesheet_extra_hours.field_project_sale_line_employee_map__cost_night_extra_hour
+msgid "Cost Night Extra Hour"
+msgstr ""
+
+#. module: sale_timesheet_extra_hours
+#: model_terms:ir.ui.view,arch_db:sale_timesheet_extra_hours.timesheet_view_tree_user_ux
+#: model_terms:ir.ui.view,arch_db:sale_timesheet_extra_hours.view_account_analytic_line_tree_inherit_account_ux
+msgid "Cost Per Hour"
+msgstr ""
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model.fields,field_description:sale_timesheet_extra_hours.field_hr_employee__day_extra_hour_cost
+msgid "Cost of an extra hour by day"
+msgstr ""
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model.fields,field_description:sale_timesheet_extra_hours.field_hr_employee__night_extra_hour_cost
+msgid "Cost of an extra hour by night"
+msgstr ""
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model.fields.selection,name:sale_timesheet_extra_hours.selection__account_analytic_line__extra_hour_type__day
+msgid "Day"
+msgstr ""
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model.fields,field_description:sale_timesheet_extra_hours.field_account_analytic_line__display_name
+#: model:ir.model.fields,field_description:sale_timesheet_extra_hours.field_hr_employee__display_name
+#: model:ir.model.fields,field_description:sale_timesheet_extra_hours.field_project_sale_line_employee_map__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model,name:sale_timesheet_extra_hours.model_hr_employee
+msgid "Employee"
+msgstr ""
+
+#. module: sale_timesheet_extra_hours
+#: model_terms:ir.ui.view,arch_db:sale_timesheet_extra_hours.timesheet_view_tree_user_ux
+#: model_terms:ir.ui.view,arch_db:sale_timesheet_extra_hours.view_account_analytic_line_form_ux
+#: model_terms:ir.ui.view,arch_db:sale_timesheet_extra_hours.view_account_analytic_line_tree_inherit_account_ux
+msgid "Extra Cost"
+msgstr ""
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model.fields,field_description:sale_timesheet_extra_hours.field_account_analytic_line__extra_hour_type
+#: model_terms:ir.ui.view,arch_db:sale_timesheet_extra_hours.timesheet_view_tree_user_ux
+#: model_terms:ir.ui.view,arch_db:sale_timesheet_extra_hours.view_account_analytic_line_form_ux
+#: model_terms:ir.ui.view,arch_db:sale_timesheet_extra_hours.view_account_analytic_line_tree_inherit_account_ux
+msgid "Extra Hour Type"
+msgstr ""
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model.fields,field_description:sale_timesheet_extra_hours.field_account_analytic_line__extra_hour
+msgid "Extra Hour?"
+msgstr ""
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model.fields.selection,name:sale_timesheet_extra_hours.selection__account_analytic_line__extra_hour_type__holiday
+msgid "Holiday"
+msgstr ""
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model.fields,field_description:sale_timesheet_extra_hours.field_account_analytic_line__id
+#: model:ir.model.fields,field_description:sale_timesheet_extra_hours.field_hr_employee__id
+#: model:ir.model.fields,field_description:sale_timesheet_extra_hours.field_project_sale_line_employee_map__id
+msgid "ID"
+msgstr ""
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model.fields.selection,name:sale_timesheet_extra_hours.selection__account_analytic_line__extra_hour_type__night
+msgid "Night"
+msgstr ""
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model,name:sale_timesheet_extra_hours.model_project_sale_line_employee_map
+msgid "Project Sales line, employee mapping"
+msgstr ""
