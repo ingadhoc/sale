@@ -3,16 +3,15 @@
 # 	* sale_timesheet_extra_hours
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025
-# bafadhoc, 2025
+# ADHOC - Bot <transbot@adhoc.com.ar>, 2025
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-14 17:10+0000\n"
-"PO-Revision-Date: 2025-02-28 13:49+0000\n"
-"Last-Translator: bafadhoc, 2025\n"
+"POT-Creation-Date: 2025-11-21 12:23+0000\n"
+"PO-Revision-Date: 2025-11-21 12:17+0000\n"
+"Last-Translator: ADHOC - Bot <transbot@adhoc.com.ar>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -72,6 +71,13 @@ msgid "Day"
 msgstr "Diurna"
 
 #. module: sale_timesheet_extra_hours
+#: model:ir.model.fields,field_description:sale_timesheet_extra_hours.field_account_analytic_line__display_name
+#: model:ir.model.fields,field_description:sale_timesheet_extra_hours.field_hr_employee__display_name
+#: model:ir.model.fields,field_description:sale_timesheet_extra_hours.field_project_sale_line_employee_map__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: sale_timesheet_extra_hours
 #: model:ir.model,name:sale_timesheet_extra_hours.model_hr_employee
 msgid "Employee"
 msgstr "Empleado"
@@ -100,6 +106,13 @@ msgstr "Hora Extra?"
 #: model:ir.model.fields.selection,name:sale_timesheet_extra_hours.selection__account_analytic_line__extra_hour_type__holiday
 msgid "Holiday"
 msgstr "Feriado"
+
+#. module: sale_timesheet_extra_hours
+#: model:ir.model.fields,field_description:sale_timesheet_extra_hours.field_account_analytic_line__id
+#: model:ir.model.fields,field_description:sale_timesheet_extra_hours.field_hr_employee__id
+#: model:ir.model.fields,field_description:sale_timesheet_extra_hours.field_project_sale_line_employee_map__id
+msgid "ID"
+msgstr ""
 
 #. module: sale_timesheet_extra_hours
 #: model:ir.model.fields.selection,name:sale_timesheet_extra_hours.selection__account_analytic_line__extra_hour_type__night
