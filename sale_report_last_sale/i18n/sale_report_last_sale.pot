@@ -1,0 +1,95 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_report_last_sale
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-22 08:21+0000\n"
+"PO-Revision-Date: 2025-11-22 08:21+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_report_last_sale
+#: model:ir.model.fields,field_description:sale_report_last_sale.field_sale_last_sale_report__company_id
+#: model_terms:ir.ui.view,arch_db:sale_report_last_sale.view_sale_last_sale_report_search
+msgid "Company"
+msgstr ""
+
+#. module: sale_report_last_sale
+#: model:ir.model.fields,field_description:sale_report_last_sale.field_sale_last_sale_report__days_since
+msgid "Days Since"
+msgstr ""
+
+#. module: sale_report_last_sale
+#: model:ir.model.fields,field_description:sale_report_last_sale.field_sale_last_sale_report__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: sale_report_last_sale
+#: model:ir.model.fields,field_description:sale_report_last_sale.field_sale_last_sale_report__id
+msgid "ID"
+msgstr ""
+
+#. module: sale_report_last_sale
+#: model:ir.actions.act_window,name:sale_report_last_sale.action_sale_last_sale_report
+#: model:ir.actions.act_window,name:sale_report_last_sale.action_sale_last_sale_report_partner
+#: model:ir.ui.menu,name:sale_report_last_sale.menu_action_sale_last_sale_report
+#: model_terms:ir.ui.view,arch_db:sale_report_last_sale.view_sale_last_sale_report_pivot
+#: model_terms:ir.ui.view,arch_db:sale_report_last_sale.view_sale_last_sale_report_search
+#: model_terms:ir.ui.view,arch_db:sale_report_last_sale.view_sale_last_sale_report_tree
+msgid "Last Sale Analysis"
+msgstr ""
+
+#. module: sale_report_last_sale
+#: model:ir.model,name:sale_report_last_sale.model_sale_last_sale_report
+msgid "Last Sale Statistics"
+msgstr ""
+
+#. module: sale_report_last_sale
+#: model_terms:ir.ui.view,arch_db:sale_report_last_sale.view_sale_last_sale_report_search
+msgid "More than 30 days"
+msgstr ""
+
+#. module: sale_report_last_sale
+#: model_terms:ir.ui.view,arch_db:sale_report_last_sale.view_sale_last_sale_report_search
+msgid "More than 60 days"
+msgstr ""
+
+#. module: sale_report_last_sale
+#: model_terms:ir.ui.view,arch_db:sale_report_last_sale.view_sale_last_sale_report_search
+msgid "More than 90 days"
+msgstr ""
+
+#. module: sale_report_last_sale
+#: model:ir.model.fields,field_description:sale_report_last_sale.field_sale_last_sale_report__date_order
+msgid "Order Date"
+msgstr ""
+
+#. module: sale_report_last_sale
+#: model:ir.model.fields,field_description:sale_report_last_sale.field_sale_last_sale_report__partner_id
+#: model_terms:ir.ui.view,arch_db:sale_report_last_sale.view_sale_last_sale_report_search
+msgid "Partner"
+msgstr ""
+
+#. module: sale_report_last_sale
+#: model:ir.model.fields,field_description:sale_report_last_sale.field_sale_last_sale_report__product_id
+#: model_terms:ir.ui.view,arch_db:sale_report_last_sale.view_sale_last_sale_report_search
+msgid "Product"
+msgstr ""
+
+#. module: sale_report_last_sale
+#: model:ir.model.fields,field_description:sale_report_last_sale.field_sale_last_sale_report__product_category_id
+#: model_terms:ir.ui.view,arch_db:sale_report_last_sale.view_sale_last_sale_report_search
+msgid "Product Category"
+msgstr ""
+
+#. module: sale_report_last_sale
+#: model_terms:ir.ui.view,arch_db:sale_report_last_sale.view_sale_last_sale_report_search
+msgid "This year"
+msgstr ""
