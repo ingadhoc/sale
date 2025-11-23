@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-13 19:05+0000\n"
+"POT-Creation-Date: 2025-11-22 08:19+0000\n"
 "PO-Revision-Date: 2025-11-07 14:28+0000\n"
 "Last-Translator: ADHOC - Bot <transbot@adhoc.com.ar>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -115,7 +115,7 @@ msgstr ""
 #. module: portal_sale_distributor
 #: model:ir.model,name:portal_sale_distributor.model_mail_thread
 msgid "Email Thread"
-msgstr "Hilo de correo electrónico"
+msgstr "Hilo de mensajes"
 
 #. module: portal_sale_distributor
 #: model:ir.model.fields,field_description:portal_sale_distributor.field_sale_order__message_partner_ids
