@@ -1,0 +1,255 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* portal_sale_distributor
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-23 08:37+0000\n"
+"PO-Revision-Date: 2025-11-23 08:37+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: portal_sale_distributor
+#: model:ir.model,name:portal_sale_distributor.model_ir_actions_act_window
+msgid "Action Window"
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model_terms:ir.ui.view,arch_db:portal_sale_distributor.view_order_form
+msgid "Add shipping"
+msgstr ""
+
+#. module: portal_sale_distributor
+#. odoo-python
+#: code:addons/portal_sale_distributor/controllers/portal_account.py:0
+msgid "All"
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model:ir.model.fields,help:portal_sale_distributor.field_product_document__attached_on_sale
+msgid ""
+"Allows you to share the document with your customers within a sale.\n"
+"Leave it empty if you don't want to share this document with sales customer.\n"
+"On quote: the document will be sent to and accessible by customers at any time.\n"
+"e.g. this option can be useful to share Product description files.\n"
+"On order confirmation: the document will be sent to and accessible by customers.\n"
+"e.g. this option can be useful to share User Manual or digital content bought on ecommerce. \n"
+"Inside quote: The document will be included in the pdf of the quotation and sale order between the header pages and the quote table. "
+msgstr ""
+
+#. module: portal_sale_distributor
+#. odoo-python
+#: code:addons/portal_sale_distributor/controllers/portal_account.py:0
+msgid "Bills"
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model:ir.model,name:portal_sale_distributor.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model_terms:ir.ui.view,arch_db:portal_sale_distributor.view_order_form
+msgid "Confirm Sale"
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model:ir.model,name:portal_sale_distributor.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_res_partner__credit_limit
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_res_users__credit_limit
+msgid "Credit Limit"
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model:ir.model.fields,help:portal_sale_distributor.field_res_partner__credit_limit
+#: model:ir.model.fields,help:portal_sale_distributor.field_res_users__credit_limit
+msgid "Credit limit specific to this partner."
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_ir_actions_act_window__display_name
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_mail_thread__display_name
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_product_document__display_name
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_product_pricelist_item__display_name
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_product_product__display_name
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_quotation_document__display_name
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_res_partner__display_name
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_sale_order__display_name
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_sale_order_line__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: portal_sale_distributor
+#. odoo-python
+#: code:addons/portal_sale_distributor/models/sale_order.py:0
+msgid ""
+"El pedido no puede ser confirmado por %s porque contiene excepciones, debe "
+"ser revisado por un administrador"
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model:ir.model,name:portal_sale_distributor.model_mail_thread
+msgid "Email Thread"
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_sale_order__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_ir_actions_act_window__id
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_mail_thread__id
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_product_document__id
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_product_pricelist_item__id
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_product_product__id
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_quotation_document__id
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_res_config_settings__id
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_res_partner__id
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_sale_order__id
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_sale_order_line__id
+msgid "ID"
+msgstr ""
+
+#. module: portal_sale_distributor
+#. odoo-python
+#: code:addons/portal_sale_distributor/controllers/portal_account.py:0
+msgid "Invoices"
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_res_config_settings__group_auto_done_setting
+msgid "Lock Confirmed Sales"
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model:ir.actions.act_url,name:portal_sale_distributor.action_my_account
+#: model:ir.ui.menu,name:portal_sale_distributor.my_account
+msgid "My Account"
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model:ir.ui.menu,name:portal_sale_distributor.quotations
+#: model_terms:ir.ui.view,arch_db:portal_sale_distributor.sale_order_view_search_inherit_quotation_new
+msgid "My Quotations"
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_sale_order__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: portal_sale_distributor
+#. odoo-python
+#: code:addons/portal_sale_distributor/controllers/portal_account.py:0
+msgid "Open"
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model:ir.ui.menu,name:portal_sale_distributor.sale_order
+#: model:ir.ui.menu,name:portal_sale_distributor.sale_order_menu
+msgid "Order"
+msgstr ""
+
+#. module: portal_sale_distributor
+#. odoo-python
+#: code:addons/portal_sale_distributor/models/sale_order.py:0
+msgid "Pedido confirmado por %s"
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model:res.groups,name:portal_sale_distributor.group_portal_backend_distributor
+#: model:res.groups.privilege,name:portal_sale_distributor.privilege_portal_sale_distributor
+msgid "Portal Sale Distributor"
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model:ir.model,name:portal_sale_distributor.model_product_pricelist_item
+msgid "Pricelist Rule"
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model:ir.model,name:portal_sale_distributor.model_product_document
+msgid "Product Document"
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model:ir.model,name:portal_sale_distributor.model_product_product
+msgid "Product Variant"
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_quotation_document__quotation_template_ids
+msgid "Quotation Templates"
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model:ir.model,name:portal_sale_distributor.model_quotation_document
+msgid "Quotation's Headers & Footers"
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_product_document__attached_on_sale
+msgid "Sale : Visible at"
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model:ir.ui.menu,name:portal_sale_distributor.order_lines
+msgid "Sale Order Lines"
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model:ir.ui.menu,name:portal_sale_distributor.sale_menu
+msgid "Sales"
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model:ir.model,name:portal_sale_distributor.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model:ir.model,name:portal_sale_distributor.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""
+
+#. module: portal_sale_distributor
+#. odoo-python
+#: code:addons/portal_sale_distributor/controllers/portal_account.py:0
+msgid "in_invoice"
+msgstr ""
+
+#. module: portal_sale_distributor
+#. odoo-python
+#: code:addons/portal_sale_distributor/controllers/portal_account.py:0
+msgid "move_type"
+msgstr ""
+
+#. module: portal_sale_distributor
+#. odoo-python
+#: code:addons/portal_sale_distributor/controllers/portal_account.py:0
+msgid "out_invoice"
+msgstr ""
+
+#. module: portal_sale_distributor
+#. odoo-python
+#: code:addons/portal_sale_distributor/controllers/portal_account.py:0
+msgid "payment_state"
+msgstr ""
+
+#. module: portal_sale_distributor
+#. odoo-python
+#: code:addons/portal_sale_distributor/controllers/portal_account.py:0
+msgid "state"
+msgstr ""
