@@ -4,6 +4,7 @@
 ##############################################################################
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.fields import Domain
 from odoo.tools.safe_eval import safe_eval
 
 
@@ -11,16 +12,12 @@ class SaleOrderType(models.Model):
     _inherit = "sale.order.type"
 
     # TODO this should go in a pr to OCA
-    sequence_id = fields.Many2one(domain="['|', ('company_id', '=', company_id), " "('company_id', '=', False)]")
+    sequence_id = fields.Many2one(check_company=True)
     # agregamos help
     journal_id = fields.Many2one(
         help="Billing journal to be used by default. No matter invoice being "
         "created automatically or manually. If no journal is set here, "
         "default journal will be used"
-    )
-    invoice_company_id = fields.Many2one(
-        string="Invoice Company",
-        related="journal_id.company_id",
     )
     invoicing_atomation = fields.Selection(
         [
@@ -70,13 +67,11 @@ class SaleOrderType(models.Model):
         'If you set "Validate No Force", then'
         " Validate without forcing availabilty",
     )
+    payment_journal_domain = fields.Binary(compute="_compute_payment_journal_domain")
     payment_journal_id = fields.Many2one(
         "account.journal",
         "Payment Journal",
-        domain="[('type','in', ['cash', 'bank']), "
-        "('company_id', '=', invoice_company_id), "
-        # "('company_id', '=', company_id), "
-        "('inbound_payment_method_line_ids.code', '=', 'manual')]",
+        domain="payment_journal_domain",
         help="Journal used only with payment_automation. As manual payment "
         "method is used, only journals with manual method are shown. "
         "This field will not be considered for sales coming from eCommerce. "
@@ -85,7 +80,6 @@ class SaleOrderType(models.Model):
         readonly=False,
         compute="_compute_payment_journal_id",
     )
-
     set_done_on_confirmation = fields.Boolean(
         help="Upon confirmation set"
         " sale order done instead of leaving it on"
@@ -94,7 +88,6 @@ class SaleOrderType(models.Model):
     auto_done_setting = fields.Boolean(
         compute="_compute_auto_done_setting",
     )
-
     invoice_validate_domain = fields.Char(
         string="Invoice Validation Domain",
         help="Domain to filter invoices for automatic validation. So, if this filter does NOT find the invoices, they stay in drafts status.",
@@ -104,6 +97,23 @@ class SaleOrderType(models.Model):
     def _compute_payment_journal_id(self):
         for rec in self.filtered(lambda x: x.payment_atomation == "none"):
             rec.payment_journal_id = False
+
+    @api.depends("invoice_company_id")
+    def _compute_payment_journal_domain(self):
+        for rec in self:
+            rec.payment_journal_domain = (
+                rec.env["account.journal"]._check_company_domain(rec.invoice_company_id)
+                & Domain("type", "in", ["cash", "bank"])
+                & Domain("inbound_payment_method_line_ids.code", "=", "manual")
+            )
+
+    @api.constrains("invoice_company_id", "payment_journal_id")
+    def _check_payment_journal_company(self):
+        for rec in self:
+            if rec.payment_journal_id and rec.payment_journal_id not in rec.env["account.journal"].search(
+                rec.payment_journal_domain
+            ):
+                raise ValidationError("The selected 'Payment Journal' does not belong to the selected invoice company.")
 
     @api.depends()
     def _compute_auto_done_setting(self):
