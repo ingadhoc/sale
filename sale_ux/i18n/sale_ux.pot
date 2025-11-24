@@ -1,0 +1,585 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_ux
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-24 09:07+0000\n"
+"PO-Revision-Date: 2025-11-24 09:07+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
+msgid "<span>Cancel quotations older than</span>"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
+msgid "<span>days.</span>"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
+msgid "<strong>Sales</strong>"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
+msgid "Al confirmar ventas, crear un proyecto sin compañía."
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__group_allow_any_user_as_salesman
+#: model:res.groups,name:sale_ux.group_allow_any_user_as_salesman
+msgid "Allow any user as salesman"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model,name:sale_ux.model_account_analytic_account
+msgid "Analytic Account"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__auto_select_all_documents
+msgid "Auto-select all documents"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,help:sale_ux.field_res_config_settings__auto_select_all_documents
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
+msgid "Automatically select all available documents from PDF Quote Builder."
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
+msgid "Automatically update prices when change pricelist."
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
+msgid ""
+"By default, Odoo only allows to choose users who have sales permission in "
+"sales orders and only internal users in the sales' teams . This option "
+"enables to choose, in both places, users of any type (internal or portal)"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
+msgid "Cancel"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__cancel_old_quotations
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
+msgid "Cancel Old Quotations"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.actions.server,name:sale_ux.ir_cron_clean_old_quotations_ir_actions_server
+msgid "Clean Old Quotations"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order__commercial_partner_id
+msgid "Commercial Entity"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_account_analytic_account__commercial_partner_id
+msgid "Commercial Partner"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model,name:sale_ux.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
+msgid "Confirm"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.actions.server,name:sale_ux.action_confirm_sale_order
+msgid "Confirm sale order"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model,name:sale_ux.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__analytic_account_without_company
+msgid "Crear proyecto y cuenta analitica sin compañia"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_filter
+msgid "Create Date"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,help:sale_ux.field_sale_order_line__date_order
+msgid ""
+"Creation date of draft/sent orders,\n"
+"Confirmation date of confirmed orders."
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
+msgid "Customer"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__group_sale_reference_on_tree_and_main_form
+msgid "Customer reference in list view and form"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__days_to_keep_quotations
+msgid "Days to Keep Quotations"
+msgstr ""
+
+#. module: sale_ux
+#. odoo-python
+#: code:addons/sale_ux/models/res_config_settings.py:0
+msgid "Days to keep quotations must be greater than 0."
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_account_fiscal_position__deduct_price_included_taxes
+msgid "Deduct Price-Included Taxes"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_portal_content
+msgid "Delivery Date:"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__amount
+msgid "Discount"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_account_analytic_account__display_name
+#: model:ir.model.fields,field_description:sale_ux.field_account_fiscal_position__display_name
+#: model:ir.model.fields,field_description:sale_ux.field_account_move__display_name
+#: model:ir.model.fields,field_description:sale_ux.field_crm_team__display_name
+#: model:ir.model.fields,field_description:sale_ux.field_product_product__display_name
+#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:sale_ux.field_res_partner__display_name
+#: model:ir.model.fields,field_description:sale_ux.field_sale_advance_payment_inv__display_name
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order__display_name
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__display_name
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_line__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__dont_send_notes_to_invoices
+msgid "Do not send notes to invoices"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_advance_payment_inv__amount_total
+msgid "Down Payment Amount With Taxes"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,help:sale_ux.field_res_config_settings__cancel_old_quotations
+msgid "Enable automatic cancellation of old quotations."
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model,name:sale_ux.model_account_fiscal_position
+msgid "Fiscal Position"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order__force_invoiced_status
+msgid "Force Invoiced Status"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields.selection,name:sale_ux.selection__sale_order__force_invoiced_status__invoiced
+msgid "Fully Invoiced"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
+msgid "Global Discount"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
+msgid "Hide cancelled lines"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_account_analytic_account__id
+#: model:ir.model.fields,field_description:sale_ux.field_account_fiscal_position__id
+#: model:ir.model.fields,field_description:sale_ux.field_account_move__id
+#: model:ir.model.fields,field_description:sale_ux.field_crm_team__id
+#: model:ir.model.fields,field_description:sale_ux.field_product_product__id
+#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__id
+#: model:ir.model.fields,field_description:sale_ux.field_res_partner__id
+#: model:ir.model.fields,field_description:sale_ux.field_sale_advance_payment_inv__id
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order__id
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__id
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_line__id
+msgid "ID"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.report_saleorder
+msgid "Image"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,help:sale_ux.field_account_fiscal_position__deduct_price_included_taxes
+msgid ""
+"In sales: When this fiscal position is set, if the product has taxes "
+"included in the price, they will be deducted from the price calculation when"
+" mapping to new taxes."
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order__internal_notes
+msgid "Internal Notes"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_order_form
+msgid "Internal Notes..."
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
+msgid "Invoice Lines"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_filter
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
+msgid "Invoiced"
+msgstr ""
+
+#. module: sale_ux
+#. odoo-python
+#: code:addons/sale_ux/models/sale_order.py:0
+msgid ""
+"It is forbidden to modify the following fields in a locked order:\n"
+"%s"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model,name:sale_ux.model_account_move
+msgid "Journal Entry"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__move_internal_notes
+msgid "Mover notas internas a transferencias de stock y facturas"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__move_note
+msgid "Mover términos y condiciones a transferencias de stock y facturas"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
+msgid "Not Invoiced"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields.selection,name:sale_ux.selection__sale_order__force_invoiced_status__no
+msgid "Nothing to Invoice"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,help:sale_ux.field_res_config_settings__days_to_keep_quotations
+msgid "Number of days to keep quotations before cancelling them."
+msgstr ""
+
+#. module: sale_ux
+#. odoo-python
+#: code:addons/sale_ux/models/sale_order.py:0
+msgid "Only users with \"%s / %s\" can Set Invoiced manually"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_line__date_order
+msgid "Order Date"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order__payment_term_id
+msgid "Payment Terms"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_line__categ_id
+msgid "Product Category"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model,name:sale_ux.model_product_product
+msgid "Product Variant"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_usability_tree
+msgid "Qty"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_filter
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
+msgid "Quotations"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.ui.menu,name:sale_ux.menu_product_catalog_reporting
+msgid "Reporting"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_order_form
+msgid "Sale History"
+msgstr ""
+
+#. module: sale_ux
+#. odoo-python
+#: code:addons/sale_ux/models/sale_order_line.py:0
+msgid "Sale History for %s"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.actions.act_window,name:sale_ux.action_sale_order_line_usability_tree
+#: model:ir.ui.menu,name:sale_ux.menu_sale_order
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_usability_tree
+msgid "Sale Order Lines"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
+msgid "Sale Orders"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model,name:sale_ux.model_sale_order_global_discount_wizard
+msgid "Sale order Global Discount Wizard"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model,name:sale_ux.model_sale_advance_payment_inv
+msgid "Sales Advance Payment Invoice"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model,name:sale_ux.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model,name:sale_ux.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_filter
+msgid "Sales Orders"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model,name:sale_ux.model_crm_team
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_line__team_id
+msgid "Sales Team"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_crm_team__member_ids
+msgid "Salespersons"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__group_delivery_date
+#: model:res.groups,name:sale_ux.group_delivery_date_on_report_online
+msgid "Show Delivery Date in Quotations report and online budget"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__show_product_image_on_report
+msgid "Show Product Image"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
+msgid "Show Product Image on quotation report"
+msgstr ""
+
+#. module: sale_ux
+#: model:res.groups,name:sale_ux.group_reference_on_tree_and_main_form
+msgid "Show SO reference field on tree and main form views"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
+msgid "Show client reference in list view and in main section of form view"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
+msgid ""
+"Shows the delivery date field in the budget report and in the online budget."
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
+msgid ""
+"Si marca esta opción y hay un valor definido en \"términos y condiciones\", "
+"el mismo se va a copiar en las facturas que se generen desde esta venta."
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
+msgid ""
+"Si marca esta opción y hay un valor definido en las \"notas internas\", el "
+"mismo se va a copiar en las facturas que se generen desde esta venta."
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
+msgid "Status"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_order_form
+msgid "Subtotal"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_advance_payment_inv__tax_ids
+msgid "Taxes"
+msgstr ""
+
+#. module: sale_ux
+#. odoo-python
+#: code:addons/sale_ux/models/sale_order.py:0
+msgid "This quotation has been automatically canceled due to its expiration."
+msgstr ""
+
+#. module: sale_ux
+#. odoo-python
+#: code:addons/sale_ux/models/sale_order.py:0
+msgid "This sale order was duplicated from %s"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_usability_tree
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_order_form
+msgid "Total"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,help:sale_ux.field_sale_order__amount_to_invoice
+msgid ""
+"Total amount available for invoicing according to the invoice policy for "
+"each sale order line.Down payments are not included in this calculation."
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order__amount_uninvoiced
+msgid "Un-invoiced"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order__amount_to_invoice
+msgid "Un-invoiced Balance"
+msgstr ""
+
+#. module: sale_ux
+#. odoo-python
+#: code:addons/sale_ux/models/sale_order.py:0
+msgid ""
+"Unable to cancel this sale order. You must first cancel related bills and "
+"pickings."
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,help:sale_ux.field_sale_order__amount_uninvoiced
+msgid "Uninvoiced amount, regardless of invoice policy."
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_usability_tree
+msgid "Unit of Measure"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_order_form
+msgid "Update Prices"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__update_prices_automatically
+msgid "Update Prices Automatically"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,help:sale_ux.field_crm_team__member_ids
+msgid "Users assigned to this team."
+msgstr ""
+
+#. module: sale_ux
+#. odoo-python
+#: code:addons/sale_ux/wizards/sale_advance_payment_inv.py:0
+msgid "You can only set amount total if taxes are of type percentage"
+msgstr ""
+
+#. module: sale_ux
+#. odoo-python
+#: code:addons/sale_ux/models/sale_order_line.py:0
+msgid "You cannot add lines to blocked sale orders."
+msgstr ""
+
+#. module: sale_ux
+#. odoo-python
+#: code:addons/sale_ux/models/sale_order.py:0
+msgid "You cannot modify already locked orders."
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
+msgid "or"
+msgstr ""
