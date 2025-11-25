@@ -45,7 +45,7 @@
                                         <td class="text-end text-nowrap"><t t-esc="item.get('card_installment')"/></td>
                                         <td class="text-end"><t t-esc="item.get('surcharge')"/>%</td>
                                         <td class="text-end"><t t-esc="item.get('subtotal')"/></td>
-                                        <td class="text-end"><t t-esc="item.get('total_per_installment')"/></td>
+                                        <td class="text-end"><span t-esc="'%.2f' % item.get('total_per_installment')"/></td>
                                         <td class="text-end"><t t-esc="item.get('installment_qty')"/></td>
                                     </tr>
                                     <t t-set="subtotal" t-value="subtotal + item.get('subtotal')"/>
