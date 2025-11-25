@@ -1,0 +1,169 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_timesheet_ux
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-25 17:19+0000\n"
+"PO-Revision-Date: 2025-11-25 17:19+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_timesheet_ux
+#: model:ir.model,name:sale_timesheet_ux.model_account_analytic_line
+msgid "Analytic Line"
+msgstr ""
+
+#. module: sale_timesheet_ux
+#: model_terms:ir.ui.view,arch_db:sale_timesheet_ux.change_allow_billable_wizzard
+msgid ""
+"Are you sure you want to change the 'Allow Billable' field to False for this"
+" project?"
+msgstr ""
+
+#. module: sale_timesheet_ux
+#: model_terms:ir.ui.view,arch_db:sale_timesheet_ux.res_config_settings_view_form
+msgid ""
+"By default changes on project, task, and tickets related to billing "
+"information are synced to timesheet lines. This can cause automated "
+"modification of the sale line associated to a timesheet. Activate this "
+"option if you want to protect timesheet lines so that changes won't modify "
+"the associated sales lines (highly recommended especially for Prepaid/Fixed "
+"Price use cases)"
+msgstr ""
+
+#. module: sale_timesheet_ux
+#: model_terms:ir.ui.view,arch_db:sale_timesheet_ux.change_allow_billable_wizzard
+msgid "Cancel"
+msgstr ""
+
+#. module: sale_timesheet_ux
+#: model:ir.model,name:sale_timesheet_ux.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: sale_timesheet_ux
+#: model_terms:ir.ui.view,arch_db:sale_timesheet_ux.change_allow_billable_wizzard
+msgid "Confirm Allow Billable Change"
+msgstr ""
+
+#. module: sale_timesheet_ux
+#: model:ir.model,name:sale_timesheet_ux.model_allow_billable_wizard
+msgid "Confirmar cambio de valor de Allow Billable"
+msgstr ""
+
+#. module: sale_timesheet_ux
+#: model:ir.model,website_form_label:sale_timesheet_ux.model_project_task
+msgid "Create a Task"
+msgstr ""
+
+#. module: sale_timesheet_ux
+#: model:ir.model.fields,field_description:sale_timesheet_ux.field_allow_billable_wizard__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: sale_timesheet_ux
+#: model:ir.model.fields,field_description:sale_timesheet_ux.field_allow_billable_wizard__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: sale_timesheet_ux
+#: model_terms:ir.ui.view,arch_db:sale_timesheet_ux.view_edit_project_billable_inherit_form
+msgid "Deactivate Billable"
+msgstr ""
+
+#. module: sale_timesheet_ux
+#: model:ir.model.fields,field_description:sale_timesheet_ux.field_account_analytic_line__display_name
+#: model:ir.model.fields,field_description:sale_timesheet_ux.field_allow_billable_wizard__display_name
+#: model:ir.model.fields,field_description:sale_timesheet_ux.field_project_project__display_name
+#: model:ir.model.fields,field_description:sale_timesheet_ux.field_project_task__display_name
+#: model:ir.model.fields,field_description:sale_timesheet_ux.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:sale_timesheet_ux.field_sale_order__display_name
+#: model:ir.model.fields,field_description:sale_timesheet_ux.field_sale_order_line__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: sale_timesheet_ux
+#: model:ir.model.fields,field_description:sale_timesheet_ux.field_account_analytic_line__id
+#: model:ir.model.fields,field_description:sale_timesheet_ux.field_allow_billable_wizard__id
+#: model:ir.model.fields,field_description:sale_timesheet_ux.field_project_project__id
+#: model:ir.model.fields,field_description:sale_timesheet_ux.field_project_task__id
+#: model:ir.model.fields,field_description:sale_timesheet_ux.field_res_config_settings__id
+#: model:ir.model.fields,field_description:sale_timesheet_ux.field_sale_order__id
+#: model:ir.model.fields,field_description:sale_timesheet_ux.field_sale_order_line__id
+msgid "ID"
+msgstr ""
+
+#. module: sale_timesheet_ux
+#: model:ir.model.fields,field_description:sale_timesheet_ux.field_allow_billable_wizard__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: sale_timesheet_ux
+#: model:ir.model.fields,field_description:sale_timesheet_ux.field_allow_billable_wizard__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: sale_timesheet_ux
+#. odoo-python
+#: code:addons/sale_timesheet_ux/models/project_project.py:0
+#: model:ir.model,name:sale_timesheet_ux.model_project_project
+#: model:ir.model.fields,field_description:sale_timesheet_ux.field_allow_billable_wizard__project_id
+msgid "Project"
+msgstr ""
+
+#. module: sale_timesheet_ux
+#: model:ir.model.fields,field_description:sale_timesheet_ux.field_res_config_settings__timesheet_protect_so_line
+msgid "Protect SO Line on Timesheets?"
+msgstr ""
+
+#. module: sale_timesheet_ux
+#: model:ir.model.fields,field_description:sale_timesheet_ux.field_project_task__order_id
+msgid "Related Sales Order"
+msgstr ""
+
+#. module: sale_timesheet_ux
+#: model:ir.model,name:sale_timesheet_ux.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: sale_timesheet_ux
+#: model:ir.model,name:sale_timesheet_ux.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""
+
+#. module: sale_timesheet_ux
+#: model:ir.model.fields,help:sale_timesheet_ux.field_project_task__order_id
+msgid "Sales order to which the task is linked."
+msgstr ""
+
+#. module: sale_timesheet_ux
+#: model:ir.model,name:sale_timesheet_ux.model_project_task
+msgid "Task"
+msgstr ""
+
+#. module: sale_timesheet_ux
+#: model:ir.model.fields,help:sale_timesheet_ux.field_project_task__display_name
+msgid ""
+"Use these keywords in the title to set new tasks:\n"
+"\n"
+"        30h Allocate 30 hours to the task\n"
+"        #tags Set tags on the task\n"
+"        @user Assign the task to a user\n"
+"        ! Set the task a medium priority\n"
+"        !! Set the task a high priority\n"
+"        !!! Set the task a urgent priority\n"
+"\n"
+"        Make sure to use the right format and order e.g. Improve the configuration screen 5h #feature #v16 @Mitchell !"
+msgstr ""
+
+#. module: sale_timesheet_ux
+#: model_terms:ir.ui.view,arch_db:sale_timesheet_ux.change_allow_billable_wizzard
+msgid "Yes, Change it"
+msgstr ""
