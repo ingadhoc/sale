@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-17 17:07+0000\n"
+"POT-Creation-Date: 2025-11-25 18:22+0000\n"
 "PO-Revision-Date: 2025-11-13 16:28+0000\n"
 "Last-Translator: ADHOC - Bot <transbot@adhoc.com.ar>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -30,11 +30,6 @@ msgid "Automations"
 msgstr "Automatizaciones"
 
 #. module: sale_order_type_automation
-#: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type__journal_id
-msgid "Billing Journal"
-msgstr "Diario de facturación"
-
-#. module: sale_order_type_automation
 #: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type__journal_id
 msgid ""
 "Billing journal to be used by default. No matter invoice being created "
@@ -44,11 +39,6 @@ msgstr ""
 "Diario de facturación que se utilizará de forma predeterminada. No importa "
 "que la factura se cree de forma automática o manual. Si no se establece "
 "ningún diario aquí, se utilizará el diario predeterminado"
-
-#. module: sale_order_type_automation
-#: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type__invoice_company_id
-msgid "Company related to this journal"
-msgstr "Compañía relacionada con este diario"
 
 #. module: sale_order_type_automation
 #: model:ir.model.fields.selection,name:sale_order_type_automation.selection__sale_order_type__invoicing_atomation__create_invoice
@@ -102,9 +92,9 @@ msgid "Invoice Automation (Validate)"
 msgstr ""
 
 #. module: sale_order_type_automation
-#: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type__invoice_company_id
-msgid "Invoice Company"
-msgstr "Empresa de facturas"
+#: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type__journal_id
+msgid "Invoice Journal"
+msgstr "Diario de facturación"
 
 #. module: sale_order_type_automation
 #. odoo-python
@@ -181,6 +171,11 @@ msgstr "Automatización de pagos"
 #: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type__payment_journal_id
 msgid "Payment Journal"
 msgstr "Diario de pago"
+
+#. module: sale_order_type_automation
+#: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type__payment_journal_domain
+msgid "Payment Journal Domain"
+msgstr ""
 
 #. module: sale_order_type_automation
 #: model:sale.order.type,name:sale_order_type_automation.sale_order_type_validate_picking_and_invoice_automation

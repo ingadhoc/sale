@@ -3,16 +3,15 @@
 # 	* sale_exception_credit_limit
 # 
 # Translators:
-# Lara Valeri, 2025
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025
+# ADHOC - Bot <transbot@adhoc.com.ar>, 2025
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-06 14:13+0000\n"
-"PO-Revision-Date: 2024-12-10 15:33+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
+"POT-Creation-Date: 2025-11-25 20:47+0000\n"
+"PO-Revision-Date: 2025-11-25 19:48+0000\n"
+"Last-Translator: ADHOC - Bot <transbot@adhoc.com.ar>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -39,12 +38,26 @@ msgstr "Contacto"
 #. module: sale_exception_credit_limit
 #: model:exception.rule,name:sale_exception_credit_limit.credit_limit_exceeded
 msgid "Credit Limit Exceeded"
-msgstr "Límite de Crédito Excedido"
+msgstr ""
 
 #. module: sale_exception_credit_limit
 #: model:ir.model.fields,field_description:sale_exception_credit_limit.field_res_partner__credit_with_confirmed_orders
 #: model:ir.model.fields,field_description:sale_exception_credit_limit.field_res_users__credit_with_confirmed_orders
 msgid "Credit Taken"
+msgstr ""
+
+#. module: sale_exception_credit_limit
+#: model:ir.model.fields,field_description:sale_exception_credit_limit.field_account_move__display_name
+#: model:ir.model.fields,field_description:sale_exception_credit_limit.field_res_partner__display_name
+#: model:ir.model.fields,field_description:sale_exception_credit_limit.field_sale_order__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: sale_exception_credit_limit
+#: model:ir.model.fields,field_description:sale_exception_credit_limit.field_account_move__id
+#: model:ir.model.fields,field_description:sale_exception_credit_limit.field_res_partner__id
+#: model:ir.model.fields,field_description:sale_exception_credit_limit.field_sale_order__id
+msgid "ID"
 msgstr ""
 
 #. module: sale_exception_credit_limit
@@ -55,7 +68,7 @@ msgstr "Asiento contable"
 #. module: sale_exception_credit_limit
 #: model:exception.rule,description:sale_exception_credit_limit.credit_limit_exceeded
 msgid "Not enough credit on partner for this sales order."
-msgstr "No hay suficiente crédito en el Contacto para este pedido de venta."
+msgstr ""
 
 #. module: sale_exception_credit_limit
 #: model:ir.model,name:sale_exception_credit_limit.model_sale_order
