@@ -102,7 +102,7 @@ class SaleOrderType(models.Model):
     def _compute_payment_journal_domain(self):
         for rec in self:
             rec.payment_journal_domain = (
-                rec.env["account.journal"]._check_company_domain(rec.invoice_company_id)
+                Domain(rec.env["account.journal"]._check_company_domain(rec.invoice_company_id))
                 & Domain("type", "in", ["cash", "bank"])
                 & Domain("inbound_payment_method_line_ids.code", "=", "manual")
             )
