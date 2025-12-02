@@ -62,9 +62,9 @@ class SaleOrderTypology(models.Model):
     @api.depends("invoice_company_id")
     def _compute_journal_domain(self):
         for rec in self:
-            rec.journal_domain = rec.env["account.journal"]._check_company_domain(rec.invoice_company_id) & Domain(
-                "type", "=", "sale"
-            )
+            rec.journal_domain = Domain(
+                rec.env["account.journal"]._check_company_domain(rec.invoice_company_id)
+            ) & Domain("type", "=", "sale")
 
     @api.constrains("invoice_company_id", "journal_id")
     def _check_journal_company(self):
