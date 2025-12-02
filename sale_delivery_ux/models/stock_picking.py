@@ -8,7 +8,7 @@ from odoo import models
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    def _add_delivery_cost_to_so(self):
+    def _action_done(self):
         """
         We set qty delivered 1 for every sale order line that:
         * is a delivery
@@ -19,10 +19,11 @@ class StockPicking(models.Model):
         button or automatically by the picking and that the user has not change
         for any reason
         """
-        super()._add_delivery_cost_to_so()
+        res = super()._action_done()
         deliver_lines = self.sale_id.order_line.filtered(
             lambda x: (
                 x.is_delivery and not x.qty_delivered and x.product_id.type == "service" and x.product_uom_qty == 1.0
             )
         )
         deliver_lines.update({"qty_delivered": 1.0})
+        return res
