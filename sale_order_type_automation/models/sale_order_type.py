@@ -125,24 +125,3 @@ class SaleOrderType(models.Model):
         payment_journal_required = self.filtered(lambda x: x.payment_atomation != "none" and not x.payment_journal_id)
         if payment_journal_required:
             raise ValidationError(_("If you choose a Payment automation, Payment Journal " "is required"))
-
-    @api.constrains("journal_id", "payment_journal_id", "sequence_id")
-    def validate_company_id(self):
-        different_company = self.filtered(
-            lambda x: x.invoice_company_id
-            and x.payment_journal_id
-            and x.invoice_company_id != x.payment_journal_id.company_id
-        )
-        if different_company:
-            raise ValidationError(_("Invoice Journal and Payment Journal must be of the same " "company"))
-
-        # la cia es opcional en la secuencia, solo chequeamos si esta
-        # seteada
-        # TODO this should go in a pr to OCA sot module
-        sequence_diff_company = self.filtered(
-            lambda x: x.sequence_id.company_id
-            and x.warehouse_id.company_id
-            and x.sequence_id.company_id != x.company_id
-        )
-        if sequence_diff_company:
-            raise ValidationError(_("The company of the sequence and the warehouse must be " "the same"))
