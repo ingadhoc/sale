@@ -63,3 +63,9 @@ class SaleOrder(models.Model):
 
     def _get_protected_fields(self):
         return super()._get_protected_fields() + ["type_id"]
+
+    def _prepare_invoice(self):
+        res = super()._prepare_invoice()
+        if self.type_id.invoice_company_id and self.type_id.invoice_company_id != self.company_id:
+            res["company_id"] = self.type_id.invoice_company_id.id
+        return res
