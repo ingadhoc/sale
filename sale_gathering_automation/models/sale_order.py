@@ -2,8 +2,13 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import _, models
+from odoo import _, fields, models
 from odoo.fields import Command
+from odoo.tools.safe_eval import (
+    datetime as safe_eval_datetime,
+    dateutil as safe_eval_dateutil,
+    safe_eval,
+)
 
 
 class SaleOrder(models.Model):
@@ -69,7 +74,19 @@ class SaleOrder(models.Model):
                 invoices = advance_payment_wizard._create_invoices(order)
                 if invoices and order.type_id.invoicing_atomation == "validate_invoice":
                     try:
-                        invoices.sudo().action_post()
+                        if order.type_id.invoice_validate_domain:
+                            domain = safe_eval(
+                                order.type_id.invoice_validate_domain,
+                                {
+                                    "datetime": safe_eval_datetime,
+                                    "context_today": lambda: fields.Date.context_today(order),
+                                    "relativedelta": safe_eval_dateutil.relativedelta.relativedelta,
+                                },
+                            )
+                            invoices_to_validate = invoices.filtered_domain(domain)
+                        else:
+                            invoices_to_validate = invoices
+                        invoices_to_validate.sudo().action_post()
                     except Exception as error:
                         message = _(
                             "We couldn't validate the automatically created "
