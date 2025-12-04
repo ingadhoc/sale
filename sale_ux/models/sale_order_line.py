@@ -58,3 +58,30 @@ class SaleOrderLine(models.Model):
             and not (x.order_id.pricelist_id and x.pricelist_item_id._show_discount())
         )
         super(SaleOrderLine, self - lines)._compute_discount()
+
+    def _compute_product_uom_id(self):
+        """Override to respect only_packagings configuration"""
+        for line in self:
+            if line.product_id.product_tmpl_id.only_packagings and line.product_id.uom_ids:
+                if line.product_uom_id and line.product_uom_id in line.product_id.uom_ids:
+                    continue
+                line.product_uom_id = line.product_id.uom_ids[0]
+            else:
+                super()._compute_product_uom_id()
+
+    @api.depends("product_template_id.only_packagings")
+    def _compute_allowed_uom_ids(self):
+        lines = self.filtered(lambda x: x.product_id.product_tmpl_id.only_packagings)
+        for line in lines:
+            line.allowed_uom_ids = line.product_id.uom_ids
+        super(SaleOrderLine, self - lines)._compute_allowed_uom_ids()
+
+    def _get_product_catalog_lines_data(self, **kwargs):
+        res = super()._get_product_catalog_lines_data(**kwargs)
+        if (
+            len(self) == 1
+            and self.product_id.product_tmpl_id.only_packagings
+            and self.product_uom_id in self.product_id.uom_ids
+        ):
+            res["uomDisplayName"] = self.product_uom_id.display_name
+        return res

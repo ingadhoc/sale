@@ -8,6 +8,7 @@ from . import account_move
 from . import analytic_account
 from . import res_config_settings
 from . import product_product
+from . import product_template
 from . import account_fiscal_position
 from . import res_partner
 from . import crm_team
