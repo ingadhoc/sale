@@ -300,3 +300,11 @@ class SaleOrder(models.Model):
                     )
                 )
         return super().write(vals)
+
+    def _get_product_catalog_order_data(self, products, **kwargs):
+        """Override to use packaging UoM when only_packagings is set"""
+        res = super()._get_product_catalog_order_data(products, **kwargs)
+        for product in products:
+            if product.product_tmpl_id.only_packagings and product.uom_ids:
+                res[product.id]["uomDisplayName"] = product.uom_ids[0].display_name
+        return res
