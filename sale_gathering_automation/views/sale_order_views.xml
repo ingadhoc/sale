@@ -1,0 +1,13 @@
+<odoo>
+    <record id="view_order_form_inherit_gathering_automation" model="ir.ui.view">
+        <field name="name">sale.order.form.gathering.automation</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <button id="create_invoice" position="attributes">
+                <attribute name="type">object</attribute>
+                <attribute name="name">action_create_invoice_with_automation</attribute>
+            </button>
+        </field>
+    </record>
+</odoo>
