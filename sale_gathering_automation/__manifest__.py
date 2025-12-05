@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Sale Gathering Automation",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.1.0",
     "category": "Sales & Stock",
     "sequence": 14,
     "summary": "",
@@ -29,6 +29,9 @@
     "depends": [
         "sale_gathering",
         "sale_order_type_automation",
+    ],
+    "data": [
+        "views/sale_order_views.xml",
     ],
     "installable": True,
     "auto_install": True,
