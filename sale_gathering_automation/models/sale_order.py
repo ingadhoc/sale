@@ -14,6 +14,21 @@ from odoo.tools.safe_eval import (
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
+    def action_create_invoice_with_automation(self):
+        self.ensure_one()
+        if (
+            self.is_gathering
+            and self.state == "sale"
+            and self.type_id
+            and self.type_id.invoicing_atomation != "none"
+            and self.has_gathering_invoice
+            and any(line.qty_to_invoice for line in self.order_line)
+        ):
+            self.run_invoicing_atomation()
+            return self.action_view_invoice()
+
+        return self.env.ref("sale.action_view_sale_advance_payment_inv").read()[0]
+
     def run_invoicing_atomation(self):
         gathering_lines = self.filtered("is_gathering")
         super(SaleOrder, gathering_lines.with_context(invoice_gathering=True)).run_invoicing_atomation()
