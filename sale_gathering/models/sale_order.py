@@ -178,6 +178,7 @@ class SaleOrder(models.Model):
                 else:
                     products_invoice.reversed_entry_id = downpayment_invoice
                     invoices.write({"ref": "Devolución Canje"})
+                invoices = invoices.sorted(lambda m: 0 if m.move_type == "out_invoice" else 1)
             else:
                 invoices = super()._create_invoices(final=True, grouped=grouped, date=date)
             return invoices
