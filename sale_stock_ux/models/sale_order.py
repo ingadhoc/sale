@@ -68,9 +68,12 @@ class SaleOrder(models.Model):
     def check_force_delivery_status(self, vals):
         if vals.get("force_delivery_status") and not self.env.user.has_group("base.group_system"):
             group = self.env.ref("base.group_system").sudo()
-            raise UserError(
-                _('Only users with "%s / %s" can Set Delivered manually') % (group.category_id.name, group.name)
-            )
+            if group.privilege_id:
+                raise UserError(
+                    _('Only users with "%s / %s" can Set Delivered manually') % (group.privilege_id.name, group.name)
+                )
+            else:
+                raise UserError(_('Only users with "%s" can Set Delivered manually') % (group.name))
 
     def _get_protected_fields(self):
         return super()._get_protected_fields() + ["picking_policy", "warehouse_id"]
