@@ -121,9 +121,12 @@ class SaleOrder(models.Model):
         group = self.sudo().env.ref("base.group_system")
         for rec in self:
             if rec.force_invoiced_status and not self.env.user.has_group("base.group_system"):
-                raise ValidationError(
-                    _('Only users with "%s / %s" can Set Invoiced manually') % (group.category_id.name, group.name)
-                )
+                if group.privilege_id:
+                    raise ValidationError(
+                        _('Only users with "%s / %s" can Set Invoiced manually') % (group.privilege_id.name, group.name)
+                    )
+                else:
+                    raise ValidationError(_('Only users with "%s" can Set Invoiced manually') % (group.name))
 
     # COMENTAMOS PARA FIX TICKET 68773. ToDo: Evaluar
     # def _get_forbidden_state_confirm(self):
