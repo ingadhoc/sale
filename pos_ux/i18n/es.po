@@ -11,42 +11,45 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-22 08:30+0000\n"
-"PO-Revision-Date: 2025-10-21 20:05+0000\n"
-"Last-Translator: ADHOC - Bot <transbot@adhoc.com.ar>, 2025\n"
-"Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
+"PO-Revision-Date: 2025-12-11 21:35+0000\n"
+"Last-Translator: Matias Nahuel Peralta <mnp@adhoc.inc>\n"
+"Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
+"sale-19-0-pos_ux/es/>\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
+" ? 1 : 2);\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: pos_ux
 #: model:ir.model.fields,field_description:pos_ux.field_pos_config__billing_behavior
 #: model:ir.model.fields,field_description:pos_ux.field_res_config_settings__pos_billing_behavior
 msgid "Billing Behavior"
-msgstr ""
+msgstr "Comportamiento de facturación"
 
 #. module: pos_ux
 #: model:ir.model.fields,field_description:pos_ux.field_pos_config__block_invoice_download
 #: model:ir.model.fields,field_description:pos_ux.field_res_config_settings__pos_block_invoice_download
 msgid "Block Invoice Download"
-msgstr ""
+msgstr "Bloquear descarga de factura"
 
 #. module: pos_ux
 #: model_terms:ir.ui.view,arch_db:pos_ux.res_config_settings_view_form
 msgid "Block invoice donwload"
-msgstr ""
+msgstr "Bloquear descarga de factura"
 
 #. module: pos_ux
 #: model:ir.model.fields.selection,name:pos_ux.selection__pos_config__billing_behavior__invoice_by_default
 msgid "By default invoice"
-msgstr ""
+msgstr "Factura por defecto"
 
 #. module: pos_ux
 #. odoo-javascript
 #: code:addons/pos_ux/static/src/js/navbar/navbar.js:0
 msgid "Change contingency mode"
-msgstr ""
+msgstr "Cambiar el modo de contingencia"
 
 #. module: pos_ux
 #: model:ir.model,name:pos_ux.model_res_config_settings
@@ -57,12 +60,12 @@ msgstr "Ajustes de configuración"
 #. odoo-javascript
 #: code:addons/pos_ux/static/src/js/navbar/navbar.xml:0
 msgid "Contingency mode"
-msgstr ""
+msgstr "Modo contingencia"
 
 #. module: pos_ux
 #: model_terms:ir.ui.view,arch_db:pos_ux.view_pos_session_form
 msgid "Create invoices"
-msgstr ""
+msgstr "Crear Factura"
 
 #. module: pos_ux
 #: model:ir.model.fields,field_description:pos_ux.field_pos_config__display_name
@@ -77,12 +80,12 @@ msgstr "Nombre para mostrar"
 #. odoo-javascript
 #: code:addons/pos_ux/static/src/js/navbar/navbar.js:0
 msgid "End contingecy"
-msgstr ""
+msgstr "Terminar contingencia"
 
 #. module: pos_ux
 #: model_terms:ir.ui.view,arch_db:pos_ux.view_pos_session_form
 msgid "Exit contingency mode"
-msgstr ""
+msgstr "Salir del modo contingencia"
 
 #. module: pos_ux
 #: model:ir.model.fields,field_description:pos_ux.field_pos_config__id
@@ -91,23 +94,23 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_ux.field_res_config_settings__id
 #: model:ir.model.fields,field_description:pos_ux.field_res_users__id
 msgid "ID"
-msgstr ""
+msgstr "Id"
 
 #. module: pos_ux
 #. odoo-javascript
 #: code:addons/pos_ux/static/src/js/navbar/navbar.js:0
 msgid "If you enter the contingency mode, invoices will never be created."
-msgstr ""
+msgstr "Si ingresa al modo de contingencia, nunca se crearán facturas."
 
 #. module: pos_ux
 #: model:ir.model.fields,field_description:pos_ux.field_pos_session__invoice_contingency
 msgid "Invoice Contingency"
-msgstr ""
+msgstr "Contingencia de factura"
 
 #. module: pos_ux
 #: model:ir.model.fields.selection,name:pos_ux.selection__pos_config__billing_behavior__on_demand
 msgid "Invoice on demand"
-msgstr ""
+msgstr "Factura a demanda"
 
 #. module: pos_ux
 #. odoo-python
@@ -116,6 +119,8 @@ msgid ""
 "No se puede completar la operación: falta definir cuenta intermediaria en "
 "los siguientes métodos de pago: %s"
 msgstr ""
+"No se puede completar la operación: falta definir cuenta intermediaria en "
+"los siguientes métodos de pago:"
 
 #. module: pos_ux
 #. odoo-python
@@ -144,12 +149,12 @@ msgstr "Sesión TPV"
 #. odoo-javascript
 #: code:addons/pos_ux/static/src/js/navbar/navbar.js:0
 msgid "Set contingecy"
-msgstr ""
+msgstr "Establecer contingencia"
 
 #. module: pos_ux
 #: model_terms:ir.ui.view,arch_db:pos_ux.view_pos_session_form
 msgid "Set contingency mode"
-msgstr ""
+msgstr "Establecer modo de contingencia"
 
 #. module: pos_ux
 #: model:ir.model,name:pos_ux.model_res_users
@@ -159,4 +164,4 @@ msgstr "Usuario"
 #. module: pos_ux
 #: model:ir.model.fields.selection,name:pos_ux.selection__pos_config__billing_behavior__invoice_required
 msgid "allways Invoice"
-msgstr ""
+msgstr "siempre factura"
