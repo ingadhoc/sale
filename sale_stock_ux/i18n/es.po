@@ -1,23 +1,24 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* sale_stock_ux
-# 
+#
 # Translators:
 # ADHOC - Bot <transbot@adhoc.com.ar>, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-25 20:52+0000\n"
+"POT-Creation-Date: 2025-12-11 12:30+0000\n"
 "PO-Revision-Date: 2025-11-06 14:59+0000\n"
 "Last-Translator: ADHOC - Bot <transbot@adhoc.com.ar>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
+"1 : 2;\n"
 
 #. module: sale_stock_ux
 #: model_terms:ir.ui.view,arch_db:sale_stock_ux.sale_order_cancel_remaining_form
@@ -25,8 +26,8 @@ msgid ""
 "'Do you want to cancel remaining quantities for this orders? This can´t be "
 "undone'"
 msgstr ""
-"¿Queres cancelar las cantidades remanentes para estas ordenes? Esto no puede"
-" deshacerse"
+"¿Queres cancelar las cantidades remanentes para estas ordenes? Esto no puede "
+"deshacerse"
 
 #. module: sale_stock_ux
 #: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_stock_return_picking_form
@@ -48,8 +49,8 @@ msgstr ""
 #. module: sale_stock_ux
 #: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_stock_return_picking_form
 msgid ""
-"<b>No está marcado</b>: entonces <b>no se va</b> a actualizar la OC/OV. Esto"
-" es común, por ejemplo, si se devuelve mercadería defectuosa y se pretende "
+"<b>No está marcado</b>: entonces <b>no se va</b> a actualizar la OC/OV. Esto "
+"es común, por ejemplo, si se devuelve mercadería defectuosa y se pretende "
 "hacer una nueva entrega de la misma."
 msgstr ""
 
@@ -78,8 +79,7 @@ msgstr "Cancelar"
 #. odoo-python
 #: code:addons/sale_stock_ux/models/sale_order_line.py:0
 msgid ""
-"Cancel remaining call for line \"%s\" (id %s), line qty updated from %s to "
-"%s"
+"Cancel remaining call for line \"%s\" (id %s), line qty updated from %s to %s"
 msgstr ""
 "Cancelar remanente para linea \"%s\" (id %s), actualizada la cantidad de la "
 "linea desde %s a %s"
@@ -206,6 +206,14 @@ msgid "Only users with \"%s / %s\" can Set Delivered manually"
 msgstr "Solo los usuarios con \"%s / %s\" pueden setear Entregado manualmente"
 
 #. module: sale_stock_ux
+#. odoo-python
+#: code:addons/sale_stock_ux/models/sale_order.py:0
+#, fuzzy
+#| msgid "Only users with \"%s / %s\" can Set Delivered manually"
+msgid "Only users with \"%s\" can Set Delivered manually"
+msgstr "Solo los usuarios con \"%s / %s\" pueden setear Entregado manualmente"
+
+#. module: sale_stock_ux
 #: model:ir.model.fields,field_description:sale_stock_ux.field_stock_move__sale_id
 msgid "Order Reference"
 msgstr "Pedido de venta"
@@ -302,8 +310,8 @@ msgstr "Línea de pedido de venta"
 #. module: sale_stock_ux
 #: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_stock_return_picking_form
 msgid ""
-"Si la devolución no está ligada a una OC/OV entonces este campo no repercute"
-" en nada."
+"Si la devolución no está ligada a una OC/OV entonces este campo no repercute "
+"en nada."
 msgstr ""
 
 #. module: sale_stock_ux
@@ -334,8 +342,8 @@ msgid ""
 "moves. This can not be undone. Are you sure you want to continue?"
 msgstr ""
 "Esto establecerá una cantidad de línea igual a la cantidad de entrega y "
-"cancelará los movimientos restantes. Esto no se puede deshacer. Estás seguro"
-" de que quieres continuar?"
+"cancelará los movimientos restantes. Esto no se puede deshacer. Estás seguro "
+"de que quieres continuar?"
 
 #. module: sale_stock_ux
 #: model:ir.model.fields.selection,name:sale_stock_ux.selection__sale_order_line__delivery_status__to_deliver
