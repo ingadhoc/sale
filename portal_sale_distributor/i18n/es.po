@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-26 18:39+0000\n"
-"PO-Revision-Date: 2025-12-11 21:35+0000\n"
-"Last-Translator: Matias Nahuel Peralta <mnp@adhoc.inc>\n"
+"PO-Revision-Date: 2025-12-13 16:10+0000\n"
+"Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
 "sale-19-0-portal_sale_distributor/es/>\n"
 "Language: es\n"
@@ -103,7 +103,7 @@ msgstr "Crédito concedido específico para este contacto."
 #: model:ir.model.fields,field_description:portal_sale_distributor.field_sale_order__display_name
 #: model:ir.model.fields,field_description:portal_sale_distributor.field_sale_order_line__display_name
 msgid "Display Name"
-msgstr "Nombre para mostrar"
+msgstr "Nombre"
 
 #. module: portal_sale_distributor
 #. odoo-python
@@ -224,7 +224,7 @@ msgstr "Ventas: visible en"
 #. module: portal_sale_distributor
 #: model:ir.ui.menu,name:portal_sale_distributor.order_lines
 msgid "Sale Order Lines"
-msgstr ""
+msgstr "Líneas de Pedido de Venta"
 
 #. module: portal_sale_distributor
 #: model:ir.ui.menu,name:portal_sale_distributor.sale_menu
@@ -263,10 +263,10 @@ msgstr ""
 #. odoo-python
 #: code:addons/portal_sale_distributor/controllers/portal_account.py:0
 msgid "payment_state"
-msgstr ""
+msgstr "Estado del Pago"
 
 #. module: portal_sale_distributor
 #. odoo-python
 #: code:addons/portal_sale_distributor/controllers/portal_account.py:0
 msgid "state"
-msgstr ""
+msgstr "Estado"
