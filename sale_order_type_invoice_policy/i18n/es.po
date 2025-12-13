@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-25 20:50+0000\n"
-"PO-Revision-Date: 2025-12-11 21:35+0000\n"
-"Last-Translator: Matias Nahuel Peralta <mnp@adhoc.inc>\n"
+"PO-Revision-Date: 2025-12-13 16:10+0000\n"
+"Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
 "sale-19-0-sale_order_type_invoice_policy/es/>\n"
 "Language: es\n"
@@ -38,7 +38,7 @@ msgstr "Cantidades entregadas"
 #: model:ir.model.fields,field_description:sale_order_type_invoice_policy.field_stock_move__display_name
 #: model:ir.model.fields,field_description:sale_order_type_invoice_policy.field_stock_picking__display_name
 msgid "Display Name"
-msgstr "Nombre para mostrar"
+msgstr "Nombre"
 
 #. module: sale_order_type_invoice_policy
 #: model:ir.model.fields,field_description:sale_order_type_invoice_policy.field_sale_order_line__id
