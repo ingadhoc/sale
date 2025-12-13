@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-10 19:15+0000\n"
-"PO-Revision-Date: 2025-12-11 21:35+0000\n"
-"Last-Translator: Matias Nahuel Peralta <mnp@adhoc.inc>\n"
+"PO-Revision-Date: 2025-12-13 16:10+0000\n"
+"Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
 "sale-19-0-sale_ux/es/>\n"
 "Language: es\n"
@@ -63,6 +63,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
 msgid "Automatically select all available documents from PDF Quote Builder."
 msgstr ""
+"Seleccione automáticamente todos los documentos disponibles del "
+"\"PDF Quote Builder\"."
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
@@ -205,7 +207,7 @@ msgstr "Descuento"
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__display_name
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_line__display_name
 msgid "Display Name"
-msgstr "Nombre para mostrar"
+msgstr "Nombre"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__dont_send_notes_to_invoices
@@ -326,13 +328,15 @@ msgstr "Última actualización el"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__move_internal_notes
+#, fuzzy
 msgid "Mover notas internas a transferencias de stock y facturas"
-msgstr ""
+msgstr "Mover notas internas a transferencias de stock y facturas"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__move_note
+#, fuzzy
 msgid "Mover términos y condiciones a transferencias de stock y facturas"
-msgstr ""
+msgstr "Mover términos y condiciones a transferencias de stock y facturas"
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
@@ -415,7 +419,7 @@ msgstr "Historial de ventas para %s"
 #: model:ir.ui.menu,name:sale_ux.menu_sale_order
 #: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_usability_tree
 msgid "Sale Order Lines"
-msgstr "Línea de Pedido de Venta"
+msgstr "Líneas de Pedido de Venta"
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
@@ -462,7 +466,7 @@ msgstr "Comerciales"
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__group_delivery_date
 #: model:res.groups,name:sale_ux.group_delivery_date_on_report_online
 msgid "Show Delivery Date in Quotations report and online budget"
-msgstr ""
+msgstr "Mostrar fecha de entrega las  cotizaciones y presupuesto en línea."
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__show_product_image_on_report
