@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-25 09:39+0000\n"
-"PO-Revision-Date: 2025-12-11 21:35+0000\n"
-"Last-Translator: Matias Nahuel Peralta <mnp@adhoc.inc>\n"
+"PO-Revision-Date: 2025-12-13 16:10+0000\n"
+"Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
 "sale-19-0-sale_exception_print/es/>\n"
 "Language: es\n"
@@ -34,7 +34,7 @@ msgstr "Bloquear Envio de Presupuesto"
 #: model:ir.model.fields,field_description:sale_exception_print.field_sale_exception_confirm__display_name
 #: model:ir.model.fields,field_description:sale_exception_print.field_sale_order__display_name
 msgid "Display Name"
-msgstr "Nombre para mostrar"
+msgstr "Nombre"
 
 #. module: sale_exception_print
 #: model:ir.model,name:sale_exception_print.model_exception_rule
