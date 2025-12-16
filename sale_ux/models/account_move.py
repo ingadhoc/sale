@@ -31,10 +31,13 @@ class AccountMove(models.Model):
         for downpayment_line in downpayment_lines:
             # When change currency in downpayment
             if self.currency_id != downpayment_line.currency_id:
-                downpayment_line.price_unit = self.currency_id._convert(
-                    downpayment_line.price_unit,
-                    downpayment_line.currency_id,
-                    self.company_id,
-                    self.invoice_date or fields.Date.today(),
+                downpayment_invoice_line = self.invoice_line_ids.filtered(
+                    lambda l: l.is_downpayment and l.sale_line_ids.ids == downpayment_line.ids
                 )
+                downpayment_invoice_line.ensure_one()
+                price_unit = downpayment_invoice_line.price_unit
+                converted_price_unit = self.currency_id._convert(
+                    price_unit, downpayment_line.currency_id, self.company_id, self.invoice_date or fields.Date.today()
+                )
+                downpayment_line.price_unit = converted_price_unit
         return res
