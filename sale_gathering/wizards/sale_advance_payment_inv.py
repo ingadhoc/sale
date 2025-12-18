@@ -37,6 +37,6 @@ class SaleAdvancePaymentInvWizard(models.TransientModel):
 
     def _create_invoices(self, sale_orders):
         invoice = super()._create_invoices(sale_orders)
-        if invoice.invoice_line_ids.is_downpayment:
+        if invoice.invoice_line_ids.filtered("is_downpayment"):
             invoice.write({"ref": "Acopio"})
         return invoice
