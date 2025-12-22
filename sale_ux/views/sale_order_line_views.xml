@@ -25,7 +25,33 @@
             <sheet>
                 <notebook>
                     <page string="Invoice Lines">
-                        <field name="invoice_lines"/>
+                        <field name="invoice_lines">
+                            <list>
+                                <field name="date"/>
+                                <field name="move_id"/>
+                                <field name="account_id"/>
+                                <field name="partner_id" optional="show"/>
+                                <field name="name" optional="show"/>
+                                <field name="quantity" optional="show"/>
+                                <field name="debit" sum="Total Debit"/>
+                                <field name="credit" sum="Total Credit"/>
+                                <field name="matching_number" optional="show"/>
+                                <field name="invoice_date" optional="hide"/>
+                                <field name="journal_id" optional="hide"/>
+                                <field name="ref" optional="hide"/>
+                                <field name="product_id" optional="hide"/>
+                                <field name="deferred_start_date" string="Start Date" optional="hide"/>
+                                <field name="deferred_end_date" string="End Date" optional="hide"/>
+                                <field name="tax_ids" widget="many2many_tags" optional="hide"/>
+                                <field name="tax_tag_ids" string="Tax Grids" widget="many2many_tags" optional="hide"/>
+                                <field name="discount_date" optional="hide"/>
+                                <field name="discount_amount_currency" string="Discount Amount" optional="hide"/>
+                                <field name="tax_line_id" string="Originator Tax" optional="hide"/>
+                                <field name="date_maturity" string="Due Date" optional="hide"/>
+                                <field name="balance" optional="hide"/>
+                                <field name="amount_residual" string="Residual" optional="hide"/>
+                            </list>
+                        </field>
                     </page>
                 </notebook>
             </sheet>
