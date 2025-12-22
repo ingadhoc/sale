@@ -110,6 +110,15 @@ class SaleOrderLine(models.Model):
             if pack_enable and rec.product_id.pack_ok and rec.pack_type == "detailed" and rec.pack_child_line_ids:
                 rec.pack_child_line_ids.with_context(cancel_from_order=True).button_cancel_remaining()
             old_product_uom_qty = rec.product_uom_qty
+
+            # Resetear printed=False en pickings asociados para evitar contra-entregas
+            # cuando Odoo intente mezclar moves en pickings ya impresos
+            pickings_to_reset = rec.order_id.picking_ids.filtered(
+                lambda p: p.state not in ("done", "cancel") and p.printed
+            )
+            if pickings_to_reset:
+                pickings_to_reset.write({"printed": False})
+
             # Al final permitimos cancelar igual porque es necesario, por ej,
             # si no se va a entregar y ya está facturado y se quiere hacer
             # la nota de crédito. además se puede volver a subir la cantidad
@@ -189,10 +198,12 @@ class SaleOrderLine(models.Model):
                     # the we keep only the one related to the finished produst.
                     # This bom shoud be the only one since bom_line_id was written on the moves
                     relevant_bom = boms.filtered(
-                        lambda b: b.type == "phantom"
-                        and (
-                            b.product_id == order_line.product_id
-                            or (b.product_tmpl_id == order_line.product_id.product_tmpl_id and not b.product_id)
+                        lambda b: (
+                            b.type == "phantom"
+                            and (
+                                b.product_id == order_line.product_id
+                                or (b.product_tmpl_id == order_line.product_id.product_tmpl_id and not b.product_id)
+                            )
                         )
                     )
                     if relevant_bom:
@@ -209,8 +220,10 @@ class SaleOrderLine(models.Model):
                                 quantity_returned = 0.0
                             continue
                         filters = {
-                            "outgoing_moves": lambda m: m.location_dest_id.usage == "customer"
-                            and (not m.origin_returned_move_id or (m.origin_returned_move_id and m.to_refund)),
+                            "outgoing_moves": lambda m: (
+                                m.location_dest_id.usage == "customer"
+                                and (not m.origin_returned_move_id or (m.origin_returned_move_id and m.to_refund))
+                            ),
                             "incoming_moves": lambda m: m.location_dest_id.usage != "customer" and m.to_refund,
                         }
                         order_qty = order_line.product_uom._compute_quantity(
