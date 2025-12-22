@@ -118,9 +118,12 @@ class SaleOrderLine(models.Model):
             old_product_uom_qty = rec.product_uom_qty
 
             # Resetear printed=False en pickings asociados para evitar contra-entregas
-            printed_pickings = rec.move_ids.mapped("picking_id").filtered("printed")
-            if printed_pickings:
-                printed_pickings.write({"printed": False})
+            # cuando Odoo intente mezclar moves en pickings ya impresos
+            pickings_to_reset = rec.order_id.picking_ids.filtered(
+                lambda p: p.state not in ("done", "cancel") and p.printed
+            )
+            if pickings_to_reset:
+                pickings_to_reset.write({"printed": False})
 
             # Al final permitimos cancelar igual porque es necesario, por ej,
             # si no se va a entregar y ya está facturado y se quiere hacer
