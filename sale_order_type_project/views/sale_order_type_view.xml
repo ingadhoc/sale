@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sot_sale_order_type_form_view" model="ir.ui.view">
+        <field name="name">sale.order.type.form.view</field>
+        <field name="model">sale.order.type</field>
+        <field name="inherit_id" ref="sale_order_type.sot_sale_order_type_form_view"/>
+        <field name="arch" type="xml">
+            <field name="sequence_id" position="after">
+                <field name="project_id" groups="project.group_project_user,analytic.group_analytic_accounting" context="{'default_allow_billable': True}" />
+            </field>
+        </field>
+    </record>
+</odoo>
