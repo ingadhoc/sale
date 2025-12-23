@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-10 19:15+0000\n"
-"PO-Revision-Date: 2025-12-10 19:15+0000\n"
+"POT-Creation-Date: 2025-12-23 21:49+0000\n"
+"PO-Revision-Date: 2025-12-23 21:49+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -180,6 +180,11 @@ msgid "Discount"
 msgstr ""
 
 #. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
+msgid "Discount Amount"
+msgstr ""
+
+#. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_account_analytic_account__display_name
 #: model:ir.model.fields,field_description:sale_ux.field_account_fiscal_position__display_name
 #: model:ir.model.fields,field_description:sale_ux.field_account_move__display_name
@@ -205,8 +210,18 @@ msgid "Down Payment Amount With Taxes"
 msgstr ""
 
 #. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
+msgid "Due Date"
+msgstr ""
+
+#. module: sale_ux
 #: model:ir.model.fields,help:sale_ux.field_res_config_settings__cancel_old_quotations
 msgid "Enable automatic cancellation of old quotations."
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
+msgid "End Date"
 msgstr ""
 
 #. module: sale_ux
@@ -349,6 +364,11 @@ msgid "Order Date"
 msgstr ""
 
 #. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
+msgid "Originator Tax"
+msgstr ""
+
+#. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order__payment_term_id
 msgid "Payment Terms"
 msgstr ""
@@ -377,6 +397,11 @@ msgstr ""
 #. module: sale_ux
 #: model:ir.ui.menu,name:sale_ux.menu_product_catalog_reporting
 msgid "Reporting"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
+msgid "Residual"
 msgstr ""
 
 #. module: sale_ux
@@ -485,6 +510,11 @@ msgid ""
 msgstr ""
 
 #. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
+msgid "Start Date"
+msgstr ""
+
+#. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
 msgid "Status"
 msgstr ""
@@ -492,6 +522,11 @@ msgstr ""
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_order_form
 msgid "Subtotal"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
+msgid "Tax Grids"
 msgstr ""
 
 #. module: sale_ux
@@ -515,6 +550,16 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_usability_tree
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_order_form
 msgid "Total"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
+msgid "Total Credit"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
+msgid "Total Debit"
 msgstr ""
 
 #. module: sale_ux
