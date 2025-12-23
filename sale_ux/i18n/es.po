@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-10 19:15+0000\n"
+"POT-Creation-Date: 2025-12-23 21:49+0000\n"
 "PO-Revision-Date: 2025-12-13 16:10+0000\n"
 "Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
@@ -18,8 +18,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
-" ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
+"0) ? 1 : 2);\n"
 "X-Generator: Weblate 5.10.4\n"
 
 #. module: sale_ux
@@ -63,8 +63,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
 msgid "Automatically select all available documents from PDF Quote Builder."
 msgstr ""
-"Seleccione automáticamente todos los documentos disponibles del "
-"\"PDF Quote Builder\"."
+"Seleccione automáticamente todos los documentos disponibles del \"PDF Quote "
+"Builder\"."
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
@@ -195,6 +195,11 @@ msgid "Discount"
 msgstr "Descuento"
 
 #. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
+msgid "Discount Amount"
+msgstr ""
+
+#. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_account_analytic_account__display_name
 #: model:ir.model.fields,field_description:sale_ux.field_account_fiscal_position__display_name
 #: model:ir.model.fields,field_description:sale_ux.field_account_move__display_name
@@ -220,9 +225,19 @@ msgid "Down Payment Amount With Taxes"
 msgstr "Monto del anticipo con impuestos"
 
 #. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
+msgid "Due Date"
+msgstr ""
+
+#. module: sale_ux
 #: model:ir.model.fields,help:sale_ux.field_res_config_settings__cancel_old_quotations
 msgid "Enable automatic cancellation of old quotations."
 msgstr "Habilitar la cancelación automática de cotizaciones antiguas."
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
+msgid "End Date"
+msgstr ""
 
 #. module: sale_ux
 #: model:ir.model,name:sale_ux.model_account_fiscal_position
@@ -373,6 +388,11 @@ msgid "Order Date"
 msgstr "Fecha de pedido"
 
 #. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
+msgid "Originator Tax"
+msgstr ""
+
+#. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order__payment_term_id
 msgid "Payment Terms"
 msgstr "Condiciones de pago"
@@ -402,6 +422,11 @@ msgstr "Presupuestos"
 #: model:ir.ui.menu,name:sale_ux.menu_product_catalog_reporting
 msgid "Reporting"
 msgstr "Informes"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
+msgid "Residual"
+msgstr ""
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_order_form
@@ -511,6 +536,11 @@ msgid ""
 msgstr ""
 
 #. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
+msgid "Start Date"
+msgstr ""
+
+#. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
 msgid "Status"
 msgstr "Estado"
@@ -518,6 +548,11 @@ msgstr "Estado"
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_order_form
 msgid "Subtotal"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
+msgid "Tax Grids"
 msgstr ""
 
 #. module: sale_ux
@@ -542,6 +577,16 @@ msgstr "Esta orden fue duplicada de %s"
 #: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_usability_tree
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_order_form
 msgid "Total"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
+msgid "Total Credit"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
+msgid "Total Debit"
 msgstr ""
 
 #. module: sale_ux
