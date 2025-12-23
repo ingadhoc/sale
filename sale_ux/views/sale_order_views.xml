@@ -27,6 +27,11 @@
                 <attribute name="column_invisible"></attribute>
                 <attribute name="optional">hide</attribute>
             </xpath>
+
+            <xpath expr="//field[@name='order_line']/list" position="attributes">
+                <attribute name="limit">40</attribute>
+            </xpath>
+
             <group name="note_group" position="after">
                 <newline/>
                 <field name="internal_notes" nolabel="1" placeholder="Internal Notes..." groups="base.group_user"/>
