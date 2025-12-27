@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="view_crossovered_budget_lines">
+        <field name="name">crossovered.budget.lines</field>
+        <field name="model">crossovered.budget.lines</field>
+        <field eval="100" name="priority" />
+        <field name="arch" type="xml">
+            <form create="false">
+                <sheet>
+                    <div>
+                            <label for="planned_detail_ids" />
+                            <field name="planned_detail_ids">
+                                <tree editable="bottom">
+                                    <field name="product_id" groups="base.group_user" />
+                                    <field name="price_unit" />
+                                    <field name="product_uom_qty" />
+                                    <field name="discount" groups="product.group_discount_per_so_line" />
+                                    <field name="price_subtotal" />
+                                </tree>
+                            </field>
+                        <group
+                            class="oe_subtotal_footer oe_right"
+                            colspan="2"
+                            name="planned_amount"
+                        >
+                            <field
+                                name="planned_amount"
+                                widget="monetary"
+                                options="{'currency_field': 'currency_id'}"
+                            />
+                        </group>
+                    </div>
+                </sheet>
+                <footer>
+                    <button
+                        class="oe_highlight"
+                        name="button_save_data"
+                        string="Save"
+                        type="object"
+                    />
+                    or
+                    <button class="oe_link" special="cancel" string="Cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="crossovered_budget_view_form">
+        <field name="name">crossovered.budget.view.form</field>
+        <field name="model">crossovered.budget</field>
+        <field name="inherit_id" ref="account_budget.crossovered_budget_view_form"/>
+        <field name="arch" type="xml">
+            <field name="planned_amount" position="after">
+                <!-- TODO tal vez agrega campo calculado que vea si hay productos en positions y solo ahi muestre boton, analogo a esto
+                    attrs="{'invisible':[('pack_type', '!=', 'non_detailed_assisted')]}"
+                -->
+                <button
+                    name="action_assisted_pack_detail"
+                    string="Detail"
+                    type="object"
+                />
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="crossovered_budget_view_tree">
+        <field name="name">crossovered.budget.view.form</field>
+        <field name="model">crossovered.budget</field>
+        <field name="inherit_id" ref="account_budget.crossovered_budget_view_tree"/>
+        <field eval="100" name="priority" />
+        <field name="arch" type="xml">
+            <tree>
+                <button string="Copy" type="object" name="copy_and_link_to_so"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>
