@@ -41,6 +41,7 @@ class AccountMove(models.Model):
         for invoice in self.filtered(
             lambda x: x.move_type in ("out_invoice", "out_refund", "in_invoice", "in_refund")
             and x.state == "posted"
+            and x.payment_state in ("not_paid", "partial")
             and x.sale_type_id.payment_atomation == "validate_payment"
         ):
             try:
