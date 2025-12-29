@@ -73,11 +73,11 @@ class SaleOrderLine(models.Model):
                 outgoing_moves, incoming_moves = line._get_outgoing_incoming_moves()
                 for move in outgoing_moves.filtered(lambda m: m.is_exchange_move and m.state == "done"):
                     line.qty_delivered -= move.product_uom._compute_quantity(
-                        move.quantity, line.product_uom, rounding_method="HALF-UP"
+                        move.quantity, line.product_uom_id, rounding_method="HALF-UP"
                     )
                 for move in incoming_moves.filtered(lambda m: m.is_exchange_move and m.state == "done"):
                     line.qty_delivered += move.product_uom._compute_quantity(
-                        move.quantity, line.product_uom, rounding_method="HALF-UP"
+                        move.quantity, line.product_uom_id, rounding_method="HALF-UP"
                     )
 
     @api.depends("order_id.state", "qty_delivered", "product_uom_qty", "order_id.force_delivery_status")
