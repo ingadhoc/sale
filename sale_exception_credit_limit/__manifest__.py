@@ -19,12 +19,13 @@
 ##############################################################################
 {
     "name": "Sale Exception Credit Limit",
-    "version": "18.0.1.1.0",
+    "version": "18.0.1.2.0",
     "author": "ADHOC SA",
     "website": "www.adhoc.com.ar",
     "license": "AGPL-3",
     "depends": [
         "sale_exception",
+        "account_multicompany_ux",
     ],
     "data": [
         "security/sale_exception_credit_limit_security.xml",
