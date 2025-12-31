@@ -1,13 +1,16 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
     <template id="report_saleorder" inherit_id="sale.report_saleorder_document">
-        <xpath expr="//table//tr/th[@name='th_description']" position="before">
-            <th t-if="doc.env['ir.config_parameter'].sudo().get_param('sale_ux.show_product_image_on_report') and any(x.image_256 for x in doc.order_line.mapped('product_id'))" name="th_image" class="text-left">Image</th>
+        <xpath expr="//t[@t-set='display_discount']" position="after">
+            <t t-set="show_images" t-value="doc.env['ir.config_parameter'].sudo().get_param('sale_ux.show_product_image_on_report')"/>
         </xpath>
-        <xpath expr="//td[@name='td_product_name']" position="before">
-            <td t-if="doc.env['ir.config_parameter'].sudo().get_param('sale_ux.show_product_image_on_report') and any(x.image_256 for x in doc.order_line.mapped('product_id'))" name="td_image" class="text-center">
-                <img t-if="doc.env['ir.config_parameter'].sudo().get_param('sale_ux.show_product_image_on_report') and option.product_id.image_256" t-att-src="image_data_uri(line.product_id.image_256)" style="max-width: 50px; max-height: 50px;"/>
+        <th name="th_description" position="before">
+            <th t-if="show_images" name="th_image" class="text-center" style="width: 60px;">Image</th>
+        </th>
+        <td name="td_product_name" position="before">
+            <td t-if="show_images" name="td_image" class="text-center" style="width: 60px;">
+                <span t-if="line.product_id.image_128" t-field="line.product_id.image_128" t-options='{"widget": "image", "class": "img img-fluid", "style": "max-width: 50px; max-height: 50px; display: block; margin: auto;"}'/>
             </td>
-        </xpath>
+        </td>
     </template>
 </odoo>
