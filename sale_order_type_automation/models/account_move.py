@@ -8,6 +8,7 @@ from odoo import fields, models
 class AccountMove(models.Model):
     _inherit = "account.move"
 
+<<<<<<< 2f57e9e86da9ea97d23e91de0aae2c54c184bb61
     def _prepare_dict_account_payment(self, invoice, payment_journal):
         partner_type = invoice.move_type in ("out_invoice", "out_refund") and "customer" or "supplier"
         return {
@@ -49,3 +50,28 @@ class AccountMove(models.Model):
                 message = "Could not automatically create and validate payment. Error: %s" % error
                 invoice.message_post(body=message)
         return res
+||||||| 7c28fe2ff92b51328d673197e051bde0d5aeb16b
+    @api.onchange("sale_type_id")
+    def onchange_sale_type_set_pay_now(self):
+        if self.sale_type_id.payment_atomation != "none" and self.sale_type_id.payment_journal_id:
+            self.pay_now_journal_id = self.sale_type_id.payment_journal_id.id
+        else:
+            self.pay_now_journal_id = False
+=======
+    @api.onchange("sale_type_id")
+    def onchange_sale_type_set_pay_now(self):
+        if self.sale_type_id.payment_atomation != "none" and self.sale_type_id.payment_journal_id:
+            self.pay_now_journal_id = self.sale_type_id.payment_journal_id.id
+        else:
+            self.pay_now_journal_id = False
+
+    def _compute_company_id(self):
+        super()._compute_company_id()
+        # If company_id is empty after super (because _accessible_branches returned empty),
+        # assign the journal's company directly. This happens when in sudo mode and the user
+        # has no access to any company
+        for move in self.filtered(
+            lambda m: not m.company_id and m.sale_type_id.journal_id and m.sale_type_id.invoicing_atomation != "none"
+        ):
+            move.company_id = move.sale_type_id.journal_id.company_id
+>>>>>>> 0cda6ca122fbbcf70b37984a7b46ee896136a7b3
