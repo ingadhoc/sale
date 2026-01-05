@@ -14,3 +14,13 @@ class AccountMove(models.Model):
             self.pay_now_journal_id = self.sale_type_id.payment_journal_id.id
         else:
             self.pay_now_journal_id = False
+
+    def _compute_company_id(self):
+        super()._compute_company_id()
+        # If company_id is empty after super (because _accessible_branches returned empty),
+        # assign the journal's company directly. This happens when in sudo mode and the user
+        # has no access to any company
+        for move in self.filtered(
+            lambda m: not m.company_id and m.sale_type_id.journal_id and m.sale_type_id.invoicing_atomation != "none"
+        ):
+            move.company_id = move.sale_type_id.journal_id.company_id
