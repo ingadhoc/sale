@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-23 21:49+0000\n"
-"PO-Revision-Date: 2025-12-23 21:49+0000\n"
+"POT-Creation-Date: 2026-01-07 13:56+0000\n"
+"PO-Revision-Date: 2026-01-07 13:56+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -190,6 +190,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_ux.field_account_move__display_name
 #: model:ir.model.fields,field_description:sale_ux.field_crm_team__display_name
 #: model:ir.model.fields,field_description:sale_ux.field_product_product__display_name
+#: model:ir.model.fields,field_description:sale_ux.field_product_template__display_name
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:sale_ux.field_res_partner__display_name
 #: model:ir.model.fields,field_description:sale_ux.field_sale_advance_payment_inv__display_name
@@ -255,6 +256,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_ux.field_account_move__id
 #: model:ir.model.fields,field_description:sale_ux.field_crm_team__id
 #: model:ir.model.fields,field_description:sale_ux.field_product_product__id
+#: model:ir.model.fields,field_description:sale_ux.field_product_template__id
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__id
 #: model:ir.model.fields,field_description:sale_ux.field_res_partner__id
 #: model:ir.model.fields,field_description:sale_ux.field_sale_advance_payment_inv__id
@@ -275,6 +277,14 @@ msgid ""
 "In sales: When this fiscal position is set, if the product has taxes "
 "included in the price, they will be deducted from the price calculation when"
 " mapping to new taxes."
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,help:sale_ux.field_product_product__only_packagings
+#: model:ir.model.fields,help:sale_ux.field_product_template__only_packagings
+msgid ""
+"Indicates that this product is only used as packaging and does not use "
+"units."
 msgstr ""
 
 #. module: sale_ux
@@ -347,6 +357,12 @@ msgid "Number of days to keep quotations before cancelling them."
 msgstr ""
 
 #. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_product_product__only_packagings
+#: model:ir.model.fields,field_description:sale_ux.field_product_template__only_packagings
+msgid "Only Packagings"
+msgstr ""
+
+#. module: sale_ux
 #. odoo-python
 #: code:addons/sale_ux/models/sale_order.py:0
 msgid "Only users with \"%s / %s\" can Set Invoiced manually"
@@ -371,6 +387,11 @@ msgstr ""
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order__payment_term_id
 msgid "Payment Terms"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model,name:sale_ux.model_product_template
+msgid "Product"
 msgstr ""
 
 #. module: sale_ux
