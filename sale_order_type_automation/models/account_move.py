@@ -20,7 +20,8 @@ class AccountMove(models.Model):
         # If company_id is empty after super (because _accessible_branches returned empty),
         # assign the journal's company directly. This happens when in sudo mode and the user
         # has no access to any company
-        for move in self.filtered(
-            lambda m: not m.company_id and m.sale_type_id.journal_id and m.sale_type_id.invoicing_atomation != "none"
-        ):
-            move.company_id = move.sale_type_id.journal_id.company_id
+        for move in self.filtered(lambda m: not m.company_id):
+            sale_type_id = self.env["sale.order.type"].browse(self.env.context.get("sale_type_id")) or move.sale_type_id  # noqa
+
+            if sale_type_id.journal_id and sale_type_id.invoicing_atomation != "none":
+                move.company_id = sale_type_id.journal_id.company_id
