@@ -32,6 +32,8 @@ class SaleOrder(models.Model):
             invoices = rec._create_invoices(final=True)
             if not invoices:
                 continue
+            invoices.write({"sale_type_id": rec.type_id.id})
+
             if rec.type_id.invoicing_atomation == "validate_invoice":
                 if rec._context.get("commit_invoice_automation"):
                     rec.env.cr.commit()
@@ -48,7 +50,7 @@ class SaleOrder(models.Model):
                         invoices_to_validate = invoices.filtered_domain(domain)
                     else:
                         invoices_to_validate = invoices
-                    invoices_to_validate.sudo().action_post()
+                    invoices_to_validate.with_context(sale_type_id=rec.type_id.id).sudo().action_post()
                     for invoice in invoices_to_validate:  # to avoid "expected singleton" error
                         if (
                             invoice.name
