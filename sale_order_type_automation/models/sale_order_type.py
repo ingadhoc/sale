@@ -42,6 +42,11 @@ class SaleOrderType(models.Model):
         "user. Should only be use if it is common that you are facing errors "
         "on invoice validation.",
     )
+    background_post = fields.Boolean(
+        string="Validate Invoice in Background",
+        help="If checked, invoices will be validated in background. "
+        "Requires account_background_post module to be installed.",
+    )
     payment_atomation = fields.Selection(
         [
             ("none", "None"),
@@ -125,3 +130,17 @@ class SaleOrderType(models.Model):
         payment_journal_required = self.filtered(lambda x: x.payment_atomation != "none" and not x.payment_journal_id)
         if payment_journal_required:
             raise ValidationError(_("If you choose a Payment automation, Payment Journal " "is required"))
+
+    @api.constrains("background_post")
+    def validate_background_post(self):
+        background_post_records = self.filtered(lambda x: x.background_post)
+        if background_post_records:
+            module_installed = (
+                self.env["ir.module.module"]
+                .sudo()
+                .search([("name", "=", "account_background_post"), ("state", "=", "installed")], limit=1)
+            )
+            if not module_installed:
+                raise ValidationError(
+                    _("To use Background Post, you must install the 'account_background_post' module.")
+                )
