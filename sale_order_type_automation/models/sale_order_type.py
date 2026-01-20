@@ -11,7 +11,7 @@ class SaleOrderType(models.Model):
     _inherit = "sale.order.type"
 
     # TODO this should go in a pr to OCA
-    sequence_id = fields.Many2one(domain="['|', ('company_id', '=', company_id), " "('company_id', '=', False)]")
+    sequence_id = fields.Many2one(domain="['|', ('company_id', '=', company_id), ('company_id', '=', False)]")
     # agregamos help
     journal_id = fields.Many2one(
         help="Billing journal to be used by default. No matter invoice being "
@@ -44,6 +44,11 @@ class SaleOrderType(models.Model):
         " it. This option is not recommended because it is less intuiteve for "
         "user. Should only be use if it is common that you are facing errors "
         "on invoice validation.",
+    )
+    background_post = fields.Boolean(
+        string="Validate Invoice in Background",
+        help="If checked, invoices will be validated in background. "
+        "Requires account_background_post module to be installed.",
     )
     payment_atomation = fields.Selection(
         [
@@ -114,7 +119,7 @@ class SaleOrderType(models.Model):
     def validate_invoicing_atomation(self):
         payment_journal_required = self.filtered(lambda x: x.payment_atomation != "none" and not x.payment_journal_id)
         if payment_journal_required:
-            raise ValidationError(_("If you choose a Payment automation, Payment Journal " "is required"))
+            raise ValidationError(_("If you choose a Payment automation, Payment Journal is required"))
 
     @api.constrains("journal_id", "payment_journal_id", "sequence_id")
     def validate_company_id(self):
@@ -124,7 +129,7 @@ class SaleOrderType(models.Model):
             and x.invoice_company_id != x.payment_journal_id.company_id
         )
         if different_company:
-            raise ValidationError(_("Invoice Journal and Payment Journal must be of the same " "company"))
+            raise ValidationError(_("Invoice Journal and Payment Journal must be of the same company"))
 
         # la cia es opcional en la secuencia, solo chequeamos si esta
         # seteada
@@ -135,4 +140,18 @@ class SaleOrderType(models.Model):
             and x.sequence_id.company_id != x.company_id
         )
         if sequence_diff_company:
-            raise ValidationError(_("The company of the sequence and the warehouse must be " "the same"))
+            raise ValidationError(_("The company of the sequence and the warehouse must be the same"))
+
+    @api.constrains("background_post")
+    def validate_background_post(self):
+        background_post_records = self.filtered(lambda x: x.background_post)
+        if background_post_records:
+            module_installed = (
+                self.env["ir.module.module"]
+                .sudo()
+                .search([("name", "=", "account_background_post"), ("state", "=", "installed")], limit=1)
+            )
+            if not module_installed:
+                raise ValidationError(
+                    _("To use Background Post, you must install the 'account_background_post' module.")
+                )

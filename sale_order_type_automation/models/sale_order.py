@@ -29,12 +29,14 @@ class SaleOrder(models.Model):
             # a list is returned but only one invoice should be returned
             # usamos final para que reste adelantos y tmb por ej
             # por si se usa el modulo de facturar las returns
+            if rec.type_id.background_post:
+                rec = rec.with_context(default_background_post=True)
             invoices = rec._create_invoices(final=True)
             if not invoices:
                 continue
             invoices.write({"sale_type_id": rec.type_id.id})
 
-            if rec.type_id.invoicing_atomation == "validate_invoice":
+            if rec.type_id.invoicing_atomation == "validate_invoice" and not rec.type_id.background_post:
                 if rec._context.get("commit_invoice_automation"):
                     rec.env.cr.commit()
                 try:
