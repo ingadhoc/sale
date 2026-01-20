@@ -39,3 +39,31 @@ class AccountMove(models.Model):
                 self.currency_id = new_currency
         if self.state == "draft" and self._get_last_sequence() and self.name and self.name != "/":
             self.name = "/"
+
+    def action_post(self):
+        """Procesa los anticipos multi-compañía al confirmar la factura."""
+        res = super().action_post()
+        for rec in self:
+            dp_lines = rec.line_ids.sale_line_ids.filtered(lambda l: l.is_downpayment and not l.display_type)
+            downpayment_lines = dp_lines.filtered(lambda sol: not sol.order_id.locked)
+            for so_dpl in downpayment_lines:
+                # Si la compañía de la línea de venta difiere de la compañía de la factura,
+                # es necesario ajustar los impuestos para escenarios multi-compañía
+
+                if so_dpl.company_id != rec.company_id:
+                    fp_tax_groups = self.env["account.tax.group"]
+                    original_taxes = {
+                        so_dpl.id: line.tax_ids.filtered(lambda x: x.tax_group_id not in fp_tax_groups).ids[:]
+                        for line in rec.invoice_line_ids
+                    }
+                    acc = self.env["account.change.company"].create(
+                        {
+                            "move_id": rec.id,
+                            "company_ids": [so_dpl.company_id.id, rec.company_id.id],
+                            "company_id": so_dpl.company_id.id,
+                            "journal_id": rec.sale_type_id.journal_id.id,
+                        }
+                    )
+                    # Aplicar el cambio de impuestos según la nueva compañía
+                    acc._get_change_company_line_taxes(so_dpl, original_taxes, fiscal_pos=None)
+        return res
