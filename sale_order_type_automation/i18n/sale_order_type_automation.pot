@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-03 20:01+0000\n"
-"PO-Revision-Date: 2025-12-03 20:01+0000\n"
+"POT-Creation-Date: 2026-01-21 15:06+0000\n"
+"PO-Revision-Date: 2026-01-21 15:06+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -66,6 +66,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type__id
 #: model:ir.model.fields,field_description:sale_order_type_automation.field_stock_picking__id
 msgid "ID"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type__background_post
+msgid ""
+"If checked, invoices will be validated in background. Requires "
+"account_background_post module to be installed."
 msgstr ""
 
 #. module: sale_order_type_automation
@@ -201,6 +208,14 @@ msgid ""
 msgstr ""
 
 #. module: sale_order_type_automation
+#. odoo-python
+#: code:addons/sale_order_type_automation/models/sale_order_type.py:0
+msgid ""
+"To use Background Post, you must install the 'account_background_post' "
+"module."
+msgstr ""
+
+#. module: sale_order_type_automation
 #: model:ir.model,name:sale_order_type_automation.model_stock_picking
 msgid "Transfer"
 msgstr ""
@@ -225,6 +240,11 @@ msgstr ""
 #. module: sale_order_type_automation
 #: model:ir.model.fields.selection,name:sale_order_type_automation.selection__sale_order_type__invoicing_atomation__validate_invoice
 msgid "Validate Invoice"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type__background_post
+msgid "Validate Invoice in Background"
 msgstr ""
 
 #. module: sale_order_type_automation
