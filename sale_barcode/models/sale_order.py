@@ -30,7 +30,8 @@ class SaleOrder(models.Model):
     def _add_product(self, product, qty=1.0):
         corresponding_line = self.order_line.filtered(lambda x: x.product_id == product)
         if corresponding_line:
-            corresponding_line.product_uom_qty += qty
+            # If multiple lines exist, increment the first one
+            corresponding_line[0].product_uom_qty += qty
         else:
             self.order_line.new(
                 {
