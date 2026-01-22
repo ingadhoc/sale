@@ -314,6 +314,7 @@ class SaleOrderLine(models.Model):
             stock_quants = self.env["stock.quant"].read_group(
                 domain=[
                     ("location_id.usage", "=", "internal"),
+                    ("location_id.show_stock_on_products", "=", True),
                     ("product_id", "=", line.product_id.id),
                     ("quantity", ">", 0),
                 ],

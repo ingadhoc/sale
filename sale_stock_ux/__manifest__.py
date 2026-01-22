@@ -32,6 +32,7 @@
         "sale_ux",
         "stock_ux",
         "web",
+        "product_stock_by_location",
     ],
     "data": [
         "security/ir.model.access.csv",
