@@ -9,7 +9,7 @@
         </th>
         <td name="td_product_name" position="before">
             <td t-if="show_images" name="td_image" class="text-center" style="width: 60px;">
-                <span t-if="line.product_id.image_128" t-field="line.product_id.image_128" t-options='{"widget": "image", "class": "img img-fluid", "style": "max-width: 50px; max-height: 50px; display: block; margin: auto;"}'/>
+                <span t-if="line.product_id.image_sale_order" t-field="line.product_id.image_sale_order" t-options='{"widget": "image", "class": "img img-fluid", "style": "max-width: 50px; max-height: 50px; display: block; margin: auto;"}'/>
             </td>
         </td>
     </template>
