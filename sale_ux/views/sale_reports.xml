@@ -9,7 +9,7 @@
         </th>
         <td name="td_name" position="before">
             <td t-if="show_images" name="td_image" class="text-center" style="width: 60px;">
-                <span t-if="line.product_id.image_128" t-field="line.product_id.image_128" t-options='{"widget": "image", "class": "img img-fluid", "style": "max-width: 50px; max-height: 50px; display: block; margin: auto;"}'/>
+                <span t-if="line.product_id.image_sale_order" t-field="line.product_id.image_sale_order" t-options='{"widget": "image", "class": "img img-fluid", "style": "max-width: 50px; max-height: 50px; display: block; margin: auto;"}'/>
             </td>
         </td>
     </template>
@@ -22,7 +22,7 @@
         </xpath>
         <xpath expr="//td[@name='td_option_name']" position="before">
             <td t-if="show_images" name="td_image_option" class="text-center" style="width: 60px;">
-                <img t-if="option.product_id.image_128" t-att-src="image_data_uri(option.product_id.image_128)" style="max-width: 50px; max-height: 50px;"/>
+                <img t-if="option.product_id.image_sale_order" t-att-src="image_data_uri(option.product_id.image_sale_order)" style="max-width: 50px; max-height: 50px;"/>
             </td>
         </xpath>
     </template>
