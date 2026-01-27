@@ -20,5 +20,8 @@ class SaleOrderLine(models.Model):
         for order in self.mapped("order_id"):
             number = 1
             for line in order.order_line.sorted("sequence"):
+                if line.display_type:
+                    line.number = False
+                    continue
                 line.number = number
                 number += 1
