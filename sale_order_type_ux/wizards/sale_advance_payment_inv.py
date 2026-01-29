@@ -24,6 +24,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
 
     def _create_invoices(self, sale_orders):
         # if discount product has a company associated, we need to remove it before changing the company in invoice
+        self = self.sudo()
         if self.mapped("sale_order_ids.type_id.journal_id.company_id") != self.mapped("sale_order_ids.company_id"):
             discount_lines = self.mapped("sale_order_ids.order_line").filtered(
                 lambda x: x.product_id == self.company_id.sale_discount_product_id
