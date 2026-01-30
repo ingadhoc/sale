@@ -34,6 +34,13 @@ class SaleOrder(models.Model):
             invoices = rec._create_invoices(final=True)
             if not invoices:
                 continue
+<<<<<<< b64dc305e6c08c1ea65d67a45ab206a6cdd76ef8
+||||||| c71a3df116b61c2ef21ba3f851bbaa82ada39f10
+            invoices.write({"sale_type_id": rec.type_id.id})
+
+=======
+
+>>>>>>> dda95bf61bcc0c724d559eefef89760e1deb4b81
             if rec.type_id.invoicing_atomation == "validate_invoice" and not rec.type_id.background_post:
                 if rec.env.context.get("commit_invoice_automation"):
                     rec.env.cr.commit()
@@ -122,3 +129,21 @@ class SaleOrder(models.Model):
             if self.type_id.set_done_on_confirmation:
                 self.action_lock()
         return res
+<<<<<<< b64dc305e6c08c1ea65d67a45ab206a6cdd76ef8
+||||||| c71a3df116b61c2ef21ba3f851bbaa82ada39f10
+
+    def _prepare_invoice(self):
+        res = super()._prepare_invoice()
+        if (self.type_id.payment_atomation != "none") and self.type_id.payment_journal_id:
+            res["pay_now_journal_id"] = self.type_id.payment_journal_id.id
+        return res
+=======
+
+    def _prepare_invoice(self):
+        res = super()._prepare_invoice()
+        if (self.type_id.payment_atomation != "none") and self.type_id.payment_journal_id:
+            res["pay_now_journal_id"] = self.type_id.payment_journal_id.id
+        if self.type_id:
+            res["sale_type_id"] = self.type_id.id
+        return res
+>>>>>>> dda95bf61bcc0c724d559eefef89760e1deb4b81
