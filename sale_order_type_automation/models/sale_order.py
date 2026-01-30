@@ -34,7 +34,6 @@ class SaleOrder(models.Model):
             invoices = rec._create_invoices(final=True)
             if not invoices:
                 continue
-            invoices.write({"sale_type_id": rec.type_id.id})
 
             if rec.type_id.invoicing_atomation == "validate_invoice" and not rec.type_id.background_post:
                 if rec._context.get("commit_invoice_automation"):
@@ -129,4 +128,6 @@ class SaleOrder(models.Model):
         res = super()._prepare_invoice()
         if (self.type_id.payment_atomation != "none") and self.type_id.payment_journal_id:
             res["pay_now_journal_id"] = self.type_id.payment_journal_id.id
+        if self.type_id:
+            res["sale_type_id"] = self.type_id.id
         return res
