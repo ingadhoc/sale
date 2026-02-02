@@ -81,4 +81,4 @@ class ResConfigSettings(models.TransientModel):
     def action_recompute_image_sale_order(self):
         self.env["product.template"].search(
             [("image_128", "!=", False), ("image_sale_order", "=", False)], limit=200
-        )._recompute_image_sale_order()
+        )._compute_image_sale_order()
