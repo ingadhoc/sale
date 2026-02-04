@@ -22,7 +22,24 @@ class SaleAdvancePaymentInvWizard(models.TransientModel):
             invoices = sale_orders.with_context(invoice_gathering=True)._create_invoices()
             return self.sale_order_ids.action_view_invoice(invoices=invoices)
         else:
-            return super().create_invoices()
+            uninvoiced_gathering_orders = sale_orders.filtered(
+                lambda so: so.is_gathering and not so.has_gathering_invoice
+            )
+            res = False
+            if uninvoiced_gathering_orders:
+                res = super(
+                    SaleAdvancePaymentInvWizard,
+                    self.with_context(active_ids=uninvoiced_gathering_orders.ids, first_gathering_invoice=True),
+                ).create_invoices()
+            remaining_orders = sale_orders - uninvoiced_gathering_orders
+            if remaining_orders:
+                res = super(
+                    SaleAdvancePaymentInvWizard,
+                    self.with_context(
+                        active_ids=remaining_orders.ids,
+                    ),
+                ).create_invoices()
+            return res
 
     # TODO seria ideal esto llevarlo a UX y que no se muestre la opción directamente
     @api.constrains("advance_payment_method")
