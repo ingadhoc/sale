@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Vista para editar credit_limit por compañía -->
+    <record id="view_property_credit_limit_form" model="ir.ui.view">
+        <field name="name">res.company.property.credit.limit.form</field>
+        <field name="model">res.company.property</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="account_multicompany_ux.view_res_company_account_property_form"/>
+        <field name="arch" type="xml">
+            <list position="inside">
+                <field name="property_credit_limit" 
+                       string="Credit Limit"/>
+            </list>
+        </field>
+    </record>
+
+</odoo>

@@ -1,18 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="res_config_settings_view_form" model="ir.ui.view">
+    <record id="res_config_settings_view_form_credit_limit" model="ir.ui.view">
         <field name="name">res.config.settings.view.form.inherit.sale_exception_credit_limit</field>
         <field name="model">res.config.settings</field>
-        <field name="priority" eval="40"/>
-        <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+        <field name="priority" eval="99"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
         <field name="arch" type="xml">
-            <!-- Ocultamos default de sale_exception por comportamiento no esperado:
-            Si seteamos un valor x en default, siempre que esté este seteado en el partner
-            se inactiva el credit limit. Ocultamos para que quede siempre en 0 y asi replica
-            lo que hacemos en 15.0 -->
-            <xpath expr="//field[@name='account_default_credit_limit']" position="attributes">
+            <xpath expr="//block[@id='invoicing_settings']/setting[field[@name='account_use_credit_limit']]" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
+            <!-- Campo auxiliar oculto -->
+            <field name="company_id" position="after">
+                <field name="is_root_company" invisible="1"/>
+            </field>
+            
+            <!-- Insertar dentro de invoicing_settings -->
+            <xpath expr="//block[@id='invoicing_settings']" position="inside">
+                
+                <!-- ============================================ -->
+                <!-- SETTING PARA ROOT COMPANY (editable)        -->
+                <!-- ============================================ -->
+                <setting id="credit_limit_multicompany" 
+                         string="Use Credit Limit"
+                         company_dependent="1"
+                         invisible="not is_root_company"
+                         help="Enable credit limit validation for sales orders. This setting will automatically propagate to all child companies.">
+                    <field name="account_use_credit_limit"/>
+                </setting>
+                
+                <!-- ============================================ -->
+                <!-- SETTING PARA CHILD COMPANY (readonly)       -->
+                <!-- ============================================ -->
+                <setting id="credit_limit_multicompany_inherited" 
+                         string="Use Credit Limit (Inherited)"
+                         invisible="is_root_company">
+                    
+                    <!-- Mensaje informativo -->
+                    <div class="text-muted mb-2">
+                        <i class="fa fa-info-circle text-info"/> 
+                        <em>Credit limit settings are managed by the parent company and cannot be modified here.</em>
+                    </div>
+                    
+                    <!-- Campo readonly -->
+                    <field name="account_use_credit_limit" 
+                           readonly="1"
+                           force_save="0"/>
+                </setting>
+                
+            </xpath>
+            
         </field>
     </record>
 </odoo>

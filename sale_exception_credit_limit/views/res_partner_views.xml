@@ -5,22 +5,43 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="account.view_partner_property_form"/>
         <field name="arch" type="xml">
+            
+            <!-- Campo auxiliar oculto para detectar si es branch -->
+            <field name="company_id" position="before">
+                <field name="is_branch_company" invisible="1"/>
+            </field>
+            
+            <!-- Ocultar credit nativo -->
             <field name="credit" position="attributes">
                 <attribute name="invisible">1</attribute>
             </field>
+            
+            <!-- Agregar credit_with_confirmed_orders -->
             <field name="credit" position="after">
-                <field name="credit_with_confirmed_orders" invisible="not use_partner_credit_limit"/>
+                <field name="credit_with_confirmed_orders" 
+                       invisible="not use_partner_credit_limit"/>
             </field>
-            <!-- Make fields editable only if the user has permissions. This is not only visually better, but also necessary to prevent the field from being included in vals and triggering the constraint. -->
+            
+            <!-- use_partner_credit_limit: editable en ROOT, readonly en BRANCH -->
             <field name="use_partner_credit_limit" position="attributes">
-                <attribute name="readonly">not user_credit_config</attribute>
+                <attribute name="readonly">not user_credit_config or is_branch_company</attribute>
             </field>
+            
+            <!-- Mensaje si está heredado -->
+            <field name="use_partner_credit_limit" position="after">
+                <div invisible="not is_branch_company or not use_partner_credit_limit" 
+                     class="alert alert-info">
+                    <i class="fa fa-info-circle"/> 
+                    <em>Credit limit settings inherited from parent company</em>
+                </div>
+            </field>
+            
+            <!-- credit_limit: editable en ROOT, readonly en BRANCH -->
             <field name="credit_limit" position="attributes">
                 <attribute name="invisible">not use_partner_credit_limit</attribute>
-                <attribute name="readonly">not user_credit_config</attribute>
+                <attribute name="readonly">not user_credit_config or is_branch_company</attribute>
             </field>
 
         </field>
     </record>
-
 </odoo>

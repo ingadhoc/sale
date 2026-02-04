@@ -25,12 +25,14 @@
     "license": "AGPL-3",
     "depends": [
         "sale_exception",
+        # "account_multicompany_ux",  # Comentado temporalmente - causa error al crear contactos
     ],
     "data": [
         "security/sale_exception_credit_limit_security.xml",
         "data/exception_rule_data.xml",
         "views/res_partner_views.xml",
         "views/res_config_settings_views.xml",
+        # "views/res_company_property_views.xml"
     ],
     "demo": ["demo/res_partner_demo.xml"],
     "installable": True,
