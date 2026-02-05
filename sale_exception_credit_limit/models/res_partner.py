@@ -35,6 +35,24 @@ class ResPartner(models.Model):
                         )
         return super().write(vals)
 
+    def _get_company_hierarchy(self, company):
+        """Get all companies in the hierarchy (parent and all childs)"""
+        if company.parent_id:
+            # Get the root parent
+            root = company
+            while root.parent_id:
+                root = root.parent_id
+            company = root
+
+        # Get all childs recursively
+        companies = company
+        childs = self.env["res.company"].search([("parent_id", "=", company.id)])
+        while childs:
+            companies |= childs
+            childs = self.env["res.company"].search([("parent_id", "in", childs.ids)])
+
+        return companies
+
     @api.depends_context("company")
     def _compute_credit_with_confirmed_orders(self):
         # Set to 0 if use_partner_credit_limit is not enabled to avoid unnecessary computations
@@ -43,6 +61,8 @@ class ResPartner(models.Model):
                 rec.credit_with_confirmed_orders = 0
             else:
                 company_id = self.env.company
+                # Get all companies in the hierarchy
+                hierarchy_companies = rec._get_company_hierarchy(company_id)
 
                 domain = [
                     ("order_id.partner_id.commercial_partner_id", "=", rec.commercial_partner_id.id),
@@ -50,6 +70,8 @@ class ResPartner(models.Model):
                     # in the total amount, not just the invoiced part. This search helps avoid including fully invoiced orders.
                     ("invoice_status", "in", ["to invoice", "no"]),
                     ("order_id.state", "in", ["sale", "done"]),
+                    # Filter by company hierarchy
+                    ("order_id.company_id", "in", hierarchy_companies.ids),
                 ]
                 order_lines = rec.env["sale.order.line"].sudo().search(domain)
 
@@ -81,6 +103,8 @@ class ResPartner(models.Model):
                     ("move_id.partner_id.commercial_partner_id", "=", rec.commercial_partner_id.id),
                     ("move_id.move_type", "in", ["out_invoice", "out_refund"]),
                     ("move_id.state", "=", "draft"),
+                    # Filter by company hierarchy
+                    ("move_id.company_id", "in", hierarchy_companies.ids),
                     # Include lines without sale_line_ids or those whose related sale order is fully invoiced
                     "|",
                     ("sale_line_ids", "=", False),
@@ -104,12 +128,10 @@ class ResPartner(models.Model):
                         )
                     draft_invoice_lines_amount += total
 
-                # Sum the credit for all companies, converting to the current company currency
+                # Sum the credit for all companies in the hierarchy
+                # No currency conversion needed as all companies in a hierarchy share the same currency
                 total_credit = 0.0
-                for company in rec.env["res.company"].search([]):
-                    credit = rec.sudo().with_company(company).credit
-                    total_credit += company.currency_id._convert(
-                        credit, company_id.currency_id, company_id, fields.Date.today()
-                    )
+                for company in hierarchy_companies:
+                    total_credit += rec.sudo().with_company(company).credit
 
                 rec.credit_with_confirmed_orders = to_invoice_amount + draft_invoice_lines_amount + total_credit

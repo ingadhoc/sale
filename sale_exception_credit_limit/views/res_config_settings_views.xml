@@ -13,6 +13,10 @@
             <xpath expr="//field[@name='account_default_credit_limit']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
+            <!-- Hacer que el campo account_use_credit_limit solo sea editable en la compañía padre -->
+            <xpath expr="//field[@name='account_use_credit_limit']" position="attributes">
+                <attribute name="readonly">not is_root_company</attribute>
+            </xpath>
         </field>
     </record>
 </odoo>
