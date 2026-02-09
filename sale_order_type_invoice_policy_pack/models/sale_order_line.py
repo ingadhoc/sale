@@ -14,9 +14,11 @@ class SaleOrderLine(models.Model):
         for line in main_pack_lines.filtered(
             lambda sol: sol.order_id.state == "sale" and sol.order_id.type_id.invoice_policy == "delivery"
         ):
-            # Verificar si todos los componentes del pack están completamente entregados
-            all_delivered = all(child.qty_delivered >= child.product_uom_qty for child in line.pack_child_line_ids)
-            if all_delivered:
-                line.qty_to_invoice = line.product_uom_qty - line.qty_invoiced
-            else:
-                line.qty_to_invoice = 0.0
+            delivered_packs = []
+            for pack_line in line.pack_child_line_ids.filtered("product_uom_qty"):
+                qty_per_pack = pack_line.product_uom_qty / line.product_uom_qty
+                packs_delivered = pack_line.qty_delivered / qty_per_pack
+                delivered_packs.append(packs_delivered)
+
+            qty_delivered_packs = min(delivered_packs) if delivered_packs else 0.0
+            line.qty_to_invoice = qty_delivered_packs - line.qty_invoiced
