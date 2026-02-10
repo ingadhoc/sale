@@ -104,6 +104,12 @@ class SaleOrderLine(models.Model):
         # la cancelación de kits no está bien resuelta ya que odoo solo computa
         # la cantidad entregada cuando todo el kit se entregó. Cuestión que,
         # por ahora, desactivamos la cancelación de kits
+
+        # Manejar órdenes bloqueadas: desbloquear temporalmente sin tracking
+        orders_to_relock = self.mapped("order_id").filtered(lambda o: o.locked)
+        if orders_to_relock:
+            orders_to_relock.with_context(tracking_disable=True).write({"locked": False})
+
         pack_enable = "pack_ok" in self.env["product.template"]._fields
         for rec in self.filtered("product_id"):
             # For product pack compatibility to cancel all of componept in case the product parent is cancel
@@ -128,11 +134,17 @@ class SaleOrderLine(models.Model):
             #         'You can not cancel remianing qty to deliver because '
             #         'there are more product invoiced than the delivered. '
             #         'You should correct invoice or ask for a refund'))
-            rec.product_uom_qty = rec.qty_delivered
+            rec.with_context(skip_locked_order_line_check=True).product_uom_qty = (
+                rec.qty_delivered + rec.quantity_returned
+            )
             rec.order_id.message_post(
                 body=_('Cancel remaining call for line "%s" (id %s), line qty updated from %s to %s')
                 % (rec.name, rec.id, old_product_uom_qty, rec.product_uom_qty)
             )
+
+        # Volver a bloquear las órdenes que estaban bloqueadas sin generar mensaje
+        if orders_to_relock:
+            orders_to_relock.with_context(tracking_disable=True).write({"locked": True})
 
     @api.onchange("product_uom_qty")
     def _onchange_product_uom_qty(self):
@@ -224,7 +236,11 @@ class SaleOrderLine(models.Model):
                                 m.location_dest_id.usage == "customer"
                                 and (not m.origin_returned_move_id or (m.origin_returned_move_id and m.to_refund))
                             ),
-                            "incoming_moves": lambda m: m.location_dest_id.usage != "customer" and m.to_refund,
+                            "incoming_moves": lambda m: (
+                                m.location_dest_id.usage != "customer"
+                                and m.location_id.usage == "customer"
+                                and m.to_refund
+                            ),
                         }
                         order_qty = order_line.product_uom._compute_quantity(
                             order_line.product_uom_qty, relevant_bom.product_uom_id
@@ -324,3 +340,9 @@ class SaleOrderLine(models.Model):
             line.stock_by_location = "\n".join(stock_lines) if stock_lines else ""
 
         (self - self).stock_by_location = ""
+
+    def _get_protected_fields(self):
+        """Override to allow modifications when skip_locked_order_line_check context is set."""
+        if self._context.get("skip_locked_order_line_check"):
+            return []
+        return super()._get_protected_fields()
