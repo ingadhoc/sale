@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Sale UX",
-    "version": "19.0.1.3.0",
+    "version": "19.0.1.4.0",
     "category": "Sales",
     "sequence": 14,
     "summary": "",
@@ -31,6 +31,7 @@
         "sale",
         "account_ux",
         "sale_management",
+        "base_bg",
     ],
     "data": [
         "wizards/sale_global_discount_wizard_views.xml",
