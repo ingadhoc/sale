@@ -76,3 +76,6 @@ class ResConfigSettings(models.TransientModel):
         for record in self:
             if record.days_to_keep_quotations <= 0:
                 raise ValidationError(_("Days to keep quotations must be greater than 0."))
+
+    def action_recompute_image_sale_order(self):
+        return self.env["product.template"].action_recompute_image_sale_order()
