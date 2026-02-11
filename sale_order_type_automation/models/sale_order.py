@@ -16,7 +16,11 @@ class SaleOrder(models.Model):
 
     def run_invoicing_atomation(self):
         for rec in self.filtered(
-            lambda x: (x.type_id.invoicing_atomation != "none" and any(line.qty_to_invoice for line in x.order_line))
+            lambda x: (
+                x.type_id.invoicing_atomation != "none"
+                and x.invoice_status == "to invoice"
+                and any(line.qty_to_invoice for line in x.order_line)
+            )
         ):
             # we take into account if there are any transaction finish from the e-commerce
             #  and not continue with the automation in this case
