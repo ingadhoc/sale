@@ -1,6 +1,5 @@
 from odoo import fields, models
 from odoo.exceptions import UserError
-from odoo.tools.translate import _
 
 
 class PosConfig(models.Model):
@@ -24,10 +23,10 @@ class PosConfig(models.Model):
             if invalid_payment_methods:
                 payment_method_names = ", ".join(invalid_payment_methods.mapped("name"))
                 raise UserError(
-                    _(
-                        "No se puede completar la operación: falta definir cuenta intermediaria en los siguientes métodos de pago: %s"
+                    self.env._(
+                        "No se puede completar la operación: falta definir cuenta intermediaria en los siguientes métodos de pago: %s",
+                        payment_method_names,
                     )
-                    % payment_method_names
                 )
             payment_method_without_outstanding_account = config.payment_method_ids.filtered(
                 lambda method: method.journal_id.type == "bank"
@@ -39,9 +38,9 @@ class PosConfig(models.Model):
                     payment_method_without_outstanding_account.mapped("name")
                 )
                 raise UserError(
-                    _(
-                        "No se puede completar la operación: falta definir la cuenta pendiente en los siguientes métodos de pago: %s"
+                    self.env._(
+                        "No se puede completar la operación: falta definir la cuenta pendiente en los siguientes métodos de pago: %s",
+                        payment_method_without_outstanding_account_names,
                     )
-                    % payment_method_without_outstanding_account_names
                 )
         return super().open_ui()
