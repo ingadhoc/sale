@@ -28,6 +28,11 @@
                 <attribute name="optional">hide</attribute>
             </xpath>
 
+            <!-- lo dejamos siempre visible para que si el cliente modifica cosas por edicion masiva, expo/impo u otras o manualmente, pueda siempre re-computar según la FP -->
+            <button name="action_update_taxes" position="attributes">
+                <attribute name="invisible">state not in ['draft', 'sent']</attribute>
+            </button>
+
             <xpath expr="//field[@name='order_line']/list" position="attributes">
                 <attribute name="limit">40</attribute>
             </xpath>
