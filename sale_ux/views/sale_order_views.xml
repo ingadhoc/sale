@@ -27,6 +27,12 @@
                 <attribute name="column_invisible"></attribute>
                 <attribute name="optional">hide</attribute>
             </xpath>
+
+            <!-- lo dejamos siempre visible para que si el cliente modifica cosas por edicion masiva, expo/impo u otras o manualmente, pueda siempre re-computar según la FP -->
+            <button name="action_update_taxes" position="attributes">
+                <attribute name="invisible">state not in ['draft', 'sent']</attribute>
+            </button>
+
             <group name="note_group" position="after">
                 <newline/>
                 <field name="internal_notes" nolabel="1" placeholder="Internal Notes..." groups="base.group_user"/>
