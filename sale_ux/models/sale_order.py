@@ -93,7 +93,6 @@ class SaleOrder(models.Model):
         self.ensure_one()
         lines_to_recompute = self.order_line.filtered(lambda line: not line.display_type)
         lines_to_recompute._compute_tax_ids()
-        self.show_update_fpos = False
 
     def action_cancel(self):
         invoice_lines = self.sudo().env["account.move.line"].search([("sale_line_ids", "in", self.order_line.ids)])
