@@ -24,7 +24,9 @@ def _revert_method(cls, name):
     See :meth:`~._patch_method`.
     """
     method = getattr(cls, name)
-    setattr(cls, name, method.origin)
+    origin = getattr(method, "origin", None)
+    if origin:
+        setattr(cls, name, origin)
 
 
 def uninstall_hook(env):
