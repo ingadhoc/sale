@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-07 13:56+0000\n"
+"POT-Creation-Date: 2026-02-19 15:58+0000\n"
 "PO-Revision-Date: 2026-01-13 22:10+0000\n"
 "Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
@@ -18,8 +18,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
-" ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
+"0) ? 1 : 2);\n"
 "X-Generator: Weblate 5.10.4\n"
 
 #. module: sale_ux
@@ -363,6 +363,18 @@ msgid "Mover términos y condiciones a transferencias de stock y facturas"
 msgstr "Mover términos y condiciones a transferencias de stock y facturas"
 
 #. module: sale_ux
+#. odoo-python
+#: code:addons/sale_ux/models/product_template.py:0
+msgid "No products found with images to recompute."
+msgstr ""
+
+#. module: sale_ux
+#. odoo-python
+#: code:addons/sale_ux/models/product_template.py:0
+msgid "No products to process"
+msgstr ""
+
+#. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
 msgid "Not Invoiced"
 msgstr "No Facturado"
@@ -568,6 +580,12 @@ msgstr "Estado"
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_order_form
 msgid "Subtotal"
+msgstr ""
+
+#. module: sale_ux
+#. odoo-python
+#: code:addons/sale_ux/models/product_template.py:0
+msgid "Successfully processed %s product images"
 msgstr ""
 
 #. module: sale_ux
