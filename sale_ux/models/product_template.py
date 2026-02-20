@@ -42,10 +42,8 @@ class ProductTemplate(models.Model):
 
     @api.model
     def action_recompute_image_sale_order(self):
-        valid_fields = ["image_128", "image_256", "image_512", "image_1024", "image_1920"]
-        image_field = self.env["ir.config_parameter"].sudo().get_param("sale_ux.product_image_field", "image_128")
-        if image_field not in valid_fields:
-            image_field = "image_128"
+        product_image_size = self.env["ir.config_parameter"].sudo().get_param("sale_ux.product_image_size", "128_50")
+        image_field = f"image_{product_image_size.split('_')[0]}"
 
         product_ids = self.search([(image_field, "!=", False)])
 
@@ -70,10 +68,8 @@ class ProductTemplate(models.Model):
 
     @api.depends("image_1920")
     def _compute_image_sale_order(self):
-        valid_fields = ["image_128", "image_256", "image_512", "image_1024", "image_1920"]
-        image_field = self.env["ir.config_parameter"].sudo().get_param("sale_ux.product_image_field", "image_128")
-        if image_field not in valid_fields:
-            image_field = "image_128"
+        product_image_size = self.env["ir.config_parameter"].sudo().get_param("sale_ux.product_image_size", "128_50")
+        image_field = f"image_{product_image_size.split('_')[0]}"
         with_image = self.filtered(image_field)
         for template in with_image:
             # Decodificar la imagen base64

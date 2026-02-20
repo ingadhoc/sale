@@ -14,6 +14,16 @@ class ResConfigSettings(models.TransientModel):
     show_product_image_on_report = fields.Boolean(
         string="Show Product Image", default=False, config_parameter="sale_ux.show_product_image_on_report"
     )
+    product_image_size = fields.Selection(
+        [
+            ("128_50", "50x50px"),
+            ("256_100", "100x100px"),
+            ("512_150", "150x150px"),
+        ],
+        string="Image Size on Report",
+        default="128_50",
+        config_parameter="sale_ux.product_image_size",
+    )
     dont_send_notes_to_invoices = fields.Boolean(
         string="Do not send notes to invoices", default=False, config_parameter="sale_ux.dont_send_notes_to_invoices"
     )
@@ -65,11 +75,14 @@ class ResConfigSettings(models.TransientModel):
         return res
 
     def set_values(self):
+        old_size = self.env["ir.config_parameter"].sudo().get_param("sale_ux.product_image_size", "128_50")
         super(ResConfigSettings, self).set_values()
         set_param = self.env["ir.config_parameter"].sudo().set_param
         set_param("sale.propagate_internal_notes", repr(self.move_internal_notes))
         set_param("sale.propagate_note", repr(self.move_note))
         set_param("sale_ux.update_prices_automatically", repr(self.update_prices_automatically))
+        if old_size != self.product_image_size:
+            self.env["product.template"].action_recompute_image_sale_order()
 
     @api.constrains("days_to_keep_quotations")
     def _check_days_to_keep_sale_orders(self):
