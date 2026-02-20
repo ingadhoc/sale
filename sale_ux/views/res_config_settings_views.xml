@@ -58,8 +58,12 @@
                     </div>
                     <div class="text-muted">
                         Show Product Image on quotation report
-                        <button type="object" name="action_recompute_image_sale_order"
-                                string="Recompute Image" icon="fa-refresh" class="oe_link"/>
+                    </div>
+                    <div class="content-group" invisible="not show_product_image_on_report">
+                        <div class="row mt16">
+                            <label for="product_image_size" class="col-lg-3 o_light_label"/>
+                            <field name="product_image_size"/>
+                        </div>
                     </div>
                 </div>
                 <div class="mt16">

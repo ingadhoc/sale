@@ -3,13 +3,19 @@
     <template id="report_saleorder" inherit_id="sale.report_saleorder_document">
         <xpath expr="//t[@t-set='display_discount']" position="after">
             <t t-set="show_images" t-value="doc.env['ir.config_parameter'].sudo().get_param('sale_ux.show_product_image_on_report')"/>
+            <t t-set="product_image_size" t-value="doc.env['ir.config_parameter'].sudo().get_param('sale_ux.product_image_size', '128_50')"/>
+            <t t-set="display_size" t-value="int(product_image_size.split('_')[1])"/>
+            <t t-set="column_width" t-value="display_size + 10"/>
         </xpath>
         <th name="th_description" position="before">
-            <th t-if="show_images" name="th_image" class="text-center" style="width: 60px;">Image</th>
+            <th t-if="show_images" name="th_image" class="text-center" t-attf-style="width: {{column_width}}px;">Image</th>
         </th>
         <td name="td_product_name" position="before">
-            <td t-if="show_images" name="td_image" class="text-center" style="width: 60px;">
-                <span t-if="line.product_id.image_sale_order" t-field="line.product_id.image_sale_order" t-options='{"widget": "image", "class": "img img-fluid", "style": "max-width: 50px; max-height: 50px; display: block; margin: auto;"}'/>
+            <td t-if="show_images" name="td_image" class="text-center" t-attf-style="width: {{column_width}}px;">
+                <span t-if="line.product_id.image_sale_order"
+                      t-field="line.product_id.image_sale_order"
+                      t-attf-style="max-width: {{display_size}}px; max-height: {{display_size}}px; display: block; margin: auto;"
+                      t-options='{"widget": "image", "class": "img img-fluid"}'/>
             </td>
         </td>
     </template>
