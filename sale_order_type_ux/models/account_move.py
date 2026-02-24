@@ -56,14 +56,25 @@ class AccountMove(models.Model):
                         so_dpl.id: line.tax_ids.filtered(lambda x: x.tax_group_id not in fp_tax_groups).ids[:]
                         for line in rec.invoice_line_ids
                     }
+                    journal = rec.sale_type_id.journal_id or (
+                        self.env["account.move"]
+                        .new(
+                            {
+                                "move_type": rec.move_type,
+                                "partner_id": rec.partner_id.id,
+                                "company_id": so_dpl.company_id.id,
+                            }
+                        )
+                        .journal_id
+                    )
                     acc = self.env["account.change.company"].create(
                         {
                             "move_id": rec.id,
                             "company_ids": [so_dpl.company_id.id, rec.company_id.id],
                             "company_id": so_dpl.company_id.id,
-                            "journal_id": rec.sale_type_id.journal_id.id,
+                            "journal_id": journal.id,
                         }
                     )
                     # Aplicar el cambio de impuestos según la nueva compañía
-                    acc._get_change_company_line_taxes(so_dpl, original_taxes, fiscal_pos=None)
+                    acc._get_change_company_line_taxes(so_dpl, original_taxes)
         return res

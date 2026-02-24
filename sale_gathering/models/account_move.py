@@ -19,7 +19,6 @@ class AccountMove(models.Model):
         for sale_line, tax_id, price_unit in sale_lines_data:
             sale_line.write(
                 {
-                    "tax_id": tax_id,
                     "price_unit": price_unit,
                 }
             )
