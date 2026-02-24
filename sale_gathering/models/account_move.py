@@ -19,7 +19,12 @@ class AccountMove(models.Model):
         for sale_line, tax_ids, price_unit in sale_lines_data:
             sale_line.write(
                 {
+<<<<<<< 4b4fcfece4d0d7e7583bc825a5c50b98d24e3d22
                     "tax_ids": [(6, 0, tax_ids)],
+||||||| 0ba3b299f90060286fabdef7be878b6d2bf7eb15
+                    "tax_id": tax_id,
+=======
+>>>>>>> fcbc0bfb78f3647534fe834aa8ede95220384580
                     "price_unit": price_unit,
                 }
             )
