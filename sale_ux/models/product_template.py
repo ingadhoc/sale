@@ -13,6 +13,11 @@ class ProductTemplate(models.Model):
     _name = "product.template"
     _inherit = ["product.template", "base.bg"]
 
+    image_sale_order = fields.Binary(
+        "Report Image",
+        compute="_compute_image_sale_order",
+        store=True,
+    )
     only_packagings = fields.Boolean(
         default=False,
         help="Indicates that this product is only used as packaging and does not use units.",
