@@ -13,3 +13,4 @@ from . import partner
 from . import product_pricelist_item
 from . import quotation_document
 from . import ir_rule
+from . import product_catalog_mixin
