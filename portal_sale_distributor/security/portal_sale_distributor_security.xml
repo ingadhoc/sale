@@ -13,6 +13,12 @@
         <field name="implied_ids" eval="[Command.link(ref('portal_backend.group_portal_backend'))]"/>
     </record>
 
+    <record model="res.groups" id="group_portal_backend_distributor_stock">
+        <field name="name">Portal Sale Distributor - Stock</field>
+        <field name="privilege_id" ref="privilege_portal_sale_distributor"/>
+        <field name="implied_ids" eval="[Command.link(ref('group_portal_backend_distributor'))]"/>
+    </record>
+
     <record id="base.group_user" model="res.groups">
         <field name="implied_ids" eval="[(4,ref('sale.group_discount_per_so_line'))]"/>
     </record>
