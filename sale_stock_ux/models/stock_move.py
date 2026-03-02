@@ -11,13 +11,6 @@ class StockMove(models.Model):
     sale_id = fields.Many2one(
         related="sale_line_id.order_id",
     )
-    is_exchange_move = fields.Boolean()
-
-    @api.model
-    def _prepare_merge_moves_distinct_fields(self):
-        fields = super()._prepare_merge_moves_distinct_fields()
-        fields.append("is_exchange_move")
-        return fields
 
     @api.model_create_multi
     def create(self, vals_list):
