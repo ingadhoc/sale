@@ -46,6 +46,7 @@ Several Improvements to sales:
 #. When duplicating a Sale Order, a message is logged in the new order indicating the origin.
 #. Allows selecting default values to assign price lists by companies and by user with the field `specific_property_product_pricelist`. It also ensures that when creating a contact, if it is not defined, it will not be set for the company you are currently on (we consider this to be an Odoo bug).
 #. Prevents writing in certain fields in blocked sales orders
+#. Displays all pricelists information directly on product forms. Shows a computed table with all pricelists (that have "Show in products" enabled) and their calculated prices for the product. Hides the standard "Pricelist Rules" field and adds a "Show in products" checkbox on pricelists to control visibility. Non-manager salespeople have read-only access to pricelist forms.
 
 Installation
 ============
