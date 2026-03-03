@@ -31,7 +31,11 @@ class SaleOrder(models.Model):
 
     def run_invoicing_atomation(self):
         gathering_lines = self.filtered("is_gathering")
-        super(SaleOrder, gathering_lines.with_context(invoice_gathering=True)).run_invoicing_atomation()
+        # Solo ejecutar el flujo de gathering para órdenes que YA tienen factura de acopio.
+        # Si no tienen factura de acopio, action_confirm se encarga de crearla.
+        # Esto evita que se creen 2 facturas al confirmar.
+        gathering_with_invoice = gathering_lines.filtered("has_gathering_invoice")
+        super(SaleOrder, gathering_with_invoice.with_context(invoice_gathering=True)).run_invoicing_atomation()
         super(SaleOrder, self - gathering_lines).run_invoicing_atomation()
 
     def _has_quantity_changes(self, values):
