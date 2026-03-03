@@ -21,6 +21,10 @@ class SaleOrder(models.Model):
         help="El monto retirado (o solicitado) se calcula en base a la columna cantidad de las lineas de ventas, no necesariamente tienen que estar entregadas/facturadas esas lineas de venta.",
     )
 
+    def _get_gathering_lines(self):
+        self.ensure_one()
+        return self.order_line
+
     @api.depends(
         "is_gathering",
         "state",
@@ -32,14 +36,15 @@ class SaleOrder(models.Model):
     )
     def _compute_gathering_balance(self):
         orders_gathering = self.filtered(
-            lambda order: order.is_gathering
-            and order.state == "sale"
-            and any(order.order_line.filtered("is_downpayment"))
+            lambda order: (
+                order.is_gathering and order.state == "sale" and any(order.order_line.filtered("is_downpayment"))
+            )
         )
 
         for order in orders_gathering:
+            lines = order._get_gathering_lines()
             total_downpayment_amount = 0
-            for line in order.order_line.filtered("is_downpayment"):
+            for line in lines.filtered("is_downpayment"):
                 total_downpayment_amount += line.tax_ids.with_context(round=False).compute_all(
                     line.price_unit,
                     currency=line.currency_id,
@@ -49,7 +54,7 @@ class SaleOrder(models.Model):
                 )["total_included"]
 
             total_amount = 0
-            for line in order.order_line.filtered(lambda x: not x.is_downpayment):
+            for line in lines.filtered(lambda x: not x.is_downpayment):
                 price_reduce = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
                 total_amount += line.tax_ids.compute_all(
                     price_reduce,
@@ -93,7 +98,7 @@ class SaleOrder(models.Model):
                     _("You cannot confirm a gathering order (%s) with a total amount of 0.") % order.name
                 )
             lines_commands = []
-            for line in order.order_line.filtered(lambda l: l.product_uom_qty > 0):
+            for line in order._get_gathering_lines().filtered(lambda l: l.product_uom_qty > 0):
                 lines_commands.append(
                     Command.update(line.id, {"initial_qty_gathered": line.product_uom_qty, "product_uom_qty": 0})
                 )
@@ -107,8 +112,9 @@ class SaleOrder(models.Model):
             lambda x: x.is_gathering and x.order_line.filtered(lambda x: x.initial_qty_gathered > 0)
         )
         for order in orders_gathering:
+            lines = order._get_gathering_lines()
             price_subtotal_with_taxes = 0
-            for line in order.order_line.filtered(lambda x: x.initial_qty_gathered > 0):
+            for line in lines.filtered(lambda x: x.initial_qty_gathered > 0):
                 price_reduce = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
                 subtotal = line.tax_ids.compute_all(
                     price_reduce,
