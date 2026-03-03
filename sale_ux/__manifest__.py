@@ -47,6 +47,8 @@
         "views/res_config_settings_views.xml",
         "views/account_fiscal_position_views.xml",
         "views/product_template_views.xml",
+        "views/product_pricelist_views.xml",
+        "views/product_template_pricelist_views.xml",
         "data/ir_config_parameter_data.xml",
         "data/ir_cron.xml",
     ],

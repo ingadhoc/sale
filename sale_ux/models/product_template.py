@@ -22,6 +22,16 @@ class ProductTemplate(models.Model):
         default=False,
         help="Indicates that this product is only used as packaging and does not use units.",
     )
+    pricelist_ids = fields.One2many(
+        "product.pricelist",
+        compute="_compute_pricelist_ids",
+        string="Pricelists",
+    )
+
+    def _compute_pricelist_ids(self):
+        for rec in self:
+            rec.pricelist_ids = rec.pricelist_ids.search([("show_products", "=", True)])
+            rec.pricelist_ids.with_context(pricelist_template_id=rec.id)._compute_price()
 
     def _get_available_uoms(self):
         self.ensure_one()
