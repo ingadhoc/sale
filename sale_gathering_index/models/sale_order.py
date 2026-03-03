@@ -34,8 +34,9 @@ class SaleOrder(models.Model):
             lambda x: x.is_gathering and x.order_line.filtered(lambda x: x.initial_qty_gathered > 0)
         )
         for order in gathering_orders:
+            lines = order._get_gathering_lines()
             indexed_gathering_amount = 0.0
-            for line in order.order_line.filtered(lambda x: x.initial_qty_gathered > 0):
+            for line in lines.filtered(lambda x: x.initial_qty_gathered > 0):
                 price = line.with_company(line.company_id)._get_display_price()
                 line_price = line.product_id._get_tax_included_unit_price(
                     line.company_id,
@@ -63,9 +64,11 @@ class SaleOrder(models.Model):
     )
     def _compute_index(self):
         gathering_orders = self.filtered(
-            lambda x: x.is_gathering
-            and x.order_line.filtered(lambda x: x.initial_qty_gathered > 0)
-            and x.gathering_amount_with_taxes > 0
+            lambda x: (
+                x.is_gathering
+                and x.order_line.filtered(lambda x: x.initial_qty_gathered > 0)
+                and x.gathering_amount_with_taxes > 0
+            )
         )
         for order in gathering_orders:
             order.index = (order.indexed_gathering_amount / order.gathering_amount_with_taxes) - 1
