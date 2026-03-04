@@ -49,6 +49,14 @@ access_sale_exception_rule_portal_distributor,sale.exception.rule.portal.distrib
 access_stock_location_portal_distributor,stock.location.portal.distributor,stock.model_stock_location,group_portal_backend_distributor,1,0,0,0
 access_stock_quant_portal_distributor,stock.quant.portal.distributor,stock.model_stock_quant,group_portal_backend_distributor,1,0,0,0
 access_sale_order_spreadsheet_portal_distributor,sale.order.spreadsheet.portal.distributor,spreadsheet_sale_management.model_sale_order_spreadsheet,group_portal_backend_distributor,1,0,0,0
+<<<<<<< 6ee576ce7550f63bf0b6cc140f00a839aecf1d9b
 access_stock_move_portal_distributor,stock.move.portal.distributor,stock.model_stock_move,group_portal_backend_distributor,1,0,0,0
 access_stock_warehouse_portal_distributor,stock.warehouse.portal.distributor,stock.model_stock_warehouse,group_portal_backend_distributor,1,0,0,0
 access_product_tag_portal_distributor,product.tag.portal.distributor,product.model_product_tag,group_portal_backend_distributor,1,0,0,0
+||||||| 2c145fd934df9801f51c82a45459dbd2e4851f00
+access_sale_exception_rule_portal_distributor,sale.exception.portal.distributor,sale_exception.model_sale_exception_confirm,portal_sale_distributor.group_portal_backend_distributor,1,0,1,0
+=======
+access_sale_exception_rule_portal_distributor,sale.exception.portal.distributor,sale_exception.model_sale_exception_confirm,portal_sale_distributor.group_portal_backend_distributor,1,0,1,0
+access_product_combo_portal_distributor,product.combo.portal.distributor,product.model_product_combo,group_portal_backend_distributor,1,0,0,0
+access_product_combo_item_portal_distributor,product.combo.item.portal.distributor,product.model_product_combo_item,group_portal_backend_distributor,1,0,0,0
+>>>>>>> cb1ea7fe2c76f806f1a6a6fc1b17db4895d054d1
