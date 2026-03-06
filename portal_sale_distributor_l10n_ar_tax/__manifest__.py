@@ -1,3 +1,4 @@
+<<<<<<< e6f5920c97adc4095247580ff7272ad81c6383db
 ##############################################################################
 #
 #    Copyright (C) 2015  ADHOC SA  (http://www.adhoc.com.ar)
@@ -36,3 +37,44 @@
     "installable": True,
     "auto_install": True,
 }
+||||||| 0887e55dbc9bce7fb2707b45b451b253e7980e4d
+=======
+##############################################################################
+#
+#    Copyright (C) 2015  ADHOC SA  (http://www.adhoc.com.ar)
+#    All Rights Reserved.
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
+{
+    "name": "Portal Distributor Sale with L10n AR Tax",
+    "version": "18.0.1.0.0",
+    "category": "Tools",
+    "complexity": "easy",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "depends": [
+        "l10n_ar_tax",
+        "portal_sale_distributor",
+    ],
+    "demo": [],
+    "data": [
+        "security/ir.model.access.csv",
+    ],
+    "installable": True,
+    "auto_install": True,
+}
+>>>>>>> d492df695a2ff2f2a512ec46de9ac54a2c4863c7
