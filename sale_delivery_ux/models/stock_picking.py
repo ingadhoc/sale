@@ -20,7 +20,7 @@ class StockPicking(models.Model):
         for any reason
         """
         res = super()._action_done()
-        deliver_lines = self.sale_id.order_line.filtered(
+        deliver_lines = self.sale_id.sudo().order_line.filtered(
             lambda x: (
                 x.is_delivery and not x.qty_delivered and x.product_id.type == "service" and x.product_uom_qty == 1.0
             )
