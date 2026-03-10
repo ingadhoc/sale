@@ -83,4 +83,7 @@ class ProductTemplate(models.Model):
 
         # Return message for background job notification (only when called from bg job)
         if self.env.context.get("bg_job"):
-            return _("Successfully processed %s product images") % len(self)
+            job = self.env["bg.job"].browse(self.env.context.get("bg_job_id"))
+            if job.next_job_id:
+                return None
+            return _("Successfully processed product images")
