@@ -44,6 +44,11 @@
         "views/portal_sale_views.xml",
         "views/sale_report_templates.xml",
     ],
+    "assets": {
+        "web.assets_backend": [
+            "portal_sale_distributor/static/src/js/user_menu_distributor.js",
+        ],
+    },
     "installable": True,
     "auto_install": False,
 }
