@@ -1,8 +1,23 @@
-from odoo import api, models
+from odoo import api, fields, models
 
 
 class ResPartner(models.Model):
     _inherit = "res.partner"
+
+    specific_property_product_pricelist = fields.Many2one(
+        string="Assigned Pricelist",
+        help=(
+            "Manually set a specific pricelist for this partner. If left blank, the system will "
+            "automatically determine the best match based on priority rules."
+        ),
+    )
+    property_product_pricelist = fields.Many2one(
+        string="Effective Pricelist",
+        help=(
+            "The pricelist that will actually be applied to sales. It reflects the assigned list "
+            "above or, if none, the one calculated by Odoo's sequence and applicability rules."
+        ),
+    )
 
     @api.model_create_multi
     def create(self, vals_list):

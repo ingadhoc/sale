@@ -5,6 +5,12 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
+            <field name="property_product_pricelist" position="before">
+                <field name="specific_property_product_pricelist" groups="product.group_product_pricelist"/>
+            </field>
+            <field name="property_product_pricelist" position="attributes">
+                <attribute name="readonly">True</attribute>
+            </field>
             <xpath expr="//group/field[@name='user_id']" position='replace'>
                 <field name="user_id" domain="[('share', '=', False)]" groups="!sale_ux.group_allow_any_user_as_salesman"/>
                 <field name="user_id" domain="[]" groups="sale_ux.group_allow_any_user_as_salesman"/>
