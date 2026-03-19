@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-10 19:40+0000\n"
-"PO-Revision-Date: 2026-03-10 19:40+0000\n"
+"POT-Creation-Date: 2026-03-19 14:23+0000\n"
+"PO-Revision-Date: 2026-03-19 14:23+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -68,6 +68,13 @@ msgid ""
 "By default, Odoo only allows to choose users who have sales permission in "
 "sales orders and only internal users in the sales' teams . This option "
 "enables to choose, in both places, users of any type (internal or portal)"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,help:sale_ux.field_product_pricelist__show_products
+msgid ""
+"By selecting it allows you to display the pricelist with the price of that "
+"product in the products"
 msgstr ""
 
 #. module: sale_ux
@@ -189,6 +196,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_ux.field_account_fiscal_position__display_name
 #: model:ir.model.fields,field_description:sale_ux.field_account_move__display_name
 #: model:ir.model.fields,field_description:sale_ux.field_crm_team__display_name
+#: model:ir.model.fields,field_description:sale_ux.field_product_pricelist__display_name
 #: model:ir.model.fields,field_description:sale_ux.field_product_product__display_name
 #: model:ir.model.fields,field_description:sale_ux.field_product_template__display_name
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__display_name
@@ -255,6 +263,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_ux.field_account_fiscal_position__id
 #: model:ir.model.fields,field_description:sale_ux.field_account_move__id
 #: model:ir.model.fields,field_description:sale_ux.field_crm_team__id
+#: model:ir.model.fields,field_description:sale_ux.field_product_pricelist__id
 #: model:ir.model.fields,field_description:sale_ux.field_product_product__id
 #: model:ir.model.fields,field_description:sale_ux.field_product_template__id
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__id
@@ -402,6 +411,27 @@ msgid "Payment Terms"
 msgstr ""
 
 #. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_product_pricelist__price
+msgid "Price"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,help:sale_ux.field_product_pricelist__price
+msgid "Price for product specified on the context"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model,name:sale_ux.model_product_pricelist
+msgid "Pricelist"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_product_product__pricelist_ids
+#: model:ir.model.fields,field_description:sale_ux.field_product_template__pricelist_ids
+msgid "Pricelists"
+msgstr ""
+
+#. module: sale_ux
 #: model:ir.model,name:sale_ux.model_product_template
 msgid "Product"
 msgstr ""
@@ -531,6 +561,11 @@ msgstr ""
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
 msgid "Show client reference in list view and in main section of form view"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_product_pricelist__show_products
+msgid "Show in products"
 msgstr ""
 
 #. module: sale_ux
