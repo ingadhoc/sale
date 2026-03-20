@@ -119,10 +119,16 @@ class SaleOrder(models.Model):
     def action_confirm(self):
         res = super().action_confirm()
         # we use this because compatibility with sale exception module
-        if isinstance(res, bool) and res:
+        if not (isinstance(res, dict) and res.get("xml_id") == "sale_exception.action_sale_exception_confirm"):
             # because it's needed to return actions if exists
-            res = self.run_picking_automation()
+            picking_action = self.run_picking_automation()
             self.sudo().run_invoicing_atomation()
             if self.type_id.set_done_on_confirmation:
                 self.action_lock()
+            if isinstance(picking_action, dict) and isinstance(res, dict) and res.get("type") == "ir.actions.client":
+                params = dict(res.get("params") or {})
+                params["next"] = picking_action
+                res["params"] = params
+            elif isinstance(picking_action, dict) and not res:
+                res = picking_action
         return res
