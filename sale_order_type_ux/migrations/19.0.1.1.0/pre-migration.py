@@ -20,6 +20,7 @@ def migrate(cr, version):
         FROM information_schema.columns
         WHERE table_name = 'sale_order_type'
           AND column_name = 'invoice_company_id'
+          AND table_schema = current_schema()
         """
     )
 
