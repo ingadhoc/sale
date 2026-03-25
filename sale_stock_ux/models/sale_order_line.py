@@ -317,7 +317,7 @@ class SaleOrderLine(models.Model):
 
                 if free_qty > 0:
                     if line.product_uom_id and line.product_uom_id != line.product_id.uom_id:
-                        free_qty = line.product_id.uom_id._compute_quantity(free_qty, line.uom_id)
+                        free_qty = line.product_id.uom_id._compute_quantity(free_qty, line.product_uom_id)
 
                     stock_lines.append(f"{location_name}: {free_qty:.2f} {line.product_uom_id.name}")
 
