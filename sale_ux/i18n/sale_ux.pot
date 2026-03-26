@@ -6,14 +6,29 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-19 14:23+0000\n"
-"PO-Revision-Date: 2026-03-19 14:23+0000\n"
+"POT-Creation-Date: 2026-03-26 14:22+0000\n"
+"PO-Revision-Date: 2026-03-26 14:22+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: sale_ux
+#: model:ir.model.fields.selection,name:sale_ux.selection__res_config_settings__product_image_size__256_100
+msgid "100x100px"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields.selection,name:sale_ux.selection__res_config_settings__product_image_size__512_150
+msgid "150x150px"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields.selection,name:sale_ux.selection__res_config_settings__product_image_size__128_50
+msgid "50x50px"
+msgstr ""
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
@@ -281,6 +296,11 @@ msgid "Image"
 msgstr ""
 
 #. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__product_image_size
+msgid "Image Size on Report"
+msgstr ""
+
+#. module: sale_ux
 #: model:ir.model.fields,help:sale_ux.field_account_fiscal_position__deduct_price_included_taxes
 msgid ""
 "In sales: When this fiscal position is set, if the product has taxes "
@@ -455,11 +475,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_filter
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
 msgid "Quotations"
-msgstr ""
-
-#. module: sale_ux
-#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
-msgid "Recompute Image"
 msgstr ""
 
 #. module: sale_ux
