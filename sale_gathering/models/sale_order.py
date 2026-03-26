@@ -103,7 +103,8 @@ class SaleOrder(models.Model):
                     Command.update(line.id, {"initial_qty_gathered": line.product_uom_qty, "product_uom_qty": 0})
                 )
             if lines_commands:
-                order.write({"order_line": lines_commands})
+                # for compatibility with sale_exception
+                order.with_context(check_exception=False).write({"order_line": lines_commands})
         return super()._action_confirm()
 
     @api.depends("order_line.initial_qty_gathered", "is_gathering")
