@@ -329,7 +329,7 @@ class SaleOrderLine(models.Model):
                     ("product_id", "=", line.product_id.id),
                     ("quantity", ">", 0),
                 ],
-                fields=["location_id"],
+                fields=["location_id", "available_quantity:sum"],
                 groupby=["location_id"],
                 lazy=False,
             )
@@ -337,11 +337,8 @@ class SaleOrderLine(models.Model):
             stock_lines = []
 
             for stock in stock_quants:
-                location_id = stock["location_id"][0]
                 location_name = stock["location_id"][1]
-
-                product = line.product_id.with_context(location=location_id)
-                free_qty = product.free_qty
+                free_qty = stock["available_quantity"]
 
                 if free_qty > 0:
                     if line.product_uom and line.product_uom != line.product_id.uom_id:
