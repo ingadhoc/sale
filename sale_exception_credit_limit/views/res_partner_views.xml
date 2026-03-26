@@ -20,10 +20,6 @@
                 <attribute name="readonly">not user_credit_config</attribute>
             </field>
 
-            <xpath expr="//div[@name='property_credit_limit_ids']/button[@name='action_company_properties']" position="attributes">
-                <attribute name="invisible">not user_credit_config</attribute>
-            </xpath>
-
         </field>
     </record>
 

@@ -25,7 +25,6 @@
     "license": "AGPL-3",
     "depends": [
         "sale_exception",
-        "account_multicompany_ux",
     ],
     "data": [
         "security/sale_exception_credit_limit_security.xml",
