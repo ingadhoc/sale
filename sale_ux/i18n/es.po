@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-26 14:22+0000\n"
+"POT-Creation-Date: 2026-03-31 12:14+0000\n"
 "PO-Revision-Date: 2026-01-13 22:10+0000\n"
 "Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
@@ -67,6 +67,12 @@ msgstr "Permitir cualquier usuario como comercial"
 #: model:ir.model,name:sale_ux.model_account_analytic_account
 msgid "Analytic Account"
 msgstr "Cuenta analítica"
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_res_partner__specific_property_product_pricelist
+#: model:ir.model.fields,field_description:sale_ux.field_res_users__specific_property_product_pricelist
+msgid "Assigned Pricelist"
+msgstr ""
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__auto_select_all_documents
@@ -254,6 +260,12 @@ msgid "Due Date"
 msgstr ""
 
 #. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_res_partner__property_product_pricelist
+#: model:ir.model.fields,field_description:sale_ux.field_res_users__property_product_pricelist
+msgid "Effective Pricelist"
+msgstr ""
+
+#. module: sale_ux
 #: model:ir.model.fields,help:sale_ux.field_res_config_settings__cancel_old_quotations
 msgid "Enable automatic cancellation of old quotations."
 msgstr "Habilitar la cancelación automática de cotizaciones antiguas."
@@ -378,6 +390,14 @@ msgstr "Última actualización por"
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__write_date
 msgid "Last Updated on"
 msgstr "Última actualización el"
+
+#. module: sale_ux
+#: model:ir.model.fields,help:sale_ux.field_res_partner__specific_property_product_pricelist
+#: model:ir.model.fields,help:sale_ux.field_res_users__specific_property_product_pricelist
+msgid ""
+"Manually set a specific pricelist for this partner. If left blank, the "
+"system will automatically determine the best match based on priority rules."
+msgstr ""
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__move_internal_notes
@@ -658,6 +678,15 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_ux.field_sale_advance_payment_inv__tax_ids
 msgid "Taxes"
 msgstr "Impuestos"
+
+#. module: sale_ux
+#: model:ir.model.fields,help:sale_ux.field_res_partner__property_product_pricelist
+#: model:ir.model.fields,help:sale_ux.field_res_users__property_product_pricelist
+msgid ""
+"The pricelist that will actually be applied to sales. It reflects the "
+"assigned list above or, if none, the one calculated by Odoo's sequence and "
+"applicability rules."
+msgstr ""
 
 #. module: sale_ux
 #. odoo-python
