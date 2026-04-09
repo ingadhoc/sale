@@ -2,7 +2,7 @@
 <template id="template" xml:space="preserve">
     <t t-name="sale_stock_info_popup_color.QtyAtDate" t-inherit="sale_stock.QtyAtDate" t-inherit-mode="extension">
         <xpath expr="//a" position="attributes">
-            <attribute name="t-attf-class">fa fa-area-chart cursor-pointer {{ props.record.data.free_qty_today &lt; props.record.data.qty_to_deliver ? 'text-danger' : '' }}</attribute>
+            <attribute name="t-attf-class">fa fa-area-chart cursor-pointer {{ props.record.data.free_qty_today &lt; props.record.data.qty_to_deliver || calcData.forecasted_issue ? 'text-danger' : '' }}</attribute>
         </xpath>
     </t>
 </template>

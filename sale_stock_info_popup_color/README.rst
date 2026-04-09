@@ -14,7 +14,7 @@
 Sale Stock Info PopUp Color
 ===========================
 
-#. This module define the info icon color (red or blue) in sale order line based on field Available (free_qty_today)
+#. This module define the info icon color (red or green) in sale order line based on field Available (free_qty_today)
 
 Installation
 ============
