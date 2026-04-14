@@ -119,7 +119,7 @@
         <field name="arch" type="xml">
             <!-- move state before invoice status and make it visible -->
             <field name="state" position="replace"/>
-            <field name="invoice_status" position="after">
+            <field name="warehouse_id" position="after">
                 <field name="state" decoration-success="state == 'sale'" decoration-info="state in ['draft', 'sent']" decoration-danger="state == 'cancel'" widget="badge"/>
             </field>
             <field name="invoice_status" position="after">
