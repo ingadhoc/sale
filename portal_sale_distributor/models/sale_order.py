@@ -55,6 +55,7 @@ class SaleOrder(models.Model):
                 + arch.xpath("//field[@name='discount3']")
                 + arch.xpath("//field[@name='tax_ids']")
                 + arch.xpath("//field[@name='validity_days']")
+                + arch.xpath("//field[@name='validity_date']")
             )
             for node in readonly_fields:
                 node.set("readonly", "1")
