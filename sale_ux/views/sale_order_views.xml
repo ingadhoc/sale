@@ -113,10 +113,11 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_tree"/>
         <field name="arch" type="xml">
-            <!-- move state before invoice status and make it visible -->
-            <field name="state" position="replace"/>
-            <field name="invoice_status" position="before">
-                <field name="state" decoration-success="state == 'sale'" decoration-info="state in ['draft', 'sent']" decoration-danger="state == 'cancel'" widget="badge"/>
+            <!-- update state field decoration and make it visible -->
+            <field name="state" position="attributes">
+                <attribute name="decoration-info">state in ['draft', 'sent']</attribute>
+                <attribute name="decoration-primary"></attribute>
+                <attribute name="decoration-danger">state == 'cancel'</attribute>
             </field>
             <field name="invoice_status" position="after">
                 <field name="amount_uninvoiced" optional="hide"/>
