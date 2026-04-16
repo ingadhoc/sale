@@ -60,11 +60,20 @@ msgstr "Nombre"
 #. module: sale_order_type_automation
 #: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type__invoice_validate_domain
 msgid ""
-"Domain to filter invoices for automatic validation. So, if this filter does "
-"NOT find the invoices, they stay in drafts status."
+"This invoice filter allows you to create some invoices in draft form without automatically validating them."
+"Therefore, if the condition is met, the invoice remains in draft status."
 msgstr ""
-"Dominio para filtrar facturas para su validación automática. Por lo tanto, "
-"si este filtro no las encuentra, se mantienen en estado de borrador."
+"Con este filtro de facturas puede hacer que algunas facturas se creen en borrador pero no se validen automaticamente."
+"Por lo tanto, si se cumple la condicion, la factura queda en borrador."
+
+#. module: sale_order_type_automation
+#: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type__sale_order_filter_domain
+msgid ""
+"This sales filter allows you to create some invoices in draft form without automatically validating them."
+"Therefore, if the condition is met, the invoice remains in draft status."
+msgstr ""
+"Con este filtro de ventas puede hacer que algunas facturas se creen en borrador pero no se validen automaticamente."
+"Por lo tanto, si se cumple la condicion, la factura queda en borrador."
 
 #. module: sale_order_type_automation
 #: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type__sequence_id
