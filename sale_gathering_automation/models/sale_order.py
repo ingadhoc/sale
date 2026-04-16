@@ -27,7 +27,7 @@ class SaleOrder(models.Model):
             self.run_invoicing_atomation()
             return self.action_view_invoice()
 
-        return self.env.ref("sale.action_view_sale_advance_payment_inv").read()[0]
+        return self.env.ref("sale.action_view_sale_advance_payment_inv").sudo().read()[0]
 
     def run_invoicing_atomation(self):
         gathering_lines = self.filtered("is_gathering")
