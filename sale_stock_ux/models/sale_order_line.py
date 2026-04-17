@@ -59,10 +59,10 @@ class SaleOrderLine(models.Model):
         outgoing_moves, incoming_moves = self._get_outgoing_incoming_moves(strict=False)
         for move in outgoing_moves.filtered(lambda m: m.is_exchange_move):
             qty_to_compute = move.quantity if move.state == "done" else move.product_uom_qty
-            qty -= move.product_uom._compute_quantity(qty_to_compute, self.product_uom, rounding_method="HALF-UP")
+            qty -= move.product_uom._compute_quantity(qty_to_compute, self.product_uom_id, rounding_method="HALF-UP")
         for move in incoming_moves.filtered(lambda m: m.is_exchange_move):
             qty_to_compute = move.quantity if move.state == "done" else move.product_uom_qty
-            qty += move.product_uom._compute_quantity(qty_to_compute, self.product_uom, rounding_method="HALF-UP")
+            qty += move.product_uom._compute_quantity(qty_to_compute, self.product_uom_id, rounding_method="HALF-UP")
         return qty
 
     @api.depends()
@@ -242,7 +242,7 @@ class SaleOrderLine(models.Model):
                                 and m.to_refund
                             ),
                         }
-                        order_qty = order_line.product_uom._compute_quantity(
+                        order_qty = order_line.product_uom_id._compute_quantity(
                             order_line.product_uom_qty, relevant_bom.product_uom_id
                         )
                         quantity_returned = return_moves._compute_kit_quantities(
