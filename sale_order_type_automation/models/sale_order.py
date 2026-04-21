@@ -17,7 +17,8 @@ class SaleOrder(models.Model):
     def run_invoicing_atomation(self):
         for rec in self.filtered(
             lambda x: (
-                x.type_id.invoicing_atomation != "none"
+                x.type_id
+                and x.type_id.invoicing_atomation != "none"
                 and x.invoice_status == "to invoice"
                 and any(line.qty_to_invoice for line in x.order_line)
             )
@@ -78,10 +79,12 @@ class SaleOrder(models.Model):
         # If there products are the type 'service' equals the
         #  delivered qyt to order qty for this sale order line
         for order_line in self.mapped("order_line").filtered(
-            lambda x: x.order_id.type_id.picking_atomation != "none"
-            and x.product_id.type == "service"
-            and x.product_id.service_type == "manual"
-            and x.product_id.expense_policy == "no"
+            lambda x: (
+                x.order_id.type_id.picking_atomation != "none"
+                and x.product_id.type == "service"
+                and x.product_id.service_type == "manual"
+                and x.product_id.expense_policy == "no"
+            )
         ):
             order_line.qty_delivered = order_line.product_uom_qty
         for rec in self.filtered(lambda x: x.type_id.picking_atomation != "none" and x.picking_ids):
