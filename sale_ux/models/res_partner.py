@@ -17,6 +17,11 @@ class ResPartner(models.Model):
         pricelist = self.env["product.pricelist"].search([], limit=1, order="sequence")
         for partner, vals in zip(partners, vals_list):
             if "specific_property_product_pricelist" not in vals:
+                # Los subcontactos heredan la lista de precios del contacto comercial
+                # (empresa matriz) a través del mecanismo de commercial_fields de Odoo.
+                # No debemos pisar ese valor o el subcontacto perderá la herencia.
+                if partner.parent_id:
+                    continue
                 default_pricelist_id = vals.get("property_product_pricelist")
 
                 if not default_pricelist_id:
