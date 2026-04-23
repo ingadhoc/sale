@@ -1,0 +1,21 @@
+<odoo>
+    <record id="sale_order_triple_discount_ux_form_view" model="ir.ui.view">
+        <field name="name">sale.order.triple.discount.ux.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_triple_discount.sale_order_triple_discount_form_view"/>
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='order_line']//list//field[@name='discount1']"
+                position="attributes"
+            >
+                <attribute name="readonly">is_discount1_readonly</attribute>
+            </xpath>
+            <xpath
+                expr="//field[@name='order_line']//form//field[@name='discount1']"
+                position="attributes"
+            >
+                <attribute name="readonly">is_discount1_readonly</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
