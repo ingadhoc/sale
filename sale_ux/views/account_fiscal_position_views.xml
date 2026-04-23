@@ -5,9 +5,9 @@
         <field name="model">account.fiscal.position</field>
         <field name="inherit_id" ref="account.view_account_position_form"/>
         <field name="arch" type="xml">
-            <field name="name" position="after">
+            <xpath expr="//field[@name='name']" position="after">
                 <field name="deduct_price_included_taxes"/>
-            </field>
+            </xpath>
         </field>
     </record>
 </odoo>
