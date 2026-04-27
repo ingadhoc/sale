@@ -12,7 +12,12 @@ class SaleOrderLine(models.Model):
     def _compute_purchase_price(self):
         super()._compute_purchase_price()
         for line in self.filtered(
-            lambda l: l.is_gathering and l.order_id and l.order_id.coef and l.product_id and isinstance(l.id, NewId)
+            lambda l: l.is_gathering
+            and l.order_id
+            and l.order_id.coef
+            and l.product_id
+            and isinstance(l.id, NewId)
+            and l.initial_qty_gathered == 0
         ):
             product_cost = line.product_id.uom_id._compute_price(
                 line.product_id.standard_price,
