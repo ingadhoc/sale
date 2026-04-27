@@ -2,7 +2,8 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import api, fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 
 
 class ProductPricelist(models.Model):
@@ -48,3 +49,17 @@ class ProductPricelist(models.Model):
                 for node in fields:
                     node.set("edit", "false")
         return arch, view
+
+    def unlink(self):
+        confirmed_orders = self.env["sale.order"].search(
+            [("pricelist_id", "in", self.ids), ("state", "=", "sale")],
+            limit=1,
+        )
+        if confirmed_orders:
+            raise UserError(
+                _(
+                    "The price list cannot be deleted because it has confirmed sales. "
+                    "In these cases, we recommend archiving the list."
+                )
+            )
+        return super().unlink()
