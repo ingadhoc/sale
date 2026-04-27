@@ -16,6 +16,7 @@ class SaleOrderLine(models.Model):
             and l.order_id.coef
             and l.product_id
             and isinstance(l.id, models.NewId)
+            and l.initial_qty_gathered == 0
         ):
             product_cost = line.product_id.uom_id._compute_price(
                 line.product_id.standard_price,
