@@ -11,7 +11,7 @@
     ],
     "data": [
         "views/res_config_settings_views.xml",
-        "views/sale_order_view.xml",
+        # "views/sale_order_view.xml",
     ],
     "installable": True,
     "auto_install": False,
