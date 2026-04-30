@@ -35,3 +35,9 @@ class ProjectProject(models.Model):
                 "res_id": wiz.id,
                 "target": "new",
             }
+
+    def _get_profitability_labels(self):
+        labels = super()._get_profitability_labels()
+        if (self.env.lang or "").startswith("es"):
+            labels["billable_fixed"] = _("Servicio (precio fijo)")
+        return labels
