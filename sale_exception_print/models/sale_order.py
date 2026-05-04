@@ -43,7 +43,7 @@ class SaleOrder(models.Model):
         """
 
         all_exception_ids = []
-        for order in self.with_context(print_exceptions=True):
+        for order in self.with_context(print_exceptions=True).exists():
             if order.ignore_exception or order.ignore_exception_print:
                 continue
             exception_ids = order.detect_exceptions()
@@ -57,7 +57,7 @@ class SaleOrder(models.Model):
         Called from JavaScript before printing.
         Returns a dict with 'has_exceptions' and 'action' if exceptions found.
         """
-        orders = self.env["sale.order"].browse(order_ids)
+        orders = self.env["sale.order"].browse(order_ids).exists()
         for order in orders:
             exception_ids = order.detect_print_exceptions()
             if exception_ids:
