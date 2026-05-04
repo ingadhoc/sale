@@ -42,7 +42,9 @@ class SaleOrderLine(models.Model):
         lines_to_update = self - lines
         super(SaleOrderLine, lines_to_update)._compute_discount()
 
-        if self.env.context.get("recompute_prices") or lines_to_update:
+        if self.env.context.get("recompute_prices") or (
+            lines_to_update and not self.env.context.get("confirming_order")
+        ):
             for line in self:
                 if line.order_id.state != "sale":
                     line.discount1 = line.discount
