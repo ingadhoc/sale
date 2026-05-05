@@ -1,1 +1,1 @@
-from . import test_sale_triple_discount_ux
+from . import test_sale_triple_discount_lock

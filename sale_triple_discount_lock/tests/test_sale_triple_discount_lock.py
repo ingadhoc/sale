@@ -5,14 +5,17 @@ from odoo import Command
 from odoo.tests import common
 
 
-class TestSaleTripleDiscountUX(common.TransactionCase):
+class TestSaleTripleDiscountLock(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.env.user.group_ids += cls.env.ref("sale.group_discount_per_so_line")
         cls.env["ir.config_parameter"].sudo().set_param("sale_triple_discount_ux.lock_discount1_readonly", "True")
         cls.partner = cls.env["res.partner"].create({"name": "Test Partner"})
-        cls.product1 = cls.env["product.product"].create(
+        products = cls.env["product.product"].search([], limit=2)
+        cls.product1 = products[0]
+        cls.product2 = products[1]
+        cls.product1.write(
             {
                 "name": "Test Product 1",
                 "type": "service",
@@ -20,7 +23,7 @@ class TestSaleTripleDiscountUX(common.TransactionCase):
                 "list_price": 600.0,
             }
         )
-        cls.product2 = cls.env["product.product"].create(
+        cls.product2.write(
             {
                 "name": "Test Product 2",
                 "type": "service",
@@ -36,28 +39,32 @@ class TestSaleTripleDiscountUX(common.TransactionCase):
                 "amount": 15.0,
             }
         )
-        cls.order = cls.env["sale.order"].create({"partner_id": cls.partner.id})
+        order_vals = {"partner_id": cls.partner.id}
+        if "ignore_exception" in cls.env["sale.order"]._fields:
+            order_vals["ignore_exception"] = True
+        cls.order = cls.env["sale.order"].create(order_vals)
         so_line = cls.env["sale.order.line"]
-        cls.so_line1 = so_line.create(
-            {
-                "order_id": cls.order.id,
-                "product_id": cls.product1.id,
-                "name": "Line 1",
-                "product_uom_qty": 1.0,
-                "tax_ids": [(6, 0, [cls.tax.id])],
-                "price_unit": 600.0,
-            }
-        )
-        cls.so_line2 = so_line.create(
-            {
-                "order_id": cls.order.id,
-                "product_id": cls.product2.id,
-                "name": "Line 2",
-                "product_uom_qty": 10.0,
-                "tax_ids": [(6, 0, [cls.tax.id])],
-                "price_unit": 60.0,
-            }
-        )
+        line1_vals = {
+            "order_id": cls.order.id,
+            "product_id": cls.product1.id,
+            "name": "Line 1",
+            "product_uom_qty": 1.0,
+            "tax_ids": [(6, 0, [cls.tax.id])],
+            "price_unit": 600.0,
+        }
+        line2_vals = {
+            "order_id": cls.order.id,
+            "product_id": cls.product2.id,
+            "name": "Line 2",
+            "product_uom_qty": 10.0,
+            "tax_ids": [(6, 0, [cls.tax.id])],
+            "price_unit": 60.0,
+        }
+        if "ignore_exception" in so_line._fields:
+            line1_vals["ignore_exception"] = True
+            line2_vals["ignore_exception"] = True
+        cls.so_line1 = so_line.create(line1_vals)
+        cls.so_line2 = so_line.create(line2_vals)
 
     def test_01_discount2_preserved_on_qty_change(self):
         self.so_line1.discount2 = 12.0
@@ -141,6 +148,9 @@ class TestSaleTripleDiscountUX(common.TransactionCase):
         if self.order.state == "waiting_approval":
             self.order.action_approve()
             self.order.action_confirm()
+        for line in self.order.order_line:
+            if not line.qty_to_invoice and line.product_id.invoice_policy == "delivery":
+                line.qty_delivered = line.product_uom_qty
         self.order._create_invoices()
         invoice = self.order.invoice_ids[0]
         inv_line = invoice.invoice_line_ids.filtered(lambda i: i.product_id == self.product1)
