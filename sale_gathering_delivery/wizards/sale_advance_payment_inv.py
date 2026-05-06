@@ -50,11 +50,19 @@ class SaleAdvancePaymentInvWizard(models.TransientModel):
         invoice = super()._create_invoices(sale_orders)
 
         if self.advance_payment_method == "fixed" and sale_orders.filtered("is_gathering"):
+            created_lines = self.env["account.move.line"]
             for order in sale_orders.filtered("is_gathering"):
                 delivery_lines = order.order_line.filtered(lambda l: l.is_delivery and l.product_uom_qty > 0)
-                if delivery_lines:
-                    for line in delivery_lines:
-                        line_vals = self._prepare_gathering_delivery_invoice_line_vals(line, invoice)
-                        self.env["account.move.line"].with_company(invoice.company_id).create(line_vals)
+                for line in delivery_lines:
+                    line_vals = self._prepare_gathering_delivery_invoice_line_vals(line, invoice)
+                    created_lines |= self.env["account.move.line"].with_company(invoice.company_id).create(line_vals)
+
+            # Strip any incompatible taxes injected by the compute during create,
+            # inside _sync_dynamic_lines so _sync_tax_lines regenerates the
+            # tax accounting entries correctly.
+            if created_lines:
+                container = {"records": invoice}
+                with invoice._sync_dynamic_lines(container):
+                    created_lines._strip_gathering_incompatible_taxes()
 
         return invoice
