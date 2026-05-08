@@ -40,6 +40,26 @@ class SaleOrderLine(models.Model):
 
     stock_by_location = fields.Text(compute="_compute_stock_by_location")
 
+    def _check_is_recurring_invoice(self):
+        self.ensure_one()
+        if (
+            self.order_id._fields.get("is_subscription")
+            and self.order_id.is_subscription
+            and self._fields.get("recurring_invoice")
+            and self.recurring_invoice
+        ):
+            return self.recurring_invoice
+        return False
+
+    def _create_procurements(self, product_qty, procurement_uom, values):
+        self.ensure_one()
+        # cancelar remanente seta la cantidad como entregada menos devuelta
+        # asi que no deberia restar en ese caso
+        # Para suscripciones: NO restar quantity_returned (ya está en qty_delivered)
+        if not self._check_is_recurring_invoice():
+            product_qty = product_qty - self.quantity_returned
+        return super()._create_procurements(product_qty, procurement_uom, values)
+
     @api.depends("product_id", "product_uom_qty")
     def _compute_total_reserved_quantity(self):
         for line in self:
