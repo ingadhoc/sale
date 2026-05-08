@@ -15,7 +15,7 @@ class AccountAnalyticLine(models.Model):
         protect_so_line = self._origin and self.env["ir.config_parameter"].sudo().get_param(
             "sale_timesheet_ux.protect_so_line", ""
         )
-        if protect_so_line:
+        if protect_so_line and self.so_line:
             return False
         else:
             return super()._is_not_billed()
