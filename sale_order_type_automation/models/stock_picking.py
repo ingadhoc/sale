@@ -18,5 +18,5 @@ class StockPicking(models.Model):
             .sudo()
             .mapped("sale_id")
         )
-        sale_orders.run_invoicing_atomation()
+        sale_orders.sudo().run_invoicing_atomation()
         return res
