@@ -163,3 +163,23 @@ msgstr "Tipo de pedido de venta"
 #: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__warehouse_id
 msgid "Warehouse"
 msgstr "Almacén"
+
+#. module: sale_order_type_ux
+#: model_terms:ir.ui.view,arch_db:sale_order_type_ux.sale_order_type_form_view
+msgid "Be careful when making modifications to this sale order type as it has"
+msgstr "Tenga cuidado al hacer modificaciones sobre este tipo de pedido de venta ya que tiene"
+
+#. module: sale_order_type_ux
+#: model_terms:ir.ui.view,arch_db:sale_order_type_ux.sale_order_type_form_view
+msgid "associated invoices"
+msgstr "facturas asociadas"
+
+#. module: sale_order_type_ux
+#: model_terms:ir.ui.view,arch_db:sale_order_type_ux.sale_order_type_form_view
+msgid "<span invisible=\"invoice_count == 0 or so_count == 0\"> and </span>"
+msgstr "<span invisible=\"invoice_count == 0 or so_count == 0\"> y </span>"
+
+#. module: sale_order_type_ux
+#: model_terms:ir.ui.view,arch_db:sale_order_type_ux.sale_order_type_form_view
+msgid "associated sale orders"
+msgstr "pedidos de venta asociados"
