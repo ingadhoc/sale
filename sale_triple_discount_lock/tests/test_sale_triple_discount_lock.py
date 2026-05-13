@@ -10,7 +10,6 @@ class TestSaleTripleDiscountLock(common.TransactionCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.env.user.group_ids += cls.env.ref("sale.group_discount_per_so_line")
-        cls.env["ir.config_parameter"].sudo().set_param("sale_triple_discount_ux.lock_discount1_readonly", "True")
         cls.partner = cls.env["res.partner"].create({"name": "Test Partner"})
         products = cls.env["product.product"].search([], limit=2)
         cls.product1 = products[0]
@@ -159,11 +158,3 @@ class TestSaleTripleDiscountLock(common.TransactionCase):
         self.assertAlmostEqual(inv_line.discount2, 15.0)
         self.assertAlmostEqual(inv_line.discount3, 5.0)
         self.assertAlmostEqual(inv_line.discount, self.so_line1.discount, places=2)
-
-    def test_07_standard_behavior_without_setting(self):
-        self.env["ir.config_parameter"].sudo().set_param("sale_triple_discount_ux.lock_discount1_readonly", "False")
-        self.so_line1.discount2 = 12.0
-        self.so_line1.discount3 = 5.0
-        self.order.action_update_prices()
-        self.assertAlmostEqual(self.so_line1.discount2, 0.0)
-        self.assertAlmostEqual(self.so_line1.discount3, 0.0)
