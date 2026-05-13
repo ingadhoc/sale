@@ -18,8 +18,10 @@ class StockPicking(models.Model):
         )
         if any(
             self.sudo().filtered(
-                lambda x: x.sale_id.type_id.invoice_policy in ["prepaid", "prepaid_block_delivery"]
-                and not x._check_sale_paid()
+                lambda x: (
+                    x.sale_id.type_id.invoice_policy in ["prepaid", "prepaid_block_delivery"]
+                    and not x._check_sale_paid()
+                )
             )
         ):
             raise UserError(_(msg))

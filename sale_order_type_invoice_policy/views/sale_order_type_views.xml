@@ -7,6 +7,7 @@
             <group position="inside">
             <group string="Invoicing Policy">
                 <field name="invoice_policy"/>
+                <field name="services_delivered" invisible="invoice_policy != 'delivery'"/>
            </group>
         </group>
         </field>

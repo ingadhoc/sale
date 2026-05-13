@@ -102,6 +102,16 @@ msgid "Transfer"
 msgstr "Traslado"
 
 #. module: sale_order_type_invoice_policy
+#: model:ir.model.fields,field_description:sale_order_type_invoice_policy.field_sale_order_type__services_delivered
+msgid "Exclude prepaid services"
+msgstr "Excluir servicios prepagos"
+
+#. module: sale_order_type_invoice_policy
+#: model:ir.model.fields,help:sale_order_type_invoice_policy.field_sale_order_type__services_delivered
+msgid "The 'Deliveries' invoice policy is not applicable to prepaid services. Recommended for Sales Order lines involving discounts or prepaid services."
+msgstr "No aplica la política de facturación Cantidades Entregadas para los servicios prepagos. Especialmente útil cuando tenemos líneas en OV como descuentos o algún otro servicio prepago."
+
+#. module: sale_order_type_invoice_policy
 #: model:ir.model,name:sale_order_type_invoice_policy.model_sale_order_type
 msgid "Type of sale order"
 msgstr "Tipo de pedido de venta"
