@@ -19,13 +19,21 @@ class SaleOrderLine(models.Model):
         """
         super()._compute_qty_to_invoice()
         for line in self.filtered(
-            lambda sol: sol.order_id.state in ["sale", "done"]
-            and sol.order_id.type_id.invoice_policy not in [False, "by_product"]
+            lambda sol: (
+                sol.order_id.state == "sale" and sol.order_id.type_id.invoice_policy not in [False, "by_product"]
+            )
         ):
             type_policy = line.order_id.type_id.invoice_policy
             if type_policy in ["order", "prepaid", "prepaid_block_delivery"]:
                 line.qty_to_invoice = line.product_uom_qty - line.quantity_returned - line.qty_invoiced
             elif type_policy == "delivery":
-                line.qty_to_invoice = line.qty_delivered - line.qty_invoiced
+                if (
+                    line.order_id.type_id.services_delivered
+                    and line.product_id.type == "service"
+                    and line.product_id.service_policy == "ordered_prepaid"
+                ):
+                    line.qty_to_invoice = line.product_uom_qty - line.quantity_returned - line.qty_invoiced
+                else:
+                    line.qty_to_invoice = line.qty_delivered - line.qty_invoiced
             else:
                 raise UserError(_("Invoicing Policy %s not implemented!") % type_policy)
