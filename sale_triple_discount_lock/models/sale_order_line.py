@@ -1,26 +1,12 @@
-from odoo import fields, models
+from odoo import models
 
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
-    is_discount1_readonly = fields.Boolean(
-        compute="_compute_is_discount1_readonly",
-    )
-
-    def _compute_is_discount1_readonly(self):
-        readonly = (
-            self.env["ir.config_parameter"].sudo().get_param("sale_triple_discount_ux.lock_discount1_readonly")
-            == "True"
-        )
-        for rec in self:
-            rec.is_discount1_readonly = readonly
-
     def _inverse_discount(self):
         if self.env.context.get("sale_triple_discount_ux_skip_inverse"):
             return
-        if not self[:1].is_discount1_readonly:
-            return super()._inverse_discount()
         for rec in self:
             rec.update(
                 {
@@ -31,8 +17,6 @@ class SaleOrderLine(models.Model):
             )
 
     def _compute_discounts(self):
-        if not self[:1].is_discount1_readonly:
-            return super()._compute_discounts()
         discount_enabled = self.env["product.pricelist.item"]._is_discount_feature_enabled()
         for rec in self:
             saved_d2 = rec.discount2
