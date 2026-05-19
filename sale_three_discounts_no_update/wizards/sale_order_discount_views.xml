@@ -1,0 +1,40 @@
+<odoo>
+    <record id="sale_order_line_wizard_form_no_update" model="ir.ui.view">
+        <field name="name">sale.order.line.wizard.form.no.update</field>
+        <field name="model">sale.order.discount</field>
+        <field name="inherit_id" ref="sale_three_discounts.sale_order_line_wizard_form"/>
+        <field name="arch" type="xml">
+            <field name="discount2" position="replace"/>
+            <field name="discount3" position="replace"/>
+            <label for="discount_percentage" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </label>
+            <field name="discount_percentage" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="discount1" position="replace">
+                <div invisible="discount_type not in ('so_discount', 'sol_discount')">
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        <span style="min-width:45px">Disc. 1</span>
+                        <field name="apply_discount1" widget="boolean_toggle" nolabel="1" class="mb-0"/>
+                        <field name="discount1" widget="percentage" readonly="not apply_discount1" nolabel="1" class="mb-0"/>
+                    </div>
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        <span style="min-width:45px">Disc. 2</span>
+                        <field name="apply_discount2" widget="boolean_toggle" nolabel="1" class="mb-0"/>
+                        <field name="discount2" widget="percentage" readonly="not apply_discount2" nolabel="1" class="mb-0"/>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <span style="min-width:45px">Disc. 3</span>
+                        <field name="apply_discount3" widget="boolean_toggle" nolabel="1" class="mb-0"/>
+                        <field name="discount3" widget="percentage" readonly="not apply_discount3" nolabel="1" class="mb-0"/>
+                    </div>
+                    <div class="d-flex align-items-center gap-2 mt-2">
+                        <span style="min-width:45px" class="text-muted">Disc.</span>
+                        <field name="discount_percentage" widget="percentage" nolabel="1" class="mb-0"/>
+                    </div>
+                </div>
+            </field>
+        </field>
+    </record>
+</odoo>
