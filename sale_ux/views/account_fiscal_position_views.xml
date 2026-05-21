@@ -5,7 +5,8 @@
         <field name="model">account.fiscal.position</field>
         <field name="inherit_id" ref="account.view_account_position_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='name']" position="after">
+        <!-- Le pasamos 'last()' porque queremos asegurarnos de seleccionar el último campo 'name' en el formulario -->
+            <xpath expr="(//field[@name='name'])[last()]" position="after">
                 <field name="deduct_price_included_taxes"/>
             </xpath>
         </field>
