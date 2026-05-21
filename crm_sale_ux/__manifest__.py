@@ -9,9 +9,10 @@
     "website": "www.adhoc.com.ar",
     "license": "AGPL-3",
     "images": [],
-    "depends": ["crm", "sale_ux"],
+    "depends": ["sale_crm", "sale_ux"],
     "data": [
         "views/crm_lead_views.xml",
+        "views/res_config_settings_views.xml",
     ],
     "demo": [],
     "installable": True,

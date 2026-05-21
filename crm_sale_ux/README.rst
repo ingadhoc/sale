@@ -17,6 +17,7 @@ CRM Sale UX
 This module:
 
 #. If the option "Allow any user as salesman" is enable, it would be possible to assign any user as salesperson in leads, opportunities and teams.
+#. Adds a CRM setting to automatically mark opportunities as Won when their quotation is confirmed.
 
 Installation
 ============
@@ -30,7 +31,8 @@ Configuration
 
 To configure this module, you need to:
 
-#. Nothing to configure
+#. Go to CRM -> Configuration -> Settings.
+#. Enable "Auto mark opportunities as Won".
 
 Usage
 =====
