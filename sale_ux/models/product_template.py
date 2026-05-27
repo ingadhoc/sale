@@ -35,12 +35,16 @@ class ProductTemplate(models.Model):
 
     @api.model
     def get_import_templates(self):
-        res = super().get_import_templates()
-        template = {
-            "label": _("Import Template for Products"),
-            "template": "/sale_ux/static/xls/product_template.xlsx",
-        }
-        return [template if item.get("label") == template["label"] else item for item in res] or [template]
+        if self.env.context.get("sale_multi_pricelist_product_template") and self.env.user.has_group(
+            "product.group_product_pricelist"
+        ):
+            return [
+                {
+                    "label": _("Import Template for Products"),
+                    "template": "/sale_ux/static/xls/product_template.xlsx",
+                }
+            ]
+        return super().get_import_templates()
 
     def _get_available_uoms(self):
         self.ensure_one()
