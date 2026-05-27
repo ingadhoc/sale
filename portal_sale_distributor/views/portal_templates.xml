@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Add Quotations card for Portal Distributors -->
+    <template id="portal_my_home_quotations" name="Portal My Home : Quotations" inherit_id="portal.portal_my_home" priority="21">
+        <div id="portal_client_category" position="inside">
+            <t t-if="request.env.user.has_group('portal_sale_distributor.group_portal_backend_distributor')">
+                <t t-call="portal.portal_docs_entry">
+                    <t t-set="icon" t-value="'/sale/static/src/img/bag.svg'"/>
+                    <t t-set="title">Quotations</t>
+                    <t t-set="url" t-value="'/my/quotes'"/>
+                    <t t-set="text">View and edit your quotations</t>
+                    <t t-set="placeholder_count" t-value="'quotation_count'"/>
+                </t>
+            </t>
+        </div>
+    </template>
+
+    <!-- Template for Quotations List Page -->
+    <template id="portal_my_quotations" name="My Quotations">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Quotations</t>
+            </t>
+            <div t-if="not quotations" class="alert alert-info" role="alert">
+                There are currently no quotations for your account.
+            </div>
+            <t t-if="quotations" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>Quotation #</th>
+                        <th class="text-end">Quotation Date</th>
+                        <th class="text-end">Valid Until</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-end">Total</th>
+                    </tr>
+                </thead>
+                <t t-foreach="quotations" t-as="quotation">
+                    <tr>
+                        <td><a t-att-href="quotation.get_portal_url()"><t t-out="quotation.name"/></a></td>
+                        <td class="text-end"><span t-field="quotation.date_order"/></td>
+                        <td class="text-end"><span t-field="quotation.validity_date"/></td>
+                        <td class="text-center">
+                            <span t-if="quotation.state == 'draft'" class="badge rounded-pill text-bg-secondary">
+                                <i class="fa fa-fw fa-pencil"/> Draft
+                            </span>
+                            <span t-if="quotation.state == 'sent'" class="badge rounded-pill text-bg-info">
+                                <i class="fa fa-fw fa-paper-plane"/> Sent
+                            </span>
+                        </td>
+                        <td class="text-end">
+                            <span t-field="quotation.amount_total"/>
+                        </td>
+                    </tr>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Add breadcrumb for quotations -->
+    <template id="portal_my_home_menu_sale" name="Portal layout : sales menu entry" inherit_id="portal.portal_breadcrumbs" priority="21">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'quote'" class="breadcrumb-item active">
+                <t>Quotations</t>
+            </li>
+        </xpath>
+    </template>
+
+</odoo>

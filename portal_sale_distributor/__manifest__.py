@@ -40,6 +40,7 @@
         "security/portal_sale_distributor_security.xml",
         "security/ir.model.access.csv",
         "views/portal_my_account_views.xml",
+        "views/portal_templates.xml",
         "views/portal_sale_views.xml",
         "views/product_product_views.xml",
         "views/sale_report_templates.xml",
