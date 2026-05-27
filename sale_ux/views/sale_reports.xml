@@ -12,10 +12,10 @@
         </th>
         <td name="td_product_name" position="before">
             <td t-if="show_images" name="td_image" class="text-center" t-attf-style="width: {{column_width}}px;">
-                <span t-if="line.product_id.image_sale_order"
-                      t-field="line.product_id.image_sale_order"
-                      t-attf-style="max-width: {{display_size}}px; max-height: {{display_size}}px; display: block; margin: auto;"
-                      t-options='{"widget": "image", "class": "img img-fluid"}'/>
+                <img t-if="line.product_id.image_sale_order"
+                     t-att-src="image_data_uri(line.product_id.image_sale_order)"
+                     t-attf-style="display: block; margin: auto; width: auto; height: auto; max-width: {{display_size}}px; max-height: {{display_size}}px; object-fit: contain;"
+                     alt="Product image"/>
             </td>
         </td>
     </template>
