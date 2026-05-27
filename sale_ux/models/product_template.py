@@ -33,6 +33,15 @@ class ProductTemplate(models.Model):
             rec.pricelist_ids = rec.pricelist_ids.search([("show_products", "=", True)])
             rec.pricelist_ids.with_context(pricelist_template_id=rec.id)._compute_price()
 
+    @api.model
+    def get_import_templates(self):
+        res = super().get_import_templates()
+        template = {
+            "label": _("Import Template for Products"),
+            "template": "/sale_ux/static/xls/product_template.xlsx",
+        }
+        return [template if item.get("label") == template["label"] else item for item in res] or [template]
+
     def _get_available_uoms(self):
         self.ensure_one()
         res = super()._get_available_uoms()
