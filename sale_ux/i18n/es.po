@@ -25,17 +25,17 @@ msgstr ""
 #. module: sale_ux
 #: model:ir.model.fields.selection,name:sale_ux.selection__res_config_settings__product_image_size__256_100
 msgid "100x100px"
-msgstr ""
+msgstr "100x100px"
 
 #. module: sale_ux
 #: model:ir.model.fields.selection,name:sale_ux.selection__res_config_settings__product_image_size__512_150
 msgid "150x150px"
-msgstr ""
+msgstr "150x150px"
 
 #. module: sale_ux
 #: model:ir.model.fields.selection,name:sale_ux.selection__res_config_settings__product_image_size__128_50
 msgid "50x50px"
-msgstr ""
+msgstr "50x50px"
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
@@ -55,7 +55,7 @@ msgstr "<strong>Ventas</strong>"
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
 msgid "Al confirmar ventas, crear un proyecto sin compañía."
-msgstr ""
+msgstr "Al confirmar ventas, crear un proyecto sin compañía."
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__group_allow_any_user_as_salesman
@@ -72,12 +72,12 @@ msgstr "Cuenta analítica"
 #: model:ir.model.fields,field_description:sale_ux.field_res_partner__specific_property_product_pricelist
 #: model:ir.model.fields,field_description:sale_ux.field_res_users__specific_property_product_pricelist
 msgid "Assigned Pricelist"
-msgstr ""
+msgstr "Lista de precios asignada"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__auto_select_all_documents
 msgid "Auto-select all documents"
-msgstr ""
+msgstr "Seleccionar automáticamente todos los documentos"
 
 #. module: sale_ux
 #: model:ir.model.fields,help:sale_ux.field_res_config_settings__auto_select_all_documents
@@ -110,6 +110,8 @@ msgid ""
 "By selecting it allows you to display the pricelist with the price of that "
 "product in the products"
 msgstr ""
+"Al seleccionarlo, permite mostrar la lista de precios con el precio de ese "
+"producto en los productos"
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
@@ -225,7 +227,7 @@ msgstr "Descuento"
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
 msgid "Discount Amount"
-msgstr ""
+msgstr "Monto de descuento"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_account_analytic_account__display_name
@@ -257,13 +259,13 @@ msgstr "Monto del anticipo con impuestos"
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
 msgid "Due Date"
-msgstr ""
+msgstr "Fecha de vencimiento"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_res_partner__property_product_pricelist
 #: model:ir.model.fields,field_description:sale_ux.field_res_users__property_product_pricelist
 msgid "Effective Pricelist"
-msgstr ""
+msgstr "Lista de precios efectiva"
 
 #. module: sale_ux
 #: model:ir.model.fields,help:sale_ux.field_res_config_settings__cancel_old_quotations
@@ -273,7 +275,7 @@ msgstr "Habilitar la cancelación automática de cotizaciones antiguas."
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
 msgid "End Date"
-msgstr ""
+msgstr "Fecha de fin"
 
 #. module: sale_ux
 #: model:ir.model,name:sale_ux.model_account_fiscal_position
@@ -325,7 +327,7 @@ msgstr "Imagen"
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__product_image_size
 msgid "Image Size on Report"
-msgstr ""
+msgstr "Tamaño de imagen en presupuesto"
 
 #. module: sale_ux
 #: model:ir.model.fields,help:sale_ux.field_account_fiscal_position__deduct_price_included_taxes
@@ -344,6 +346,7 @@ msgstr ""
 msgid ""
 "Indicates that this product is only used as packaging and does not use units."
 msgstr ""
+"Indica que este producto se usa solo como embalaje y no utiliza unidades."
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order__internal_notes
@@ -398,6 +401,9 @@ msgid ""
 "Manually set a specific pricelist for this partner. If left blank, the "
 "system will automatically determine the best match based on priority rules."
 msgstr ""
+"Establece manualmente una lista de precios específica para este contacto. Si "
+"se deja en blanco, el sistema determinará automáticamente la mejor "
+"coincidencia según las reglas de prioridad."
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__move_internal_notes
@@ -415,13 +421,13 @@ msgstr "Mover términos y condiciones a transferencias de stock y facturas"
 #. odoo-python
 #: code:addons/sale_ux/models/product_template.py:0
 msgid "No products found with images to recompute."
-msgstr ""
+msgstr "No se encontraron productos con imágenes para recalcular."
 
 #. module: sale_ux
 #. odoo-python
 #: code:addons/sale_ux/models/product_template.py:0
 msgid "No products to process"
-msgstr ""
+msgstr "No hay productos para procesar"
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
@@ -466,7 +472,7 @@ msgstr "Fecha de pedido"
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
 msgid "Originator Tax"
-msgstr ""
+msgstr "Impuesto de origen"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order__payment_term_id
@@ -476,28 +482,28 @@ msgstr "Condiciones de pago"
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_product_pricelist__price
 msgid "Price"
-msgstr ""
+msgstr "Precio"
 
 #. module: sale_ux
 #: model:ir.model.fields,help:sale_ux.field_product_pricelist__price
 msgid "Price for product specified on the context"
-msgstr ""
+msgstr "Precio del producto especificado en el contexto"
 
 #. module: sale_ux
 #: model:ir.model,name:sale_ux.model_product_pricelist
 msgid "Pricelist"
-msgstr ""
+msgstr "Lista de precios"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_product_product__pricelist_ids
 #: model:ir.model.fields,field_description:sale_ux.field_product_template__pricelist_ids
 msgid "Pricelists"
-msgstr ""
+msgstr "Listas de precios"
 
 #. module: sale_ux
 #: model:ir.model,name:sale_ux.model_product_template
 msgid "Product"
-msgstr ""
+msgstr "Producto"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_line__categ_id
@@ -524,7 +530,7 @@ msgstr "Presupuestos"
 #: model:ir.model.fields,field_description:sale_ux.field_product_product__image_sale_order
 #: model:ir.model.fields,field_description:sale_ux.field_product_template__image_sale_order
 msgid "Report Image"
-msgstr ""
+msgstr "Imagen en presupuesto"
 
 #. module: sale_ux
 #: model:ir.ui.menu,name:sale_ux.menu_product_catalog_reporting
@@ -534,7 +540,7 @@ msgstr "Informes"
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
 msgid "Residual"
-msgstr ""
+msgstr "Residual"
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_order_form
@@ -626,13 +632,15 @@ msgstr ""
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_product_pricelist__show_products
 msgid "Show in products"
-msgstr ""
+msgstr "Mostrar en productos"
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
 msgid ""
 "Shows the delivery date field in the budget report and in the online budget."
 msgstr ""
+"Muestra el campo de fecha de entrega en el informe del presupuesto y en el "
+"presupuesto en línea."
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
@@ -640,6 +648,8 @@ msgid ""
 "Si marca esta opción y hay un valor definido en \"términos y condiciones\", "
 "el mismo se va a copiar en las facturas que se generen desde esta venta."
 msgstr ""
+"Si marca esta opción y hay un valor definido en \"términos y condiciones\", "
+"el mismo se va a copiar en las facturas que se generen desde esta venta."
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
@@ -647,11 +657,13 @@ msgid ""
 "Si marca esta opción y hay un valor definido en las \"notas internas\", el "
 "mismo se va a copiar en las facturas que se generen desde esta venta."
 msgstr ""
+"Si marca esta opción y hay un valor definido en las \"notas internas\", el "
+"mismo se va a copiar en las facturas que se generen desde esta venta."
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
 msgid "Start Date"
-msgstr ""
+msgstr "Fecha de inicio"
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
@@ -661,13 +673,13 @@ msgstr "Estado"
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_order_form
 msgid "Subtotal"
-msgstr ""
+msgstr "Subtotal"
 
 #. module: sale_ux
 #. odoo-python
 #: code:addons/sale_ux/models/product_template.py:0
 msgid "Successfully processed product images"
-msgstr ""
+msgstr "Imágenes de productos procesadas correctamente"
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
@@ -687,6 +699,9 @@ msgid ""
 "assigned list above or, if none, the one calculated by Odoo's sequence and "
 "applicability rules."
 msgstr ""
+"La lista de precios que se aplicará efectivamente en las ventas. Refleja la "
+"lista asignada anteriormente o, si no hay ninguna, la calculada por las "
+"reglas de secuencia y aplicabilidad de Odoo."
 
 #. module: sale_ux
 #. odoo-python
@@ -705,7 +720,7 @@ msgstr "Esta orden fue duplicada de %s"
 #: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_usability_tree
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_order_form
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
