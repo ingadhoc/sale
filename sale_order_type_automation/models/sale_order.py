@@ -59,31 +59,29 @@ class SaleOrder(models.Model):
             ):
                 if rec.env.context.get("commit_invoice_automation"):
                     rec.env.cr.commit()
+                if rec.type_id.invoice_validate_domain:
+                    domain = safe_eval(
+                        rec.type_id.invoice_validate_domain,
+                        {
+                            "datetime": safe_eval_datetime,
+                            "context_today": lambda: fields.Date.context_today(rec),
+                            "relativedelta": safe_eval_dateutil.relativedelta.relativedelta,
+                        },
+                    )
+                    invoices_to_validate = (invoices - invoices.filtered_domain(domain)) if domain else invoices
+                else:
+                    invoices_to_validate = invoices
                 try:
-                    if rec.type_id.invoice_validate_domain:
-                        domain = safe_eval(
-                            rec.type_id.invoice_validate_domain,
-                            {
-                                "datetime": safe_eval_datetime,
-                                "context_today": lambda: fields.Date.context_today(rec),
-                                "relativedelta": safe_eval_dateutil.relativedelta.relativedelta,
-                            },
-                        )
-                        invoices_to_validate = (invoices - invoices.filtered_domain(domain)) if domain else invoices
-                    else:
-                        invoices_to_validate = invoices
-                    invoices_to_validate.sudo().action_post()
-                    for invoice in invoices_to_validate:  # to avoid "expected singleton" error
-                        if (
-                            invoice.name
-                            and not invoice.line_ids.mapped("move_name")
-                            and invoice.name not in invoice.line_ids.mapped("move_name")
-                        ):
-                            invoice.env.add_to_compute(invoice.line_ids._fields["move_name"], invoice.line_ids)
+                    with rec.env.cr.savepoint():
+                        invoices_to_validate.sudo().action_post()
+                        for invoice in invoices_to_validate:  # to avoid "expected singleton" error
+                            if (
+                                invoice.name
+                                and not invoice.line_ids.mapped("move_name")
+                                and invoice.name not in invoice.line_ids.mapped("move_name")
+                            ):
+                                invoice.env.add_to_compute(invoice.line_ids._fields["move_name"], invoice.line_ids)
                 except Exception as error:
-                    rec.env.cr.rollback()
-                    if not rec.env.context.get("commit_invoice_automation"):
-                        raise error
                     message = _(
                         "We couldn't validate the automatically created "
                         "invoices (ids %s), you will need to validate them"
