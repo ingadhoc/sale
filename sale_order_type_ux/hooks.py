@@ -12,8 +12,7 @@ def post_init_hook(env):
         """
         UPDATE sale_order
         SET type_id = %s
-        WHERE state IN ('sale', 'cancel')
-          AND type_id IS NULL
+        WHERE type_id IS NULL
     """,
         (default_sale_order_type.id,),
     )
