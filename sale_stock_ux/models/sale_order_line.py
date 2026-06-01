@@ -242,7 +242,7 @@ class SaleOrderLine(models.Model):
                                 and m.to_refund
                             ),
                         }
-                        order_qty = order_line.product_uom._compute_quantity(
+                        order_qty = order_line.product_uom_id._compute_quantity(
                             order_line.product_uom_qty, relevant_bom.product_uom_id
                         )
                         quantity_returned = return_moves._compute_kit_quantities(
