@@ -2,11 +2,40 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models
+from odoo import api, fields, models
 
 
 class SaleOrder(models.Model):
     _inherit = "sale.order"
+
+    loyalty_rewards_banner_visible = fields.Boolean(
+        compute="_compute_loyalty_rewards_banner_visible",
+    )
+
+    @api.depends(
+        "state",
+        "partner_id",
+        "pricelist_id",
+        "company_id",
+        "order_line.reward_id",
+        "order_line.is_reward_line",
+        "order_line.product_id",
+        "order_line.product_uom_qty",
+        "order_line.discount",
+        "order_line.price_unit",
+        "order_line.coupon_id",
+        "applied_coupon_ids",
+        "coupon_point_ids",
+    )
+    def _compute_loyalty_rewards_banner_visible(self):
+        for order in self:
+            order.loyalty_rewards_banner_visible = False
+            if order.state not in ("draft", "sent"):
+                continue
+            if order.order_line.filtered("is_reward_line"):
+                continue
+            if order._get_claimable_rewards() or any(order._get_applicable_program_points().values()):
+                order.loyalty_rewards_banner_visible = True
 
     def _program_check_compute_points(self, programs):
         res = super()._program_check_compute_points(programs)
