@@ -30,6 +30,7 @@
         "sale_loyalty",
     ],
     "data": [
+        "views/sale_order_views.xml",
         "views/loyalty_program_views.xml",
     ],
     "installable": True,

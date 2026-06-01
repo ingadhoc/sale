@@ -53,3 +53,8 @@ msgstr "Pedido de venta"
 #: model_terms:ir.ui.view,arch_db:sale_loyalty_ux.loyalty_program_view_form
 msgid "Sales domain"
 msgstr "Dominio de venta"
+
+#. module: sale_loyalty_ux
+#: model_terms:ir.ui.view,arch_db:sale_loyalty_ux.view_sale_order_form_loyalty_rewards_banner
+msgid "There are available rewards that apply to this Sales Order"
+msgstr "Existen recompensas disponibles que aplican en esta Orden de Venta"

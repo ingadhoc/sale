@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_sale_order_form_loyalty_rewards_banner" model="ir.ui.view">
+        <field name="name">sale.order.form.loyalty.rewards.banner</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='sale_warning_text']/.." position="before">
+                <field name="loyalty_rewards_banner_visible" invisible="1"/>
+                <div class="alert alert-info" role="alert" invisible="not loyalty_rewards_banner_visible">
+                    <span>There are available rewards that apply to this Sales Order</span>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
