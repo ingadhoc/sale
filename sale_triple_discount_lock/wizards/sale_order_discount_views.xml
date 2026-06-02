@@ -1,0 +1,33 @@
+<odoo>
+    <record id="sale_order_line_wizard_form_triple_lock" model="ir.ui.view">
+        <field name="name">sale.order.discount.form.triple.lock</field>
+        <field name="model">sale.order.discount</field>
+        <field name="inherit_id" ref="sale.sale_order_line_wizard_form"/>
+        <field name="arch" type="xml">
+            <label for="discount_percentage" position="attributes">
+                <attribute name="invisible">discount_type not in ('so_discount',)</attribute>
+            </label>
+            <field name="discount_percentage" position="attributes">
+                <attribute name="invisible">discount_type not in ('so_discount',)</attribute>
+            </field>
+            <field name="discount_percentage" position="after">
+                <div class="d-flex flex-column" invisible="discount_type != 'sol_discount'">
+                    <div class="o_row">
+                        <label for="apply_discount2" string="Disc. 2"/>
+                        <field name="apply_discount2" widget="boolean_toggle"/>
+                        <field name="discount2" widget="percentage" nolabel="1" readonly="not apply_discount2"/>
+                    </div>
+                    <div class="o_row">
+                        <label for="apply_discount3" string="Disc. 3"/>
+                        <field name="apply_discount3" widget="boolean_toggle"/>
+                        <field name="discount3" widget="percentage" nolabel="1" readonly="not apply_discount3"/>
+                    </div>
+                    <div class="o_row">
+                        <label for="total_discount" string="Disc."/>
+                        <field name="total_discount" widget="percentage" nolabel="1" readonly="1"/>
+                    </div>
+                </div>
+            </field>
+        </field>
+    </record>
+</odoo>

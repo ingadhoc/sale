@@ -11,6 +11,7 @@
     ],
     "data": [
         "views/sale_order_view.xml",
+        "wizards/sale_order_discount_views.xml",
     ],
     "installable": True,
     "auto_install": False,
