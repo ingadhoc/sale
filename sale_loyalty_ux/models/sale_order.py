@@ -3,6 +3,7 @@
 # directory
 ##############################################################################
 from odoo import models
+from odoo.osv import expression
 
 
 class SaleOrder(models.Model):
@@ -13,6 +14,6 @@ class SaleOrder(models.Model):
         for r in res:
             domain = r._get_valid_sale_order()
             if not res[r].get("error") and domain:
-                if self not in self.env["sale.order"].search(domain):
+                if not self.env["sale.order"].search_count(expression.AND([domain, [("id", "=", self.id)]])):
                     res[r] = {"error": "SaleOrder not matching"}
         return res
