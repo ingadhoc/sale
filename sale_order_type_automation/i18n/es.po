@@ -46,6 +46,24 @@ msgstr ""
 "ningún diario aquí, se utilizará el diario predeterminado"
 
 #. module: sale_order_type_automation
+#: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type__invoice_validate_domain
+msgid ""
+"This invoice filter allows you to create some invoices in draft form without automatically validating them."
+"Therefore, if the condition is met, the invoice remains in draft status."
+msgstr ""
+"Con este filtro de facturas puede hacer que algunas facturas se creen en borrador pero no se validen automaticamente."
+"Por lo tanto, si se cumple la condicion, la factura queda en borrador."
+
+#. module: sale_order_type_automation
+#: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type__sale_order_filter_domain
+msgid ""
+"This sales filter allows you to create some invoices in draft form without automatically validating them."
+"Therefore, if the condition is met, the invoice remains in draft status."
+msgstr ""
+"Con este filtro de ventas puede hacer que algunas facturas se creen en borrador pero no se validen automaticamente."
+"Por lo tanto, si se cumple la condicion, la factura queda en borrador."
+
+#. module: sale_order_type_automation
 #: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type__invoice_company_id
 msgid "Company related to this journal"
 msgstr "Compañía relacionada con este diario"

@@ -101,8 +101,13 @@ class SaleOrderType(models.Model):
     )
 
     invoice_validate_domain = fields.Char(
-        string="Invoice Validation Domain",
-        help="Domain to filter invoices for automatic validation. So, if this filter does NOT find the invoices, they stay in drafts status.",
+        string="Draft invoice domain",
+        help="This invoice filter allows you to create some invoices in draft form without automatically validating them. Therefore, if the condition is met, the invoice remains in draft status.",
+    )
+
+    sale_order_filter_domain = fields.Char(
+        string="Draft sale order domain",
+        help="This sales filter allows you to create some invoices in draft form without automatically validating them. Therefore, if the condition is met, the invoice remains in draft status.",
     )
 
     @api.depends("payment_atomation")
@@ -124,9 +129,11 @@ class SaleOrderType(models.Model):
     @api.constrains("journal_id", "payment_journal_id", "sequence_id")
     def validate_company_id(self):
         different_company = self.filtered(
-            lambda x: x.invoice_company_id
-            and x.payment_journal_id
-            and x.invoice_company_id != x.payment_journal_id.company_id
+            lambda x: (
+                x.invoice_company_id
+                and x.payment_journal_id
+                and x.invoice_company_id != x.payment_journal_id.company_id
+            )
         )
         if different_company:
             raise ValidationError(_("Invoice Journal and Payment Journal must be of the same company"))
@@ -135,9 +142,9 @@ class SaleOrderType(models.Model):
         # seteada
         # TODO this should go in a pr to OCA sot module
         sequence_diff_company = self.filtered(
-            lambda x: x.sequence_id.company_id
-            and x.warehouse_id.company_id
-            and x.sequence_id.company_id != x.company_id
+            lambda x: (
+                x.sequence_id.company_id and x.warehouse_id.company_id and x.sequence_id.company_id != x.company_id
+            )
         )
         if sequence_diff_company:
             raise ValidationError(_("The company of the sequence and the warehouse must be the same"))
