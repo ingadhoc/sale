@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-03 19:41+0000\n"
-"PO-Revision-Date: 2026-06-03 19:41+0000\n"
+"POT-Creation-Date: 2026-06-03 23:01+0000\n"
+"PO-Revision-Date: 2026-06-03 23:01+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -663,6 +663,14 @@ msgstr ""
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_advance_payment_inv__tax_ids
 msgid "Taxes"
+msgstr ""
+
+#. module: sale_ux
+#. odoo-python
+#: code:addons/sale_ux/models/product_pricelist.py:0
+msgid ""
+"The price list cannot be deleted because it has confirmed sales. In these "
+"cases, we recommend archiving the list."
 msgstr ""
 
 #. module: sale_ux
