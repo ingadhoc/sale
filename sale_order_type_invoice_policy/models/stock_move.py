@@ -13,7 +13,9 @@ class StockMove(models.Model):
         For the cron call check if the moves needs to be reserved or not depends of the policy in the sale order type.
         """
         prepaid_unpaid = self.sudo().filtered(
-            lambda x: x.picking_id.sale_id.type_id.invoice_policy == "prepaid" and not x.picking_id._check_sale_paid()
+            lambda x: x.picking_id.picking_type_id.code == "outgoing"
+            and x.picking_id.sale_id.type_id.invoice_policy == "prepaid"
+            and not x.picking_id._check_sale_paid()
         )
         if prepaid_unpaid:
             self -= prepaid_unpaid

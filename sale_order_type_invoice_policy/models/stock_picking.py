@@ -19,7 +19,8 @@ class StockPicking(models.Model):
         if any(
             self.sudo().filtered(
                 lambda x: (
-                    x.sale_id.type_id.invoice_policy in ["prepaid", "prepaid_block_delivery"]
+                    x.picking_type_id.code == "outgoing"
+                    and x.sale_id.type_id.invoice_policy in ["prepaid", "prepaid_block_delivery"]
                     and not x._check_sale_paid()
                 )
             )
@@ -34,7 +35,9 @@ class StockPicking(models.Model):
             "be invoiced and paid before you can reserve qty to this picking"
         )
         prepaid_unpaid = self.sudo().filtered(
-            lambda x: x.sale_id.type_id.invoice_policy == "prepaid" and not x._check_sale_paid()
+            lambda x: x.picking_type_id.code == "outgoing"
+            and x.sale_id.type_id.invoice_policy == "prepaid"
+            and not x._check_sale_paid()
         )
         if prepaid_unpaid and self._context.get("prepaid_raise"):
             raise UserError(_(msg))
