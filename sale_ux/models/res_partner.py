@@ -41,9 +41,7 @@ class ResPartner(models.Model):
 
                 if not default_pricelist_id:
                     default_pricelist_id = (
-                        self.env["ir.default"]
-                        ._get_model_defaults(self._name)
-                        .get("specific_property_product_pricelist", False)
+                        self.env["ir.default"]._get_model_defaults(self._name).get("property_product_pricelist", False)
                     )
 
                 if default_pricelist_id:
