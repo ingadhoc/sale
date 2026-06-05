@@ -52,8 +52,13 @@ class SaleAdvancePaymentInvWizard(models.TransientModel):
         order = sale_obj.browse(self.env.context.get("active_ids"))[0]
 
         if self.tax_ids:
+            product = self.product_id if "product_id" in self._fields else self.env["product.product"]
             taxes = self.tax_ids.compute_all(
-                self.amount, order.company_id.currency_id, 1.0, product=self.product_id, partner=order.partner_id
+                self.amount,
+                order.company_id.currency_id,
+                1.0,
+                product=product,
+                partner=order.partner_id,
             )
             self.amount_total = taxes["total_included"]
         else:
