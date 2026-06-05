@@ -76,7 +76,10 @@ class SaleOrder(models.Model):
         res = super().action_confirm()
         if isinstance(res, bool) and res:
             for order in self.filtered(
-                lambda x: x.is_gathering and x.type_id.invoicing_atomation != "none" and not x.has_gathering_invoice
+                lambda x: x.is_gathering
+                and x.type_id
+                and x.type_id.invoicing_atomation != "none"
+                and not x.has_gathering_invoice
             ):
                 advance_payment_wizard = (
                     self.env["sale.advance.payment.inv"]
