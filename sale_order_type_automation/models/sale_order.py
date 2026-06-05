@@ -26,15 +26,16 @@ class SaleOrder(models.Model):
             # we take into account if there are any transaction finish from the e-commerce
             #  and not continue with the automation in this case
             # Check sale order exclusion domain: create invoice but skip validation
+            eval_ctx = {
+                "datetime": safe_eval_datetime,
+                "context_today": lambda: fields.Date.context_today(rec),
+                "relativedelta": safe_eval_dateutil.relativedelta.relativedelta,
+            }
             skip_validation = False
             if rec.type_id.sale_order_filter_domain:
                 so_domain = safe_eval(
                     rec.type_id.sale_order_filter_domain,
-                    {
-                        "datetime": safe_eval_datetime,
-                        "context_today": lambda: fields.Date.context_today(rec),
-                        "relativedelta": safe_eval_dateutil.relativedelta.relativedelta,
-                    },
+                    eval_ctx,
                 )
                 if so_domain and rec.filtered_domain(so_domain):
                     skip_validation = True
@@ -62,25 +63,16 @@ class SaleOrder(models.Model):
                 if rec.type_id.invoice_validate_domain:
                     domain = safe_eval(
                         rec.type_id.invoice_validate_domain,
-                        {
-                            "datetime": safe_eval_datetime,
-                            "context_today": lambda: fields.Date.context_today(rec),
-                            "relativedelta": safe_eval_dateutil.relativedelta.relativedelta,
-                        },
+                        eval_ctx,
                     )
                     invoices_to_validate = (invoices - invoices.filtered_domain(domain)) if domain else invoices
                 else:
                     invoices_to_validate = invoices
+                if not invoices_to_validate:
+                    continue
                 try:
                     with rec.env.cr.savepoint():
                         invoices_to_validate.sudo().action_post()
-                        for invoice in invoices_to_validate:  # to avoid "expected singleton" error
-                            if (
-                                invoice.name
-                                and not invoice.line_ids.mapped("move_name")
-                                and invoice.name not in invoice.line_ids.mapped("move_name")
-                            ):
-                                invoice.env.add_to_compute(invoice.line_ids._fields["move_name"], invoice.line_ids)
                 except Exception as error:
                     message = _(
                         "We couldn't validate the automatically created "
