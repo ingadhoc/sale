@@ -48,6 +48,7 @@ Several Improvements to sales:
 #. Add the field "Un-invoiced" (amount_uninvoiced) in the sale order to show the uninvoiced amount.
 #. Prevents writing in certain fields in blocked sales orders.
 #. Deleting price lists with confirmed sale orders is not permitted.
+#. Prevents deleting sale orders when they have associated invoices, preserving traceability.
 
 Installation
 ============

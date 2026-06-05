@@ -13,6 +13,17 @@ from odoo.tools.safe_eval import safe_eval
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
+    def unlink(self):
+        orders_with_invoices = self.filtered("invoice_ids")
+        if orders_with_invoices:
+            raise UserError(
+                self.env._(
+                    "You cannot delete this sales order because it has related invoices. "
+                    "To preserve traceability, the record must remain archived or canceled."
+                )
+            )
+        return super().unlink()
+
     internal_notes = fields.Html()
     payment_term_id = fields.Many2one(
         tracking=True,
