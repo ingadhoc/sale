@@ -1,15 +1,15 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* sale_order_type_invoice_policy
-# 
+#
 # Translators:
 # ADHOC - Bot <transbot@adhoc.com.ar>, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-25 20:50+0000\n"
+"POT-Creation-Date: 2026-06-03 21:14+0000\n"
 "PO-Revision-Date: 2025-12-13 16:10+0000\n"
 "Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
@@ -18,8 +18,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
-" ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
+"0) ? 1 : 2);\n"
 "X-Generator: Weblate 5.10.4\n"
 
 #. module: sale_order_type_invoice_policy
@@ -39,6 +39,11 @@ msgstr "Cantidades entregadas"
 #: model:ir.model.fields,field_description:sale_order_type_invoice_policy.field_stock_picking__display_name
 msgid "Display Name"
 msgstr "Nombre"
+
+#. module: sale_order_type_invoice_policy
+#: model:ir.model.fields,field_description:sale_order_type_invoice_policy.field_sale_order_type__services_delivered
+msgid "Exclude prepaid services"
+msgstr "Excluir servicios prepagos"
 
 #. module: sale_order_type_invoice_policy
 #: model:ir.model.fields,field_description:sale_order_type_invoice_policy.field_sale_order_line__id
@@ -97,19 +102,19 @@ msgid "Stock Move"
 msgstr "Movimiento de stock"
 
 #. module: sale_order_type_invoice_policy
+#: model:ir.model.fields,help:sale_order_type_invoice_policy.field_sale_order_type__services_delivered
+msgid ""
+"The 'Deliveries' invoice policy is not applicable to prepaid services. "
+"Recommended for Sales Order lines involving discounts or prepaid services."
+msgstr ""
+"No aplica la política de facturación Cantidades Entregadas para los "
+"servicios prepagos. Especialmente útil cuando tenemos líneas en OV como "
+"descuentos o algún otro servicio prepago."
+
+#. module: sale_order_type_invoice_policy
 #: model:ir.model,name:sale_order_type_invoice_policy.model_stock_picking
 msgid "Transfer"
 msgstr "Traslado"
-
-#. module: sale_order_type_invoice_policy
-#: model:ir.model.fields,field_description:sale_order_type_invoice_policy.field_sale_order_type__services_delivered
-msgid "Exclude prepaid services"
-msgstr "Excluir servicios prepagos"
-
-#. module: sale_order_type_invoice_policy
-#: model:ir.model.fields,help:sale_order_type_invoice_policy.field_sale_order_type__services_delivered
-msgid "The 'Deliveries' invoice policy is not applicable to prepaid services. Recommended for Sales Order lines involving discounts or prepaid services."
-msgstr "No aplica la política de facturación Cantidades Entregadas para los servicios prepagos. Especialmente útil cuando tenemos líneas en OV como descuentos o algún otro servicio prepago."
 
 #. module: sale_order_type_invoice_policy
 #: model:ir.model,name:sale_order_type_invoice_policy.model_sale_order_type
