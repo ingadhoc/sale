@@ -6,6 +6,12 @@
         <field name="model">stock.return.picking</field>
         <field name="arch" type="xml">
             <field name="product_return_moves" position="before">
+                <div class="alert alert-warning" role="alert" style="margin-bottom:0px;"
+                     invisible="not context.get('show_return_of_return_warning')">
+                    Está generando una devolución a partir de <b>otra devolución</b> vinculada a una orden de venta.
+                    Esto puede dejar la orden inconsistente en sus cantidades entregadas y en su estado de facturación.
+                    Si aun así quiere continuar, presione <b>"Continuar igual"</b>.
+                </div>
                 <div class="alert alert-info" role="alert" style="margin-bottom:0px;">
                     <b>Importante</b>: si está haciendo un movimiento inverso relacionado a un Pedido de Venta o de Compra, entonces debe prestar atención al campo <b>"Para Abonar (actualizar OC/OV)"</b>, donde, si:
                     <ul>
@@ -27,6 +33,22 @@
                 <!-- porque la traducción no se actualiza -->
                 <attribute name="string">Para Abonar (actualizar OC/OV)</attribute>
             </field>
+            <!-- Cuando se muestra la advertencia de devolución-de-devolución,
+                 ocultamos los botones normales y dejamos solo "Continuar igual". -->
+            <button name="action_create_returns" position="attributes">
+                <attribute name="invisible">context.get('show_return_of_return_warning')</attribute>
+            </button>
+            <button name="action_create_returns_all" position="attributes">
+                <attribute name="invisible">context.get('show_return_of_return_warning')</attribute>
+            </button>
+            <button name="action_create_exchanges" position="attributes">
+                <attribute name="invisible">picking_type_code not in ('incoming', 'outgoing') or context.get('show_return_of_return_warning')</attribute>
+            </button>
+            <button name="action_create_returns" position="after">
+                <button string="Continuar igual" name="action_create_returns" type="object" class="btn-primary"
+                        context="{'skip_return_of_sale_return_check': True}"
+                        invisible="not context.get('show_return_of_return_warning')"/>
+            </button>
         </field>
     </record>
 
