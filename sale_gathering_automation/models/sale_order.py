@@ -90,7 +90,7 @@ class SaleOrder(models.Model):
                     )
                 )
                 advance_payment_wizard._check_amount_is_positive()
-                invoices = advance_payment_wizard._create_invoices(order)
+                invoices = advance_payment_wizard.with_context(first_gathering_invoice=True)._create_invoices(order)
                 if invoices and order.type_id.invoicing_atomation == "validate_invoice":
                     try:
                         if order.type_id.invoice_validate_domain:
@@ -102,7 +102,7 @@ class SaleOrder(models.Model):
                                     "relativedelta": safe_eval_dateutil.relativedelta.relativedelta,
                                 },
                             )
-                            invoices_to_validate = invoices.filtered_domain(domain)
+                            invoices_to_validate = invoices - invoices.filtered_domain(domain)
                         else:
                             invoices_to_validate = invoices
                         invoices_to_validate.sudo().action_post()
