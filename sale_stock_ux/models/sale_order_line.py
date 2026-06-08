@@ -340,6 +340,6 @@ class SaleOrderLine(models.Model):
 
     def _get_protected_fields(self):
         """Override to allow modifications when skip_locked_order_line_check context is set."""
-        if self._context.get("skip_locked_order_line_check"):
+        if self.env.context.get("skip_locked_order_line_check"):
             return []
         return super()._get_protected_fields()
