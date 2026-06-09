@@ -31,6 +31,8 @@ Point of Sale UX
 
 5. If a payment method does not have a "receivable account" and "outstanding account" defined, it will not allow you to log in to the POS.
 
+6. **Payment methods are created with "Identify Customer" enabled by default** (``split_transactions = True``).
+
 
 Installation
 ============
