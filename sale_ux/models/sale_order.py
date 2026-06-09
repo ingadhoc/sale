@@ -50,19 +50,6 @@ class SaleOrder(models.Model):
             )
             order.amount_uninvoiced = order.amount_total - invoices._get_sale_order_invoiced_amount(order)
 
-    def _compute_fiscal_position_id(self):
-        if self.env.user.has_group("account.group_delivery_invoice_address"):
-            return super()._compute_fiscal_position_id()
-        for order in self:
-            if not order.partner_id:
-                order.fiscal_position_id = False
-                continue
-            order.fiscal_position_id = (
-                self.env["account.fiscal.position"]
-                .with_company(order.company_id)
-                ._get_fiscal_position(order.partner_id, order.partner_id)
-            )
-
     def _prepare_invoice(self):
         vals = super(SaleOrder, self)._prepare_invoice()
         propagate_internal_notes = (
