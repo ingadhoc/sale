@@ -1,4 +1,4 @@
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 
 
 class ResPartner(models.Model):
@@ -53,3 +53,14 @@ class ResPartner(models.Model):
                     partner.specific_property_product_pricelist = None
 
         return partners
+
+    @api.model
+    def get_import_templates(self):
+        if self.env.context.get("res_partner_search_mode") == "customer":
+            return [
+                {
+                    "label": _("Import Template for Customers"),
+                    "template": "/sale_ux/static/xls/res_partner.xlsx",
+                }
+            ]
+        return super().get_import_templates()
