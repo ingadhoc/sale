@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-22 08:21+0000\n"
-"PO-Revision-Date: 2025-11-22 08:21+0000\n"
+"POT-Creation-Date: 2026-06-11 14:58+0000\n"
+"PO-Revision-Date: 2026-06-11 14:58+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -62,6 +62,7 @@ msgstr ""
 #. module: pos_ux
 #: model:ir.model.fields,field_description:pos_ux.field_pos_config__display_name
 #: model:ir.model.fields,field_description:pos_ux.field_pos_order__display_name
+#: model:ir.model.fields,field_description:pos_ux.field_pos_payment_method__display_name
 #: model:ir.model.fields,field_description:pos_ux.field_pos_session__display_name
 #: model:ir.model.fields,field_description:pos_ux.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:pos_ux.field_res_users__display_name
@@ -80,12 +81,25 @@ msgid "Exit contingency mode"
 msgstr ""
 
 #. module: pos_ux
+#: model:ir.model.fields,help:pos_ux.field_pos_payment_method__split_transactions
+msgid ""
+"Forces to set a customer when using this payment method and splits the "
+"journal entries for each customer. It could slow down the closing process."
+msgstr ""
+
+#. module: pos_ux
 #: model:ir.model.fields,field_description:pos_ux.field_pos_config__id
 #: model:ir.model.fields,field_description:pos_ux.field_pos_order__id
+#: model:ir.model.fields,field_description:pos_ux.field_pos_payment_method__id
 #: model:ir.model.fields,field_description:pos_ux.field_pos_session__id
 #: model:ir.model.fields,field_description:pos_ux.field_res_config_settings__id
 #: model:ir.model.fields,field_description:pos_ux.field_res_users__id
 msgid "ID"
+msgstr ""
+
+#. module: pos_ux
+#: model:ir.model.fields,field_description:pos_ux.field_pos_payment_method__split_transactions
+msgid "Identify Customer"
 msgstr ""
 
 #. module: pos_ux
@@ -128,6 +142,11 @@ msgstr ""
 #. module: pos_ux
 #: model:ir.model,name:pos_ux.model_pos_order
 msgid "Point of Sale Orders"
+msgstr ""
+
+#. module: pos_ux
+#: model:ir.model,name:pos_ux.model_pos_payment_method
+msgid "Point of Sale Payment Methods"
 msgstr ""
 
 #. module: pos_ux
