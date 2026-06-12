@@ -18,5 +18,15 @@
                      alt="Product image"/>
             </td>
         </td>
+        <!-- Empty image-column cell so non-product rows keep the grid aligned -->
+        <td name="td_section_name" position="before">
+            <td t-if="show_images" name="td_section_image" t-attf-style="width: {{column_width}}px;"/>
+        </td>
+        <td name="td_combo_name" position="before">
+            <td t-if="show_images" name="td_combo_image" t-attf-style="width: {{column_width}}px;"/>
+        </td>
+        <td name="td_section_group_name" position="before">
+            <td t-if="show_images" name="td_section_group_image" t-attf-style="width: {{column_width}}px;"/>
+        </td>
     </template>
 </odoo>
