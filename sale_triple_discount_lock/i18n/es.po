@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-21 14:34+0000\n"
+"POT-Creation-Date: 2026-06-12 14:46+0000\n"
 "PO-Revision-Date: 2026-04-27 17:28+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -17,13 +17,55 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #. module: sale_triple_discount_lock
+#: model:ir.model.fields,field_description:sale_triple_discount_lock.field_sale_order_discount__apply_discount2
+msgid "Apply Disc. 2"
+msgstr ""
+
+#. module: sale_triple_discount_lock
+#: model:ir.model.fields,field_description:sale_triple_discount_lock.field_sale_order_discount__apply_discount3
+msgid "Apply Disc. 3"
+msgstr ""
+
+#. module: sale_triple_discount_lock
+#: model_terms:ir.ui.view,arch_db:sale_triple_discount_lock.sale_order_line_wizard_form_triple_lock
+msgid "Disc."
+msgstr ""
+
+#. module: sale_triple_discount_lock
+#: model_terms:ir.ui.view,arch_db:sale_triple_discount_lock.sale_order_line_wizard_form_triple_lock
+msgid "Disc. 2"
+msgstr ""
+
+#. module: sale_triple_discount_lock
+#: model_terms:ir.ui.view,arch_db:sale_triple_discount_lock.sale_order_line_wizard_form_triple_lock
+msgid "Disc. 3"
+msgstr ""
+
+#. module: sale_triple_discount_lock
+#: model:ir.model.fields,field_description:sale_triple_discount_lock.field_sale_order_discount__discount2
+msgid "Discount 2 (%)"
+msgstr ""
+
+#. module: sale_triple_discount_lock
+#: model:ir.model.fields,field_description:sale_triple_discount_lock.field_sale_order_discount__discount3
+msgid "Discount 3 (%)"
+msgstr ""
+
+#. module: sale_triple_discount_lock
+#: model:ir.model,name:sale_triple_discount_lock.model_sale_order_discount
+msgid "Discount Wizard"
+msgstr ""
+
+#. module: sale_triple_discount_lock
 #: model:ir.model.fields,field_description:sale_triple_discount_lock.field_sale_order__display_name
+#: model:ir.model.fields,field_description:sale_triple_discount_lock.field_sale_order_discount__display_name
 #: model:ir.model.fields,field_description:sale_triple_discount_lock.field_sale_order_line__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: sale_triple_discount_lock
 #: model:ir.model.fields,field_description:sale_triple_discount_lock.field_sale_order__id
+#: model:ir.model.fields,field_description:sale_triple_discount_lock.field_sale_order_discount__id
 #: model:ir.model.fields,field_description:sale_triple_discount_lock.field_sale_order_line__id
 msgid "ID"
 msgstr ""
@@ -36,4 +78,9 @@ msgstr ""
 #. module: sale_triple_discount_lock
 #: model:ir.model,name:sale_triple_discount_lock.model_sale_order_line
 msgid "Sales Order Line"
+msgstr ""
+
+#. module: sale_triple_discount_lock
+#: model:ir.model.fields,field_description:sale_triple_discount_lock.field_sale_order_discount__total_discount
+msgid "Total Discount"
 msgstr ""
