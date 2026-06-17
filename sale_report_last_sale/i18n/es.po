@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-15 15:27+0000\n"
-"PO-Revision-Date: 2025-12-13 16:10+0000\n"
+"PO-Revision-Date: 2026-06-17 21:54+0000\n"
 "Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
 "sale-19-0-sale_report_last_sale/es/>\n"
@@ -31,7 +31,7 @@ msgstr "Compañía"
 #. module: sale_report_last_sale
 #: model:ir.model.fields,field_description:sale_report_last_sale.field_sale_last_sale_report__days_since
 msgid "Days Since"
-msgstr ""
+msgstr "Días desde"
 
 #. module: sale_report_last_sale
 #: model:ir.model.fields,field_description:sale_report_last_sale.field_sale_last_sale_report__display_name
@@ -51,27 +51,27 @@ msgstr "Id"
 #: model_terms:ir.ui.view,arch_db:sale_report_last_sale.view_sale_last_sale_report_search
 #: model_terms:ir.ui.view,arch_db:sale_report_last_sale.view_sale_last_sale_report_tree
 msgid "Last Sale Analysis"
-msgstr ""
+msgstr "Análisis de ventas pasadas"
 
 #. module: sale_report_last_sale
 #: model:ir.model,name:sale_report_last_sale.model_sale_last_sale_report
 msgid "Last Sale Statistics"
-msgstr ""
+msgstr "Últimas estadísticas de ventas"
 
 #. module: sale_report_last_sale
 #: model_terms:ir.ui.view,arch_db:sale_report_last_sale.view_sale_last_sale_report_search
 msgid "More than 30 days"
-msgstr ""
+msgstr "Más de 30 días"
 
 #. module: sale_report_last_sale
 #: model_terms:ir.ui.view,arch_db:sale_report_last_sale.view_sale_last_sale_report_search
 msgid "More than 60 days"
-msgstr ""
+msgstr "Más de 60 días"
 
 #. module: sale_report_last_sale
 #: model_terms:ir.ui.view,arch_db:sale_report_last_sale.view_sale_last_sale_report_search
 msgid "More than 90 days"
-msgstr ""
+msgstr "Más de 90 días"
 
 #. module: sale_report_last_sale
 #: model:ir.model.fields,field_description:sale_report_last_sale.field_sale_last_sale_report__date_order
