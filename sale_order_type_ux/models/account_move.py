@@ -52,9 +52,12 @@ class AccountMove(models.Model):
 
                 if so_dpl.company_id != rec.company_id:
                     fp_tax_groups = self.env["account.tax.group"]
+                    # Cada línea de anticipo tiene su propia alícuota; filtramos la
+                    # invoice line vinculada a este so_dpl para no pisar todos los
+                    # impuestos con los de la última línea (clave constante en el dict).
+                    matching_lines = rec.invoice_line_ids.filtered(lambda l: so_dpl in l.sale_line_ids)
                     original_taxes = {
-                        so_dpl.id: line.tax_ids.filtered(lambda x: x.tax_group_id not in fp_tax_groups).ids[:]
-                        for line in rec.invoice_line_ids
+                        so_dpl.id: matching_lines.tax_ids.filtered(lambda x: x.tax_group_id not in fp_tax_groups).ids[:]
                     }
                     journal = rec.sale_type_id.journal_id or (
                         self.env["account.move"]
