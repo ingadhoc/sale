@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-03 23:01+0000\n"
+"POT-Creation-Date: 2026-06-18 16:28+0000\n"
 "PO-Revision-Date: 2026-01-13 22:10+0000\n"
 "Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
@@ -805,6 +805,14 @@ msgstr ""
 #: code:addons/sale_ux/models/sale_order_line.py:0
 msgid "You cannot add lines to blocked sale orders."
 msgstr "No puede agregar líneas a órdenes de venta bloqueadas."
+
+#. module: sale_ux
+#. odoo-python
+#: code:addons/sale_ux/models/sale_order.py:0
+msgid ""
+"You cannot delete this sales order because it has related invoices. To "
+"preserve traceability, the record must remain archived or canceled."
+msgstr ""
 
 #. module: sale_ux
 #. odoo-python
