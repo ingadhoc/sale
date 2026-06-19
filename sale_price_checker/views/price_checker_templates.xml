@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="page" name="Price Checker">&lt;!DOCTYPE html&gt;
+        <html t-att-lang="lang.replace('_', '-')">
+            <head>
+                <title>Price Checker</title>
+                <meta charset="utf-8"/>
+                <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+                <link rel="shortcut icon" type="image/x-icon" href="/web/static/img/favicon.ico"/>
+                <script type="text/javascript">
+                    var odoo = {
+                        csrf_token: "<t t-esc="request.csrf_token(None)"/>",
+                        debug: "<t t-esc="request.session.debug"/>",
+                        __session_info__: <t t-out="json.dumps(session_info)"/>,
+                    };
+                    window.priceCheckerConfig = {
+                        companyId: <t t-esc="company.id"/>,
+                        pricelistId: <t t-esc="pricelist.id if pricelist else 'null'"/>,
+                    };
+                </script>
+                <t t-call-assets="sale_price_checker.assets_price_checker"/>
+            </head>
+            <body>
+                <div id="price_checker_root"/>
+            </body>
+        </html>
+    </template>
+</odoo>

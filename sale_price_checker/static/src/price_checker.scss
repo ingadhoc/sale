@@ -1,0 +1,83 @@
+.o_price_checker {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+    width: 100%;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e3e7ee 100%);
+
+    .o_price_checker_main {
+        flex: 1;
+        min-width: 0;
+        padding: 2rem;
+    }
+
+    .o_price_checker_history {
+        flex: 0 0 33%;
+        background: #ffffff;
+        border-left: 1px solid #dee2e6;
+        padding: 2rem 1.5rem;
+        overflow-y: auto;
+        max-height: 100vh;
+    }
+
+    .o_price_checker_history_item {
+        padding: 1rem 0;
+        border-bottom: 1px solid #f1f3f5;
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+    .o_price_checker_history_image {
+        width: 64px;
+        height: 64px;
+        object-fit: contain;
+        background: #f8f9fa;
+        flex-shrink: 0;
+    }
+
+    .o_price_checker_idle {
+        max-width: 700px;
+    }
+
+    .o_price_checker_icon {
+        font-size: 12rem;
+        line-height: 1;
+        display: block;
+    }
+
+    .o_price_checker_search {
+        max-width: 500px;
+    }
+
+    .o_price_checker_input {
+        font-size: 1.5rem;
+        padding: 0.75rem 1rem;
+    }
+
+    .o_price_checker_card {
+        max-width: 1100px;
+        width: 90%;
+        border-radius: 1rem;
+    }
+
+    .o_price_checker_image {
+        max-height: 360px;
+        object-fit: contain;
+    }
+
+    .o_price_checker_description {
+        font-size: 1.1rem;
+        white-space: pre-line;
+        line-height: 1.4;
+    }
+
+    .o_price_checker_price_bar {
+        letter-spacing: -0.02em;
+    }
+
+    .o_price_checker_not_found {
+        max-width: 700px;
+    }
+}

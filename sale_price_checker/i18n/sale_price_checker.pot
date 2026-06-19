@@ -1,0 +1,90 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_price_checker
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-19 00:00+0000\n"
+"PO-Revision-Date: 2026-06-19 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_price_checker
+#: model:ir.model,name:sale_price_checker.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: sale_price_checker
+#: model:ir.model,name:sale_price_checker.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: sale_price_checker
+#: model:ir.model.fields,help:sale_price_checker.field_product_template__show_in_price_checker
+msgid ""
+"If unchecked, this product will not appear when scanned in the public price"
+" checker."
+msgstr ""
+
+#. module: sale_price_checker
+#: model_terms:ir.ui.view,arch_db:sale_price_checker.page
+#: code:addons/sale_price_checker/static/src/price_checker.xml:0
+msgid "Price Checker"
+msgstr ""
+
+#. module: sale_price_checker
+#: model:ir.model.fields,field_description:sale_price_checker.field_res_company__price_checker_pricelist_id
+#: model:ir.model.fields,field_description:sale_price_checker.field_res_config_settings__price_checker_pricelist_id
+#: model_terms:ir.ui.view,arch_db:sale_price_checker.res_config_settings_view_form_inherit
+msgid "Price Checker Pricelist"
+msgstr ""
+
+#. module: sale_price_checker
+#: model:ir.model.fields,help:sale_price_checker.field_res_company__price_checker_pricelist_id
+msgid ""
+"Pricelist used by the public price checker for this company. If empty, the "
+"product's Sales Price (lst_price) is used as a fallback."
+msgstr ""
+
+#. module: sale_price_checker
+#: model_terms:ir.ui.view,arch_db:sale_price_checker.res_config_settings_view_form_inherit
+msgid ""
+"Pricelist used by the public price checker (URL /price-checker/<company_id>)."
+" If empty, the product's Sales Price is used as a fallback."
+msgstr ""
+
+#. module: sale_price_checker
+#: code:addons/sale_price_checker/static/src/price_checker.xml:0
+msgid "Barcode"
+msgstr ""
+
+#. module: sale_price_checker
+#: code:addons/sale_price_checker/static/src/price_checker.xml:0
+msgid "Product not found"
+msgstr ""
+
+#. module: sale_price_checker
+#: model:ir.model,name:sale_price_checker.model_product_template
+msgid "Product"
+msgstr ""
+
+#. module: sale_price_checker
+#: code:addons/sale_price_checker/static/src/price_checker.xml:0
+msgid "Recent searches"
+msgstr ""
+
+#. module: sale_price_checker
+#: code:addons/sale_price_checker/static/src/price_checker.xml:0
+msgid "Scan or type a barcode"
+msgstr ""
+
+#. module: sale_price_checker
+#: model:ir.model.fields,field_description:sale_price_checker.field_product_template__show_in_price_checker
+msgid "Show in Price Checker"
+msgstr ""

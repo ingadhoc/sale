@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="sale_price_checker.PriceChecker">
+        <div class="o_price_checker">
+            <div class="o_price_checker_main d-flex flex-column justify-content-center align-items-center">
+                <t t-if="state.mode === 'idle' or state.mode === 'loading'">
+                    <div class="o_price_checker_idle text-center">
+                        <i class="fa fa-barcode o_price_checker_icon text-primary mb-4"/>
+                        <h1 class="display-1 fw-bold mb-3">Price Checker</h1>
+                        <p class="lead text-muted mb-4">Scan or type a barcode</p>
+                        <form t-on-submit.prevent="onSubmit" class="o_price_checker_search mx-auto">
+                            <div class="input-group input-group-lg">
+                                <input type="text"
+                                       class="form-control form-control-lg text-center o_price_checker_input"
+                                       placeholder="Barcode"
+                                       t-model="state.barcode"
+                                       autocomplete="off"
+                                       data-enable-barcode="1"
+                                       t-att-disabled="state.mode === 'loading'"/>
+                                <button type="submit"
+                                        class="btn btn-primary px-4"
+                                        t-att-disabled="state.mode === 'loading'">
+                                    <i class="fa fa-search"/>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </t>
+
+                <t t-elif="state.mode === 'showing'">
+                    <div class="card shadow-lg o_price_checker_card border-0 overflow-hidden">
+                        <div class="row g-0">
+                            <div class="col-md-5 d-flex align-items-center justify-content-center bg-white p-4">
+                                <img t-att-src="state.product.image_url"
+                                     class="img-fluid o_price_checker_image"
+                                     alt=""/>
+                            </div>
+                            <div class="col-md-7 d-flex flex-column">
+                                <div class="p-4 flex-grow-1">
+                                    <h2 class="display-4 fw-bold mb-3" t-esc="state.product.name"/>
+                                    <p t-if="state.product.description_sale"
+                                       class="text-muted mb-0 o_price_checker_description"
+                                       t-esc="state.product.description_sale"/>
+                                </div>
+                                <div class="o_price_checker_price_bar bg-primary text-white text-center py-4 px-3">
+                                    <div class="display-1 fw-bold lh-1" t-esc="state.product.price"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+
+                <t t-elif="state.mode === 'not_found'">
+                    <div class="o_price_checker_not_found text-center">
+                        <i class="fa fa-exclamation-circle text-danger o_price_checker_icon mb-4"/>
+                        <h1 class="display-3 fw-bold mb-3">Product not found</h1>
+                        <p class="lead text-muted mb-0">
+                            <span class="font-monospace" t-esc="state.lastBarcode"/>
+                        </p>
+                    </div>
+                </t>
+            </div>
+
+            <aside t-if="state.history.length" class="o_price_checker_history">
+                <h6 class="text-uppercase text-muted fw-bold mb-3">Recent searches</h6>
+                <t t-foreach="state.history" t-as="item" t-key="item.image_url">
+                    <div class="o_price_checker_history_item d-flex align-items-center gap-3">
+                        <img t-att-src="item.image_url" alt="" class="o_price_checker_history_image rounded"/>
+                        <div class="flex-grow-1 overflow-hidden">
+                            <div class="fw-semibold text-truncate" t-esc="item.name"/>
+                            <div class="d-flex align-items-baseline gap-2 flex-wrap">
+                                <span class="text-primary fw-bold" t-esc="item.price"/>
+                                <small t-if="item.price_untaxed" class="text-muted">
+                                    (Sin Imp.: <t t-esc="item.price_untaxed"/>)
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </aside>
+        </div>
+    </t>
+
+</templates>
