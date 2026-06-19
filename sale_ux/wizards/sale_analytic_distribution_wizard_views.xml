@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_sale_order_analytic_wizard_form" model="ir.ui.view">
+        <field name="name">Sale Order Analytic Wizard</field>
+        <field name="model">sale.order.analytic.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Asignar cuenta analítica a líneas">
+                <group>
+                    <group>
+                        <field name="plan_id"/>
+                        <field name="analytic_account_id"
+                               context="{'default_plan_id': plan_id}"
+                               domain="[('plan_id', 'child_of', plan_id)] if plan_id else []"/>
+                    </group>
+                    <group>
+                        <field name="select_all"/>
+                    </group>
+                </group>
+                <field name="line_ids">
+                    <list editable="bottom" create="false" delete="false">
+                        <field name="sale_line_id" column_invisible="1"/>
+                        <field name="selected" widget="boolean_toggle"/>
+                        <field name="order_id" optional="show"/>
+                        <field name="product_id"/>
+                        <field name="name"/>
+                        <field name="current_analytic"/>
+                    </list>
+                </field>
+                <footer>
+                    <button name="action_apply" string="Aplicar" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancelar" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sale_order_set_analytic" model="ir.actions.server">
+        <field name="name">Asignar cuenta analítica a líneas</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">
+action = {
+    "type": "ir.actions.act_window",
+    "name": "Asignar cuenta analítica a líneas",
+    "res_model": "sale.order.analytic.wizard",
+    "view_mode": "form",
+    "target": "new",
+    "context": dict(env.context, active_ids=records.ids, active_model="sale.order"),
+}
+        </field>
+    </record>
+
+</odoo>
