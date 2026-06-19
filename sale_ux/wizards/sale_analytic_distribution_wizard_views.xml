@@ -5,7 +5,7 @@
         <field name="name">Sale Order Analytic Wizard</field>
         <field name="model">sale.order.analytic.wizard</field>
         <field name="arch" type="xml">
-            <form string="Asignar cuenta analítica a líneas">
+            <form string="Set Analytic Account on Lines">
                 <group>
                     <group>
                         <field name="plan_id"/>
@@ -28,16 +28,16 @@
                     </list>
                 </field>
                 <footer>
-                    <button name="action_apply" string="Aplicar" type="object" class="oe_highlight"/>
+                    <button name="action_apply" string="Apply" type="object" class="oe_highlight"/>
                     or
-                    <button string="Cancelar" class="oe_link" special="cancel"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
                 </footer>
             </form>
         </field>
     </record>
 
     <record id="action_sale_order_set_analytic" model="ir.actions.server">
-        <field name="name">Asignar cuenta analítica a líneas</field>
+        <field name="name">Set analytic account on lines</field>
         <field name="model_id" ref="sale.model_sale_order"/>
         <field name="binding_model_id" ref="sale.model_sale_order"/>
         <field name="binding_view_types">list,form</field>
@@ -45,7 +45,7 @@
         <field name="code">
 action = {
     "type": "ir.actions.act_window",
-    "name": "Asignar cuenta analítica a líneas",
+    "name": "Set Analytic Account on Lines",
     "res_model": "sale.order.analytic.wizard",
     "view_mode": "form",
     "target": "new",
