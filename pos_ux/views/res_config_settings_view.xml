@@ -12,6 +12,10 @@
                 <setting id="pos_billing_behavior_setting">
                    <field name="pos_billing_behavior"/>
                 </setting>
+                <setting id="pos_default_partner_setting" string="Default customer"
+                         help="Pre-select this partner on every new POS order">
+                    <field name="pos_default_partner_id"/>
+                </setting>
             </setting>
         </field>
     </record>
