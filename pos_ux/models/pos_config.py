@@ -14,6 +14,21 @@ class PosConfig(models.Model):
         default="on_demand",
     )
     block_invoice_download = fields.Boolean()
+    default_partner_id = fields.Many2one(
+        "res.partner",
+        string="Default Customer",
+        help=(
+            "If set, every new POS order will start with this partner pre-selected. "
+            "Useful for B2C points of sale where most sales go to a generic "
+            "anonymous customer (e.g. 'Consumidor Final' in AR)."
+        ),
+    )
+
+    def get_limited_partners_loading(self, offset=0):
+        partner_ids = super().get_limited_partners_loading(offset)
+        if self.default_partner_id and (self.default_partner_id.id,) not in partner_ids:
+            partner_ids.append((self.default_partner_id.id,))
+        return partner_ids
 
     def open_ui(self):
         for config in self:

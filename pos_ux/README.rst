@@ -33,6 +33,18 @@ Point of Sale UX
 
 6. **Payment methods are created with "Identify Customer" enabled by default** (``split_transactions = True``).
 
+7. **Default customer**: setting that pre-selects a partner on every new POS order.
+   Useful for B2C points of sale where most sales go to a generic anonymous customer.
+
+8. **Block session close when there are paid orders without invoice**. Only
+   applies when the billing behavior is set to "Always Invoice". Use the
+   "Generate invoices" button in the session backend to invoice the pending
+   orders before closing the session.
+
+9. **Invoiced / Not Invoiced pill in the orders list**. Paid orders show a
+   badge in the ticket screen indicating whether they were already invoiced,
+   so the cashier can tell at a glance which orders are still pending.
+
 
 Installation
 ============

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_ux.TicketScreenInvoicedPill"
+       t-inherit="point_of_sale.TicketScreen" t-inherit-mode="extension">
+        <xpath expr="//td[hasclass('align-middle') and hasclass('text-end')]" position="inside">
+            <div t-if="order.finalized" class="mt-1">
+                <span t-attf-class="badge rounded fs-6 text-bg-{{ order.raw.account_move ? 'success' : 'warning' }}">
+                    <t t-if="order.raw.account_move">Invoiced</t>
+                    <t t-else="">Not Invoiced</t>
+                </span>
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('align-items-end')]" position="inside">
+            <div t-if="order.finalized"
+                 t-attf-class="badge rounded fs-6 mt-1 text-bg-{{ order.raw.account_move ? 'success' : 'warning' }}">
+                <t t-if="order.raw.account_move">Invoiced</t>
+                <t t-else="">Not Invoiced</t>
+            </div>
+        </xpath>
+    </t>
+
+</templates>
