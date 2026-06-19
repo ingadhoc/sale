@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Sale UX",
-    "version": "19.0.1.16.0",
+    "version": "19.0.1.17.0",
     "category": "Sales",
     "sequence": 14,
     "summary": "",
@@ -36,6 +36,7 @@
     "data": [
         "wizards/sale_global_discount_wizard_views.xml",
         "wizards/sale_advance_payment_inv_views.xml",
+        "wizards/sale_analytic_distribution_wizard_views.xml",
         "security/sale_ux_security.xml",
         "security/ir.model.access.csv",
         "views/account_views.xml",
