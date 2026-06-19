@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_inherit" model="ir.ui.view">
+        <field name="name">res.config.settings.form.inherit.sale.price.checker</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@name='quotation_order_setting_container']" position="inside">
+                <setting id="price_checker_pricelist" string="Price Checker Pricelist"
+                         invisible="not group_product_pricelist"
+                         help="Pricelist used by the public price checker (URL /price-checker/&lt;company_id&gt;). If empty, the product's Sales Price is used as a fallback.">
+                    <field name="price_checker_pricelist_id"
+                           domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]"/>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>
