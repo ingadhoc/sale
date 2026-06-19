@@ -7,28 +7,27 @@ from odoo import api, fields, models
 
 class SaleOrderAnalyticWizard(models.TransientModel):
     _name = "sale.order.analytic.wizard"
-    _description = "Asignar cuenta analítica a líneas de venta"
+    _description = "Set Analytic Account on Sale Order Lines"
 
     plan_id = fields.Many2one(
         "account.analytic.plan",
-        string="Plan analítico",
+        string="Analytic Plan",
         default=lambda self: self._default_plan_id(),
-        help="Plan usado al crear una cuenta analítica nueva desde este wizard.",
+        help="Plan used when creating a new analytic account from this wizard.",
     )
     analytic_account_id = fields.Many2one(
         "account.analytic.account",
-        string="Cuenta analítica",
+        string="Analytic Account",
         required=True,
-        help="Cuenta analítica que se asignará (al 100%) a las líneas seleccionadas.",
+        help="Analytic account that will be assigned (at 100%) to the selected lines.",
     )
     select_all = fields.Boolean(
-        "Seleccionar todas",
-        help="Marca o desmarca todas las líneas de golpe.",
+        help="Check or uncheck every line at once.",
     )
     line_ids = fields.One2many(
         "sale.order.analytic.wizard.line",
         "wizard_id",
-        string="Líneas",
+        string="Lines",
     )
 
     @api.model
@@ -55,14 +54,14 @@ class SaleOrderAnalyticWizard(models.TransientModel):
     def action_apply(self):
         self.ensure_one()
         lines_to_set = self.line_ids.filtered("selected").mapped("sale_line_id")
-        # reemplazo total: la cuenta elegida queda al 100% (pisa la distribución previa)
+        # full replace: the chosen account is set at 100% (overrides any previous distribution)
         lines_to_set.write({"analytic_distribution": {str(self.analytic_account_id.id): 100}})
         return {"type": "ir.actions.act_window_close"}
 
 
 class SaleOrderAnalyticWizardLine(models.TransientModel):
     _name = "sale.order.analytic.wizard.line"
-    _description = "Línea del wizard de cuenta analítica"
+    _description = "Analytic Account Wizard Line"
 
     wizard_id = fields.Many2one(
         "sale.order.analytic.wizard",
@@ -71,16 +70,15 @@ class SaleOrderAnalyticWizardLine(models.TransientModel):
     )
     sale_line_id = fields.Many2one(
         "sale.order.line",
-        string="Línea de venta",
+        string="Sale Order Line",
         required=True,
         ondelete="cascade",
     )
-    selected = fields.Boolean("Aplicar", default=True)
-    order_id = fields.Many2one(related="sale_line_id.order_id", string="Orden")
-    product_id = fields.Many2one(related="sale_line_id.product_id", string="Producto")
-    name = fields.Text(related="sale_line_id.name", string="Descripción")
+    selected = fields.Boolean("Apply", default=True)
+    order_id = fields.Many2one(related="sale_line_id.order_id", string="Order")
+    product_id = fields.Many2one(related="sale_line_id.product_id", string="Product")
+    name = fields.Text(related="sale_line_id.name", string="Description")
     current_analytic = fields.Char(
-        "Analítica actual",
         compute="_compute_current_analytic",
     )
 
