@@ -21,14 +21,24 @@ class StockMove(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        """La cantidad devuelta no deberia ser contada en nuevos movimientos de stock
-        que se creen a partir de una orden de venta.
+        """La cantidad devuelta no deberia ser contada en los nuevos movimientos de
+        entrega genuinos que se creen a partir de una orden de venta.
         Agregamos un HACK para que si esta instalado secondary unit sea recomputada en la creacion de
         movimientos de stock.
-        TODO: Solo deberia impactar en movimientos de salida (uno o mas pasos)
+
+        Solo debe impactar en entregas genuinas: NO en los movimientos de
+        devolucion (``origin_returned_move_id``) ni en los de devolucion para
+        cambio (``is_exchange_move``). Esos ajustan la demanda por otra via y, si
+        se les resta ``quantity_returned``, nacen con la demanda corrupta -- por
+        ejemplo, una 2da devolucion o un cambio sobre una OV con una devolucion
+        previa con reembolso quedaban con demanda = cantidad - quantity_returned.
         """
         for vals in vals_list:
-            if vals.get("sale_line_id"):
+            if (
+                vals.get("sale_line_id")
+                and not vals.get("is_exchange_move")
+                and not vals.get("origin_returned_move_id")
+            ):
                 sale_line_qty_ret = self.env["sale.order.line"].browse(vals["sale_line_id"]).quantity_returned
                 vals["product_uom_qty"] -= sale_line_qty_ret
                 if "secondary_uom_qty" in vals:
