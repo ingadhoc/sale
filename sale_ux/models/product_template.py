@@ -35,9 +35,7 @@ class ProductTemplate(models.Model):
 
     @api.model
     def get_import_templates(self):
-        if self.env.context.get("sale_multi_pricelist_product_template") and self.env.user.has_group(
-            "product.group_product_pricelist"
-        ):
+        if self.env.context.get("sale_multi_pricelist_product_template"):
             return [
                 {
                     "label": _("Import Template for Products"),
