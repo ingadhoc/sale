@@ -48,6 +48,14 @@
             <group position="before">
                 <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible="active"/>
             </group>
+            <xpath expr="//sheet" position="before">
+                <field name="invoice_count" invisible="1"/>
+                <field name="so_count" invisible="1"/>
+                <div class="alert alert-warning" role="alert" invisible="invoice_count == 0 and so_count == 0">
+                    Be careful when making modifications to this sale order type as it has
+                    <span invisible="invoice_count == 0"><field name="invoice_count" readonly="1" nolabel="1"/> associated invoices</span><span invisible="invoice_count == 0 or so_count == 0"> and </span><span invisible="so_count == 0"><field name="so_count" readonly="1" nolabel="1"/> associated sale orders</span>.
+                </div>
+            </xpath>
         </field>
     </record>
 

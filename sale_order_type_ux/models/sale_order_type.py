@@ -53,6 +53,14 @@ class SaleOrderTypology(models.Model):
     journal_id = fields.Many2one(
         "account.journal", string="Invoice Journal", domain="journal_domain", check_company=False
     )
+    invoice_count = fields.Integer(
+        compute="_compute_invoice_count",
+        help="Number of invoices created from sales orders of this type. This field is used to determine whether the modification of a sale order type is not recommended.",
+    )
+    so_count = fields.Integer(
+        compute="_compute_so_count",
+        help="Number of sales orders created from this type. This field is used to determine whether the modification of a sale order type is not recommended.",
+    )
 
     @api.depends("company_id")
     def _compute_invoice_company_id(self):
@@ -71,3 +79,11 @@ class SaleOrderTypology(models.Model):
         for rec in self:
             if rec.journal_id and rec.journal_id not in rec.env["account.journal"].search(rec.journal_domain):
                 raise ValidationError("The selected 'Invoice Journal' does not belong to the selected invoice company.")
+
+    def _compute_invoice_count(self):
+        for rec in self:
+            rec.invoice_count = self.env["account.move"].search_count([("sale_type_id", "=", rec.id)])
+
+    def _compute_so_count(self):
+        for rec in self:
+            rec.so_count = self.env["sale.order"].search_count([("type_id", "=", rec.id)])
