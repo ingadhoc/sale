@@ -6,84 +6,45 @@
         <field name="arch" type="xml">
 
             <xpath expr="//block[@name='quotation_order_setting_container']" position="inside">
-                <div class="mt16">
-                    <div>
-                        <field name="group_allow_any_user_as_salesman"/>
-                        <label for="group_allow_any_user_as_salesman"/>
-                    </div>
-                    <div class="text-muted">
-                        By default, Odoo only allows to choose users who have sales permission in sales orders and only internal users in the sales' teams . This option enables to choose, in both places, users of any type (internal or portal)
-                    </div>
-                </div>
-                <div class="mt16">
-                    <div >
-                        <field name="group_sale_reference_on_tree_and_main_form"/>
-                        <label for="group_sale_reference_on_tree_and_main_form"/>
-                    </div>
-                    <div class="text-muted">
-                        Show client reference in list view and in main section of form view
-                    </div>
-                </div>
-                <div class="mt16">
-                    <div>
-                        <field name="update_prices_automatically"/>
-                        <label for="update_prices_automatically"/>
-                    </div>
-                    <div class="text-muted">
-                        Automatically update prices when change pricelist.
-                    </div>
-                </div>
-                <div class="mt16">
-                    <div>
-                        <field name="move_internal_notes"/>
-                        <label for="move_internal_notes"/>
-                    </div>
-                    <div class="text-muted">
-                        Si marca esta opción y hay un valor definido en las "notas internas", el mismo se va a copiar en las facturas que se generen desde esta venta.
-                    </div>
-                </div>
-                <div class="mt16">
-                    <div>
-                        <field name="move_note"/>
-                        <label for="move_note"/>
-                    </div>
-                    <div class="text-muted">
-                        Si marca esta opción y hay un valor definido en "términos y condiciones", el mismo se va a copiar en las facturas que se generen desde esta venta.
-                    </div>
-                </div>
-                <div class="mt16">
-                    <div>
-                        <field name="show_product_image_on_report"/>
-                        <label for="show_product_image_on_report"/>
-                    </div>
-                    <div class="text-muted">
-                        Show Product Image on quotation report
-                    </div>
+                <setting id="group_allow_any_user_as_salesman"
+                         help="By default, Odoo only allows to choose users who have sales permission in sales orders and only internal users in the sales&apos; teams. This option enables to choose, in both places, users of any type (internal or portal)">
+                    <field name="group_allow_any_user_as_salesman"/>
+                </setting>
+                <setting id="group_sale_reference_on_tree_and_main_form"
+                         help="Show client reference in list view and in main section of form view">
+                    <field name="group_sale_reference_on_tree_and_main_form"/>
+                </setting>
+                <setting id="update_prices_automatically"
+                         string="Update Prices Automatically"
+                         help="Automatically update prices when change pricelist.">
+                    <field name="update_prices_automatically"/>
+                </setting>
+                <setting id="move_internal_notes"
+                         help="Si marca esta opción y hay un valor definido en las &quot;notas internas&quot;, el mismo se va a copiar en las facturas que se generen desde esta venta.">
+                    <field name="move_internal_notes"/>
+                </setting>
+                <setting id="move_note"
+                         help="Si marca esta opción y hay un valor definido en &quot;términos y condiciones&quot;, el mismo se va a copiar en las facturas que se generen desde esta venta.">
+                    <field name="move_note"/>
+                </setting>
+                <setting id="show_product_image_on_report"
+                         help="Show Product Image on quotation report">
+                    <field name="show_product_image_on_report"/>
                     <div class="content-group" invisible="not show_product_image_on_report">
                         <div class="row mt16">
                             <label for="product_image_size" class="col-lg-3 o_light_label"/>
                             <field name="product_image_size"/>
                         </div>
                     </div>
-                </div>
-                <div class="mt16">
-                    <div>
-                        <field name="analytic_account_without_company"/>
-                        <label for="analytic_account_without_company"/>
-                    </div>
-                    <div class="text-muted">
-                        Al confirmar ventas, crear un proyecto sin compañía.
-                    </div>
-                </div>
-                <div class="mt16">
-                    <div>
-                        <field name="auto_select_all_documents"/>
-                        <label for="auto_select_all_documents"/>
-                    </div>
-                    <div class="text-muted">
-                        Automatically select all available documents from PDF Quote Builder.
-                    </div>
-                </div>
+                </setting>
+                <setting id="analytic_account_without_company"
+                         help="Al confirmar ventas, crear un proyecto sin compañía.">
+                    <field name="analytic_account_without_company"/>
+                </setting>
+                <setting id="auto_select_all_documents"
+                         help="Automatically select all available documents from PDF Quote Builder.">
+                    <field name="auto_select_all_documents"/>
+                </setting>
             </xpath>
             <xpath expr="//block[@name='quotation_order_setting_container']" position="inside">
                 <setting id="cancel_old_quotations" string="Cancel Old Quotations">
