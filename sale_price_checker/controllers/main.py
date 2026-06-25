@@ -8,18 +8,6 @@ from odoo.tools.misc import format_amount
 
 
 class PriceCheckerController(http.Controller):
-    def _pricelists_enabled(self):
-        """True when the Pricelists feature is turned on in Sales settings.
-
-        Mirrors the way the settings toggle works: pricelists are enabled
-        when ``product.group_product_pricelist`` is implied by
-        ``base.group_user``.
-        """
-        pricelist_group = request.env.ref("product.group_product_pricelist", raise_if_not_found=False)
-        if not pricelist_group:
-            return False
-        return pricelist_group in request.env.ref("base.group_user").sudo().implied_ids
-
     def _resolve(self, company_id=None, pricelist_id=None):
         """Return (company, pricelist) or None if any id is invalid/archived.
 
@@ -42,7 +30,7 @@ class PriceCheckerController(http.Controller):
         if not company:
             return None
 
-        pricelists_enabled = self._pricelists_enabled()
+        pricelists_enabled = request.env["res.company"].sudo()._price_checker_pricelists_enabled()
 
         if pricelist_id is None:
             pricelist = (
