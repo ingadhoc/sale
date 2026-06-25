@@ -947,6 +947,32 @@ msgstr "No puedes modificar pedidos de venta ya bloqueados."
 msgid "or"
 msgstr "o"
 
+#. module: sale_ux
+#. odoo-python
+#: code:addons/sale_ux/models/sale_order.py:0
+msgid ""
+"Cancelled down payment line(s) linked to this invoice were removed from sale "
+"order %(order)s on reset to draft."
+msgstr ""
+"Se eliminaron la(s) línea(s) de anticipo canceladas vinculadas a esta "
+"factura de la orden de venta %(order)s al restablecerla a borrador."
+
+#. module: sale_ux
+#. odoo-python
+#: code:addons/sale_ux/models/sale_order.py:0
+msgid ""
+"Cancelled down payment line(s) removed on reset to draft: %(lines)s (related "
+"invoice(s): %(invoices)s)."
+msgstr ""
+"Línea(s) de anticipo canceladas eliminadas al restablecer a borrador: "
+"%(lines)s (factura(s) relacionada(s): %(invoices)s)."
+
+#. module: sale_ux
+#. odoo-python
+#: code:addons/sale_ux/models/sale_order.py:0
+msgid "none"
+msgstr "ninguna"
+
 #~ msgid "Create a Customer"
 #~ msgstr "Crear un cliente"
 

@@ -31,6 +31,29 @@ class TestSaleGatheringOrder(SaleGatheringCommon):
         self.assertAlmostEqual(order.gathering_balance, 150.0)
         self.assertAlmostEqual(order.withdrawn_amount, 50.0)
 
+    def test_cancelled_downpayment_excluded_from_gathering_balance(self):
+        order = self._confirm_gathering_order()
+        self._create_and_pay_gathering_downpayment(order, amount=250.0)
+
+        gathering_line = order.order_line.filtered(lambda line: not line.is_downpayment)
+        gathering_line.write({"product_uom_qty": 1.0})
+
+        wizard = self._create_advance_payment_wizard(order, amount=500.0)
+        wizard.create_invoices()
+        second_downpayment_line = order.order_line.filtered(
+            lambda line: line.is_downpayment and not line.display_type
+        ).sorted("id")[-1]
+        cancelled_invoice = second_downpayment_line.invoice_lines.move_id
+        self.assertTrue(cancelled_invoice)
+        cancelled_invoice.button_cancel()
+        self.assertEqual(second_downpayment_line._get_downpayment_state(), "cancel")
+
+        order._compute_gathering_balance()
+        order._compute_withdrawn_amount()
+
+        self.assertAlmostEqual(order.gathering_balance, 150.0)
+        self.assertAlmostEqual(order.withdrawn_amount, 50.0)
+
     def test_invoice_gathering_zero_creates_exchange_invoice_lines(self):
         order = self._confirm_gathering_order()
         self._create_and_pay_gathering_downpayment(order, amount=250.0)

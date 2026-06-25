@@ -50,6 +50,7 @@ Several Improvements to sales:
 #. Deleting price lists with confirmed sale orders is not permitted.
 #. Prevents deleting sale orders when they have associated invoices, preserving traceability.
 #. Add an action to assign an analytic account to sale order lines. Since v19 the analytic account is no longer a sale order header field: it lives in each line's analytic distribution, and the distribution widget does not allow creating analytic accounts inline. Select one or more sale orders in the list (or open one) and, in the actions menu, look for 'Set analytic account on lines'. A wizard lists the order lines (sections and notes excluded) with a checkbox per line plus a 'Select All' toggle, lets you pick or create an analytic account (the plan field feeds the quick-create), and assigns it at 100% to the selected lines.
+#. When a sale order is reset to draft, its down payment lines whose invoice was cancelled are automatically removed (they carry no accounting value and only clutter the order lines). The removal is logged as a note both on the sale order and on the related invoice to keep traceability.
 
 Installation
 ============

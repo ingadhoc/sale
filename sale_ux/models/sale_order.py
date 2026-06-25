@@ -126,6 +126,35 @@ class SaleOrder(models.Model):
         else:
             return super().action_cancel()
 
+    def action_draft(self):
+        res = super().action_draft()
+        for order in self:
+            cancelled_downpayments = order.order_line.filtered(
+                lambda line: line.is_downpayment and line._get_downpayment_state() == "cancel"
+            )
+            if not cancelled_downpayments:
+                continue
+            related_moves = cancelled_downpayments.invoice_lines.move_id
+            downpayment_names = ", ".join(cancelled_downpayments.mapped("name"))
+            order.message_post(
+                body=self.env._(
+                    "Cancelled down payment line(s) removed on reset to draft: %(lines)s "
+                    "(related invoice(s): %(invoices)s).",
+                    lines=downpayment_names,
+                    invoices=", ".join(related_moves.mapped("display_name")) or self.env._("none"),
+                )
+            )
+            for move in related_moves:
+                move.message_post(
+                    body=self.env._(
+                        "Cancelled down payment line(s) linked to this invoice were removed "
+                        "from sale order %(order)s on reset to draft.",
+                        order=order.name,
+                    )
+                )
+            cancelled_downpayments.unlink()
+        return res
+
     @api.constrains("force_invoiced_status")
     def check_force_invoiced_status(self):
         group = self.sudo().env.ref("base.group_system")

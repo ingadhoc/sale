@@ -33,6 +33,7 @@ class SaleOrder(models.Model):
         "order_line.product_uom_qty",
         "order_line.is_downpayment",
         "order_line.quantity_returned",
+        "order_line.invoice_lines.parent_state",
     )
     def _compute_gathering_balance(self):
         orders_gathering = self.filtered(
