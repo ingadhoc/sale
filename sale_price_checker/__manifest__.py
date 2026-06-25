@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Sale Price Checker",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.1.0",
     "category": "Sales",
     "sequence": 14,
     "summary": "Public web price checker by barcode for in-store kiosks",
