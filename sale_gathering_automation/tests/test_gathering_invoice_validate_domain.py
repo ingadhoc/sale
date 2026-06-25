@@ -10,10 +10,16 @@ class TestGatheringInvoiceValidateDomain(common.TransactionCase):
         super().setUp()
         self.partner = self.env["res.partner"].create({"name": "Test Gathering Partner"})
         self.product = self.env.ref("product.product_product_4")
+        invoice_journal = self.env["account.journal"].search(
+            [("type", "=", "sale"), ("company_id", "=", self.env.company.id)],
+            limit=1,
+        )
         self.gathering_validate_type = self.env["sale.order.type"].create(
             {
                 "name": "Test Gathering Validate Invoice Domain",
+                "company_id": self.env.company.id,
                 "invoicing_atomation": "validate_invoice",
+                "journal_id": invoice_journal.id,
                 "invoice_validate_domain": "[('move_type', '=', 'out_invoice')]",
             }
         )

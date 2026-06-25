@@ -129,6 +129,25 @@ class SaleOrderType(models.Model):
         default = self.env["ir.config_parameter"].sudo().get_param("sale.auto_done_setting", "False")
         self.auto_done_setting = safe_eval(default)
 
+    @api.constrains("invoicing_atomation", "company_id", "invoice_company_id", "journal_id")
+    def _check_invoicing_journal_required(self):
+        # install_mode is True when loading demo/fixture data, where records may
+        # intentionally omit these fields (e.g. company-agnostic demo types).
+        if self.env.context.get("install_mode"):
+            return
+        for rec in self.filtered(lambda x: x.invoicing_atomation != "none"):
+            missing = []
+            if not rec.company_id:
+                missing.append(_("Company"))
+            if not rec.invoice_company_id:
+                missing.append(_("Invoice Company"))
+            if not rec.journal_id:
+                missing.append(_("Invoice Journal"))
+            if missing:
+                raise ValidationError(
+                    _("The following fields are required when invoice automation is active: %s") % ", ".join(missing)
+                )
+
     @api.constrains("payment_atomation", "payment_journal_id")
     def validate_invoicing_atomation(self):
         payment_journal_required = self.filtered(lambda x: x.payment_atomation != "none" and not x.payment_journal_id)

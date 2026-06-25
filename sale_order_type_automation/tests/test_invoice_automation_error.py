@@ -21,7 +21,9 @@ class TestInvoiceAutomationError(TestSaleCommon):
         cls.validate_invoice_type = cls.env["sale.order.type"].create(
             {
                 "name": "Test Validate Invoice Automation",
+                "company_id": cls.env.company.id,
                 "invoicing_atomation": "validate_invoice",
+                "journal_id": cls.company_data["default_journal_sale"].id,
             }
         )
         sale_exception_installed = cls.env["sale.order"]._fields.get("ignore_exception")

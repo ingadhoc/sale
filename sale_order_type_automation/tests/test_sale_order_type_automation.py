@@ -14,6 +14,11 @@ class TestSaleOrderTypeAutomation(TransactionCase):
         super().setUpClass()
         cls.partner = cls.env.ref("base.res_partner_1")
         cls.sale_type = cls.env.ref("sale_order_type.normal_sale_type")
+        cls.sale_type.company_id = cls.env.company
+        cls.invoice_journal = cls.env["account.journal"].search(
+            [("type", "=", "sale"), ("company_id", "=", cls.env.company.id)],
+            limit=1,
+        )
         cls.product = cls.env["product.product"].create(
             {
                 "name": "Sale Order Type Automation Product",
@@ -52,6 +57,7 @@ class TestSaleOrderTypeAutomation(TransactionCase):
         self.sale_type.write(
             {
                 "invoicing_atomation": "create_invoice",
+                "journal_id": self.invoice_journal.id,
                 "picking_atomation": "none",
                 "set_done_on_confirmation": False,
                 "invoice_validate_domain": False,
@@ -68,6 +74,7 @@ class TestSaleOrderTypeAutomation(TransactionCase):
         self.sale_type.write(
             {
                 "invoicing_atomation": "validate_invoice",
+                "journal_id": self.invoice_journal.id,
                 "picking_atomation": "none",
                 "invoice_validate_domain": False,
             }
