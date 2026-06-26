@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-18 16:28+0000\n"
+"POT-Creation-Date: 2026-06-26 15:37+0000\n"
 "PO-Revision-Date: 2026-01-13 22:10+0000\n"
 "Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
@@ -96,13 +96,9 @@ msgstr "Actualizar precios automáticamente al cambiar la lista de precio."
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
 msgid ""
 "By default, Odoo only allows to choose users who have sales permission in "
-"sales orders and only internal users in the sales' teams . This option "
+"sales orders and only internal users in the sales' teams. This option "
 "enables to choose, in both places, users of any type (internal or portal)"
 msgstr ""
-"Por defecto, Odoo sólo permite elegir usuarios que tengan permiso de ventas "
-"en pedidos de venta y sólo usuarios internos en los equipos de ventas. Esta "
-"opción permite elegir, en ambos lugares, usuarios de cualquier tipo (interno "
-"o portal)."
 
 #. module: sale_ux
 #: model:ir.model.fields,help:sale_ux.field_product_pricelist__show_products
@@ -784,6 +780,7 @@ msgstr "Actualizar precios"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__update_prices_automatically
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
 msgid "Update Prices Automatically"
 msgstr "Actualizar precios automáticamente"
 
@@ -824,3 +821,13 @@ msgstr "No puedes modificar pedidos de venta ya bloqueados."
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
 msgid "or"
 msgstr "o"
+
+#~ msgid ""
+#~ "By default, Odoo only allows to choose users who have sales permission in "
+#~ "sales orders and only internal users in the sales' teams . This option "
+#~ "enables to choose, in both places, users of any type (internal or portal)"
+#~ msgstr ""
+#~ "Por defecto, Odoo sólo permite elegir usuarios que tengan permiso de "
+#~ "ventas en pedidos de venta y sólo usuarios internos en los equipos de "
+#~ "ventas. Esta opción permite elegir, en ambos lugares, usuarios de "
+#~ "cualquier tipo (interno o portal)."
