@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-29 16:06+0000\n"
+"POT-Creation-Date: 2026-06-26 16:32+0000\n"
 "PO-Revision-Date: 2026-03-31 19:31+0000\n"
 "Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
@@ -42,6 +42,12 @@ msgstr ""
 "Diario de facturación que se utilizará de forma predeterminada. No importa "
 "que la factura se cree de forma automática o manual. Si no se establece "
 "ningún diario aquí, se utilizará el diario predeterminado"
+
+#. module: sale_order_type_automation
+#. odoo-python
+#: code:addons/sale_order_type_automation/models/sale_order_type.py:0
+msgid "Company"
+msgstr ""
 
 #. module: sale_order_type_automation
 #: model:ir.model.fields.selection,name:sale_order_type_automation.selection__sale_order_type__invoicing_atomation__create_invoice
@@ -105,6 +111,14 @@ msgid "Invoice Automation (Validate)"
 msgstr "Automatización de facturas (Validar)"
 
 #. module: sale_order_type_automation
+#. odoo-python
+#: code:addons/sale_order_type_automation/models/sale_order_type.py:0
+msgid "Invoice Company"
+msgstr ""
+
+#. module: sale_order_type_automation
+#. odoo-python
+#: code:addons/sale_order_type_automation/models/sale_order_type.py:0
 #: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type__journal_id
 msgid "Invoice Journal"
 msgstr "Diario de facturación"
@@ -230,6 +244,12 @@ msgstr "Pedido de venta"
 #: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type__set_done_on_confirmation
 msgid "Set Done On Confirmation"
 msgstr "Bloquear OV al confirmar"
+
+#. module: sale_order_type_automation
+#. odoo-python
+#: code:addons/sale_order_type_automation/models/sale_order_type.py:0
+msgid "The following fields are required when invoice automation is active: %s"
+msgstr ""
 
 #. module: sale_order_type_automation
 #. odoo-python
