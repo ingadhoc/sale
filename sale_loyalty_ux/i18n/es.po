@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-22 08:15+0000\n"
+"POT-Creation-Date: 2026-06-26 16:32+0000\n"
 "PO-Revision-Date: 2025-12-13 16:10+0000\n"
 "Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
@@ -21,6 +21,11 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
 "0) ? 1 : 2);\n"
 "X-Generator: Weblate 5.10.4\n"
+
+#. module: sale_loyalty_ux
+#: model_terms:ir.ui.view,arch_db:sale_loyalty_ux.view_sale_order_form_loyalty_rewards_banner
+msgid "<span>There are available rewards that apply to this Sales Order</span>"
+msgstr ""
 
 #. module: sale_loyalty_ux
 #: model:ir.model.fields,field_description:sale_loyalty_ux.field_loyalty_program__display_name
@@ -40,6 +45,11 @@ msgid "Loyalty Program"
 msgstr "Programa de fidelización"
 
 #. module: sale_loyalty_ux
+#: model:ir.model.fields,field_description:sale_loyalty_ux.field_sale_order__loyalty_rewards_banner_visible
+msgid "Loyalty Rewards Banner Visible"
+msgstr ""
+
+#. module: sale_loyalty_ux
 #: model:ir.model.fields,field_description:sale_loyalty_ux.field_loyalty_program__sale_domain
 msgid "Sale Domain"
 msgstr "Dominio de venta "
@@ -54,7 +64,5 @@ msgstr "Pedido de venta"
 msgid "Sales domain"
 msgstr "Dominio de venta"
 
-#. module: sale_loyalty_ux
-#: model_terms:ir.ui.view,arch_db:sale_loyalty_ux.view_sale_order_form_loyalty_rewards_banner
-msgid "There are available rewards that apply to this Sales Order"
-msgstr "Existen recompensas disponibles que aplican en esta Orden de Venta"
+#~ msgid "There are available rewards that apply to this Sales Order"
+#~ msgstr "Existen recompensas disponibles que aplican en esta Orden de Venta"
