@@ -6,14 +6,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-22 08:15+0000\n"
-"PO-Revision-Date: 2025-11-22 08:15+0000\n"
+"POT-Creation-Date: 2026-06-26 16:32+0000\n"
+"PO-Revision-Date: 2026-06-26 16:32+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: sale_loyalty_ux
+#: model_terms:ir.ui.view,arch_db:sale_loyalty_ux.view_sale_order_form_loyalty_rewards_banner
+msgid ""
+"<span>There are available rewards that apply to this Sales Order</span>"
+msgstr ""
 
 #. module: sale_loyalty_ux
 #: model:ir.model.fields,field_description:sale_loyalty_ux.field_loyalty_program__display_name
@@ -33,6 +39,11 @@ msgid "Loyalty Program"
 msgstr ""
 
 #. module: sale_loyalty_ux
+#: model:ir.model.fields,field_description:sale_loyalty_ux.field_sale_order__loyalty_rewards_banner_visible
+msgid "Loyalty Rewards Banner Visible"
+msgstr ""
+
+#. module: sale_loyalty_ux
 #: model:ir.model.fields,field_description:sale_loyalty_ux.field_loyalty_program__sale_domain
 msgid "Sale Domain"
 msgstr ""
@@ -45,9 +56,4 @@ msgstr ""
 #. module: sale_loyalty_ux
 #: model_terms:ir.ui.view,arch_db:sale_loyalty_ux.loyalty_program_view_form
 msgid "Sales domain"
-msgstr ""
-
-#. module: sale_loyalty_ux
-#: model_terms:ir.ui.view,arch_db:sale_loyalty_ux.view_sale_order_form_loyalty_rewards_banner
-msgid "There are available rewards that apply to this Sales Order"
 msgstr ""
