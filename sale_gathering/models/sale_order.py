@@ -33,6 +33,7 @@ class SaleOrder(models.Model):
         "order_line.product_uom_qty",
         "order_line.is_downpayment",
         "order_line.quantity_returned",
+        "order_line.invoice_lines.parent_state",
     )
     def _compute_gathering_balance(self):
         orders_gathering = self.filtered(
@@ -44,7 +45,7 @@ class SaleOrder(models.Model):
         for order in orders_gathering:
             lines = order._get_gathering_lines()
             total_downpayment_amount = 0
-            for line in lines.filtered("is_downpayment"):
+            for line in lines.filtered(lambda l: l.is_downpayment and l._get_downpayment_state() != "cancel"):
                 total_downpayment_amount += line.tax_id.with_context(round=False).compute_all(
                     line.price_unit,
                     currency=line.currency_id,
