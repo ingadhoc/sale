@@ -136,30 +136,33 @@ class SaleOrderLine(models.Model):
 
             old_product_uom_qty = rec.product_uom_qty
 
-            # Cancelamos explícitamente los movimientos de salida pendientes (el
-            # remanente a entregar) en lugar de delegar la baja al recálculo de la
-            # regla de stock. Ese recálculo genera un movimiento de cantidad
-            # negativa que, cuando la salida fue reservada desde una sub-ubicación
-            # distinta al origen nominal de la regla, no se fusiona (merge) con el
-            # move original (difiere `location_id` en la clave de merge) y termina
-            # dándose vuelta como una contraentrega (IN fantasma), dejando el OUT
-            # huérfano en `confirmed` y comprometiendo stock. Cancelar los moves
-            # pendientes es robusto ante cualquier sub-ubicación de reserva.
-            # Excluimos las devoluciones del cliente (origen 'customer'). Ver ticket 121400.
-            moves_to_cancel = rec.move_ids.filtered(
-                lambda m: m.state not in ("done", "cancel") and m.location_id.usage != "customer"
+            # Al cancelar el remanente hay dos situaciones excluyentes. La clave es
+            # si quedó stock EN TRÁNSITO: pasos internos ya validados (ej. el PICK de
+            # una entrega multi-paso) que movieron mercadería a una ubicación
+            # intermedia y todavía no llegó al cliente.
+            target_qty = rec.qty_delivered + rec.quantity_returned
+            in_transit_moves = rec.move_ids.filtered(
+                lambda m: m.state == "done"
+                and m.location_id.usage != "customer"
+                and m.location_dest_id.usage != "customer"
             )
-            moves_to_cancel._action_cancel()
-
-            # Seteamos la cantidad con `skip_procurement` para no relanzar la regla
-            # de stock (que volvería a generar el movimiento negativo/contraentrega).
-            # Permitimos cancelar igual aunque haya más facturado que entregado,
-            # por ej. si no se va a entregar y ya está facturado y se quiere hacer
-            # la nota de crédito. Además se puede volver a subir la cantidad si se
-            # requiere.
-            rec.with_context(skip_locked_order_line_check=True, skip_procurement=True).product_uom_qty = (
-                rec.qty_delivered + rec.quantity_returned
-            )
+            if in_transit_moves:
+                # (a) Con tránsito: delegamos la baja al recálculo de la regla para que
+                # genere los movimientos inversos (contraentrega legítima) que devuelven
+                # ese stock al origen. Cancelar los moves a mano lo dejaría varado.
+                rec.with_context(skip_locked_order_line_check=True).product_uom_qty = target_qty
+            else:
+                # (b) Sin tránsito: si delegáramos, el recálculo genera un movimiento
+                # negativo que, cuando la salida se reservó desde una sub-ubicación
+                # distinta al origen nominal de la regla, no se fusiona (difiere
+                # `location_id` en la clave de merge) y se da vuelta como una
+                # contraentrega (IN fantasma), dejando el OUT huérfano y comprometiendo
+                # stock. Por eso cancelamos los moves pendientes explícitamente y usamos
+                # `skip_procurement` para no relanzar la regla. Ver ticket 121400.
+                rec.move_ids.filtered(
+                    lambda m: m.state not in ("done", "cancel") and m.location_id.usage != "customer"
+                )._action_cancel()
+                rec.with_context(skip_locked_order_line_check=True, skip_procurement=True).product_uom_qty = target_qty
             rec.order_id.message_post(
                 body=_('Cancel remaining call for line "%s" (id %s), line qty updated from %s to %s')
                 % (rec.name, rec.id, old_product_uom_qty, rec.product_uom_qty)
