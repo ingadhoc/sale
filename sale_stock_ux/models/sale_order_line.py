@@ -149,8 +149,7 @@ class SaleOrderLine(models.Model):
             moves_to_cancel = rec.move_ids.filtered(
                 lambda m: m.state not in ("done", "cancel") and m.location_id.usage != "customer"
             )
-            if moves_to_cancel:
-                moves_to_cancel._action_cancel()
+            moves_to_cancel._action_cancel()
 
             # Seteamos la cantidad con `skip_procurement` para no relanzar la regla
             # de stock (que volvería a generar el movimiento negativo/contraentrega).
