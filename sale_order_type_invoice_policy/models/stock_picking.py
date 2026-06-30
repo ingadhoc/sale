@@ -19,7 +19,11 @@ class StockPicking(models.Model):
         if any(
             self.sudo().filtered(
                 lambda x: (
-                    x.picking_type_id.code in ("outgoing", "internal")
+                    (
+                        x.picking_type_id.code == "outgoing"
+                        or x.picking_type_id
+                        in (x.picking_type_id.warehouse_id.pick_type_id | x.picking_type_id.warehouse_id.pack_type_id)
+                    )
                     and x.sale_id.type_id.invoice_policy in ["prepaid", "prepaid_block_delivery"]
                     and not x._check_sale_paid()
                 )
