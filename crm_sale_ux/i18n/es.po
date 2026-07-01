@@ -1,6 +1,56 @@
-# 
+#
 msgid ""
 msgstr ""
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "Language: es\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#. module: crm_sale_ux
+#: model_terms:ir.ui.view,arch_db:crm_sale_ux.crm_sale_ux_res_config_settings_view_form
+msgid "Auto mark opportunities as Won"
+msgstr "Marcar oportunidades como ganadas automáticamente"
+
+#. module: crm_sale_ux
+#: model:ir.model,name:crm_sale_ux.model_res_config_settings
+msgid "Config Settings"
+msgstr "Ajustes de configuración"
+
+#. module: crm_sale_ux
+#: model:ir.model.fields,field_description:crm_sale_ux.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:crm_sale_ux.field_sale_order__display_name
+msgid "Display Name"
+msgstr "Nombre a mostrar"
+
+#. module: crm_sale_ux
+#: model:ir.model.fields,field_description:crm_sale_ux.field_res_config_settings__id
+#: model:ir.model.fields,field_description:crm_sale_ux.field_sale_order__id
+msgid "ID"
+msgstr "ID"
+
+#. module: crm_sale_ux
+#: model:ir.model.fields,field_description:crm_sale_ux.field_res_config_settings__crm_auto_won_on_sale_confirm
+msgid "Mark opportunity as won on sales order confirmation"
+msgstr "Marcar oportunidad como ganada al confirmar el pedido de venta"
+
+#. module: crm_sale_ux
+#: model:ir.model,name:crm_sale_ux.model_sale_order
+msgid "Sales Order"
+msgstr "Pedido de venta"
+
+#. module: crm_sale_ux
+#: model_terms:ir.ui.view,arch_db:crm_sale_ux.crm_sale_ux_res_config_settings_view_form
+msgid ""
+"When a quotation linked to an opportunity is confirmed, mark that "
+"opportunity as Won automatically."
+msgstr ""
+"Cuando se confirma un presupuesto vinculado a una oportunidad, marca esa "
+"oportunidad como ganada automáticamente."
+
+#. module: crm_sale_ux
+#: model:ir.model.fields,help:crm_sale_ux.field_res_config_settings__crm_auto_won_on_sale_confirm
+msgid ""
+"When enabled, confirming a quotation linked to an opportunity marks that "
+"opportunity as Won."
+msgstr ""
+"Cuando está habilitado, confirmar un presupuesto vinculado a una oportunidad"
+" marca esa oportunidad como ganada."

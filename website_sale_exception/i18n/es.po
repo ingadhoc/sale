@@ -19,14 +19,14 @@ msgstr ""
 #. module: website_sale_exception
 #: model:ir.model.fields,field_description:website_sale_exception.field_sale_order__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nombre a mostrar"
 
 #. module: website_sale_exception
 #: model:ir.model.fields,field_description:website_sale_exception.field_sale_order__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: website_sale_exception
 #: model:ir.model,name:website_sale_exception.model_sale_order
 msgid "Sales Order"
-msgstr ""
+msgstr "Pedido de venta"

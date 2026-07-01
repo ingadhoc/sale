@@ -173,18 +173,8 @@ msgid "Payment Journal Domain"
 msgstr ""
 
 #. module: sale_order_type_automation
-#: model:sale.order.type,name:sale_order_type_automation.sale_order_type_validate_picking_and_invoice_automation
-msgid "Picking And Invoice Automation (Validate)"
-msgstr ""
-
-#. module: sale_order_type_automation
 #: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type__picking_atomation
 msgid "Picking Atomation"
-msgstr ""
-
-#. module: sale_order_type_automation
-#: model:sale.order.type,name:sale_order_type_automation.sale_order_type_validate_picking_automation
-msgid "Picking Automation (Validate)"
 msgstr ""
 
 #. module: sale_order_type_automation
@@ -208,6 +198,11 @@ msgstr ""
 #. module: sale_order_type_automation
 #: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type__set_done_on_confirmation
 msgid "Set Done On Confirmation"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: model:ir.model,name:sale_order_type_automation.model_stock_picking
+msgid "Stock Picking - Delivery Guide (Uruguay)"
 msgstr ""
 
 #. module: sale_order_type_automation
@@ -248,11 +243,6 @@ msgstr ""
 msgid ""
 "To use Background Post, you must install the 'account_background_post' "
 "module."
-msgstr ""
-
-#. module: sale_order_type_automation
-#: model:ir.model,name:sale_order_type_automation.model_stock_picking
-msgid "Transfer"
 msgstr ""
 
 #. module: sale_order_type_automation
