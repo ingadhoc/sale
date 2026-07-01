@@ -25,6 +25,18 @@ class SaleOrder(models.Model):
         ):
             # we take into account if there are any transaction finish from the e-commerce
             #  and not continue with the automation in this case
+            skip_validation = False
+            if rec.type_id.sale_order_filter_domain:
+                so_domain = safe_eval(
+                    rec.type_id.sale_order_filter_domain,
+                    {
+                        "datetime": safe_eval_datetime,
+                        "context_today": lambda: fields.Date.context_today(rec),
+                        "relativedelta": safe_eval_dateutil.relativedelta.relativedelta,
+                    },
+                )
+                if so_domain and rec.filtered_domain(so_domain):
+                    skip_validation = True
             if (
                 rec.transaction_ids
                 and rec.env["ir.config_parameter"].sudo().get_param("sale.automatic_invoice")
@@ -40,7 +52,11 @@ class SaleOrder(models.Model):
             if not invoices:
                 continue
 
-            if rec.type_id.invoicing_atomation == "validate_invoice" and not rec.type_id.background_post:
+            if (
+                rec.type_id.invoicing_atomation == "validate_invoice"
+                and not rec.type_id.background_post
+                and not skip_validation
+            ):
                 if rec._context.get("commit_invoice_automation"):
                     rec.env.cr.commit()
                 try:

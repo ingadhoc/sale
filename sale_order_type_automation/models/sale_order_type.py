@@ -104,6 +104,10 @@ class SaleOrderType(models.Model):
         string="Invoice Validation Domain",
         help="Domain to filter invoices for automatic validation. So, if this filter does NOT find the invoices, they stay in drafts status.",
     )
+    sale_order_filter_domain = fields.Char(
+        string="Draft sale order domain",
+        help="This sales filter allows you to create some invoices in draft form without automatically validating them. Therefore, if the condition is met, the invoice remains in draft status.",
+    )
 
     @api.depends("payment_atomation")
     def _compute_payment_journal_id(self):
