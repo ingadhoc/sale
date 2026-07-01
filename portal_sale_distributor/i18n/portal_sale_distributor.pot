@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-26 14:22+0000\n"
-"PO-Revision-Date: 2026-03-26 14:22+0000\n"
+"POT-Creation-Date: 2026-06-19 19:43+0000\n"
+"PO-Revision-Date: 2026-06-19 19:43+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -62,6 +62,11 @@ msgstr ""
 #. module: portal_sale_distributor
 #: model:ir.model,name:portal_sale_distributor.model_res_partner
 msgid "Contact"
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model:ir.model,website_form_label:portal_sale_distributor.model_res_partner
+msgid "Create a Customer"
 msgstr ""
 
 #. module: portal_sale_distributor

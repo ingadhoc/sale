@@ -1,10 +1,10 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* sale_gathering
-# 
+#
 # Translators:
 # ADHOC - Bot <transbot@adhoc.com.ar>, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
@@ -12,14 +12,12 @@ msgstr ""
 "POT-Creation-Date: 2025-11-13 20:54+0000\n"
 "PO-Revision-Date: 2025-12-13 16:10+0000\n"
 "Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
-"Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
-"sale-19-0-sale_gathering/es/>\n"
+"Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/sale-19-0-sale_gathering/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
-" ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0) ? 1 : 2);\n"
 "X-Generator: Weblate 5.10.4\n"
 
 #. module: sale_gathering
@@ -28,11 +26,13 @@ msgid ""
 "(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or "
 "'Order - %s' % (object.name)"
 msgstr ""
+"(object.state in ('draft', 'sent') and 'Presupuesto - %s' % (object.name)) "
+"or 'Pedido - %s' % (object.name)"
 
 #. module: sale_gathering
 #: model_terms:ir.ui.view,arch_db:sale_gathering.view_order_form
 msgid "<span class=\"bg-warning\">Acopio</span>"
-msgstr ""
+msgstr "<span class=\"bg-warning\">Acopio</span>"
 
 #. module: sale_gathering
 #: model_terms:ir.ui.view,arch_db:sale_gathering.sale_gathering_totals
@@ -71,6 +71,8 @@ msgid ""
 "Balance entre la factura de acopio/anticipo y los retiros de mercaderia que "
 "realizo el cliente. Monto positivo es a favor del cliente"
 msgstr ""
+"Balance entre la factura de acopio/anticipo y los retiros de mercadería que "
+"realizó el cliente. Monto positivo es a favor del cliente"
 
 #. module: sale_gathering
 #. odoo-python
@@ -119,11 +121,14 @@ msgid ""
 " las lineas de ventas, no necesariamente tienen que estar "
 "entregadas/facturadas esas lineas de venta."
 msgstr ""
+"El monto retirado (o solicitado) se calcula en base a la columna cantidad de"
+" las líneas de ventas, no necesariamente tienen que estar "
+"entregadas/facturadas esas líneas de venta."
 
 #. module: sale_gathering
 #: model:ir.model.fields.selection,name:sale_gathering.selection__sale_advance_payment_inv__advance_payment_method__invoice_gathering_zero
 msgid "Factura en cero descontando acopio"
-msgstr ""
+msgstr "Factura en cero descontando acopio"
 
 #. module: sale_gathering
 #: model_terms:ir.ui.view,arch_db:sale_gathering.view_sales_order_filter
@@ -183,7 +188,7 @@ msgstr "Asiento contable"
 #. module: sale_gathering
 #: model:ir.model.fields,help:sale_gathering.field_sale_order__gathering_amount_with_taxes
 msgid "Monto acopiado inicialmente."
-msgstr ""
+msgstr "Monto acopiado inicialmente."
 
 #. module: sale_gathering
 #: model_terms:ir.ui.view,arch_db:sale_gathering.view_sales_order_filter
@@ -222,6 +227,8 @@ msgid ""
 "The 'Factura en cero descontando acopio' method can only be used for "
 "gathering sales."
 msgstr ""
+"El método 'Factura en cero descontando acopio' solo se puede usar para "
+"ventas de acopio."
 
 #. module: sale_gathering
 #. odoo-python
@@ -243,6 +250,7 @@ msgstr "Monto retirado"
 #: code:addons/sale_gathering/models/sale_order.py:0
 msgid "You cannot confirm a gathering order (%s) with a total amount of 0."
 msgstr ""
+"No se puede confirmar un pedido de acopio (%s) con un importe total de 0."
 
 #. module: sale_gathering
 #. odoo-python

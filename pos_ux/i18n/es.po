@@ -13,14 +13,12 @@ msgstr ""
 "POT-Creation-Date: 2026-06-11 14:58+0000\n"
 "PO-Revision-Date: 2025-12-13 16:10+0000\n"
 "Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
-"Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
-"sale-19-0-pos_ux/es/>\n"
+"Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/sale-19-0-pos_ux/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
-"0) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0) ? 1 : 2);\n"
 "X-Generator: Weblate 5.10.4\n"
 
 #. module: pos_ux
@@ -94,6 +92,8 @@ msgid ""
 "Forces to set a customer when using this payment method and splits the "
 "journal entries for each customer. It could slow down the closing process."
 msgstr ""
+"Obliga a definir un cliente cuando se usa este método de pago y divide los "
+"asientos contables por cliente. Puede ralentizar el proceso de cierre."
 
 #. module: pos_ux
 #: model:ir.model.fields,field_description:pos_ux.field_pos_config__id
@@ -108,7 +108,7 @@ msgstr "Id"
 #. module: pos_ux
 #: model:ir.model.fields,field_description:pos_ux.field_pos_payment_method__split_transactions
 msgid "Identify Customer"
-msgstr ""
+msgstr "Identificar cliente"
 
 #. module: pos_ux
 #. odoo-javascript
@@ -141,11 +141,11 @@ msgstr ""
 #: code:addons/pos_ux/models/pos_config.py:0
 #, fuzzy
 msgid ""
-"No se puede completar la operación: falta definir la cuenta pendiente en los "
-"siguientes métodos de pago: %s"
+"No se puede completar la operación: falta definir la cuenta pendiente en los"
+" siguientes métodos de pago: %s"
 msgstr ""
-"No se puede completar la operación: falta definir la cuenta pendiente en los "
-"siguientes métodos de pago: %s"
+"No se puede completar la operación: falta definir la cuenta pendiente en los"
+" siguientes métodos de pago: %s"
 
 #. module: pos_ux
 #: model:ir.model,name:pos_ux.model_pos_config
@@ -160,7 +160,7 @@ msgstr "Pedidos del TPV"
 #. module: pos_ux
 #: model:ir.model,name:pos_ux.model_pos_payment_method
 msgid "Point of Sale Payment Methods"
-msgstr ""
+msgstr "Métodos de pago del Punto de Venta"
 
 #. module: pos_ux
 #: model:ir.model,name:pos_ux.model_pos_session

@@ -19,7 +19,7 @@ msgstr ""
 #. module: sale_price_checker
 #: model:ir.model,name:sale_price_checker.model_res_company
 msgid "Companies"
-msgstr "Compañías"
+msgstr "Empresas"
 
 #. module: sale_price_checker
 #: model:ir.model,name:sale_price_checker.model_res_config_settings
@@ -55,7 +55,7 @@ msgid ""
 "product's Sales Price (lst_price) is used as a fallback."
 msgstr ""
 "Lista de precios usada por el verificador de precios público para esta "
-"compañía. Si está vacía, se usa el Precio de Venta del producto (lst_price) "
+"empresa. Si está vacía, se usa el Precio de Venta del producto (lst_price) "
 "como alternativa."
 
 #. module: sale_price_checker
