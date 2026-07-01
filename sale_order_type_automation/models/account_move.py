@@ -45,7 +45,8 @@ class AccountMove(models.Model):
             and x.sale_type_id.payment_atomation == "validate_payment"
         ):
             try:
-                self._register_payment_invoice(invoice, invoice.sale_type_id.payment_journal_id)
+                with self.env.cr.savepoint():
+                    self._register_payment_invoice(invoice, invoice.sale_type_id.payment_journal_id)
             except Exception as error:
                 message = "Could not automatically create and validate payment. Error: %s" % error
                 invoice.message_post(body=message)
