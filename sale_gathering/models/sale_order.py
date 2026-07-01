@@ -44,7 +44,15 @@ class SaleOrder(models.Model):
         for order in orders_gathering:
             lines = order._get_gathering_lines()
             total_downpayment_amount = 0
-            for line in lines.filtered("is_downpayment"):
+            for line in lines.filtered(
+                lambda l: l.is_downpayment
+                and not l.display_type
+                and any(
+                    il.parent_state != "cancel"
+                    for il in l.invoice_lines
+                    if len(il.move_id.invoice_line_ids.sale_line_ids.filtered("is_downpayment")) == 1
+                )
+            ):
                 total_downpayment_amount += line.tax_ids.with_context(round=False).compute_all(
                     line.price_unit,
                     currency=line.currency_id,
