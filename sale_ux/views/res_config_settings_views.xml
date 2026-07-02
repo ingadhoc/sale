@@ -58,6 +58,10 @@
                 <setting id="group_delivery_date" help="Shows the delivery date field in the budget report and in the online budget." title="Shows the delivery date field in the budget report and in the online budget.">
                     <field name="group_delivery_date"/>
                 </setting>
+                <setting id="sale_order_line_view_limit" string="Lines per page"
+                         help="Lines shown per page on the order. Leave empty to keep the default; a lower value (e.g. 40) speeds up very long orders.">
+                    <field name="sale_order_line_view_limit"/>
+                </setting>
             </xpath>
         </field>
     </record>

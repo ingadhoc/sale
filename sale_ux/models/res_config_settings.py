@@ -63,6 +63,17 @@ class ResConfigSettings(models.TransientModel):
         "Show Delivery Date in Quotations report and online budget",
         implied_group="sale_ux.group_delivery_date_on_report_online",
     )
+    sale_order_line_view_limit = fields.Integer(
+        string="Sale order lines per page",
+        config_parameter="sale_ux.order_line_view_limit",
+        help="Lines shown per page on the order. Leave empty to keep the default; "
+        "a lower value (e.g. 40) speeds up very long orders.",
+    )
+
+    @api.onchange("sale_order_line_view_limit")
+    def _onchange_sale_order_line_view_limit(self):
+        if self.sale_order_line_view_limit < 0:
+            self.sale_order_line_view_limit = 0
 
     def get_values(self):
         res = super(ResConfigSettings, self).get_values()

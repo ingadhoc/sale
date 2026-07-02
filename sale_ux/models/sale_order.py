@@ -324,3 +324,28 @@ class SaleOrder(models.Model):
             if product.product_tmpl_id.only_packagings and product.uom_ids:
                 res[product.id]["uomDisplayName"] = product.uom_ids[0].display_name
         return res
+
+    def _order_line_view_limit(self):
+        """Configurable page size for the order_line list; 0 keeps the core default (ticket 121312)."""
+        param = self.env["ir.config_parameter"].sudo().get_param("sale_ux.order_line_view_limit")
+        try:
+            return max(int(param or 0), 0)
+        except ValueError:
+            return 0
+
+    @api.model
+    def _get_view_cache_key(self, view_id=None, view_type="form", **options):
+        key = super()._get_view_cache_key(view_id=view_id, view_type=view_type, **options)
+        # only the form arch depends on this param, so vary just the form cache key on change
+        if view_type == "form":
+            key += (self._order_line_view_limit(),)
+        return key
+
+    @api.model
+    def _get_view(self, view_id=None, view_type="form", **options):
+        arch, view = super()._get_view(view_id=view_id, view_type=view_type, **options)
+        limit = self._order_line_view_limit()
+        if view_type == "form" and limit:
+            for node in arch.xpath("//field[@name='order_line']/list"):
+                node.set("limit", str(limit))
+        return arch, view
