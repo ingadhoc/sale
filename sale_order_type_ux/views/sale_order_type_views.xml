@@ -35,9 +35,9 @@
                 <field name="invoice_company_id" options="{'no_create': True}"/>
             </field>
             <xpath expr="//field[@name='sequence_id']" position="before">
-                <field name="warehouse_id" options="{'no_create': True}"/>/>
-                <field name="company_id" options="{'no_create': True}"/>/>
-                <field name="pricelist_id" options="{'no_create': True}"/>/>
+                <field name="warehouse_id" options="{'no_create': True}"/>
+                <field name="company_id" options="{'no_create': True}"/>
+                <field name="pricelist_id" options="{'no_create': True}"/>
             </xpath>
 
              <field name="payment_term_id" position="after">
