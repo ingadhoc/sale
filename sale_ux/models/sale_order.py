@@ -94,6 +94,12 @@ class SaleOrder(models.Model):
         lines_to_recompute = self.order_line.filtered(lambda line: not line.display_type)
         lines_to_recompute._compute_tax_id()
 
+    def action_confirm(self):
+        for order in self:
+            if order.state == "sale":
+                raise UserError(_("The sale order %s is already confirmed.") % order.display_name)
+        return super().action_confirm()
+
     def action_cancel(self):
         invoice_lines = self.sudo().env["account.move.line"].search([("sale_line_ids", "in", self.order_line.ids)])
         moves = invoice_lines.mapped("move_id").filtered(
