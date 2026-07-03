@@ -80,7 +80,7 @@ class SaleOrder(models.Model):
             ):
                 advance_payment_wizard = (
                     self.env["sale.advance.payment.inv"]
-                    .with_context()
+                    .with_context(first_gathering_invoice=True)
                     .create(
                         {
                             "advance_payment_method": "fixed",
