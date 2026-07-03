@@ -691,6 +691,12 @@ msgstr ""
 #. module: sale_ux
 #. odoo-python
 #: code:addons/sale_ux/models/sale_order.py:0
+msgid "The sale order %s is already confirmed."
+msgstr ""
+
+#. module: sale_ux
+#. odoo-python
+#: code:addons/sale_ux/models/sale_order.py:0
 msgid "This quotation has been automatically canceled due to its expiration."
 msgstr ""
 

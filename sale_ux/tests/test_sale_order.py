@@ -85,6 +85,14 @@ class TestSaleOrder(SaleUxCommon):
         self.assertNotIn(excluded_line, lines)
         self.assertIn(order.order_line[1], lines)
 
+    def test_confirm_already_confirmed_raises(self):
+        order = self._create_sale_order()
+        order.action_confirm()
+        self.assertEqual(order.state, "sale")
+
+        with self.assertRaises(UserError):
+            order.action_confirm()
+
     def test_locked_order_blocks_protected_fields(self):
         order = self._create_sale_order()
         order.action_confirm()

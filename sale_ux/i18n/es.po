@@ -712,6 +712,12 @@ msgstr ""
 #. module: sale_ux
 #. odoo-python
 #: code:addons/sale_ux/models/sale_order.py:0
+msgid "The sale order %s is already confirmed."
+msgstr "El pedido de venta %s ya está confirmado."
+
+#. module: sale_ux
+#. odoo-python
+#: code:addons/sale_ux/models/sale_order.py:0
 msgid "This quotation has been automatically canceled due to its expiration."
 msgstr ""
 "Esta cotización ha sido cancelada automáticamente debido a su vencimiento."

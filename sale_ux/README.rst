@@ -49,6 +49,7 @@ Several Improvements to sales:
 #. Prevents writing in certain fields in blocked sales orders.
 #. Deleting price lists with confirmed sale orders is not permitted.
 #. Prevents deleting sale orders when they have associated invoices, preserving traceability.
+#. Prevents re-confirming a sale order that is already confirmed, raising a clear error message.
 
 Installation
 ============
