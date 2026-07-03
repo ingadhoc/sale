@@ -2,6 +2,10 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
+import logging
+
+import psycopg2
+from odoo import _, fields, models
 from odoo.exceptions import UserError
 from odoo.tools.safe_eval import (
     datetime as safe_eval_datetime,
@@ -13,7 +17,7 @@ from odoo.tools.safe_eval import (
     safe_eval,
 )
 
-from odoo import _, fields, models
+_logger = logging.getLogger(__name__)
 
 
 class SaleOrder(models.Model):
@@ -83,8 +87,22 @@ class SaleOrder(models.Model):
                         "invoices (ids %s), you will need to validate them"
                         " manually. This is what we get: %s"
                     ) % (invoices.ids, error)
-                    invoices.message_post(body=message)
-                    rec.message_post(body=message)
+                    self._log_invoicing_automation_error(rec, invoices, message, error)
+
+    def _log_invoicing_automation_error(self, order, invoices, message, error):
+        try:
+            invoices.message_post(body=message)
+            order.message_post(body=message)
+        except psycopg2.Error:
+            order.env.cr.rollback()
+            _logger.warning(
+                "The invoicing automation transaction of sale order %s was "
+                "aborted, recovering before logging the failure: %s",
+                order.ids,
+                error,
+            )
+            invoices.message_post(body=message)
+            order.message_post(body=message)
 
     def run_picking_automation(self):
         # If there products are the type 'service' equals the

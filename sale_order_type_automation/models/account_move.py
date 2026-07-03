@@ -2,7 +2,12 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
+import logging
+
+import psycopg2
 from odoo import fields, models
+
+_logger = logging.getLogger(__name__)
 
 
 class AccountMove(models.Model):
@@ -48,5 +53,15 @@ class AccountMove(models.Model):
                 self._register_payment_invoice(invoice, invoice.sale_type_id.payment_journal_id)
             except Exception as error:
                 message = "Could not automatically create and validate payment. Error: %s" % error
-                invoice.message_post(body=message)
+                try:
+                    invoice.message_post(body=message)
+                except psycopg2.Error:
+                    invoice.env.cr.rollback()
+                    _logger.warning(
+                        "The payment automation transaction of invoice %s was "
+                        "aborted, recovering before logging the failure: %s",
+                        invoice.ids,
+                        error,
+                    )
+                    invoice.message_post(body=message)
         return res
