@@ -83,7 +83,7 @@ class SaleOrder(models.Model):
             ):
                 advance_payment_wizard = (
                     self.env["sale.advance.payment.inv"]
-                    .with_context()
+                    .with_context(first_gathering_invoice=True)
                     .create(
                         {
                             "advance_payment_method": "fixed",
@@ -93,7 +93,7 @@ class SaleOrder(models.Model):
                     )
                 )
                 advance_payment_wizard._check_amount_is_positive()
-                invoices = advance_payment_wizard.with_context(first_gathering_invoice=True)._create_invoices(order)
+                invoices = advance_payment_wizard._create_invoices(order)
                 if invoices and order.type_id.invoicing_atomation == "validate_invoice":
                     try:
                         if order.type_id.invoice_validate_domain:
