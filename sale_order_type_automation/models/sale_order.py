@@ -2,13 +2,18 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import _, fields, models
 from odoo.exceptions import UserError
 from odoo.tools.safe_eval import (
     datetime as safe_eval_datetime,
+)
+from odoo.tools.safe_eval import (
     dateutil as safe_eval_dateutil,
+)
+from odoo.tools.safe_eval import (
     safe_eval,
 )
+
+from odoo import _, fields, models
 
 
 class SaleOrder(models.Model):
@@ -71,8 +76,7 @@ class SaleOrder(models.Model):
                 if not invoices_to_validate:
                     continue
                 try:
-                    with rec.env.cr.savepoint():
-                        invoices_to_validate.sudo().action_post()
+                    invoices_to_validate.sudo().action_post()
                 except Exception as error:
                     message = _(
                         "We couldn't validate the automatically created "
