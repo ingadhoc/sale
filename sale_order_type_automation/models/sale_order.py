@@ -71,8 +71,7 @@ class SaleOrder(models.Model):
                 if not invoices_to_validate:
                     continue
                 try:
-                    with rec.env.cr.savepoint():
-                        invoices_to_validate.sudo().action_post()
+                    invoices_to_validate.sudo().action_post()
                 except Exception as error:
                     message = _(
                         "We couldn't validate the automatically created "
