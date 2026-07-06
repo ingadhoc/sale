@@ -4,21 +4,19 @@
 ##############################################################################
 import ast
 
-from odoo import api, fields, models
+from odoo import api, models
 from odoo.exceptions import ValidationError
 from odoo.fields import Domain
 
 
-class LoyaltyProgram(models.Model):
-    _inherit = "loyalty.program"
+class LoyaltyRule(models.Model):
+    _inherit = "loyalty.rule"
 
-    sale_domain = fields.Char(default="[]")
-
-    @api.constrains("sale_domain")
-    def _check_sale_domain(self):
-        for program in self:
-            if program.sale_domain and program.sale_domain != "[]":
-                for condition in Domain(ast.literal_eval(program.sale_domain)).iter_conditions():
+    @api.constrains("product_domain")
+    def _check_product_domain(self):
+        for rule in self:
+            if rule.product_domain and rule.product_domain != "[]":
+                for condition in Domain(ast.literal_eval(rule.product_domain)).iter_conditions():
                     if condition.operator in ("=", "!=") and isinstance(condition.value, (list, tuple)):
                         raise ValidationError(
                             self.env._(
@@ -28,10 +26,3 @@ class LoyaltyProgram(models.Model):
                                 value=condition.value,
                             )
                         )
-
-    def _get_valid_sale_order(self):
-        domain = []
-        if self.sale_domain and self.sale_domain != "[]":
-            domain = Domain.AND([domain, ast.literal_eval(self.sale_domain)])
-            return domain
-        return False

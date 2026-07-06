@@ -16,6 +16,7 @@ Sale Loyalty UX
 
 #. Adds the capability of filtering sale orders in a Loyalty program
 #. Shows a blue reminder banner on draft/sent sale orders when claimable rewards are available and no reward has been applied yet
+#. Validates loyalty domains and blocks saving a domain that uses the '=' / '!=' operator against a list value (which floods the logs on every recompute), forcing the 'in' / 'not in' operator instead
 
 Installation
 ============

@@ -28,6 +28,17 @@ msgid "<span>There are available rewards that apply to this Sales Order</span>"
 msgstr ""
 
 #. module: sale_loyalty_ux
+#. odoo-python
+#: code:addons/sale_loyalty_ux/models/loyalty_domain.py:0
+msgid ""
+"Invalid domain syntax: operator '%(operator)s' cannot be used with a list "
+"value %(value)s. Use 'in' or 'not in' instead."
+msgstr ""
+"Sintaxis de dominio inválida: el operador '%(operator)s' no puede usarse con "
+"un valor de tipo lista %(value)s. Utilice 'está en' (in) o 'no está en' (not "
+"in) en su lugar."
+
+#. module: sale_loyalty_ux
 #: model:ir.model.fields,field_description:sale_loyalty_ux.field_loyalty_program__display_name
 #: model:ir.model.fields,field_description:sale_loyalty_ux.field_sale_order__display_name
 msgid "Display Name"

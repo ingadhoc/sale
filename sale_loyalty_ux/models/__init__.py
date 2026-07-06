@@ -4,3 +4,4 @@
 ##############################################################################
 from . import sale_order
 from . import loyalty_program
+from . import loyalty_rule
