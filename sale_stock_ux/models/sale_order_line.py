@@ -136,29 +136,24 @@ class SaleOrderLine(models.Model):
 
             old_product_uom_qty = rec.product_uom_qty
 
-            # Cancelamos explícitamente los movimientos de salida pendientes (el
-            # remanente a entregar) en lugar de delegar la baja al recálculo de la
-            # regla de stock. Ese recálculo genera un movimiento de cantidad
-            # negativa que, cuando la salida fue reservada desde una sub-ubicación
-            # distinta al origen nominal de la regla, no se fusiona (merge) con el
-            # move original (difiere `location_id` en la clave de merge) y termina
-            # dándose vuelta como una contraentrega (IN fantasma), dejando el OUT
-            # huérfano en `confirmed` y comprometiendo stock. Cancelar los moves
-            # pendientes es robusto ante cualquier sub-ubicación de reserva.
-            # Excluimos las devoluciones del cliente (origen 'customer'). Ver ticket 121400.
-            moves_to_cancel = rec.move_ids.filtered(
-                lambda m: m.state not in ("done", "cancel") and m.location_id.usage != "customer"
+            # Resetear printed=False en pickings asociados para evitar contra-entregas
+            # cuando Odoo intente mezclar moves en pickings ya impresos
+            pickings_to_reset = rec.order_id.picking_ids.filtered(
+                lambda p: p.state not in ("done", "cancel") and p.printed
             )
-            if moves_to_cancel:
-                moves_to_cancel._action_cancel()
+            if pickings_to_reset:
+                pickings_to_reset.write({"printed": False})
 
-            # Seteamos la cantidad con `skip_procurement` para no relanzar la regla
-            # de stock (que volvería a generar el movimiento negativo/contraentrega).
-            # Permitimos cancelar igual aunque haya más facturado que entregado,
-            # por ej. si no se va a entregar y ya está facturado y se quiere hacer
-            # la nota de crédito. Además se puede volver a subir la cantidad si se
-            # requiere.
-            rec.with_context(skip_locked_order_line_check=True, skip_procurement=True).product_uom_qty = (
+            # Al final permitimos cancelar igual porque es necesario, por ej,
+            # si no se va a entregar y ya está facturado y se quiere hacer
+            # la nota de crédito. además se puede volver a subir la cantidad
+            # si se requiere
+            # if rec.qty_invoiced > rec.qty_delivered:
+            #     raise ValidationError(_(
+            #         'You can not cancel remianing qty to deliver because '
+            #         'there are more product invoiced than the delivered. '
+            #         'You should correct invoice or ask for a refund'))
+            rec.with_context(skip_locked_order_line_check=True).product_uom_qty = (
                 rec.qty_delivered + rec.quantity_returned
             )
             rec.order_id.message_post(
