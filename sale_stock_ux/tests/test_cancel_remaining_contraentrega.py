@@ -154,3 +154,164 @@ class TestCancelRemainingContraentrega(TransactionCase):
             0.0,
             "No debe quedar stock varado en Output tras cancelar el remanente en multi-paso",
         )
+
+    def _build_three_step_mto_route(self, warehouse):
+        """Ruta de entrega en 3 pasos PULL/MTO encadenada (PICK->PACK->OUT), como
+        la que usa Cedent: los 3 moves se crean encadenados al confirmar la orden
+        y `sale_line_id` queda SOLO en el move OUT. La ruta auto-generada del
+        warehouse de test arma los pasos por reglas push (progresivas), que no
+        reproducen el escenario."""
+        customer_loc = self.env.ref("stock.stock_location_customers")
+        route = self.env["stock.route"].create(
+            {"name": "R122299 3 pasos MTO", "product_selectable": True}
+        )
+        steps = [
+            ("pick", warehouse.lot_stock_id, warehouse.wh_pack_stock_loc_id, warehouse.pick_type_id, "make_to_stock"),
+            ("pack", warehouse.wh_pack_stock_loc_id, warehouse.wh_output_stock_loc_id, warehouse.pack_type_id, "make_to_order"),
+            ("out", warehouse.wh_output_stock_loc_id, customer_loc, warehouse.out_type_id, "make_to_order"),
+        ]
+        for name, src, dst, ptype, procure_method in steps:
+            self.env["stock.rule"].create(
+                {
+                    "name": name,
+                    "route_id": route.id,
+                    "action": "pull",
+                    "picking_type_id": ptype.id,
+                    "location_src_id": src.id,
+                    "location_dest_id": dst.id,
+                    "procure_method": procure_method,
+                    "warehouse_id": warehouse.id,
+                }
+            )
+        return route
+
+    def test_cancel_remaining_three_steps_no_orphan_upstream_demand(self):
+        """Regresión ticket 122299 (Cedent, entrega en 3 pasos).
+
+        Ruta PICK -> PACK -> OUT pull/MTO (cadena creada al confirmar). Nada
+        entregado. Al cancelar el remanente, la línea baja a 0 y el move OUT se
+        cancela, PERO los PICK/PACK aguas arriba quedan vivos demandando la
+        cantidad original: el depósito prepara de más (exactamente lo reportado
+        — el pick pide más que la OV).
+
+        Causa: button_cancel_remaining solo actúa sobre `line.move_ids`, que en
+        multi-paso son los OUT (los PICK/PACK tienen sale_line_id=False), y nada
+        recorre la cadena aguas arriba. La propagación nativa de Odoo
+        (`propagate_cancel`) va aguas ABAJO (move_dest_ids), así que cancelar el
+        OUT nunca limpia el PICK/PACK, tenga el flag el valor que tenga. No
+        depende de config del cliente: pasa en cualquier entrega multi-paso MTO.
+        """
+        storable = self.env["product.product"].create(
+            {"name": "Test Product 122299 3steps", "list_price": 100.0, "type": "consu", "is_storable": True}
+        )
+        warehouse = self.env["stock.warehouse"].create(
+            {"name": "WH 122299 3steps", "code": "T22", "company_id": self.env.company.id}
+        )
+        warehouse.delivery_steps = "pick_pack_ship"
+        route = self._build_three_step_mto_route(warehouse)
+        storable.route_ids = [(6, 0, route.ids)]
+
+        self.env["stock.quant"].with_context(inventory_mode=True)._update_available_quantity(
+            storable, warehouse.lot_stock_id, 100
+        )
+
+        sale_order = self.env["sale.order"].create(
+            {
+                "partner_id": self.partner.id,
+                "warehouse_id": warehouse.id,
+                "order_line": [(0, 0, {"product_id": storable.id, "product_uom_qty": 20, "price_unit": 100.0})],
+            }
+        )
+        sale_order.action_confirm()
+        line = sale_order.order_line
+
+        # Cadena completa creada al confirmar: PICK + PACK + OUT, sale_line_id solo en OUT.
+        all_moves = sale_order.picking_ids.move_ids.filtered(lambda m: m.product_id == storable)
+        self.assertEqual(len(all_moves), 3, "Se esperaba la cadena PICK + PACK + OUT")
+        self.assertEqual(
+            all_moves.filtered(lambda m: m.sale_line_id).mapped("picking_id.picking_type_id.sequence_code"),
+            ["OUT"],
+            "sale_line_id debe estar solo en el move OUT (como en Cedent)",
+        )
+
+        # Cancelar remanente (nada llegó al cliente todavía)
+        line.with_context(cancel_from_order=True).button_cancel_remaining()
+        self.assertEqual(line.product_uom_qty, 0.0)
+
+        # --- Demanda huérfana aguas arriba ---
+        live = all_moves.filtered(lambda m: m.state not in ("done", "cancel"))
+        self.assertFalse(
+            live,
+            "Quedaron moves vivos aguas arriba (PICK/PACK) tras cancelar el remanente "
+            "en 3 pasos con propagate_cancel=False: el depósito prepararía de más "
+            "(ticket 122299). Moves vivos: %s"
+            % [(m.picking_id.name, m.product_uom_qty, m.state) for m in live],
+        )
+
+    def test_cancel_remaining_three_steps_partial_pick_no_orphan(self):
+        """Regresión ticket 122299 (caso 'Negro': 3 pasos con PICK PARCIAL).
+
+        Ruta PICK -> PACK -> OUT pull/MTO. El PICK se valida parcialmente: parte
+        queda EN TRÁNSITO (pack loc) y se genera un backorder por el remanente.
+        Al cancelar el remanente:
+          - el stock en tránsito ya pickeado debe volver al origen (contraentrega),
+          - el remanente NO pickeado aguas arriba (PICK backorder + su PACK) NO debe
+            quedar vivo demandando de más.
+        Este es el caso rama (a) de button_cancel_remaining.
+        """
+        storable = self.env["product.product"].create(
+            {"name": "Test Product 122299 partial", "list_price": 100.0, "type": "consu", "is_storable": True}
+        )
+        warehouse = self.env["stock.warehouse"].create(
+            {"name": "WH 122299 partial", "code": "T23", "company_id": self.env.company.id}
+        )
+        warehouse.delivery_steps = "pick_pack_ship"
+        route = self._build_three_step_mto_route(warehouse)
+        storable.route_ids = [(6, 0, route.ids)]
+
+        self.env["stock.quant"].with_context(inventory_mode=True)._update_available_quantity(
+            storable, warehouse.lot_stock_id, 100
+        )
+
+        sale_order = self.env["sale.order"].create(
+            {
+                "partner_id": self.partner.id,
+                "warehouse_id": warehouse.id,
+                "order_line": [(0, 0, {"product_id": storable.id, "product_uom_qty": 20, "price_unit": 100.0})],
+            }
+        )
+        sale_order.action_confirm()
+        line = sale_order.order_line
+
+        # Validar PARCIALMENTE el PICK: 10 de 20 -> 10 en tránsito (pack loc) + backorder 10.
+        pick = sale_order.picking_ids.filtered(lambda p: p.picking_type_id.sequence_code == "PICK")
+        pick.action_assign()
+        pick.move_ids.quantity = 10
+        pick.move_ids.picked = True
+        res = pick.button_validate()
+        if isinstance(res, dict) and res.get("res_model") == "stock.backorder.confirmation":
+            wiz = self.env[res["res_model"]].with_context(**res["context"]).create({})
+            wiz.process()  # crear backorder por el remanente
+        self.assertEqual(self._transit_qty(storable, warehouse), 10.0, "El PICK parcial debió dejar 10 en tránsito")
+
+        # Cancelar remanente
+        line.with_context(cancel_from_order=True).button_cancel_remaining()
+        self.assertEqual(line.product_uom_qty, 0.0)
+
+        # 1) No debe quedar remanente pendiente demandando de más.
+        backorder_pick = sale_order.picking_ids.filtered(
+            lambda p: p.picking_type_id.sequence_code == "PICK" and p.backorder_id
+        )
+        live_backorder = backorder_pick.move_ids.filtered(lambda m: m.state not in ("done", "cancel"))
+        self.assertFalse(
+            live_backorder,
+            "El PICK backorder del remanente quedó vivo tras cancelar el remanente (ticket 122299)",
+        )
+
+        # 2) El stock en tránsito debe volver al origen (no quedar varado).
+        self._validate_all_live_pickings(sale_order)
+        self.assertEqual(
+            self._transit_qty(storable, warehouse),
+            0.0,
+            "El stock en tránsito no volvió al origen tras cancelar el remanente (caso parcial 122299)",
+        )

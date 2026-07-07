@@ -118,6 +118,46 @@ class SaleOrderLine(models.Model):
                 delivery_status = "no"
             line.delivery_status = delivery_status
 
+    def _get_delivery_moves_chain(self):
+        """Cadena completa de moves de entrega de la línea: los OUT (únicos con
+        sale_line_id) más los pasos internos aguas arriba (PACK/PICK), subiendo por
+        move_orig_ids. En entregas multi-paso `move_ids` trae solo los OUT, por eso
+        hay que recorrer la cadena para no dejar remanente huérfano. Ver ticket 122299."""
+        self.ensure_one()
+        moves = self.move_ids
+        frontier = self.move_ids
+        while frontier:
+            parents = frontier.move_orig_ids - moves
+            moves |= parents
+            frontier = parents
+        return moves
+
+    def _return_in_transit_moves(self, in_transit_moves):
+        """Devuelve al origen el stock ya movido a ubicaciones intermedias (moves
+        `done` internos→internos) que, al cancelar el remanente, ya no va a salir.
+
+        Un move `done` no se puede cancelar (Odoo obliga a crear una devolución),
+        así que usamos la primitiva nativa `stock.return.picking` para generar la
+        contraentrega (Packing/Output → Stock). No se valida acá: queda como picking
+        de entrada para que el operario la confirme, igual que cualquier retorno.
+        `to_refund=False` porque es un retorno interno de logística, no una
+        devolución del cliente (no debe impactar cantidades facturables). Ver ticket 122299."""
+        if not in_transit_moves:
+            return
+        return_picking_obj = self.env["stock.return.picking"]
+        for picking in in_transit_moves.picking_id:
+            picking_moves = in_transit_moves.filtered(lambda m: m.picking_id == picking)
+            wizard = return_picking_obj.with_context(
+                active_id=picking.id, active_model="stock.picking", active_ids=picking.ids
+            ).create({"picking_id": picking.id})
+            keep = wizard.product_return_moves.filtered(lambda line: line.move_id in picking_moves)
+            (wizard.product_return_moves - keep).unlink()
+            for return_line in keep:
+                return_line.quantity = return_line.move_id.quantity
+                return_line.to_refund = False
+            if keep:
+                wizard.action_create_returns()
+
     def button_cancel_remaining(self):
         # la cancelación de kits no está bien resuelta ya que odoo solo computa
         # la cantidad entregada cuando todo el kit se entregó. Cuestión que,
@@ -136,33 +176,35 @@ class SaleOrderLine(models.Model):
 
             old_product_uom_qty = rec.product_uom_qty
 
-            # Al cancelar el remanente hay dos situaciones excluyentes. La clave es
-            # si quedó stock EN TRÁNSITO: pasos internos ya validados (ej. el PICK de
-            # una entrega multi-paso) que movieron mercadería a una ubicación
-            # intermedia y todavía no llegó al cliente.
             target_qty = rec.qty_delivered + rec.quantity_returned
-            in_transit_moves = rec.move_ids.filtered(
+            # Recorremos TODA la cadena de entrega (OUT + PACK + PICK). En entregas
+            # multi-paso `move_ids` solo trae los OUT (los pasos internos tienen
+            # sale_line_id=False), así que operar solo sobre `move_ids` dejaría el
+            # remanente vivo aguas arriba y el depósito prepararía de más. Ver ticket 122299.
+            chain = rec._get_delivery_moves_chain()
+
+            # Stock ya movido a una ubicación intermedia (EN TRÁNSITO, ej. el PICK
+            # de una entrega multi-paso ya validado) que, al cancelar el remanente,
+            # ya no va a salir. No se puede cancelar un move 'done': se devuelve al
+            # origen con una contraentrega nativa (ver _return_in_transit_moves).
+            in_transit_moves = chain.filtered(
                 lambda m: m.state == "done"
                 and m.location_id.usage != "customer"
                 and m.location_dest_id.usage != "customer"
             )
-            if in_transit_moves:
-                # (a) Con tránsito: delegamos la baja al recálculo de la regla para que
-                # genere los movimientos inversos (contraentrega legítima) que devuelven
-                # ese stock al origen. Cancelar los moves a mano lo dejaría varado.
-                rec.with_context(skip_locked_order_line_check=True).product_uom_qty = target_qty
-            else:
-                # (b) Sin tránsito: si delegáramos, el recálculo genera un movimiento
-                # negativo que, cuando la salida se reservó desde una sub-ubicación
-                # distinta al origen nominal de la regla, no se fusiona (difiere
-                # `location_id` en la clave de merge) y se da vuelta como una
-                # contraentrega (IN fantasma), dejando el OUT huérfano y comprometiendo
-                # stock. Por eso cancelamos los moves pendientes explícitamente y usamos
-                # `skip_procurement` para no relanzar la regla. Ver ticket 121400.
-                rec.move_ids.filtered(
-                    lambda m: m.state not in ("done", "cancel") and m.location_id.usage != "customer"
-                )._action_cancel()
-                rec.with_context(skip_locked_order_line_check=True, skip_procurement=True).product_uom_qty = target_qty
+
+            # Cancelamos TODO el remanente pendiente de la cadena (no solo el OUT) y
+            # NO delegamos al recálculo de la regla: al bajar product_uom_qty, el core
+            # genera un move negativo que, si la salida se reservó desde una sub-ubicación
+            # distinta al origen nominal, no se fusiona (difiere `location_id` en la clave
+            # de merge) y se da vuelta como contraentrega fantasma (ticket 121400); y en
+            # multi-paso con PICK parcial deja demanda forward huérfana (ticket 122299).
+            # Por eso: cancelar pendientes + devolver el tránsito + skip_procurement.
+            chain.filtered(
+                lambda m: m.state not in ("done", "cancel") and m.location_id.usage != "customer"
+            )._action_cancel()
+            rec._return_in_transit_moves(in_transit_moves)
+            rec.with_context(skip_locked_order_line_check=True, skip_procurement=True).product_uom_qty = target_qty
             rec.order_id.message_post(
                 body=_('Cancel remaining call for line "%s" (id %s), line qty updated from %s to %s')
                 % (rec.name, rec.id, old_product_uom_qty, rec.product_uom_qty)
