@@ -19,7 +19,17 @@ class StockPicking(models.Model):
         if any(
             self.sudo().filtered(
                 lambda x: (
+<<<<<<< 45158847ecfb019e152733cc2218df6e704a0b9d
                     x.picking_type_id.code == "outgoing"
+||||||| f24c9bcd7b4cfaa86e9db2e77a40d71dbb223c0e
+                    (
+                        x.picking_type_id.code == "outgoing"
+                        or x.picking_type_id
+                        in (x.picking_type_id.warehouse_id.pick_type_id | x.picking_type_id.warehouse_id.pack_type_id)
+                    )
+=======
+                    x._is_delivery_chain()
+>>>>>>> bc8c628efebe157d725705ead2330519dcbdad33
                     and x.sale_id.type_id.invoice_policy in ["prepaid", "prepaid_block_delivery"]
                     and not x._check_sale_paid()
                 )
@@ -61,3 +71,19 @@ class StockPicking(models.Model):
         ):
             return False
         return True
+
+    def _is_delivery_chain(self):
+        """Whether this picking's moves eventually reach a customer location.
+
+        Identifies pick/pack/out steps regardless of how many intermediate
+        picking types a warehouse defines (e.g. several custom Pick
+        operation types per product category), instead of relying on the
+        single warehouse.pick_type_id/pack_type_id references, which only
+        cover the default 3-step route and miss any extra custom ones.
+        Return/receipt pickings are excluded naturally, since their moves
+        never end up in a customer location.
+        """
+        self.ensure_one()
+        moves = self.move_ids
+        dest_moves = moves.browse(moves._rollup_move_dests())
+        return bool((moves | dest_moves).filtered(lambda m: m.location_dest_id.usage == "customer"))
