@@ -58,4 +58,20 @@
         <field eval="0" name="perm_unlink"/>
     </record>
 
+    <!-- Portal distributors need to read the Odoo company partner(s) they belong
+         to. The sale order form reads company_id.partner_id during rendering and
+         onchanges, but the native portal rule restricts res.partner to
+         child_of commercial_partner_id, which blocks that read.
+         This rule grants the minimum extra access: only the company partners. -->
+    <record id="portal_res_partner_company_rule" model="ir.rule">
+        <field name="name">Portal Distributor: read own company partners</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="domain_force">[('id', 'in', user.company_ids.partner_id.ids)]</field>
+        <field name="groups" eval="[(4, ref('group_portal_backend_distributor'))]"/>
+        <field eval="1" name="perm_read"/>
+        <field eval="0" name="perm_write"/>
+        <field eval="0" name="perm_create"/>
+        <field eval="0" name="perm_unlink"/>
+    </record>
+
 </odoo>
