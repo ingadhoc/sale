@@ -1,9 +1,16 @@
-from odoo import models
+from odoo import api, models
 
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
+    @api.depends(
+        "pack_child_line_ids.qty_delivered_method",
+        "pack_child_line_ids.move_ids.state",
+        "pack_child_line_ids.move_ids.scrap_id",
+        "pack_child_line_ids.move_ids.product_uom_qty",
+        "pack_child_line_ids.move_ids.product_uom",
+    )
     def _compute_quantity_returned(self):
         res = super()._compute_quantity_returned()
 
