@@ -26,7 +26,7 @@
     "website": "www.adhoc.com.ar",
     "license": "AGPL-3",
     "depends": [
-        "event",
+        "event_sale",
         "portal_sale_distributor",
     ],
     "demo": [],
