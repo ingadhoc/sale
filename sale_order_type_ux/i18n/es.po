@@ -36,7 +36,7 @@ msgstr "Archivado"
 #. module: sale_order_type_ux
 #: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__company_id
 msgid "Company"
-msgstr "Compañía"
+msgstr "Empresa"
 
 #. module: sale_order_type_ux
 #: model:sale.order.type,name:sale_order_type_ux.default_sale_order_type
@@ -73,7 +73,7 @@ msgstr ""
 #. module: sale_order_type_ux
 #: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__invoice_company_id
 msgid "Invoice Company"
-msgstr ""
+msgstr "Empresa de facturación"
 
 #. module: sale_order_type_ux
 #: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__journal_id
@@ -98,7 +98,7 @@ msgstr "Campos predefinidos"
 #. module: sale_order_type_ux
 #: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__pricelist_id
 msgid "Pricelist"
-msgstr "Tarifa"
+msgstr "Lista de precios"
 
 #. module: sale_order_type_ux
 #: model:ir.model,name:sale_order_type_ux.model_sale_order
@@ -108,7 +108,7 @@ msgstr "Pedido de venta"
 #. module: sale_order_type_ux
 #: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__team_id
 msgid "Sales Team"
-msgstr ""
+msgstr "Equipo de ventas"
 
 #. module: sale_order_type_ux
 #: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__sequence

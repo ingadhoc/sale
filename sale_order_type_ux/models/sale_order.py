@@ -26,14 +26,6 @@ class SaleOrder(models.Model):
             res._compute_fiscal_position_id()
         return res
 
-    def _compute_team_id(self):
-        res = super()._compute_team_id()
-        for order in self.filtered("type_id"):
-            order_type = order.type_id
-            if order_type.team_id:
-                order.team_id = order_type.team_id
-        return res
-
     @api.onchange("type_id")
     def _onchange_team_id(self):
         if self.type_id and self.type_id.team_id:
