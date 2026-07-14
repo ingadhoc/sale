@@ -41,7 +41,6 @@
             </xpath>
 
              <field name="payment_term_id" position="after">
-                <field name="team_id" options="{'no_create': True}"/>
                 <field name="fiscal_position_id" options="{'no_create': True}"/>
             </field>
 
