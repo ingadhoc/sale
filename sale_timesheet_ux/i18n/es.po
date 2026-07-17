@@ -9,15 +9,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-03 16:55+0000\n"
+"POT-Creation-Date: 2026-06-19 19:55+0000\n"
 "PO-Revision-Date: 2025-12-13 16:10+0000\n"
 "Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
-"Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/sale-19-0-sale_timesheet_ux/es/>\n"
+"Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
+"sale-19-0-sale_timesheet_ux/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
+"0) ? 1 : 2);\n"
 "X-Generator: Weblate 5.10.4\n"
 
 #. module: sale_timesheet_ux
@@ -28,8 +30,8 @@ msgstr "Línea analítica"
 #. module: sale_timesheet_ux
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_ux.change_allow_billable_wizzard
 msgid ""
-"Are you sure you want to change the 'Allow Billable' field to False for this"
-" project?"
+"Are you sure you want to change the 'Allow Billable' field to False for this "
+"project?"
 msgstr ""
 "¿Estas seguro de que deseas cambiar el campo 'Permitir Facturación' a falso "
 "para este proyecto?"
@@ -46,8 +48,8 @@ msgid ""
 msgstr ""
 "Por defecto, cambios en proyectos, tareas y tickets relacionados a la "
 "información de facturación se sincronizan con las líneas de hojas de horas. "
-"Esto puede causar modificaciones automáticas de la línea de venta asociada a"
-" la hoja de horas. Active esta opción si quiere protejer las línes de las "
+"Esto puede causar modificaciones automáticas de la línea de venta asociada a "
+"la hoja de horas. Active esta opción si quiere protejer las línes de las "
 "hojas de horas para que los cambios no modifiquen las líneas de venta "
 "asociadas (altamente recomendado especialmente para casos de prepago/precio "
 "fijo"
@@ -71,6 +73,11 @@ msgstr "Confirmar cambio de Permitir Facturación"
 #: model:ir.model,name:sale_timesheet_ux.model_allow_billable_wizard
 msgid "Confirmar cambio de valor de Allow Billable"
 msgstr "Confirmar cambio de valor de Permitir Facturacióm"
+
+#. module: sale_timesheet_ux
+#: model:ir.model,website_form_label:sale_timesheet_ux.model_project_task
+msgid "Create a Task"
+msgstr "Crear una tarea"
 
 #. module: sale_timesheet_ux
 #: model:ir.model.fields,field_description:sale_timesheet_ux.field_allow_billable_wizard__create_uid
@@ -175,7 +182,8 @@ msgid ""
 "        !! Set the task a high priority\n"
 "        !!! Set the task a urgent priority\n"
 "\n"
-"        Make sure to use the right format and order e.g. Improve the configuration screen 5h #feature #v16 @Mitchell !"
+"        Make sure to use the right format and order e.g. Improve the "
+"configuration screen 5h #feature #v16 @Mitchell !"
 msgstr ""
 "Utiliza estas palabras clave en el título para establecer nuevas tareas:\n"
 "\n"
@@ -186,14 +194,10 @@ msgstr ""
 "        !! Asignar prioridad alta a la tarea\n"
 "        !!! Asignar prioridad urgente a la tarea\n"
 "\n"
-"        Asegúrate de utilizar el formato y el orden correcto, por ejemplo: ¡Mejorar la pantalla de configuración 5 h #función #v16 @Mitchell!"
+"        Asegúrate de utilizar el formato y el orden correcto, por ejemplo: "
+"¡Mejorar la pantalla de configuración 5 h #función #v16 @Mitchell!"
 
 #. module: sale_timesheet_ux
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_ux.change_allow_billable_wizzard
 msgid "Yes, Change it"
 msgstr "Sí, cámbialo"
-
-#. module: sale_timesheet_ux
-#: model:ir.model,website_form_label:sale_timesheet_ux.model_project_task
-msgid "Create a Task"
-msgstr "Crear una tarea"
