@@ -12,12 +12,14 @@ msgstr ""
 "POT-Creation-Date: 2026-07-17 14:16+0000\n"
 "PO-Revision-Date: 2026-01-13 22:10+0000\n"
 "Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
-"Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/sale-19-0-sale_ux/es/>\n"
+"Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
+"sale-19-0-sale_ux/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
+"0) ? 1 : 2);\n"
 "X-Generator: Weblate 5.10.4\n"
 
 #. module: sale_ux
@@ -121,8 +123,8 @@ msgid ""
 msgstr ""
 "Por defecto, Odoo sólo permite elegir usuarios que tengan permiso de ventas "
 "en pedidos de venta y sólo usuarios internos en los equipos de ventas. Esta "
-"opción permite elegir, en ambos lugares, usuarios de cualquier tipo (interno"
-" o portal)."
+"opción permite elegir, en ambos lugares, usuarios de cualquier tipo (interno "
+"o portal)."
 
 #. module: sale_ux
 #: model:ir.model.fields,help:sale_ux.field_product_pricelist__show_products
@@ -194,6 +196,11 @@ msgstr "Crear cuenta analitica sin empresa"
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_filter
 msgid "Create Date"
 msgstr "Fecha de creación"
+
+#. module: sale_ux
+#: model:ir.model,website_form_label:sale_ux.model_res_partner
+msgid "Create a Customer"
+msgstr "Crear un cliente"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard__create_uid
@@ -389,8 +396,8 @@ msgstr "Plantilla de importación para productos"
 #: model:ir.model.fields,help:sale_ux.field_account_fiscal_position__deduct_price_included_taxes
 msgid ""
 "In sales: When this fiscal position is set, if the product has taxes "
-"included in the price, they will be deducted from the price calculation when"
-" mapping to new taxes."
+"included in the price, they will be deducted from the price calculation when "
+"mapping to new taxes."
 msgstr ""
 "En ventas: Cuando se establece esta posición fiscal, si el producto tiene "
 "impuestos incluidos en el precio, se descontarán del cálculo del precio al "
@@ -400,8 +407,7 @@ msgstr ""
 #: model:ir.model.fields,help:sale_ux.field_product_product__only_packagings
 #: model:ir.model.fields,help:sale_ux.field_product_template__only_packagings
 msgid ""
-"Indicates that this product is only used as packaging and does not use "
-"units."
+"Indicates that this product is only used as packaging and does not use units."
 msgstr "Indica que este producto solo se usa como embalaje y no usa unidades."
 
 #. module: sale_ux
@@ -466,9 +472,9 @@ msgid ""
 "Manually set a specific pricelist for this partner. If left blank, the "
 "system will automatically determine the best match based on priority rules."
 msgstr ""
-"Definí manualmente una lista de precios específica para este contacto. Si se"
-" deja en blanco, el sistema determinará automáticamente la mejor "
-"coincidencia según las reglas de prioridad."
+"Definí manualmente una lista de precios específica para este contacto. Si se "
+"deja en blanco, el sistema determinará automáticamente la mejor coincidencia "
+"según las reglas de prioridad."
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__move_internal_notes
@@ -731,8 +737,8 @@ msgstr "Mostrar campo de referencia SO en vista árbol y formulario"
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
 msgid "Show client reference in list view and in main section of form view"
 msgstr ""
-"Mostrar la referencia del cliente en la vista de lista y en el encabezado de"
-" la vista de formulario de la OV"
+"Mostrar la referencia del cliente en la vista de lista y en el encabezado de "
+"la vista de formulario de la OV"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_product_pricelist__show_products
@@ -803,8 +809,8 @@ msgid ""
 "The price list cannot be deleted because it has confirmed sales. In these "
 "cases, we recommend archiving the list."
 msgstr ""
-"La lista de precios no se puede eliminar porque tiene ventas confirmadas. En"
-" estos casos, recomendamos archivar la lista."
+"La lista de precios no se puede eliminar porque tiene ventas confirmadas. En "
+"estos casos, recomendamos archivar la lista."
 
 #. module: sale_ux
 #: model:ir.model.fields,help:sale_ux.field_res_partner__property_product_pricelist
@@ -874,8 +880,8 @@ msgid ""
 "Unable to cancel this sale order. You must first cancel related bills and "
 "pickings."
 msgstr ""
-"No se puede cancelar esta orden de venta. Primero debe cancelar las facturas"
-" y transferencias relacionados."
+"No se puede cancelar esta orden de venta. Primero debe cancelar las facturas "
+"y transferencias relacionados."
 
 #. module: sale_ux
 #: model:ir.model.fields,help:sale_ux.field_sale_order__amount_uninvoiced
@@ -955,8 +961,3 @@ msgstr "o"
 #~ "ventas en pedidos de venta y sólo usuarios internos en los equipos de "
 #~ "ventas. Esta opción permite elegir, en ambos lugares, usuarios de "
 #~ "cualquier tipo (interno o portal)."
-
-#. module: sale_ux
-#: model:ir.model,website_form_label:sale_ux.model_res_partner
-msgid "Create a Customer"
-msgstr "Crear un cliente"
