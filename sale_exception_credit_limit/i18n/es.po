@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-19 19:46+0000\n"
+"POT-Creation-Date: 2026-07-17 20:20+0000\n"
 "PO-Revision-Date: 2025-12-13 16:10+0000\n"
 "Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
@@ -42,11 +42,6 @@ msgstr "Configurar Límite de Crédito en Contactos"
 #: model:ir.model,name:sale_exception_credit_limit.model_res_partner
 msgid "Contact"
 msgstr "Contacto"
-
-#. module: sale_exception_credit_limit
-#: model:ir.model,website_form_label:sale_exception_credit_limit.model_res_partner
-msgid "Create a Customer"
-msgstr "Crear un cliente"
 
 #. module: sale_exception_credit_limit
 #: model:exception.rule,name:sale_exception_credit_limit.credit_limit_exceeded
@@ -142,3 +137,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_exception_credit_limit.field_res_users__user_credit_config
 msgid "User Credit Config"
 msgstr "Configuración de Crédito del Usuario"
+
+#~ msgid "Create a Customer"
+#~ msgstr "Crear un cliente"
