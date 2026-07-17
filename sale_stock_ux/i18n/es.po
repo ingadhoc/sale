@@ -9,15 +9,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-03 16:12+0000\n"
+"POT-Creation-Date: 2026-06-19 19:55+0000\n"
 "PO-Revision-Date: 2025-12-13 16:10+0000\n"
 "Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
-"Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/sale-19-0-sale_stock_ux/es/>\n"
+"Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
+"sale-19-0-sale_stock_ux/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
+"0) ? 1 : 2);\n"
 "X-Generator: Weblate 5.10.4\n"
 
 #. module: sale_stock_ux
@@ -26,8 +28,8 @@ msgid ""
 "'Do you want to cancel remaining quantities for this orders? This can´t be "
 "undone'"
 msgstr ""
-"¿Queres cancelar las cantidades remanentes para estas ordenes? Esto no puede"
-" deshacerse"
+"¿Queres cancelar las cantidades remanentes para estas ordenes? Esto no puede "
+"deshacerse"
 
 #. module: sale_stock_ux
 #: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_stock_return_picking_form
@@ -56,12 +58,12 @@ msgstr ""
 #. module: sale_stock_ux
 #: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_stock_return_picking_form
 msgid ""
-"<b>No está marcado</b>: entonces <b>no se va</b> a actualizar la OC/OV. Esto"
-" es común, por ejemplo, si se devuelve mercadería defectuosa y se pretende "
+"<b>No está marcado</b>: entonces <b>no se va</b> a actualizar la OC/OV. Esto "
+"es común, por ejemplo, si se devuelve mercadería defectuosa y se pretende "
 "hacer una nueva entrega de la misma."
 msgstr ""
-"<b>No está marcado</b>: entonces <b>no se va</b> a actualizar la OC/OV. Esto"
-" es común, por ejemplo, si se devuelve mercadería defectuosa y se pretende "
+"<b>No está marcado</b>: entonces <b>no se va</b> a actualizar la OC/OV. Esto "
+"es común, por ejemplo, si se devuelve mercadería defectuosa y se pretende "
 "hacer una nueva entrega de la misma."
 
 #. module: sale_stock_ux
@@ -89,8 +91,7 @@ msgstr "Cancelar"
 #. odoo-python
 #: code:addons/sale_stock_ux/models/sale_order_line.py:0
 msgid ""
-"Cancel remaining call for line \"%s\" (id %s), line qty updated from %s to "
-"%s"
+"Cancel remaining call for line \"%s\" (id %s), line qty updated from %s to %s"
 msgstr ""
 "Cancelar remanente para linea \"%s\" (id %s), actualizada la cantidad de la "
 "linea desde %s a %s"
@@ -192,6 +193,12 @@ msgstr "Ultima Actualización en"
 #: model:ir.actions.act_window,name:sale_stock_ux.action_sale_order_massive_cancel_wizard
 msgid "Mass cancellation of remaining quantities"
 msgstr "Cancelación masiva de las cantidades remanentes"
+
+#. module: sale_stock_ux
+#. odoo-javascript
+#: code:addons/sale_stock_ux/static/src/widgets/qty_at_date_widget.xml:0
+msgid "No stock available"
+msgstr "Sin stock disponible"
 
 #. module: sale_stock_ux
 #: model:ir.model.fields.selection,name:sale_stock_ux.selection__sale_order__delivery_status__no
@@ -314,11 +321,11 @@ msgstr "Línea de pedido de venta"
 #. module: sale_stock_ux
 #: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_stock_return_picking_form
 msgid ""
-"Si la devolución no está ligada a una OC/OV entonces este campo no repercute"
-" en nada."
+"Si la devolución no está ligada a una OC/OV entonces este campo no repercute "
+"en nada."
 msgstr ""
-"Si la devolución no está ligada a una OC/OV entonces este campo no repercute"
-" en nada."
+"Si la devolución no está ligada a una OC/OV entonces este campo no repercute "
+"en nada."
 
 #. module: sale_stock_ux
 #: model:ir.model.fields,field_description:sale_stock_ux.field_sale_order_line__stock_by_location
@@ -348,8 +355,8 @@ msgid ""
 "moves. This can not be undone. Are you sure you want to continue?"
 msgstr ""
 "Esto establecerá una cantidad de línea igual a la cantidad de entrega y "
-"cancelará los movimientos restantes. Esto no se puede deshacer. Estás seguro"
-" de que quieres continuar?"
+"cancelará los movimientos restantes. Esto no se puede deshacer. Estás seguro "
+"de que quieres continuar?"
 
 #. module: sale_stock_ux
 #: model:ir.model.fields.selection,name:sale_stock_ux.selection__sale_order_line__delivery_status__to_deliver
@@ -405,9 +412,3 @@ msgid ""
 msgstr ""
 "¡Está reduciendo la cantidad pedida! Recomendamos usar el botón para "
 "cancelar remanente y luego setear la cantidad deseada."
-
-#. module: sale_stock_ux
-#. odoo-javascript
-#: code:addons/sale_stock_ux/static/src/widgets/qty_at_date_widget.xml:0
-msgid "No stock available"
-msgstr "Sin stock disponible"
