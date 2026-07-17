@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-29 16:14+0000\n"
+"POT-Creation-Date: 2026-07-17 14:16+0000\n"
 "PO-Revision-Date: 2026-01-13 22:10+0000\n"
 "Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
@@ -65,8 +65,30 @@ msgstr "Permitir cualquier usuario como comercial"
 
 #. module: sale_ux
 #: model:ir.model,name:sale_ux.model_account_analytic_account
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard__analytic_account_id
 msgid "Analytic Account"
 msgstr "Cuenta analítica"
+
+#. module: sale_ux
+#: model:ir.model,name:sale_ux.model_sale_order_analytic_wizard_line
+msgid "Analytic Account Wizard Line"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard__plan_id
+msgid "Analytic Plan"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,help:sale_ux.field_sale_order_analytic_wizard__analytic_account_id
+msgid "Analytic account that will be assigned (at 100%) to the selected lines."
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard_line__selected
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_analytic_wizard_form
+msgid "Apply"
+msgstr ""
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_res_partner__specific_property_product_pricelist
@@ -108,6 +130,7 @@ msgid ""
 msgstr ""
 
 #. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_analytic_wizard_form
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
 msgid "Cancel"
 msgstr "Cancelado"
@@ -117,6 +140,11 @@ msgstr "Cancelado"
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
 msgid "Cancel Old Quotations"
 msgstr "Cancelar presupuestos viejos"
+
+#. module: sale_ux
+#: model:ir.model.fields,help:sale_ux.field_sale_order_analytic_wizard__select_all
+msgid "Check or uncheck every line at once."
+msgstr ""
 
 #. module: sale_ux
 #: model:ir.actions.server,name:sale_ux.ir_cron_clean_old_quotations_ir_actions_server
@@ -164,11 +192,15 @@ msgid "Create Date"
 msgstr "Fecha de creación"
 
 #. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard__create_uid
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard_line__create_uid
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__create_uid
 msgid "Created by"
 msgstr "Creado por"
 
 #. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard__create_date
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard_line__create_date
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__create_date
 msgid "Created on"
 msgstr "Creado el"
@@ -181,6 +213,11 @@ msgid ""
 msgstr ""
 "Fecha de creación del borrador/envío de los pedidos,\n"
 "Fecha de confirmación de los pedidos confirmados."
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard_line__current_analytic
+msgid "Current Analytic"
+msgstr ""
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
@@ -214,6 +251,11 @@ msgid "Delivery Date:"
 msgstr "Fecha de Entrega:"
 
 #. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard_line__name
+msgid "Description"
+msgstr ""
+
+#. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__amount
 msgid "Discount"
 msgstr "Descuento"
@@ -235,6 +277,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_ux.field_res_partner__display_name
 #: model:ir.model.fields,field_description:sale_ux.field_sale_advance_payment_inv__display_name
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order__display_name
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard__display_name
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard_line__display_name
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__display_name
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_line__display_name
 msgid "Display Name"
@@ -308,6 +352,8 @@ msgstr "Ocultar líneas canceladas"
 #: model:ir.model.fields,field_description:sale_ux.field_res_partner__id
 #: model:ir.model.fields,field_description:sale_ux.field_sale_advance_payment_inv__id
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order__id
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard__id
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard_line__id
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__id
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_line__id
 msgid "ID"
@@ -390,14 +436,23 @@ msgid "Journal Entry"
 msgstr "Asiento contable"
 
 #. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard__write_uid
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard_line__write_uid
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__write_uid
 msgid "Last Updated by"
 msgstr "Última actualización por"
 
 #. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard__write_date
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard_line__write_date
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__write_date
 msgid "Last Updated on"
 msgstr "Última actualización el"
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard__line_ids
+msgid "Lines"
+msgstr ""
 
 #. module: sale_ux
 #: model:ir.model.fields,help:sale_ux.field_res_partner__specific_property_product_pricelist
@@ -467,6 +522,11 @@ msgid "Only users with \"%s\" can Set Invoiced manually"
 msgstr "Solo usuarios con \"%s / %s\" pueden establecer Facturado manualmente"
 
 #. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard_line__order_id
+msgid "Order"
+msgstr ""
+
+#. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_line__date_order
 msgid "Order Date"
 msgstr "Fecha de pedido"
@@ -480,6 +540,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order__payment_term_id
 msgid "Payment Terms"
 msgstr "Condiciones de pago"
+
+#. module: sale_ux
+#: model:ir.model.fields,help:sale_ux.field_sale_order_analytic_wizard__plan_id
+msgid "Plan used when creating a new analytic account from this wizard."
+msgstr ""
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_product_pricelist__price
@@ -504,6 +569,7 @@ msgstr ""
 
 #. module: sale_ux
 #: model:ir.model,name:sale_ux.model_product_template
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard_line__product_id
 msgid "Product"
 msgstr ""
 
@@ -561,6 +627,11 @@ msgid "Sale History for %s"
 msgstr "Historial de ventas para %s"
 
 #. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard_line__sale_line_id
+msgid "Sale Order Line"
+msgstr ""
+
+#. module: sale_ux
 #: model:ir.actions.act_window,name:sale_ux.action_sale_order_line_usability_tree
 #: model:ir.ui.menu,name:sale_ux.menu_sale_order
 #: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_usability_tree
@@ -607,6 +678,26 @@ msgstr "Equipo de ventas"
 #: model:ir.model.fields,field_description:sale_ux.field_crm_team__member_ids
 msgid "Salespersons"
 msgstr "Comerciales"
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard__select_all
+msgid "Select All"
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_analytic_wizard_form
+msgid "Set Analytic Account on Lines"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model,name:sale_ux.model_sale_order_analytic_wizard
+msgid "Set Analytic Account on Sale Order Lines"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.actions.server,name:sale_ux.action_sale_order_set_analytic
+msgid "Set analytic account on lines"
+msgstr ""
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__group_delivery_date
@@ -796,6 +887,11 @@ msgid "Users assigned to this team."
 msgstr "Usuarios asignados a este equipo."
 
 #. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard_line__wizard_id
+msgid "Wizard"
+msgstr ""
+
+#. module: sale_ux
 #. odoo-python
 #: code:addons/sale_ux/wizards/sale_advance_payment_inv.py:0
 msgid "You can only set amount total if taxes are of type percentage"
@@ -824,6 +920,7 @@ msgid "You cannot modify already locked orders."
 msgstr "No puedes modificar pedidos de venta ya bloqueados."
 
 #. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_analytic_wizard_form
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
 msgid "or"
 msgstr "o"
