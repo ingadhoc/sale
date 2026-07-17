@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-19 19:54+0000\n"
+"POT-Creation-Date: 2026-07-17 20:18+0000\n"
 "PO-Revision-Date: 2025-12-13 16:10+0000\n"
 "Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
@@ -35,11 +35,6 @@ msgstr ""
 #: model:ir.model,name:sale_require_purchase_order_number.model_res_partner
 msgid "Contact"
 msgstr "Contacto"
-
-#. module: sale_require_purchase_order_number
-#: model:ir.model,website_form_label:sale_require_purchase_order_number.model_res_partner
-msgid "Create a Customer"
-msgstr "Crear un cliente"
 
 #. module: sale_require_purchase_order_number
 #: model:ir.model.fields,field_description:sale_require_purchase_order_number.field_account_move__display_name
@@ -95,14 +90,14 @@ msgid "Sales Order"
 msgstr "Pedido de venta"
 
 #. module: sale_require_purchase_order_number
-#: model:ir.model,name:sale_require_purchase_order_number.model_stock_picking
-msgid "Stock Picking - Delivery Guide (Uruguay)"
-msgstr "Albarán - Remito de entrega (Uruguay)"
-
-#. module: sale_require_purchase_order_number
 #: model:ir.model.constraint,message:sale_require_purchase_order_number.constraint_sale_order_purchase_order_number_uniq
 msgid "The Purchase Order Number must be unique!"
 msgstr "El numero de pedido de compra debe ser único!"
+
+#. module: sale_require_purchase_order_number
+#: model:ir.model,name:sale_require_purchase_order_number.model_stock_picking
+msgid "Transfer"
+msgstr "Traslado"
 
 #. module: sale_require_purchase_order_number
 #. odoo-python
@@ -132,5 +127,8 @@ msgstr ""
 "No puede transferir productos sin un número de pedido de compra para este "
 "cliente"
 
-#~ msgid "Transfer"
-#~ msgstr "Traslado"
+#~ msgid "Create a Customer"
+#~ msgstr "Crear un cliente"
+
+#~ msgid "Stock Picking - Delivery Guide (Uruguay)"
+#~ msgstr "Albarán - Remito de entrega (Uruguay)"
