@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-19 19:55+0000\n"
+"POT-Creation-Date: 2026-07-17 20:12+0000\n"
 "PO-Revision-Date: 2025-12-13 16:10+0000\n"
 "Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
@@ -73,11 +73,6 @@ msgstr "Confirmar cambio de Permitir Facturación"
 #: model:ir.model,name:sale_timesheet_ux.model_allow_billable_wizard
 msgid "Confirmar cambio de valor de Allow Billable"
 msgstr "Confirmar cambio de valor de Permitir Facturacióm"
-
-#. module: sale_timesheet_ux
-#: model:ir.model,website_form_label:sale_timesheet_ux.model_project_task
-msgid "Create a Task"
-msgstr "Crear una tarea"
 
 #. module: sale_timesheet_ux
 #: model:ir.model.fields,field_description:sale_timesheet_ux.field_allow_billable_wizard__create_uid
@@ -201,3 +196,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_ux.change_allow_billable_wizzard
 msgid "Yes, Change it"
 msgstr "Sí, cámbialo"
+
+#~ msgid "Create a Task"
+#~ msgstr "Crear una tarea"
