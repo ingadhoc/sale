@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-19 19:43+0000\n"
+"POT-Creation-Date: 2026-07-17 20:24+0000\n"
 "PO-Revision-Date: 2025-12-13 16:10+0000\n"
 "Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
@@ -88,11 +88,6 @@ msgstr "Confirmar Venta"
 #: model:ir.model,name:portal_sale_distributor.model_res_partner
 msgid "Contact"
 msgstr "Contacto"
-
-#. module: portal_sale_distributor
-#: model:ir.model,website_form_label:portal_sale_distributor.model_res_partner
-msgid "Create a Customer"
-msgstr "Crear un cliente"
 
 #. module: portal_sale_distributor
 #: model:ir.model.fields,field_description:portal_sale_distributor.field_res_partner__credit_limit
@@ -304,3 +299,6 @@ msgstr "Estado del Pago"
 #: code:addons/portal_sale_distributor/controllers/portal_account.py:0
 msgid "state"
 msgstr "Estado"
+
+#~ msgid "Create a Customer"
+#~ msgstr "Crear un cliente"
