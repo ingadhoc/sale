@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-17 14:16+0000\n"
+"POT-Creation-Date: 2026-07-17 20:24+0000\n"
 "PO-Revision-Date: 2026-01-13 22:10+0000\n"
 "Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
@@ -196,11 +196,6 @@ msgstr "Crear cuenta analitica sin empresa"
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_filter
 msgid "Create Date"
 msgstr "Fecha de creación"
-
-#. module: sale_ux
-#: model:ir.model,website_form_label:sale_ux.model_res_partner
-msgid "Create a Customer"
-msgstr "Crear un cliente"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard__create_uid
@@ -951,6 +946,9 @@ msgstr "No puedes modificar pedidos de venta ya bloqueados."
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
 msgid "or"
 msgstr "o"
+
+#~ msgid "Create a Customer"
+#~ msgstr "Crear un cliente"
 
 #~ msgid ""
 #~ "By default, Odoo only allows to choose users who have sales permission in "
