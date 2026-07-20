@@ -136,26 +136,33 @@ class SaleOrderLine(models.Model):
 
             old_product_uom_qty = rec.product_uom_qty
 
-            # Resetear printed=False en pickings asociados para evitar contra-entregas
-            # cuando Odoo intente mezclar moves en pickings ya impresos
-            pickings_to_reset = rec.order_id.picking_ids.filtered(
-                lambda p: p.state not in ("done", "cancel") and p.printed
+            # Al cancelar el remanente hay dos situaciones excluyentes. La clave es
+            # si quedó stock EN TRÁNSITO: pasos internos ya validados (ej. el PICK de
+            # una entrega multi-paso) que movieron mercadería a una ubicación
+            # intermedia y todavía no llegó al cliente.
+            target_qty = rec.qty_delivered + rec.quantity_returned
+            in_transit_moves = rec.move_ids.filtered(
+                lambda m: m.state == "done"
+                and m.location_id.usage != "customer"
+                and m.location_dest_id.usage != "customer"
             )
-            if pickings_to_reset:
-                pickings_to_reset.write({"printed": False})
-
-            # Al final permitimos cancelar igual porque es necesario, por ej,
-            # si no se va a entregar y ya está facturado y se quiere hacer
-            # la nota de crédito. además se puede volver a subir la cantidad
-            # si se requiere
-            # if rec.qty_invoiced > rec.qty_delivered:
-            #     raise ValidationError(_(
-            #         'You can not cancel remianing qty to deliver because '
-            #         'there are more product invoiced than the delivered. '
-            #         'You should correct invoice or ask for a refund'))
-            rec.with_context(skip_locked_order_line_check=True).product_uom_qty = (
-                rec.qty_delivered + rec.quantity_returned
-            )
+            if in_transit_moves:
+                # (a) Con tránsito: delegamos la baja al recálculo de la regla para que
+                # genere los movimientos inversos (contraentrega legítima) que devuelven
+                # ese stock al origen. Cancelar los moves a mano lo dejaría varado.
+                rec.with_context(skip_locked_order_line_check=True).product_uom_qty = target_qty
+            else:
+                # (b) Sin tránsito: si delegáramos, el recálculo genera un movimiento
+                # negativo que, cuando la salida se reservó desde una sub-ubicación
+                # distinta al origen nominal de la regla, no se fusiona (difiere
+                # `location_id` en la clave de merge) y se da vuelta como una
+                # contraentrega (IN fantasma), dejando el OUT huérfano y comprometiendo
+                # stock. Por eso cancelamos los moves pendientes explícitamente y usamos
+                # `skip_procurement` para no relanzar la regla. Ver ticket 121400.
+                rec.move_ids.filtered(
+                    lambda m: m.state not in ("done", "cancel") and m.location_id.usage != "customer"
+                )._action_cancel()
+                rec.with_context(skip_locked_order_line_check=True, skip_procurement=True).product_uom_qty = target_qty
             rec.order_id.message_post(
                 body=_('Cancel remaining call for line "%s" (id %s), line qty updated from %s to %s')
                 % (rec.name, rec.id, old_product_uom_qty, rec.product_uom_qty)
