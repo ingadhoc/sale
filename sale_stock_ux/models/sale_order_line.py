@@ -118,6 +118,90 @@ class SaleOrderLine(models.Model):
                 delivery_status = "no"
             line.delivery_status = delivery_status
 
+    def _get_delivery_moves_chain(self):
+        """Cadena completa de entrega (OUT + PACK + PICK). En multi-paso MTO/pull
+        ``move_ids`` solo trae los OUT (los pasos internos no llevan ``sale_line_id``),
+        así que subimos por ``move_orig_ids`` con el helper nativo de core. Ver ticket
+        122299."""
+        self.ensure_one()
+        return self.env["stock.move"].browse(self.move_ids._rollup_move_origs())
+
+    def _cancel_or_reduce_chain(self, chain, reduce_qty):
+        """Saca ``reduce_qty`` de demanda pendiente de la cadena de entrega.
+
+        En MTO/pull los pasos internos (PICK/PACK) no llevan ``sale_line_id`` y el core
+        los FUSIONA entre líneas del mismo producto. Por eso, en cada tramo pendiente,
+        si su cantidad es <= al remanente lo cancelamos (es exclusivo de esta línea) y
+        si es mayor lo reducimos (move fusionado: conservamos la parte de las otras
+        líneas). ``reduce_qty`` viene en la UoM de la línea; convertimos por move.
+        Ver ticket 122299."""
+        self.ensure_one()
+        pending = chain.filtered(lambda m: m.state not in ("done", "cancel") and m.location_id.usage != "customer")
+        for move in pending:
+            reduce_in_move = self.product_uom._compute_quantity(reduce_qty, move.product_uom, rounding_method="HALF-UP")
+            if float_compare(move.product_uom_qty, reduce_in_move, precision_rounding=move.product_uom.rounding) <= 0:
+                # cancel_from_order evita el constraint check_cancel de stock_ux, que bloquea
+                # a usuarios sin el permiso 'Picking cancelation allow' (ticket 122867).
+                move.with_context(cancel_from_order=True)._action_cancel()
+            else:
+                move.product_uom_qty -= reduce_in_move
+                move._action_assign()
+
+    def _return_remaining_transit(self, chain, remnant):
+        """Devuelve a Stock lo que quedó en tránsito en ubicaciones intermedias.
+
+        Lo ya movido a un paso intermedio (ej. PICK/PACK validados) que ya no va a
+        salir queda parado ahí, y un move ``done`` no se puede cancelar. Calculamos la
+        posición NETA de la cadena por ubicación (entra +, sale -) y, por cada interna
+        ≠ Stock con neto > 0, generamos un retorno directo a Stock. Trabajar por neto
+        (en vez de tramo a tramo) resuelve también el multi-nivel PICK+PACK ambos done.
+        El total devuelto se topea en ``remnant`` (lo cancelado por ESTA línea): si los
+        moves están fusionados con otras líneas, el neto incluye cantidad ajena que no
+        hay que devolver. Queda pendiente de validar, como cualquier contraentrega.
+        Ver ticket 122299."""
+        self.ensure_one()
+        product_uom = self.product_uom
+        rounding = product_uom.rounding
+        warehouse = self.order_id.warehouse_id
+        stock_location = warehouse.lot_stock_id
+        net = {}
+        for move in chain.filtered(lambda m: m.state == "done"):
+            qty = move.product_uom._compute_quantity(move.quantity, product_uom, rounding_method="HALF-UP")
+            net[move.location_dest_id] = net.get(move.location_dest_id, 0.0) + qty
+            net[move.location_id] = net.get(move.location_id, 0.0) - qty
+
+        group = self.move_ids[:1].group_id
+        budget = remnant
+        vals = []
+        for location, qty in net.items():
+            if location == stock_location or location.usage != "internal":
+                continue
+            qty = min(qty, budget)
+            if float_compare(qty, 0.0, precision_rounding=rounding) <= 0:
+                continue
+            budget -= qty
+            vals.append(
+                {
+                    "name": _("Cancel remaining return: %s") % (self.name or self.product_id.display_name),
+                    "product_id": self.product_id.id,
+                    "product_uom": product_uom.id,
+                    "product_uom_qty": qty,
+                    "location_id": location.id,
+                    "location_dest_id": stock_location.id,
+                    "picking_type_id": warehouse.int_type_id.id,
+                    "warehouse_id": warehouse.id,
+                    "company_id": self.order_id.company_id.id,
+                    "group_id": group.id if group else False,
+                    "origin": self.order_id.name,
+                    "procure_method": "make_to_stock",
+                }
+            )
+        return_moves = self.env["stock.move"].create(vals)
+        if return_moves:
+            return_moves._action_confirm()
+            return_moves._action_assign()
+        return return_moves
+
     def button_cancel_remaining(self):
         # la cancelación de kits no está bien resuelta ya que odoo solo computa
         # la cantidad entregada cuando todo el kit se entregó. Cuestión que,
@@ -135,27 +219,22 @@ class SaleOrderLine(models.Model):
                 rec.pack_child_line_ids.with_context(cancel_from_order=True).button_cancel_remaining()
 
             old_product_uom_qty = rec.product_uom_qty
+            target_qty = rec.qty_delivered + rec.quantity_returned
+            remnant = old_product_uom_qty - target_qty
+            if float_compare(remnant, 0.0, precision_rounding=rec.product_uom.rounding) <= 0:
+                continue  # nada para cancelar (línea ya entregada o sobre-entregada)
 
-            # Resetear printed=False en pickings asociados para evitar contra-entregas
-            # cuando Odoo intente mezclar moves en pickings ya impresos
-            pickings_to_reset = rec.order_id.picking_ids.filtered(
-                lambda p: p.state not in ("done", "cancel") and p.printed
-            )
-            if pickings_to_reset:
-                pickings_to_reset.write({"printed": False})
-
-            # Al final permitimos cancelar igual porque es necesario, por ej,
-            # si no se va a entregar y ya está facturado y se quiere hacer
-            # la nota de crédito. además se puede volver a subir la cantidad
-            # si se requiere
-            # if rec.qty_invoiced > rec.qty_delivered:
-            #     raise ValidationError(_(
-            #         'You can not cancel remianing qty to deliver because '
-            #         'there are more product invoiced than the delivered. '
-            #         'You should correct invoice or ask for a refund'))
-            rec.with_context(skip_locked_order_line_check=True).product_uom_qty = (
-                rec.qty_delivered + rec.quantity_returned
-            )
+            # NO delegamos la baja al recálculo de la regla: el move negativo que genera
+            # el core se da vuelta como contraentrega fantasma cuando la salida se reservó
+            # desde una sub-ubicación (ticket 121400) y en multi-paso MTO deja demanda
+            # forward huérfana (ticket 122299). En su lugar recorremos toda la cadena
+            # (OUT + PACK + PICK; ``move_ids`` solo trae los OUT), sacamos el remanente
+            # pendiente, devolvemos a Stock lo que quedó en tránsito, y bajamos la
+            # cantidad con ``skip_procurement`` para no relanzar la regla.
+            chain = rec._get_delivery_moves_chain()
+            rec._cancel_or_reduce_chain(chain, remnant)
+            rec._return_remaining_transit(chain, remnant)
+            rec.with_context(skip_locked_order_line_check=True, skip_procurement=True).product_uom_qty = target_qty
             rec.order_id.message_post(
                 body=_('Cancel remaining call for line "%s" (id %s), line qty updated from %s to %s')
                 % (rec.name, rec.id, old_product_uom_qty, rec.product_uom_qty)
