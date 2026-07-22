@@ -39,8 +39,13 @@ class StockMove(models.Model):
                 and not vals.get("is_exchange_move")
                 and not vals.get("origin_returned_move_id")
             ):
-                sale_line_qty_ret = self.env["sale.order.line"].browse(vals["sale_line_id"]).quantity_returned
-                vals["product_uom_qty"] -= sale_line_qty_ret
+                sale_line = self.env["sale.order.line"].browse(vals["sale_line_id"])
+                # Para suscripciones NO restar quantity_returned: ya esta contemplado en
+                # qty_delivered y en sale_order_line._create_procurements. Restarlo tambien aca
+                # lo cuenta dos veces y deja el movimiento en cero (o negativo -> invierte el
+                # picking a IN). Mismo criterio que _create_procurements.
+                if not sale_line._check_is_recurring_invoice():
+                    vals["product_uom_qty"] -= sale_line.quantity_returned
                 if "secondary_uom_qty" in vals:
                     del vals["secondary_uom_qty"]
 
