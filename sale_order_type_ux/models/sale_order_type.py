@@ -7,11 +7,6 @@ class SaleOrderTypology(models.Model):
     _inherit = "sale.order.type"
     _order = "sequence asc"
 
-    sequence = fields.Integer(
-        required=True,
-        default=10,
-    )
-
     team_id = fields.Many2one(
         "crm.team",
         check_company=True,
