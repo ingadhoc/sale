@@ -1,2 +1,8 @@
+<<<<<<< 87c7fec409b5a25c867102beefa91ebeee6c53f2
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_loyalty_card_rule_portal_distributor,access_loyalty_card_rule_portal_distributor,loyalty.model_loyalty_card,portal_sale_distributor.group_portal_backend_distributor,1,0,0,0
+||||||| c056f823652215a55b76af7120b86f09b8842531
+=======
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_order_coupon_points_portal_distributor,sale.order.coupon.points.portal.distributor,sale_loyalty.model_sale_order_coupon_points,portal_sale_distributor.group_portal_backend_distributor,1,0,0,0
+>>>>>>> 2231d201848a6ddbd8a78e87dfaeaa2209eef4dd
