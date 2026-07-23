@@ -13,6 +13,10 @@ class SaleOrderLine(models.Model):
         gathering_lines = self.filtered(lambda x: x.is_gathering and x.initial_qty_gathered > 0)
         super(SaleOrderLine, self - gathering_lines)._compute_price_unit()
 
+    def _compute_discount(self):
+        gathering_lines = self.filtered(lambda x: x.is_gathering and x.initial_qty_gathered > 0)
+        super(SaleOrderLine, self - gathering_lines)._compute_discount()
+
     def _prepare_base_line_for_taxes_computation(self, **kwargs):
         self.ensure_one()
         if self.initial_qty_gathered > 0 and self.env.context.get("first_gathering_invoice"):
