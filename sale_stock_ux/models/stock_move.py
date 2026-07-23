@@ -21,29 +21,22 @@ class StockMove(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        """La cantidad devuelta no deberia ser contada en los nuevos movimientos de
-        entrega genuinos que se creen a partir de una orden de venta.
-        Agregamos un HACK para que si esta instalado secondary unit sea recomputada en la creacion de
-        movimientos de stock.
+        """HACK para que, si está instalado secondary unit, se recompute la
+        unidad secundaria en la creación de movimientos de stock a partir de una
+        orden de venta (borramos ``secondary_uom_qty`` para que se recalcule
+        desde ``product_uom_qty``).
 
-        Solo debe impactar en entregas genuinas: NO en los movimientos de
-        devolucion (``origin_returned_move_id``) ni en los de devolucion para
-        cambio (``is_exchange_move``). Esos ajustan la demanda por otra via y, si
-        se les resta ``quantity_returned``, nacen con la demanda corrupta -- por
-        ejemplo, una 2da devolucion o un cambio sobre una OV con una devolucion
-        previa con reembolso quedaban con demanda = cantidad - quantity_returned.
+        La cantidad devuelta (``quantity_returned``) NO se resta acá: eso lo hace
+        ``sale.order.line._create_procurements`` (que además excluye
+        suscripciones vía ``_check_is_recurring_invoice``). Restarla también acá
+        duplicaba el descuento y, al subir la cantidad pedida luego de una
+        devolución total, dejaba la demanda en negativo -> Odoo invertía el
+        movimiento y creaba una recepción (IN) en lugar de una entrega (OUT).
+        Mismo criterio que 18.0, donde esta resta está deshabilitada.
         """
         for vals in vals_list:
-            if (
-                vals.get("sale_line_id")
-                and not vals.get("is_exchange_move")
-                and not vals.get("origin_returned_move_id")
-            ):
-                sale_line_qty_ret = self.env["sale.order.line"].browse(vals["sale_line_id"]).quantity_returned
-                vals["product_uom_qty"] -= sale_line_qty_ret
-                if "secondary_uom_qty" in vals:
-                    del vals["secondary_uom_qty"]
-
+            if vals.get("sale_line_id") and vals.get("secondary_uom_qty"):
+                del vals["secondary_uom_qty"]
         return super().create(vals_list)
 
     def _get_new_picking_values(self):
