@@ -202,6 +202,7 @@ class SaleOrderLine(models.Model):
         "move_ids.product_uom",
     )
     def _compute_quantity_returned(self):
+        bom_enable = "bom_ids" in self.env["product.template"]._fields
         for order_line in self:
             quantity_returned = 0.0
             # we use same method as in odoo use to delivery's
@@ -217,12 +218,16 @@ class SaleOrderLine(models.Model):
                         and r.to_refund
                     )
                 )
-                # In multi-step deliveries, we need to avoid counting the same return multiple times
-                for move in return_moves.filtered(lambda m: m.location_id.usage == "customer"):
+                # Kit component moves are skipped here: their returned quantity is computed
+                # below by _compute_kit_quantities, and their UoM may belong to a different
+                # category than the order line's.
+                non_kit_moves = return_moves
+                if bom_enable:
+                    non_kit_moves = return_moves.filtered(lambda m: m.bom_line_id.bom_id.type != "phantom")
+                for move in non_kit_moves:
                     quantity_returned += move.product_uom._compute_quantity(
                         move.product_uom_qty, order_line.product_uom
                     )
-                bom_enable = "bom_ids" in self.env["product.template"]._fields
                 if bom_enable:
                     boms = return_moves.mapped("bom_line_id.bom_id")
                     dropship = False
