@@ -65,9 +65,11 @@ class SaleOrder(models.Model):
                         rec.type_id.invoice_validate_domain,
                         eval_ctx,
                     )
-                    invoices_to_validate = (invoices - invoices.filtered_domain(domain)) if domain else invoices
+                    invoices_not_validated = invoices.filtered_domain(domain) if domain else rec.env["account.move"]
+                    invoices_to_validate = invoices - invoices_not_validated
                 else:
                     invoices_to_validate = invoices
+                    invoices_not_validated = rec.env["account.move"]
                 if not invoices_to_validate:
                     continue
                 try:
@@ -78,8 +80,26 @@ class SaleOrder(models.Model):
                         "invoices (ids %s), you will need to validate them"
                         " manually. This is what we get: %s"
                     ) % (invoices.ids, error)
-                    invoices.message_post(body=message)
+                    invoices._message_log_batch(bodies=dict((invoice.id, message) for invoice in invoices))
                     rec.message_post(body=message)
+                # Post message for invoices that were not validated due to domain filter
+                if invoices_not_validated:
+                    domain_message = _(
+                        "⚠️Esta factura no se validó porque no cumplió la condición del tipo de pedido de venta "
+                        "para que sea validada automáticamente. Revisar la FA/OV si tiene que hacer alguna "
+                        "modificación y luego validarla manualmente."
+                    )
+                    invoices_not_validated._message_log_batch(
+                        bodies=dict((invoice.id, domain_message) for invoice in invoices_not_validated)
+                    )
+            elif skip_validation and invoices:
+                # Post message for invoices not validated due to sale order domain filter
+                skip_message = _(
+                    "⚠️Esta factura no se validó porque no cumplió la condición del tipo de pedido de venta "
+                    "para que sea validada automáticamente. Revisar la FA/OV si tiene que hacer alguna "
+                    "modificación y luego validarla manualmente."
+                )
+                invoices._message_log_batch(bodies=dict((invoice.id, skip_message) for invoice in invoices))
 
     def run_picking_automation(self):
         # If there products are the type 'service' equals the
