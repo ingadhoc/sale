@@ -54,6 +54,16 @@ class SaleOrder(models.Model):
                             },
                         )
                         invoices_to_validate = invoices.filtered_domain(domain)
+                        # Post message on invoices that don't meet the validation criteria
+                        invoices_not_validated = invoices - invoices_to_validate
+                        if invoices_not_validated:
+                            message = _(
+                                "⚠️Esta factura no se valido porque no cumplio la condicion del tipo de pedido de "
+                                "venta para que sea validad automaticamente. Revisar la FA/OV si tiene que hacer "
+                                "alguna modificacion y luego validarla manualmente."
+                            )
+                            for invoice in invoices_not_validated:
+                                invoice.message_post(body=message)
                     else:
                         invoices_to_validate = invoices
                     invoices_to_validate.with_context(sale_type_id=rec.type_id.id).sudo().action_post()
