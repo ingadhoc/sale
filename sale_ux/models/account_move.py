@@ -12,6 +12,16 @@ class AccountMove(models.Model):
     sale_order_ids = fields.Many2many("sale.order", compute="_compute_sale_orders")
     # en la ui agregamos este que seria mejor a nivel performance
     has_sales = fields.Boolean(string="Has Sales?", compute="_compute_has_sales")
+    # no almacenado: solo memoiza el chequeo por factura para no recorrer las lineas una
+    # vez por linea en _prepare_product_base_line_for_taxes_computation (ver ahi)
+    has_downpayment_deduction = fields.Boolean(compute="_compute_has_downpayment_deduction")
+
+    @api.depends("invoice_line_ids.is_downpayment", "invoice_line_ids.display_type")
+    def _compute_has_downpayment_deduction(self):
+        for move in self:
+            move.has_downpayment_deduction = any(
+                line.is_downpayment for line in move.invoice_line_ids if line.display_type == "product"
+            )
 
     @api.depends("move_type", "partner_id", "partner_id.lang", "company_id")
     def _compute_narration(self):
@@ -38,6 +48,26 @@ class AccountMove(models.Model):
         (self - moves).has_sales = False
         for rec in moves:
             rec.has_sales = any(line for line in rec.invoice_line_ids.mapped("sale_line_ids"))
+
+    # Evaluar en proximas verciones si Odoo lo resuelve
+    # Propuesto upstream en https://github.com/odoo/odoo/pull/278963
+    def _prepare_product_base_line_for_taxes_computation(self, product_line):
+        base_line = super()._prepare_product_base_line_for_taxes_computation(product_line)
+        # El wizard de anticipos redondea a la moneda el price_unit del anticipo
+        # (_prepare_down_payment_lines_values), asi que no cancela exacto contra las lineas
+        # que dedujo cuando el subtotal crudo de alguna cae en medio centavo. Con
+        # round_globally ese residuo se amplifica a un centavo entero que aterriza en la
+        # linea base mas grande, y puede dar vuelta la factura final a nota de credito.
+        # Apuntamos a los importes ya redondeados (price_subtotal), que son los que se
+        # facturaron en el anticipo, para que la agregacion cancele exacto.
+        if (
+            base_line.get("special_type") != "down_payment"
+            and self.is_invoice(include_receipts=True)
+            and self.company_id.tax_calculation_rounding_method == "round_globally"
+            and self.has_downpayment_deduction
+        ):
+            base_line["manual_total_excluded_currency"] = product_line.price_subtotal
+        return base_line
 
     # Evaluar en proximas verciones si Odoo lo resuelve
     def action_post(self):
