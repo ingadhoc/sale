@@ -63,51 +63,19 @@ class StockPicking(models.Model):
         return True
 
     def _is_delivery_chain(self):
-        """Whether this picking's moves eventually reach a customer location.
+        """Whether this picking's moves ultimately reach a customer location.
 
-        Identifies pick/pack/out steps regardless of how many intermediate
-        picking types a warehouse defines (e.g. several custom Pick
-        operation types per product category), instead of relying on the
-        single warehouse.pick_type_id/pack_type_id references, which only
-        cover the default 3-step route and miss any extra custom ones.
-        Return/receipt pickings are excluded naturally, since their moves
-        never end up in a customer location.
-
-        Some routes only create the next leg's stock.move once the current
-        one is done (instead of upfront at sale confirmation), so rolling up
-        move_dest_ids alone misses the chain for pickings validated before
-        that next move exists. Falling back to the warehouse's stock.rule
-        graph covers that case: rules are static routing configuration, so
-        they are already there even when the moves they will generate are
-        not.
-
-        The rule graph is direction-blind though: a return leg can land on
-        an internal location (e.g. the warehouse's own Stock) from which
-        outgoing rules for future sales are still reachable, which would
-        wrongly read as "heading to a customer". Returned moves are excluded
-        upfront (via move_orig_ids rollup, so a later leg of a multi-step
-        return is also caught) before even considering that fallback.
+        Relies on stock.move.location_final_id, which core already computes
+        as the end of the whole chain of operations a move belongs to (set
+        from the route's rule configuration, not from moves that may not be
+        created yet). This tells apart delivery legs (pick/pack/out, whose
+        chain ends at a customer location) from receipt legs (e.g. a 2-step
+        receipt's put-away, whose chain ends in an internal location even
+        when it is tied to a sale line for MTO) and from returns (whose
+        chain does not end at a customer location either), without needing
+        to compare against specific picking types or walk routing rules by
+        hand - both of which previously misclassified pickings a warehouse
+        routes differently than the default 3-step delivery.
         """
         self.ensure_one()
-        moves = self.move_ids
-        orig_moves = moves.browse(moves._rollup_move_origs())
-        if orig_moves.filtered("origin_returned_move_id"):
-            return False
-
-        dest_moves = moves.browse(moves._rollup_move_dests())
-        if (moves | dest_moves).filtered(lambda m: m.location_dest_id.usage == "customer"):
-            return True
-
-        Rule = self.env["stock.rule"]
-        to_visit = set(moves.location_dest_id.ids)
-        seen = set()
-        while to_visit:
-            location_id = to_visit.pop()
-            if location_id in seen:
-                continue
-            seen.add(location_id)
-            if self.env["stock.location"].browse(location_id).usage == "customer":
-                return True
-            next_rules = Rule.search([("location_src_id", "=", location_id), ("active", "=", True)])
-            to_visit.update(set(next_rules.location_dest_id.ids) - seen)
-        return False
+        return bool(self.move_ids.filtered(lambda m: (m.location_final_id or m.location_dest_id).usage == "customer"))
