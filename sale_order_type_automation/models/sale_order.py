@@ -2,13 +2,17 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
+import logging
+
 from odoo import _, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import RedirectWarning, UserError
 from odoo.tools.safe_eval import (
     datetime as safe_eval_datetime,
     dateutil as safe_eval_dateutil,
     safe_eval,
 )
+
+_logger = logging.getLogger(__name__)
 
 
 class SaleOrder(models.Model):
@@ -72,16 +76,14 @@ class SaleOrder(models.Model):
                     invoices_not_validated = rec.env["account.move"]
                 if not invoices_to_validate:
                     continue
+                if rec.env.context.get("background_post_defer"):
+                    invoices_to_validate = invoices_to_validate.with_context(force_background_post=True)
                 try:
                     invoices_to_validate.sudo().action_post()
                 except Exception as error:
-                    message = _(
-                        "We couldn't validate the automatically created "
-                        "invoices (ids %s), you will need to validate them"
-                        " manually. This is what we get: %s"
-                    ) % (invoices.ids, error)
-                    invoices._message_log_batch(bodies=dict((invoice.id, message) for invoice in invoices))
-                    rec.message_post(body=message)
+                    rec._handle_invoicing_automation_error(invoices, error)
+                else:
+                    rec._log_background_post_defer(invoices_to_validate)
                 # Post message for invoices that were not validated due to domain filter
                 if invoices_not_validated:
                     domain_message = _(
@@ -100,6 +102,103 @@ class SaleOrder(models.Model):
                     "modificación y luego validarla manualmente."
                 )
                 invoices._message_log_batch(bodies=dict((invoice.id, skip_message) for invoice in invoices))
+
+    def _log_background_post_defer(self, invoices):
+        self.ensure_one()
+        if not self.env.context.get("background_post_defer"):
+            return
+        invoices = invoices.filtered(lambda x: x.state == "draft")
+        if not invoices:
+            return
+        if self.env.context.get("background_post_batch_defer"):
+            reason = self.env._(
+                "more than %s transfers were validated at once",
+                self.env["account.move"]._get_background_post_batch_size(),
+            )
+        else:
+            reason = self.env._("its validation failed and the operation was run again anyway")
+        self._message_log(
+            body=self.env._("The invoice was left in draft to be validated by the background post process, %s.", reason)
+        )
+        invoices._message_log_batch(
+            bodies=dict.fromkeys(
+                invoices.ids,
+                self.env._(
+                    "This invoice was left in draft to be validated by the background post process, "
+                    "%(reason)s. The error, if there was one, is logged on %(order)s.",
+                    reason=reason,
+                    order=self._get_html_link(),
+                ),
+            )
+        )
+
+    def _get_invoicing_automation_error_body(self, invoices, error):
+        self.ensure_one()
+        return self.env._(
+            "We couldn't validate the automatically created "
+            "invoices (ids %s), you will need to validate them"
+            " manually. This is what we get: %s"
+        ) % (invoices.ids, error)
+
+    def _get_internal_message_partners(self):
+        return self.message_partner_ids.filtered(lambda x: x.user_ids and all(u._is_internal() for u in x.user_ids))
+
+    def _log_invoicing_automation_error(self, invoices, error, xml_id=False):
+        self.ensure_one()
+        message, action_id = str(error), False
+        try:
+            with self.pool.cursor() as new_cr:
+                # the current transaction holds the order row, so a lock on it would hang here
+                new_cr.execute("SET LOCAL lock_timeout = '5s'")
+                order = self.with_env(self.env(cr=new_cr))
+                message = order._get_invoicing_automation_error_body(invoices, error)
+                if xml_id:
+                    action_id = order.env.ref(xml_id).id
+                if order.exists():
+                    order.message_post(body=message, partner_ids=order._get_internal_message_partners().ids)
+        except Exception:
+            _logger.exception("Could not log the invoicing automation error on sale order %s", self.id)
+        return message, action_id
+
+    def _handle_invoicing_automation_error(self, invoices, error):
+        self.ensure_one()
+        if (
+            self.env.context.get("background_post_defer")
+            or self.env.context.get("force_background_post")
+            or self.env.context.get("commit_invoice_automation")
+        ):
+            message = self._get_invoicing_automation_error_body(invoices, error)
+            invoices._message_log_batch(bodies=dict((invoice.id, message) for invoice in invoices))
+            self.message_post(body=message)
+            return
+
+        deferrable = self.env["account.move"]._background_post_available()
+        picking_ids = self.env.context.get("background_post_picking_ids")
+        if picking_ids:
+            xml_id = "sale_order_type_automation.action_picking_validate_force_background_post"
+            button_text = self.env._("Validate anyway")
+            hint = self.env._(
+                "You can validate the transfer anyway. The invoice will be created and validated "
+                "later on by the background post process."
+            )
+            context = {"active_model": "stock.picking", "active_ids": picking_ids, "active_id": picking_ids[0]}
+        else:
+            xml_id = "sale_order_type_automation.action_sale_order_confirm_force_background_post"
+            button_text = self.env._("Confirm anyway")
+            hint = self.env._(
+                "You can confirm the order anyway. The invoice will be created and validated later "
+                "on by the background post process."
+            )
+            context = {"active_model": "sale.order", "active_ids": self.ids, "active_id": self.id}
+
+        message, action_id = self._log_invoicing_automation_error(invoices, error, deferrable and xml_id)
+        if not action_id:
+            raise UserError(message) from error
+        raise RedirectWarning(message + "\n\n" + hint, action_id, button_text, context) from error
+
+    def action_confirm_force_background_post(self):
+        self.with_context(background_post_defer=True).action_confirm()
+        return self._get_records_action()
 
     def run_picking_automation(self):
         # If there products are the type 'service' equals the
@@ -137,7 +236,7 @@ class SaleOrder(models.Model):
                     )
                 for op in pick.move_line_ids:
                     op.with_context(sale_automation=True).quantity = op.quantity_product_uom
-            pick.button_validate()
+            pick.with_context(background_post_confirming_order=True).button_validate()
             pending_after = self.picking_ids.filtered(lambda x: x.state not in ("done", "cancel"))
             if pending_after:
                 pending_after.action_assign()

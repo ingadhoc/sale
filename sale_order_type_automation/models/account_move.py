@@ -2,11 +2,16 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import fields, models
+from markupsafe import Markup
+from odoo import api, fields, models
 
 
 class AccountMove(models.Model):
     _inherit = "account.move"
+
+    @api.model
+    def _background_post_available(self):
+        return "background_post" in self._fields and hasattr(self, "_get_background_post_batch_size")
 
     def _prepare_dict_account_payment(self, invoice, payment_journal):
         return {
@@ -64,3 +69,18 @@ class AccountMove(models.Model):
                 message = "Could not automatically create and validate payment. Error: %s" % error
                 invoice.message_post(body=message)
         return res
+
+    def _notify_background_post_error(self, error):
+        self.ensure_one()
+        orders = self.sudo().line_ids.sale_line_ids.order_id
+        if not orders:
+            return super()._notify_background_post_error(error)
+        body = self._get_background_post_error_body(error)
+        for order in orders:
+            order.message_post(body=body, partner_ids=order._get_internal_message_partners().ids)
+        self._message_log(
+            body=self.env._(
+                "We tried to validate this invoice on the background but got an error, logged on %(orders)s.",
+                orders=Markup(", ").join(order._get_html_link() for order in orders),
+            )
+        )

@@ -33,6 +33,7 @@
         "demo/sale_order_type_demo.xml",
     ],
     "data": [
+        "data/sale_order_type_automation_data.xml",
         "views/sale_order_type_views.xml",
     ],
     "installable": True,

@@ -5,6 +5,7 @@
 from unittest.mock import patch
 
 from odoo.addons.sale.tests.common import TestSaleCommon
+from odoo.exceptions import UserError
 from odoo.tests import tagged
 
 
@@ -50,27 +51,19 @@ class TestInvoiceAutomationError(TestSaleCommon):
             }
         )
 
-    def test_arca_timeout_keeps_invoice_and_logs_error(self):
-        """Al fallar action_post (ej. timeout ARCA), la factura queda en draft y
-        se registra el error en el chatter de la factura y de la orden de venta."""
+    def test_arca_timeout_aborts_the_confirmation(self):
         so = self._create_so()
         AccountMove = self.env["account.move"]
-        with patch.object(
-            type(AccountMove),
-            "action_post",
-            side_effect=Exception("ARCA timeout"),
+        with (
+            patch.object(type(AccountMove), "_background_post_available", return_value=False),
+            patch.object(
+                type(AccountMove),
+                "action_post",
+                side_effect=Exception("ARCA timeout"),
+            ),
         ):
-            so.action_confirm()
+            with self.assertRaises(UserError) as catcher:
+                so.action_confirm()
 
-        self.assertEqual(len(so.invoice_ids), 1, "La factura debe haberse creado")
-        invoice = so.invoice_ids
-        self.assertTrue(invoice.exists(), "La factura no debe haberse borrado por el savepoint")
-        self.assertEqual(invoice.state, "draft", "La factura debe quedar en draft si action_post falla")
-        self.assertTrue(
-            any("ARCA timeout" in (m.body or "") for m in invoice.message_ids),
-            "Se esperaba mensaje de error en el chatter de la factura",
-        )
-        self.assertTrue(
-            any("ARCA timeout" in (m.body or "") for m in so.message_ids),
-            "Se esperaba mensaje de error en el chatter de la orden de venta",
-        )
+        self.assertIn("ARCA timeout", str(catcher.exception))
+        self.assertEqual(so.state, "draft", "La orden no queda confirmada si no se pudo validar la factura")

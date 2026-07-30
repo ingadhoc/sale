@@ -3,22 +3,31 @@
 # directory
 ##############################################################################
 from odoo import Command
+from odoo.addons.sale.tests.common import TestSaleCommon
 from odoo.exceptions import ValidationError
-from odoo.tests import TransactionCase, tagged
+from odoo.tests import tagged
 
 
 @tagged("post_install", "-at_install")
-class TestSaleOrderTypeAutomation(TransactionCase):
+class TestSaleOrderTypeAutomation(TestSaleCommon):
+    @classmethod
+    def setup_independent_user(cls):
+        return None
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.partner = cls.env.ref("base.res_partner_1")
-        cls.sale_type = cls.env.ref("sale_order_type.normal_sale_type")
-        cls.sale_type.company_id = cls.env.company
-        cls.invoice_journal = cls.env["account.journal"].search(
-            [("type", "=", "sale"), ("company_id", "=", cls.env.company.id)],
-            limit=1,
+        cls.partner = cls.partner_a
+        cls.invoice_journal = cls.company_data["default_journal_sale"]
+        cls.sale_type = cls.env["sale.order.type"].create(
+            {
+                "name": "Test Sale Order Type Automation",
+                "company_id": cls.env.company.id,
+                "journal_id": cls.invoice_journal.id,
+            }
         )
+        if cls.env["sale.order"]._fields.get("ignore_exception"):
+            cls.env["exception.rule"].search([("active", "=", True)]).write({"active": False})
         cls.product = cls.env["product.product"].create(
             {
                 "name": "Sale Order Type Automation Product",
@@ -52,7 +61,7 @@ class TestSaleOrderTypeAutomation(TransactionCase):
             ],
         }
         vals.update(extra_vals)
-        return self.env["sale.order"].with_context(ignore_exception=True).create(vals)
+        return self.env["sale.order"].create(vals)
 
     def test_action_confirm_creates_invoice_when_configured(self):
         self.sale_type.write(
@@ -66,7 +75,7 @@ class TestSaleOrderTypeAutomation(TransactionCase):
         )
         order = self._create_order()
 
-        order.with_context(ignore_exception=True).action_confirm()
+        order.action_confirm()
 
         self.assertTrue(order.invoice_ids)
         self.assertEqual(set(order.invoice_ids.mapped("state")), {"draft"})
@@ -82,10 +91,15 @@ class TestSaleOrderTypeAutomation(TransactionCase):
         )
         order = self._create_order()
 
-        order.with_context(ignore_exception=True).action_confirm()
+        order.action_confirm()
 
-        self.assertTrue(order.invoice_ids)
-        self.assertEqual(set(order.invoice_ids.mapped("state")), {"posted"})
+        self.assertEqual(order.state, "sale")
+        invoice = order.invoice_ids
+        self.assertEqual(len(invoice), 1)
+        self.assertEqual(invoice.state, "posted")
+        self.assertNotIn(invoice.name, (False, "/"), "a posted invoice has to be numbered")
+        if "l10n_latam_document_type_id" in invoice._fields and invoice.l10n_latam_use_documents:
+            self.assertTrue(invoice.l10n_latam_document_type_id, "a posted invoice needs its document type")
 
     def test_action_confirm_sets_order_done_when_configured(self):
         self.sale_type.write(
@@ -97,7 +111,7 @@ class TestSaleOrderTypeAutomation(TransactionCase):
         )
         order = self._create_order()
 
-        order.with_context(ignore_exception=True).action_confirm()
+        order.action_confirm()
 
         self.assertEqual(order.state, "sale")
         self.assertTrue(order.locked)
@@ -124,7 +138,7 @@ class TestSaleOrderTypeAutomation(TransactionCase):
             }
         )
         order = self._create_order()
-        order.with_context(ignore_exception=True).action_confirm()
+        order.action_confirm()
         invoice = order.invoice_ids
 
         vals = invoice._prepare_dict_account_payment(invoice, self.invoice_journal)
