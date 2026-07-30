@@ -96,3 +96,30 @@ msgstr "No aplica la política de facturación Cantidades Entregadas para los se
 #: model:ir.model,name:sale_order_type_invoice_policy.model_sale_order_type
 msgid "Type of sale order"
 msgstr "Tipo de pedido de venta"
+
+#. module: sale_order_type_invoice_policy
+#. odoo-python
+#: code:addons/sale_order_type_invoice_policy/models/stock_picking.py:0
+msgid ""
+"If you use a sale type in the sale order related with invoice policy "
+"\"Block Reserve/Block Delivery\", then every sale line must be invoiced "
+"and paid before you can validate picking"
+msgstr ""
+"Si utiliza un tipo de pedido de venta cuya política de facturación es "
+"\"Reserva/Entrega Bloqueadas\", todas las líneas de venta deben estar "
+"facturadas y pagadas antes de poder validar la operación"
+
+#. module: sale_order_type_invoice_policy
+#. odoo-python
+#: code:addons/sale_order_type_invoice_policy/models/stock_picking.py:0
+msgid ""
+"This receipt is linked to a purchase generated to fulfill a Make To Order "
+"(MTO) sale line. Since that sale order's type uses invoice policy \"Block "
+"Reserve/Block Delivery\", the sale order must be fully invoiced and paid "
+"before you can validate this receipt."
+msgstr ""
+"Esta recepción está vinculada a una compra generada para cumplir una "
+"línea de venta bajo pedido (MTO). Como el tipo de pedido de esa venta "
+"utiliza la política de facturación \"Reserva/Entrega Bloqueadas\", la "
+"venta debe estar totalmente facturada y pagada antes de poder validar "
+"esta recepción."
