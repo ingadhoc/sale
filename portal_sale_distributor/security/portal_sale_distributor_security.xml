@@ -51,15 +51,26 @@
         <field eval="0" name="perm_unlink"/>
     </record>
 
-    <!-- The ir.model.access above grants read on stock.warehouse, but a portal
-         user is also in base.group_portal, and mrp_subcontracting adds a rule
-         on that group restricting warehouses to the ones of the partner's own
-         pickings. A distributor placing its first order has none, so adding a
-         sale order line fails to read the warehouse. Same reason as the
-         product.template rule above. -->
+    <!-- The ir.model.access entries grant read on stock.warehouse and uom.uom,
+         but a portal user is also in base.group_portal, and mrp_subcontracting
+         adds rules on that group restricting both models to what belongs to the
+         partner's own subcontracting (its pickings, its BoMs). A distributor has
+         none of that, so it cannot add a line to a sale order. Same reason as
+         the product.template rule above. -->
     <record id="portal_stock_warehouse_rule" model="ir.rule">
         <field name="name">Warehouses (distribuidores)</field>
         <field name="model_id" ref="stock.model_stock_warehouse"/>
+        <field name="domain_force">[(1 ,'=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_portal_backend_distributor'))]"/>
+        <field eval="1" name="perm_read"/>
+        <field eval="0" name="perm_write"/>
+        <field eval="0" name="perm_create"/>
+        <field eval="0" name="perm_unlink"/>
+    </record>
+
+    <record id="portal_uom_rule" model="ir.rule">
+        <field name="name">UoM (distribuidores)</field>
+        <field name="model_id" ref="uom.model_uom_uom"/>
         <field name="domain_force">[(1 ,'=', 1)]</field>
         <field name="groups" eval="[(4, ref('group_portal_backend_distributor'))]"/>
         <field eval="1" name="perm_read"/>
