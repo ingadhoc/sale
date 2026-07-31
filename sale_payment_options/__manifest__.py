@@ -28,11 +28,11 @@
     "depends": ["sale", "card_installment"],
     "data": [
         "security/ir.model.access.csv",
+        "views/res_config_settings_views.xml",
         "views/sale_order_views.xml",
         "views/sale_payment_option_template_views.xml",
         "wizard/sale_payment_option_wizard_views.xml",
         "report/sale_order_payment_options_report.xml",
-        "report/ir_actions_report.xml",
     ],
     "installable": True,
     "application": False,
