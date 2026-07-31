@@ -22,8 +22,9 @@ Allows defining and displaying multiple payment options on quotations and sales 
 - Visual display of payment options in the order.
 - Automatic recalculation if the order total changes.
 - Each payment option can have multiple installment plans.
-- Payment options are shown in the sales order PDF, with tables, subtotals, and totals.
+- Payment options are shown in the standard quotation / sales order PDF, with tables, subtotals, and totals.
 - Handles missing or malformed data gracefully in reports.
+- Optionally, print the installment amounts per sale order line instead of the order-wide table.
 
 Installation
 ============
@@ -35,7 +36,23 @@ To install this module, you need to:
 Configuration
 =============
 
-No additional configuration is required.
+To print the installment amounts discriminated by line, you need to:
+
+#. Go to *Sales > Configuration > Settings > Quotations & Orders*.
+#. Enable *Payment Options Display: Discriminate by sale order line*.
+
+With that option enabled the printed quotation shows, under each line, the amount per
+installment of every payment option (e.g. *3 installments of $ 41,600.00 | 6 installments
+of $ 24,000.00*), the order-wide payment options table is not printed and the standard
+totals summary is shown instead. The setting is per company.
+
+The installment amounts are always computed on the line amount with taxes included, no
+matter whether the report prints the line amounts with or without taxes: they are what
+the customer is going to pay.
+
+Everything is printed on the standard quotation report, so the tax discrimination rules of
+each localization are respected (in Argentina, the *Discriminate Taxes* setting of the sale
+order type).
 
 Usage
 =====
@@ -45,7 +62,8 @@ Usage
 #. Select a template or add payment lines manually.
 #. Save to apply the payment options to the order.
 #. The summary appears in the order (read-only).
-#. When printing, payment options are shown as tables with installment details and totals.
+#. When printing the quotation, payment options are shown as a table with installment
+   details and totals, or discriminated by line if the setting above is enabled.
 
 Bug Tracker
 ===========

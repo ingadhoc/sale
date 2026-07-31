@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.sale.payment.options</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <block name="quotation_order_setting_container" position="inside">
+                <setting id="sale_payment_options_by_line" company_dependent="1"
+                         string="Payment Options Display"
+                         help="Discriminate by sale order line">
+                    <field name="sale_payment_options_by_line"/>
+                </setting>
+            </block>
+        </field>
+    </record>
+</odoo>

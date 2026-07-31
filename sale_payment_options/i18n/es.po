@@ -28,13 +28,10 @@ msgid "% OV"
 msgstr "% OV"
 
 #. module: sale_payment_options
-#: model:ir.actions.report,print_report_name:sale_payment_options.action_report_saleorder_payment_options
-msgid ""
-"(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or "
-"'Order - %s' % (object.name)"
-msgstr ""
-"(object.state in ('draft', 'sent') and 'Presupuesto - %s' % (object.name)) "
-"or 'Pedido - %s' % (object.name)"
+#. odoo-python
+#: code:addons/sale_payment_options/models/sale_order_line.py:0
+msgid "%(installment_qty)s installments of %(amount)s"
+msgstr "%(installment_qty)s cuotas de %(amount)s"
 
 #. module: sale_payment_options
 #: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_template__active
@@ -51,6 +48,16 @@ msgstr "Agregar opción de pago"
 #: model_terms:ir.ui.view,arch_db:sale_payment_options.view_sale_payment_option_wizard_form
 msgid "Cancel"
 msgstr "Cancelar"
+
+#. module: sale_payment_options
+#: model:ir.model,name:sale_payment_options.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: sale_payment_options
+#: model:ir.model,name:sale_payment_options.model_res_config_settings
+msgid "Config Settings"
+msgstr "Ajustes de configuración"
 
 #. module: sale_payment_options
 #: model_terms:ir.ui.view,arch_db:sale_payment_options.view_sale_payment_option_wizard_form
@@ -94,6 +101,17 @@ msgstr "Moneda"
 #: model_terms:ir.ui.view,arch_db:sale_payment_options.view_sale_payment_option_template_form
 msgid "Details"
 msgstr "Detalles"
+
+#. module: sale_payment_options
+#: model:ir.model.fields,field_description:sale_payment_options.field_res_company__sale_payment_options_by_line
+#: model:ir.model.fields,field_description:sale_payment_options.field_res_config_settings__sale_payment_options_by_line
+msgid "Discriminate Payment Options by Sale Line"
+msgstr "Discriminar opciones de pago por línea de venta"
+
+#. module: sale_payment_options
+#: model_terms:ir.ui.view,arch_db:sale_payment_options.res_config_settings_view_form
+msgid "Discriminate by sale order line"
+msgstr "Discriminar por línea de venta"
 
 #. module: sale_payment_options
 #: model:ir.model.fields,field_description:sale_payment_options.field_sale_order__display_name
@@ -228,14 +246,24 @@ msgid "Payment Options"
 msgstr "Opciones de pago"
 
 #. module: sale_payment_options
+#: model_terms:ir.ui.view,arch_db:sale_payment_options.res_config_settings_view_form
+msgid "Payment Options Display"
+msgstr "Visualización de opciones de pago"
+
+#. module: sale_payment_options
 #: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard_line__percentage
 msgid "Percentage"
 msgstr "Porcentaje"
 
 #. module: sale_payment_options
-#: model:ir.actions.report,name:sale_payment_options.action_report_saleorder_payment_options
-msgid "Quotation / Order (Payment Options)"
-msgstr "Presupuesto / Pedido (Opciones de pago)"
+#: model:ir.model.fields,help:sale_payment_options.field_res_company__sale_payment_options_by_line
+#: model:ir.model.fields,help:sale_payment_options.field_res_config_settings__sale_payment_options_by_line
+msgid ""
+"Print the installment amounts under each sale order line instead of the "
+"payment options table of the whole order."
+msgstr ""
+"Imprime los importes de las cuotas debajo de cada línea del pedido de venta "
+"en lugar de la tabla de opciones de pago de toda la orden."
 
 #. module: sale_payment_options
 #: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option__sale_order_id
@@ -267,6 +295,11 @@ msgstr "Línea de asistente de opción de pago de venta"
 #: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard__sale_order_id
 msgid "Sales Order"
 msgstr "Pedido de venta"
+
+#. module: sale_payment_options
+#: model:ir.model,name:sale_payment_options.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Línea de pedido de venta"
 
 #. module: sale_payment_options
 #: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option__sequence
