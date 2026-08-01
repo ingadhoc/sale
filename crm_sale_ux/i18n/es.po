@@ -1,9 +1,16 @@
 #
 msgid ""
 msgstr ""
-"Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
+"PO-Revision-Date: 2026-08-01 21:54+0000\n"
+"Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
+"Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
+"sale-19-0-crm_sale_ux/es/>\n"
 "Language: es\n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
+" ? 1 : 2);\n"
+"X-Generator: Weblate 5.10.4\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #. module: crm_sale_ux
 #: model_terms:ir.ui.view,arch_db:crm_sale_ux.crm_sale_ux_res_config_settings_view_form
@@ -19,13 +26,13 @@ msgstr "Ajustes de configuración"
 #: model:ir.model.fields,field_description:crm_sale_ux.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:crm_sale_ux.field_sale_order__display_name
 msgid "Display Name"
-msgstr "Nombre a mostrar"
+msgstr "Nombre"
 
 #. module: crm_sale_ux
 #: model:ir.model.fields,field_description:crm_sale_ux.field_res_config_settings__id
 #: model:ir.model.fields,field_description:crm_sale_ux.field_sale_order__id
 msgid "ID"
-msgstr "ID"
+msgstr "Id"
 
 #. module: crm_sale_ux
 #: model:ir.model.fields,field_description:crm_sale_ux.field_res_config_settings__crm_auto_won_on_sale_confirm
