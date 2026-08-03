@@ -9,12 +9,16 @@ class AccountMove(models.Model):
     _inherit = "account.move"
 
     def _prepare_dict_account_payment(self, invoice, payment_journal):
-        partner_type = invoice.move_type in ("out_invoice", "out_refund") and "customer" or "supplier"
         return {
-            "reconciled_invoice_ids": [(6, 0, invoice.ids)],
+            # reconciled_invoice_ids is a non stored computed field without inverse, so
+            # writing it here was a no-op. invoice_ids is the stored m2m holding the link
+            "invoice_ids": [(6, 0, invoice.ids)],
             "amount": invoice.amount_residual,
             "partner_id": invoice.partner_id.id,
-            "partner_type": partner_type,
+            "partner_type": "customer" if invoice.is_sale_document() else "supplier",
+            # refunds move the money on the opposite direction of the document they fix,
+            # otherwise a customer refund would be registered as an inbound receipt
+            "payment_type": "inbound" if invoice.is_inbound() else "outbound",
             "journal_id": payment_journal.id,
             "date": fields.Date.context_today(self),
             "currency_id": invoice.currency_id.id,
