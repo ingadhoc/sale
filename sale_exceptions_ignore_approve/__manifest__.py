@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Sale Exceptions Ingore Approve Directly',
-    'version': "17.0.1.1.0",
+    'version': "17.0.1.2.0",
     'category': 'Sale',
     'sequence': 14,
     'author': 'ADHOC SA',
@@ -28,6 +28,7 @@
     'summary': '',
     'depends': [
         'sale_exception',
+        'sale_management',
     ],
     'external_dependencies': {
     },
