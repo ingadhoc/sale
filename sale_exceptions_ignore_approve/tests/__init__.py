@@ -2,10 +2,4 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-<<<<<<< 1e8423ad5b74eeab7c7cab76f14f5ea9c52d42c9
-||||||| eb7b15c61452c97be6a52473c4df7b9a951d6ae4
-from . import wizards
-=======
-from . import models
-from . import wizards
->>>>>>> b0ae290d0c50086389bc093021bb2c31b73885ac
+from . import test_confirm_notification_mail
