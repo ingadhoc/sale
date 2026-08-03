@@ -28,6 +28,7 @@
     "summary": "",
     "depends": [
         "sale_exception",
+        "sale_management",
     ],
     "external_dependencies": {},
     "data": [

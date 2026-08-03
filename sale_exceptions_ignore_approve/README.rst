@@ -36,6 +36,8 @@ Usage
 To use this module, you need to:
 
 #. When Ignoring a sale Exception, approve directly the sale order.
+#. The quotation template confirmation mail is not sent when the confirmation
+   is aborted by an exception, so the customer does not get it twice.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
