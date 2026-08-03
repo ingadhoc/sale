@@ -31,6 +31,7 @@ class TestSaleOrderTypeAutomation(TransactionCase):
             [
                 ("type", "in", ["cash", "bank"]),
                 ("inbound_payment_method_line_ids.code", "=", "manual"),
+                ("outbound_payment_method_line_ids.code", "=", "manual"),
                 ("company_id", "=", cls.sale_type.invoice_company_id.id),
             ],
             limit=1,

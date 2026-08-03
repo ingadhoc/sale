@@ -78,7 +78,8 @@ class SaleOrderType(models.Model):
         "Payment Journal",
         domain="payment_journal_domain",
         help="Journal used only with payment_automation. As manual payment "
-        "method is used, only journals with manual method are shown. "
+        "method is used, only journals with an inbound and an outbound manual "
+        "method are shown, since refunds are paid on the opposite direction. "
         "This field will not be considered for sales coming from eCommerce. "
         "You should configure it directly in Settings > Website.",
         store=True,
@@ -113,7 +114,10 @@ class SaleOrderType(models.Model):
             rec.payment_journal_domain = (
                 Domain(rec.env["account.journal"]._check_company_domain(rec.invoice_company_id))
                 & Domain("type", "in", ["cash", "bank"])
+                # both directions are required: invoices are paid with an inbound payment
+                # and refunds with an outbound one
                 & Domain("inbound_payment_method_line_ids.code", "=", "manual")
+                & Domain("outbound_payment_method_line_ids.code", "=", "manual")
             )
 
     @api.constrains("invoice_company_id", "payment_journal_id")
@@ -122,7 +126,13 @@ class SaleOrderType(models.Model):
             if rec.payment_journal_id and rec.payment_journal_id not in rec.env["account.journal"].search(
                 rec.payment_journal_domain
             ):
-                raise ValidationError("The selected 'Payment Journal' does not belong to the selected invoice company.")
+                raise ValidationError(
+                    _(
+                        "The selected 'Payment Journal' is not valid for the selected invoice company. "
+                        "Only cash or bank journals of that company with an inbound and an outbound "
+                        "manual payment method can be used."
+                    )
+                )
 
     @api.depends()
     def _compute_auto_done_setting(self):
