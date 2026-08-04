@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-30 18:55+0000\n"
-"PO-Revision-Date: 2026-07-30 18:55+0000\n"
+"POT-Creation-Date: 2026-08-04 15:37+0000\n"
+"PO-Revision-Date: 2026-08-04 15:37+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -127,7 +127,8 @@ msgstr ""
 #: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type__payment_journal_id
 msgid ""
 "Journal used only with payment_automation. As manual payment method is used,"
-" only journals with manual method are shown. This field will not be "
+" only journals with an inbound and an outbound manual method are shown, "
+"since refunds are paid on the opposite direction. This field will not be "
 "considered for sales coming from eCommerce. You should configure it directly"
 " in Settings > Website."
 msgstr ""
@@ -224,6 +225,15 @@ msgid ""
 "The following products are not available, we suggest to check stock or to use a sale type that forces availability.\n"
 "Products:\n"
 "* %s\n"
+msgstr ""
+
+#. module: sale_order_type_automation
+#. odoo-python
+#: code:addons/sale_order_type_automation/models/sale_order_type.py:0
+msgid ""
+"The selected 'Payment Journal' is not valid for the selected invoice "
+"company. Only cash or bank journals of that company with an inbound and an "
+"outbound manual payment method can be used."
 msgstr ""
 
 #. module: sale_order_type_automation
