@@ -322,13 +322,20 @@ class SaleOrderLine(models.Model):
                 line.qty_to_invoice = qty_to_invoice_corrected
 
     @api.depends(
-        "order_id.force_invoiced_status", "state", "product_uom_qty", "qty_delivered", "qty_to_invoice", "qty_invoiced"
+        "order_id.force_invoiced_status",
+        "state",
+        "product_uom_qty",
+        "qty_delivered",
+        "qty_to_invoice",
+        "qty_invoiced",
+        "quantity_returned",
     )
     def _compute_invoice_status(self):
         super()._compute_invoice_status()
         precision = self.env["decimal.precision"].precision_get("Product Unit of Measure")
         for line in self:
             if not line.order_id.force_invoiced_status:
+                net_qty = line.product_uom_qty - line.quantity_returned
                 if not float_is_zero(line.qty_to_invoice, precision_digits=precision):
                     line.invoice_status = "to invoice"
                 elif (
@@ -338,11 +345,14 @@ class SaleOrderLine(models.Model):
                     and float_compare(line.qty_delivered, line.product_uom_qty, precision_digits=precision) == 1
                 ):
                     line.invoice_status = "upselling"
-                elif (
-                    float_compare(
-                        line.qty_invoiced, (line.product_uom_qty - line.quantity_returned), precision_digits=precision
-                    )
-                    >= 0
+                elif float_compare(line.qty_invoiced, net_qty, precision_digits=precision) >= 0 and (
+                    # Sin devolución mantenemos la semántica nativa (una línea de
+                    # cantidad 0 queda "invoiced"). Con devolución solo es "invoiced"
+                    # si quedó una cantidad neta positiva a facturar; si se devolvió
+                    # todo (neto 0), no hay nada que facturar y cae a "no", igual que
+                    # el core de Odoo. Ver ticket 123997.
+                    float_is_zero(line.quantity_returned, precision_digits=precision)
+                    or float_compare(net_qty, 0.0, precision_digits=precision) > 0
                 ):
                     line.invoice_status = "invoiced"
                 else:
