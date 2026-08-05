@@ -33,25 +33,27 @@ class SaleOrder(models.Model):
         "order_line.product_uom_qty",
         "order_line.is_downpayment",
         "order_line.quantity_returned",
+        "order_line.invoice_lines.parent_state",
+        "order_line.invoice_lines.quantity",
     )
     def _compute_gathering_balance(self):
         orders_gathering = self.filtered(
-            lambda order: (
-                order.is_gathering and order.state == "sale" and any(order.order_line.filtered("is_downpayment"))
-            )
+            lambda order: (order.is_gathering and order.state == "sale" and order.order_line.filtered("is_downpayment"))
         )
 
         for order in orders_gathering:
             lines = order._get_gathering_lines()
             total_downpayment_amount = 0
+            # Solo suma anticipos con una linea de factura confirmada y positiva (el anticipo original).
+            # - parent_state == "posted" descarta anticipos en borrador o cancelados.
+            # - quantity > 0 descarta las lineas de deduccion/canje del anticipo (que van con quantity -1),
+            #   evitando resucitar un anticipo cancelado sin depender de referencias tipo "Canje".
+            # Un pedido con productos de impuestos distintos genera una linea de anticipo por grupo
+            # impositivo; todas son positivas y confirmadas, asi que aca se cuentan todas (fix doble anticipo).
             for line in lines.filtered(
                 lambda l: l.is_downpayment
                 and not l.display_type
-                and any(
-                    il.parent_state != "cancel"
-                    for il in l.invoice_lines
-                    if len(il.move_id.invoice_line_ids.sale_line_ids.filtered("is_downpayment")) == 1
-                )
+                and any(il.parent_state == "posted" and il.quantity > 0 for il in l.invoice_lines)
             ):
                 total_downpayment_amount += line.tax_ids.with_context(round=False).compute_all(
                     line.price_unit,
@@ -79,10 +81,11 @@ class SaleOrder(models.Model):
     def _get_invoiceable_lines(self, final=False):
         """Return the invoiceable lines for order `self`."""
         invoiceable_lines = super()._get_invoiceable_lines(final=final)
-        for rec in self.filtered(lambda x: x.is_gathering and x.gathering_balance >= -1.0):
-            for line in rec.order_line.filtered("is_downpayment"):
-                if final:
-                    invoiceable_lines |= line
+        gathering_orders = self.filtered(lambda x: x.is_gathering and x.gathering_balance >= -1.0)
+        if final:
+            for rec in gathering_orders:
+                invoiceable_lines |= rec.order_line.filtered("is_downpayment")
+        if gathering_orders:
             invoiceable_lines = invoiceable_lines.filtered(
                 lambda line: line.display_type not in ["line_section", "line_note"]
             )
@@ -107,33 +110,47 @@ class SaleOrder(models.Model):
                 )
             lines_commands = []
             for line in order._get_gathering_lines().filtered(lambda l: l.product_uom_qty > 0):
-                lines_commands.append(
-                    Command.update(line.id, {"initial_qty_gathered": line.product_uom_qty, "product_uom_qty": 0})
-                )
+                lines_commands.append(Command.update(line.id, order._get_gathering_confirm_line_vals(line)))
             if lines_commands:
                 # for compatibility with sale_exception
                 order.with_context(check_exception=False).write({"order_line": lines_commands})
         return super()._action_confirm()
 
+    def _get_gathering_confirm_line_vals(self, line):
+        """Values written on a gathered line when the order is confirmed.
+
+        Extension point: the quantity is moved to `initial_qty_gathered` here, so modules needing
+        to snapshot line data at confirmation time must do it from this method (before the
+        quantity is reset).
+        """
+        self.ensure_one()
+        return {"initial_qty_gathered": line.product_uom_qty, "product_uom_qty": 0}
+
+    def _get_gathering_amount(self, price_unit_getter):
+        """Sum the tax-included total over the gathered lines.
+
+        `price_unit_getter(line)` returns the base unit price (before discount) for a line.
+        """
+        self.ensure_one()
+        total = 0.0
+        for line in self._get_gathering_lines().filtered(lambda l: l.initial_qty_gathered > 0):
+            price_reduce = price_unit_getter(line) * (1 - (line.discount or 0.0) / 100.0)
+            total += line.tax_ids.compute_all(
+                price_reduce,
+                currency=line.currency_id,
+                quantity=line.initial_qty_gathered,
+                product=line.product_id,
+                partner=line.order_id.partner_shipping_id,
+            )["total_included"]
+        return total
+
     @api.depends("order_line.initial_qty_gathered", "is_gathering")
     def _compute_gathering_amount(self):
         orders_gathering = self.filtered(
-            lambda x: x.is_gathering and x.order_line.filtered(lambda x: x.initial_qty_gathered > 0)
+            lambda order: order.is_gathering and any(line.initial_qty_gathered > 0 for line in order.order_line)
         )
         for order in orders_gathering:
-            lines = order._get_gathering_lines()
-            price_subtotal_with_taxes = 0
-            for line in lines.filtered(lambda x: x.initial_qty_gathered > 0):
-                price_reduce = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
-                subtotal = line.tax_ids.compute_all(
-                    price_reduce,
-                    currency=line.currency_id,
-                    quantity=line.initial_qty_gathered,
-                    product=line.product_id,
-                    partner=line.order_id.partner_shipping_id,
-                )
-                price_subtotal_with_taxes += subtotal["total_included"]
-            order.gathering_amount_with_taxes = price_subtotal_with_taxes
+            order.gathering_amount_with_taxes = order._get_gathering_amount(lambda line: line.price_unit)
         (self - orders_gathering).gathering_amount_with_taxes = 0.0
 
     @api.depends("is_gathering", "invoice_ids", "invoice_ids.state")
@@ -227,10 +244,7 @@ class SaleOrder(models.Model):
                     if downpayment_line.sale_line_ids:
                         downpayment_tax_key = frozenset(downpayment_line.sale_line_ids.tax_ids.ids)
                         amount_for_this_tax_group = tax_groups.get(downpayment_tax_key, 0.0)
-                        if amount_for_this_tax_group < 0.0:
-                            sign = -1.0
-                        else:
-                            sign = 1.0
+                        sign = -1.0 if amount_for_this_tax_group < 0.0 else 1.0
                         downpayment_line.write(
                             {
                                 "price_unit": amount_for_this_tax_group * sign,
