@@ -53,6 +53,8 @@ class SaleOrderLine(models.Model):
         return super()._get_protected_fields() + ["discount"]
 
     def _compute_discount(self):
+        if "discount1" in self._fields:
+            return super()._compute_discount()
         lines = self.filtered(
             lambda x: x.order_id.state == "sale"
             and not (x.order_id.pricelist_id and x.pricelist_item_id._show_discount())
