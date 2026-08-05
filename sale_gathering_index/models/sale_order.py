@@ -28,35 +28,52 @@ class SaleOrder(models.Model):
         compute="_compute_indexed_withdrawn_amount",
     )
 
-    @api.depends("order_line.product_id.list_price")
+    def _get_gathering_confirm_line_vals(self, line):
+        vals = super()._get_gathering_confirm_line_vals(line)
+        vals["gathering_base_price_unit"] = self._get_current_line_price_unit(line)
+        return vals
+
+    def _get_current_line_price_unit(self, line):
+        """Unit price the line would get from the current pricelist/list price."""
+        price = line.with_company(line.company_id)._get_display_price()
+        return line.product_id._get_tax_included_unit_price(
+            line.company_id,
+            line.order_id.currency_id,
+            line.order_id.date_order,
+            "sale",
+            fiscal_position=line.order_id.fiscal_position_id,
+            product_price_unit=price,
+            product_currency=line.currency_id,
+        )
+
+    def _get_indexed_line_price_unit(self, line):
+        """Agreed unit price updated by the list price variation since the order was confirmed.
+
+        The index must only reflect how prices moved after gathering. Comparing the current list
+        price against `price_unit` mixed in any discount agreed at gathering time, so an order
+        confirmed at a negotiated price showed an index greater than zero right away.
+        `gathering_base_price_unit` is the list price snapshot taken on confirmation; lines
+        gathered before it existed fall back to `price_unit`, keeping their previous behaviour.
+        """
+        base_price_unit = line.gathering_base_price_unit or line.price_unit
+        if not base_price_unit:
+            return line.price_unit
+        return line.price_unit * self._get_current_line_price_unit(line) / base_price_unit
+
+    @api.depends(
+        "order_line.product_id.list_price",
+        "order_line.price_unit",
+        "order_line.gathering_base_price_unit",
+        "order_line.initial_qty_gathered",
+        "order_line.discount",
+        "is_gathering",
+    )
     def _compute_indexed_gathering_amount(self):
         gathering_orders = self.filtered(
-            lambda x: x.is_gathering and x.order_line.filtered(lambda x: x.initial_qty_gathered > 0)
+            lambda order: order.is_gathering and any(line.initial_qty_gathered > 0 for line in order.order_line)
         )
         for order in gathering_orders:
-            lines = order._get_gathering_lines()
-            indexed_gathering_amount = 0.0
-            for line in lines.filtered(lambda x: x.initial_qty_gathered > 0):
-                price = line.with_company(line.company_id)._get_display_price()
-                line_price = line.product_id._get_tax_included_unit_price(
-                    line.company_id,
-                    line.order_id.currency_id,
-                    line.order_id.date_order,
-                    "sale",
-                    fiscal_position=line.order_id.fiscal_position_id,
-                    product_price_unit=price,
-                    product_currency=line.currency_id,
-                )
-                price_reduce = line_price * (1 - (line.discount or 0.0) / 100.0)
-                price_subtotal = line.tax_ids.compute_all(
-                    price_reduce,
-                    currency=line.currency_id,
-                    quantity=line.initial_qty_gathered,
-                    product=line.product_id,
-                    partner=line.order_id.partner_shipping_id,
-                )["total_included"]
-                indexed_gathering_amount += price_subtotal
-            order.indexed_gathering_amount = indexed_gathering_amount
+            order.indexed_gathering_amount = order._get_gathering_amount(order._get_indexed_line_price_unit)
         (self - gathering_orders).indexed_gathering_amount = 0.0
 
     @api.depends(
@@ -64,10 +81,10 @@ class SaleOrder(models.Model):
     )
     def _compute_index(self):
         gathering_orders = self.filtered(
-            lambda x: (
-                x.is_gathering
-                and x.order_line.filtered(lambda x: x.initial_qty_gathered > 0)
-                and x.gathering_amount_with_taxes > 0
+            lambda order: (
+                order.is_gathering
+                and any(line.initial_qty_gathered > 0 for line in order.order_line)
+                and order.gathering_amount_with_taxes > 0
             )
         )
         for order in gathering_orders:
@@ -78,11 +95,12 @@ class SaleOrder(models.Model):
 
     @api.depends("gathering_balance", "index")
     def _compute_gathering_balance_indexed(self):
-        self.gathering_balance_indexed = self.gathering_balance * (1 + self.index)
+        for rec in self:
+            rec.gathering_balance_indexed = rec.gathering_balance * (1 + rec.index)
 
     @api.depends("gathering_balance_indexed", "indexed_gathering_amount")
     def _compute_indexed_withdrawn_amount(self):
-        orders = self.filtered(lambda x: x.gathering_balance_indexed > 0)
+        orders = self.filtered("is_gathering")
         for rec in orders:
             rec.indexed_withdrawn_amount = rec.indexed_gathering_amount - rec.gathering_balance_indexed
         (self - orders).indexed_withdrawn_amount = 0.0

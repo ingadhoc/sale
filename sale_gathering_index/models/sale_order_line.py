@@ -1,9 +1,19 @@
-from odoo import _, api, models
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
+
+    gathering_base_price_unit = fields.Float(
+        string="Gathering Base Price",
+        digits="Product Price",
+        copy=False,
+        readonly=True,
+        help="List price of the product when the gathering order was confirmed. It is the baseline "
+        "the index is measured against, so a price agreed below the list price does not show up "
+        "as a price variation.",
+    )
 
     @api.constrains("product_id")
     def _check_existing_gathering_products(self):
@@ -21,24 +31,26 @@ class SaleOrderLine(models.Model):
                 )
 
     def write(self, vals):
-        if "product_uom_qty" in vals and "initial_qty_gathered" not in vals:
-            if any(
+        if (
+            "product_uom_qty" in vals
+            and "initial_qty_gathered" not in vals
+            and any(
                 line.order_id.is_gathering
                 and line.order_id.state == "sale"
                 and vals["product_uom_qty"] > line.product_uom_qty
                 and line.initial_qty_gathered == 0
                 for line in self
-            ):
-                raise UserError(_("You can't modify the quantity of an added product. Please add a new line."))
-        if "name" in vals:
-            if any(
-                line.order_id.is_gathering
-                and line.order_id.state == "sale"
-                and line.display_type not in ["line_section", "line_note"]
-                and not line.is_downpayment
-                for line in self
-            ):
-                raise UserError(_("You can't modify the description."))
+            )
+        ):
+            raise UserError(_("You can't modify the quantity of an added product. Please add a new line."))
+        if "name" in vals and any(
+            line.order_id.is_gathering
+            and line.order_id.state == "sale"
+            and line.display_type not in ["line_section", "line_note"]
+            and not line.is_downpayment
+            for line in self
+        ):
+            raise UserError(_("You can't modify the description."))
         return super().write(vals)
 
     def _reset_price_unit(self):
