@@ -113,12 +113,48 @@ class SaleOrder(models.Model):
             )
         ):
             order_line.qty_delivered = order_line.product_uom_qty
+<<<<<<< 8e8b6f0db17248b0a42067b21acabdf75efbf73a
         for rec in self.filtered(lambda x: x.type_id.picking_atomation != "none" and x.picking_ids):
             rec._process_pickings()
         return True
+||||||| 1e8423ad5b74eeab7c7cab76f14f5ea9c52d42c9
+        for rec in self.filtered(lambda x: x.type_id.picking_atomation != "none" and x.procurement_group_id):
+            rec._process_pickings()
+        return True
+=======
+        print_actions = []
+        for rec in self.filtered(lambda x: x.type_id.picking_atomation != "none" and x.procurement_group_id):
+            # ``or []`` porque _process_pickings puede estar extendido y no devolver nada:
+            # que no imprima es tolerable, que no se pueda confirmar la venta no.
+            print_actions += rec._process_pickings() or []
+        return self._merge_picking_print_actions(print_actions) or True
+
+    def _merge_picking_print_actions(self, actions):
+        """Junta los reportes a imprimir en una sola acción ``do_multi_print``.
+
+        Lo que no sea un reporte se descarta a propósito: ``button_validate`` puede
+        devolver un asistente (backorder, por ejemplo) y acá no hay cliente que lo
+        ejecute, igual que antes de propagar nada."""
+        reports = []
+        for action in actions:
+            if not isinstance(action, dict):
+                continue
+            if action.get("tag") == "do_multi_print":
+                reports += (action.get("params") or {}).get("reports") or []
+            elif action.get("type") == "ir.actions.report":
+                reports.append(action)
+        if not reports:
+            return False
+        return {
+            "type": "ir.actions.client",
+            "tag": "do_multi_print",
+            "params": {"reports": reports},
+        }
+>>>>>>> 6b382ade5a841aefe5b892764ae83bfb5e309b9f
 
     def _process_pickings(self, prev_pending=None):
         self.ensure_one()
+        print_actions = []
         pickings = self.picking_ids.filtered(lambda x: x.state not in ("done", "cancel"))
         for pick in pickings.sorted(lambda p: p.picking_type_id.sequence):
             pick.action_assign()
@@ -137,13 +173,16 @@ class SaleOrder(models.Model):
                     )
                 for op in pick.move_line_ids:
                     op.with_context(sale_automation=True).quantity = op.quantity_product_uom
-            pick.button_validate()
+            # Validamos server-side: si descartamos la acción de impresión que
+            # devuelve button_validate, nadie la ejecuta y no se imprime nada.
+            print_actions.append(pick.button_validate())
             pending_after = self.picking_ids.filtered(lambda x: x.state not in ("done", "cancel"))
             if pending_after:
                 pending_after.action_assign()
         pending_final = self.picking_ids.filtered(lambda x: x.state not in ("done", "cancel"))
         if pending_final and pending_final != (prev_pending or set()):
-            self._process_pickings(prev_pending=pending_final)
+            print_actions += self._process_pickings(prev_pending=pending_final) or []
+        return print_actions
 
     def action_confirm(self):
         res = super().action_confirm()
