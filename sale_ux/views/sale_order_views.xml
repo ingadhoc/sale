@@ -124,7 +124,7 @@
                 <field name="amount_to_invoice" optional="hide"/>
             </field>
             <field name="date_order" position="before">
-                <field name="create_date" widget="date" optional="hide"/>
+                <field name="create_date" options="{'show_time': False}" optional="hide"/>
             </field>
 
             <!-- As we unify menus we make the draft more visible -->
