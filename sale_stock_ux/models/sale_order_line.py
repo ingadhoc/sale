@@ -347,6 +347,7 @@ class SaleOrderLine(models.Model):
         if not lines:
             return
 
+<<<<<<< 601569e65b32b4bad35f02a8810ec1755d9acdc5
         available_by_product = defaultdict(list)
         for product, location, available_quantity in self.env["stock.quant"]._read_group(
             domain=[
@@ -360,14 +361,62 @@ class SaleOrderLine(models.Model):
         ):
             if available_quantity > 0:
                 available_by_product[product.id].append((location.display_name, available_quantity))
+||||||| 1e8423ad5b74eeab7c7cab76f14f5ea9c52d42c9
+            stock_quants = self.env["stock.quant"].read_group(
+                domain=[
+                    ("location_id.usage", "=", "internal"),
+                    ("product_id", "=", line.product_id.id),
+                    ("quantity", ">", 0),
+                ],
+                fields=["location_id", "available_quantity:sum"],
+                groupby=["location_id"],
+                lazy=False,
+            )
+=======
+        available_by_product = defaultdict(list)
+        for product, location, available_quantity in self.env["stock.quant"]._read_group(
+            domain=[
+                ("location_id.usage", "=", "internal"),
+                ("product_id", "in", lines.product_id.ids),
+                ("quantity", ">", 0),
+            ],
+            groupby=["product_id", "location_id"],
+            aggregates=["available_quantity:sum"],
+        ):
+            if available_quantity > 0:
+                available_by_product[product.id].append((location.display_name, available_quantity))
+>>>>>>> ec9059f76d61bfa44e56cd1ed3ef5e7e828b182f
 
         for line in lines:
             stock_lines = []
+<<<<<<< 601569e65b32b4bad35f02a8810ec1755d9acdc5
             for location_name, free_qty in available_by_product.get(line.product_id.id, []):
                 if line.product_uom_id and line.product_uom_id != line.product_id.uom_id:
                     free_qty = line.product_id.uom_id._compute_quantity(free_qty, line.product_uom_id)
                 stock_lines.append(f"{location_name}: {free_qty:.2f} {line.product_uom_id.name}")
             line.stock_by_location = "\n".join(stock_lines)
+||||||| 1e8423ad5b74eeab7c7cab76f14f5ea9c52d42c9
+
+            for stock in stock_quants:
+                location_name = stock["location_id"][1]
+                free_qty = stock["available_quantity"]
+
+                if free_qty > 0:
+                    if line.product_uom and line.product_uom != line.product_id.uom_id:
+                        free_qty = line.product_id.uom_id._compute_quantity(free_qty, line.product_uom)
+
+                    stock_lines.append(f"{location_name}: {free_qty:.2f} {line.product_uom.name}")
+
+            line.stock_by_location = "\n".join(stock_lines) if stock_lines else ""
+
+        (self - self).stock_by_location = ""
+=======
+            for location_name, free_qty in available_by_product.get(line.product_id.id, []):
+                if line.product_uom and line.product_uom != line.product_id.uom_id:
+                    free_qty = line.product_id.uom_id._compute_quantity(free_qty, line.product_uom)
+                stock_lines.append(f"{location_name}: {free_qty:.2f} {line.product_uom.name}")
+            line.stock_by_location = "\n".join(stock_lines)
+>>>>>>> ec9059f76d61bfa44e56cd1ed3ef5e7e828b182f
 
     def _get_protected_fields(self):
         """Override to allow modifications when skip_locked_order_line_check context is set."""
