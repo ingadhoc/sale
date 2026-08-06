@@ -3,4 +3,4 @@
 # directory
 ##############################################################################
 
-from . import test_sale_order_type_automation
+from . import test_picking_automation_print, test_sale_order_type_automation
