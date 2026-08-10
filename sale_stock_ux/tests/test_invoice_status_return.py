@@ -31,8 +31,10 @@ class TestInvoiceStatusReturn(AccountTestInvoicingCommon):
             }
         )
         # Evitar que reglas de excepción bloqueen la confirmación en runbot.
+        # sudo() porque el usuario de AccountTestInvoicingCommon no está en el
+        # grupo "Exception manager" y sin él el write falla con AccessError.
         if cls.env["sale.order"]._fields.get("ignore_exception"):
-            cls.env["exception.rule"].search([("active", "=", True)]).write({"active": False})
+            cls.env["exception.rule"].sudo().search([("active", "=", True)]).write({"active": False})
 
     def _create_order(self, qty):
         order = self.env["sale.order"].create(
