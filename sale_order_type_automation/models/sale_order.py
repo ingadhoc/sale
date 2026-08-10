@@ -49,7 +49,7 @@ class SaleOrder(models.Model):
             # usamos final para que reste adelantos y tmb por ej
             # por si se usa el modulo de facturar las returns
             if rec.type_id.background_post:
-                rec = rec.with_context(default_background_post=True)
+                rec = rec.with_context(default_background_post_date=fields.Datetime.now())
             invoices = rec._create_invoices(final=True)
             if not invoices:
                 continue
