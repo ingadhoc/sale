@@ -85,6 +85,10 @@ class SaleOrder(models.Model):
                 + arch.xpath("//label[@for='recurrence_id']")
                 + arch.xpath("//field[@name='recurrence_id']")
                 + arch.xpath("//button[@name='update_date_prices_and_validity']")
+                # its invisible modifier reads project_ids, and computing that field searches
+                # projects by reinvoiced_sale_order_id, restricted to salesmen. Hiding the button
+                # drops the modifier, so the field is no longer added to the view nor read.
+                + arch.xpath("//button[@name='action_view_milestone']")
             )
             for node in invisible_fields:
                 node.set("invisible", "1")
