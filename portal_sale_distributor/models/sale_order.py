@@ -107,3 +107,11 @@ class SaleOrder(models.Model):
     def action_update_prices(self):
         self = self.sudo()
         super().action_update_prices()
+
+    def _message_get_suggested_recipients_batch(self, **kwargs):
+        # to keep odoobot out of the suggestions, mail reads base.partner_root.email_normalized
+        # without sudo, and a portal user can not read that contact: the chatter fails to load
+        # right after the distributor confirms the order. They do not add recipients anyway.
+        if not self.env.user.has_group("base.group_user"):
+            return {record.id: [] for record in self}
+        return super()._message_get_suggested_recipients_batch(**kwargs)
