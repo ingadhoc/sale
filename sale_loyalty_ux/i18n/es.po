@@ -26,6 +26,23 @@ msgid "Loyalty Program"
 msgstr "Programa de fidelización"
 
 #. module: sale_loyalty_ux
+#: model:ir.model.fields,field_description:sale_loyalty_ux.field_loyalty_program__not_applicable_message
+#: model_terms:ir.ui.view,arch_db:sale_loyalty_ux.loyalty_program_view_form
+msgid "Message When the Promotion Does Not Apply"
+msgstr "Mensaje cuando no aplica la promoción"
+
+#. module: sale_loyalty_ux
+#: model:ir.model.fields,help:sale_loyalty_ux.field_loyalty_program__not_applicable_message
+msgid ""
+"Message shown to the user when the sales order does not match the sales "
+"domain. Use it to explain why the program does not apply and what to do to "
+"make it apply. If empty, a generic message is used."
+msgstr ""
+"Mensaje que se le muestra al usuario cuando el pedido de venta no cumple con "
+"el dominio de venta. Sirve para explicar por qué no aplica el programa y qué "
+"debe hacer para que aplique. Si está vacío, se muestra un mensaje genérico."
+
+#. module: sale_loyalty_ux
 #: model:ir.model.fields,field_description:sale_loyalty_ux.field_loyalty_program__sale_domain
 msgid "Sale Domain"
 msgstr "Dominio de venta "
@@ -39,3 +56,18 @@ msgstr "Pedido de venta"
 #: model_terms:ir.ui.view,arch_db:sale_loyalty_ux.loyalty_program_view_form
 msgid "Sales domain"
 msgstr "Dominio de venta"
+
+#. module: sale_loyalty_ux
+#. odoo-python
+#: code:addons/sale_loyalty_ux/models/sale_order.py:0
+msgid ""
+"This promotion cannot be applied because this sales order does not meet the "
+"conditions required by the program \"%(program)s\"."
+msgstr ""
+"Esta promoción no puede aplicarse porque el pedido de venta no cumple con "
+"las condiciones requeridas por el programa \"%(program)s\"."
+
+#. module: sale_loyalty_ux
+#: model_terms:ir.ui.view,arch_db:sale_loyalty_ux.loyalty_program_view_form
+msgid "e.g. You must be registered to use this coupon."
+msgstr "ej. Debe estar registrado para usar este cupón."
