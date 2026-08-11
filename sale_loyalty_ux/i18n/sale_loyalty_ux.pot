@@ -44,6 +44,20 @@ msgid "Loyalty Rewards Banner Visible"
 msgstr ""
 
 #. module: sale_loyalty_ux
+#: model:ir.model.fields,field_description:sale_loyalty_ux.field_loyalty_program__not_applicable_message
+#: model_terms:ir.ui.view,arch_db:sale_loyalty_ux.loyalty_program_view_form
+msgid "Message When the Promotion Does Not Apply"
+msgstr ""
+
+#. module: sale_loyalty_ux
+#: model:ir.model.fields,help:sale_loyalty_ux.field_loyalty_program__not_applicable_message
+msgid ""
+"Message shown to the user when the sales order does not match the sales "
+"domain. Use it to explain why the program does not apply and what to do to "
+"make it apply. If empty, a generic message is used."
+msgstr ""
+
+#. module: sale_loyalty_ux
 #: model:ir.model.fields,field_description:sale_loyalty_ux.field_loyalty_program__sale_domain
 msgid "Sale Domain"
 msgstr ""
@@ -56,4 +70,17 @@ msgstr ""
 #. module: sale_loyalty_ux
 #: model_terms:ir.ui.view,arch_db:sale_loyalty_ux.loyalty_program_view_form
 msgid "Sales domain"
+msgstr ""
+
+#. module: sale_loyalty_ux
+#. odoo-python
+#: code:addons/sale_loyalty_ux/models/sale_order.py:0
+msgid ""
+"This promotion cannot be applied because this sales order does not meet the "
+"conditions required by the program \"%(program)s\"."
+msgstr ""
+
+#. module: sale_loyalty_ux
+#: model_terms:ir.ui.view,arch_db:sale_loyalty_ux.loyalty_program_view_form
+msgid "e.g. You must be registered to use this coupon."
 msgstr ""

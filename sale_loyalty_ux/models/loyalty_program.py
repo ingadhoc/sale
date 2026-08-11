@@ -12,6 +12,13 @@ class LoyaltyProgram(models.Model):
     _inherit = "loyalty.program"
 
     sale_domain = fields.Char(default="[]")
+    not_applicable_message = fields.Char(
+        string="Message When the Promotion Does Not Apply",
+        translate=True,
+        help="Message shown to the user when the sales order does not match the sales domain. "
+        "Use it to explain why the program does not apply and what to do to make it apply. "
+        "If empty, a generic message is used.",
+    )
 
     def _get_valid_sale_order(self):
         domain = []

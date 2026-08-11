@@ -49,5 +49,12 @@ class SaleOrder(models.Model):
             domain = r._get_valid_sale_order()
             if not res[r].get("error") and domain:
                 if self not in self.env["sale.order"].search(domain):
-                    res[r] = {"error": "SaleOrder not matching"}
+                    res[r] = {
+                        "error": r.not_applicable_message
+                        or self.env._(
+                            "This promotion cannot be applied because this sales order does not meet"
+                            ' the conditions required by the program "%(program)s".',
+                            program=r.name,
+                        )
+                    }
         return res
