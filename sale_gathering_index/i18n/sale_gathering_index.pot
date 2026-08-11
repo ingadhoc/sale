@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-19 19:49+0000\n"
-"PO-Revision-Date: 2026-06-19 19:49+0000\n"
+"POT-Creation-Date: 2026-08-11 21:14+0000\n"
+"PO-Revision-Date: 2026-08-11 21:14+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -75,6 +75,11 @@ msgid "Display Name"
 msgstr ""
 
 #. module: sale_gathering_index
+#: model:ir.model.fields,field_description:sale_gathering_index.field_sale_order_line__gathering_base_price_unit
+msgid "Gathering Base Price"
+msgstr ""
+
+#. module: sale_gathering_index
 #: model:ir.model.fields,field_description:sale_gathering_index.field_sale_order__id
 #: model:ir.model.fields,field_description:sale_gathering_index.field_sale_order_line__id
 msgid "ID"
@@ -98,6 +103,14 @@ msgstr ""
 #. module: sale_gathering_index
 #: model:ir.model.fields,field_description:sale_gathering_index.field_sale_order__indexed_withdrawn_amount
 msgid "Indexed Withdrawn Amount"
+msgstr ""
+
+#. module: sale_gathering_index
+#: model:ir.model.fields,help:sale_gathering_index.field_sale_order_line__gathering_base_price_unit
+msgid ""
+"List price of the product when the gathering order was confirmed. It is the "
+"baseline the index is measured against, so a price agreed below the list "
+"price does not show up as a price variation."
 msgstr ""
 
 #. module: sale_gathering_index
