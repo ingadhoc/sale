@@ -74,10 +74,15 @@ class SaleOrder(models.Model):
 
     def action_confirm(self):
         res = super().action_confirm()
-        if isinstance(res, bool) and res:
-            for order in self.filtered(
-                lambda x: x.is_gathering and x.type_id.invoicing_atomation != "none" and not x.has_gathering_invoice
-            ):
+        # res puede ser una acción y no solo True: lo que define si facturamos es el estado del pedido
+        orders_to_invoice = self.filtered(
+            lambda x: x.state == "sale"
+            and x.is_gathering
+            and x.type_id.invoicing_atomation != "none"
+            and not x.has_gathering_invoice
+        )
+        if orders_to_invoice:
+            for order in orders_to_invoice:
                 advance_payment_wizard = (
                     self.env["sale.advance.payment.inv"]
                     .with_context(first_gathering_invoice=True)
