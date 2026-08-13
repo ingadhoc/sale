@@ -19,13 +19,23 @@ class AccountMove(models.Model):
             # refunds move the money on the opposite direction of the document they fix,
             # otherwise a customer refund would be registered as an inbound receipt
             "payment_type": "inbound" if invoice.is_inbound() else "outbound",
+            # the payment must live in the invoice company (a branch may invoice while the
+            # shared payment journal belongs to the parent). Company consistency checks use
+            # parent_of semantics, so a payment on the branch can still use the parent journal,
+            # but a payment left on the journal's parent company can't reference the branch lines
+            "company_id": invoice.company_id.id,
             "journal_id": payment_journal.id,
             "date": fields.Date.context_today(self),
             "currency_id": invoice.currency_id.id,
         }
 
     def _register_payment_invoice(self, invoice, payment_journal):
-        payment = self.env["account.payment"].create(self._prepare_dict_account_payment(invoice, payment_journal))
+        # resolve company-dependent defaults/computes against the invoice company (branch)
+        payment = (
+            self.env["account.payment"]
+            .with_company(invoice.company_id)
+            .create(self._prepare_dict_account_payment(invoice, payment_journal))
+        )
         payment.action_post()
 
         domain = [

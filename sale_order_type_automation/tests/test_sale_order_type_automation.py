@@ -111,6 +111,26 @@ class TestSaleOrderTypeAutomation(TransactionCase):
                 }
             )
 
+    def test_prepare_payment_uses_invoice_company(self):
+        # regression: the payment must be built on the invoice company. On a branch that
+        # invoices while the payment journal belongs to the parent, leaving the payment on
+        # the journal's company raised a cross-company error (parent_of consistency check).
+        self.sale_type.write(
+            {
+                "invoicing_atomation": "validate_invoice",
+                "journal_id": self.invoice_journal.id,
+                "picking_atomation": "none",
+                "invoice_validate_domain": False,
+            }
+        )
+        order = self._create_order()
+        order.with_context(ignore_exception=True).action_confirm()
+        invoice = order.invoice_ids
+
+        vals = invoice._prepare_dict_account_payment(invoice, self.invoice_journal)
+
+        self.assertEqual(vals["company_id"], invoice.company_id.id)
+
     def test_validate_payment_automation_accepts_valid_payment_journal(self):
         if not self.payment_journal:
             self.skipTest("No manual payment journal available for current company")
