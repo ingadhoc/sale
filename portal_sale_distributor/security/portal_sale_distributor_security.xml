@@ -58,4 +58,18 @@
         <field eval="0" name="perm_unlink"/>
     </record>
 
+    <!-- mrp_subcontracting limits warehouses to the partner's own pickings for
+         base.group_portal; a distributor has none and could not add order lines.
+         Same reason as the product.template rule above. -->
+    <record id="portal_stock_warehouse_rule" model="ir.rule">
+        <field name="name">Warehouses (distribuidores)</field>
+        <field name="model_id" ref="stock.model_stock_warehouse"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', user.company_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('group_portal_backend_distributor'))]"/>
+        <field eval="1" name="perm_read"/>
+        <field eval="0" name="perm_write"/>
+        <field eval="0" name="perm_create"/>
+        <field eval="0" name="perm_unlink"/>
+    </record>
+
 </odoo>
