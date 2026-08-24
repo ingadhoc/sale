@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<odoo>
+    <!-- Inherits from sale_order_validity so the button is already in the arch. -->
+    <record id="view_order_form_validity_distributor" model="ir.ui.view">
+        <field name="name">portal_sale_distributor_sale_order_validity.view_order_form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_order_validity.view_order_form_validity"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='update_date_prices_and_validity']" position="attributes">
+                <attribute name="groups">!portal_sale_distributor.group_portal_backend_distributor</attribute>
+            </xpath>
+            <group name="order_details" position="inside">
+                <div groups="portal_sale_distributor.group_portal_backend_distributor">
+                    <button
+                        name="update_date_prices_and_validity"
+                        type="object"
+                        string="Update Validity"
+                        icon="fa-refresh"
+                        invisible="state not in ['draft', 'sent']"/>
+                </div>
+            </group>
+        </field>
+    </record>
+</odoo>
