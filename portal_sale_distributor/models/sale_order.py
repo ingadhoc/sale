@@ -16,6 +16,9 @@ class SaleOrder(models.Model):
     message_partner_ids = fields.Many2many(
         groups="base.group_user,portal_sale_distributor.group_portal_backend_distributor"
     )
+    tag_ids = fields.Many2many(
+        groups="sales_team.group_sale_salesman,portal_sale_distributor.group_portal_backend_distributor"
+    )
 
     def action_confirm_distributor(self):
         if self.detect_exceptions() != []:
@@ -84,11 +87,13 @@ class SaleOrder(models.Model):
                 arch.xpath("//field[@name='ignore_exception']")
                 + arch.xpath("//label[@for='recurrence_id']")
                 + arch.xpath("//field[@name='recurrence_id']")
-                + arch.xpath("//button[@name='update_date_prices_and_validity']")
                 # its invisible modifier reads project_ids, and computing that field searches
                 # projects by reinvoiced_sale_order_id, restricted to salesmen. Hiding the button
                 # drops the modifier, so the field is no longer added to the view nor read.
                 + arch.xpath("//button[@name='action_view_milestone']")
+                # sale.order.margin carries no groups, unlike its line level counterparts. The
+                # whole block, or the label and the percentage are left behind.
+                + arch.xpath("//label[@for='margin']/..")
             )
             for node in invisible_fields:
                 node.set("invisible", "1")

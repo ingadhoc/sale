@@ -18,38 +18,20 @@
 #
 ##############################################################################
 {
-    "name": "Portal Distributor Sale",
-    "version": "19.0.1.5.0",
+    "name": "Portal Distributor Sale Project",
+    "version": "19.0.1.0.0",
     "category": "Tools",
     "complexity": "easy",
-    "author": "ADHOC SA, Odoo Community Association (OCA)",
-    "website": "www.adhoc.com.ar",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.inc",
     "license": "AGPL-3",
     "depends": [
-        "sale_exception",
-        "price_security",
-        "delivery",
-        "sale_ux",
-        "sale_management",
-        "portal_backend",
-        "sale_pdf_quote_builder",
-    ],
-    "demo": [
-        "demo/res_users_demo.xml",
+        "sale_project",
+        "portal_sale_distributor",
     ],
     "data": [
-        "security/portal_sale_distributor_security.xml",
-        "security/res_partner_security.xml",
         "security/ir.model.access.csv",
-        "views/portal_my_account_views.xml",
-        "views/portal_sale_views.xml",
-        "views/sale_report_templates.xml",
     ],
-    "assets": {
-        "web.assets_backend": [
-            "portal_sale_distributor/static/src/js/user_menu_distributor.js",
-        ],
-    },
     "installable": True,
-    "auto_install": False,
+    "auto_install": True,
 }
