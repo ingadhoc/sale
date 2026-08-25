@@ -2,11 +2,58 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import fields, models
+from odoo import _, fields, models
 
 
 class AccountMove(models.Model):
     _inherit = "account.move"
+
+    def _get_invoicing_automation_blocking_reasons(self):
+        """Return ``{move.id: reason}`` for invoices that must not be posted automatically.
+
+        These are the failures that can be known BEFORE calling ``action_post``. Trying
+        and failing is not harmless: ``_post`` writes ``state`` before the constraints
+        run and nothing rolls that write back, so the next flush persists a move that is
+        'posted' with no number and no document type. Skipping the post leaves a clean
+        draft plus an explanatory log instead, which is the same treatment the invoices
+        excluded by ``invoice_validate_domain`` already get.
+        """
+        reasons = {}
+        # soft dependency: only latam localizations require a document type
+        if "l10n_latam_document_type_id" not in self._fields:
+            return reasons
+        for move in self.filtered(lambda x: x.l10n_latam_use_documents and not x.l10n_latam_document_type_id):
+            reason = _(
+                "The journal '%(journal)s' requires a document type and none could be " "determined for %(partner)s.",
+                journal=move.journal_id.display_name,
+                partner=move.partner_id.display_name,
+            )
+            responsibility_field = "l10n_ar_afip_responsibility_type_id"
+            if responsibility_field in move.partner_id._fields and not move.partner_id[responsibility_field]:
+                reason += _(" Please configure the ARCA Responsibility of the customer.")
+            reasons[move.id] = reason
+        return reasons
+
+    def _recover_failed_automatic_post(self):
+        """Undo the state a failed ``action_post`` left behind on these invoices.
+
+        ``_post`` writes ``state`` through ``write()``, which validates the constraints
+        only after updating the cache, so a constraint error leaves ``state = 'posted'``
+        pending and the next flush (the failure log itself) persists it: a posted move
+        with no number and no document type. Wrapping the post in a savepoint is not an
+        option here, the AR e-invoice code commits and discards it (ingadhoc/sale#1755),
+        so we only put back the moves left in that impossible shape, which by definition
+        never reached numbering nor the CAE.
+        """
+        broken = self.filtered(lambda x: x.state == "posted" and x.name in (False, "/"))
+        if not broken:
+            return
+        try:
+            broken.sudo().write({"state": "draft", "posted_before": False})
+        except Exception as recovery_error:
+            # never mask the original error: writing on a posted move checks the lock dates
+            message = "Could not restore the draft state of this invoice. Error: %s" % recovery_error
+            broken._message_log_batch(bodies=dict.fromkeys(broken.ids, message))
 
     def _prepare_dict_account_payment(self, invoice, payment_journal):
         return {

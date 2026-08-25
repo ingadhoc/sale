@@ -72,9 +72,40 @@ class SaleOrder(models.Model):
                     invoices_not_validated = rec.env["account.move"]
                 if not invoices_to_validate:
                     continue
+                # Don't even try to post what we already know will fail: a failed action_post
+                # cannot be rolled back (see _recover_failed_automatic_post) and would leave the
+                # invoice marked as posted without number nor document type.
+                blocking_reasons = invoices_to_validate._get_invoicing_automation_blocking_reasons()
+                if blocking_reasons:
+                    reasons = "\n* ".join(blocking_reasons.values())
+                    if not rec.env.context.get("commit_invoice_automation"):
+                        # Block the confirmation, as it was done up to v18: raising rolls the
+                        # request back, so the order is left unconfirmed with nothing dangling.
+                        raise UserError(
+                            _(
+                                "The invoices of the order %(order)s cannot be validated "
+                                "automatically:\n* %(reasons)s",
+                                order=rec.display_name,
+                                reasons=reasons,
+                            )
+                        )
+                    # Batch run: it already committed, so it cannot be torn down. Leave the
+                    # invoices as clean drafts and report why they were not validated.
+                    blocked = invoices_to_validate.browse(blocking_reasons.keys())
+                    blocked._message_log_batch(bodies=blocking_reasons)
+                    rec.message_post(
+                        body=_(
+                            "The following invoices were created but not validated " "automatically:\n* %(reasons)s",
+                            reasons=reasons,
+                        )
+                    )
+                    invoices_to_validate -= blocked
+                    if not invoices_to_validate:
+                        continue
                 try:
                     invoices_to_validate.sudo().action_post()
                 except Exception as error:
+                    invoices_to_validate._recover_failed_automatic_post()
                     message = _(
                         "We couldn't validate the automatically created "
                         "invoices (ids %s), you will need to validate them"
