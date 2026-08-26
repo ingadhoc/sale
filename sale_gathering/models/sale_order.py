@@ -41,6 +41,14 @@ class SaleOrder(models.Model):
             lambda order: (order.is_gathering and order.state == "sale" and order.order_line.filtered("is_downpayment"))
         )
 
+        # invoice_lines may be cached empty from a read under a restricted
+        # multi-company context, which would zero the down payment
+        downpayment_lines = orders_gathering.order_line.filtered(
+            lambda line: line.is_downpayment and not line.display_type
+        )
+        if downpayment_lines:
+            downpayment_lines.invalidate_recordset(["invoice_lines"])
+
         for order in orders_gathering:
             lines = order._get_gathering_lines()
             total_downpayment_amount = 0
@@ -53,7 +61,7 @@ class SaleOrder(models.Model):
             for line in lines.filtered(
                 lambda l: l.is_downpayment
                 and not l.display_type
-                and any(il.parent_state == "posted" and il.quantity > 0 for il in l.invoice_lines)
+                and any(il.parent_state == "posted" and il.quantity > 0 for il in l.sudo().invoice_lines)
             ):
                 total_downpayment_amount += line.tax_ids.with_context(round=False).compute_all(
                     line.price_unit,
