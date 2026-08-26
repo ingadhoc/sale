@@ -105,22 +105,47 @@ class SaleOrder(models.Model):
         lines_to_recompute = self.order_line.filtered(lambda line: not line.display_type)
         lines_to_recompute._compute_tax_ids()
 
-    def action_cancel(self):
+    def _get_orders_blocking_cancel(self):
+        """Orders whose invoices prevent cancellation, in one search for the whole recordset."""
         invoice_lines = self.sudo().env["account.move.line"].search([("sale_line_ids", "in", self.order_line.ids)])
-        moves = invoice_lines.mapped("move_id").filtered(
+        candidates = invoice_lines.move_id.filtered(
             lambda x: x.move_type in ("out_invoice", "out_refund") and x.state not in ["cancel", "draft"]
         )
+        # read what the check needs up front, so filtering per order costs no extra query
+        invoice_lines.sale_line_ids.fetch(["order_id"])
+        candidates.fetch(["payment_state", "invoice_origin"])
+        blocked = self.browse()
+        for order in self:
+            moves = invoice_lines.filtered(lambda line: order in line.sale_line_ids.order_id).move_id & candidates
+            if moves and not order._invoices_allow_cancel(moves):
+                blocked |= order
+        return blocked
+
+    def _invoices_allow_cancel(self, moves):
+        self.ensure_one()
         # Check that all invoices are reversed and belong to this sale order
         invoices = moves.filtered(lambda m: m.move_type == "out_invoice")
-        valid_invoices = all(inv.payment_state == "reversed" and inv.invoice_origin == self.name for inv in invoices)
+        if not all(inv.payment_state == "reversed" and inv.invoice_origin == self.name for inv in invoices):
+            return False
         # Check that all refunds are paid and belong to this sale order
-        if valid_invoices:
-            refunds = moves.filtered(lambda m: m.move_type == "out_refund")
-            valid_refunds = all(ref.payment_state == "paid" and ref.invoice_origin == self.name for ref in refunds)
-            valid_invoices = valid_refunds if refunds else False
+        refunds = moves.filtered(lambda m: m.move_type == "out_refund")
+        if not refunds:
+            return False
+        return all(ref.payment_state == "paid" and ref.invoice_origin == self.name for ref in refunds)
 
-        if moves and not (valid_invoices):
-            raise UserError(_("Unable to cancel this sale order. You must first cancel related bills and pickings."))
+    def _check_cancel_allowed(self):
+        """Raise if any order cannot be cancelled. Modules adding checks extend this."""
+        blocked = self._get_orders_blocking_cancel()
+        if blocked:
+            raise UserError(
+                _(
+                    "Unable to cancel %s. You must first cancel related bills and pickings.",
+                    ", ".join(blocked.mapped("display_name")),
+                )
+            )
+
+    def action_cancel(self):
+        self._check_cancel_allowed()
         if any(order.locked for order in self):
             return self._action_cancel()
         else:

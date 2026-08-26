@@ -1,3 +1,4 @@
+from odoo.exceptions import UserError
 from odoo.tests import TransactionCase
 
 
@@ -66,3 +67,26 @@ class TestActionCancel(TransactionCase):
 
         # Verificar el estado de la orden después de cancelar
         self.assertEqual(sale_order.state, "cancel")
+
+    def test_mass_cancel_blocks_when_deliveries_are_done(self):
+        # el wizard estandar saltea el chequeo de entregas hechas de action_cancel()
+        sale_order = self.sale_order_model.create(
+            {
+                "partner_id": self.partner.id,
+                "order_line": [(0, 0, {"product_id": self.product.id, "product_uom_qty": 1, "price_unit": 100.0})],
+            }
+        )
+        sale_order.action_confirm()
+        picking = sale_order.picking_ids
+        for move in picking.move_ids:
+            move.quantity = move.product_uom_qty
+            move.picked = True
+        picking.button_validate()
+        self.assertEqual(picking.state, "done")
+
+        wizard = self.env["sale.mass.cancel.orders"].with_context(active_ids=sale_order.ids).create({})
+
+        with self.assertRaises(UserError):
+            wizard.action_mass_cancel()
+
+        self.assertEqual(sale_order.state, "sale")
