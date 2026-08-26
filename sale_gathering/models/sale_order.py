@@ -42,6 +42,14 @@ class SaleOrder(models.Model):
             )
         )
 
+        # invoice_lines may be cached empty from a read under a restricted
+        # multi-company context, which would zero the down payment
+        downpayment_lines = orders_gathering.order_line.filtered(
+            lambda line: line.is_downpayment and not line.display_type
+        )
+        if downpayment_lines:
+            downpayment_lines.invalidate_recordset(["invoice_lines"])
+
         for order in orders_gathering:
             lines = order._get_gathering_lines()
             total_downpayment_amount = 0
@@ -50,7 +58,7 @@ class SaleOrder(models.Model):
                 and not l.display_type
                 and any(
                     il.parent_state != "cancel"
-                    for il in l.invoice_lines
+                    for il in l.sudo().invoice_lines
                     if len(il.move_id.invoice_line_ids.sale_line_ids.filtered("is_downpayment")) == 1
                 )
             ):
