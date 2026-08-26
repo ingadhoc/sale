@@ -27,6 +27,7 @@ Several Improvements to sales:
 #. Block cancellation of a sale order if there is a related invoice in a state different from "draft" or "cancel".
    Customer invoices (out_invoice) are excluded if they have been reversed.
    Customer debit notes (out_debit) are excluded if they are fully paid.
+#. Apply those same cancellation checks to the "Cancel" action of the sale orders list view. The standard mass cancel wizard cancelled the orders without running them, so confirmed orders with posted invoices (or, with sale_stock_ux, done deliveries) could be cancelled from the list.
 #. Customer Preview" button in sale orders, opens the online quotation in a new tab.
 #. In sale.order.form, we rename the field price_subtotal and price_total of the sale order lines to "Subtotal" and "Total" respectively.
 #. Add option in Sales settings to update prices automatically.

@@ -269,3 +269,80 @@ class TestSaleOrder(SaleUxCommon):
         self.assertEqual(order_1.state, "sale")
         self.assertEqual(order_2.state, "sale")
         self.assertIsNotNone(result)
+
+    def _mass_cancel(self, orders):
+        return self.env["sale.mass.cancel.orders"].with_context(active_ids=orders.ids).create({}).action_mass_cancel()
+
+    def test_mass_cancel_blocks_when_related_invoices_exist(self):
+        """Test that the mass cancel wizard is blocked when related invoices exist"""
+        order = self._create_sale_order()
+        self._prepare_order_for_invoicing(order)
+        invoice = order._create_invoices(final=True)[0]
+        invoice.action_post()
+
+        with self.assertRaises(UserError):
+            self._mass_cancel(order)
+
+        self.assertEqual(order.state, "sale")
+
+    def test_mass_cancel_allows_when_invoices_are_draft(self):
+        """Test that the mass cancel wizard cancels orders with draft invoices only"""
+        order = self._create_sale_order()
+        self._prepare_order_for_invoicing(order)
+        order._create_invoices(final=True)
+
+        self._mass_cancel(order)
+
+        self.assertEqual(order.state, "cancel")
+
+    def test_mass_cancel_error_names_the_blocking_order(self):
+        """Test that the mass cancel error identifies the order blocking the batch"""
+        order = self._create_sale_order()
+        self._prepare_order_for_invoicing(order)
+        invoice = order._create_invoices(final=True)[0]
+        invoice.action_post()
+
+        with self.assertRaises(UserError) as catcher:
+            self._mass_cancel(order)
+
+        self.assertIn(order.display_name, str(catcher.exception))
+
+    def test_mass_cancel_skips_already_cancelled_orders(self):
+        """Test that an order cancelled by the old path does not block the batch"""
+        blocking_order = self._create_sale_order()
+        self._prepare_order_for_invoicing(blocking_order)
+        invoice = blocking_order._create_invoices(final=True)[0]
+        invoice.action_post()
+        # the standard wizard used to cancel these without running any check
+        blocking_order._action_cancel()
+        self.assertEqual(blocking_order.state, "cancel")
+        quotation = self._create_sale_order()
+
+        self._mass_cancel(blocking_order | quotation)
+
+        self.assertEqual(quotation.state, "cancel")
+
+    def test_action_cancel_on_several_orders_names_every_blocking_one(self):
+        """Test that cancelling a recordset reports each order whose invoices block it"""
+        orders = self.env["sale.order"]
+        for _index in range(2):
+            order = self._create_sale_order()
+            self._prepare_order_for_invoicing(order)
+            invoice = order._create_invoices(final=True)[0]
+            invoice.action_post()
+            orders |= order
+
+        with self.assertRaises(UserError) as catcher:
+            orders.action_cancel()
+
+        for order in orders:
+            self.assertIn(order.display_name, str(catcher.exception))
+        self.assertEqual(set(orders.mapped("state")), {"sale"})
+
+    def test_mass_cancel_cancels_several_quotations(self):
+        """Test that the mass cancel wizard still cancels a whole recordset"""
+        orders = self._create_sale_order() | self._create_sale_order()
+
+        self._mass_cancel(orders)
+
+        self.assertEqual(set(orders.mapped("state")), {"cancel"})
