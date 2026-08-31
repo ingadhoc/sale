@@ -138,46 +138,63 @@ class SaleOrderLine(models.Model):
         # por ahora, desactivamos la cancelación de kits
 
         # Manejar órdenes bloqueadas: desbloquear temporalmente sin tracking
-        orders_to_relock = self.mapped("order_id").filtered(lambda o: o.locked)
+        orders = self.mapped("order_id")
+        orders_to_relock = orders.filtered(lambda o: o.locked)
         if orders_to_relock:
             orders_to_relock.with_context(tracking_disable=True).write({"locked": False})
-
-        pack_enable = "pack_ok" in self.env["product.template"]._fields
-        for rec in self.filtered("product_id"):
-            # For product pack compatibility to cancel all of componept in case the product parent is cancel
-            if pack_enable and rec.product_id.pack_ok and rec.pack_type == "detailed" and rec.pack_child_line_ids:
-                rec.pack_child_line_ids.with_context(cancel_from_order=True).button_cancel_remaining()
-
-            old_product_uom_qty = rec.product_uom_qty
-
-            # Resetear printed=False en pickings asociados para evitar contra-entregas
-            # cuando Odoo intente mezclar moves en pickings ya impresos
-            pickings_to_reset = rec.order_id.picking_ids.filtered(
+        try:
+            # Resetear printed=False en pickings abiertos de la orden para poder
+            # cancelar sus moves cuando el tipo de operación restringe cancelar impresos.
+            pickings_to_reset = orders.mapped("picking_ids").filtered(
                 lambda p: p.state not in ("done", "cancel") and p.printed
             )
             if pickings_to_reset:
                 pickings_to_reset.write({"printed": False})
 
-            # Al final permitimos cancelar igual porque es necesario, por ej,
-            # si no se va a entregar y ya está facturado y se quiere hacer
-            # la nota de crédito. además se puede volver a subir la cantidad
-            # si se requiere
-            # if rec.qty_invoiced > rec.qty_delivered:
-            #     raise ValidationError(_(
-            #         'You can not cancel remianing qty to deliver because '
-            #         'there are more product invoiced than the delivered. '
-            #         'You should correct invoice or ask for a refund'))
-            rec.with_context(skip_locked_order_line_check=True).product_uom_qty = (
-                rec.qty_delivered + rec.quantity_returned
-            )
-            rec.order_id.message_post(
-                body=_('Cancel remaining call for line "%s" (id %s), line qty updated from %s to %s')
-                % (rec.name, rec.id, old_product_uom_qty, rec.product_uom_qty)
-            )
+            pack_enable = "pack_ok" in self.env["product.template"]._fields
+            for rec in self.filtered("product_id"):
+                # For product pack compatibility to cancel all of componept in case the product parent is cancel
+                if pack_enable and rec.product_id.pack_ok and rec.pack_type == "detailed" and rec.pack_child_line_ids:
+                    rec.pack_child_line_ids.with_context(cancel_from_order=True).button_cancel_remaining()
 
-        # Volver a bloquear las órdenes que estaban bloqueadas sin generar mensaje
-        if orders_to_relock:
-            orders_to_relock.with_context(tracking_disable=True).write({"locked": True})
+                old_product_uom_qty = rec.product_uom_qty
+
+                # Al final permitimos cancelar igual porque es necesario, por ej,
+                # si no se va a entregar y ya está facturado y se quiere hacer
+                # la nota de crédito. además se puede volver a subir la cantidad
+                # si se requiere
+                # if rec.qty_invoiced > rec.qty_delivered:
+                #     raise ValidationError(_(
+                #         'You can not cancel remianing qty to deliver because '
+                #         'there are more product invoiced than the delivered. '
+                #         'You should correct invoice or ask for a refund'))
+
+                # Cancelamos el remanente SIN pasar por el procurement (skip_procurement).
+                # Si redujéramos la cantidad dejando que se lance el stock rule, el core
+                # genera un move NEGATIVO de compensación por cada tramo de la ruta
+                # (ej. PICK y OUT en entregas de 2 pasos). Ese negativo solo se absorbe
+                # si encuentra un move positivo NO 'done' en el mismo tramo; cuando la
+                # contraparte ya está 'done' (stock pickeado a Salida) o todavía no
+                # existe, el sobrante no puede mergearse y Odoo lo materializa como
+                # contra-entrega (traslado reverso to_refund). En su lugar bajamos la
+                # demanda y cancelamos directamente los moves pendientes de la línea
+                # (= el remanente). Lo ya entregado/'done' no se toca. Ver ticket 118147.
+                rec.with_context(skip_locked_order_line_check=True, skip_procurement=True).product_uom_qty = (
+                    rec.qty_delivered + rec.quantity_returned
+                )
+
+                pending_moves = rec.move_ids.filtered(lambda m: m.state not in ("done", "cancel"))
+                if pending_moves:
+                    pending_moves.with_context(cancel_from_order=True, can_delete=True)._action_cancel()
+
+                rec.order_id.message_post(
+                    body=_('Cancel remaining call for line "%s" (id %s), line qty updated from %s to %s')
+                    % (rec.name, rec.id, old_product_uom_qty, rec.product_uom_qty)
+                )
+        finally:
+            # Volver a bloquear las órdenes que estaban bloqueadas sin generar mensaje.
+            if orders_to_relock:
+                orders_to_relock.with_context(tracking_disable=True).write({"locked": True})
 
     @api.onchange("product_uom_qty")
     def _onchange_product_uom_qty(self):
