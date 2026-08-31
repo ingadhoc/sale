@@ -37,7 +37,7 @@
                             <tbody>
                                 <t t-set="subtotal" t-value="0"/>
                                 <t t-set="rowspan" t-value="len(opt.options_json) if opt.options_json else 1"/>
-                                <t t-foreach="opt.options_json" t-as="item" t-index="item_index">
+                                <t t-foreach="opt.options_json" t-as="item">
                                     <tr>
                                         <td class="text-start" t-if="item_index == 0" t-att-rowspan="rowspan"><t t-esc="op_index"/></td>
                                         <td class="text-start" t-if="item_index != 0" style="display:none"></td> <!-- The following hidden cell is used to keep table alignment when using rowspan for the index column. -->
