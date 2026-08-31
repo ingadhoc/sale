@@ -6,7 +6,11 @@ from odoo import _, fields, models
 from odoo.exceptions import UserError
 from odoo.tools.safe_eval import (
     datetime as safe_eval_datetime,
+)
+from odoo.tools.safe_eval import (
     dateutil as safe_eval_dateutil,
+)
+from odoo.tools.safe_eval import (
     safe_eval,
 )
 
