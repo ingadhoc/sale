@@ -30,10 +30,18 @@ class ResPartner(models.Model):
                         ._get_model_defaults(self._name)
                         .get("specific_property_product_pricelist", False)
                     )
+                skip_specific = False
+                if pricelist.country_group_ids and not partner.country_id:
+                    # La primera lista requiere país y el partner no tiene país
+                    # → Si el default es distinto, NO asignamos specific
+                    skip_specific = True
 
                 if default_pricelist_id:
                     if default_pricelist_id != pricelist.id:
-                        partner.specific_property_product_pricelist = default_pricelist_id
+                        if not skip_specific:
+                            partner.specific_property_product_pricelist = default_pricelist_id
+                        else:
+                            partner.specific_property_product_pricelist = None
                     else:
                         partner.specific_property_product_pricelist = None
                 else:
