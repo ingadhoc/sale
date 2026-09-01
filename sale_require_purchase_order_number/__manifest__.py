@@ -22,7 +22,9 @@
     "version": "19.0.1.0.0",
     "category": "Sales",
     "sequence": 14,
-    "summary": "",
+    "summary": "Track and require the customer purchase order number. Printing it on a "
+    "document or reporting it to a tax authority is done by each localization: "
+    "Argentina, Uruguay and Chile are covered, other countries only store the field.",
     "author": "ADHOC SA",
     "website": "www.adhoc.com.ar",
     "license": "AGPL-3",
