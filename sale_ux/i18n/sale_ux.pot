@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-17 20:24+0000\n"
-"PO-Revision-Date: 2026-07-17 20:24+0000\n"
+"POT-Creation-Date: 2026-09-03 14:59+0000\n"
+"PO-Revision-Date: 2026-09-03 14:59+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -131,6 +131,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__cancel_old_quotations
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
 msgid "Cancel Old Quotations"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model,name:sale_ux.model_sale_mass_cancel_orders
+msgid "Cancel multiple quotations"
 msgstr ""
 
 #. module: sale_ux
@@ -266,6 +271,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:sale_ux.field_res_partner__display_name
 #: model:ir.model.fields,field_description:sale_ux.field_sale_advance_payment_inv__display_name
+#: model:ir.model.fields,field_description:sale_ux.field_sale_mass_cancel_orders__display_name
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order__display_name
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard__display_name
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard_line__display_name
@@ -341,6 +347,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__id
 #: model:ir.model.fields,field_description:sale_ux.field_res_partner__id
 #: model:ir.model.fields,field_description:sale_ux.field_sale_advance_payment_inv__id
+#: model:ir.model.fields,field_description:sale_ux.field_sale_mass_cancel_orders__id
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order__id
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard__id
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard_line__id
@@ -828,9 +835,7 @@ msgstr ""
 #. module: sale_ux
 #. odoo-python
 #: code:addons/sale_ux/models/sale_order.py:0
-msgid ""
-"Unable to cancel this sale order. You must first cancel related bills and "
-"pickings."
+msgid "Unable to cancel %s. You must first cancel related bills and pickings."
 msgstr ""
 
 #. module: sale_ux
