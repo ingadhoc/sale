@@ -73,7 +73,61 @@ class SaleOrder(models.Model):
                 if not invoices_to_validate:
                     continue
                 try:
+<<<<<<< 87c7fec409b5a25c867102beefa91ebeee6c53f2
                     invoices_to_validate.sudo().action_post()
+||||||| c056f823652215a55b76af7120b86f09b8842531
+                    if rec.type_id.invoice_validate_domain:
+                        domain = safe_eval(
+                            rec.type_id.invoice_validate_domain,
+                            {
+                                "datetime": safe_eval_datetime,
+                                "context_today": lambda: fields.Date.context_today(rec),
+                                "relativedelta": safe_eval_dateutil.relativedelta.relativedelta,
+                            },
+                        )
+                        invoices_to_validate = invoices.filtered_domain(domain)
+                    else:
+                        invoices_to_validate = invoices
+                    invoices_to_validate.with_context(sale_type_id=rec.type_id.id).sudo().action_post()
+                    for invoice in invoices_to_validate:  # to avoid "expected singleton" error
+                        if (
+                            invoice.name
+                            and not invoice.line_ids.mapped("move_name")
+                            and invoice.name not in invoice.line_ids.mapped("move_name")
+                        ):
+                            invoice.env.add_to_compute(invoice.line_ids._fields["move_name"], invoice.line_ids)
+=======
+                    if rec.type_id.invoice_validate_domain:
+                        domain = safe_eval(
+                            rec.type_id.invoice_validate_domain,
+                            {
+                                "datetime": safe_eval_datetime,
+                                "context_today": lambda: fields.Date.context_today(rec),
+                                "relativedelta": safe_eval_dateutil.relativedelta.relativedelta,
+                            },
+                        )
+                        invoices_to_validate = invoices.filtered_domain(domain)
+                        # Post message on invoices that don't meet the validation criteria
+                        invoices_not_validated = invoices - invoices_to_validate
+                        if invoices_not_validated:
+                            message = _(
+                                "⚠️Esta factura no se valido porque no cumplio la condicion del tipo de pedido de "
+                                "venta para que sea validad automaticamente. Revisar la FA/OV si tiene que hacer "
+                                "alguna modificacion y luego validarla manualmente."
+                            )
+                            for invoice in invoices_not_validated:
+                                invoice.message_post(body=message)
+                    else:
+                        invoices_to_validate = invoices
+                    invoices_to_validate.with_context(sale_type_id=rec.type_id.id).sudo().action_post()
+                    for invoice in invoices_to_validate:  # to avoid "expected singleton" error
+                        if (
+                            invoice.name
+                            and not invoice.line_ids.mapped("move_name")
+                            and invoice.name not in invoice.line_ids.mapped("move_name")
+                        ):
+                            invoice.env.add_to_compute(invoice.line_ids._fields["move_name"], invoice.line_ids)
+>>>>>>> c3428f49b6a9d41cbc8587cfad0d662102d21a44
                 except Exception as error:
                     message = _(
                         "We couldn't validate the automatically created "
