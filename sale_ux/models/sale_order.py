@@ -183,6 +183,7 @@ class SaleOrder(models.Model):
 
     def _create_invoices(self, grouped=False, final=False, date=None):
         invoices = super()._create_invoices(grouped=grouped, final=final, date=date)
+        self._fix_multicurrency_downpayment_amounts(invoices)
         precision = self.env["decimal.precision"].precision_get("Product Unit of Measure")
         filtered_invoices = invoices.filtered(
             lambda i: (
@@ -193,6 +194,27 @@ class SaleOrder(models.Model):
         filtered_invoices.action_switch_move_type()
         filtered_invoices.mapped("invoice_line_ids").mapped(lambda line: line.write({"quantity": abs(line.quantity)}))
         return invoices
+
+    def _fix_multicurrency_downpayment_amounts(self, invoices):
+        for move in invoices.filtered(lambda m: m.state == "draft" and m.move_type in ("out_invoice", "out_refund")):
+            downpayment_lines = move.invoice_line_ids.filtered(
+                lambda line: line.is_downpayment and line.display_type == "product"
+            )
+            other_currency_dp = downpayment_lines.sale_line_ids.invoice_lines.filtered(
+                lambda line: line.move_id != move
+                and line.move_id.state != "cancel"
+                and line.currency_id != move.currency_id
+            )
+            if not other_currency_dp:
+                continue
+            for line in downpayment_lines:
+                price_unit = line.price_unit
+                move.with_context(skip_is_manually_modified=True).write(
+                    {"invoice_line_ids": [Command.update(line.id, {"price_unit": price_unit + 1.0})]}
+                )
+                move.with_context(skip_is_manually_modified=True).write(
+                    {"invoice_line_ids": [Command.update(line.id, {"price_unit": price_unit})]}
+                )
 
     def action_preview_sale_order(self):
         """Open sale Preview in a new Tab"""
