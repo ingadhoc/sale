@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-04 15:37+0000\n"
-"PO-Revision-Date: 2026-08-04 15:37+0000\n"
+"POT-Creation-Date: 2026-09-04 22:05+0000\n"
+"PO-Revision-Date: 2026-09-04 22:05+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -37,6 +37,17 @@ msgstr ""
 #. odoo-python
 #: code:addons/sale_order_type_automation/models/sale_order_type.py:0
 msgid "Company"
+msgstr ""
+
+#. module: sale_order_type_automation
+#. odoo-python
+#: code:addons/sale_order_type_automation/models/sale_order.py:0
+msgid "Confirm anyway"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: model:ir.actions.server,name:sale_order_type_automation.action_sale_order_confirm_force_background_post
+msgid "Confirm anyway (validate invoice in background)"
 msgstr ""
 
 #. module: sale_order_type_automation
@@ -111,6 +122,12 @@ msgstr ""
 #: code:addons/sale_order_type_automation/models/sale_order_type.py:0
 #: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type__journal_id
 msgid "Invoice Journal"
+msgstr ""
+
+#. module: sale_order_type_automation
+#. odoo-python
+#: code:addons/sale_order_type_automation/models/stock_picking.py:0
+msgid "Invoices to be validated in the background"
 msgstr ""
 
 #. module: sale_order_type_automation
@@ -229,6 +246,14 @@ msgstr ""
 
 #. module: sale_order_type_automation
 #. odoo-python
+#: code:addons/sale_order_type_automation/models/sale_order.py:0
+msgid ""
+"The invoice was left in draft to be validated by the background post "
+"process, %s."
+msgstr ""
+
+#. module: sale_order_type_automation
+#. odoo-python
 #: code:addons/sale_order_type_automation/models/sale_order_type.py:0
 msgid ""
 "The selected 'Payment Journal' is not valid for the selected invoice "
@@ -242,6 +267,14 @@ msgid ""
 "This invoice filter allows you to create some invoices in draft form without"
 " automatically validating them. Therefore, if the condition is met, the "
 "invoice remains in draft status."
+msgstr ""
+
+#. module: sale_order_type_automation
+#. odoo-python
+#: code:addons/sale_order_type_automation/models/sale_order.py:0
+msgid ""
+"This invoice was left in draft to be validated by the background post "
+"process, %(reason)s. The error, if there was one, is logged on %(order)s."
 msgstr ""
 
 #. module: sale_order_type_automation
@@ -305,9 +338,64 @@ msgstr ""
 #. module: sale_order_type_automation
 #. odoo-python
 #: code:addons/sale_order_type_automation/models/sale_order.py:0
+msgid "Validate anyway"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: model:ir.actions.server,name:sale_order_type_automation.action_picking_validate_force_background_post
+msgid "Validate anyway (validate invoice in background)"
+msgstr ""
+
+#. module: sale_order_type_automation
+#. odoo-python
+#: code:addons/sale_order_type_automation/models/sale_order.py:0
 msgid ""
 "We couldn't validate the automatically created invoices (ids %s), you will "
 "need to validate them manually. This is what we get: %s"
+msgstr ""
+
+#. module: sale_order_type_automation
+#. odoo-python
+#: code:addons/sale_order_type_automation/models/account_move.py:0
+msgid ""
+"We tried to validate this invoice on the background but got an error, logged"
+" on %(orders)s."
+msgstr ""
+
+#. module: sale_order_type_automation
+#. odoo-python
+#: code:addons/sale_order_type_automation/models/sale_order.py:0
+msgid ""
+"You can confirm the order anyway. The invoice will be created and validated "
+"later on by the background post process."
+msgstr ""
+
+#. module: sale_order_type_automation
+#. odoo-python
+#: code:addons/sale_order_type_automation/models/sale_order.py:0
+msgid ""
+"You can validate the transfer anyway. The invoice will be created and "
+"validated later on by the background post process."
+msgstr ""
+
+#. module: sale_order_type_automation
+#. odoo-python
+#: code:addons/sale_order_type_automation/models/stock_picking.py:0
+msgid ""
+"You validated %(count)s transfers at once, so their invoices were created "
+"and left to be validated by the background post process."
+msgstr ""
+
+#. module: sale_order_type_automation
+#. odoo-python
+#: code:addons/sale_order_type_automation/models/sale_order.py:0
+msgid "its validation failed and the operation was run again anyway"
+msgstr ""
+
+#. module: sale_order_type_automation
+#. odoo-python
+#: code:addons/sale_order_type_automation/models/sale_order.py:0
+msgid "more than %s transfers were validated at once"
 msgstr ""
 
 #. module: sale_order_type_automation
