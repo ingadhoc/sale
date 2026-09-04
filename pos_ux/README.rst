@@ -51,7 +51,8 @@ Installation
 
 To install this module, you need to:
 
-#. Only need to install the module
+#. Nothing, it is installed automatically together with Point of Sale
+   (``auto_install``).
 
 Configuration
 =============
