@@ -25,6 +25,32 @@ class SaleOrder(models.Model):
         self.ensure_one()
         return self.order_line
 
+    def _get_orders_with_gathering_invoice(self, move_domain):
+        """Orders whose down payment already has an invoice matching `move_domain`.
+
+        Answered with a grouped query on `account.move.line` rather than by reading
+        `invoice_ids`. That relation is built from `order_line.invoice_lines`, which
+        the multi-company record rule on `account.move.line` filters: when the
+        gathering invoice belongs to a company the user has disabled in the company
+        selector it comes back empty and an already invoiced order looks uninvoiced.
+        Reading it through `sudo()` returns the right value but leaves the unfiltered
+        records in the cache entry the user's own reads go through, which desyncs
+        `invoice_ids` from `invoice_count` and breaks the invoice smart button. A
+        query answers the same question and writes nothing to that cache.
+        """
+        downpayment_lines = self.order_line.filtered(lambda line: line.is_downpayment and not line.display_type)
+        if not downpayment_lines:
+            return self.browse()
+        line_to_order = {line.id: line.order_id.id for line in downpayment_lines}
+        domain = [
+            ("sale_line_ids", "in", list(line_to_order)),
+            # same condition as `account.move._is_downpayment()`: no regular sale line
+            "!",
+            ("move_id.line_ids.sale_line_ids.is_downpayment", "=", False),
+        ] + move_domain
+        groups = self.env["account.move.line"].sudo()._read_group(domain, groupby=["sale_line_ids"])
+        return self.browse({line_to_order[line.id] for (line,) in groups if line.id in line_to_order})
+
     @api.depends(
         "is_gathering",
         "state",
@@ -147,12 +173,14 @@ class SaleOrder(models.Model):
 
     @api.depends("is_gathering", "invoice_ids", "invoice_ids.state")
     def _compute_has_gathering_invoice(self):
-        orders_gathering = self.filtered("is_gathering")
-        for rec in orders_gathering:
-            rec.has_gathering_invoice = any(
-                invoice._is_downpayment() for invoice in rec.invoice_ids if invoice.state != "cancel"
-            )
-        (self - orders_gathering).has_gathering_invoice = False
+        invoiced = self.filtered("is_gathering")._get_orders_with_gathering_invoice(
+            [
+                ("move_id.move_type", "in", ("out_invoice", "out_refund")),
+                ("move_id.state", "!=", "cancel"),
+            ]
+        )
+        invoiced.has_gathering_invoice = True
+        (self - invoiced).has_gathering_invoice = False
 
     def action_lock(self):
         super(SaleOrder, self - self.filtered("is_gathering")).action_lock()
