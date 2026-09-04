@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-19 19:53+0000\n"
+"POT-Creation-Date: 2026-07-31 13:36+0000\n"
 "PO-Revision-Date: 2025-12-13 16:10+0000\n"
 "Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
@@ -114,7 +114,10 @@ msgid "Discriminate by sale order line"
 msgstr "Discriminar por línea de venta"
 
 #. module: sale_payment_options
+#: model:ir.model.fields,field_description:sale_payment_options.field_res_company__display_name
+#: model:ir.model.fields,field_description:sale_payment_options.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:sale_payment_options.field_sale_order__display_name
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_order_line__display_name
 #: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option__display_name
 #: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_template__display_name
 #: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard__display_name
@@ -137,7 +140,10 @@ msgstr ""
 "ejemplo, el formato para el recargo de un 6% se aplica con el valor 1.06."
 
 #. module: sale_payment_options
+#: model:ir.model.fields,field_description:sale_payment_options.field_res_company__id
+#: model:ir.model.fields,field_description:sale_payment_options.field_res_config_settings__id
 #: model:ir.model.fields,field_description:sale_payment_options.field_sale_order__id
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_order_line__id
 #: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option__id
 #: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_template__id
 #: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard__id
