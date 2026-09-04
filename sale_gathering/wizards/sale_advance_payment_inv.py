@@ -32,6 +32,21 @@ class SaleAdvancePaymentInvWizard(models.TransientModel):
                     self.with_context(active_ids=uninvoiced_gathering_orders.ids, first_gathering_invoice=True),
                 ).create_invoices()
             remaining_orders = sale_orders - uninvoiced_gathering_orders
+            # a gathering order gets exactly one down payment: creating a second one
+            # duplicates the gathering line and its invoice, which is how the orders
+            # with two down payments were produced
+            duplicated_gathering = remaining_orders.filtered(
+                lambda so: so.is_gathering and self.advance_payment_method in ("fixed", "percentage")
+            )
+            if duplicated_gathering:
+                raise ValidationError(
+                    _(
+                        "These gathering sales already have their gathering invoice, a second one cannot be"
+                        " created: %s.\n\nIf you do not see it on the order, it belongs to another company:"
+                        " enable every company in the company selector to review it.",
+                        ", ".join(duplicated_gathering.mapped("name")),
+                    )
+                )
             if remaining_orders:
                 res = super(
                     SaleAdvancePaymentInvWizard,
