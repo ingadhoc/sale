@@ -16,7 +16,7 @@ class StockPicking(models.Model):
         self = self.with_context(**automation_context)
         res = super()._action_done()
         sale_orders = (
-            self.filtered(lambda p: p.location_id.usage == "customer" or p.location_dest_id.usage == "customer")
+            self.filtered(lambda p: p.location_id._is_outgoing() or p.location_dest_id._is_outgoing())
             .sudo()
             .mapped("sale_id")
         )
