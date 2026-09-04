@@ -25,6 +25,18 @@ class SaleOrder(models.Model):
         self.ensure_one()
         return self.order_line
 
+    def _invalidate_invoices_cache(self):
+        """Drop the cached invoice relations so they can be re-read through `sudo()`.
+
+        `invoice_ids` is computed from `order_line.invoice_lines`, which the
+        multi-company record rule on `account.move.line` filters out: when the
+        gathering invoice belongs to a company the user has disabled, the relation
+        comes back empty and the order looks uninvoiced. The empty value stays in
+        the cache and survives the `sudo()`, so it has to be dropped first.
+        """
+        self.order_line.invalidate_recordset(["invoice_lines"])
+        self.invalidate_recordset(["invoice_ids"])
+
     @api.depends(
         "is_gathering",
         "state",
@@ -148,9 +160,10 @@ class SaleOrder(models.Model):
     @api.depends("is_gathering", "invoice_ids", "invoice_ids.state")
     def _compute_has_gathering_invoice(self):
         orders_gathering = self.filtered("is_gathering")
+        orders_gathering._invalidate_invoices_cache()
         for rec in orders_gathering:
             rec.has_gathering_invoice = any(
-                invoice._is_downpayment() for invoice in rec.invoice_ids if invoice.state != "cancel"
+                invoice._is_downpayment() for invoice in rec.sudo().invoice_ids if invoice.state != "cancel"
             )
         (self - orders_gathering).has_gathering_invoice = False
 
