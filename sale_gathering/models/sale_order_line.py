@@ -59,23 +59,21 @@ class SaleOrderLine(models.Model):
 
     @api.constrains("product_uom_qty")
     def _check_gathering_invoice(self):
-        for rec in self.filtered(
-            lambda x: (
-                x.is_gathering
-                and x.order_id.state == "sale"
-                and x.product_uom_qty > 0
-                and not any(
-                    invoice._is_downpayment()
-                    for invoice in x.order_id.invoice_ids
-                    if invoice.move_type == "out_invoice"
-                    and invoice.state not in ("cancel", "draft")
-                    and invoice.payment_state in ("paid", "in_payment")
+        lines_to_check = self.filtered(
+            lambda x: x.is_gathering and x.order_id.state == "sale" and x.product_uom_qty > 0
+        )
+        lines_to_check.order_id._invalidate_invoices_cache()
+        for rec in lines_to_check:
+            if not any(
+                invoice._is_downpayment()
+                for invoice in rec.order_id.sudo().invoice_ids
+                if invoice.move_type == "out_invoice"
+                and invoice.state not in ("cancel", "draft")
+                and invoice.payment_state in ("paid", "in_payment")
+            ):
+                raise ValidationError(
+                    _("Before adding quantities, you need to create, confirm and pay the gathering invoice.")
                 )
-            )
-        ):
-            raise ValidationError(
-                _("Before adding quantities, you need to create, confirm and pay the gathering invoice.")
-            )
 
     def _compute_qty_to_deliver(self):
         super()._compute_qty_to_deliver()
