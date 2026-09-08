@@ -54,6 +54,6 @@
     "demo": [],
     "test": [],
     "installable": True,
-    "auto_install": True,
+    "auto_install": ["sale_stock", "sale_ux", "stock_ux", "web"],
     "application": False,
 }
