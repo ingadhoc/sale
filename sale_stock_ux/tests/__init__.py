@@ -3,3 +3,4 @@ from . import test_kit_return_uom
 from . import test_return_of_return
 from . import test_stock_info_batching
 from . import test_invoice_status_return
+from . import test_cancel_remaining_partial_return
