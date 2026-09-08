@@ -74,3 +74,22 @@ class SaleOrderLine(models.Model):
                 )
                 total += sign * (converted_price_unit - line.price_unit)
         return total
+
+    def _prepare_invoice_line(self, **optional_values):
+        """Don't inherit a down payment account from another company.
+
+        When invoicing the balance of an order, sale reuses the account of the
+        already invoiced down payment line without checking the company. If that
+        down payment invoice ended up in another company (changing the journal on
+        the draft invoice recomputes account.move.company_id), the foreign account
+        travels to the new invoice line and breaks _check_company, leaving the
+        order with no way to be invoiced at all. Drop it and let account.move.line
+        resolve the account of its own company.
+        """
+        res = super()._prepare_invoice_line(**optional_values)
+        if not self.is_downpayment or not res.get("account_id"):
+            return res
+        account = self.env["account.account"].browse(res["account_id"])
+        if not account.filtered_domain(account._check_company_domain(self.company_id)):
+            del res["account_id"]
+        return res
