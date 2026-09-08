@@ -179,6 +179,10 @@ class SaleOrderLine(models.Model):
         if orders_to_relock:
             orders_to_relock.with_context(tracking_disable=True).write({"locked": True})
 
+        # Aviso fail-safe: si el cancel dejo una contra-entrega fantasma, avisar
+        # (no se corrige nada; el saneo lo dispara el usuario). Tarea 73048.
+        self.mapped("order_id")._notify_phantom_counterdeliveries()
+
     @api.onchange("product_uom_qty")
     def _onchange_product_uom_qty(self):
         """
