@@ -53,6 +53,14 @@ class TestSaleGatheringDeliveryMulticompany(AccountTestInvoicingCommon):
             "default_account_revenue"
         ]
 
+        # When sale_exception is installed, confirming an order that breaks an active rule raises
+        # BaseExceptionError instead of opening the popup (there is no web client to handle it here).
+        # Rules like "Reference Field Required" or "Unapproved Partner" are active by default, so the
+        # orders built below would never reach action_confirm.
+        sale_exception_installed = cls.env["sale.order"]._fields.get("ignore_exception")
+        if sale_exception_installed:
+            cls.env["exception.rule"].search([("active", "=", True)]).write({"active": False})
+
     def _create_gathering_order(self, sale_type=False):
         order_values = {
             "partner_id": self.partner_a.id,
