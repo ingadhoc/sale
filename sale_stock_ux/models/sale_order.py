@@ -4,21 +4,14 @@
 ##############################################################################
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
+from odoo.tools.float_utils import float_compare
 
 
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    delivery_status = fields.Selection(
-        selection_add=[
-            ("no", "Nothing to Deliver"),
-        ],
-        readonly=True,
-        default="no",
-    )
     force_delivery_status = fields.Selection(
         [
-            ("no", "Nothing to Deliver"),
             ("full", "Fully Delivered"),
         ],
         tracking=True,
@@ -39,20 +32,62 @@ class SaleOrder(models.Model):
         self = self.with_context(cancel_from_order=True)
         for order in self.filtered(lambda order: order.picking_ids.filtered(lambda x: x.state == "done")):
             raise UserError(
-                _("Unable to cancel sale order %s as some deliveries" " have already been done.") % (order.name)
+                _("Unable to cancel sale order %s as some deliveries have already been done.") % (order.name)
             )
         return super().action_cancel()
 
-    @api.depends("picking_ids", "picking_ids.state", "force_delivery_status")
+    @api.depends(
+        "picking_ids",
+        "picking_ids.state",
+        "force_delivery_status",
+        "order_line.qty_delivered",
+        "order_line.product_uom_qty",
+    )
     def _compute_delivery_status(self):
+        """
+        Compute delivery status considering both storable products and services.
+        """
         super()._compute_delivery_status()
+        precision = self.env["decimal.precision"].precision_get("Product Unit of Measure")
         for order in self:
-            if not order.picking_ids or all(p.state == "cancel" for p in order.picking_ids):
-                order.delivery_status = "no"
-                continue
             if order.force_delivery_status:
                 order.delivery_status = order.force_delivery_status
                 continue
+
+            consu_lines = order.order_line.filtered(lambda l: l.product_id.type == "consu")
+            service_lines = order.order_line.filtered(lambda l: l.product_id.type == "service")
+
+            if not consu_lines and not service_lines:
+                order.delivery_status = False
+                continue
+
+            if not service_lines:
+                continue
+
+            service_fully_delivered = service_partially_delivered = True
+            for line in service_lines:
+                delivered, ordered = line.qty_delivered, line.product_uom_qty
+                if float_compare(delivered, ordered, precision_digits=precision) < 0:
+                    service_fully_delivered = False
+                    if float_compare(delivered, 0.0, precision_digits=precision) == 0:
+                        service_partially_delivered = False
+                        break
+
+            service_status = (
+                "full" if service_fully_delivered else ("partial" if service_partially_delivered else "pending")
+            )
+
+            if not consu_lines:
+                order.delivery_status = service_status
+                continue
+
+            consu_status = order.delivery_status
+            if consu_status == "full" and service_status == "full":
+                order.delivery_status = "full"
+            elif consu_status in ("partial", "full") or service_status in ("partial", "full"):
+                order.delivery_status = "partial"
+            else:
+                order.delivery_status = "pending"
 
     def write(self, vals):
         self.check_force_delivery_status(vals)
