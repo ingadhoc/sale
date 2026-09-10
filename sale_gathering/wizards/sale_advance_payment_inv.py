@@ -53,7 +53,11 @@ class SaleAdvancePaymentInvWizard(models.TransientModel):
                 )
 
     def _create_invoices(self, sale_orders):
-        invoice = super()._create_invoices(sale_orders)
-        if invoice.invoice_line_ids.filtered("is_downpayment"):
-            invoice.write({"ref": "Acopio"})
-        return invoice
+        invoices = super()._create_invoices(sale_orders)
+        gathering_invoices = invoices.filtered(
+            lambda move: move.invoice_line_ids.filtered(
+                lambda line: line.is_downpayment and line.sale_line_ids.order_id.filtered("is_gathering")
+            )
+        )
+        gathering_invoices.write({"ref": "Acopio"})
+        return invoices
