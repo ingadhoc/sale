@@ -14,17 +14,8 @@ class SaleOrder(models.Model):
 
         super()._recompute_prices()
 
-        discount_enabled = self.env["product.pricelist.item"]._is_discount_feature_enabled()
         for line in self.order_line:
             d2, d3 = saved[line.id]
-            pricelist_discount = 0.0
-            if line.order_id.pricelist_id and discount_enabled and line.pricelist_item_id._show_discount():
-                pricelist_price = line._get_pricelist_price()
-                base_price = line._get_pricelist_price_before_discount()
-                if base_price != 0:
-                    d = (base_price - pricelist_price) / base_price * 100
-                    if (d > 0 and base_price > 0) or (d < 0 and base_price < 0):
-                        pricelist_discount = d
             line.with_context(sale_triple_discount_ux_skip_inverse=True).write(
-                {"discount1": pricelist_discount, "discount2": d2, "discount3": d3}
+                {"discount1": line._get_locked_discount1(), "discount2": d2, "discount3": d3}
             )
