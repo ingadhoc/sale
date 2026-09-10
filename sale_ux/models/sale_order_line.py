@@ -60,6 +60,7 @@ class SaleOrderLine(models.Model):
             and not (x.order_id.pricelist_id and x.pricelist_item_id._show_discount())
         )
         super(SaleOrderLine, self - lines)._compute_discount()
+<<<<<<< 74692a2e99938e9d79d28cce6a6386b2d31138e3
 
     def _compute_product_uom_id(self):
         """Override to respect only_packagings configuration"""
@@ -87,3 +88,22 @@ class SaleOrderLine(models.Model):
         ):
             res["uomDisplayName"] = self.product_uom_id.display_name
         return res
+||||||| 0e0e895a314e30c12fa0e26110b771e8544a905c
+=======
+
+    def _get_downpayment_line_price_unit(self, invoices):
+        total = super()._get_downpayment_line_price_unit(invoices)
+        for line in self.invoice_lines:
+            if line.move_id.state != "posted" or line.move_id in invoices:
+                continue
+            if line.currency_id and self.currency_id and line.currency_id != self.currency_id:
+                sign = 1 if line.move_id.move_type == "out_invoice" else -1
+                converted_price_unit = line.currency_id._convert(
+                    line.price_unit,
+                    self.currency_id,
+                    line.company_id,
+                    line.move_id.invoice_date or line.move_id.date or fields.Date.context_today(self),
+                )
+                total += sign * (converted_price_unit - line.price_unit)
+        return total
+>>>>>>> eaf993bc889c0518d46e56fe217c965d6d42fe6d

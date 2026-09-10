@@ -24,6 +24,7 @@ class AccountMove(models.Model):
         if invoices_to_compute:
             super(AccountMove, invoices_to_compute)._compute_narration()
 
+<<<<<<< 74692a2e99938e9d79d28cce6a6386b2d31138e3
     # Evaluar en próximas versiones si Odoo lo resuelve
     def action_post(self):
         res = super(AccountMove, self).action_post()
@@ -41,3 +42,42 @@ class AccountMove(models.Model):
                 )
                 downpayment_line.price_unit = converted_price_unit
         return res
+||||||| 0e0e895a314e30c12fa0e26110b771e8544a905c
+    def _compute_sale_orders(self):
+        for rec in self:
+            rec.sale_order_ids = rec.invoice_line_ids.mapped("sale_line_ids.order_id")
+
+    def _compute_has_sales(self):
+        moves = self.filtered(lambda move: move.is_sale_document())
+        (self - moves).has_sales = False
+        for rec in moves:
+            rec.has_sales = any(line for line in rec.invoice_line_ids.mapped("sale_line_ids"))
+
+    # Evaluar en proximas verciones si Odoo lo resuelve
+    def action_post(self):
+        res = super(AccountMove, self).action_post()
+        downpayment_lines = self.line_ids.sale_line_ids.filtered(lambda l: l.is_downpayment and not l.display_type)
+        for downpayment_line in downpayment_lines:
+            # When change currency in downpayment
+            if self.currency_id != downpayment_line.currency_id:
+                downpayment_invoice_line = self.invoice_line_ids.filtered(
+                    lambda l: l.is_downpayment and l.sale_line_ids.ids == downpayment_line.ids
+                )
+                downpayment_invoice_line.ensure_one()
+                price_unit = downpayment_invoice_line.price_unit
+                converted_price_unit = self.currency_id._convert(
+                    price_unit, downpayment_line.currency_id, self.company_id, self.invoice_date or fields.Date.today()
+                )
+                downpayment_line.price_unit = converted_price_unit
+        return res
+=======
+    def _compute_sale_orders(self):
+        for rec in self:
+            rec.sale_order_ids = rec.invoice_line_ids.mapped("sale_line_ids.order_id")
+
+    def _compute_has_sales(self):
+        moves = self.filtered(lambda move: move.is_sale_document())
+        (self - moves).has_sales = False
+        for rec in moves:
+            rec.has_sales = any(line for line in rec.invoice_line_ids.mapped("sale_line_ids"))
+>>>>>>> eaf993bc889c0518d46e56fe217c965d6d42fe6d
