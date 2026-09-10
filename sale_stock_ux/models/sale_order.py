@@ -23,6 +23,8 @@ class SaleOrder(models.Model):
         ],
         tracking=True,
         copy=False,
+        help="Forces the delivery status of the order, ignoring the actual deliveries: "
+        "'Fully Delivered' marks it as delivered even if deliveries are missing.",
     )
 
     with_returns = fields.Boolean(

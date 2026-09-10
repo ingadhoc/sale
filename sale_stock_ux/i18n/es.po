@@ -155,6 +155,15 @@ msgid "Force Delivery Status"
 msgstr "Forzar estado de entrega"
 
 #. module: sale_stock_ux
+#: model:ir.model.fields,help:sale_stock_ux.field_sale_order__force_delivery_status
+msgid ""
+"Forces the delivery status of the order, ignoring the actual deliveries: "
+"'Fully Delivered' marks it as delivered even if deliveries are missing."
+msgstr ""
+"Fuerza manualmente el estado de entrega del pedido ignorando las entregas "
+"reales: «Entregado por completo» lo marca como entregado aunque falten entregas."
+
+#. module: sale_stock_ux
 #: model:ir.model.fields.selection,name:sale_stock_ux.selection__sale_order__force_delivery_status__full
 #: model:ir.model.fields.selection,name:sale_stock_ux.selection__sale_order_line__delivery_status__full
 #: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_sales_order_filter
