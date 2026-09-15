@@ -79,4 +79,53 @@
         <field eval="0" name="perm_unlink"/>
     </record>
 
+    <!-- Same reason as the two rules above, for the rest of the stock models
+         mrp_subcontracting restricts on base.group_portal. The domain is scoped to
+         the companies of the user, on top of the global multi-company rule of stock.
+         stock.picking is left out: the portal rule on transfers already covers the
+         orders of the partner. -->
+    <record id="portal_stock_location_rule" model="ir.rule">
+        <field name="name">Ubicaciones (distribuidores)</field>
+        <field name="model_id" ref="stock.model_stock_location"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', user.company_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('group_portal_backend_distributor'))]"/>
+        <field eval="1" name="perm_read"/>
+        <field eval="0" name="perm_write"/>
+        <field eval="0" name="perm_create"/>
+        <field eval="0" name="perm_unlink"/>
+    </record>
+
+    <record id="portal_stock_picking_type_rule" model="ir.rule">
+        <field name="name">Tipos de operación (distribuidores)</field>
+        <field name="model_id" ref="stock.model_stock_picking_type"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', user.company_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('group_portal_backend_distributor'))]"/>
+        <field eval="1" name="perm_read"/>
+        <field eval="0" name="perm_write"/>
+        <field eval="0" name="perm_create"/>
+        <field eval="0" name="perm_unlink"/>
+    </record>
+
+    <record id="portal_stock_move_rule" model="ir.rule">
+        <field name="name">Movimientos de stock (distribuidores)</field>
+        <field name="model_id" ref="stock.model_stock_move"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', user.company_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('group_portal_backend_distributor'))]"/>
+        <field eval="1" name="perm_read"/>
+        <field eval="0" name="perm_write"/>
+        <field eval="0" name="perm_create"/>
+        <field eval="0" name="perm_unlink"/>
+    </record>
+
+    <record id="portal_stock_move_line_rule" model="ir.rule">
+        <field name="name">Movimientos detallados (distribuidores)</field>
+        <field name="model_id" ref="stock.model_stock_move_line"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', user.company_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('group_portal_backend_distributor'))]"/>
+        <field eval="1" name="perm_read"/>
+        <field eval="0" name="perm_write"/>
+        <field eval="0" name="perm_create"/>
+        <field eval="0" name="perm_unlink"/>
+    </record>
+
 </odoo>
