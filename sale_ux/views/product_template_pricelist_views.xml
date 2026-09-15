@@ -11,6 +11,9 @@
                         <field name="name"/>
                         <field name="price"/>
                         <field name="currency_id" column_invisible="True"/>
+                        <button name="action_open_product_pricelist_item" type="object"
+                                icon="fa-external-link" title="Edit pricelist rules"
+                                context="{'pricelist_template_id': parent.id}"/>
                     </list>
                 </field>
             </field>
