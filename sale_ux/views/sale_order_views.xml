@@ -65,6 +65,18 @@
             <xpath expr="//field[@name='order_line']/list//field[@name='discount']" position="after">
                 <button name="action_sale_history" type="object" icon="fa-history" title="Sale History"/>
             </xpath>
+
+            <!-- Buscar por variante y no por plantilla. El name_search de
+                 product.template resuelve la rama de variantes con una subconsulta
+                 correlacionada que Postgres re-ejecuta una vez por plantilla
+                 candidata: 10 s con un catalogo de 182 productos. La busqueda sobre
+                 product.product no tiene ese problema. Ticket 127858, tarea 59012. -->
+            <xpath expr="//field[@name='order_line']/list//field[@name='product_id']" position="attributes">
+                <attribute name="optional">show</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list//field[@name='product_template_id']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
         </field>
     </record>
 
