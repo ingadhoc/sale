@@ -87,3 +87,24 @@ class SaleOrderLine(models.Model):
         ):
             res["uomDisplayName"] = self.product_uom_id.display_name
         return res
+
+    def _get_downpayment_line_price_unit(self, invoices):
+        """Core sums the down payment invoice lines without converting currencies.
+
+        Needed when the down payment invoice currency differs from the order one
+        (account_invoice_move_currency).
+        """
+        total = super()._get_downpayment_line_price_unit(invoices)
+        for line in self.invoice_lines:
+            if line.move_id.state != "posted" or line.move_id in invoices:
+                continue
+            if line.currency_id and self.currency_id and line.currency_id != self.currency_id:
+                sign = 1 if line.move_id.move_type == "out_invoice" else -1
+                converted_price_unit = line.currency_id._convert(
+                    line.price_unit,
+                    self.currency_id,
+                    line.company_id,
+                    line.move_id.invoice_date or line.move_id.date or fields.Date.context_today(self),
+                )
+                total += sign * (converted_price_unit - line.price_unit)
+        return total
