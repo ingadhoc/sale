@@ -12,3 +12,11 @@ class ResConfigSettings(models.TransientModel):
         related="company_id.price_checker_pricelist_id",
         readonly=False,
     )
+
+    def action_open_price_checker(self):
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_url",
+            "url": f"/price-checker/{self.company_id.id}",
+            "target": "new",
+        }

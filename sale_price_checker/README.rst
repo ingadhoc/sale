@@ -17,6 +17,10 @@ Sale Price Checker
 Public web price checker for in-store kiosks: scan a barcode, see the price
 (taxes included). The screen auto-resets 5s after each scan.
 
+The big number is always the price with taxes and the small one below is the
+price without them, no matter whether the product taxes are set as included in
+price or not. When both match (no taxes, or a 0% tax) the small line is hidden.
+
 URL forms
 =========
 
@@ -28,10 +32,10 @@ URL forms
      - Company
      - Pricelist
    * - ``/price-checker``
-     - first active by ``sequence``
+     - current website's (or public user's)
      - company's configured pricelist
    * - ``/price-checker/-/<pricelist_id>``
-     - first active by ``sequence``
+     - current website's (or public user's)
      - that pricelist (override)
    * - ``/price-checker/<company_id>``
      - that company
@@ -40,7 +44,10 @@ URL forms
      - that company
      - that pricelist (override)
 
-The ``-`` placeholder means "default company". Any invalid id, archived
+The ``-`` placeholder means "default company". On a multi-company database
+the bare URL resolves to the website's company, which is not necessarily the
+one being configured: use the *Open Price Checker* button in the settings to
+get the URL of the right company. Any invalid id, archived
 company / pricelist, or pricelist that doesn't belong to the company
 returns **404**.
 
@@ -49,7 +56,9 @@ Configuration
 
 #. *Sales → Settings → Price Checker Pricelist* — pricelist used by the
    checker for the active company. Empty → falls back to the product's
-   Sales Price. The setting only shows when *Pricelists* is enabled.
+   Sales Price. The setting only shows when *Pricelists* is enabled. The
+   *Open Price Checker* button next to it opens the checker of the company
+   being configured.
 
 #. *Products list view* — optional column *Show in Price Checker* (default
    ``True``) to hide / show products in the checker.
