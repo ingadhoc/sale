@@ -161,7 +161,8 @@ msgid ""
 "'Fully Delivered' marks it as delivered even if deliveries are missing."
 msgstr ""
 "Fuerza manualmente el estado de entrega del pedido ignorando las entregas "
-"reales: «Entregado por completo» lo marca como entregado aunque falten entregas."
+"reales: «Entregado por completo» lo marca como entregado aunque falten "
+"entregas."
 
 #. module: sale_stock_ux
 #: model:ir.model.fields.selection,name:sale_stock_ux.selection__sale_order__force_delivery_status__full
