@@ -11,9 +11,9 @@ class PriceCheckerController(http.Controller):
     def _resolve(self, company_id=None, pricelist_id=None):
         """Return (company, pricelist) or None if any id is invalid/archived.
 
-        When ``company_id`` is ``None`` (bare ``/price-checker`` URL), pick
-        the first active company by ``sequence`` (same ordering Odoo uses
-        for the company switcher).
+        When ``company_id`` is ``None`` (bare ``/price-checker`` URL), use the
+        frontend company: the current website's one, or the public user's when
+        website is not installed.
 
         ``pricelist`` may be an empty recordset — that's the ``lst_price``
         fallback path downstream. It happens when no override is requested
@@ -24,7 +24,7 @@ class PriceCheckerController(http.Controller):
         feature is off, the URL form is rejected (returns ``None``).
         """
         if company_id is None:
-            company = request.env["res.company"].sudo().search([], order="sequence, id", limit=1)
+            company = request.env(su=True).company.exists()
         else:
             company = request.env["res.company"].sudo().search([("id", "=", company_id)], limit=1)
         if not company:
@@ -126,18 +126,23 @@ class PriceCheckerController(http.Controller):
 
         taxes = product.taxes_id.filtered(lambda t: not t.company_id or t.company_id == company)
         if taxes:
-            total = taxes.compute_all(price, currency, 1.0, product=product)["total_included"]
+            tax_totals = taxes.compute_all(price, currency, 1.0, product=product)
+            total = tax_totals["total_included"]
+            total_untaxed = tax_totals["total_excluded"]
         else:
-            total = price
+            total = total_untaxed = price
 
+        lang_code = company.partner_id.lang
         return {
             "found": True,
             "name": product.display_name,
             "description_sale": product.description_sale or "",
             "image_url": f"/price-checker/image/{product.id}",
-            "price": format_amount(env, total, currency, lang_code=company.partner_id.lang),
+            "price": format_amount(env, total, currency, lang_code=lang_code),
             "price_untaxed": (
-                format_amount(env, price, currency, lang_code=company.partner_id.lang) if taxes else False
+                format_amount(env, total_untaxed, currency, lang_code=lang_code)
+                if not currency.is_zero(total - total_untaxed)
+                else False
             ),
         }
 

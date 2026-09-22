@@ -60,6 +60,11 @@ msgid ""
 msgstr ""
 
 #. module: sale_price_checker
+#: model_terms:ir.ui.view,arch_db:sale_price_checker.res_config_settings_view_form_inherit
+msgid "Open Price Checker"
+msgstr ""
+
+#. module: sale_price_checker
 #. odoo-javascript
 #: code:addons/sale_price_checker/static/src/price_checker.xml:0
 msgid "Price Checker"
