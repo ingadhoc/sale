@@ -40,8 +40,6 @@
                                 <field name="journal_id" optional="hide"/>
                                 <field name="ref" optional="hide"/>
                                 <field name="product_id" optional="hide"/>
-                                <field name="deferred_start_date" string="Start Date" optional="hide"/>
-                                <field name="deferred_end_date" string="End Date" optional="hide"/>
                                 <field name="tax_ids" widget="many2many_tags" optional="hide"/>
                                 <field name="tax_tag_ids" string="Tax Grids" widget="many2many_tags" optional="hide"/>
                                 <field name="discount_date" optional="hide"/>
