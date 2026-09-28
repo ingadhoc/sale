@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-19 19:48+0000\n"
-"PO-Revision-Date: 2026-06-19 19:48+0000\n"
+"POT-Creation-Date: 2026-09-28 16:18+0000\n"
+"PO-Revision-Date: 2026-09-28 16:18+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -216,6 +216,15 @@ msgstr ""
 msgid ""
 "The gathering balance will be negative (%s), you cannot make this "
 "modification to the order. Order: %s"
+msgstr ""
+
+#. module: sale_gathering
+#. odoo-python
+#: code:addons/sale_gathering/wizards/sale_advance_payment_inv.py:0
+msgid ""
+"These gathering sales already have their gathering invoice, a second one cannot be created: %s.\n"
+"\n"
+"If you do not see it on the order, it belongs to another company: enable every company in the company selector to review it."
 msgstr ""
 
 #. module: sale_gathering
