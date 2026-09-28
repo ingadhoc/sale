@@ -1,6 +1,6 @@
 ##############################################################################
 #
-#    Copyright (C) 2015  ADHOC SA  (http://www.adhoc.com.ar)
+#    Copyright (C) 2026  ADHOC SA  (http://www.adhoc.com.ar)
 #    All Rights Reserved.
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -18,28 +18,19 @@
 #
 ##############################################################################
 {
-    "name": "Sale Order Type Invoicing Policy",
-    "version": "18.0.1.2.0",
+    "name": "Sale Order Type Invoicing Policy Project",
+    "version": "18.0.1.0.0",
     "category": "Sale Management",
     "author": "ADHOC SA",
     "website": "www.adhoc.com.ar",
     "license": "AGPL-3",
     "depends": [
-        "account",
-        "sale_order_type_ux",
-        # agregamos esta depenencia para permitir reembolsar las devoluciones
-        # y para no tener que hacer modulos puente
-        "sale_stock_ux",
-    ],
-    "demo": [
-        "demo/res_partner_demo.xml",
-        "demo/sale_order_demo.xml",
+        "sale_order_type_invoice_policy",
+        "sale_project",
     ],
     "data": [
         "views/sale_order_type_views.xml",
-        "views/stock_picking_views.xml",
-        "data/sale_order_type_data.xml",
     ],
     "installable": True,
-    "auto_install": False,
+    "auto_install": True,
 }

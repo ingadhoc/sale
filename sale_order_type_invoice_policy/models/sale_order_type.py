@@ -21,9 +21,3 @@ class SaleOrderType(models.Model):
         default="by_product",
         help="If you choose prepaid you...",
     )
-
-    services_delivered = fields.Boolean(
-        string="Exclude prepaid services",
-        help="The 'Deliveries' invoice policy is not applicable to prepaid services. "
-        "Recommended for Sales Order lines involving discounts or prepaid services.",
-    )
