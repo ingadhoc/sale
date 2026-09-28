@@ -7,6 +7,8 @@ class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
     def _detect_exceptions(self, rule):
+        if self.env.context.get("test_base_exception"):
+            return super()._detect_exceptions(rule)
         # Skip sale_exception's override, which writes through a second cursor.
         records = BaseExceptionMethod._detect_exceptions(self, rule)
         lines_to_remove_exception = (self - records).filtered(lambda line: rule.id in line.exception_ids.ids)
