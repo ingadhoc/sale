@@ -14,17 +14,15 @@
 Sale Exception Compat
 =====================
 
-Keeps the exception flow that `sale_exception` had before OCA/server-tools#3590,
-where `detect_exceptions()` writes in the ongoing transaction and returns the
-rules instead of writing through a second cursor and raising.
+Keeps the confirmation flow that `sale_exception` had before
+OCA/server-tools#3590: the exceptions are detected before any other module
+overrides `action_confirm`, and a sales order that matches a rule rolls back
+everything the confirmation did and shows the popup.
 
-The upstream mechanism opens a second database connection to store the
-exceptions. That connection writes the same rows the ongoing transaction is
-about to write, so the confirmation either fails with a serialization error or
-blocks until the worker is killed. It also turns the exception into an error
-for any caller outside the backend web client (portal, e-commerce, API, cron),
-because the handler that translates it into a popup is only registered in
-`web.assets_backend`.
+The replacement of `detect_exceptions()` itself lives in `base_exception_compat`,
+because it is defined on the abstract model every exception module inherits
+from and it also covers `stock_exception` and any other one. This module only
+keeps what is specific to sales.
 
 Installation
 ============
