@@ -4,12 +4,15 @@ from odoo.tests import tagged
 
 @tagged("post_install", "-at_install")
 class TestInvoiceStatusReturn(AccountTestInvoicingCommon):
-    """Estado de facturación de la OV tras devoluciones (ticket 123997).
+    """Estado y saldo pendiente de la OV tras devoluciones (ticket 123997).
 
     En ``sale_stock_ux`` una devolución PARCIAL totalmente facturada debe
     quedar "invoiced" (lo entregado neto se facturó), pero una devolución
     TOTAL debe caer a "no" (no queda nada por facturar), igual que el core de
     Odoo. Antes del fix la devolución total quedaba erróneamente "invoiced".
+
+    El monto pendiente (``amount_to_invoice``) tiene que acompañar a ese
+    estado: una línea "invoiced" no puede dejar saldo sin facturar.
     """
 
     @classmethod
@@ -114,3 +117,28 @@ class TestInvoiceStatusReturn(AccountTestInvoicingCommon):
         self._validate(order.picking_ids)
         self._invoice(order)
         self.assertEqual(line.invoice_status, "invoiced")
+
+    def test_partial_return_leaves_no_amount_to_invoice(self):
+        """Devolución parcial: tras la nota de crédito no queda saldo pendiente."""
+        order = self._create_order(2.0)
+        line = order.order_line
+        delivery = order.picking_ids
+        self._validate(delivery)
+        self._invoice(order)
+        self._make_return(delivery, quantity=1.0)
+        self._invoice(order)
+
+        self.assertEqual(line.invoice_status, "invoiced")
+        self.assertAlmostEqual(line.amount_to_invoice, 0.0, places=2)
+        self.assertAlmostEqual(line.untaxed_amount_to_invoice, 0.0, places=2)
+        self.assertAlmostEqual(order.amount_to_invoice, 0.0, places=2)
+
+    def test_no_return_keeps_core_amount_to_invoice(self):
+        """Sin devolución el monto pendiente sigue siendo el del core."""
+        order = self._create_order(3.0)
+        line = order.order_line
+        self.assertAlmostEqual(line.amount_to_invoice, line.price_total, places=2)
+
+        self._validate(order.picking_ids)
+        self._invoice(order)
+        self.assertAlmostEqual(line.amount_to_invoice, 0.0, places=2)
