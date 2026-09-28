@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <!-- Sale Portal Distributor CRUD for Stock Warehouse with MRP Subcontrating -->
+    <record id="portal_warehouses_subcontractor_rule" model="ir.rule">
+        <field name="name">Portal Distributor Warehouses Subcontractor</field>
+        <field name="model_id" ref="stock.model_stock_warehouse"/>
+        <field name="domain_force">[(1 ,'=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_portal_backend_distributor'))]"/>
+        <field eval="1" name="perm_unlink"/>
+        <field eval="0" name="perm_write"/>
+        <field eval="0" name="perm_read"/>
+        <field eval="0" name="perm_create"/>
+    </record>
+
+    <!-- Sale Portal Distributor CRUD for UoM Subcontractor -->
+    <record id="portal_uom_subcontractor_rule" model="ir.rule">
+        <field name="name">Portal Distributor UoM Subcontractor</field>
+        <field name="model_id" ref="uom.model_uom_uom"/>
+        <field name="domain_force">[(1 ,'=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_portal_backend_distributor'))]"/>
+        <field eval="1" name="perm_unlink"/>
+        <field eval="0" name="perm_write"/>
+        <field eval="0" name="perm_read"/>
+        <field eval="0" name="perm_create"/>
+    </record>
+
+    <!-- Sale Portal Distributor CRUD for Stock Locations Subcontractor -->
+    <record id="portal_sale_order_user_rule" model="ir.rule">
+        <field name="name">Portal Distributor Stock Locations Subcontractor</field>
+        <field name="model_id" ref="stock.model_stock_location"/>
+        <field name="domain_force">[(1 ,'=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_portal_backend_distributor'))]"/>
+        <field eval="1" name="perm_unlink"/>
+        <field eval="0" name="perm_write"/>
+        <field eval="0" name="perm_read"/>
+        <field eval="0" name="perm_create"/>
+    </record>
+
+</odoo>
