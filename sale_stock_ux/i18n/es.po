@@ -224,9 +224,8 @@ msgstr "Solo los usuarios con \"%s / %s\" pueden setear Entregado manualmente"
 #. module: sale_stock_ux
 #. odoo-python
 #: code:addons/sale_stock_ux/models/sale_order.py:0
-#, fuzzy
 msgid "Only users with \"%s\" can Set Delivered manually"
-msgstr "Solo los usuarios con \"%s / %s\" pueden setear Entregado manualmente"
+msgstr "Solo los usuarios con \"%s\" pueden setear Entregado manualmente"
 
 #. module: sale_stock_ux
 #: model:ir.model.fields,field_description:sale_stock_ux.field_stock_move__sale_id
