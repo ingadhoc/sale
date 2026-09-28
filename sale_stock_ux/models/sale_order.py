@@ -78,10 +78,10 @@ class SaleOrder(models.Model):
             group = self.env.ref("base.group_system").sudo()
             if group.privilege_id:
                 raise UserError(
-                    _('Only users with "%s / %s" can Set Delivered manually') % (group.privilege_id.name, group.name)
+                    _('Only users with "%s / %s" can Set Delivered manually', group.privilege_id.name, group.name)
                 )
             else:
-                raise UserError(_('Only users with "%s" can Set Delivered manually') % (group.name))
+                raise UserError(_('Only users with "%s" can Set Delivered manually', group.name))
 
     def _get_protected_fields(self):
         return super()._get_protected_fields() + ["picking_policy", "warehouse_id"]
