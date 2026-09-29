@@ -1,6 +1,10 @@
+import logging
+
 from odoo import Command, _, api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools import str2bool
+
+_logger = logging.getLogger(__name__)
 
 
 class SaleOrder(models.Model):
@@ -114,10 +118,17 @@ class SaleOrder(models.Model):
     def _get_invoiceable_lines(self, final=False):
         """Return the invoiceable lines for order `self`."""
         invoiceable_lines = super()._get_invoiceable_lines(final=final)
-        for rec in self.filtered(lambda x: x.is_gathering and x.gathering_balance >= -1.0):
+        gathering_orders = self.filtered(lambda x: x.is_gathering and x.gathering_balance >= -1.0)
+        for rec in gathering_orders:
+            # the down payment is only invoiced along with the goods being withdrawn: on its own
+            # it is billed whole and credits the entire gathering, once per run, with no limit
+            if not invoiceable_lines.filtered(lambda line: line.order_id == rec and not line.is_downpayment):
+                invoiceable_lines -= invoiceable_lines.filtered(lambda line: line.order_id == rec)
+                continue
             for line in rec.order_line.filtered("is_downpayment"):
                 if final:
                     invoiceable_lines |= line
+        if gathering_orders:
             invoiceable_lines = invoiceable_lines.filtered(
                 lambda line: line.display_type not in ["line_section", "line_note"]
             )
@@ -251,6 +262,11 @@ class SaleOrder(models.Model):
                     lambda l: not l.is_downpayment and l.display_type == "product"
                 )
                 if not regular_lines:
+                    # without goods to prorate against, the down payment keeps its full price
+                    _logger.warning(
+                        "Gathering invoice %s has no regular line: down payment left untouched at its full price",
+                        invoice.id,
+                    )
                     continue
 
                 tax_groups = {}
