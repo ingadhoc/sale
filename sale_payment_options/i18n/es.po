@@ -30,6 +30,12 @@ msgstr "% OV"
 #. module: sale_payment_options
 #. odoo-python
 #: code:addons/sale_payment_options/models/sale_order_line.py:0
+msgid "%(card_installment)s: %(installments)s"
+msgstr "%(card_installment)s: %(installments)s"
+
+#. module: sale_payment_options
+#. odoo-python
+#: code:addons/sale_payment_options/models/sale_order_line.py:0
 msgid "%(installment_qty)s installments of %(amount)s"
 msgstr "%(installment_qty)s cuotas de %(amount)s"
 
@@ -270,6 +276,11 @@ msgid ""
 msgstr ""
 "Imprime los importes de las cuotas debajo de cada línea del pedido de venta "
 "en lugar de la tabla de opciones de pago de toda la orden."
+
+#. module: sale_payment_options
+#: model:ir.actions.report,name:sale_payment_options.action_report_saleorder_payment_options
+msgid "Quotation / Order (Payment Options)"
+msgstr "Presupuesto / Pedido (Opciones de pago)"
 
 #. module: sale_payment_options
 #: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option__sale_order_id

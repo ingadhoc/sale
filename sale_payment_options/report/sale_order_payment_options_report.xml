@@ -1,14 +1,24 @@
 <odoo>
+    <!-- Entry point of the payment options report. It calls the standard wrapper, which is where
+         the localizations route the document to their own version of it, instead of rendering the
+         document itself: rendering it here would print the generic quotation in every country. -->
+    <template id="report_saleorder_payment_options">
+        <t t-set="docs" t-value="docs.with_context(print_payment_options=True)"/>
+        <t t-call="sale.report_saleorder_raw"/>
+    </template>
+
     <template id="report_saleorder_payment_options_document" inherit_id="sale.report_saleorder_document">
-        <!-- The order totals are replaced by the payment options table, so they are only hidden
-             when that table is actually printed: not when the order has no payment options, and
-             not when the options are discriminated per line (there the standard totals, with the
-             tax discrimination each localization defines, are the only summary left). -->
-        <xpath expr="//div[@name='so_total_summary']" position="attributes">
-            <attribute name="t-attf-style">#{'display: none;' if doc.payment_option_ids and not doc.company_id.sale_payment_options_by_line else ''}</attribute>
+        <xpath expr="//t[@t-set='display_taxes']" position="after">
+            <t t-set="print_payment_options" t-value="doc.env.context.get('print_payment_options') and doc.payment_option_ids"/>
+            <t t-set="payment_options_by_line" t-value="print_payment_options and doc.company_id.sale_payment_options_by_line"/>
+        </xpath>
+        <!-- Per line options are computed on the line amount taxes included, so the line has to
+             print that amount and not its net subtotal, or the installments tie to no printed figure. -->
+        <xpath expr="//t[@t-set='price_field']" position="attributes">
+            <attribute name="t-value">'price_total' if (hide_taxes_details or doc.company_price_include == 'tax_included' or payment_options_by_line) else 'price_subtotal'</attribute>
         </xpath>
         <xpath expr="//tr[@name='tr_product']" position="after">
-            <t t-if="doc.company_id.sale_payment_options_by_line and not is_section and not is_subsection and not is_note and not is_combo and not line.is_downpayment">
+            <t t-if="payment_options_by_line and not is_section and not is_subsection and not is_note and not is_combo and not line.is_downpayment">
                 <t t-set="installments_display" t-value="line._get_payment_options_installments_display()"/>
                 <tr t-if="installments_display" name="tr_payment_options_installments" class="fst-italic o_line_note">
                     <td name="td_payment_options_installments" colspan="99" t-att-class="padding_class">
@@ -18,7 +28,7 @@
             </t>
         </xpath>
         <xpath expr="//div[@name='so_total_summary']" position="after">
-            <t t-if="doc.payment_option_ids and not doc.company_id.sale_payment_options_by_line">
+            <t t-if="print_payment_options and not payment_options_by_line">
                 <h3>Payment Options</h3>
                 <div>
                     <table class="o_has_total_table table o_main_table table-borderless">

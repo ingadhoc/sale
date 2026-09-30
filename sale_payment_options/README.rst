@@ -22,7 +22,7 @@ Allows defining and displaying multiple payment options on quotations and sales 
 - Visual display of payment options in the order.
 - Automatic recalculation if the order total changes.
 - Each payment option can have multiple installment plans.
-- Payment options are shown in the standard quotation / sales order PDF, with tables, subtotals, and totals.
+- Payment options are printed from their own report action, with tables, subtotals, and totals.
 - Handles missing or malformed data gracefully in reports.
 - Optionally, print the installment amounts per sale order line instead of the order-wide table.
 
@@ -42,17 +42,29 @@ To print the installment amounts discriminated by line, you need to:
 #. Enable *Payment Options Display: Discriminate by sale order line*.
 
 With that option enabled the printed quotation shows, under each line, the amount per
-installment of every payment option (e.g. *3 installments of $ 41,600.00 | 6 installments
-of $ 24,000.00*), the order-wide payment options table is not printed and the standard
-totals summary is shown instead. The setting is per company.
+installment of every payment option, prefixed with the name of its installment plan (e.g.
+*Cash discount (CASH): 1 installments of $ 41,600.00 | Plan 6 (CARD): 6 installments of
+$ 24,000.00*), and the order-wide payment options table is not printed. The setting is per
+company.
 
 The installment amounts are always computed on the line amount with taxes included, no
 matter whether the report prints the line amounts with or without taxes: they are what
 the customer is going to pay.
 
-Everything is printed on the standard quotation report, so the tax discrimination rules of
-each localization are respected (in Argentina, the *Discriminate Taxes* setting of the sale
-order type).
+Printing
+========
+
+The module adds a second print action, *Quotation / Order (Payment Options)*, next to the
+standard one. The standard action prints the quotation as always, without any payment
+option; this one prints it with them.
+
+Both print the same document: the report action only calls the standard wrapper with a flag
+in the context, instead of rendering the quotation document itself. That is what keeps the
+localizations working, because they register their own version of the document on that
+wrapper (in Argentina, the header, the identification block and the *Discriminate Taxes*
+setting of the sale order type).
+
+The totals summary of the order is always printed, with the payment options below it.
 
 Usage
 =====
@@ -62,8 +74,9 @@ Usage
 #. Select a template or add payment lines manually.
 #. Save to apply the payment options to the order.
 #. The summary appears in the order (read-only).
-#. When printing the quotation, payment options are shown as a table with installment
-   details and totals, or discriminated by line if the setting above is enabled.
+#. Print with *Quotation / Order (Payment Options)* to get them on the PDF, as a table
+   with installment details and totals, or discriminated by line if the setting above is
+   enabled.
 
 Bug Tracker
 ===========
