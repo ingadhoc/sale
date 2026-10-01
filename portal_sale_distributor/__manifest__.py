@@ -50,6 +50,6 @@
             "portal_sale_distributor/static/src/js/user_menu_distributor.js",
         ],
     },
-    "installable": True,
+    "installable": False,
     "auto_install": False,
 }

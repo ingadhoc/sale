@@ -15,7 +15,7 @@
         "views/res_config_settings_views.xml",
     ],
     "demo": [],
-    "installable": True,
+    "installable": False,
     "auto_install": True,
     "application": False,
 }

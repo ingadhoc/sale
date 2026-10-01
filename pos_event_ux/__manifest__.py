@@ -7,7 +7,7 @@
         "pos_event_sale",
     ],
     "data": [],
-    "installable": True,
+    "installable": False,
     "auto_install": False,
     "license": "LGPL-3",
 }

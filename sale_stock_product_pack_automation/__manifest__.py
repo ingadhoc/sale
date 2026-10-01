@@ -10,7 +10,7 @@
         "sale_stock_product_pack_ux",
         "sale_order_type_automation",
     ],
-    "installable": True,
+    "installable": False,
     "auto_install": True,
     "application": False,
 }

@@ -10,7 +10,7 @@
         "sale_stock_ux",
         "sale_stock_product_pack",
     ],
-    "installable": True,
+    "installable": False,
     "auto_install": True,
     "application": False,
 }

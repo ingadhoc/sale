@@ -9,7 +9,7 @@
         "sale_exception_print",
     ],
     "data": [],
-    "installable": True,
+    "installable": False,
     "auto_install": True,
     "application": False,
 }

@@ -33,7 +33,7 @@
         "views/sale_order_views.xml",
         "views/loyalty_program_views.xml",
     ],
-    "installable": True,
+    "installable": False,
     "auto_install": True,
     "application": False,
 }

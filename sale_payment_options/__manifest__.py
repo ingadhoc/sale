@@ -34,7 +34,7 @@
         "wizard/sale_payment_option_wizard_views.xml",
         "report/sale_order_payment_options_report.xml",
     ],
-    "installable": True,
+    "installable": False,
     "application": False,
     "auto_install": False,
     "assets": {

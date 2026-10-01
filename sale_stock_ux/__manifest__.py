@@ -53,7 +53,7 @@
     },
     "demo": [],
     "test": [],
-    "installable": True,
+    "installable": False,
     "auto_install": ["sale_stock", "sale_ux", "stock_ux", "web"],
     "application": False,
 }

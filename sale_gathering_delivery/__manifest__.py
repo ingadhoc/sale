@@ -30,7 +30,7 @@
         "sale_gathering",
         "delivery",
     ],
-    "installable": True,
+    "installable": False,
     "auto_install": True,
     "application": False,
 }
