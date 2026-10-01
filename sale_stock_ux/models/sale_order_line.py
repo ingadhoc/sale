@@ -322,6 +322,51 @@ class SaleOrderLine(models.Model):
                 line.qty_to_invoice = qty_to_invoice_corrected
 
     @api.depends(
+        "discount",
+        "price_total",
+        "product_uom_qty",
+        "qty_delivered",
+        "qty_invoiced_posted",
+        "quantity_returned",
+    )
+    def _compute_amount_to_invoice(self):
+        """
+        El calculo original usa la cantidad pedida sin restar las devoluciones,
+        asi que una linea devuelta y acreditada queda facturada por completo
+        pero con saldo pendiente. Usamos la misma cantidad neta que el estado.
+        Con politica "segun lo entregado" no hace falta: qty_delivered ya viene
+        neto de devoluciones.
+        """
+        super()._compute_amount_to_invoice()
+        for line in self:
+            if not line.product_uom_qty or not line.quantity_returned:
+                continue
+            if line.product_id.invoice_policy == "delivery":
+                continue
+            qty_to_invoice = line.product_uom_qty - line.quantity_returned - line.qty_invoiced_posted
+            line.amount_to_invoice = line.price_total / line.product_uom_qty * qty_to_invoice
+
+    @api.depends(
+        "state",
+        "product_id",
+        "untaxed_amount_invoiced",
+        "qty_delivered",
+        "product_uom_qty",
+        "price_unit",
+        "quantity_returned",
+    )
+    def _compute_untaxed_amount_to_invoice(self):
+        """Mismo criterio que _compute_amount_to_invoice, sin impuestos."""
+        super()._compute_untaxed_amount_to_invoice()
+        for line in self:
+            if not line.product_uom_qty or not line.quantity_returned:
+                continue
+            if line.product_id.invoice_policy == "delivery":
+                continue
+            returned_amount = line.price_subtotal / line.product_uom_qty * line.quantity_returned
+            line.untaxed_amount_to_invoice = max(line.untaxed_amount_to_invoice - returned_amount, 0.0)
+
+    @api.depends(
         "order_id.force_invoiced_status",
         "state",
         "product_uom_qty",
