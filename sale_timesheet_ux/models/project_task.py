@@ -5,7 +5,11 @@ class ProjectTask(models.Model):
     _inherit = "project.task"
 
     order_id = fields.Many2one(
-        "sale.order", "Related Sales Order", store=True, help="Sales order to which the task is linked."
+        "sale.order",
+        "Related Sales Order",
+        store=True,
+        index="btree_not_null",
+        help="Sales order to which the task is linked.",
     )
 
     def _get_timesheet(self):
