@@ -30,6 +30,12 @@ msgstr "% OV"
 #. module: sale_payment_options
 #. odoo-python
 #: code:addons/sale_payment_options/models/sale_order_line.py:0
+msgid "%(card_installment)s: %(installments)s"
+msgstr "%(card_installment)s: %(installments)s"
+
+#. module: sale_payment_options
+#. odoo-python
+#: code:addons/sale_payment_options/models/sale_order_line.py:0
 msgid "%(installment_qty)s installments of %(amount)s"
 msgstr "%(installment_qty)s cuotas de %(amount)s"
 
