@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="sale_offline_app.OrdersScreen">
+        <div class="p-3 border-bottom">
+            <button type="button" class="btn btn-primary btn-lg w-100"
+                t-att-disabled="!readyCount or data.sending" t-on-click="() => preventa.sendOrders()">
+                <i t-attf-class="fa {{ data.sending ? 'fa-circle-o-notch fa-spin' : 'fa-cloud-upload' }} me-2"/>
+                Enviar pedidos (<t t-esc="readyCount"/>)
+            </button>
+            <div class="form-check form-switch mt-3">
+                <input class="form-check-input" type="checkbox" role="switch" id="preventa_auto_send"
+                    t-att-checked="data.autoSend" t-on-change="onToggleAutoSend"/>
+                <label class="form-check-label" for="preventa_auto_send">
+                    Enviar automáticamente cuando hay conexión
+                </label>
+            </div>
+            <small t-if="data.lastSend" class="text-muted d-block mt-2">
+                Último envío: <t t-esc="formatDate(data.lastSend.date)"/> (<t t-esc="data.lastSend.sent"/> pedidos)
+            </small>
+        </div>
+        <div t-if="!sections.length" class="p-4 text-center text-muted">Todavía no hay pedidos.</div>
+        <t t-foreach="sections" t-as="section" t-key="section.key">
+            <h6 class="px-3 pt-3 pb-1 text-uppercase text-muted small">
+                <t t-esc="section.title"/> (<t t-esc="section.orders.length"/>)
+            </h6>
+            <ul class="list-group list-group-flush">
+                <li t-foreach="section.orders" t-as="order" t-key="order.uuid" class="list-group-item list-group-item-action"
+                    role="button" t-on-click="() => props.onOpenOrder(order)">
+                    <div class="d-flex justify-content-between">
+                        <span class="fw-bold" t-esc="order.partner_name"/>
+                        <i t-if="order.state === 'sent'" class="fa fa-check text-success"/>
+                        <i t-elif="order.state === 'ready'" class="fa fa-clock-o text-primary"/>
+                        <i t-elif="order.state === 'rejected'" class="fa fa-exclamation-triangle text-danger"/>
+                    </div>
+                    <small class="text-muted" t-esc="orderInfo(order)"/>
+                    <small t-if="order.reject_reason" class="d-block text-danger" t-esc="order.reject_reason"/>
+                </li>
+            </ul>
+        </t>
+    </t>
+</templates>

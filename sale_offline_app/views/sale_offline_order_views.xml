@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sale_offline_order_view_list" model="ir.ui.view">
+        <field name="name">sale.offline.order.list</field>
+        <field name="model">sale.offline.order</field>
+        <field name="arch" type="xml">
+            <list create="false" edit="false" decoration-danger="conversion_state == 'error'">
+                <field name="create_date" string="Received"/>
+                <field name="create_uid" string="Salesperson" widget="many2one_avatar_user"/>
+                <field name="partner_name"/>
+                <field name="line_count"/>
+                <field name="amount_total"/>
+                <field name="sale_order_id"/>
+                <field name="conversion_state" widget="badge" decoration-info="conversion_state == 'pending'" decoration-success="conversion_state == 'done'" decoration-danger="conversion_state == 'error'"/>
+                <field name="uuid" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="sale_offline_order_view_form" model="ir.ui.view">
+        <field name="name">sale.offline.order.form</field>
+        <field name="model">sale.offline.order</field>
+        <field name="arch" type="xml">
+            <form create="false" edit="false">
+                <header>
+                    <button name="action_convert" type="object" string="Convert now" class="btn-primary" invisible="conversion_state != 'pending'" groups="sales_team.group_sale_manager"/>
+                    <button name="action_retry" type="object" string="Retry" invisible="conversion_state != 'error'" groups="sales_team.group_sale_manager"/>
+                    <field name="conversion_state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="partner_name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="create_uid" string="Salesperson" widget="many2one_avatar_user"/>
+                            <field name="amount_total"/>
+                            <field name="line_count"/>
+                            <field name="sale_order_id"/>
+                        </group>
+                        <group>
+                            <field name="create_date" string="Received"/>
+                            <field name="uuid"/>
+                        </group>
+                    </group>
+                    <field name="error_message" invisible="conversion_state != 'error'" class="text-danger"/>
+                    <field name="payload_text" widget="code" options="{'mode': 'javascript'}"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="sale_offline_order_view_search" model="ir.ui.view">
+        <field name="name">sale.offline.order.search</field>
+        <field name="model">sale.offline.order</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="uuid"/>
+                <field name="create_uid" string="Salesperson"/>
+                <filter name="pending" string="Pending" domain="[('conversion_state', 'in', ['pending'])]"/>
+                <filter name="error" string="Error" domain="[('conversion_state', 'in', ['error'])]"/>
+                <filter name="done" string="Converted" domain="[('conversion_state', 'in', ['done'])]"/>
+                <separator/>
+                <filter name="create_date" string="Received" date="create_date"/>
+                <group>
+                    <filter name="group_user" string="Salesperson" context="{'group_by': 'create_uid'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="sale_offline_order_action" model="ir.actions.act_window">
+        <field name="name">Offline Orders</field>
+        <field name="res_model">sale.offline.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No offline orders yet</p>
+            <p>Orders sent from the offline sales app arrive here before becoming sale orders.</p>
+        </field>
+    </record>
+
+    <menuitem id="sale_offline_order_menu"
+        action="sale_offline_order_action"
+        parent="sale.sale_order_menu"
+        sequence="30"/>
+</odoo>

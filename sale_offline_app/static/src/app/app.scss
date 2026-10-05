@@ -1,0 +1,40 @@
+html, body {
+    height: 100%;
+}
+
+.o_preventa_header {
+    background-color: #714B67;
+    min-height: 56px;
+}
+
+.o_preventa_search {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.o_preventa_suggestions {
+    max-height: 45vh;
+    overflow-y: auto;
+}
+
+.o_preventa_qty {
+    max-width: 7rem;
+}
+
+.o_preventa_lock {
+    background-color: #714B67;
+}
+
+.o_preventa_pin_dot {
+    width: 16px;
+    height: 16px;
+    border: 2px solid white;
+    border-radius: 50%;
+}
+
+.o_preventa_keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 80px);
+    gap: 12px;
+}

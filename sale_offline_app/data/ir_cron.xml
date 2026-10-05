@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="cron_convert_offline_orders" model="ir.cron">
+        <field name="name">Offline sales app: convert received orders</field>
+        <field name="model_id" ref="model_sale_offline_order"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_convert_pending()</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">5</field>
+        <field name="interval_type">minutes</field>
+        <field name="active">True</field>
+    </record>
+</odoo>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_users_offline_pin_wizard_view_form" model="ir.ui.view">
+        <field name="name">res.users.offline.pin.wizard.form</field>
+        <field name="model">res.users.offline.pin.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <p class="text-muted">
+                    Asked by the offline sales app every time it is opened. Leave both empty to remove it.
+                    Takes effect on the device at the next sync.
+                </p>
+                <group>
+                    <field name="pin" password="True" placeholder="4 to 6 digits"/>
+                    <field name="pin_confirm" password="True"/>
+                </group>
+                <footer>
+                    <button name="action_save" type="object" string="Save" class="btn-primary"/>
+                    <button string="Discard" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
