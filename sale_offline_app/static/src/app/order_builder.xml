@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="sale_offline_app.OrderBuilder">
+        <div t-if="activity" class="px-3 py-2 bg-info-subtle small">
+            <i class="fa fa-shopping-basket me-1"/><t t-esc="activity.summary"/>
+        </div>
+        <div class="o_preventa_search p-2 bg-body border-bottom">
+            <div class="input-group input-group-lg">
+                <input type="search" class="form-control" placeholder="Nombre, código o código de barras"
+                    t-ref="search" t-model="state.query" t-on-input="onSearchInput" t-on-keydown="onSearchKeydown"
+                    autocomplete="off" enterkeyhint="search"/>
+                <button t-if="cameraSupported" type="button" class="btn btn-secondary" t-on-click="onCamera" title="Escanear con la cámara">
+                    <i class="fa fa-camera"/>
+                </button>
+            </div>
+            <div t-if="suggestions.length" class="list-group mt-1 o_preventa_suggestions">
+                <button t-foreach="suggestions" t-as="product" t-key="product.id" type="button"
+                    class="list-group-item list-group-item-action" t-on-click="() => this.select(product)">
+                    <div t-esc="product.display_name"/>
+                    <small class="text-muted">
+                        <t t-esc="productHint(product)"/>
+                    </small>
+                </button>
+            </div>
+            <div class="d-flex gap-2 mt-2">
+                <input type="number" inputmode="decimal" min="0" step="any" class="form-control form-control-lg o_preventa_qty"
+                    t-model="state.quantity" t-on-keydown="(ev) => ev.key === 'Enter' and this.add()"/>
+                <button type="button" class="btn btn-primary btn-lg flex-grow-1" t-att-disabled="!state.product" t-on-click="add">
+                    <i class="fa fa-plus me-1"/>Agregar
+                </button>
+            </div>
+        </div>
+        <div t-if="!order or !order.lines.length" class="p-4 text-center text-muted">
+            Buscá o escaneá un producto para empezar el pedido.
+        </div>
+        <t t-else="">
+            <t t-set="orderTotals" t-value="this.totals"/>
+            <ul class="list-group list-group-flush">
+                <li t-foreach="order.lines" t-as="line" t-key="line.product_id" class="list-group-item d-flex justify-content-between">
+                    <div class="me-2">
+                        <div t-esc="line.name"/>
+                        <small class="text-muted">
+                            <t t-esc="line.quantity"/> × <t t-esc="preventa.formatAmount(line.price_unit)"/> s/imp.
+                        </small>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="text-end text-nowrap">
+                            <div class="fw-bold" t-esc="preventa.formatAmount(orderTotals.lines[line_index].included)"/>
+                            <small class="text-muted">c/imp.</small>
+                        </div>
+                        <button type="button" class="btn btn-link text-danger fs-4 px-2" title="Borrar línea"
+                            t-on-click="() => this.removeLine(line)">
+                            <i class="fa fa-trash"/>
+                        </button>
+                    </div>
+                </li>
+            </ul>
+            <div class="p-3 border-top">
+                <div class="d-flex justify-content-between text-muted">
+                    <span>Subtotal sin impuestos</span>
+                    <span t-esc="preventa.formatAmount(orderTotals.excluded)"/>
+                </div>
+                <div class="d-flex justify-content-between text-muted">
+                    <span>Impuestos</span>
+                    <span t-esc="preventa.formatAmount(orderTotals.taxes)"/>
+                </div>
+                <div class="d-flex justify-content-between fs-4 fw-bold">
+                    <span>Total</span>
+                    <span t-esc="preventa.formatAmount(orderTotals.included)"/>
+                </div>
+                <button type="button" class="btn btn-success btn-lg w-100 mt-3" t-on-click="closeOrder">
+                    <i class="fa fa-check me-2"/>Cerrar pedido
+                </button>
+            </div>
+        </t>
+    </t>
+</templates>

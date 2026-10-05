@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="sale_offline_app.ActivitiesScreen">
+        <div t-if="!sections.length" class="p-4 text-center text-muted">
+            No tenés visitas pendientes. Sincronizá para bajar las actividades del día.
+        </div>
+        <t t-foreach="sections" t-as="section" t-key="section.key">
+            <h6 t-attf-class="px-3 pt-3 pb-1 text-uppercase small {{ section.key === 'overdue' ? 'text-danger' : 'text-muted' }}">
+                <t t-esc="section.title"/> (<t t-esc="section.items.length"/>)
+            </h6>
+            <div class="list-group list-group-flush">
+                <button t-foreach="section.items" t-as="item" t-key="item.activity.id" type="button"
+                    class="list-group-item list-group-item-action py-3" t-att-disabled="!item.partner"
+                    t-on-click="() => props.onStart(item.activity)">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <span class="fw-bold" t-esc="item.partner ? item.partner.name : 'Cliente no disponible'"/>
+                        <t t-set="badge" t-value="orderBadge(item.order)"/>
+                        <span t-if="badge" t-attf-class="badge {{ badge[1] }}" t-esc="badge[0]"/>
+                    </div>
+                    <div class="small" t-esc="item.activity.summary"/>
+                    <small class="text-muted" t-esc="subtitle(item)"/>
+                    <small t-if="item.activity.note" class="d-block text-muted fst-italic" t-esc="item.activity.note"/>
+                </button>
+            </div>
+        </t>
+    </t>
+</templates>

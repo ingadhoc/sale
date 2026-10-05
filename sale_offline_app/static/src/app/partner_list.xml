@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="sale_offline_app.PartnerList">
+        <div class="o_preventa_search p-2 bg-body border-bottom">
+            <input type="search" class="form-control form-control-lg" placeholder="Buscar cliente por nombre, CUIT o referencia"
+                t-model="state.query"/>
+        </div>
+        <div t-if="!data.partners.length" class="p-4 text-center text-muted">
+            No hay clientes en el celular. Sincronizá para bajarlos.
+        </div>
+        <div class="list-group list-group-flush">
+            <button t-foreach="partners" t-as="partner" t-key="partner.id" type="button"
+                class="list-group-item list-group-item-action py-3" t-on-click="() => props.onSelect(partner)">
+                <div class="fw-bold" t-esc="partner.name"/>
+                <small class="text-muted">
+                    <t t-esc="subtitle(partner)"/>
+                </small>
+            </button>
+        </div>
+    </t>
+</templates>

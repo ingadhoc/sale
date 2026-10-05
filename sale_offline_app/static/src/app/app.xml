@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="sale_offline_app.App">
+        <LockScreen t-if="data.locked"/>
+        <div t-else="" class="o_preventa d-flex flex-column h-100">
+            <header class="o_preventa_header d-flex align-items-center gap-2 px-2 py-2 text-white">
+                <button t-if="partner or state.orderUuid" type="button" class="btn btn-link text-white px-1" t-on-click="back">
+                    <i class="fa fa-arrow-left fa-lg"/>
+                </button>
+                <div class="flex-grow-1 text-truncate fs-5 fw-bold" t-esc="title"/>
+                <i t-attf-class="fa fa-circle {{ data.online ? 'text-success' : 'text-secondary' }}"
+                    t-att-title="data.online ? 'En línea' : 'Sin conexión'"/>
+                <button t-if="data.link" type="button" class="btn btn-link text-white px-1" title="Sincronizar"
+                    t-att-disabled="data.syncing or !data.online" t-on-click="() => preventa.sync()">
+                    <i t-attf-class="fa fa-refresh fa-lg {{ data.syncing ? 'fa-spin' : '' }}"/>
+                </button>
+                <button type="button" class="btn btn-link text-white px-1" title="Estado"
+                    t-on-click="() => this.state.showStatus = !this.state.showStatus">
+                    <i class="fa fa-info-circle fa-lg"/>
+                </button>
+            </header>
+
+            <div t-if="data.updateAvailable" class="alert alert-info rounded-0 m-0 d-flex align-items-center justify-content-between">
+                <span>Hay una versión nueva de la app.</span>
+                <button type="button" class="btn btn-primary btn-sm" t-on-click="() => preventa.applyUpdate()">Actualizar</button>
+            </div>
+            <div t-if="data.authExpired" class="alert alert-danger rounded-0 m-0">
+                <div>La vinculación de este celular con Odoo venció o fue revocada. Volvé a vincularlo: los pedidos guardados no se pierden.</div>
+                <button type="button" class="btn btn-danger w-100 mt-2" t-att-disabled="!data.online" t-on-click="() => preventa.linkDevice()">
+                    <i class="fa fa-link me-2"/>Volver a vincular
+                </button>
+            </div>
+            <div t-elif="expiryWarning" class="alert alert-warning rounded-0 m-0 d-flex align-items-center justify-content-between gap-2">
+                <span t-esc="expiryWarning"/>
+                <button type="button" class="btn btn-warning btn-sm text-nowrap" t-att-disabled="!data.online" t-on-click="() => preventa.linkDevice()">Renovar</button>
+            </div>
+            <div t-if="data.error" class="alert alert-danger rounded-0 m-0" t-esc="data.error"/>
+            <div t-if="data.needsSync and !data.syncing" class="alert alert-warning rounded-0 m-0">
+                La app se actualizó: sincronizá con conexión para actualizar los datos.
+            </div>
+
+            <div t-if="state.showStatus" class="o_preventa_status p-3 border-bottom bg-light small">
+                <div t-if="data.link">Vinculado como <b t-esc="data.link.user"/>, key vence el <t t-esc="formatDate(data.link.expiration)"/></div>
+                <div t-if="data.link"><t t-esc="data.pin ? 'Con PIN de bloqueo' : 'Sin PIN: se configura en tus Preferencias de Odoo y baja al sincronizar'"/></div>
+                <t t-if="data.lastSync">
+                    <div>Última sincronización: <t t-esc="formatDate(data.lastSync.date)"/></div>
+                    <div><t t-esc="data.lastSync.partners"/> clientes · <t t-esc="data.lastSync.products"/> productos · <t t-esc="data.lastSync.activities or 0"/> visitas</div>
+                    <div>Bajada: <t t-esc="data.lastSync.downloadMs"/> ms · guardado: <t t-esc="data.lastSync.storeMs"/> ms</div>
+                </t>
+                <div t-if="data.storage">
+                    Almacenamiento: <t t-esc="formatBytes(data.storage.usage)"/> de <t t-esc="formatBytes(data.storage.quota)"/>
+                    · <t t-esc="data.persisted ? 'persistente' : 'puede borrarse si falta espacio'"/>
+                </div>
+                <div class="mt-3">
+                    <div t-if="isInstalled" class="text-success">
+                        <i class="fa fa-check me-1"/>La app está instalada en este dispositivo.
+                    </div>
+                    <button t-elif="pwa.isAvailable" type="button" class="btn btn-primary w-100" t-on-click="installApp">
+                        <i class="fa fa-mobile me-2"/>Agregar a la pantalla de inicio
+                    </button>
+                    <div t-else="" class="text-muted">
+                        Para instalarla: en Chrome, menú <b>⋮</b> → <b>Agregar a la pantalla principal</b>
+                        (o <b>Instalar app</b>).
+                    </div>
+                </div>
+                <button t-if="data.link" type="button" class="btn btn-outline-danger w-100 mt-3" t-on-click="logout">
+                    <i class="fa fa-sign-out me-2"/>Salir
+                </button>
+            </div>
+
+            <main class="flex-grow-1 overflow-auto">
+                <div t-if="!data.link" class="p-4 text-center">
+                    <p class="fs-5">Este celular todavía no está vinculado a Odoo.</p>
+                    <p class="text-muted">Necesitás conexión y tu usuario de Odoo una sola vez.</p>
+                    <button type="button" class="btn btn-primary btn-lg w-100" t-att-disabled="!data.online"
+                        t-on-click="() => preventa.linkDevice()">Vincular este celular</button>
+                </div>
+                <t t-elif="partner">
+                    <ul class="nav nav-tabs nav-fill">
+                        <li class="nav-item">
+                            <a href="#" t-attf-class="nav-link {{ state.tab === 'order' ? 'active' : '' }}"
+                                t-on-click.prevent="() => this.state.tab = 'order'">Pedido</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" t-attf-class="nav-link {{ state.tab === 'data' ? 'active' : '' }}"
+                                t-on-click.prevent="() => this.state.tab = 'data'">Datos del cliente</a>
+                        </li>
+                    </ul>
+                    <OrderBuilder t-if="state.tab === 'order'" partner="partner" activityId="state.activityId"/>
+                    <PartnerDetail t-else="" partner="partner"/>
+                </t>
+                <t t-elif="state.screen === 'orders' and state.orderUuid">
+                    <OrderDetail uuid="state.orderUuid"/>
+                </t>
+                <t t-elif="state.screen === 'orders'">
+                    <OrdersScreen onOpenOrder.bind="openOrder"/>
+                </t>
+                <t t-elif="state.screen === 'partners'">
+                    <PartnerList onSelect.bind="openPartner"/>
+                </t>
+                <t t-else="">
+                    <ActivitiesScreen onStart.bind="startActivity"/>
+                </t>
+            </main>
+
+            <nav t-if="data.link" class="o_preventa_nav d-flex border-top bg-body">
+                <button type="button" t-attf-class="btn flex-fill py-2 {{ state.screen === 'activities' ? 'text-primary fw-bold' : 'text-muted' }}"
+                    t-on-click="() => this.goTo('activities')">
+                    <i class="fa fa-calendar-check-o d-block fs-4"/>Visitas
+                </button>
+                <button type="button" t-attf-class="btn flex-fill py-2 {{ state.screen === 'partners' ? 'text-primary fw-bold' : 'text-muted' }}"
+                    t-on-click="() => this.goTo('partners')">
+                    <i class="fa fa-users d-block fs-4"/>Clientes
+                </button>
+                <button type="button" t-attf-class="btn flex-fill py-2 position-relative {{ state.screen === 'orders' ? 'text-primary fw-bold' : 'text-muted' }}"
+                    title="Pedidos" t-on-click="() => this.goTo('orders')">
+                    <i class="fa fa-list-alt d-block fs-4"/>Pedidos
+                    <span t-if="readyCount" class="position-absolute top-0 translate-middle-x badge rounded-pill text-bg-warning" t-esc="readyCount"/>
+                </button>
+            </nav>
+        </div>
+        <MainComponentsContainer/>
+    </t>
+</templates>
