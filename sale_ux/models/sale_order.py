@@ -133,6 +133,7 @@ class SaleOrder(models.Model):
             return False
         return all(ref.payment_state == "paid" and ref.invoice_origin == self.name for ref in refunds)
 
+<<<<<<< a5c67f89a56d0ccb04bcbfd7307f9e0b42f0ac32
     def _check_cancel_allowed(self):
         """Raise if any order cannot be cancelled. Modules adding checks extend this."""
         blocked = self._get_orders_blocking_cancel()
@@ -141,6 +142,38 @@ class SaleOrder(models.Model):
                 _(
                     "Unable to cancel %s. You must first cancel related bills and pickings.",
                     ", ".join(blocked.mapped("display_name")),
+||||||| 00e9237f897e9f0c17252e2923cc647f9b0d40a4
+        if moves and not (valid_invoices):
+            raise UserError(_("Unable to cancel this sale order. You must first " "cancel related bills and pickings."))
+        if any(order.locked for order in self):
+            # No encontre otra forma de evitar el raise usererror que impide que ordenes se cancelen si el pedido está bloqueado
+            cancel_warning = self._show_cancel_wizard()
+            if cancel_warning:
+                self.ensure_one()
+                template_id = self.env["ir.model.data"]._xmlid_to_res_id(
+                    "sale.mail_template_sale_cancellation", raise_if_not_found=False
+=======
+    def _check_cancel_allowed(self):
+        """Raise if any order cannot be cancelled. Modules adding checks extend this."""
+        blocked = self._get_orders_blocking_cancel()
+        if blocked:
+            raise UserError(
+                _(
+                    "Unable to cancel %s. You must first cancel related bills and pickings.",
+                    ", ".join(blocked.mapped("display_name")),
+                )
+            )
+
+    def action_cancel(self):
+        self._check_cancel_allowed()
+        if any(order.locked for order in self):
+            # No encontre otra forma de evitar el raise usererror que impide que ordenes se cancelen si el pedido está bloqueado
+            cancel_warning = self._show_cancel_wizard()
+            if cancel_warning:
+                self.ensure_one()
+                template_id = self.env["ir.model.data"]._xmlid_to_res_id(
+                    "sale.mail_template_sale_cancellation", raise_if_not_found=False
+>>>>>>> e7566b19cba42ff2028eb18044af51a0fadc5322
                 )
             )
 
