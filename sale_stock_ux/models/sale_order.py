@@ -35,13 +35,19 @@ class SaleOrder(models.Model):
         for order in self:
             order.with_returns = any(line.quantity_returned for line in order.order_line)
 
-    def action_cancel(self):
-        self = self.with_context(cancel_from_order=True)
-        for order in self.filtered(lambda order: order.picking_ids.filtered(lambda x: x.state == "done")):
+    def _check_cancel_allowed(self):
+        delivered = self.filtered(lambda order: order.picking_ids.filtered(lambda x: x.state == "done"))
+        if delivered:
             raise UserError(
-                _("Unable to cancel sale order %s as some deliveries" " have already been done.") % (order.name)
+                _(
+                    "Unable to cancel sale order %s as some deliveries have already been done.",
+                    ", ".join(delivered.mapped("display_name")),
+                )
             )
-        return super().action_cancel()
+        return super()._check_cancel_allowed()
+
+    def action_cancel(self):
+        return super(SaleOrder, self.with_context(cancel_from_order=True)).action_cancel()
 
     @api.depends("picking_ids", "picking_ids.state", "force_delivery_status")
     def _compute_delivery_status(self):
