@@ -189,14 +189,16 @@ class SaleOrder(models.Model):
 
     @api.depends("is_gathering", "invoice_ids", "invoice_ids.state")
     def _compute_has_gathering_invoice(self):
-        invoiced = self.filtered("is_gathering")._get_orders_with_gathering_invoice(
+        # on `_origin`: having a gathering invoice is a fact of the database, and the query
+        # cannot take the virtual ids an onchange works with
+        invoiced = self.filtered("is_gathering")._origin._get_orders_with_gathering_invoice(
             [
                 ("move_id.move_type", "in", ("out_invoice", "out_refund")),
                 ("move_id.state", "!=", "cancel"),
             ]
         )
-        invoiced.has_gathering_invoice = True
-        (self - invoiced).has_gathering_invoice = False
+        for order in self:
+            order.has_gathering_invoice = order._origin in invoiced
 
     def action_lock(self):
         super(SaleOrder, self - self.filtered("is_gathering")).action_lock()
