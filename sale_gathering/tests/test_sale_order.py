@@ -103,3 +103,25 @@ class TestSaleGatheringOrder(SaleGatheringCommon):
         canje_invoice = posted_or_draft_invoices.sorted("id")[-1]
         self.assertTrue(canje_invoice.invoice_line_ids.filtered(lambda line: line.display_type == "product"))
         self.assertTrue(canje_invoice.invoice_line_ids.filtered("is_downpayment"))
+
+    def test_onchange_on_gathering_order_with_downpayment(self):
+        # Durante un onchange las lineas son registros virtuales: sus NewId no pueden
+        # llegar al dominio de la consulta, psycopg2 no los sabe convertir.
+        order = self._confirm_gathering_order()
+        self._create_and_pay_gathering_downpayment(order, amount=250.0)
+
+        fields_spec = {
+            "is_gathering": {},
+            "has_gathering_invoice": {},
+            "order_line": {"fields": {"product_uom_qty": {}, "is_downpayment": {}}},
+        }
+        order.onchange({"is_gathering": True}, ["is_gathering"], fields_spec)
+
+        virtual_order = self.env["sale.order"].new({"order_line": order.order_line, "is_gathering": True}, origin=order)
+        self.assertTrue(virtual_order.has_gathering_invoice)
+
+        # la factura existe en la base: sacar el anticipo de la pantalla no la hace desaparecer
+        self.env.invalidate_all()
+        kept_lines = order.order_line.filtered(lambda line: not line.is_downpayment)
+        without_downpayment = self.env["sale.order"].new({"order_line": kept_lines, "is_gathering": True}, origin=order)
+        self.assertTrue(without_downpayment.has_gathering_invoice)
