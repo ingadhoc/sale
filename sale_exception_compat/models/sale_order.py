@@ -1,4 +1,5 @@
 from odoo import models
+from odoo.tools import config
 
 
 class SaleOrder(models.Model):
@@ -7,7 +8,9 @@ class SaleOrder(models.Model):
     def _exception_blocked_confirmation(self):
         """Undo everything the confirmation did and show the exception popup."""
         exception_map = {sale.id: sale.exception_ids.ids for sale in self}
-        self.env.cr.rollback()
+        # Tests forbid rolling back the test cursor.
+        if not config["test_enable"]:
+            self.env.cr.rollback()
         # The rollback undoes the database writes but leaves the cache dirty,
         # so the next flush would write them back.
         self.env.invalidate_all()
