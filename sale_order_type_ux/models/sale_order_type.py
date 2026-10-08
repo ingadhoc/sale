@@ -44,7 +44,7 @@ class SaleOrderTypology(models.Model):
         readonly=False,
         precompute=True,
     )
-    journal_domain = fields.Binary(compute="_compute_journal_domain")
+    journal_domain = fields.Json(compute="_compute_journal_domain")
     journal_id = fields.Many2one(
         "account.journal", string="Invoice Journal", domain="journal_domain", check_company=False
     )
@@ -57,9 +57,10 @@ class SaleOrderTypology(models.Model):
     @api.depends("invoice_company_id")
     def _compute_journal_domain(self):
         for rec in self:
-            rec.journal_domain = Domain(
-                rec.env["account.journal"]._check_company_domain(rec.invoice_company_id)
-            ) & Domain("type", "=", "sale")
+            rec.journal_domain = list(
+                Domain(rec.env["account.journal"]._check_company_domain(rec.invoice_company_id))
+                & Domain("type", "=", "sale")
+            )
 
     @api.constrains("invoice_company_id", "journal_id")
     def _check_journal_company(self):
