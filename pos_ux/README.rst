@@ -27,21 +27,19 @@ Point of Sale UX
 
 3. **Adds the contingency mode** for when connection fails
 
-4. Makes the "receivable account" of payment methods mandatory
+4. If a payment method of a bank journal does not have an "outstanding account" defined, it will not allow you to log in to the POS.
 
-5. If a payment method does not have a "receivable account" and "outstanding account" defined, it will not allow you to log in to the POS.
+5. **Default order customer**: setting that pre-selects a partner on every new
+   POS order. Useful for B2C points of sale where most sales go to a generic
+   anonymous customer. It is not the "Default Customer" of the point of sale,
+   which Odoo uses for the session closing entries.
 
-6. **Payment methods are created with "Identify Customer" enabled by default** (``split_transactions = True``).
-
-7. **Default customer**: setting that pre-selects a partner on every new POS order.
-   Useful for B2C points of sale where most sales go to a generic anonymous customer.
-
-8. **Block session close when there are paid orders without invoice**. Only
+6. **Block session close when there are paid orders without invoice**. Only
    applies when the billing behavior is set to "Always Invoice". Use the
    "Generate invoices" button in the session backend to invoice the pending
    orders before closing the session.
 
-9. **Invoiced / Not Invoiced pill in the orders list**. Paid orders show a
+7. **Invoiced / Not Invoiced pill in the orders list**. Paid orders show a
    badge in the ticket screen indicating whether they were already invoiced,
    so the cashier can tell at a glance which orders are still pending.
 
