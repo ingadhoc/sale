@@ -6,9 +6,10 @@ from odoo import _, models
 
 
 class SaleOrder(models.Model):
-    _name = "sale.order"
-    _inherit = ["sale.order", "barcodes.barcode_events_mixin"]
+    _inherit = "sale.order"
 
+    # barcodes.barcode_events_mixin does not exist in 20.0: nothing calls this
+    # method until scanning is reimplemented in the frontend.
     def on_barcode_scanned(self, barcode):
         # Skip system commands (let barcode_handlers.js handle them)
         if barcode.startswith(("OCD", "OBT")):
