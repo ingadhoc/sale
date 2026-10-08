@@ -23,17 +23,6 @@ msgid "Billing Behavior"
 msgstr "Comportamiento de facturación"
 
 #. module: pos_ux
-#: model:ir.model.fields,field_description:pos_ux.field_pos_config__block_invoice_download
-#: model:ir.model.fields,field_description:pos_ux.field_res_config_settings__pos_block_invoice_download
-msgid "Block Invoice Download"
-msgstr "Bloquear descarga de factura"
-
-#. module: pos_ux
-#: model_terms:ir.ui.view,arch_db:pos_ux.res_config_settings_view_form
-msgid "Block invoice donwload"
-msgstr "Bloquear descarga de factura"
-
-#. module: pos_ux
 #: model:ir.model.fields.selection,name:pos_ux.selection__pos_config__billing_behavior__invoice_by_default
 msgid "By default invoice"
 msgstr "Factura por defecto"

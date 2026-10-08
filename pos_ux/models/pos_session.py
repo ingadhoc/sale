@@ -26,12 +26,15 @@ class PosSession(models.Model):
     def action_unset_invoice_contingency(self):
         self.invoice_contingency = False
 
-    def _cannot_close_session(self, bank_payment_method_diffs=None):
+    def _pos_ux_cannot_close_session(self):
+        """Own check: 20.0 removed the core _cannot_close_session hook."""
+        self.ensure_one()
         if self.config_id.billing_behavior == "invoice_required":
             pending = self._paid_orders_without_invoice()
             if pending:
                 return {
-                    "successful": False,
+                    "status": False,
+                    "type": "pos_ux_unbilled",
                     "message": self.env._(
                         "Cannot close the session: there are %s paid order(s) "
                         "without invoice. Invoice them from the backend "
@@ -39,9 +42,14 @@ class PosSession(models.Model):
                         len(pending),
                     ),
                     "redirect": False,
-                    "pos_ux_unbilled": True,
                 }
-        return super()._cannot_close_session(bank_payment_method_diffs=bank_payment_method_diffs)
+        return {}
+
+    def close_session_from_ui(self, *args, **kwargs):
+        blocked = self._pos_ux_cannot_close_session()
+        if blocked:
+            return blocked
+        return super().close_session_from_ui(*args, **kwargs)
 
     @api.model
     def _load_pos_data_fields(self, config_id):
