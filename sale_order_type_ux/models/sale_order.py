@@ -51,6 +51,7 @@ class SaleOrder(models.Model):
         else:
             invoices = super()._create_invoices(grouped=grouped, final=final, date=date)
 
+        invoices._sale_order_type_ux_redetect_fiscal_position()
         return invoices
 
     def _get_protected_fields(self):
