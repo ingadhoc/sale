@@ -56,6 +56,15 @@ so scanning a packaging on a line sold by unit adds its whole content.
 Known limitations
 =================
 
+Scanning products is not available in 20.0
+------------------------------------------
+
+Odoo 20.0 removed the barcode events mixin that this module used to receive
+the scans on a sale order, so scanning a product or a packaging does not add it
+to the order lines, and no warning is shown. The barcode commands to confirm or
+cancel an order keep working. The scan has to be reimplemented for 20.0, and the
+behaviour described in the rest of this file applies once it is.
+
 Scanning a unit on a line sold by packaging adds a whole packaging
 ------------------------------------------------------------------
 

@@ -6,7 +6,6 @@ from odoo import fields, models
 
 
 class SaleOrderLine(models.Model):
-    _name = "sale.order.line"
-    _inherit = ["sale.order.line", "barcodes.barcode_events_mixin"]
+    _inherit = "sale.order.line"
 
     product_barcode = fields.Char(related="product_id.barcode")

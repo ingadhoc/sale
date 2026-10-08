@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo.tests import Form, TransactionCase, tagged
+from odoo.tests import TransactionCase, tagged
 
 
 @tagged("post_install", "-at_install")
@@ -37,13 +37,15 @@ class TestSaleBarcode(TransactionCase):
         )
         cls.partner = cls.env["res.partner"].create({"name": "Scannable partner"})
 
-    def _scan(self, *barcodes):
+    def _new_order(self):
+        return self.env["sale.order"].new({"partner_id": self.partner.id})
+
+    def _scan(self, *barcodes, order=None):
         """Return the order lines resulting from scanning barcodes on a new order."""
-        order_form = Form(self.env["sale.order"])
-        order_form.partner_id = self.partner
+        order = order or self._new_order()
         for barcode in barcodes:
-            order_form._barcode_scanned = barcode
-        return order_form.save().order_line
+            order.on_barcode_scanned(barcode)
+        return order.order_line
 
     def test_scan_product(self):
         lines = self._scan(*["PRODUCT_BARCODE"] * 15)
@@ -72,14 +74,11 @@ class TestSaleBarcode(TransactionCase):
         self.assertEqual(lines.product_uom_id, self.packaging_uom)
 
     def test_scan_product_on_line_with_packaging_set_manually(self):
-        order_form = Form(self.env["sale.order"])
-        order_form.partner_id = self.partner
-        order_form._barcode_scanned = "PRODUCT_BARCODE"
-        with order_form.order_line.edit(0) as line:
-            line.product_uom_id = self.packaging_uom
-            line.product_uom_qty = 1.0
-        order_form._barcode_scanned = "PRODUCT_BARCODE"
-        lines = order_form.save().order_line
+        order = self._new_order()
+        line = self._scan("PRODUCT_BARCODE", order=order)
+        line.product_uom_id = self.packaging_uom
+        line.product_uom_qty = 1.0
+        lines = self._scan("PRODUCT_BARCODE", order=order)
         self.assertEqual(lines.product_uom_qty, 2.0)
         self.assertEqual(lines.product_uom_id, self.packaging_uom)
 
@@ -92,7 +91,7 @@ class TestSaleBarcode(TransactionCase):
         self.assertEqual(lines.product_uom_id, self.unit)
 
     def test_scan_unknown_barcode(self):
-        order = self.env["sale.order"].new({"partner_id": self.partner.id})
+        order = self._new_order()
         result = order.on_barcode_scanned("UNKNOWN_BARCODE")
         self.assertIn("warning", result)
         self.assertFalse(order.order_line)
