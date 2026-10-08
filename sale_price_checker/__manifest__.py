@@ -39,7 +39,7 @@
     "assets": {
         "sale_price_checker.assets_price_checker": [
             ("include", "web.assets_frontend"),
-            "barcodes/static/src/barcode_service.js",
+            "barcodes/static/src/barcode_plugin.js",
             "sale_price_checker/static/src/price_checker.scss",
             "sale_price_checker/static/src/price_checker.xml",
             "sale_price_checker/static/src/price_checker.js",

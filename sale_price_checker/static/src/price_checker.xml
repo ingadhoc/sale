@@ -6,7 +6,7 @@
             <div class="o_price_checker_main d-flex flex-column justify-content-center align-items-center">
                 <t t-if="this.state.mode === 'idle' or this.state.mode === 'loading'">
                     <div class="o_price_checker_idle text-center">
-                        <i class="fa fa-barcode o_price_checker_icon text-primary mb-4"/>
+                        <i class="oi o_price_checker_icon text-primary mb-4" data-icon="barcode"/>
                         <h1 class="display-1 fw-bold mb-3">Price Checker</h1>
                         <p class="lead text-muted mb-4">Scan or type a barcode</p>
                         <form t-on-submit.prevent="this.onSubmit" class="o_price_checker_search mx-auto">
@@ -14,14 +14,14 @@
                                 <input type="text"
                                        class="form-control form-control-lg text-center o_price_checker_input"
                                        placeholder="Barcode"
-                                       t-custom-model="this.state.barcode"
+                                       t-model.proxy="this.state.barcode"
                                        autocomplete="off"
                                        data-enable-barcode="1"
                                        t-att-disabled="this.state.mode === 'loading'"/>
                                 <button type="submit"
                                         class="btn btn-primary px-4"
                                         t-att-disabled="this.state.mode === 'loading'">
-                                    <i class="fa fa-search"/>
+                                    <i class="oi" data-icon="search"/>
                                 </button>
                             </div>
                         </form>
@@ -53,7 +53,7 @@
 
                 <t t-elif="this.state.mode === 'not_found'">
                     <div class="o_price_checker_not_found text-center">
-                        <i class="fa fa-exclamation-circle text-danger o_price_checker_icon mb-4"/>
+                        <i class="oi text-danger o_price_checker_icon mb-4" data-icon="error"/>
                         <h1 class="display-3 fw-bold mb-3">Product not found</h1>
                         <p class="lead text-muted mb-0">
                             <span class="font-monospace" t-out="this.state.lastBarcode"/>
