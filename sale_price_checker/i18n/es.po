@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-19 00:00+0000\n"
-"PO-Revision-Date: 2026-06-19 00:00+0000\n"
+"POT-Creation-Date: 2026-10-08 19:09+0000\n"
+"PO-Revision-Date: 2026-10-08 19:09+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -17,14 +17,127 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: sale_price_checker
+#. odoo-javascript
+#: code:addons/sale_price_checker/static/src/price_checker.xml:0
+msgid "(Sin Imp.:"
+msgstr ""
+
+#. module: sale_price_checker
+#: model:ir.module.module,description:base.module_sale_price_checker
+msgid ""
+".. |company| replace:: ADHOC SA\n"
+"\n"
+".. |company_logo| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-logo.png\n"
+"   :alt: ADHOC SA\n"
+"   :target: https://www.adhoc.com.ar\n"
+"\n"
+".. |icon| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-icon.png\n"
+"\n"
+".. image:: https://img.shields.io/badge/license-AGPL--3-blue.png\n"
+"   :target: https://www.gnu.org/licenses/agpl\n"
+"   :alt: License: AGPL-3\n"
+"\n"
+"==================\n"
+"Sale Price Checker\n"
+"==================\n"
+"\n"
+"Public web price checker for in-store kiosks: scan a barcode, see the price\n"
+"(taxes included). The screen auto-resets 5s after each scan.\n"
+"\n"
+"URL forms\n"
+"=========\n"
+"\n"
+".. list-table::\n"
+"   :header-rows: 1\n"
+"   :widths: 40 30 30\n"
+"\n"
+"   * - URL\n"
+"     - Company\n"
+"     - Pricelist\n"
+"   * - ``/price-checker``\n"
+"     - first active by ``sequence``\n"
+"     - company's configured pricelist\n"
+"   * - ``/price-checker/-/<pricelist_id>``\n"
+"     - first active by ``sequence``\n"
+"     - that pricelist (override)\n"
+"   * - ``/price-checker/<company_id>``\n"
+"     - that company\n"
+"     - company's configured pricelist\n"
+"   * - ``/price-checker/<company_id>/<pricelist_id>``\n"
+"     - that company\n"
+"     - that pricelist (override)\n"
+"\n"
+"The ``-`` placeholder means \"default company\". Any invalid id, archived\n"
+"company / pricelist, or pricelist that doesn't belong to the company\n"
+"returns **404**.\n"
+"\n"
+"Configuration\n"
+"=============\n"
+"\n"
+"#. *Sales → Settings → Price Checker Pricelist* — pricelist used by the\n"
+"   checker for the active company. Empty → falls back to the product's\n"
+"   Sales Price. The setting only shows when *Pricelists* is enabled.\n"
+"\n"
+"#. *Products list view* — optional column *Show in Price Checker* (default\n"
+"   ``True``) to hide / show products in the checker.\n"
+"\n"
+"Bug Tracker\n"
+"===========\n"
+"\n"
+"Bugs are tracked on `GitHub Issues\n"
+"<https://github.com/ingadhoc/sale/issues>`_. In case of trouble, please\n"
+"check there if your issue has already been reported. If you spotted it first,\n"
+"help us smashing it by providing a detailed and welcomed feedback.\n"
+"\n"
+"Credits\n"
+"=======\n"
+"\n"
+"Images\n"
+"------\n"
+"\n"
+"* |company| |icon|\n"
+"\n"
+"Contributors\n"
+"------------\n"
+"\n"
+"Maintainer\n"
+"----------\n"
+"\n"
+"|company_logo|\n"
+"\n"
+"This module is maintained by the |company|.\n"
+"\n"
+"To contribute to this module, please visit https://www.adhoc.com.ar.\n"
+msgstr ""
+
+#. module: sale_price_checker
+#: code:addons/sale_price_checker/static/src/price_checker.xml:0
+msgid "Barcode"
+msgstr "Código de barras"
+
+#. module: sale_price_checker
 #: model:ir.model,name:sale_price_checker.model_res_company
-msgid "Companies"
-msgstr "Empresas"
+msgid "Company"
+msgstr "Empresa"
 
 #. module: sale_price_checker
 #: model:ir.model,name:sale_price_checker.model_res_config_settings
 msgid "Config Settings"
 msgstr "Ajustes de configuración"
+
+#. module: sale_price_checker
+#: model:ir.model.fields,field_description:sale_price_checker.field_product_template__display_name
+#: model:ir.model.fields,field_description:sale_price_checker.field_res_company__display_name
+#: model:ir.model.fields,field_description:sale_price_checker.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: sale_price_checker
+#: model:ir.model.fields,field_description:sale_price_checker.field_product_template__id
+#: model:ir.model.fields,field_description:sale_price_checker.field_res_company__id
+#: model:ir.model.fields,field_description:sale_price_checker.field_res_config_settings__id
+msgid "ID"
+msgstr ""
 
 #. module: sale_price_checker
 #: model:ir.model.fields,help:sale_price_checker.field_product_template__show_in_price_checker
@@ -49,16 +162,6 @@ msgid "Price Checker Pricelist"
 msgstr "Lista de precios del verificador"
 
 #. module: sale_price_checker
-#: model:ir.model.fields,help:sale_price_checker.field_res_company__price_checker_pricelist_id
-msgid ""
-"Pricelist used by the public price checker for this company. If empty, the "
-"product's Sales Price (lst_price) is used as a fallback."
-msgstr ""
-"Lista de precios usada por el verificador de precios público para esta "
-"empresa. Si está vacía, se usa el Precio de Venta del producto (lst_price) "
-"como alternativa."
-
-#. module: sale_price_checker
 #: model_terms:ir.ui.view,arch_db:sale_price_checker.res_config_settings_view_form_inherit
 msgid ""
 "Pricelist used by the public price checker (URL /price-checker/<company_id>)."
@@ -69,14 +172,14 @@ msgstr ""
 "producto como alternativa."
 
 #. module: sale_price_checker
-#: code:addons/sale_price_checker/static/src/price_checker.xml:0
-msgid "Barcode"
-msgstr "Código de barras"
-
-#. module: sale_price_checker
-#: code:addons/sale_price_checker/static/src/price_checker.xml:0
-msgid "Product not found"
-msgstr "Producto no encontrado"
+#: model:ir.model.fields,help:sale_price_checker.field_res_company__price_checker_pricelist_id
+msgid ""
+"Pricelist used by the public price checker for this company. If empty, the "
+"product's Sales Price (lst_price) is used as a fallback."
+msgstr ""
+"Lista de precios usada por el verificador de precios público para esta "
+"empresa. Si está vacía, se usa el Precio de Venta del producto (lst_price) "
+"como alternativa."
 
 #. module: sale_price_checker
 #: model:ir.model,name:sale_price_checker.model_product_template
@@ -85,8 +188,23 @@ msgstr "Producto"
 
 #. module: sale_price_checker
 #: code:addons/sale_price_checker/static/src/price_checker.xml:0
+msgid "Product not found"
+msgstr "Producto no encontrado"
+
+#. module: sale_price_checker
+#: model:ir.module.module,summary:base.module_sale_price_checker
+msgid "Public web price checker by barcode for in-store kiosks"
+msgstr "Verificador de precios web público por código de barras para kioscos en tienda"
+
+#. module: sale_price_checker
+#: code:addons/sale_price_checker/static/src/price_checker.xml:0
 msgid "Recent searches"
 msgstr "Consultas recientes"
+
+#. module: sale_price_checker
+#: model:ir.module.module,shortdesc:base.module_sale_price_checker
+msgid "Sale Price Checker"
+msgstr "Verificador de precios de venta"
 
 #. module: sale_price_checker
 #: code:addons/sale_price_checker/static/src/price_checker.xml:0
