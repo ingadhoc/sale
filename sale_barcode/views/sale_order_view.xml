@@ -6,17 +6,9 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <form position="inside">
-                <field name="_barcode_scanned" widget="barcode_handler" />
-            </form>
             <xpath expr="//field[@name='order_line']/list" position="inside">
                 <field name="product_barcode" column_invisible="1"/>
             </xpath>
-            <xpath expr="//field[@name='order_line']//field[@name='product_uom_qty']" position="attributes">
-                <attribute name="options">{'barcode_events': True}</attribute>
-                <attribute name="widget">field_float_scannable</attribute>
-            </xpath>
-
             <xpath expr="//button[@name='action_confirm'][1]" position="attributes">
                 <attribute name="barcode_trigger">validate</attribute>
             </xpath>
