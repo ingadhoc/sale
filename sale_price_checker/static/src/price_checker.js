@@ -1,8 +1,9 @@
 /** @odoo-module **/
 
-import { Component, onWillUnmount, useExternalListener, useState } from "@odoo/owl";
+import { Component, onWillUnmount, proxy } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
+import { useExternalListener } from "@web/owl2/utils";
 import { Interaction } from "@web/public/interaction";
 
 class PriceChecker extends Component {
@@ -10,7 +11,7 @@ class PriceChecker extends Component {
     static props = {};
 
     setup() {
-        this.state = useState({
+        this.state = proxy({
             mode: "idle",
             barcode: "",
             product: null,
