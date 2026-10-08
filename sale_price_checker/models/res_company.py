@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import fields, models, tools
+from odoo import api, fields, models
 
 
 class ResCompany(models.Model):
@@ -16,7 +16,7 @@ class ResCompany(models.Model):
         "If empty, the product's Sales Price (lst_price) is used as a fallback.",
     )
 
-    @tools.ormcache(cache="groups")
+    @api.ormcache(cache="groups")
     def _price_checker_pricelists_enabled(self):
         pricelist_group = self.env.ref("product.group_product_pricelist", raise_if_not_found=False)
         if not pricelist_group:
