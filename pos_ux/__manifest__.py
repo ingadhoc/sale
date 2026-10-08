@@ -1,6 +1,6 @@
 {
     "name": "Point of Sale UX",
-    "version": "19.0.1.4.0",
+    "version": "20.0.1.0.0",
     "category": "Point of Sale",
     "author": "ADHOC SA",
     "depends": [
@@ -15,8 +15,7 @@
             "pos_ux/static/src/**/*",
         ],
     },
-    "installable": False,
+    "installable": True,
     "auto_install": True,
     "license": "LGPL-3",
-    "post_init_hook": "post_init_hook",
 }

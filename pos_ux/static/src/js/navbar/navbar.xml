@@ -4,10 +4,10 @@
     <t t-name="Navbar" t-inherit="point_of_sale.Navbar" t-inherit-mode="extension">
         <xpath expr="//CashierName" position="after">
             <div class="header-button invoice-contingency"
-                t-on-click="setContingencyMode">
+                t-on-click="() => this.setContingencyMode()">
                 <span class="contingency-button ">
-                    <i class="fa"
-                    t-att-class="{'fa-unlink': pos.session.invoice_contingency, 'fa-link': !pos.session.invoice_contingency }"
+                    <i class="oi oi-fw oi-lg"
+                    t-att-data-icon="this.pos.session.invoice_contingency ? 'link_off' : 'link'"
                     role="img" aria-label="Contingency mode" title="Contingency mode"></i>
                 </span>
             </div>

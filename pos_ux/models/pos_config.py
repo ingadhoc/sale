@@ -14,9 +14,9 @@ class PosConfig(models.Model):
         default="on_demand",
     )
     block_invoice_download = fields.Boolean()
-    default_partner_id = fields.Many2one(
+    default_order_partner_id = fields.Many2one(
         "res.partner",
-        string="Default Customer",
+        string="Default Order Customer",
         help=(
             "If set, every new POS order will start with this partner pre-selected. "
             "Useful for B2C points of sale where most sales go to a generic "
@@ -26,23 +26,12 @@ class PosConfig(models.Model):
 
     def get_limited_partners_loading(self, offset=0):
         partner_ids = super().get_limited_partners_loading(offset)
-        if self.default_partner_id and (self.default_partner_id.id,) not in partner_ids:
-            partner_ids.append((self.default_partner_id.id,))
+        if self.default_order_partner_id and (self.default_order_partner_id.id,) not in partner_ids:
+            partner_ids.append((self.default_order_partner_id.id,))
         return partner_ids
 
     def open_ui(self):
         for config in self:
-            invalid_payment_methods = config.payment_method_ids.filtered(
-                lambda method: not method.split_transactions and not method.receivable_account_id
-            )
-            if invalid_payment_methods:
-                payment_method_names = ", ".join(invalid_payment_methods.mapped("name"))
-                raise UserError(
-                    self.env._(
-                        "No se puede completar la operación: falta definir cuenta intermediaria en los siguientes métodos de pago: %s",
-                        payment_method_names,
-                    )
-                )
             payment_method_without_outstanding_account = config.payment_method_ids.filtered(
                 lambda method: method.journal_id.type == "bank"
                 and not method.outstanding_account_id
