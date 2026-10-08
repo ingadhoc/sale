@@ -5,7 +5,7 @@ import { patch } from "@web/core/utils/patch";
 
 patch(ClosePosPopup.prototype, {
     async handleClosingError(response) {
-        if (response.pos_ux_unbilled) {
+        if (response.type === "pos_ux_unbilled") {
             this.dialog.add(AlertDialog, {
                 title: _t("Cannot close session"),
                 body: response.message,

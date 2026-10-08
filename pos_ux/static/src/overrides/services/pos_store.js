@@ -3,6 +3,6 @@ import { patch } from "@web/core/utils/patch";
 
 patch(PosStore.prototype, {
     getDefaultPartnerId() {
-        return this.config.default_partner_id?.id || super.getDefaultPartnerId();
+        return this.config.default_order_partner_id?.id || super.getDefaultPartnerId();
     },
 });

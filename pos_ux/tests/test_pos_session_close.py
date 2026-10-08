@@ -3,7 +3,7 @@ from odoo.tests import TransactionCase, tagged
 
 @tagged("post_install", "-at_install")
 class TestPosSessionClose(TransactionCase):
-    """Tests for _cannot_close_session: blocks closing if there are paid orders
+    """Tests for the closing block: closing is refused if there are paid orders
     without invoice, only when the billing behavior is "Always Invoice"."""
 
     @classmethod
@@ -34,23 +34,23 @@ class TestPosSessionClose(TransactionCase):
         self.config.billing_behavior = "invoice_required"
         order = self._make_paid_order()
         self.assertFalse(order.account_move)
-        result = self.session._cannot_close_session()
+        result = self.session._pos_ux_cannot_close_session()
         self.assertIsNotNone(result)
-        self.assertFalse(result.get("successful"))
+        self.assertEqual(result.get("type"), "pos_ux_unbilled")
 
     def test_blocked_even_in_contingency(self):
         self.config.billing_behavior = "invoice_required"
         self._make_paid_order()
         self.session.invoice_contingency = True
-        result = self.session._cannot_close_session()
+        result = self.session._pos_ux_cannot_close_session()
         self.assertIsNotNone(result)
-        self.assertFalse(result.get("successful"))
+        self.assertEqual(result.get("type"), "pos_ux_unbilled")
 
     def test_allowed_when_not_invoice_required(self):
         self._make_paid_order()
         for behavior in ("on_demand", "invoice_by_default"):
             self.config.billing_behavior = behavior
-            result = self.session._cannot_close_session()
+            result = self.session._pos_ux_cannot_close_session()
             self.assertFalse(result)
 
     def test_allowed_when_all_invoiced(self):
@@ -64,5 +64,12 @@ class TestPosSessionClose(TransactionCase):
             }
         )
         order.account_move = dummy_move
-        result = self.session._cannot_close_session()
+        result = self.session._pos_ux_cannot_close_session()
         self.assertFalse(result)
+
+    def test_close_session_from_ui_returns_the_block(self):
+        self.config.billing_behavior = "invoice_required"
+        self._make_paid_order()
+        result = self.session.close_session_from_ui()
+        self.assertFalse(result.get("status"))
+        self.assertEqual(result.get("type"), "pos_ux_unbilled")

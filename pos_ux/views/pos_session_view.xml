@@ -5,23 +5,13 @@
         <field name="model">pos.session</field>
         <field name="inherit_id" ref="point_of_sale.view_pos_session_form" />
         <field name="arch" type="xml">
-            <button name="open_frontend_cb" position="after">
+            <widget name="pos_open_ui_button" position="after">
                 <button name="action_set_invoice_contingency" type="object" string="Set contingency mode"
                     invisible="invoice_contingency or state not in ['opening_control', 'opened']"/>
                 <button name="action_unset_invoice_contingency" type="object" string="Exit contingency mode"
                     invisible="not invoice_contingency or state not in ['opening_control', 'opened']"/>
                 <button name="action_generate_invoices" type="object" string="Create invoices" invisible = "state == 'closed'"/>
-            </button>
-        </field>
-    </record>
-    <record id="pos_payment_method_view_form" model="ir.ui.view">
-        <field name="name">pos.payment.method.form.edited</field>
-        <field name="model">pos.payment.method</field>
-        <field name="inherit_id" ref="point_of_sale.pos_payment_method_view_form" />
-        <field name="arch" type="xml">
-            <field name="receivable_account_id" position="attributes">
-                <attribute name="required">not split_transactions</attribute>
-            </field>
+            </widget>
         </field>
     </record>
 </odoo>
