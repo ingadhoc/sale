@@ -29,8 +29,8 @@ class SaleOrder(models.Model):
             raise UserError(_("You cannot confirm a sales order without a Purchase Order Number for this partner"))
         return super().action_confirm()
 
-    def _create_invoices(self, grouped=False, final=False, date=None):
-        moves = super()._create_invoices(grouped, final, date)
+    def _create_invoices(self, final=False, grouped=False):
+        moves = super()._create_invoices(final=final, grouped=grouped)
         origin_map = {order.name: order.purchase_order_number for order in self}
         for move in moves:
             if not move.invoice_origin:
