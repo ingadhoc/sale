@@ -1,16 +1,16 @@
 /** @odoo-module **/
 
-import { Component, onWillUnmount, useExternalListener, useState } from "@odoo/owl";
+import { Component, onWillUnmount, proxy, usePlugin } from "@odoo/owl";
 import { registry } from "@web/core/registry";
-import { useService } from "@web/core/utils/hooks";
+import { useBus } from "@web/core/utils/hooks";
 import { Interaction } from "@web/public/interaction";
+import { BarcodePlugin } from "@barcodes/barcode_plugin";
 
 class PriceChecker extends Component {
     static template = "sale_price_checker.PriceChecker";
-    static props = {};
 
     setup() {
-        this.state = useState({
+        this.state = proxy({
             mode: "idle",
             barcode: "",
             product: null,
@@ -21,8 +21,8 @@ class PriceChecker extends Component {
         this.companyId = window.priceCheckerConfig.companyId;
         this.pricelistId = window.priceCheckerConfig.pricelistId;
 
-        const barcode = useService("barcode");
-        useExternalListener(barcode.bus, "barcode_scanned", (ev) => {
+        const barcode = usePlugin(BarcodePlugin);
+        useBus(barcode.bus, "barcode_scanned", (ev) => {
             this.state.barcode = ev.detail.barcode;
             this.lookup(ev.detail.barcode);
         });

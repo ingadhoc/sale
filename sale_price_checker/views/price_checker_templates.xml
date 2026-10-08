@@ -10,13 +10,13 @@
                 <link rel="shortcut icon" type="image/x-icon" href="/web/static/img/favicon.ico"/>
                 <script type="text/javascript">
                     var odoo = {
-                        csrf_token: "<t t-esc="request.csrf_token(None)"/>",
-                        debug: "<t t-esc="request.session.debug"/>",
+                        csrf_token: "<t t-out="request.csrf_token(None)"/>",
+                        debug: "<t t-out="request.session.debug"/>",
                         __session_info__: <t t-out="json.dumps(session_info)"/>,
                     };
                     window.priceCheckerConfig = {
-                        companyId: <t t-esc="company.id"/>,
-                        pricelistId: <t t-esc="pricelist.id if pricelist else 'null'"/>,
+                        companyId: <t t-out="company.id"/>,
+                        pricelistId: <t t-out="pricelist.id if pricelist else 'null'"/>,
                     };
                 </script>
                 <t t-call-assets="sale_price_checker.assets_price_checker"/>

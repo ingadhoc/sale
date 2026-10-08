@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Sale Price Checker",
-    "version": "19.0.1.1.0",
+    "version": "20.0.1.0.0",
     "category": "Sales",
     "sequence": 14,
     "summary": "Public web price checker by barcode for in-store kiosks",
@@ -39,14 +39,14 @@
     "assets": {
         "sale_price_checker.assets_price_checker": [
             ("include", "web.assets_frontend"),
-            "barcodes/static/src/barcode_service.js",
+            "barcodes/static/src/barcode_plugin.js",
             "sale_price_checker/static/src/price_checker.scss",
             "sale_price_checker/static/src/price_checker.xml",
             "sale_price_checker/static/src/price_checker.js",
         ],
     },
     "demo": [],
-    "installable": False,
+    "installable": True,
     "auto_install": False,
     "application": False,
 }
