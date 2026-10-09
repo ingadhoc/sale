@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Sale Loyalty UX",
-    "version": "19.0.1.2.0",
+    "version": "20.0.1.0.0",
     "category": "Sales",
     "sequence": 14,
     "summary": "",
@@ -33,7 +33,7 @@
         "views/sale_order_views.xml",
         "views/loyalty_program_views.xml",
     ],
-    "installable": False,
+    "installable": True,
     "auto_install": True,
     "application": False,
 }
