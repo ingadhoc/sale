@@ -31,7 +31,7 @@ class SaleOrder(models.Model):
         if self.type_id and self.type_id.team_id:
             self.team_id = self.type_id.team_id
 
-    def _create_invoices(self, grouped=False, final=False, date=None):
+    def _create_invoices(self, final=False, grouped=False):
         """
         Overrides the `_create_invoices` method to ensure that taxes are correctly computed
         for the company of the invoice. In cases where the company has a localization
@@ -43,13 +43,11 @@ class SaleOrder(models.Model):
             all_invoices = self.env["account.move"]
             for order_type in self.mapped("type_id"):
                 orders_with_type = self.filtered(lambda x: x.type_id.id == order_type.id)
-                type_invoices = super(SaleOrder, orders_with_type)._create_invoices(
-                    grouped=grouped, final=final, date=date
-                )
+                type_invoices = super(SaleOrder, orders_with_type)._create_invoices(final=final, grouped=grouped)
                 all_invoices |= type_invoices
             invoices = all_invoices
         else:
-            invoices = super()._create_invoices(grouped=grouped, final=final, date=date)
+            invoices = super()._create_invoices(final=final, grouped=grouped)
 
         return invoices
 
