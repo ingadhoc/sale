@@ -16,7 +16,7 @@ Point of Sale Event UX
 
 Prevents selling more event tickets than the event capacity from the Point of Sale.
 
-On Odoo 18 the standard capacity guard never runs on the PoS flow, so an order can push an event past ``seats_max`` with no error at all. This module re-runs the capacity check on the affected events and tickets when the order is paid, raising a ``ValidationError`` on overbooking.
+On Odoo 18 the standard capacity guard only looks at confirmed registrations, and the PoS confirms them from ``action_pos_order_paid``, whose exceptions ``_process_saved_order`` catches and only logs. So an order can push an event past ``seats_max`` with no error at all. This module asks for room for the registrations of the order before confirming them, raising a ``ValidationError`` on overbooking.
 
 Note: the check runs at synchronization time, after the cashier took the money. In that case the order fails to sync and no ticket is issued.
 
