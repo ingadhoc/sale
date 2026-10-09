@@ -23,6 +23,12 @@ msgstr ""
 #. module: sale_payment_options
 #. odoo-python
 #: code:addons/sale_payment_options/models/sale_order_line.py:0
+msgid "%(card_installment)s: %(installments)s"
+msgstr ""
+
+#. module: sale_payment_options
+#. odoo-python
+#: code:addons/sale_payment_options/models/sale_order_line.py:0
 msgid "%(installment_qty)s installments of %(amount)s"
 msgstr ""
 
@@ -256,6 +262,11 @@ msgstr ""
 msgid ""
 "Print the installment amounts under each sale order line instead of the "
 "payment options table of the whole order."
+msgstr ""
+
+#. module: sale_payment_options
+#: model:ir.actions.report,name:sale_payment_options.action_report_saleorder_payment_options
+msgid "Quotation / Order (Payment Options)"
 msgstr ""
 
 #. module: sale_payment_options
