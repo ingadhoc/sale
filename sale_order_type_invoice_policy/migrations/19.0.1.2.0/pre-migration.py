@@ -14,6 +14,9 @@ def migrate(cr, version):
     the xmlid must point to the bridge, and the bridge must be installed.
     auto_install does not cover this: it only triggers when a dependency is
     itself being installed, which is not the case on an existing database.
+
+    If the bridge was installed before this module was upgraded, it already
+    owns its own xmlid for the field, so ours is dropped instead of renamed.
     """
     cr.execute(
         """
@@ -22,8 +25,21 @@ def migrate(cr, version):
          WHERE module = 'sale_order_type_invoice_policy'
            AND model = 'ir.model.fields'
            AND name = 'field_sale_order_type__services_delivered'
+           AND NOT EXISTS (
+               SELECT 1 FROM ir_model_data
+                WHERE module = %s
+                  AND name = 'field_sale_order_type__services_delivered'
+           )
         """,
-        (BRIDGE,),
+        (BRIDGE, BRIDGE),
+    )
+    cr.execute(
+        """
+        DELETE FROM ir_model_data
+         WHERE module = 'sale_order_type_invoice_policy'
+           AND model = 'ir.model.fields'
+           AND name = 'field_sale_order_type__services_delivered'
+        """
     )
     cr.execute(
         """
