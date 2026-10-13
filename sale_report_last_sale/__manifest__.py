@@ -11,8 +11,7 @@
     "license": "AGPL-3",
     "data": [
         "reports/sale_last_sale_report.xml",
-        "security/ir.model.access.csv",
-        "security/ir_rule.xml",
+        "security/ir.access.csv",
     ],
     "category": "Sale",
     "installable": True,
