@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form_cancel_remaining" model="ir.ui.view">
+        <field name="name">sale.order.form.cancelar.remanente</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <field name="tiene_remanente" invisible="1"/>
+                <button name="action_cancel_remaining" type="object"
+                        string="Cancelar remanente" class="btn-secondary"
+                        invisible="state != 'sale' or not tiene_remanente"
+                        confirm="Se va a bajar la cantidad pedida a lo que realmente se entregó, en todas las líneas con pendiente. ¿Confirmás?"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list//field[@name='qty_delivered']" position="before">
+                <field name="puede_cancelar_remanente" column_invisible="1"/>
+                <button name="button_cancel_remaining" type="object"
+                        icon="fa-times-circle text-danger" title="Cancelar remanente de esta línea"
+                        invisible="not puede_cancelar_remanente"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="purchase_order_form_cancel_remaining" model="ir.ui.view">
+        <field name="name">purchase.order.form.cancelar.remanente</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <field name="tiene_remanente" invisible="1"/>
+                <button name="action_cancel_remaining" type="object"
+                        string="Cancelar remanente" class="btn-secondary"
+                        invisible="state not in ('purchase', 'done') or not tiene_remanente"
+                        confirm="Se va a bajar la cantidad pedida a lo que realmente se recibió. ¿Confirmás?"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list//field[@name='qty_received']" position="before">
+                <field name="puede_cancelar_remanente" column_invisible="1"/>
+                <button name="button_cancel_remaining" type="object"
+                        icon="fa-times-circle text-danger" title="Cancelar remanente de esta línea"
+                        invisible="not puede_cancelar_remanente"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
