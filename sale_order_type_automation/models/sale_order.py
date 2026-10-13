@@ -14,23 +14,27 @@ from odoo.tools.safe_eval import (
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    def run_invoicing_atomation(self):
-        for rec in self.filtered(
+    def _orders_to_invoice_automatically(self):
+        """Orders their type invoices on the delivery validation running right now."""
+        automatic_invoice = self.env["ir.config_parameter"].sudo().get_param("sale.automatic_invoice")
+        return self.filtered(
             lambda x: (
                 x.type_id
                 and x.type_id.invoicing_atomation != "none"
                 and x.invoice_status == "to invoice"
                 and any(line.qty_to_invoice for line in x.order_line)
+                # we take into account if there are any transaction finish from the e-commerce
+                #  and not continue with the automation in this case
+                and not (
+                    x.transaction_ids
+                    and automatic_invoice
+                    and any([True if transaction.state == "done" else False for transaction in x.transaction_ids])
+                )
             )
-        ):
-            # we take into account if there are any transaction finish from the e-commerce
-            #  and not continue with the automation in this case
-            if (
-                rec.transaction_ids
-                and rec.env["ir.config_parameter"].sudo().get_param("sale.automatic_invoice")
-                and any([True if transaction.state == "done" else False for transaction in rec.transaction_ids])
-            ):
-                continue
+        )
+
+    def run_invoicing_atomation(self):
+        for rec in self._orders_to_invoice_automatically():
             # a list is returned but only one invoice should be returned
             # usamos final para que reste adelantos y tmb por ej
             # por si se usa el modulo de facturar las returns
