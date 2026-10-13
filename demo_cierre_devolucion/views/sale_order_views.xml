@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form_devolucion" model="ir.ui.view">
+        <field name="name">sale.order.form.devolucion.sin.cerrar</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <div class="alert alert-warning text-center" role="alert"
+                     invisible="not devolucion_sin_cerrar">
+                    <field name="devolucion_sin_cerrar" invisible="1"/>
+                    Esta venta tiene una <b>devolución sin resolver</b>: quedan unidades
+                    pendientes de entregar que el cliente ya devolvió.
+                    <button name="action_resolver_devolucion" type="object"
+                            class="btn-link p-0 align-baseline"
+                            string="Resolver devolución"/>
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list//field[@name='qty_delivered']" position="after">
+                <field name="devolucion_sin_cerrar" optional="show" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

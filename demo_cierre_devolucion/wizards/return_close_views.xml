@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_return_close_confirmation" model="ir.ui.view">
+        <field name="name">return.close.confirmation.form</field>
+        <field name="model">return.close.confirmation</field>
+        <field name="arch" type="xml">
+            <form>
+                <div class="alert alert-info" role="alert">
+                    Esta devolución deja mercadería sin entregar en el documento de origen.
+                    <b>¿Cerramos el documento por lo que quedó entregado, o lo dejamos
+                    pendiente para reponer?</b>
+                </div>
+                <field name="line_ids" nolabel="1">
+                    <list create="0" delete="0" editable="bottom"
+                          decoration-warning="ojo">
+                        <field name="ojo" column_invisible="1"/>
+                        <field name="origen" readonly="1"/>
+                        <field name="product_id" readonly="1"/>
+                        <field name="qty_returned" readonly="1"/>
+                        <field name="qty_delivered_after" readonly="1"/>
+                        <field name="qty_pending" readonly="1"/>
+                        <field name="qty_pending_before" readonly="1"
+                               string="Ya estaba pendiente"/>
+                    </list>
+                </field>
+                <div class="alert alert-warning mt-2" role="alert"
+                     invisible="not line_ids.ojo">
+                    <b>Atención:</b> alguna línea ya tenía mercadería pendiente de entregar
+                    antes de esta devolución (columna resaltada). Si cerrás, esa mercadería
+                    se cancela también.
+                </div>
+                <footer>
+                    <button name="action_cerrar" type="object" class="btn-primary"
+                            string="Cerrar por lo entregado"/>
+                    <button name="action_dejar_pendiente" type="object" class="btn-secondary"
+                            string="Dejar pendiente para reponer"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
