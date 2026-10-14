@@ -58,7 +58,7 @@ class ProductPricelist(models.Model):
                 (self.env.ref("product.product_pricelist_item_tree_view").id, "list"),
                 (self.env.ref("product.product_pricelist_item_form_view").id, "form"),
             ],
-            "domain": self._get_applicable_rules_domain(product, fields.Datetime.now()),
+            "domain": self._get_applicable_rules_domain(product, date=fields.Datetime.now()),
             "context": context,
         }
 

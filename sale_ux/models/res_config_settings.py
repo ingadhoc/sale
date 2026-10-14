@@ -11,9 +11,6 @@ class ResConfigSettings(models.TransientModel):
     group_allow_any_user_as_salesman = fields.Boolean(
         "Allow any user as salesman", implied_group="sale_ux.group_allow_any_user_as_salesman"
     )
-    show_product_image_on_report = fields.Boolean(
-        string="Show Product Image", default=False, config_parameter="sale_ux.show_product_image_on_report"
-    )
     product_image_size = fields.Selection(
         [
             ("128_50", "50x50px"),
@@ -35,8 +32,6 @@ class ResConfigSettings(models.TransientModel):
         # agregamos portal para portal distributor
         group="base.group_user,base.group_portal",
     )
-
-    update_prices_automatically = fields.Boolean()
 
     move_internal_notes = fields.Boolean(
         "Mover notas internas a transferencias de stock y facturas",
@@ -66,29 +61,19 @@ class ResConfigSettings(models.TransientModel):
 
     def get_values(self):
         res = super(ResConfigSettings, self).get_values()
-        get_param = self.env["ir.config_parameter"].sudo().get_param
-        res.update(move_internal_notes=get_param("sale.propagate_internal_notes") == "True")
-        res.update(move_note=get_param("sale.propagate_note") == "True")
-        res.update(
-            update_prices_automatically=get_param("sale_ux.update_prices_automatically", "False").lower() == "true"
-        )
+        get_bool = self.env["ir.config_parameter"].sudo().get_bool
+        res.update(move_internal_notes=get_bool("sale.propagate_internal_notes"))
+        res.update(move_note=get_bool("sale.propagate_note"))
         return res
 
     def set_values(self):
-        old_size = self.env["ir.config_parameter"].sudo().get_param("sale_ux.product_image_size", "128_50")
         super(ResConfigSettings, self).set_values()
-        set_param = self.env["ir.config_parameter"].sudo().set_param
-        set_param("sale.propagate_internal_notes", repr(self.move_internal_notes))
-        set_param("sale.propagate_note", repr(self.move_note))
-        set_param("sale_ux.update_prices_automatically", repr(self.update_prices_automatically))
-        if old_size != self.product_image_size:
-            self.env["product.template"].action_recompute_image_sale_order()
+        set_bool = self.env["ir.config_parameter"].sudo().set_bool
+        set_bool("sale.propagate_internal_notes", self.move_internal_notes)
+        set_bool("sale.propagate_note", self.move_note)
 
     @api.constrains("days_to_keep_quotations")
     def _check_days_to_keep_sale_orders(self):
         for record in self:
             if record.days_to_keep_quotations <= 0:
                 raise ValidationError(_("Days to keep quotations must be greater than 0."))
-
-    def action_recompute_image_sale_order(self):
-        return self.env["product.template"].action_recompute_image_sale_order()

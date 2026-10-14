@@ -13,8 +13,6 @@ class SaleOrderLine(models.Model):
 
     team_id = fields.Many2one("crm.team", string="Sales Team", related="order_id.team_id")
 
-    categ_id = fields.Many2one("product.category", string="Product Category", related="product_id.categ_id")
-
     @api.depends("order_id.force_invoiced_status")
     def _compute_invoice_status(self):
         """
@@ -78,8 +76,8 @@ class SaleOrderLine(models.Model):
             line.allowed_uom_ids = line.product_id.uom_ids
         super(SaleOrderLine, self - lines)._compute_allowed_uom_ids()
 
-    def _get_product_catalog_lines_data(self, **kwargs):
-        res = super()._get_product_catalog_lines_data(**kwargs)
+    def _get_product_catalog_lines_data(self, parent_record, **kwargs):
+        res = super()._get_product_catalog_lines_data(parent_record, **kwargs)
         if (
             len(self) == 1
             and self.product_id.product_tmpl_id.only_packagings

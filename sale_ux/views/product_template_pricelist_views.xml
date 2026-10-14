@@ -5,7 +5,7 @@
         <field name="model">product.template</field>
         <field name="inherit_id" ref="product.product_template_form_view"/>
         <field name="arch" type="xml">
-            <field name="pricelist_rule_ids" position="before">
+            <field name="fixed_pricelist_rule_ids" position="before">
                 <field name="pricelist_ids" >
                     <list delete='false' create='false' edit="false" editable="top" options="{'no_open': True}">
                         <field name="name"/>
@@ -17,7 +17,7 @@
                     </list>
                 </field>
             </field>
-            <field name="pricelist_rule_ids" position="attributes">
+            <field name="fixed_pricelist_rule_ids" position="attributes">
                 <attribute name="invisible">1</attribute>
             </field>
         </field>
