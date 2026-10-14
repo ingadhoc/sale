@@ -29,8 +29,9 @@ Point of Sale UX
 
 3. If a payment method of a bank journal does not have an "outstanding account" defined, it will not allow you to log in to the POS.
 
-4. **Default order customer**: setting that pre-selects a partner on every new
-   POS order. Useful for B2C points of sale where most sales go to a generic
+4. **Default order customer**: setting that pre-selects a partner on every POS
+   order that starts without one, including the empty order the POS reuses when
+   it opens. Useful for B2C points of sale where most sales go to a generic
    anonymous customer. It is not the "Default Customer" of the point of sale,
    which Odoo uses for the session closing entries.
 
