@@ -35,6 +35,7 @@ class SaleOrderLine(models.Model):
                         "percentage": percentage,
                         "installment_qty": installment_qty,
                         "amount_per_installment": amount / installment_qty,
+                        "card_installment": item.get("card_installment") or "",
                     }
                 )
             if segments:
@@ -42,9 +43,11 @@ class SaleOrderLine(models.Model):
         return options
 
     def _get_payment_options_installments_display(self):
-        """Human readable installment breakdown, e.g. "3 installments of $ 30,000.00 | 6 installments of $ 15,000.00".
+        """Human readable installment breakdown, e.g. "Plan A (CASH): 1 installments of $ 90,000.00 | Plan B (CARD): 6 installments of $ 15,000.00".
 
-        Options are separated by a pipe; segments of a single option split across plans are joined with a plus.
+        Each segment is prefixed with the name of its installment plan, so the customer knows which
+        payment method each amount belongs to. Options are separated by a pipe; segments of a single
+        option split across plans are joined with a plus.
         """
         self.ensure_one()
         currency = self.order_id.currency_id
@@ -55,13 +58,18 @@ class SaleOrderLine(models.Model):
             for segment in segments:
                 if float_is_zero(segment["amount_per_installment"], precision_rounding=rounding):
                     continue
-                segments_display.append(
-                    self.env._(
-                        "%(installment_qty)s installments of %(amount)s",
-                        installment_qty=segment["installment_qty"],
-                        amount=currency.format(segment["amount_per_installment"]),
-                    )
+                installment_display = self.env._(
+                    "%(installment_qty)s installments of %(amount)s",
+                    installment_qty=segment["installment_qty"],
+                    amount=currency.format(segment["amount_per_installment"]),
                 )
+                if segment["card_installment"]:
+                    installment_display = self.env._(
+                        "%(card_installment)s: %(installments)s",
+                        card_installment=segment["card_installment"],
+                        installments=installment_display,
+                    )
+                segments_display.append(installment_display)
             if segments_display:
                 options_display.append(" + ".join(segments_display))
         return " | ".join(options_display)
