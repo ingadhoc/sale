@@ -38,7 +38,6 @@
         "wizards/sale_advance_payment_inv_views.xml",
         "wizards/sale_analytic_distribution_wizard_views.xml",
         "security/sale_ux_security.xml",
-        "security/ir.model.access.csv",
         "views/account_views.xml",
         "views/sale_order_views.xml",
         "views/sale_order_line_views.xml",
@@ -52,6 +51,7 @@
         "views/product_template_pricelist_views.xml",
         "data/ir_config_parameter_data.xml",
         "data/ir_cron.xml",
+        'security/ir.access.csv',
     ],
     "assets": {
         "web.assets_backend": [
