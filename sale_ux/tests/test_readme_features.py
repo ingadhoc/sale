@@ -1,10 +1,12 @@
 import base64
 import io
+import os
 import re
 
 from odoo import Command
 from odoo.exceptions import UserError
 from odoo.tests import new_test_user, tagged
+from odoo.tools import file_path
 from PIL import Image
 
 from .common import SaleUxCommon
@@ -207,3 +209,78 @@ class TestReadmeFeatures(SaleUxCommon):
 
         self.assertIn("Delivery:", str(html))
         self.assertIn("Sale UX 15 days", str(html))
+
+    def test_import_templates_exist_for_customers_and_products(self):
+        templates = self.env["res.partner"].with_context(res_partner_search_mode="customer").get_import_templates()
+        templates += (
+            self.env["product.template"].with_context(sale_multi_pricelist_product_template=True).get_import_templates()
+        )
+
+        self.assertEqual(len(templates), 2)
+        for template in templates:
+            self.assertTrue(os.path.exists(file_path(template["template"].lstrip("/"))), template["label"])
+
+    def test_fixed_down_payment_with_price_included_taxes_invoices_the_amount_asked(self):
+        tax = self.env["account.tax"].create(
+            {
+                "name": "Sale UX 21% included down payment",
+                "amount": 21,
+                "amount_type": "percent",
+                "type_tax_use": "sale",
+                "price_include_override": "tax_included",
+            }
+        )
+        product = self.env["product.product"].create(
+            {"name": "Sale UX taxed product", "type": "consu", "list_price": 121.0, "taxes_id": [Command.set([tax.id])]}
+        )
+        order = self._create_sale_order(order_line=[Command.create({"product_id": product.id, "product_uom_qty": 1})])
+        order.action_confirm()
+
+        self.env["sale.advance.payment.inv"].with_context(active_ids=order.ids, active_model="sale.order").create(
+            {"advance_payment_method": "fixed", "fixed_amount": 50.0}
+        ).create_invoices()
+
+        self.assertEqual(order.invoice_ids.amount_total, 50.0)
+
+    def test_online_quotation_shows_the_product_image_only_with_the_company_setting(self):
+        image = io.BytesIO()
+        Image.new("RGB", (300, 300), (30, 30, 200)).save(image, format="JPEG")
+        self.product.write({"image_1920": base64.b64encode(image.getvalue()).decode()})
+        order = self._create_sale_order()
+
+        def render():
+            return str(
+                self.env["ir.qweb"]._render(
+                    "sale.sale_order_portal_content",
+                    {
+                        "sale_order": order,
+                        "report_type": "html",
+                        "resize_to_attachment": False,
+                        "backend_url": "",
+                        "res_company": order.company_id,
+                        "user": self.env.user,
+                    },
+                )
+            )
+
+        # the online quotation uses the native image (image_128), the size selector only applies to the PDF
+        self.env.company.display_product_images_on_so = False
+        self.assertNotIn("o_sale_portal_product_image", render())
+        self.env.company.display_product_images_on_so = True
+        self.assertIn("o_sale_portal_product_image", render())
+
+    def test_product_prices_tab_lists_pricelists_without_rules_for_the_product(self):
+        self.env["product.pricelist"].create({"name": "Sale UX pricelist without rules", "show_products": True})
+        template = self.env["product.template"].create({"name": "Sale UX template", "list_price": 40.0})
+
+        prices = {pricelist.name: pricelist.price for pricelist in template.pricelist_ids}
+
+        self.assertEqual(prices["Sale UX pricelist without rules"], 40.0)
+
+    def test_sale_history_button_is_hidden_on_lines_without_product(self):
+        arch = self._arch("sale.order", "form")
+
+        button = re.search(r'<button name="action_sale_history"[^>]*>', arch)
+
+        self.assertTrue(button)
+        self.assertIn('invisible="not product_id"', button.group(0))
