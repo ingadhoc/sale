@@ -364,3 +364,5 @@ msgstr "Con devoluciones"
 #: code:addons/sale_stock_ux/wizards/stock_return_picking.py:0
 msgid "You cannot create exchanges for return lines marked to refund."
 msgstr ""
+"No se puede crear un cambio con líneas marcadas Para abonar. Destildá Para "
+"abonar en todas las líneas."
