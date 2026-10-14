@@ -1,0 +1,5 @@
+id,name,model_id,group_id/id,operation,domain
+access_sale_order_global_discount_wizard,access_sale_order_global_discount_wizard,sale.order.global_discount.wizard,base.group_user,cru,
+access_sale_order_analytic_wizard,access_sale_order_analytic_wizard,sale.order.analytic.wizard,sales_team.group_sale_salesman,crud,
+access_sale_order_analytic_wizard_line,access_sale_order_analytic_wizard_line,sale.order.analytic.wizard.line,sales_team.group_sale_salesman,crud,
+access_product_pricelist_sale_user,product.pricelist.sale.user,product.pricelist,sales_team.group_sale_salesman,ru,
