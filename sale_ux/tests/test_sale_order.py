@@ -26,9 +26,9 @@ class TestSaleOrder(SaleUxCommon):
 
     def test_prepare_invoice_respects_note_propagation_settings(self):
         self.env.company.invoice_terms = "Company invoice terms"
-        self.IrConfig.set_param("account.use_invoice_terms", "True")
-        self.IrConfig.set_param("sale.propagate_internal_notes", "True")
-        self.IrConfig.set_param("sale.propagate_note", "False")
+        self.IrConfig.set_str("account.use_invoice_terms", "True")
+        self.IrConfig.set_str("sale.propagate_internal_notes", "True")
+        self.IrConfig.set_str("sale.propagate_note", "False")
         order = self._create_sale_order(
             internal_notes="<p>Internal note</p>",
             note="Sale note",
@@ -39,7 +39,7 @@ class TestSaleOrder(SaleUxCommon):
         self.assertEqual(vals["internal_notes"], "<p>Internal note</p>")
         self.assertIn("Company invoice terms", str(vals["narration"]))
 
-        self.IrConfig.set_param("sale.propagate_note", "True")
+        self.IrConfig.set_str("sale.propagate_note", "True")
         vals = order._prepare_invoice()
 
         self.assertIn("Sale note", str(vals["narration"]))
@@ -66,7 +66,7 @@ class TestSaleOrder(SaleUxCommon):
         order.action_confirm()
         note_line = order.order_line.filtered(lambda line: line.display_type == "line_note")
 
-        self.IrConfig.set_param("sale_ux.dont_send_notes_to_invoices", "True")
+        self.IrConfig.set_str("sale_ux.dont_send_notes_to_invoices", "True")
         invoiceable_lines = order._get_invoiceable_lines()
 
         self.assertNotIn(note_line, invoiceable_lines)
@@ -105,6 +105,27 @@ class TestSaleOrder(SaleUxCommon):
 
         self.assertEqual(order.state, "cancel")
 
+    def test_force_invoiced_status_marks_order_and_lines_and_zeroes_amount_to_invoice(self):
+        order = self._create_sale_order()
+        order.action_confirm()
+        self.assertEqual(order.invoice_status, "to invoice")
+
+        order.force_invoiced_status = "invoiced"
+
+        self.assertEqual(order.invoice_status, "invoiced")
+        self.assertEqual(order.order_line.mapped("invoice_status"), ["invoiced"])
+        self.assertEqual(order.amount_to_invoice, 0.0)
+
+    def test_force_nothing_to_invoice_status_marks_order_and_lines(self):
+        order = self._create_sale_order()
+        order.action_confirm()
+
+        order.force_invoiced_status = "no"
+
+        self.assertEqual(order.invoice_status, "no")
+        self.assertEqual(order.order_line.mapped("invoice_status"), ["no"])
+        self.assertEqual(order.amount_to_invoice, 0.0)
+
     def test_force_invoiced_status_requires_system_user(self):
         order = self._create_sale_order()
         self._prepare_order_for_invoicing(order)
@@ -141,7 +162,7 @@ class TestSaleOrder(SaleUxCommon):
         self.assertEqual(order.amount_uninvoiced, 0.0)
 
     def test_prepare_analytic_account_without_company(self):
-        self.IrConfig.set_param("sale_ux.analytic_account_without_company", "True")
+        self.IrConfig.set_str("sale_ux.analytic_account_without_company", "True")
         order = self._create_sale_order(client_order_ref="REF-001")
 
         values = order._prepare_analytic_account_data(prefix="Project")
@@ -156,8 +177,8 @@ class TestSaleOrder(SaleUxCommon):
         self.assertEqual(values["name"], order.name)
 
     def test_cron_clean_old_quotations_cancels_expired_drafts(self):
-        self.IrConfig.set_param("sale_ux.cancel_old_quotations", "True")
-        self.IrConfig.set_param("sale_ux.days_to_keep_quotations", "10")
+        self.IrConfig.set_str("sale_ux.cancel_old_quotations", "True")
+        self.IrConfig.set_str("sale_ux.days_to_keep_quotations", "10")
         old_order = self._create_old_quotation(days_old=20)
         recent_order = self._create_old_quotation(days_old=2)
 
@@ -166,27 +187,17 @@ class TestSaleOrder(SaleUxCommon):
         self.assertEqual(old_order.state, "cancel")
         self.assertEqual(recent_order.state, "draft")
 
-    def test_action_preview_sale_order_opens_new_tab(self):
+    def test_action_update_prices_recomputes_prices_and_logs_the_pricelist(self):
         order = self._create_sale_order()
+        line = order.order_line[0]
+        line.price_unit = 1.0
+        messages_before = len(order.message_ids)
 
-        action = order.action_preview_sale_order()
+        order.action_update_prices()
 
-        self.assertEqual(action["target"], "new")
-
-    def test_onchange_pricelist_can_recompute_prices_automatically(self):
-        self.IrConfig.set_param("sale_ux.update_prices_automatically", "True")
-        order = self._create_sale_order()
-
-        order._onchange_pricelist_id_show_update_prices()
-
-        self.assertTrue(order.order_line)
-
-    def test_onchange_fiscal_position_recomputes_line_taxes(self):
-        order = self._create_sale_order()
-
-        order._onchange_fiscal_position_id()
-
-        self.assertTrue(order.order_line)
+        self.assertEqual(line.price_unit, self.product.list_price)
+        self.assertEqual(len(order.message_ids), messages_before + 1)
+        self.assertIn("Product prices have been recomputed", order.message_ids[0].body)
 
     def test_action_update_prices_ignores_empty_recordset(self):
         result = self.env["sale.order"].action_update_prices()

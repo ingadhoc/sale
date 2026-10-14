@@ -28,11 +28,6 @@
                 <attribute name="optional">hide</attribute>
             </xpath>
 
-            <!-- lo dejamos siempre visible para que si el cliente modifica cosas por edicion masiva, expo/impo u otras o manualmente, pueda siempre re-computar según la FP -->
-            <button name="action_update_taxes" position="attributes">
-                <attribute name="invisible">state not in ['draft', 'sent']</attribute>
-            </button>
-
             <group name="note_group" position="after">
                 <newline/>
                 <field name="internal_notes" nolabel="1" placeholder="Internal Notes..." groups="base.group_user"/>
@@ -54,16 +49,13 @@
                 <attribute name="domain">['|',('partner_id','=',False), ('commercial_partner_id','=',commercial_partner_id)]</attribute>
             </field> -->
             <group name="order_details" position="inside">
-                <div groups="!product.group_product_pricelist">
+                <!-- Odoo 20 only recomputes prices when the pricelist changes: we keep the button for everyone (PO decision) -->
+                <div>
                   <button name="action_update_prices" type="object" string=" Update Prices" icon="refresh" invisible="state not in ['draft', 'sent']"/>
                 </div>
             </group>
-            <xpath expr="//group[@name='order_details']//div[hasclass('o_row')]/button" position="attributes">
-                <attribute name="invisible">state not in ['draft', 'sent']</attribute>
-                <attribute name="confirm"/>
-            </xpath>
             <xpath expr="//field[@name='order_line']/list//field[@name='discount']" position="after">
-                <button name="action_sale_history" type="object" icon="history" title="Sale History"/>
+                <button name="action_sale_history" type="object" icon="history" title="Sale History" invisible="not product_id"/>
             </xpath>
         </field>
     </record>
@@ -167,22 +159,5 @@
     <!-- sequence 1 instead of to to orders menu so that it is before lines -->
     <record model="ir.ui.menu" id="sale.menu_sale_order">
         <field name="sequence">1</field>
-    </record>
-
-    <!--Hide Sale Invoicing Menu -->
-    <record model="ir.ui.menu" id="sale.menu_sale_invoicing">
-        <field name="active" eval="False"/>
-    </record>
-
-    <record id="action_confirm_sale_order" model="ir.actions.server">
-        <field name="name">Confirm sale order</field>
-        <field name="model_id" ref="sale.model_sale_order"/>
-        <field name="binding_model_id" ref="sale.model_sale_order"/>
-        <field name="binding_view_types">list</field>
-        <field name="state">code</field>
-        <field name="code">
-for record in records:
-    record.action_confirm()
-        </field>
     </record>
 </odoo>

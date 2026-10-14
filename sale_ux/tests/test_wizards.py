@@ -7,27 +7,6 @@ from .common import SaleUxCommon
 
 @tagged("post_install", "-at_install")
 class TestSaleUxWizards(SaleUxCommon):
-    def test_global_discount_wizard_sets_all_sale_line_discounts(self):
-        order = self._create_sale_order(
-            order_line=[
-                Command.create({"product_id": self.product.id, "price_unit": 100.0}),
-                Command.create({"product_id": self.product.id, "price_unit": 200.0}),
-            ]
-        )
-
-        # Some stacks override line discounts after write (e.g. pricelist-driven locks).
-        # In those environments this wizard cannot enforce a global discount by design.
-        order.order_line.write({"discount": 12.5})
-        if order.order_line.mapped("discount") != [12.5, 12.5]:
-            self.skipTest("Line discounts are controlled by installed modules in this stack")
-        order.order_line.write({"discount": 0.0})
-
-        wizard = self.env["sale.order.global_discount.wizard"].with_context(active_id=order.id).create({"amount": 12.5})
-        result = wizard.confirm()
-
-        self.assertTrue(result)
-        self.assertEqual(order.order_line.mapped("discount"), [12.5, 12.5])
-
     def test_advance_payment_amount_total_computes_taxes(self):
         order = self._create_sale_order()
         tax = self.env["account.tax"].create(

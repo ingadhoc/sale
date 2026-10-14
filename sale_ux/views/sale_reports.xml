@@ -1,32 +1,16 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
+    <!-- Odoo 20 shows the product image natively (company setting "Display Product Images"); we only let choose its size -->
     <template id="report_saleorder" inherit_id="sale.report_saleorder_document">
         <xpath expr="//t[@t-set='display_discount']" position="after">
-            <t t-set="show_images" t-value="doc.env['ir.config_parameter'].sudo().get_param('sale_ux.show_product_image_on_report')"/>
-            <t t-set="product_image_size" t-value="doc.env['ir.config_parameter'].sudo().get_param('sale_ux.product_image_size', '128_50')"/>
+            <t t-set="product_image_size" t-value="doc.env['ir.config_parameter'].sudo().get_str('sale_ux.product_image_size') or '128_50'"/>
+            <t t-set="image_field" t-value="'image_' + product_image_size.split('_')[0]"/>
             <t t-set="display_size" t-value="int(product_image_size.split('_')[1])"/>
-            <t t-set="column_width" t-value="display_size + 10"/>
         </xpath>
-        <th name="th_description" position="before">
-            <th t-if="show_images" name="th_image" class="text-center" t-attf-style="width: {{column_width}}px;">Image</th>
-        </th>
-        <td name="td_product_name" position="before">
-            <td t-if="show_images" name="td_image" class="text-center" t-attf-style="width: {{column_width}}px;">
-                <img t-if="line.product_id.image_sale_order"
-                     t-att-src="image_data_uri(line.product_id.image_sale_order)"
-                     t-attf-style="display: block; margin: auto; width: auto; height: auto; max-width: {{display_size}}px; max-height: {{display_size}}px; object-fit: contain;"
-                     alt="Product image"/>
-            </td>
-        </td>
-        <!-- Empty image-column cell so non-product rows keep the grid aligned -->
-        <td name="td_section_name" position="before">
-            <td t-if="show_images" name="td_section_image" t-attf-style="width: {{column_width}}px;"/>
-        </td>
-        <td name="td_combo_name" position="before">
-            <td t-if="show_images" name="td_combo_image" t-attf-style="width: {{column_width}}px;"/>
-        </td>
-        <td name="td_section_group_name" position="before">
-            <td t-if="show_images" name="td_section_group_image" t-attf-style="width: {{column_width}}px;"/>
-        </td>
+        <xpath expr="//td[@name='td_product_name']//img[hasclass('o_sale_report_product_image')]" position="attributes">
+            <attribute name="t-if">doc.company_id.display_product_images_on_so and line.product_id[image_field]</attribute>
+            <attribute name="t-att-src">image_data_uri(line.product_id[image_field])</attribute>
+            <attribute name="t-attf-style">width: auto; height: auto; max-width: {{display_size}}px; max-height: {{display_size}}px;</attribute>
+        </xpath>
     </template>
 </odoo>

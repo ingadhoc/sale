@@ -31,10 +31,8 @@
         "sale",
         "account_ux",
         "sale_management",
-        "base_bg",
     ],
     "data": [
-        "wizards/sale_global_discount_wizard_views.xml",
         "wizards/sale_advance_payment_inv_views.xml",
         "wizards/sale_analytic_distribution_wizard_views.xml",
         "security/sale_ux_security.xml",
@@ -51,7 +49,7 @@
         "views/product_template_pricelist_views.xml",
         "data/ir_config_parameter_data.xml",
         "data/ir_cron.xml",
-        'security/ir.access.csv',
+        "security/ir.access.csv",
     ],
     "assets": {
         "web.assets_backend": [
