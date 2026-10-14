@@ -27,20 +27,18 @@ Point of Sale UX
    in contingency, the invoice PDF is not downloaded when validating a payment,
    even if the "Download Invoice" setting of the point of sale is on.
 
-3. If a payment method of a bank journal does not have an "outstanding account" defined, it will not allow you to log in to the POS.
-
-4. **Default order customer**: setting that pre-selects a partner on every POS
+3. **Default order customer**: setting that pre-selects a partner on every POS
    order that starts without one, including the empty order the POS reuses when
    it opens. Useful for B2C points of sale where most sales go to a generic
    anonymous customer. It is not the "Default Customer" of the point of sale,
    which Odoo uses for the session closing entries.
 
-5. **Block session close when there are paid orders without invoice**. Only
+4. **Block session close when there are paid orders without invoice**. Only
    applies when the billing behavior is set to "Always Invoice". Use the
    "Generate invoices" button in the session backend to invoice the pending
    orders before closing the session.
 
-6. **Invoiced / Not Invoiced pill in the orders list**. Paid orders show a
+5. **Invoiced / Not Invoiced pill in the orders list**. Paid orders show a
    badge in the ticket screen indicating whether they were already invoiced,
    so the cashier can tell at a glance which orders are still pending.
 

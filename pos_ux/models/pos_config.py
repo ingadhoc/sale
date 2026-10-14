@@ -1,5 +1,4 @@
 from odoo import fields, models
-from odoo.exceptions import UserError
 
 
 class PosConfig(models.Model):
@@ -28,22 +27,3 @@ class PosConfig(models.Model):
         if self.default_order_partner_id and (self.default_order_partner_id.id,) not in partner_ids:
             partner_ids.append((self.default_order_partner_id.id,))
         return partner_ids
-
-    def open_ui(self):
-        for config in self:
-            payment_method_without_outstanding_account = config.payment_method_ids.filtered(
-                lambda method: method.journal_id.type == "bank"
-                and not method.outstanding_account_id
-                and not any(line.payment_account_id for line in method.journal_id.inbound_payment_method_line_ids)
-            )
-            if payment_method_without_outstanding_account:
-                payment_method_without_outstanding_account_names = ", ".join(
-                    payment_method_without_outstanding_account.mapped("name")
-                )
-                raise UserError(
-                    self.env._(
-                        "No se puede completar la operación: falta definir la cuenta pendiente en los siguientes métodos de pago: %s",
-                        payment_method_without_outstanding_account_names,
-                    )
-                )
-        return super().open_ui()
