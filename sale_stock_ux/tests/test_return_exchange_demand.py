@@ -102,3 +102,21 @@ class TestReturnExchangeDemand(TransactionCase):
                 3.0,
                 "Los movimientos de cambio deben pedir 3u; el hack los dejaba en 3 - quantity_returned.",
             )
+
+    def test_exchange_unchecks_to_refund(self):
+        """Devolucion para cambio con "Para abonar" tildado (por defecto): no
+        da error, destilda la casilla y la OV queda igual que antes."""
+        order = self._new_order(qty=10)
+        delivery = order.picking_ids
+        self._validate(delivery)
+
+        exchange = self._return_wizard(delivery, qty=1, to_refund=True)
+        exchange.action_create_exchanges()
+        self.assertFalse(any(exchange.product_return_moves.mapped("to_refund")))
+
+        for picking in order.picking_ids.filtered(lambda p: p.state not in ("done", "cancel")):
+            self._validate(picking)
+
+        line = order.order_line
+        self.assertEqual(line.qty_delivered, 10.0)
+        self.assertEqual(line.quantity_returned, 0.0)
