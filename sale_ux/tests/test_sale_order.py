@@ -105,6 +105,26 @@ class TestSaleOrder(SaleUxCommon):
 
         self.assertEqual(order.state, "cancel")
 
+    def test_catalog_shows_the_packaging_uom_of_only_packagings_products(self):
+        self.product.product_tmpl_id.write(
+            {"uom_ids": [Command.link(self.product_uom_pack.id)], "only_packagings": True}
+        )
+        order = self._create_sale_order()
+
+        data = order._get_product_catalog_order_data(self.product)
+
+        self.assertEqual(data[self.product.id]["uomDisplayName"], self.product_uom_pack.display_name)
+
+    def test_line_of_only_packagings_product_uses_its_packaging_uom(self):
+        self.product.product_tmpl_id.write(
+            {"uom_ids": [Command.link(self.product_uom_pack.id)], "only_packagings": True}
+        )
+
+        order = self._create_sale_order()
+
+        self.assertEqual(order.order_line.product_uom_id, self.product_uom_pack)
+        self.assertEqual(order.order_line.allowed_uom_ids, self.product_uom_pack)
+
     def test_force_invoiced_status_marks_order_and_lines_and_zeroes_amount_to_invoice(self):
         order = self._create_sale_order()
         order.action_confirm()
