@@ -156,14 +156,6 @@ msgid ""
 msgstr ""
 
 #. module: pos_ux
-#. odoo-python
-#: code:addons/pos_ux/models/pos_config.py:0
-msgid ""
-"No se puede completar la operación: falta definir la cuenta pendiente en los"
-" siguientes métodos de pago: %s"
-msgstr ""
-
-#. module: pos_ux
 #. odoo-javascript
 #: code:addons/pos_ux/static/src/overrides/screens/ticket_screen/ticket_screen.xml:0
 msgid "Not Invoiced"
