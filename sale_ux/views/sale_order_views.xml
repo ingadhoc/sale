@@ -55,7 +55,7 @@
             </field> -->
             <group name="order_details" position="inside">
                 <div groups="!product.group_product_pricelist">
-                  <button name="action_update_prices" type="object" string=" Update Prices" icon="fa-refresh" invisible="state not in ['draft', 'sent']"/>
+                  <button name="action_update_prices" type="object" string=" Update Prices" icon="refresh" invisible="state not in ['draft', 'sent']"/>
                 </div>
             </group>
             <xpath expr="//group[@name='order_details']//div[hasclass('o_row')]/button" position="attributes">
@@ -63,7 +63,7 @@
                 <attribute name="confirm"/>
             </xpath>
             <xpath expr="//field[@name='order_line']/list//field[@name='discount']" position="after">
-                <button name="action_sale_history" type="object" icon="fa-history" title="Sale History"/>
+                <button name="action_sale_history" type="object" icon="history" title="Sale History"/>
             </xpath>
         </field>
     </record>
