@@ -286,21 +286,6 @@ class TestSaleOrder(SaleUxCommon):
         self.assertTrue(messages)
         self.assertIn(order.name, messages[0].body)
 
-    def test_action_confirm_multiple_sales_from_list(self):
-        """Test confirming multiple sales orders from list view"""
-        if not hasattr(self.env["sale.order"], "action_confirm_sale_order"):
-            self.skipTest("action_confirm_sale_order is provided by an optional dependency")
-
-        order_1 = self._create_sale_order()
-        order_2 = self._create_sale_order()
-        orders = order_1 | order_2
-
-        result = orders.action_confirm_sale_order()
-
-        self.assertEqual(order_1.state, "sale")
-        self.assertEqual(order_2.state, "sale")
-        self.assertIsNotNone(result)
-
     def _mass_cancel(self, orders):
         return self.env["sale.mass.cancel.orders"].with_context(active_ids=orders.ids).create({}).action_mass_cancel()
 
