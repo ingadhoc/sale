@@ -523,6 +523,16 @@ msgid "Number of days to keep quotations before cancelling them."
 msgstr "Número de días para mantener las cotizaciones antes de cancelarlas."
 
 #. module: sale_ux
+#: model:ir.model.fields,help:sale_ux.field_res_config_settings__report_in_product_uom
+msgid "On the quotation PDF and the online quotation, lines sold in another unit (e.g. a packaging) show quantity and unit price in the product unit."
+msgstr "En el PDF del presupuesto y en el presupuesto online, las líneas vendidas en otra unidad (por ejemplo, un envase) muestran la cantidad y el precio unitario en la unidad del producto."
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
+msgid "On the quotation PDF and the online quotation, show quantity and unit price of lines sold in another unit (e.g. a packaging) in the product unit."
+msgstr "En el PDF del presupuesto y en el presupuesto online, mostrar la cantidad y el precio unitario de las líneas vendidas en otra unidad (por ejemplo, un envase) en la unidad del producto."
+
+#. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_product_product__only_packagings
 #: model:ir.model.fields,field_description:sale_ux.field_product_template__only_packagings
 msgid "Only Packagings"
@@ -746,6 +756,11 @@ msgstr "Mostrar Imagen del Producto"
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
 msgid "Show Product Image on quotation report"
 msgstr "Mostrar imagen del producto en las cotizaciones"
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__report_in_product_uom
+msgid "Show Product Unit on Quotations"
+msgstr "Mostrar la unidad del producto en los presupuestos"
 
 #. module: sale_ux
 #: model:res.groups,name:sale_ux.group_reference_on_tree_and_main_form
