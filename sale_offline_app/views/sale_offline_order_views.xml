@@ -8,6 +8,8 @@
                 <field name="create_date" string="Received"/>
                 <field name="create_uid" string="Salesperson" widget="many2one_avatar_user"/>
                 <field name="partner_name"/>
+                <field name="kind"/>
+                <field name="reason" optional="show"/>
                 <field name="line_count"/>
                 <field name="amount_total"/>
                 <field name="sale_order_id"/>
@@ -34,7 +36,9 @@
                     <group>
                         <group>
                             <field name="create_uid" string="Salesperson" widget="many2one_avatar_user"/>
-                            <field name="amount_total"/>
+                            <field name="kind"/>
+                            <field name="reason" invisible="kind != 'no_purchase'"/>
+                            <field name="amount_total" invisible="kind == 'no_purchase'"/>
                             <field name="line_count"/>
                             <field name="sale_order_id"/>
                         </group>

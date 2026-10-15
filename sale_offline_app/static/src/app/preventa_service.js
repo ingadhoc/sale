@@ -4,10 +4,11 @@ import { browser } from "@web/core/browser/browser";
 import { registry } from "@web/core/registry";
 import { roundPrecision } from "@web/core/utils/numbers";
 import { LocalDB } from "./local_db";
+import { PricelistEngine } from "./pricelist";
 
 const APP_PATH = "/preventa";
 // Bump when the shape of synced records changes: local catalog is refreshed, orders are kept.
-const DATA_VERSION = 3;
+const DATA_VERSION = 6;
 const ORDERS_SCHEMA_VERSION = 1;
 const ORDERS_PER_REQUEST = 200;
 const AUTO_SEND_RETRY_MS = 60000;
@@ -51,9 +52,21 @@ export const preventaService = {
             partners: [],
             products: [],
             activities: [],
+            categories: [],
+            history: [],
             orders: {},
+            // Day of visits the salesperson chose to work on (kept while the app is open).
+            workDay: null,
+            // Customer search of the orders screen, kept while opening an order and coming back.
+            ordersQuery: "",
+            warehouse: false,
         });
-        let index = markRaw({ byCode: new Map() });
+        let pricing = markRaw(new PricelistEngine());
+        let discountEnabled = false;
+        let index = markRaw({ byCode: new Map(), byId: new Map() });
+        let catalog = markRaw({ children: new Map(), products: new Map(), counts: new Map() });
+        // Images are only shown online and never stored: object URLs live while the app is open.
+        const imageUrls = new Map();
         let fiscal = markRaw({ company: null, taxById: new Map(), positionById: new Map() });
         let waitingWorker = null;
 
@@ -74,6 +87,54 @@ export const preventaService = {
                 partner._search = normalize([partner.name, partner.ref, partner.vat].join(" "));
             }
             index = markRaw({ byCode, byId });
+            buildCatalog();
+        }
+
+        /** Category tree for the catalog: children and products per category, and how
+         * many products hang below each one (subcategories included). */
+        function buildCatalog() {
+            const parentById = new Map(state.categories.map((category) => [category.id, category.parent_id]));
+            const children = new Map();
+            for (const category of state.categories) {
+                const key = category.parent_id || false;
+                if (!children.has(key)) {
+                    children.set(key, []);
+                }
+                children.get(key).push(category);
+            }
+            for (const list of children.values()) {
+                list.sort((a, b) => a.name.localeCompare(b.name));
+            }
+            const products = new Map();
+            const counts = new Map();
+            for (const product of state.products) {
+                const key = product.categ_id || false;
+                if (!products.has(key)) {
+                    products.set(key, []);
+                }
+                products.get(key).push(product);
+                for (let id = key; id; id = parentById.get(id)) {
+                    counts.set(id, (counts.get(id) || 0) + 1);
+                }
+            }
+            for (const list of products.values()) {
+                list.sort((a, b) => a.display_name.localeCompare(b.display_name));
+            }
+            catalog = markRaw({ children, products, counts });
+        }
+
+        function getCategoryChildren(categoryId) {
+            return (catalog.children.get(categoryId || false) || []).filter((category) =>
+                catalog.counts.get(category.id)
+            );
+        }
+
+        function getCategoryProducts(categoryId) {
+            return catalog.products.get(categoryId || false) || [];
+        }
+
+        function getCategoryCount(categoryId) {
+            return catalog.counts.get(categoryId) || 0;
         }
 
         function buildFiscal(company, taxes, positions) {
@@ -120,6 +181,7 @@ export const preventaService = {
                     tax_ids: getTaxes(product, partner),
                     price_unit: line.price_unit,
                     quantity: line.quantity,
+                    discount: line.discount || 0,
                     currency_id: state.currency,
                 });
             });
@@ -150,8 +212,32 @@ export const preventaService = {
             };
         }
 
+        /** Unit price before taxes from the customer's pricelist (list price without one). */
+        function unitPrice(product, partner, quantity = 1) {
+            return partner?.pricelist_id
+                ? pricing.getPrice(partner.pricelist_id, product, quantity)
+                : product.lst_price;
+        }
+
+        /** Price and discount of an order line, as Odoo would put them on the sale order line. */
+        function linePrice(product, partner, quantity) {
+            if (!partner?.pricelist_id) {
+                return { price: product.lst_price, discount: 0 };
+            }
+            if (!discountEnabled) {
+                return { price: unitPrice(product, partner, quantity), discount: 0 };
+            }
+            const { price, discount } = pricing.getPriceWithDiscount(partner.pricelist_id, product, quantity);
+            // Stored with 2 decimals on the sale order line (Discount precision).
+            return { price, discount: Math.round(discount * 100) / 100 };
+        }
+
+        function buildPricing(pricelists, items) {
+            pricing = markRaw(new PricelistEngine(pricelists, items, state.categories));
+        }
+
         function priceIncluded(product, partner) {
-            return computeLines([{ product_id: product.id, price_unit: product.lst_price, quantity: 1 }], partner)
+            return computeLines([{ product_id: product.id, price_unit: unitPrice(product, partner), quantity: 1 }], partner)
                 .included;
         }
 
@@ -171,13 +257,22 @@ export const preventaService = {
             state.autoSend = Boolean(await db.getMeta("autoSend"));
             state.pin = (await db.getMeta("pin")) || false;
             state.currency = (await db.getMeta("currency")) || state.currency;
-            const [company, taxes, positions, activities] = await Promise.all([
-                db.getMeta("company"),
-                db.getMeta("taxes"),
-                db.getMeta("fiscalPositions"),
-                db.getMeta("activities"),
-            ]);
+            const [company, taxes, positions, activities, categories, history, pricelists, pricelistItems] =
+                await Promise.all([
+                    db.getMeta("company"),
+                    db.getMeta("taxes"),
+                    db.getMeta("fiscalPositions"),
+                    db.getMeta("activities"),
+                    db.getMeta("categories"),
+                    db.getMeta("history"),
+                    db.getMeta("pricelists"),
+                    db.getMeta("pricelistItems"),
+                ]);
+            state.warehouse = (await db.getMeta("warehouse")) || false;
+            discountEnabled = Boolean(await db.getMeta("discountEnabled"));
             state.activities = markRaw(activities || []);
+            state.categories = markRaw(categories || []);
+            state.history = markRaw(history || []);
             const [partners, products, orders] = await Promise.all([
                 db.getAll("partners"),
                 db.getAll("products"),
@@ -190,6 +285,7 @@ export const preventaService = {
             state.orders = Object.fromEntries(orders.map((order) => [order.uuid, order]));
             buildIndex();
             buildFiscal(company, taxes || [], positions || []);
+            buildPricing(pricelists || [], pricelistItems || []);
             state.needsSync = Boolean(state.link) && (await db.getMeta("dataVersion")) !== DATA_VERSION;
         }
 
@@ -250,6 +346,7 @@ export const preventaService = {
                     partners: data.partners.length,
                     products: data.products.length,
                     activities: data.activities.length,
+                    history: data.history.length,
                     downloadMs: Math.round(downloaded - started),
                     storeMs: Math.round(performance.now() - downloaded),
                 };
@@ -259,16 +356,28 @@ export const preventaService = {
                 await db.setMeta("taxes", data.taxes);
                 await db.setMeta("fiscalPositions", data.fiscal_positions);
                 await db.setMeta("activities", data.activities);
+                await db.setMeta("categories", data.categories);
+                await db.setMeta("history", data.history);
+                await db.setMeta("pricelists", data.pricelists);
+                await db.setMeta("pricelistItems", data.pricelist_items);
+                await db.setMeta("warehouse", data.warehouse);
+                await db.setMeta("discountEnabled", data.discount_enabled);
                 await db.setMeta("lastSync", lastSync);
                 await db.setMeta("dataVersion", DATA_VERSION);
                 state.partners = markRaw(data.partners);
                 state.products = markRaw(data.products);
                 state.activities = markRaw(data.activities);
+                state.categories = markRaw(data.categories);
+                state.history = markRaw(data.history);
+                state.warehouse = data.warehouse;
+                discountEnabled = data.discount_enabled;
                 state.currency = data.currency;
                 state.pin = data.pin || false;
                 state.lastSync = lastSync;
                 buildIndex();
                 buildFiscal(data.company, data.taxes, data.fiscal_positions);
+                buildPricing(data.pricelists, data.pricelist_items);
+                await repriceDrafts();
                 state.needsSync = false;
             } catch (error) {
                 if (!state.authExpired) {
@@ -325,38 +434,165 @@ export const preventaService = {
             );
         }
 
-        async function addLine(partner, product, quantity, activityId = false) {
-            let order = getDraftOrder(partner);
-            if (!order) {
-                order = {
-                    uuid: window.crypto.randomUUID(),
-                    partner_id: partner.id,
-                    partner_name: partner.name,
-                    date: new Date().toISOString(),
-                    state: "draft",
-                    lines: [],
-                };
+        function newDraft(partner, activityId) {
+            return {
+                uuid: window.crypto.randomUUID(),
+                kind: "order",
+                partner_id: partner.id,
+                partner_name: partner.name,
+                date: new Date().toISOString(),
+                state: "draft",
+                activity_id: activityId || false,
+                lines: [],
+            };
+        }
+
+        async function saveDraft(order, partner) {
+            // Prices follow the pricelist on every change: a rule may depend on the quantity.
+            for (const line of order.lines) {
+                const product = index.byId.get(line.product_id);
+                if (product) {
+                    const { price, discount } = linePrice(product, partner, line.quantity);
+                    line.price_unit = price;
+                    // The pricelist discount is a default: once the salesperson changes it, it stays.
+                    if (!line.discount_edited) {
+                        line.discount = discount;
+                    }
+                }
             }
+            order.pricelist_id = partner.pricelist_id || false;
+            const computed = computeLines(order.lines, partner);
+            order.lines.forEach((orderLine, i) => (orderLine.tax_ids = computed.lines[i].tax_ids));
+            order.fiscal_position_id = partner.fiscal_position_id || false;
+            await saveOrder(order);
+        }
+
+        // Orders being built follow the prices and pricelists just synced.
+        async function repriceDrafts() {
+            const partners = new Map(state.partners.map((partner) => [partner.id, partner]));
+            for (const draft of getOrdersByState("draft")) {
+                const partner = partners.get(draft.partner_id);
+                if (partner) {
+                    await saveDraft(JSON.parse(JSON.stringify(draft)), partner);
+                }
+            }
+        }
+
+        /** Set the quantity of a product in the customer's draft (0 removes the line). */
+        async function setQuantity(partner, product, quantity, activityId = false) {
+            const current = getDraftOrder(partner);
+            if (!current && !(quantity > 0)) {
+                return;
+            }
+            const order = current ? JSON.parse(JSON.stringify(current)) : newDraft(partner, activityId);
             if (activityId && !order.activity_id) {
                 order.activity_id = activityId;
             }
             const line = order.lines.find((l) => l.product_id === product.id);
-            if (line) {
-                line.quantity += quantity;
+            if (!(quantity > 0)) {
+                order.lines = order.lines.filter((l) => l.product_id !== product.id);
+            } else if (line) {
+                line.quantity = quantity;
             } else {
                 order.lines.unshift({
                     product_id: product.id,
                     name: product.display_name,
                     code: product.default_code || "",
                     quantity,
+                    discount: 0,
                     price_unit: product.lst_price,
                 });
             }
-            const computed = computeLines(order.lines, partner);
-            order.lines.forEach((orderLine, i) => (orderLine.tax_ids = computed.lines[i].tax_ids));
-            order.fiscal_position_id = partner.fiscal_position_id || false;
-            await db.put("orders", JSON.parse(JSON.stringify(order)));
-            state.orders[order.uuid] = order;
+            await saveDraft(order, partner);
+        }
+
+        /** Discount in % on a line of the customer's draft. */
+        async function setDiscount(partner, productId, discount) {
+            const current = getDraftOrder(partner);
+            const order = current && JSON.parse(JSON.stringify(current));
+            const line = order?.lines.find((l) => l.product_id === productId);
+            if (!line) {
+                return;
+            }
+            line.discount = Math.min(Math.max(discount || 0, 0), 100);
+            line.discount_edited = true;
+            await saveDraft(order, partner);
+        }
+
+        function getLineQuantity(partner, productId, orders = state.orders) {
+            const order = getDraftOrder(partner, orders);
+            return order?.lines.find((line) => line.product_id === productId)?.quantity || 0;
+        }
+
+        async function addLine(partner, product, quantity, activityId = false) {
+            const current = getLineQuantity(partner, product.id);
+            await setQuantity(partner, product, current + quantity, activityId);
+        }
+
+        /**
+         * Copy the lines of a previous order into the customer's draft, at today's
+         * prices. Returns the names of the products no longer in the catalog.
+         */
+        async function repeatOrder(partner, lines, activityId = false) {
+            const missing = [];
+            for (const line of lines) {
+                const product = index.byId.get(line.product_id);
+                if (product) {
+                    await addLine(partner, product, line.quantity, activityId);
+                } else {
+                    missing.push(line.name);
+                }
+            }
+            return missing;
+        }
+
+        /** Close the visit without an order: it travels with the orders, as one more record. */
+        async function registerNoPurchase(partner, activityId, reason) {
+            const draft = getDraftOrder(partner);
+            if (draft) {
+                await db.delete("orders", draft.uuid);
+                delete state.orders[draft.uuid];
+            }
+            const now = new Date().toISOString();
+            await saveOrder({
+                uuid: window.crypto.randomUUID(),
+                kind: "no_purchase",
+                partner_id: partner.id,
+                partner_name: partner.name,
+                activity_id: activityId,
+                reason,
+                date: now,
+                closed_at: now,
+                state: "ready",
+                lines: [],
+                location: await getLocation(),
+            });
+            if (state.autoSend) {
+                sendOrders({ silent: true });
+            }
+        }
+
+        // Number Odoo gave to an order sent from this device, once it came back in the history.
+        function getServerName(uuid) {
+            return state.history.find((order) => order.offline_uuid === uuid)?.name || false;
+        }
+
+        function getImageUrl(productId) {
+            if (!imageUrls.has(productId)) {
+                const promise = browser
+                    .fetch(`${APP_PATH}/api/image/${productId}`, {
+                        headers: { Authorization: `Bearer ${state.link.key}` },
+                    })
+                    .then((response) => (response.ok ? response.blob() : null))
+                    .then((blob) => (blob ? URL.createObjectURL(blob) : null))
+                    .catch(() => {
+                        // Offline or failed: try again next time.
+                        imageUrls.delete(productId);
+                        return null;
+                    });
+                imageUrls.set(productId, promise);
+            }
+            return imageUrls.get(productId);
         }
 
         async function saveOrder(order) {
@@ -426,11 +662,14 @@ export const preventaService = {
         function buildPayload(order) {
             return {
                 schema_version: ORDERS_SCHEMA_VERSION,
+                kind: order.kind || "order",
+                reason: order.reason || false,
                 uuid: order.uuid,
                 activity_id: order.activity_id || false,
                 partner_id: order.partner_id,
                 partner_name: order.partner_name,
                 fiscal_position_id: order.fiscal_position_id,
+                pricelist_id: order.pricelist_id || false,
                 created_on_device: order.date,
                 closed_at: order.closed_at,
                 location: order.location,
@@ -443,6 +682,7 @@ export const preventaService = {
                     name: line.name,
                     quantity: line.quantity,
                     price_unit: line.price_unit,
+                    discount: line.discount || 0,
                     tax_ids: line.tax_ids,
                     price_subtotal: line.price_subtotal,
                     price_total: line.price_total,
@@ -536,10 +776,14 @@ export const preventaService = {
                 partners: markRaw([]),
                 products: markRaw([]),
                 activities: markRaw([]),
+                categories: markRaw([]),
+                history: markRaw([]),
+                warehouse: false,
                 orders: {},
             });
             buildIndex();
             buildFiscal(null, [], []);
+            buildPricing([], []);
             refreshStorage();
         }
 
@@ -568,9 +812,16 @@ export const preventaService = {
             }
         }
 
+        /**
+         * Revoke the key, wipe the device and, when online, end the Odoo session and
+         * go back to the Odoo login: the next person links the device with their user.
+         */
         async function logout() {
             const revoked = await revokeKey(state.link.key);
             await resetLocal();
+            if (revoked && browser.navigator.onLine) {
+                browser.location.href = `/web/session/logout?redirect=${encodeURIComponent(`${APP_PATH}/link`)}`;
+            }
             return revoked;
         }
 
@@ -687,6 +938,17 @@ export const preventaService = {
             setAutoSend,
             getOrdersByState,
             getActivityOrder,
+            setQuantity,
+            setDiscount,
+            unitPrice,
+            getLineQuantity,
+            repeatOrder,
+            registerNoPurchase,
+            getServerName,
+            getImageUrl,
+            getCategoryChildren,
+            getCategoryProducts,
+            getCategoryCount,
         };
     },
 };

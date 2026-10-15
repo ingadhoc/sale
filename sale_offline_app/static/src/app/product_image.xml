@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="sale_offline_app.ProductImage">
+        <div class="o_preventa_thumb d-flex align-items-center justify-content-center rounded bg-light flex-shrink-0">
+            <img t-if="state.url" t-att-src="state.url" alt="" class="mw-100 mh-100"/>
+            <i t-else="" class="fa fa-picture-o text-muted"/>
+        </div>
+    </t>
+</templates>

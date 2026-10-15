@@ -16,6 +16,9 @@ API_KEY_SCOPE = "sale_offline_app"
 API_KEY_MONTHS = 6
 ORDERS_SCHEMA_VERSION = 1
 ACTIVITY_DAYS_AHEAD = 7
+ORDER_HISTORY_DAYS = 30
+MAX_HISTORY_ORDERS = 500
+MAX_REASON_LENGTH = 500
 MAX_ORDERS_PER_REQUEST = 200
 UUID_RE = re.compile(r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$")
 # Loaded on demand by web/core/barcode when the browser lacks BarcodeDetector.
@@ -138,7 +141,12 @@ class SaleOfflineApp(http.Controller):
         partners = request.env["res.partner"].search(
             [("parent_id", "=", False), ("company_id", "in", [False, *user.company_ids.ids])]
         )
+        warehouse = self._warehouse(user)
         products = request.env["product.product"].search([("sale_ok", "=", True)])
+        free_qty = {
+            product.id: product.free_qty for product in products.with_context(warehouse_id=warehouse.id, bin_size=True)
+        }
+        categories = request.env["product.category"].search([("id", "parent_of", products.categ_id.ids)])
         fiscal_position_model = request.env["account.fiscal.position"]
         fiscal_position_by_partner = {
             partner.id: fiscal_position_model._get_fiscal_position(partner) for partner in partners
@@ -147,6 +155,7 @@ class SaleOfflineApp(http.Controller):
         taxes_by_product = {product.id: product.taxes_id._filter_taxes_by_company(company) for product in products}
         taxes = request.env["account.tax"].union(*taxes_by_product.values(), fiscal_positions.tax_ids)
         taxes |= taxes.flatten_taxes_hierarchy()
+        pricelists = self._pricelists_to_sync(partners)
         currency = company.currency_id
         data = {
             "server_date": fields.Datetime.to_string(fields.Datetime.now()),
@@ -165,7 +174,27 @@ class SaleOfflineApp(http.Controller):
                 "tax_calculation_rounding_method": company.tax_calculation_rounding_method,
             },
             "partners": [self._partner_data(partner, fiscal_position_by_partner[partner.id]) for partner in partners],
-            "products": [self._product_data(product, taxes_by_product[product.id]) for product in products],
+            "warehouse": {"id": warehouse.id, "name": warehouse.name} if warehouse else False,
+            "products": [
+                self._product_data(product, taxes_by_product[product.id], free_qty[product.id])
+                for product in products.with_context(bin_size=True)
+            ],
+            "categories": [
+                {"id": category.id, "name": category.name, "parent_id": category.parent_id.id or False}
+                for category in categories
+            ],
+            "history": self._history_data(user),
+            # Like sale.order.line: a percentage rule shows as a discount only with this on.
+            "discount_enabled": request.env["product.pricelist.item"]._is_discount_feature_enabled(),
+            "pricelists": [
+                {"id": pricelist.id, "name": pricelist.name, "currency_id": pricelist.currency_id.id}
+                for pricelist in pricelists
+            ],
+            # Already in the order Odoo tries them (product.pricelist.item._order).
+            "pricelist_items": [
+                self._pricelist_item_data(item)
+                for item in request.env["product.pricelist.item"].search([("pricelist_id", "in", pricelists.ids)])
+            ],
             "taxes": [self._tax_data(tax) for tax in taxes],
             "activities": self._activities_data(user, set(partners.ids)),
             "fiscal_positions": [
@@ -179,6 +208,19 @@ class SaleOfflineApp(http.Controller):
             ],
         }
         return request.make_json_response(data, {"Cache-Control": "no-store"})
+
+    @http.route(f"{APP_PATH}/api/image/<int:product_id>", type="http", auth="none", methods=["GET"], readonly=True)
+    def product_image(self, product_id):
+        """Product thumbnail, only while online: images are never stored on the device."""
+        self._authenticate_bearer()
+        product = request.env["product.product"].search([("id", "=", product_id), ("sale_ok", "=", True)])
+        if not product:
+            raise Forbidden()
+        stream = request.env["ir.binary"]._get_image_stream_from(product, "image_128")
+        response = stream.get_response()
+        # Not even the browser HTTP cache may keep it.
+        response.headers["Cache-Control"] = "no-store"
+        return response
 
     @http.route(f"{APP_PATH}/api/orders", type="http", auth="none", methods=["POST"], csrf=False)
     def receive_orders(self):
@@ -216,7 +258,16 @@ class SaleOfflineApp(http.Controller):
         uuid = order.get("uuid")
         if not isinstance(uuid, str) or not UUID_RE.match(uuid):
             return None, "invalid uuid"
-        if not isinstance(order.get("lines"), list) or not order["lines"]:
+        kind = order.get("kind", "order")
+        if kind == "no_purchase":
+            reason = order.get("reason")
+            if not isinstance(reason, str) or not reason.strip() or len(reason) > MAX_REASON_LENGTH:
+                return None, "invalid reason"
+            if not order.get("activity_id"):
+                return None, "no activity"
+        elif kind != "order":
+            return None, f"unknown kind {kind!r}"
+        elif not isinstance(order.get("lines"), list) or not order["lines"]:
             return None, "no lines"
         try:
             datetime.fromisoformat(order["created_on_device"].replace("Z", "+00:00"))
@@ -264,6 +315,84 @@ class SaleOfflineApp(http.Controller):
             )
         return result
 
+    def _warehouse(self, user):
+        """Warehouse whose stock the app shows: the user's default one, else the
+        company's first. Where it should come from is still an open question."""
+        return user.property_warehouse_id or request.env["stock.warehouse"].search(
+            [("company_id", "=", user.company_id.id)], limit=1
+        )
+
+    def _pricelists_to_sync(self, partners):
+        """Pricelists of the customers plus the ones their rules are based on."""
+        pricelists = partners.property_product_pricelist
+        to_check = pricelists
+        while to_check:
+            based_on = to_check.item_ids.base_pricelist_id - pricelists
+            pricelists |= based_on
+            to_check = based_on
+        return pricelists
+
+    def _pricelist_item_data(self, item):
+        # Fields read by the app to mirror product.pricelist.item._compute_price.
+        return {
+            "id": item.id,
+            "pricelist_id": item.pricelist_id.id,
+            "applied_on": item.applied_on,
+            "categ_id": item.categ_id.id or False,
+            "product_tmpl_id": item.product_tmpl_id.id or False,
+            "product_id": item.product_id.id or False,
+            "min_quantity": item.min_quantity,
+            "date_start": item.date_start and fields.Datetime.to_string(item.date_start),
+            "date_end": item.date_end and fields.Datetime.to_string(item.date_end),
+            "base": item.base,
+            "base_pricelist_id": item.base_pricelist_id.id or False,
+            "compute_price": item.compute_price,
+            "fixed_price": item.fixed_price,
+            "percent_price": item.percent_price,
+            "price_discount": item.price_discount,
+            "price_markup": item.price_markup,
+            "price_round": item.price_round,
+            "price_surcharge": item.price_surcharge,
+            "price_min_margin": item.price_min_margin,
+            "price_max_margin": item.price_max_margin,
+        }
+
+    def _history_data(self, user):
+        """Recent sale orders of the salesperson, so the app can show and repeat them."""
+        orders = request.env["sale.order"].search(
+            [
+                ("user_id", "=", user.id),
+                ("state", "!=", "cancel"),
+                ("date_order", ">=", fields.Datetime.now() - timedelta(days=ORDER_HISTORY_DAYS)),
+            ],
+            order="date_order desc, id desc",
+            limit=MAX_HISTORY_ORDERS,
+        )
+        return [
+            {
+                "id": order.id,
+                "name": order.name,
+                "partner_id": order.partner_id.commercial_partner_id.id,
+                "partner_name": order.partner_id.commercial_partner_id.name,
+                # UTC with an explicit "Z" so the device shows it in its own timezone.
+                "date_order": order.date_order.isoformat() + "Z",
+                "amount_total": order.amount_total,
+                "state": order.state,
+                "offline_uuid": order.offline_order_id.uuid or False,
+                "lines": [
+                    {
+                        "product_id": line.product_id.id,
+                        "name": line.product_id.display_name,
+                        "quantity": line.product_uom_qty,
+                        "price_unit": line.price_unit,
+                    }
+                    for line in order.order_line
+                    if line.product_id and not line.display_type
+                ],
+            }
+            for order in orders
+        ]
+
     def _partner_data(self, partner, fiscal_position):
         return {
             "id": partner.id,
@@ -281,19 +410,27 @@ class SaleOfflineApp(http.Controller):
             "partner_latitude": partner.partner_latitude,
             "partner_longitude": partner.partner_longitude,
             "property_product_pricelist": partner.property_product_pricelist.display_name or False,
+            "pricelist_id": partner.property_product_pricelist.id or False,
             "fiscal_position_id": fiscal_position.id or False,
             "fiscal_position_name": fiscal_position.name or False,
         }
 
-    def _product_data(self, product, taxes):
+    def _product_data(self, product, taxes, free_qty):
         return {
             "id": product.id,
             "display_name": product.display_name,
             "default_code": product.default_code or False,
             "barcode": product.barcode or False,
             "lst_price": product.lst_price,
+            "standard_price": product.standard_price,
+            # Snapshot at sync time: it does not follow what is sold during the day.
+            "free_qty": free_qty if product.is_storable else False,
+            "product_tmpl_id": product.product_tmpl_id.id,
             "uom_id": product.uom_id.name,
             "taxes_id": taxes.ids,
+            "categ_id": product.categ_id.id or False,
+            # Read with bin_size: only tells whether there is an image to fetch online.
+            "has_image": bool(product.image_128),
         }
 
     def _tax_data(self, tax):

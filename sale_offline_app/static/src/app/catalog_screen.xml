@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="sale_offline_app.CatalogScreen">
+        <div class="o_preventa_search p-2 bg-body border-bottom">
+            <input type="search" class="form-control form-control-lg" placeholder="Buscar en el catálogo"
+                t-model="state.query" autocomplete="off"/>
+            <small t-if="!props.partner" class="d-block text-muted mt-1">
+                Para cargar un pedido, entrá desde una visita o un cliente.
+            </small>
+        </div>
+        <div t-if="!data.products.length" class="p-4 text-center text-muted">
+            No hay productos en el celular. Sincronizá desde Configuración.
+        </div>
+        <t t-elif="state.query">
+            <div t-if="!results.length" class="p-4 text-center text-muted">Sin resultados.</div>
+            <CatalogProduct t-foreach="results" t-as="product" t-key="product.id"
+                product="product" partner="props.partner" activityId="props.activityId"/>
+        </t>
+        <t t-else="">
+            <CatalogNode t-foreach="roots" t-as="category" t-key="category.id"
+                category="category" depth="0" partner="props.partner" activityId="props.activityId"/>
+            <CatalogProduct t-foreach="uncategorized" t-as="product" t-key="product.id"
+                product="product" partner="props.partner" activityId="props.activityId"/>
+        </t>
+        <div t-if="props.partner" class="o_preventa_cart_bar d-flex align-items-center justify-content-between gap-2 px-3 py-2 text-white">
+            <t t-if="summary">
+                <span><t t-esc="summary.count"/> artículo(s)</span>
+                <span class="fs-5 fw-bold">Total <t t-esc="summary.total"/></span>
+                <button t-if="props.onShowOrder" type="button" class="btn btn-light btn-sm" t-on-click="props.onShowOrder">Ver pedido</button>
+            </t>
+            <span t-else="" class="small">Todavía no cargaste artículos.</span>
+        </div>
+    </t>
+
+    <t t-name="sale_offline_app.CatalogNode">
+        <button type="button" t-attf-class="o_preventa_category btn w-100 d-flex align-items-center justify-content-between rounded-0 border-bottom py-3 text-start {{ props.depth ? 'bg-light' : 'fw-bold' }}"
+            t-attf-style="padding-left: {{ 1 + props.depth * 1.25 }}rem" t-on-click="() => this.state.open = !this.state.open">
+            <span><t t-esc="props.category.name"/> (<t t-esc="count"/>)</span>
+            <i t-attf-class="fa {{ state.open ? 'fa-chevron-up' : 'fa-chevron-down' }} text-muted"/>
+        </button>
+        <t t-if="state.open">
+            <CatalogNode t-foreach="children" t-as="child" t-key="child.id"
+                category="child" depth="props.depth + 1" partner="props.partner" activityId="props.activityId"/>
+            <CatalogProduct t-foreach="products" t-as="product" t-key="product.id"
+                product="product" partner="props.partner" activityId="props.activityId"/>
+        </t>
+    </t>
+
+    <t t-name="sale_offline_app.CatalogProduct">
+        <div class="d-flex align-items-start gap-2 px-3 py-2 border-bottom">
+            <ProductImage product="props.product"/>
+            <div class="flex-grow-1 min-w-0">
+                <div class="text-truncate" t-esc="props.product.display_name"/>
+                <small class="text-muted">
+                    <t t-if="props.product.default_code"><t t-esc="props.product.default_code"/> · </t>
+                    <t t-esc="price"/> c/imp.
+                </small>
+                <small t-if="stock !== false" t-attf-class="d-block {{ stock > 0 ? 'text-success' : 'text-danger' }}">
+                    Stock: <t t-esc="stock"/>
+                </small>
+                <div t-if="props.partner" class="d-flex flex-wrap align-items-center gap-2 mt-2">
+                    <div class="input-group o_preventa_stepper">
+                        <button type="button" class="btn btn-outline-secondary" t-att-disabled="!quantity"
+                            t-on-click="() => this.setQuantity(quantity - 1)">
+                            <i class="fa fa-minus"/>
+                        </button>
+                        <input type="number" inputmode="decimal" min="0" step="any" class="form-control text-center"
+                            t-att-value="quantity" t-on-change="onInput"/>
+                        <button type="button" class="btn btn-primary" t-on-click="() => this.setQuantity(quantity + 1)">
+                            <i class="fa fa-plus"/>
+                        </button>
+                    </div>
+                    <div class="input-group o_preventa_discount">
+                        <span class="input-group-text">Desc.</span>
+                        <input type="number" inputmode="decimal" min="0" max="100" step="any" class="form-control text-end"
+                            t-att-value="discount" t-att-disabled="!quantity" t-on-change="onDiscount"/>
+                        <span class="input-group-text">%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

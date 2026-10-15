@@ -7,9 +7,10 @@ const STATE_LABELS = {
     rejected: "Rechazado por Odoo",
 };
 
+/** Read-only view of an order: one from this device, or one of the history from Odoo. */
 export class OrderDetail extends Component {
     static template = "sale_offline_app.OrderDetail";
-    static props = { uuid: String };
+    static props = { order: Object, fromHistory: Boolean, onRepeat: Function };
 
     setup() {
         this.preventa = useService("preventa");
@@ -17,16 +18,36 @@ export class OrderDetail extends Component {
     }
 
     get order() {
-        return this.data.orders[this.props.uuid];
+        return this.props.order;
+    }
+
+    get isNoPurchase() {
+        return this.order.kind === "no_purchase";
     }
 
     get stateLabel() {
-        return STATE_LABELS[this.order.state] || this.order.state;
+        if (this.props.fromHistory) {
+            return this.order.name;
+        }
+        if (this.isNoPurchase) {
+            return `No compra · ${STATE_LABELS[this.order.state] || this.order.state}`;
+        }
+        const label = STATE_LABELS[this.order.state] || this.order.state;
+        const serverName = this.preventa.getServerName(this.order.uuid);
+        return serverName ? `${label} · ${serverName}` : label;
     }
 
     get mapsUrl() {
         const location = this.order.location;
         return location && `https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}`;
+    }
+
+    get canRepeat() {
+        return !this.isNoPurchase && this.order.lines.length > 0;
+    }
+
+    lineTotal(line) {
+        return line.price_total ?? line.price_unit * line.quantity;
     }
 
     formatDate(iso) {

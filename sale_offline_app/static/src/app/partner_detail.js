@@ -12,6 +12,11 @@ export class PartnerDetail extends Component {
         return `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
     }
 
+    get phoneUrl() {
+        const phone = (this.props.partner.phone || "").replace(/[^\d+]/g, "");
+        return phone && `tel:${phone}`;
+    }
+
     get rows() {
         const p = this.props.partner;
         return [

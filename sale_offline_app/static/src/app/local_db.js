@@ -55,6 +55,12 @@ export class LocalDB {
         return transactionToPromise(transaction);
     }
 
+    delete(store, key) {
+        const transaction = this.db.transaction(store, "readwrite");
+        transaction.objectStore(store).delete(key);
+        return transactionToPromise(transaction);
+    }
+
     clearAll() {
         const names = Object.keys(STORES);
         const transaction = this.db.transaction(names, "readwrite");

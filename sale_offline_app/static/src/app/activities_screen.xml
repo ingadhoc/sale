@@ -1,26 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="sale_offline_app.ActivitiesScreen">
-        <div t-if="!sections.length" class="p-4 text-center text-muted">
-            No tenés visitas pendientes. Sincronizá para bajar las actividades del día.
+        <div t-if="!days.length" class="p-4 text-center text-muted">
+            No tenés visitas pendientes. Sincronizá desde Configuración para bajar las visitas.
         </div>
-        <t t-foreach="sections" t-as="section" t-key="section.key">
-            <h6 t-attf-class="px-3 pt-3 pb-1 text-uppercase small {{ section.key === 'overdue' ? 'text-danger' : 'text-muted' }}">
-                <t t-esc="section.title"/> (<t t-esc="section.items.length"/>)
-            </h6>
+        <t t-else="">
+            <div class="o_preventa_search p-2 border-bottom">
+                <input type="search" class="form-control form-control-lg" placeholder="Buscar cliente: código, CUIT o nombre"
+                    t-model="state.query" autocomplete="off"/>
+                <div t-if="!state.query" class="o_preventa_days d-flex gap-2 mt-2">
+                    <button t-foreach="days" t-as="day" t-key="day.key" type="button"
+                        t-attf-class="btn btn-sm rounded-pill text-nowrap {{ day.key === selectedDay ? 'btn-primary' : (day.key === 'overdue' ? 'btn-outline-danger' : 'btn-outline-secondary') }}"
+                        t-on-click="() => this.data.workDay = day.key" t-esc="day.label"/>
+                </div>
+            </div>
+            <div class="px-3 pt-2 pb-1 small text-muted">
+                <t t-if="state.query">Visitas de todos los días bajados que coinciden (<t t-esc="items.length"/>)</t>
+                <t t-else=""><t t-esc="doneCount"/> de <t t-esc="items.length"/> visitadas</t>
+            </div>
             <div class="list-group list-group-flush">
-                <button t-foreach="section.items" t-as="item" t-key="item.activity.id" type="button"
-                    class="list-group-item list-group-item-action py-3" t-att-disabled="!item.partner"
-                    t-on-click="() => props.onStart(item.activity)">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <span class="fw-bold" t-esc="item.partner ? item.partner.name : 'Cliente no disponible'"/>
-                        <t t-set="badge" t-value="orderBadge(item.order)"/>
-                        <span t-if="badge" t-attf-class="badge {{ badge[1] }}" t-esc="badge[0]"/>
+                <div t-foreach="items" t-as="item" t-key="item.activity.id"
+                    class="list-group-item list-group-item-action d-flex align-items-center gap-2 py-3">
+                    <div class="flex-grow-1 min-w-0" role="button" t-att-aria-disabled="!item.partner"
+                        t-on-click="() => item.partner and props.onStart(item.activity)">
+                        <div class="d-flex justify-content-between align-items-start gap-2">
+                            <span class="fw-bold text-primary" t-esc="title(item)"/>
+                            <t t-set="itemBadge" t-value="badge(item.order)"/>
+                            <span t-if="itemBadge" t-attf-class="badge text-nowrap {{ itemBadge.cls }}">
+                                <i t-attf-class="fa {{ itemBadge.icon }} me-1"/><t t-esc="itemBadge.label"/>
+                            </span>
+                        </div>
+                        <small class="d-block text-muted" t-esc="subtitle(item)"/>
+                        <small t-if="item.activity.note" class="d-block text-muted fst-italic" t-esc="item.activity.note"/>
                     </div>
-                    <div class="small" t-esc="item.activity.summary"/>
-                    <small class="text-muted" t-esc="subtitle(item)"/>
-                    <small t-if="item.activity.note" class="d-block text-muted fst-italic" t-esc="item.activity.note"/>
-                </button>
+                    <t t-set="itemMapsUrl" t-value="mapsUrl(item.partner)"/>
+                    <a t-if="itemMapsUrl" t-att-href="itemMapsUrl" target="_blank" rel="noopener"
+                        class="btn btn-outline-primary flex-shrink-0 o_preventa_map_btn" title="Abrir en Google Maps">
+                        <i class="fa fa-map-marker fa-lg"/>
+                    </a>
+                </div>
             </div>
         </t>
     </t>

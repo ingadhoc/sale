@@ -24,8 +24,12 @@ class SaleOfflineOrder(models.Model):
 
     uuid = fields.Char(required=True, readonly=True)
     payload = fields.Json(readonly=True)
+    # Only for records that never become a sale order (a no-purchase visit).
+    processed_date = fields.Datetime(readonly=True, copy=False)
 
     payload_text = fields.Text(string="Payload (JSON)", compute="_compute_payload_fields")
+    kind = fields.Selection([("order", "Order"), ("no_purchase", "No purchase")], compute="_compute_payload_fields")
+    reason = fields.Char(string="No purchase reason", compute="_compute_payload_fields")
     partner_name = fields.Char(string="Customer", compute="_compute_payload_fields")
     amount_total = fields.Float(compute="_compute_payload_fields")
     line_count = fields.Integer(string="Lines", compute="_compute_payload_fields")
@@ -49,15 +53,17 @@ class SaleOfflineOrder(models.Model):
             payload = record.payload or {}
             record.payload_text = json.dumps(payload, indent=2, ensure_ascii=False) if payload else False
             record.partner_name = payload.get("partner_name")
+            record.kind = payload.get("kind") or "order"
+            record.reason = payload.get("reason")
             record.amount_total = payload.get("amount_total") or 0.0
             record.line_count = len(payload.get("lines") or [])
 
-    @api.depends("sale_order_ids", "error_ids")
+    @api.depends("sale_order_ids", "error_ids", "processed_date")
     def _compute_conversion(self):
         for record in self:
             record.sale_order_id = record.sale_order_ids[:1]
             record.error_message = record.error_ids[:1].message
-            if record.sale_order_ids:
+            if record.sale_order_ids or record.processed_date:
                 record.conversion_state = "done"
             elif record.error_ids:
                 record.conversion_state = "error"
@@ -68,9 +74,9 @@ class SaleOfflineOrder(models.Model):
         if operator != "in":
             return NotImplemented
         domains = {
-            "pending": [("sale_order_ids", "=", False), ("error_ids", "=", False)],
-            "done": [("sale_order_ids", "!=", False)],
-            "error": [("sale_order_ids", "=", False), ("error_ids", "!=", False)],
+            "pending": [("sale_order_ids", "=", False), ("processed_date", "=", False), ("error_ids", "=", False)],
+            "done": ["|", ("sale_order_ids", "!=", False), ("processed_date", "!=", False)],
+            "error": [("sale_order_ids", "=", False), ("processed_date", "=", False), ("error_ids", "!=", False)],
         }
         return Domain.OR(domains[state] for state in value if state in domains)
 
@@ -95,7 +101,8 @@ class SaleOfflineOrder(models.Model):
                 """
                 SELECT o.id
                   FROM sale_offline_order o
-                 WHERE NOT EXISTS (SELECT 1 FROM sale_order s WHERE s.offline_order_id = o.id)
+                 WHERE o.processed_date IS NULL
+                   AND NOT EXISTS (SELECT 1 FROM sale_order s WHERE s.offline_order_id = o.id)
                    AND NOT EXISTS (SELECT 1 FROM sale_offline_order_error e WHERE e.offline_order_id = o.id)
                  ORDER BY o.id
                  LIMIT %s
@@ -110,7 +117,10 @@ class SaleOfflineOrder(models.Model):
         for offline_order in self:
             try:
                 with self.env.cr.savepoint():
-                    offline_order._create_sale_order()
+                    if offline_order.kind == "no_purchase":
+                        offline_order._close_visit_without_order()
+                    else:
+                        offline_order._create_sale_order()
             except Exception as error:  # noqa: BLE001 - one bad order must not stop the batch
                 _logger.info("Offline order %s not converted: %s", offline_order.uuid, error)
                 self.env["sale.offline.order.error"].sudo().create(
@@ -136,12 +146,15 @@ class SaleOfflineOrder(models.Model):
                         "product_id": line["product_id"],
                         "product_uom_qty": line["quantity"],
                         "price_unit": line["price_unit"],
+                        "discount": line.get("discount") or 0.0,
                         "tax_ids": [Command.set(line.get("tax_ids") or [])],
                     }
                 )
                 for line in payload["lines"]
             ],
         }
+        if payload.get("pricelist_id"):
+            values["pricelist_id"] = payload["pricelist_id"]
         if payload.get("fiscal_position_id"):
             values["fiscal_position_id"] = payload["fiscal_position_id"]
         order = self.env["sale.order"].with_user(user).with_company(user.company_id).create(values)
@@ -151,6 +164,16 @@ class SaleOfflineOrder(models.Model):
         if activity := activity.filtered("active"):
             activity.action_feedback(feedback=self.env._("Order %s taken from the offline app", order.name))
         return order
+
+    def _close_visit_without_order(self):
+        """Mark the visit as done with the reason given by the salesperson."""
+        self.ensure_one()
+        payload = self.payload or {}
+        activity = self.env["mail.activity"].with_user(self.create_uid).browse(payload.get("activity_id") or [])
+        # Done activities are archived: never close the same visit twice.
+        if activity := activity.exists().filtered("active"):
+            activity.action_feedback(feedback=self.env._("No purchase: %s", payload.get("reason")))
+        self.processed_date = fields.Datetime.now()
 
     @api.model
     def _receive(self, orders):

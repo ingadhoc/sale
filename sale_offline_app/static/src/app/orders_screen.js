@@ -1,23 +1,56 @@
 import { Component, useState } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
 
+/**
+ * Two views of the same orders:
+ * - "send": what is waiting to go to Odoo, with the send button;
+ * - "orders": orders being built, sent from this device and the history from Odoo.
+ */
 export class OrdersScreen extends Component {
     static template = "sale_offline_app.OrdersScreen";
-    static props = { onOpenOrder: Function };
+    static props = { mode: String, onOpenOrder: Function, onOpenHistory: Function };
 
     setup() {
         this.preventa = useService("preventa");
         this.data = useState(this.preventa.state);
     }
 
+    /** Ids of the customers matching the search (code, VAT or name), or false without one. */
+    get partnerIds() {
+        // The send view has no search box: a query typed in Pedidos must not filter it.
+        return (
+            this.props.mode === "orders" &&
+            this.data.ordersQuery &&
+            new Set(this.preventa.searchPartners(this.data.ordersQuery, Infinity).map((partner) => partner.id))
+        );
+    }
+
     get sections() {
-        const byState = (orderState) => this.preventa.getOrdersByState(orderState, this.data.orders);
-        return [
-            { key: "ready", title: "Listos para enviar", orders: byState("ready") },
-            { key: "rejected", title: "Rechazados por Odoo", orders: byState("rejected") },
-            { key: "sent", title: "Enviados", orders: byState("sent") },
-            { key: "draft", title: "En carga", orders: byState("draft") },
-        ].filter((section) => section.orders.length);
+        const partnerIds = this.partnerIds;
+        const byState = (orderState) =>
+            this.preventa
+                .getOrdersByState(orderState, this.data.orders)
+                .filter((order) => !partnerIds || partnerIds.has(order.partner_id));
+        const sections =
+            this.props.mode === "send"
+                ? [
+                      { key: "ready", title: "Sin enviar", orders: byState("ready") },
+                      { key: "rejected", title: "Rechazados por Odoo", orders: byState("rejected") },
+                  ]
+                : [
+                      { key: "draft", title: "En carga", orders: byState("draft") },
+                      { key: "sent", title: "Enviados desde este celular", orders: byState("sent") },
+                  ];
+        return sections.filter((section) => section.orders.length);
+    }
+
+    get history() {
+        // Orders sent from this device are already listed above.
+        const local = new Set(Object.keys(this.data.orders));
+        const partnerIds = this.partnerIds;
+        return this.data.history.filter(
+            (order) => !local.has(order.offline_uuid) && (!partnerIds || partnerIds.has(order.partner_id))
+        );
     }
 
     get readyCount() {
@@ -29,9 +62,16 @@ export class OrdersScreen extends Component {
     }
 
     orderInfo(order) {
+        if (order.kind === "no_purchase") {
+            return [`No compra: ${order.reason}`, this.formatDate(order.sent_at || order.closed_at)].join(" · ");
+        }
         const parts = [`${order.lines.length} líneas`];
         if (order.amount_total !== undefined) {
             parts.push(this.preventa.formatAmount(order.amount_total));
+        }
+        const serverName = order.state === "sent" && this.preventa.getServerName(order.uuid);
+        if (serverName) {
+            parts.push(serverName);
         }
         if (order.state === "sent") {
             parts.push(`enviado ${this.formatDate(order.sent_at)}`);
@@ -41,7 +81,9 @@ export class OrdersScreen extends Component {
         return parts.join(" · ");
     }
 
-    onToggleAutoSend(ev) {
-        this.preventa.setAutoSend(ev.target.checked);
+    historyInfo(order) {
+        return [order.name, this.formatDate(order.date_order), this.preventa.formatAmount(order.amount_total)].join(
+            " · "
+        );
     }
 }

@@ -12,7 +12,7 @@ export class PartnerList extends Component {
     }
 
     subtitle(partner) {
-        return [partner.vat, partner.city].filter(Boolean).join(" · ");
+        return [partner.vat, partner.street, partner.city].filter(Boolean).join(" · ");
     }
 
     get partners() {

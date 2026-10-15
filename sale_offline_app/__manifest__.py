@@ -7,7 +7,7 @@
     "website": "www.adhoc.com.ar",
     "license": "AGPL-3",
     "depends": [
-        "sale",
+        "sale_stock",
         "account",
         "barcodes",
     ],

@@ -3,6 +3,7 @@ import { scanBarcode } from "@web/core/barcode/barcode_dialog";
 import { isBarcodeScannerSupported } from "@web/core/barcode/barcode_video_scanner";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { useBus, useService } from "@web/core/utils/hooks";
+import { NoPurchaseDialog } from "./no_purchase_dialog";
 
 export class OrderBuilder extends Component {
     static template = "sale_offline_app.OrderBuilder";
@@ -30,6 +31,28 @@ export class OrderBuilder extends Component {
         return activityId && this.data.activities.find((activity) => activity.id === activityId);
     }
 
+    get activityResult() {
+        // An order already closed or a no purchase registered for this visit.
+        const order = this.activity && this.preventa.getActivityOrder(this.activity.id, this.data.orders);
+        return order && order.state !== "draft" ? order : false;
+    }
+
+    noPurchase() {
+        const activity = this.activity;
+        this.env.services.dialog.add(NoPurchaseDialog, {
+            partnerName: this.props.partner.name,
+            confirm: async (reason) => {
+                await this.preventa.registerNoPurchase(this.props.partner, activity.id, reason);
+                this.notification.add("No compra registrada: queda lista para enviar.", { type: "success" });
+            },
+        });
+    }
+
+    async changeQuantity(line, delta) {
+        const product = { id: line.product_id, display_name: line.name, lst_price: line.price_unit };
+        await this.preventa.setQuantity(this.props.partner, product, Math.max(line.quantity + delta, 0));
+    }
+
     get suggestions() {
         if (this.state.product) {
             return [];
@@ -43,9 +66,14 @@ export class OrderBuilder extends Component {
 
     productHint(product) {
         const price = this.preventa.priceIncluded(product, this.props.partner);
-        return [product.default_code, product.barcode, `${this.preventa.formatAmount(price)} c/imp.`]
+        const stock = product.free_qty === false ? false : `stock ${product.free_qty}`;
+        return [product.default_code, product.barcode, `${this.preventa.formatAmount(price)} c/imp.`, stock]
             .filter(Boolean)
             .join(" · ");
+    }
+
+    onDiscount(line, ev) {
+        this.preventa.setDiscount(this.props.partner, line.product_id, parseFloat(ev.target.value) || 0);
     }
 
     select(product) {
