@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-31 13:36+0000\n"
-"PO-Revision-Date: 2026-07-31 13:36+0000\n"
+"POT-Creation-Date: 2026-10-15 19:25+0000\n"
+"PO-Revision-Date: 2026-10-15 19:25+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -30,6 +30,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/sale_payment_options/models/sale_order_line.py:0
 msgid "%(installment_qty)s installments of %(amount)s"
+msgstr ""
+
+#. module: sale_payment_options
+#: model:ir.actions.report,print_report_name:sale_payment_options.action_report_saleorder_payment_options
+msgid ""
+"(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or "
+"'Order - %s' % (object.name)"
 msgstr ""
 
 #. module: sale_payment_options
@@ -257,8 +264,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_payment_options.res_config_settings_view_form
 msgid ""
 "Print the installment amounts under each sale order line instead of the "
-"payment options table of the whole order. It only applies to the "
-"'Quotation / Order (Payment Options)' report."
+"payment options table of the whole order. It only applies to the 'Quotation "
+"/ Order (Payment Options)' report."
 msgstr ""
 
 #. module: sale_payment_options
