@@ -88,6 +88,18 @@ msgid "Notes"
 msgstr ""
 
 #. module: sale_order_type_ux
+#: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__picking_type_id
+msgid "Operation Type"
+msgstr ""
+
+#. module: sale_order_type_ux
+#: model:ir.model.fields,help:sale_order_type_ux.field_sale_order_type__picking_type_id
+msgid ""
+"Operation type used for the deliveries of the orders with this type. Leave "
+"it empty to use the one configured on the warehouse rules."
+msgstr ""
+
+#. module: sale_order_type_ux
 #: model_terms:ir.ui.view,arch_db:sale_order_type_ux.sale_order_type_form_view
 msgid "Predefined fields"
 msgstr ""
@@ -110,6 +122,13 @@ msgstr ""
 #. module: sale_order_type_ux
 #: model:ir.model.fields,help:sale_order_type_ux.field_sale_order_type__active
 msgid "Set active to false to hide the type of sale without removing it."
+msgstr ""
+
+#. module: sale_order_type_ux
+#: code:addons/sale_order_type_ux/models/sale_order_type.py:0
+msgid ""
+"The operation type '%s' does not belong to the warehouse of this sale "
+"order type."
 msgstr ""
 
 #. module: sale_order_type_ux

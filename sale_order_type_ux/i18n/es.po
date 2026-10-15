@@ -98,6 +98,20 @@ msgid "Notes"
 msgstr "Notas"
 
 #. module: sale_order_type_ux
+#: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__picking_type_id
+msgid "Operation Type"
+msgstr "Tipo de operación"
+
+#. module: sale_order_type_ux
+#: model:ir.model.fields,help:sale_order_type_ux.field_sale_order_type__picking_type_id
+msgid ""
+"Operation type used for the deliveries of the orders with this type. Leave "
+"it empty to use the one configured on the warehouse rules."
+msgstr ""
+"Tipo de operación que usan las entregas de las órdenes con este tipo. Si "
+"queda vacío, se usa el configurado en las reglas del almacén."
+
+#. module: sale_order_type_ux
 #: model_terms:ir.ui.view,arch_db:sale_order_type_ux.sale_order_type_form_view
 msgid "Predefined fields"
 msgstr "Campos predefinidos"
@@ -122,6 +136,15 @@ msgstr "Equipo de ventas"
 msgid "Set active to false to hide the type of sale without removing it."
 msgstr ""
 "Establezca activo en falso para ocultar el tipo de venta sin eliminarlo."
+
+#. module: sale_order_type_ux
+#: code:addons/sale_order_type_ux/models/sale_order_type.py:0
+msgid ""
+"The operation type '%s' does not belong to the warehouse of this sale "
+"order type."
+msgstr ""
+"El tipo de operación '%s' no pertenece al almacén de este tipo de pedido "
+"de venta."
 
 #. module: sale_order_type_ux
 #: model:ir.model.fields,help:sale_order_type_ux.field_sale_order_type__company_id
