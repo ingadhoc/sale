@@ -21,6 +21,11 @@ Sale Order Type Ux
 * Set in Invoice view form the field "Sale Type" readonly to states different than "draft".
 * Add fiscal position on sale types.
 * Allows select journal from another company.
+* Add an operation type on sale types, limited to the delivery operation types of the
+  warehouse of the type. The deliveries of the orders with that type use it, so it is
+  possible to choose, for instance, the delivery slip book from the sale order type.
+  With deliveries in two or three steps only the last step, the one that goes to the
+  customer, uses it. If it is empty the behaviour is the usual one.
 * When the order type invoices in another company, the invoice gets the fiscal position
   of that company and its taxes, instead of keeping the ones of the company that sells.
 * Integration between Portal and Sale Order Type module:
