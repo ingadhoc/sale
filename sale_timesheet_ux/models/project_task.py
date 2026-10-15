@@ -8,6 +8,10 @@ class ProjectTask(models.Model):
         "sale.order", "Related Sales Order", store=True, help="Sales order to which the task is linked."
     )
 
+    @property
+    def SELF_READABLE_FIELDS(self):
+        return super().SELF_READABLE_FIELDS | {"order_id"}
+
     def _get_timesheet(self):
         recs = super()._get_timesheet()
         if self.env.context.get("write_allow_billiable"):
