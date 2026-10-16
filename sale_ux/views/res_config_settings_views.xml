@@ -14,11 +14,6 @@
                          help="Show client reference in list view and in main section of form view">
                     <field name="group_sale_reference_on_tree_and_main_form"/>
                 </setting>
-                <setting id="update_prices_automatically"
-                         string="Update Prices Automatically"
-                         help="Automatically update prices when change pricelist.">
-                    <field name="update_prices_automatically"/>
-                </setting>
                 <setting id="move_internal_notes"
                          help="Si marca esta opción y hay un valor definido en las &quot;notas internas&quot;, el mismo se va a copiar en las facturas que se generen desde esta venta.">
                     <field name="move_internal_notes"/>
@@ -26,16 +21,6 @@
                 <setting id="move_note"
                          help="Si marca esta opción y hay un valor definido en &quot;términos y condiciones&quot;, el mismo se va a copiar en las facturas que se generen desde esta venta.">
                     <field name="move_note"/>
-                </setting>
-                <setting id="show_product_image_on_report"
-                         help="Show Product Image on quotation report">
-                    <field name="show_product_image_on_report"/>
-                    <div class="content-group" invisible="not show_product_image_on_report">
-                        <div class="row mt16">
-                            <label for="product_image_size" class="col-lg-3 o_light_label"/>
-                            <field name="product_image_size"/>
-                        </div>
-                    </div>
                 </setting>
                 <setting id="analytic_account_without_company"
                          help="Al confirmar ventas, crear un proyecto sin compañía.">
@@ -45,6 +30,14 @@
                          help="Automatically select all available documents from PDF Quote Builder.">
                     <field name="auto_select_all_documents"/>
                 </setting>
+            </xpath>
+            <xpath expr="//setting[@id='display_product_images_on_so']" position="inside">
+                <div class="content-group" invisible="not display_product_images_on_so">
+                    <div class="row mt16">
+                        <label for="product_image_size" class="col-lg-3 o_light_label"/>
+                        <field name="product_image_size"/>
+                    </div>
+                </div>
             </xpath>
             <xpath expr="//block[@name='quotation_order_setting_container']" position="inside">
                 <setting id="cancel_old_quotations" string="Cancel Old Quotations">

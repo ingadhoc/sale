@@ -11,7 +11,7 @@ class AccountMove(models.Model):
     @api.depends("move_type", "partner_id", "partner_id.lang", "company_id")
     def _compute_narration(self):
         """Override para respetar el parámetro propagate_note desde sale orders"""
-        propagate_note = self.env["ir.config_parameter"].sudo().get_param("sale.propagate_note") == "True"
+        propagate_note = self.env["ir.config_parameter"].sudo().get_bool("sale.propagate_note")
 
         # Si propagate_note está activado y la factura viene de una SO, no tocar la narración
         if propagate_note:

@@ -63,16 +63,3 @@ class SaleAdvancePaymentInvWizard(models.TransientModel):
             self.amount_total = taxes["total_included"]
         else:
             self.amount_total = self.amount
-
-    def _create_invoice(self, order, so_line, amount):
-        invoice = super()._create_invoice(order=order, so_line=so_line, amount=amount)
-        propagate_internal_notes = (
-            self.env["ir.config_parameter"].sudo().get_param("sale.propagate_internal_notes") == "True"
-        )
-        propagate_note = self.env["ir.config_parameter"].sudo().get_param("sale.propagate_note") == "True"
-        # we use sudo to prevent error with sales user when create the invoice
-        if propagate_internal_notes:
-            invoice.sudo().internal_notes = order.internal_notes
-        if not propagate_note:
-            invoice.sudo().narration = False
-        return invoice
