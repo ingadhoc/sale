@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 18:26+0000\n"
-"PO-Revision-Date: 2026-10-15 18:26+0000\n"
+"POT-Creation-Date: 2026-10-16 14:28+0000\n"
+"PO-Revision-Date: 2026-10-16 14:28+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -41,6 +41,8 @@ msgid ""
 "* Set in Invoice view form the field \"Sale Type\" readonly to states different than \"draft\".\n"
 "* Add fiscal position on sale types.\n"
 "* Allows select journal from another company.\n"
+"* When the order type invoices in another company, the invoice gets the fiscal position\n"
+"  of that company and its taxes, instead of keeping the ones of the company that sells.\n"
 "* Integration between Portal and Sale Order Type module:\n"
 "\n"
 " - New access record to sale type model for portal users\n"
@@ -124,6 +126,7 @@ msgid "Default"
 msgstr ""
 
 #. module: sale_order_type_ux
+#: model:ir.model.fields,field_description:sale_order_type_ux.field_account_move__display_name
 #: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order__display_name
 #: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__display_name
 msgid "Display Name"
@@ -135,6 +138,7 @@ msgid "Fiscal Position"
 msgstr ""
 
 #. module: sale_order_type_ux
+#: model:ir.model.fields,field_description:sale_order_type_ux.field_account_move__id
 #: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order__id
 #: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__id
 msgid "ID"
@@ -160,6 +164,11 @@ msgstr ""
 #. module: sale_order_type_ux
 #: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__journal_domain
 msgid "Journal Domain"
+msgstr ""
+
+#. module: sale_order_type_ux
+#: model:ir.model,name:sale_order_type_ux.model_account_move
+msgid "Journal Entry"
 msgstr ""
 
 #. module: sale_order_type_ux
