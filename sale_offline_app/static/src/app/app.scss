@@ -1,0 +1,151 @@
+html, body {
+    height: 100%;
+}
+
+.o_preventa_header {
+    background-color: #714B67;
+    min-height: 56px;
+}
+
+.o_preventa_search {
+    position: sticky;
+    top: 0;
+    // Above the input groups of the rows scrolling below it.
+    z-index: 10;
+    // bg-body is transparent in this bundle (--bs-body-bg is not defined).
+    background-color: white;
+}
+
+.o_preventa_suggestions {
+    max-height: 45vh;
+    overflow-y: auto;
+}
+
+.o_preventa_qty {
+    max-width: 7rem;
+}
+
+.o_preventa_lock {
+    background-color: #714B67;
+}
+
+.o_preventa_pin_dot {
+    width: 16px;
+    height: 16px;
+    border: 2px solid white;
+    border-radius: 50%;
+}
+
+.o_preventa_keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 80px);
+    gap: 12px;
+}
+
+// Home screen in the spirit of Odoo's app switcher: soft diagonal gradient,
+// one colored square per section and its name below.
+.o_preventa_home {
+    background:
+        linear-gradient(160deg, rgba(255, 255, 255, 0) 55%, rgba(113, 75, 103, 0.18) 100%),
+        linear-gradient(315deg, #D9D3F0 0%, #EDE3FA 30%, #FEFEFE 60%, #EAE7F9 100%);
+    min-height: 100%;
+}
+
+.o_preventa_menu {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 24px;
+    column-gap: 8px;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.o_preventa_app {
+    &:active .o_preventa_app_icon {
+        transform: translateY(1px);
+        box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2), 0 2px 4px -2px rgba(0, 0, 0, 0.5);
+    }
+}
+
+.o_preventa_app_icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 18%;
+    color: white;
+    font-size: 34px;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2), 0 8px 15px -10px rgba(0, 0, 0, 0.75);
+    transition: box-shadow ease-in 0.1s, transform ease-in 0.1s;
+}
+
+.o_preventa_app_badge {
+    top: -6px;
+    right: -6px;
+    font-size: 0.75rem;
+}
+
+.o_preventa_app_caption {
+    color: #374151;
+    font-size: 0.85rem;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.o_preventa_days {
+    overflow-x: auto;
+}
+
+.o_preventa_thumb {
+    width: 48px;
+    height: 48px;
+}
+
+.o_preventa_category {
+    background-color: var(--bs-body-bg);
+}
+
+.o_preventa_discount {
+    max-width: 9rem;
+}
+
+// Running total while ordering from the catalog.
+.o_preventa_cart_bar {
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+    background-color: #714B67;
+    min-height: 52px;
+}
+
+// − quantity + as one block, square like Odoo's inputs.
+.o_preventa_stepper {
+    width: 8.5rem;
+    flex-wrap: nowrap;
+
+    .btn {
+        width: 2.5rem;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .form-control, .input-group-text {
+        min-width: 2.5rem;
+        text-align: center;
+        padding-left: 0.25rem;
+        padding-right: 0.25rem;
+    }
+}
+
+.o_preventa_map_btn {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.o_preventa_install {
+    border-radius: 12px;
+    width: calc(100% - 2rem);
+    max-width: 480px;
+    margin: 0 auto 1rem;
+}

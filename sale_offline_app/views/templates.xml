@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="index" name="Sale Offline App">&lt;!DOCTYPE html&gt;
+        <html lang="es">
+            <head>
+                <title>Preventa</title>
+                <meta charset="utf-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content"/>
+                <meta name="theme-color" content="#714B67"/>
+                <link rel="manifest" href="/preventa/manifest.webmanifest"/>
+                <link rel="icon" href="/web/static/img/odoo-icon-192x192.png"/>
+                <link rel="apple-touch-icon" href="/web/static/img/odoo-icon-ios.png"/>
+                <script type="text/javascript">
+                    var odoo = {
+                        csrf_token: "<t t-esc="request.csrf_token(None)"/>",
+                        debug: "<t t-esc="debug"/>",
+                        __session_info__: <t t-out="json.dumps(session_info)"/>,
+                    };
+                    odoo.loadMenusPromise = Promise.resolve();
+                </script>
+                <t t-call-assets="sale_offline_app.assets"/>
+            </head>
+            <body/>
+        </html>
+    </template>
+</odoo>

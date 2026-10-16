@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="sale_offline_app.LockScreen">
+        <div class="o_preventa_lock d-flex flex-column align-items-center justify-content-center h-100 px-4 text-white">
+            <i class="fa fa-lock fa-3x mb-3"/>
+            <div class="fs-5 mb-1">Ingresá tu PIN</div>
+            <div class="small mb-4 opacity-75" t-esc="data.link and data.link.user"/>
+            <div class="d-flex gap-3 mb-2">
+                <span t-foreach="dots" t-as="filled" t-key="filled_index"
+                    t-attf-class="o_preventa_pin_dot {{ filled ? 'bg-white' : '' }}"/>
+            </div>
+            <div class="small mb-4" t-att-class="state.error ? 'text-warning' : 'invisible'">PIN incorrecto</div>
+            <div class="o_preventa_keypad">
+                <button t-foreach="keys" t-as="key" t-key="key_index" type="button"
+                    t-attf-class="btn btn-lg text-white fs-2 {{ key ? '' : 'invisible' }}"
+                    t-on-click="() => this.press(key)" t-esc="key"/>
+            </div>
+        </div>
+    </t>
+</templates>
