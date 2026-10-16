@@ -21,7 +21,7 @@
             <t t-if="payment_options_by_line and not is_section and not is_subsection and not is_note and not is_combo and not line.is_downpayment">
                 <t t-set="installments_display" t-value="line._get_payment_options_installments_display()"/>
                 <tr t-if="installments_display" name="tr_payment_options_installments" class="fst-italic o_line_note">
-                    <td name="td_payment_options_installments" colspan="99" t-att-class="padding_class">
+                    <td name="td_payment_options_installments" colspan="99" t-att-style="padding_style">
                         <span t-out="installments_display"/>
                     </td>
                 </tr>
