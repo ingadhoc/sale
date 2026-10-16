@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form_returned" model="ir.ui.view">
+        <field name="name">sale.order.form.cantidad.devuelta</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <!-- la columna de la lista (lo que se ve) -->
+            <xpath expr="//field[@name='order_line']/list//field[@name='qty_delivered']" position="after">
+                <field name="quantity_returned" optional="show" readonly="1"/>
+            </xpath>
+            <!-- y el formulario interno de la linea -->
+            <xpath expr="//field[@name='order_line']/form//field[@name='qty_delivered']" position="after">
+                <field name="quantity_returned" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="purchase_order_form_returned" model="ir.ui.view">
+        <field name="name">purchase.order.form.cantidad.devuelta</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/list//field[@name='qty_received']" position="after">
+                <field name="qty_returned" optional="show" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
