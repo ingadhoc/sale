@@ -7,16 +7,11 @@
         <field name="arch" type="xml">
             <field name="product_return_moves" position="before">
                 <div class="alert alert-info" role="alert" style="margin-bottom:0px;">
-                    <b>Importante</b>: si está haciendo un movimiento inverso relacionado a un Pedido de Venta o de Compra, entonces debe prestar atención al campo <b>"Para Abonar (actualizar OC/OV)"</b>, donde, si:
-                    <ul>
-                        <li>
-                            <b>Está marcado</b>: entonces <b>se va</b> a actualizar la OC/OV considerando que los productos devueltos no se van a volver a entregar, y por ende, permitiendo hacer una nota de crédito si los items ya fueron facturados, o tener en cuenta esta devolución al hacer la factura.
-                        </li>
-                        <li>
-                            <b>No está marcado</b>: entonces <b>no se va</b> a actualizar la OC/OV. Esto es común, por ejemplo, si se devuelve mercadería defectuosa y se pretende hacer una nueva entrega de la misma.
-                        </li>
+                    <b>Si la devolución está ligada a un pedido de venta o de compra, la columna "Para abonar" define si el pedido se actualiza:</b>
+                    <ul class="mb-0">
+                        <li><b>Devolver</b> (con "Para abonar" tildado): los productos no se vuelven a entregar y quedan para nota de crédito.</li>
+                        <li><b>Devolución para cambio</b>: primero destildá "Para abonar" en todas las líneas. Se reponen los mismos productos con una nueva entrega y no genera nota de crédito. Para cambiar por otro producto, usá Devolver y agregá el producto nuevo al pedido.</li>
                     </ul>
-                    Si la devolución no está ligada a una OC/OV entonces este campo no repercute en nada.
                 </div>
             </field>
             <field name="to_refund" position="attributes">

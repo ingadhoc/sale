@@ -403,6 +403,7 @@ msgstr "Con devoluciones"
 #: code:addons/sale_stock_ux/wizards/stock_return_picking.py:0
 msgid "You cannot create exchanges for return lines marked to refund."
 msgstr ""
+<<<<<<< 634f0c28cb174905cb29bb2f9192c08143ccfea9
 "No se pueden crear intercambios para líneas de devolución marcadas para "
 "reembolso."
 
@@ -418,3 +419,8 @@ msgstr ""
 
 #~ msgid "No stock available"
 #~ msgstr "Sin stock disponible"
+||||||| e6a965edeac12bbc6a6d736efe403438c5255071
+=======
+"No se puede crear un cambio con líneas marcadas Para abonar. Destildá Para "
+"abonar en todas las líneas."
+>>>>>>> 6e46eca0d16978bf6ace536da8fb7e4cc3c8e8ec
