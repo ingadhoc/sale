@@ -11,20 +11,27 @@ class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     def button_validate(self):
-        msg = (
+        delivery_msg = (
             "If you use a sale type in the sale order related with invoice "
             'policy "Block Reserve/Block Delivery", then every sale line must '
             "be invoiced and paid before you can validate picking"
         )
-        if any(
-            self.sudo().filtered(
-                lambda x: (
-                    x._is_delivery_chain()
-                    and x.sale_id.type_id.invoice_policy in ["prepaid", "prepaid_block_delivery"]
-                    and not x._check_sale_paid()
-                )
+        mto_receipt_msg = (
+            "This receipt is linked to a purchase generated to fulfill a Make "
+            "To Order (MTO) sale line. Since that sale order's type uses "
+            'invoice policy "Block Reserve/Block Delivery", the sale order '
+            "must be fully invoiced and paid before you can validate this "
+            "receipt."
+        )
+        blocked = self.sudo().filtered(
+            lambda x: (
+                x._is_delivery_chain()
+                and x.sale_id.type_id.invoice_policy in ["prepaid", "prepaid_block_delivery"]
+                and not x._check_sale_paid()
             )
-        ):
+        )
+        if blocked:
+            msg = delivery_msg if blocked.filtered(lambda x: x._is_customer_delivery()) else mto_receipt_msg
             raise UserError(_(msg))
         return super().button_validate()
 
@@ -111,3 +118,16 @@ class StockPicking(models.Model):
             next_rules = Rule.search([("location_src_id", "=", location_id), ("active", "=", True)])
             to_visit.update(set(next_rules.location_dest_id.ids) - seen)
         return False
+
+    def _is_customer_delivery(self):
+        """Whether this picking's own moves are actually bound for a customer.
+
+        Used only to choose the error message in button_validate(): a
+        receipt tied to an unpaid MTO sale line is still blocked by
+        _is_delivery_chain() above, but it never truly ends at a customer,
+        so it gets the MTO-specific message instead of the generic delivery
+        one. stock.move.location_final_id gives the real end of this move's
+        own chain, computed by core from its route/rule configuration.
+        """
+        self.ensure_one()
+        return bool(self.move_ids.filtered(lambda m: (m.location_final_id or m.location_dest_id).usage == "customer"))
