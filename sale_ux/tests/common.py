@@ -2,8 +2,10 @@ from odoo import Command, fields
 from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
 from odoo.tests.common import TransactionCase
 
+from .invariants import SaleUxInvariants
 
-class SaleUxCommon(TransactionCase):
+
+class SaleUxCommon(SaleUxInvariants, TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
