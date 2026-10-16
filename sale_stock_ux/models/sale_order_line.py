@@ -232,14 +232,33 @@ class SaleOrderLine(models.Model):
                         and r.to_refund
                     )
                 )
+                # A return of a refunded return sends the goods back to the customer, so it
+                # cancels that return out, the same way native qty_delivered counts it.
+                redelivery_moves = order_line.mapped("move_ids").filtered(
+                    lambda r: (
+                        r.state == "done"
+                        and not r.scrapped
+                        and r.location_dest_id.usage == "customer"
+                        and r.to_refund
+                        and r.origin_returned_move_id.to_refund
+                    )
+                )
                 # Kit component moves are skipped here: their returned quantity is computed
                 # below by _compute_kit_quantities, and their UoM may belong to a different
                 # category than the order line's.
                 non_kit_moves = return_moves
+                non_kit_redelivery_moves = redelivery_moves
                 if bom_enable:
                     non_kit_moves = return_moves.filtered(lambda m: m.bom_line_id.bom_id.type != "phantom")
+                    non_kit_redelivery_moves = redelivery_moves.filtered(
+                        lambda m: m.bom_line_id.bom_id.type != "phantom"
+                    )
                 for move in non_kit_moves:
                     quantity_returned += move.product_uom._compute_quantity(
+                        move.product_uom_qty, order_line.product_uom
+                    )
+                for move in non_kit_redelivery_moves:
+                    quantity_returned -= move.product_uom._compute_quantity(
                         move.product_uom_qty, order_line.product_uom
                     )
                 if bom_enable:
@@ -276,20 +295,13 @@ class SaleOrderLine(models.Model):
                                 quantity_returned = 0.0
                             continue
                         filters = {
-                            "outgoing_moves": lambda m: (
-                                m.location_dest_id.usage == "customer"
-                                and (not m.origin_returned_move_id or (m.origin_returned_move_id and m.to_refund))
-                            ),
-                            "incoming_moves": lambda m: (
-                                m.location_dest_id.usage != "customer"
-                                and m.location_id.usage == "customer"
-                                and m.to_refund
-                            ),
+                            "outgoing_moves": lambda m: m in redelivery_moves,
+                            "incoming_moves": lambda m: m in return_moves,
                         }
                         order_qty = order_line.product_uom._compute_quantity(
                             order_line.product_uom_qty, relevant_bom.product_uom_id
                         )
-                        quantity_returned = return_moves._compute_kit_quantities(
+                        quantity_returned = (return_moves | redelivery_moves)._compute_kit_quantities(
                             order_line.product_id, order_qty, relevant_bom, filters
                         )
 

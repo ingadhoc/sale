@@ -102,6 +102,34 @@ class TestReturnOfReturn(TransactionCase):
         self.assertEqual(new_picking.return_id, returned)
         self.assertNotIn(new_picking, pickings_before)
 
+    def _make_confirmed_return(self, picking, to_refund=True, quantity=10.0):
+        wizard = self._make_return_wizard(picking, to_refund=to_refund, quantity=quantity)
+        action = wizard.with_context(skip_return_of_sale_return_check=True).action_create_returns()
+        returned = self.env["stock.picking"].browse(action["res_id"])
+        self._validate(returned)
+        return returned
+
+    def test_redelivery_cancels_refunded_return(self):
+        """Returned quantity is net of the returns of returns sent back to the customer."""
+        line = self.sale_order.order_line
+        first_return = self._make_confirmed_return(self.delivery)
+        redelivery = self._make_confirmed_return(first_return)
+        second_return = self._make_confirmed_return(redelivery)
+        self._make_confirmed_return(second_return, quantity=8.0)
+
+        self.assertEqual(line.qty_delivered, 8.0)
+        self.assertEqual(line.quantity_returned, 2.0)
+        self.assertEqual(line.qty_to_invoice, 8.0)
+
+    def test_redelivery_of_non_refunded_return_is_ignored(self):
+        """A return that was not refunded is not counted, so neither is its redelivery."""
+        line = self.sale_order.order_line
+        first_return = self._make_confirmed_return(self.delivery, to_refund=False)
+        self._make_confirmed_return(first_return, to_refund=True)
+
+        self.assertEqual(line.quantity_returned, 0.0)
+        self.assertEqual(line.qty_to_invoice, 10.0)
+
     def test_exchange_from_original_delivery_is_allowed(self):
         """El flujo de exchange (action_create_exchanges) no debe advertir."""
         wizard = (
