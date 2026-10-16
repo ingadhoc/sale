@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-17 20:25+0000\n"
+"POT-Creation-Date: 2026-10-16 20:13+0000\n"
 "PO-Revision-Date: 2026-10-13 21:55+0000\n"
 "Last-Translator: Florencia Frigieri <ffp@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
@@ -18,8 +18,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
-" ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
+"0) ? 1 : 2);\n"
 "X-Generator: Weblate 5.10.4\n"
 
 #. module: sale_stock_ux
@@ -34,37 +34,22 @@ msgstr ""
 #. module: sale_stock_ux
 #: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_stock_return_picking_form
 msgid ""
-"<b>Está marcado</b>: entonces <b>se va</b> a actualizar la OC/OV "
-"considerando que los productos devueltos no se van a volver a entregar, y "
-"por ende, permitiendo hacer una nota de crédito si los items ya fueron "
-"facturados, o tener en cuenta esta devolución al hacer la factura."
+"<b>Devolución para cambio</b>: se reponen los mismos productos con una nueva "
+"entrega. No genera nota de crédito. Para cambiar por otro producto, usá "
+"Devolver y agregá el producto nuevo al pedido."
 msgstr ""
-"<b>Está marcado</b>: entonces <b>se va</b> a actualizar la OC/OV "
-"considerando que los productos devueltos no se van a volver a entregar, y "
-"por ende, permitiendo hacer una nota de crédito si los items ya fueron "
-"facturados, o tener en cuenta esta devolución al hacer la factura."
 
 #. module: sale_stock_ux
 #: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_stock_return_picking_form
 msgid ""
-"<b>Importante</b>: si está haciendo un movimiento inverso relacionado a un "
-"Pedido de Venta o de Compra, entonces debe prestar atención al campo "
-"<b>\"Para Abonar (actualizar OC/OV)\"</b>, donde, si:"
+"<b>Devolver</b>: los productos no se vuelven a entregar y quedan para nota "
+"de crédito."
 msgstr ""
-"<b>Importante</b>: si está haciendo un movimiento inverso relacionado a un "
-"Pedido de Venta o de Compra, entonces debe prestar atención al campo "
-"<b>\"Para Abonar (actualizar OC/OV)\"</b>, donde, si:"
 
 #. module: sale_stock_ux
 #: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_stock_return_picking_form
-msgid ""
-"<b>No está marcado</b>: entonces <b>no se va</b> a actualizar la OC/OV. Esto "
-"es común, por ejemplo, si se devuelve mercadería defectuosa y se pretende "
-"hacer una nueva entrega de la misma."
+msgid "<b>Si la devolución está ligada a un pedido de venta o de compra:</b>"
 msgstr ""
-"<b>No está marcado</b>: entonces <b>no se va</b> a actualizar la OC/OV. Esto "
-"es común, por ejemplo, si se devuelve mercadería defectuosa y se pretende "
-"hacer una nueva entrega de la misma."
 
 #. module: sale_stock_ux
 #: model:ir.model.fields,field_description:sale_stock_ux.field_sale_order_line__all_qty_delivered
@@ -239,11 +224,6 @@ msgid "Ordered quantity decreased!"
 msgstr "La cantidad ordenada disminuyó!"
 
 #. module: sale_stock_ux
-#: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_stock_return_picking_form
-msgid "Para Abonar (actualizar OC/OV)"
-msgstr "Para Abonar (actualizar OC/OV)"
-
-#. module: sale_stock_ux
 #: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_sales_order_filter
 msgid "Pedidos de venta con devoluciones facturables"
 msgstr "Pedidos de venta con devoluciones facturables"
@@ -322,15 +302,6 @@ msgid "Sales Order Line"
 msgstr "Línea de pedido de venta"
 
 #. module: sale_stock_ux
-#: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_stock_return_picking_form
-msgid ""
-"Si la devolución no está ligada a una OC/OV entonces este campo no repercute "
-"en nada."
-msgstr ""
-"Si la devolución no está ligada a una OC/OV entonces este campo no repercute "
-"en nada."
-
-#. module: sale_stock_ux
 #: model:ir.model.fields,field_description:sale_stock_ux.field_sale_order_line__stock_by_location
 msgid "Stock By Location"
 msgstr "Stock por Ubicación"
@@ -400,14 +371,6 @@ msgstr "Con devoluciones"
 
 #. module: sale_stock_ux
 #. odoo-python
-#: code:addons/sale_stock_ux/wizards/stock_return_picking.py:0
-msgid "You cannot create exchanges for return lines marked to refund."
-msgstr ""
-"No se pueden crear intercambios para líneas de devolución marcadas para "
-"reembolso."
-
-#. module: sale_stock_ux
-#. odoo-python
 #: code:addons/sale_stock_ux/models/sale_order_line.py:0
 msgid ""
 "¡Está reduciendo la cantidad pedida! Recomendamos usar el botón para "
@@ -415,6 +378,50 @@ msgid ""
 msgstr ""
 "¡Está reduciendo la cantidad pedida! Recomendamos usar el botón para "
 "cancelar remanente y luego setear la cantidad deseada."
+
+#~ msgid ""
+#~ "<b>Está marcado</b>: entonces <b>se va</b> a actualizar la OC/OV "
+#~ "considerando que los productos devueltos no se van a volver a entregar, y "
+#~ "por ende, permitiendo hacer una nota de crédito si los items ya fueron "
+#~ "facturados, o tener en cuenta esta devolución al hacer la factura."
+#~ msgstr ""
+#~ "<b>Está marcado</b>: entonces <b>se va</b> a actualizar la OC/OV "
+#~ "considerando que los productos devueltos no se van a volver a entregar, y "
+#~ "por ende, permitiendo hacer una nota de crédito si los items ya fueron "
+#~ "facturados, o tener en cuenta esta devolución al hacer la factura."
+
+#~ msgid ""
+#~ "<b>Importante</b>: si está haciendo un movimiento inverso relacionado a "
+#~ "un Pedido de Venta o de Compra, entonces debe prestar atención al campo "
+#~ "<b>\"Para Abonar (actualizar OC/OV)\"</b>, donde, si:"
+#~ msgstr ""
+#~ "<b>Importante</b>: si está haciendo un movimiento inverso relacionado a "
+#~ "un Pedido de Venta o de Compra, entonces debe prestar atención al campo "
+#~ "<b>\"Para Abonar (actualizar OC/OV)\"</b>, donde, si:"
+
+#~ msgid ""
+#~ "<b>No está marcado</b>: entonces <b>no se va</b> a actualizar la OC/OV. "
+#~ "Esto es común, por ejemplo, si se devuelve mercadería defectuosa y se "
+#~ "pretende hacer una nueva entrega de la misma."
+#~ msgstr ""
+#~ "<b>No está marcado</b>: entonces <b>no se va</b> a actualizar la OC/OV. "
+#~ "Esto es común, por ejemplo, si se devuelve mercadería defectuosa y se "
+#~ "pretende hacer una nueva entrega de la misma."
+
+#~ msgid "Para Abonar (actualizar OC/OV)"
+#~ msgstr "Para Abonar (actualizar OC/OV)"
+
+#~ msgid ""
+#~ "Si la devolución no está ligada a una OC/OV entonces este campo no "
+#~ "repercute en nada."
+#~ msgstr ""
+#~ "Si la devolución no está ligada a una OC/OV entonces este campo no "
+#~ "repercute en nada."
+
+#~ msgid "You cannot create exchanges for return lines marked to refund."
+#~ msgstr ""
+#~ "No se pueden crear intercambios para líneas de devolución marcadas para "
+#~ "reembolso."
 
 #~ msgid "No stock available"
 #~ msgstr "Sin stock disponible"
