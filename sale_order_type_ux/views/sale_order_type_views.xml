@@ -25,6 +25,7 @@
             </field>
             <xpath expr="//field[@name='sequence_id']" position="before">
                 <field name="warehouse_id" options="{'no_create': True}"/>
+                <field name="picking_type_id" options="{'no_create': True}" invisible="not warehouse_id"/>
                 <field name="company_id" options="{'no_create': True}"/>
                 <field name="pricelist_id" options="{'no_create': True}"/>
             </xpath>
