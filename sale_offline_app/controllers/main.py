@@ -63,6 +63,10 @@ class SaleOfflineApp(http.Controller):
             "background_color": "#714B67",
             "theme_color": "#714B67",
             "prefer_related_applications": False,
+            # Lets the page ask the browser whether this same PWA is installed (getInstalledRelatedApps).
+            "related_applications": [
+                {"platform": "webapp", "url": f"{request.httprequest.host_url}{APP_PATH[1:]}/manifest.webmanifest"}
+            ],
             "icons": [
                 {"src": f"/web/static/img/odoo-icon-{size}.png", "sizes": size, "type": "image/png"}
                 for size in ("192x192", "512x512")

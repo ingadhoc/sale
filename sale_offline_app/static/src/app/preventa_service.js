@@ -59,6 +59,10 @@ export const preventaService = {
             workDay: null,
             // Customer search of the orders screen, kept while opening an order and coming back.
             ordersQuery: "",
+            // Just linked: the home screen offers to install the app on the device.
+            justLinked: false,
+            // Known to be installed on the device; false when the browser cannot tell.
+            appInstalled: false,
             warehouse: false,
         });
         let pricing = markRaw(new PricelistEngine());
@@ -314,6 +318,7 @@ export const preventaService = {
             if (browser.navigator.storage?.persist) {
                 await browser.navigator.storage.persist();
             }
+            state.justLinked = true;
             return true;
         }
 
@@ -878,6 +883,16 @@ export const preventaService = {
             });
         }
 
+        /** Chrome on Android answers whether this PWA is installed; other browsers cannot tell. */
+        async function checkInstalled() {
+            try {
+                const apps = await browser.navigator.getInstalledRelatedApps?.();
+                state.appInstalled = Boolean(apps?.length);
+            } catch {
+                state.appInstalled = false;
+            }
+        }
+
         function applyUpdate() {
             waitingWorker?.postMessage("SKIP_WAITING");
         }
@@ -909,6 +924,7 @@ export const preventaService = {
         const justLinked = await readLinkFromUrl();
         registerServiceWorker();
         refreshStorage();
+        checkInstalled();
         if (justLinked || (state.needsSync && browser.navigator.onLine)) {
             sync();
         }

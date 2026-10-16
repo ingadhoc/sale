@@ -75,6 +75,21 @@
                             <span class="o_preventa_app_caption" t-esc="tile.label"/>
                         </button>
                     </div>
+                    <div t-if="showInstall" t-attf-class="o_preventa_install p-3 bg-white border {{ data.justLinked ? 'border-primary border-2' : '' }}">
+                        <div t-if="data.justLinked" class="fw-bold mb-1">
+                            <i class="fa fa-check text-success me-1"/>Celular vinculado.
+                        </div>
+                        <div class="small mb-2">
+                            Instalá la app para abrirla desde el escritorio del celular, aunque no haya señal.
+                        </div>
+                        <button t-if="pwa.isAvailable" type="button" class="btn btn-primary w-100" t-on-click="installApp">
+                            <i class="fa fa-mobile me-2"/>Instalar en el celular
+                        </button>
+                        <div t-else="" class="small text-muted">
+                            En Chrome: menú <b>⋮</b> → <b>Agregar a la pantalla principal</b> (o <b>Instalar app</b>).
+                            Si ya la instalaste, abrila desde su ícono.
+                        </div>
+                    </div>
                 </div>
                 <ActivitiesScreen t-elif="state.screen === 'activities'" onStart.bind="startActivity"/>
                 <PartnerList t-elif="state.screen === 'partners'" onSelect.bind="openPartner"/>

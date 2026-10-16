@@ -1,4 +1,5 @@
 import { Component, useState } from "@odoo/owl";
+import { isDisplayStandalone } from "@web/core/browser/feature_detection";
 import { AlertDialog, ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { MainComponentsContainer } from "@web/core/main_components_container";
 import { useService } from "@web/core/utils/hooks";
@@ -43,6 +44,9 @@ export class PreventaApp extends Component {
         this.preventa = useService("preventa");
         this.notification = useService("notification");
         this.data = useState(this.preventa.state);
+        // Odoo's pwa service keeps the browser install prompt (beforeinstallprompt).
+        this.pwa = useState(useService("pwa"));
+        this.isStandalone = isDisplayStandalone();
         this.state = useState({
             screen: "home",
             partnerId: null,
@@ -80,6 +84,22 @@ export class PreventaApp extends Component {
             { screen: "send", icon: "fa-cloud-upload", label: "Enviar", color: "#F4A261", count: this.readyCount },
             { screen: "settings", icon: "fa-cog", label: "Configuración", color: "#4C5767" },
         ];
+    }
+
+    /** Opened from the browser and not known to be installed: offer to install it. */
+    get showInstall() {
+        return !this.isStandalone && !this.data.appInstalled;
+    }
+
+    installApp() {
+        this.pwa.show({
+            onDone: ({ outcome }) => {
+                if (outcome === "accepted") {
+                    this.data.appInstalled = true;
+                    this.data.justLinked = false;
+                }
+            },
+        });
     }
 
     get expiryWarning() {

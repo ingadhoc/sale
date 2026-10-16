@@ -142,3 +142,10 @@ html, body {
     align-items: center;
     justify-content: center;
 }
+
+.o_preventa_install {
+    border-radius: 12px;
+    width: calc(100% - 2rem);
+    max-width: 480px;
+    margin: 0 auto 1rem;
+}

@@ -50,6 +50,9 @@
                 <div t-if="isInstalled" class="text-success">
                     <i class="fa fa-check me-1"/>La app está instalada en este dispositivo.
                 </div>
+                <div t-elif="data.appInstalled" class="text-success">
+                    <i class="fa fa-check me-1"/>La app ya está instalada: abrila desde su ícono.
+                </div>
                 <button t-elif="pwa.isAvailable" type="button" class="btn btn-primary w-100" t-on-click="() => pwa.show()">
                     <i class="fa fa-mobile me-2"/>Agregar a la pantalla de inicio
                 </button>
