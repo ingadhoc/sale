@@ -37,6 +37,10 @@
                         </div>
                     </div>
                 </setting>
+                <setting id="report_in_product_uom"
+                         help="On the quotation PDF and the online quotation, show quantity and unit price of lines sold in another unit (e.g. a packaging) in the product unit.">
+                    <field name="report_in_product_uom"/>
+                </setting>
                 <setting id="analytic_account_without_company"
                          help="Al confirmar ventas, crear un proyecto sin compañía.">
                     <field name="analytic_account_without_company"/>

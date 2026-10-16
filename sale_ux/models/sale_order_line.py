@@ -108,3 +108,39 @@ class SaleOrderLine(models.Model):
                 )
                 total += sign * (converted_price_unit - line.price_unit)
         return total
+
+    def _get_report_price_unit(self):
+        """Unit price shown on customer documents, in the line UoM. Hook for localizations."""
+        self.ensure_one()
+        return self.price_unit
+
+    def _get_report_product_uom_values(self):
+        """Quantity and unit price in the product UoM for customer documents.
+
+        Only when the setting is enabled and the line is sold in another UoM of the same
+        reference (e.g. a packaging). Returns False otherwise.
+        """
+        self.ensure_one()
+        product_uom = self.product_id.uom_id
+        line_uom = self.product_uom_id
+        if (
+            self.display_type
+            or not product_uom
+            or not line_uom
+            or line_uom == product_uom
+            or not line_uom._has_common_reference(product_uom)
+            or not self.env["ir.config_parameter"].sudo().get_param("sale_ux.report_in_product_uom")
+        ):
+            return False
+        price_digits = self.env["decimal.precision"].precision_get("Product Price")
+        return {
+            "qty": line_uom._compute_quantity(self.product_uom_qty, product_uom, round=False),
+            "uom": product_uom,
+            "price_unit": line_uom._compute_price(self._get_report_price_unit(), product_uom),
+            # Extra decimals so that quantity x unit price matches the subtotal
+            "price_options": {
+                "widget": "float",
+                "precision": max(price_digits, 4),
+                "min_precision": price_digits,
+            },
+        }
