@@ -3,7 +3,7 @@
 {
     "name": "Sale Report Last Sale",
     "summary": "Adds a report view to show how many days " "have passed since a partner ordered a product",
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "depends": [
         "sale",
     ],
@@ -11,9 +11,8 @@
     "license": "AGPL-3",
     "data": [
         "reports/sale_last_sale_report.xml",
-        "security/ir.model.access.csv",
-        "security/ir_rule.xml",
+        "security/ir.access.csv",
     ],
     "category": "Sale",
-    "installable": False,
+    "installable": True,
 }
