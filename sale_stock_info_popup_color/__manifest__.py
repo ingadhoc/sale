@@ -16,6 +16,9 @@
         "web.assets_backend": [
             "sale_stock_info_popup_color/static/src/**/*",
         ],
+        "web.assets_tests": [
+            "sale_stock_info_popup_color/static/tests/tours/*.js",
+        ],
     },
     "demo": [],
     "installable": True,
