@@ -50,8 +50,27 @@ class TestQtyAtDateColor(HttpCase):
         self.assertGreaterEqual(line_incoming.virtual_available_at_date, line_incoming.qty_to_deliver)
         self.assertLess(line_incoming.free_qty_today, line_incoming.qty_to_deliver)
         self.assertGreaterEqual(line_on_hand.free_qty_today, line_on_hand.qty_to_deliver)
+        # A bare list keeps the tour away from widgets of unrelated modules in the order form
+        view = self.env["ir.ui.view"].create(
+            {
+                "name": "sale_stock_info_popup_color test lines",
+                "model": "sale.order.line",
+                "type": "list",
+                "arch": '<list><field name="product_id"/><field name="product_uom_qty"/>'
+                '<widget name="qty_at_date_widget"/></list>',
+            }
+        )
+        action = self.env["ir.actions.act_window"].create(
+            {
+                "name": "Popup color lines",
+                "res_model": "sale.order.line",
+                "view_mode": "list",
+                "view_id": view.id,
+                "domain": [("order_id", "=", self.sale_order.id)],
+            }
+        )
         self.start_tour(
-            f"/odoo/sales/{self.sale_order.id}",
+            f"/odoo/action-{action.id}",
             "sale_stock_info_popup_color_tour",
             login="admin",
         )
