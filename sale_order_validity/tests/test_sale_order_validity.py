@@ -58,7 +58,10 @@ class TestSaleOrderValidity(SaleCommon):
 
         order.update_date_prices_and_validity()
 
-        self.assertEqual(order.date_order.date(), fields.Date.context_today(order))
+        self.assertEqual(
+            fields.Datetime.context_timestamp(order, order.date_order).date(),
+            fields.Date.context_today(order),
+        )
         self.assertEqual(order.validity_date, order.date_order.date() + timedelta(days=order.validity_days))
         self.assertEqual(order.order_line.price_unit, order.order_line.product_id.list_price)
 
