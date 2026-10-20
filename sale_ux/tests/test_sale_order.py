@@ -220,9 +220,9 @@ class TestSaleOrder(SaleUxCommon):
         self.assertIn("Product prices have been recomputed", order.message_ids[0].body)
 
     def test_action_update_prices_ignores_empty_recordset(self):
-        result = self.env["sale.order"].action_update_prices()
-
-        self.assertIsNone(result)
+        # must not raise nor post anything; the return value is not asserted because
+        # sale_margin_ux (auto-installed with sale_margin) always returns True
+        self.env["sale.order"].action_update_prices()
 
     def test_copy_removes_inactive_taxes_from_new_order(self):
         tax = self.tax_sale_a.copy({"name": "Sale UX inactive tax"})
