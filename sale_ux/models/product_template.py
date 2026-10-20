@@ -35,6 +35,9 @@ class ProductTemplate(models.Model):
         return super().get_import_templates()
 
     def _get_available_uoms(self):
+        if not self:
+            # lines without a product (sections, notes, down payment header) get here empty
+            return super()._get_available_uoms()
         self.ensure_one()
         res = super()._get_available_uoms()
         if self.only_packagings:
