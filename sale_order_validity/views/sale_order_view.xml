@@ -26,7 +26,7 @@
                     <button name="update_date_prices_and_validity" type="object"
                     string="Update Validity"
                     help="Update Date, Prices and Validity"
-                    class="btn-link mb-1 px-0" icon="fa-refresh"
+                    class="btn-link mb-1 px-0" icon="refresh"
                     invisible="state not in ['draft', 'sent']"/>
                 </div>
             </field>
