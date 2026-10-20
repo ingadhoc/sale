@@ -33,7 +33,6 @@
         "sale_management",
     ],
     "data": [
-        "wizards/sale_advance_payment_inv_views.xml",
         "wizards/sale_analytic_distribution_wizard_views.xml",
         "security/sale_ux_security.xml",
         "views/account_views.xml",
