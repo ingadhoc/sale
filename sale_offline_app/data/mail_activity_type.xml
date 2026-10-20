@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="mail_activity_type_sales_visit" model="mail.activity.type">
+        <field name="name">Sales Visit</field>
+        <field name="summary">Visit the customer and take the order</field>
+        <field name="icon">fa-shopping-basket</field>
+        <field name="category">default</field>
+        <field name="sequence">40</field>
+    </record>
+</odoo>

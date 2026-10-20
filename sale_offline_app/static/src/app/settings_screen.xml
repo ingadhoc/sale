@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="sale_offline_app.SettingsScreen">
+        <section class="p-3 border-bottom">
+            <h6 class="text-uppercase text-muted small">Sincronización</h6>
+            <button type="button" class="btn btn-primary btn-lg w-100" t-att-disabled="data.syncing or !data.online"
+                t-on-click="() => preventa.sync()">
+                <i t-attf-class="fa fa-refresh me-2 {{ data.syncing ? 'fa-spin' : '' }}"/>
+                <t t-esc="data.syncing ? 'Sincronizando…' : 'Sincronizar'"/>
+            </button>
+            <div t-if="!data.online" class="small text-muted mt-1">Sin conexión: se sincroniza cuando vuelva la señal.</div>
+            <div t-if="data.lastSync" class="small mt-2">
+                <div>Última: <t t-esc="formatDate(data.lastSync.date)"/></div>
+                <div>
+                    <t t-esc="data.lastSync.partners"/> clientes · <t t-esc="data.lastSync.products"/> productos ·
+                    <t t-esc="data.lastSync.activities or 0"/> visitas · <t t-esc="data.lastSync.history or 0"/> pedidos anteriores
+                </div>
+                <div t-if="visitDays">Días con visitas: <t t-esc="visitDays"/></div>
+                <div>Stock del depósito: <t t-esc="data.warehouse ? data.warehouse.name : 'sin depósito'"/></div>
+                <div class="text-muted">Bajada: <t t-esc="data.lastSync.downloadMs"/> ms · guardado: <t t-esc="data.lastSync.storeMs"/> ms</div>
+            </div>
+            <div t-else="" class="small text-muted mt-2">Todavía no se sincronizó.</div>
+            <div class="form-check form-switch mt-3">
+                <input class="form-check-input" type="checkbox" role="switch" id="preventa_auto_send"
+                    t-att-checked="data.autoSend" t-on-change="onToggleAutoSend"/>
+                <label class="form-check-label" for="preventa_auto_send">
+                    Enviar pedidos automáticamente cuando hay conexión
+                </label>
+            </div>
+        </section>
+
+        <section class="p-3 border-bottom small">
+            <h6 class="text-uppercase text-muted small">Vinculación con Odoo</h6>
+            <div>Usuario: <b t-esc="data.link.user"/></div>
+            <div>La key vence el <t t-esc="formatDate(data.link.expiration)"/></div>
+            <div><t t-esc="data.pin ? 'Con PIN de bloqueo' : 'Sin PIN: se configura en tus Preferencias de Odoo y baja al sincronizar'"/></div>
+            <button type="button" class="btn btn-outline-secondary w-100 mt-2" t-att-disabled="!data.online"
+                t-on-click="() => preventa.linkDevice()">
+                <i class="fa fa-link me-2"/>Renovar vinculación
+            </button>
+        </section>
+
+        <section class="p-3 border-bottom small">
+            <h6 class="text-uppercase text-muted small">Este dispositivo</h6>
+            <div t-if="data.storage">
+                Almacenamiento: <t t-esc="formatBytes(data.storage.usage)"/> de <t t-esc="formatBytes(data.storage.quota)"/>
+                · <t t-esc="data.persisted ? 'persistente' : 'puede borrarse si falta espacio'"/>
+            </div>
+            <div class="mt-2">
+                <div t-if="isInstalled" class="text-success">
+                    <i class="fa fa-check me-1"/>La app está instalada en este dispositivo.
+                </div>
+                <div t-elif="data.appInstalled" class="text-success">
+                    <i class="fa fa-check me-1"/>La app ya está instalada: abrila desde su ícono.
+                </div>
+                <button t-elif="pwa.isAvailable" type="button" class="btn btn-primary w-100" t-on-click="() => pwa.show()">
+                    <i class="fa fa-mobile me-2"/>Agregar a la pantalla de inicio
+                </button>
+                <div t-else="" class="text-muted">
+                    Para instalarla: en Chrome, menú <b>⋮</b> → <b>Agregar a la pantalla principal</b>
+                    (o <b>Instalar app</b>).
+                </div>
+            </div>
+        </section>
+
+        <section class="p-3">
+            <button type="button" class="btn btn-outline-danger btn-lg w-100" t-on-click="props.onLogout">
+                <i class="fa fa-sign-out me-2"/>Salir
+            </button>
+            <div class="small text-muted mt-1">
+                Borra todos los datos del celular y vuelve al ingreso de Odoo. Hay que enviar los pedidos antes.
+            </div>
+        </section>
+    </t>
+</templates>
