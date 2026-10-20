@@ -22,6 +22,7 @@ class SaleOrderAnalyticWizard(models.TransientModel):
         help="Analytic account that will be assigned (at 100%) to the selected lines.",
     )
     select_all = fields.Boolean(
+        default=True,
         help="Check or uncheck every line at once.",
     )
     line_ids = fields.One2many(
