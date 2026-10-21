@@ -498,6 +498,16 @@ msgid "Number of days to keep quotations before cancelling them."
 msgstr ""
 
 #. module: sale_ux
+#: model:ir.model.fields,help:sale_ux.field_res_config_settings__report_in_product_uom
+msgid "On the quotation PDF and the online quotation, lines sold in another unit (e.g. a packaging) show quantity and unit price in the product unit."
+msgstr ""
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
+msgid "On the quotation PDF and the online quotation, show quantity and unit price of lines sold in another unit (e.g. a packaging) in the product unit."
+msgstr ""
+
+#. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_product_product__only_packagings
 #: model:ir.model.fields,field_description:sale_ux.field_product_template__only_packagings
 msgid "Only Packagings"
@@ -554,6 +564,11 @@ msgstr ""
 #. module: sale_ux
 #: model:ir.model.fields,help:sale_ux.field_product_pricelist__price
 msgid "Price for product specified on the context"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_line__price_unit_product_uom
+msgid "Price per Product Unit"
 msgstr ""
 
 #. module: sale_ux
@@ -722,6 +737,11 @@ msgid "Show Product Image on quotation report"
 msgstr ""
 
 #. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__report_in_product_uom
+msgid "Show Product Unit on Quotations"
+msgstr ""
+
+#. module: sale_ux
 #: model:res.groups,name:sale_ux.group_reference_on_tree_and_main_form
 msgid "Show SO reference field on tree and main form views"
 msgstr ""
@@ -863,6 +883,11 @@ msgstr ""
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_usability_tree
 msgid "Unit of Measure"
+msgstr ""
+
+#. module: sale_ux
+#: model:ir.model.fields,help:sale_ux.field_sale_order_line__price_unit_product_uom
+msgid "Unit price in the unit of the product, for instance per kg on a line sold by packaging, with the same tax criteria as the printed quotation. If you change it, the unit price of the line is recomputed."
 msgstr ""
 
 #. module: sale_ux

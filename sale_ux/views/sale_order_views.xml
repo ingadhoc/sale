@@ -65,6 +65,12 @@
             <xpath expr="//field[@name='order_line']/list//field[@name='discount']" position="after">
                 <button name="action_sale_history" type="object" icon="fa-history" title="Sale History"/>
             </xpath>
+            <xpath expr="//field[@name='order_line']/list//field[@name='price_unit']" position="after">
+                <field name="price_unit_product_uom_editable" column_invisible="1"/>
+                <field name="price_unit_product_uom"
+                       optional="hide"
+                       readonly="not price_unit_product_uom_editable"/>
+            </xpath>
         </field>
     </record>
 
