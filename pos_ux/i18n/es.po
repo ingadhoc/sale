@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-13 15:52+0000\n"
-"PO-Revision-Date: 2025-12-13 16:10+0000\n"
+"POT-Creation-Date: 2026-10-22 19:36+0000\n"
+"PO-Revision-Date: 2026-10-22 19:36+0000\n"
 "Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
 "sale-19-0-pos_ux/es/>\n"
@@ -15,6 +15,109 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
 "0) ? 1 : 2);\n"
 "X-Generator: Weblate 5.10.4\n"
+
+#. module: pos_ux
+#: model:ir.module.module,description:base.module_pos_ux
+msgid ""
+".. |company| replace:: ADHOC SA\n"
+"\n"
+".. |company_logo| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-logo.png\n"
+"   :alt: ADHOC SA\n"
+"   :target: https://www.adhoc.com.ar\n"
+"\n"
+".. |icon| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-icon.png\n"
+"\n"
+".. image:: https://img.shields.io/badge/license-AGPL--3-blue.png\n"
+"   :target: https://www.gnu.org/licenses/agpl\n"
+"   :alt: License: AGPL-3\n"
+"\n"
+"================\n"
+"Point of Sale UX\n"
+"================\n"
+"\n"
+"1. Setting \"Billing behavior\" with billing options:\n"
+"\n"
+"   a. **Invoice on demand**: the user can check to invoice.\n"
+"\n"
+"   b. **By default invoice**: invoice is issued by default.\n"
+"      It is allowed to change to not invoice\n"
+"\n"
+"   c. **Always Invoice**: invoice is always issued\n"
+"\n"
+"2. **Adds the contingency mode** for when connection fails. While the session is\n"
+"   in contingency, the invoice PDF is not downloaded when validating a payment,\n"
+"   even if the \"Download Invoice\" setting of the point of sale is on.\n"
+"\n"
+"3. **Default order customer**: setting that pre-selects a partner on every POS\n"
+"   order that starts without one, including the empty order the POS reuses when\n"
+"   it opens. Useful for B2C points of sale where most sales go to a generic\n"
+"   anonymous customer. It is not the \"Default Customer\" of the point of sale,\n"
+"   which Odoo uses for the session closing entries.\n"
+"\n"
+"4. **Block session close when there are paid orders without invoice**. Only\n"
+"   applies when the billing behavior is set to \"Always Invoice\". Use the\n"
+"   \"Generate invoices\" button in the session backend to invoice the pending\n"
+"   orders before closing the session.\n"
+"\n"
+"5. **Invoiced / Not Invoiced pill in the orders list**. Paid orders show a\n"
+"   badge in the ticket screen indicating whether they were already invoiced,\n"
+"   so the cashier can tell at a glance which orders are still pending.\n"
+"\n"
+"\n"
+"Installation\n"
+"============\n"
+"\n"
+"To install this module, you need to:\n"
+"\n"
+"#. Nothing, it is installed automatically together with Point of Sale\n"
+"   (``auto_install``).\n"
+"\n"
+"Configuration\n"
+"=============\n"
+"\n"
+"To configure this module, you need to:\n"
+"\n"
+"#.\n"
+"\n"
+"Usage\n"
+"=====\n"
+"\n"
+"To use this module, you need to:\n"
+"\n"
+"#.\n"
+"\n"
+".. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas\n"
+"   :alt: Try me on Runbot\n"
+"   :target: http://runbot.adhoc.com.ar/\n"
+"\n"
+"Bug Tracker\n"
+"===========\n"
+"\n"
+"Bugs are tracked on `GitHub Issues\n"
+"<https://github.com/ingadhoc/sale/issues>`_. In case of trouble, please\n"
+"check there if your issue has already been reported. If you spotted it first,\n"
+"help us smashing it by providing a detailed and welcomed feedback.\n"
+"\n"
+"Credits\n"
+"=======\n"
+"\n"
+"Images\n"
+"------\n"
+"\n"
+"* |company| |icon|\n"
+"\n"
+"Contributors\n"
+"------------\n"
+"\n"
+"Maintainer\n"
+"----------\n"
+"\n"
+"|company_logo|\n"
+"\n"
+"This module is maintained by the |company|.\n"
+"\n"
+"To contribute to this module, please visit https://www.adhoc.com.ar.\n"
+msgstr ""
 
 #. module: pos_ux
 #: model:ir.model.fields,field_description:pos_ux.field_pos_config__billing_behavior
@@ -66,15 +169,15 @@ msgid "Create invoices"
 msgstr "Crear Factura"
 
 #. module: pos_ux
-#: model:ir.model.fields,field_description:pos_ux.field_pos_config__default_partner_id
-#: model:ir.model.fields,field_description:pos_ux.field_res_config_settings__pos_default_partner_id
-msgid "Default Customer"
-msgstr "Cliente por defecto"
+#: model:ir.model.fields,field_description:pos_ux.field_pos_config__default_order_partner_id
+#: model:ir.model.fields,field_description:pos_ux.field_res_config_settings__pos_default_order_partner_id
+msgid "Default Order Customer"
+msgstr "Cliente por defecto del pedido"
 
 #. module: pos_ux
 #: model_terms:ir.ui.view,arch_db:pos_ux.res_config_settings_view_form
-msgid "Default customer"
-msgstr "Cliente por defecto"
+msgid "Default order customer"
+msgstr "Cliente por defecto del pedido"
 
 #. module: pos_ux
 #: model:ir.model.fields,field_description:pos_ux.field_pos_config__display_name
@@ -98,15 +201,6 @@ msgid "Exit contingency mode"
 msgstr "Salir del modo contingencia"
 
 #. module: pos_ux
-#: model:ir.model.fields,help:pos_ux.field_pos_payment_method__split_transactions
-msgid ""
-"Forces to set a customer when using this payment method and splits the "
-"journal entries for each customer. It could slow down the closing process."
-msgstr ""
-"Obliga a definir un cliente cuando se usa este método de pago y divide los "
-"asientos contables por cliente. Puede ralentizar el proceso de cierre."
-
-#. module: pos_ux
 #: model:ir.model.fields,field_description:pos_ux.field_pos_config__id
 #: model:ir.model.fields,field_description:pos_ux.field_pos_order__id
 #: model:ir.model.fields,field_description:pos_ux.field_pos_payment_method__id
@@ -115,11 +209,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_ux.field_res_users__id
 msgid "ID"
 msgstr "Id"
-
-#. module: pos_ux
-#: model:ir.model.fields,field_description:pos_ux.field_pos_payment_method__split_transactions
-msgid "Identify Customer"
-msgstr "Identificar cliente"
 
 #. module: pos_ux
 #: model:ir.model.fields,help:pos_ux.field_pos_config__default_partner_id
@@ -167,6 +256,14 @@ msgstr ""
 "los siguientes métodos de pago: %s"
 
 #. module: pos_ux
+#. odoo-python
+#: code:addons/pos_ux/models/pos_config.py:0
+msgid ""
+"No se puede completar la operación: falta definir la cuenta pendiente en los"
+" siguientes métodos de pago: %s"
+msgstr ""
+
+#. module: pos_ux
 #. odoo-javascript
 #: code:addons/pos_ux/static/src/overrides/screens/ticket_screen/ticket_screen.xml:0
 msgid "Not Invoiced"
@@ -179,18 +276,18 @@ msgstr "Configuración del TPV"
 
 #. module: pos_ux
 #: model:ir.model,name:pos_ux.model_pos_order
-msgid "Point of Sale Orders"
-msgstr "Pedidos del TPV"
-
-#. module: pos_ux
-#: model:ir.model,name:pos_ux.model_pos_payment_method
-msgid "Point of Sale Payment Methods"
-msgstr "Métodos de pago del Punto de Venta"
+msgid "Point of Sale Order"
+msgstr "Orden del punto de venta"
 
 #. module: pos_ux
 #: model:ir.model,name:pos_ux.model_pos_session
 msgid "Point of Sale Session"
 msgstr "Sesión TPV"
+
+#. module: pos_ux
+#: model:ir.module.module,shortdesc:base.module_pos_ux
+msgid "Point of Sale UX"
+msgstr ""
 
 #. module: pos_ux
 #: model_terms:ir.ui.view,arch_db:pos_ux.res_config_settings_view_form
