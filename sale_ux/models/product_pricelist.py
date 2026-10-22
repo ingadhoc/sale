@@ -29,12 +29,15 @@ class ProductPricelist(models.Model):
     def _compute_price(self):
         self = self.sudo()
         product = self._get_context_product()
-        if not product:
-            self.price = 0.0
-            return
-        for rec in self:
-            contextual_price = product.with_context(pricelist=rec.id)._get_contextual_price()
-            rec.sudo().write({"price": contextual_price})
+        # this compute is also called explicitly, so price must be protected for the
+        # assignment to only fill the cache. An actual write() bumps write_date, and
+        # website_sale overrides write() to clear the whole registry cache
+        with self.env.protecting([self._fields["price"]], self):
+            if not product:
+                self.price = 0.0
+                return
+            for rec in self:
+                rec.price = product.with_context(pricelist=rec.id)._get_contextual_price()
 
     def action_open_product_pricelist_item(self):
         self.ensure_one()
