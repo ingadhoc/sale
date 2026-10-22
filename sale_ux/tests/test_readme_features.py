@@ -97,6 +97,13 @@ class TestReadmeFeatures(SaleUxCommon):
         self.assertIn('name="amount_uninvoiced"', arch)
         self.assertIn('name="amount_to_invoice"', arch)
 
+    def test_lists_of_the_orders_and_quotations_menus_have_the_optional_columns(self):
+        """In 20 these menus use lists that do not inherit from sale.view_order_tree."""
+        for xmlid in ("sale.sale_order_list_with_dashboard", "sale.view_quotation_tree_with_onboarding"):
+            arch = self._arch("sale.order", "list", view_id=self.env.ref(xmlid).id)
+            for column in ("amount_uninvoiced", "amount_to_invoice", "create_date"):
+                self.assertIn(f'name="{column}"', arch, f"{column} is missing in {xmlid}")
+
     def test_update_prices_button_is_visible_to_salesman_without_pricelists(self):
         self.assertIn('name="action_update_prices"', self._arch("sale.order", "form", self.salesman))
 
