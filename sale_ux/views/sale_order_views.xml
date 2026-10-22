@@ -126,6 +126,23 @@
         </field>
     </record>
 
+    <!-- In Odoo 20 the Orders and Quotations menus use lists that inherit from the quotation list and not from
+         sale.view_order_tree, so the optional columns are also added here -->
+    <record id="view_quotation_tree_uninvoiced" model="ir.ui.view">
+        <field name="name">sale.quotation.list.uninvoiced</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">
+            <field name="invoice_status" position="after">
+                <field name="amount_uninvoiced" optional="hide"/>
+                <field name="amount_to_invoice" optional="hide"/>
+            </field>
+            <field name="date_order" position="before">
+                <field name="create_date" options="{'show_time': False}" optional="hide"/>
+            </field>
+        </field>
+    </record>
+
     <record id="view_sales_order_filter" model="ir.ui.view">
         <field name="name">sale.order.filter</field>
         <field name="model">sale.order</field>
