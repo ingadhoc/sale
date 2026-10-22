@@ -21,7 +21,7 @@ Several Improvements to sales:
 #. Make sale orders menu show all sale records (quotations, and confirmed ones). Make that, by default, links to sale orders shows "sale" data and not only "quotation" data.
 #. Add option in settings to show "Customer Reference" field on Sale Order tree view and in the main section of the form view.
 #. Add a menu item on Orders for "Sale Order Lines" and improve views with more fields.
-#. Allow cancel sales orders in locked state and unlock it after cancelling
+#. Allow cancel sales orders in locked state. The order stays locked after cancelling.
 #. Fix in button "Create invoice" in sale orders, to create a refund invoice if the sale order amount it's zero and the line's quantities are negative (because of a return). Without this fix, when the OV is $0.00 and the refund is made, it proposes to make an FA instead of an NC.
 #. Block cancellation of a sale order if there is a related invoice in a state different from "draft" or "cancel".
    Customer invoices (out_invoice) are excluded if they have been reversed.
@@ -36,7 +36,7 @@ Several Improvements to sales:
 #. Keeps the "Update Prices" button on the sale order, visible to all users, and logs in the chatter that the prices were recomputed. Odoo 20 recomputes prices only when the pricelist changes, and here prices change daily with the exchange rate.
 #. Add a setting to choose the size (50, 100 or 150 px) of the product image shown on the quotation report. The image itself is shown with the Odoo company setting "Display Product Images".
 #. Add a setting for automatic cancellation of quotations
-#. Modifying the discount, adding lines and changing the price list of a blocked sales order is prevented. This error occurs when working in the same form view in more than one tab at the same time.
+#. Modifying the discount and changing the price list of a blocked sales order is prevented. This error occurs when working in the same form view in more than one tab at the same time. Adding lines to a blocked sales order is not prevented.
 #. Add setting to automatically select all available documents from PDF Quote Builder.
 #. Add the field "Amount to Invoice" and "Un-invoiced" in the sale order list view.
 #. When duplicating a Sale Order, a message is logged in the new order indicating the origin.
