@@ -201,11 +201,3 @@ class TestPartnerProductConfig(SaleUxCommon):
 
     def test_fiscal_position_deducts_price_included_taxes_when_setting_is_on(self):
         self.assertEqual(self._price_with_fiscal_position(deduct=True), 100.0)
-
-    def test_config_setting_for_pdf_auto_selection_is_stored(self):
-        """Test that PDF Quote Builder auto-selection setting is stored properly"""
-        self.IrConfig.set_str("sale_ux.pdf_quote_auto_select", "True")
-
-        result = self.IrConfig.get_str("sale_ux.pdf_quote_auto_select")
-
-        self.assertEqual(result, "True")

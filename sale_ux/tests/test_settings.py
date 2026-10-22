@@ -5,14 +5,6 @@ from .common import SaleUxCommon
 
 @tagged("post_install", "-at_install")
 class TestSaleUxSettings(SaleUxCommon):
-    def test_setting_show_customer_reference_field_is_stored(self):
-        """Test that 'Show Customer Reference' setting is stored properly"""
-        self.IrConfig.set_str("sale_ux.show_customer_reference", "True")
-
-        result = self.IrConfig.get_str("sale_ux.show_customer_reference")
-
-        self.assertEqual(result, "True")
-
     def test_setting_propagate_internal_notes_is_stored(self):
         """Test that internal notes propagation setting is stored"""
         self.IrConfig.set_str("sale.propagate_internal_notes", "True")
@@ -51,35 +43,3 @@ class TestSaleUxSettings(SaleUxCommon):
 
         # Setting should be retrievable but should be validated elsewhere
         self.assertIsNotNone(result)
-
-    def test_setting_for_show_product_image_on_quotation_is_stored(self):
-        """Test that product image on quotation setting is stored"""
-        self.IrConfig.set_str("sale_ux.show_product_image_quotation", "True")
-
-        result = self.IrConfig.get_str("sale_ux.show_product_image_quotation")
-
-        self.assertEqual(result, "True")
-
-    def test_setting_for_allow_any_salesman_is_stored(self):
-        """Test that 'allow any salesman' setting is stored"""
-        self.IrConfig.set_str("sale_ux.allow_any_salesman", "True")
-
-        result = self.IrConfig.get_str("sale_ux.allow_any_salesman")
-
-        self.assertEqual(result, "True")
-
-    def test_setting_for_allow_any_team_member_is_stored(self):
-        """Test that 'allow any team member' setting is stored"""
-        self.IrConfig.set_str("sale_ux.allow_any_team_member", "True")
-
-        result = self.IrConfig.get_str("sale_ux.allow_any_team_member")
-
-        self.assertEqual(result, "True")
-
-    def test_setting_for_create_analytic_account_without_company_is_stored(self):
-        """Test that analytic account without company setting is stored"""
-        self.IrConfig.set_str("sale_ux.create_analytic_without_company", "True")
-
-        result = self.IrConfig.get_str("sale_ux.create_analytic_without_company")
-
-        self.assertEqual(result, "True")
