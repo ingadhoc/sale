@@ -24,6 +24,12 @@ class ResConfigSettings(models.TransientModel):
         default="128_50",
         config_parameter="sale_ux.product_image_size",
     )
+    report_in_product_uom = fields.Boolean(
+        string="Show Product Unit on Quotations",
+        config_parameter="sale_ux.report_in_product_uom",
+        help="On the quotation PDF and the online quotation, lines sold in another unit (e.g. a packaging) "
+        "show quantity and unit price in the product unit.",
+    )
     dont_send_notes_to_invoices = fields.Boolean(
         string="Do not send notes to invoices", default=False, config_parameter="sale_ux.dont_send_notes_to_invoices"
     )

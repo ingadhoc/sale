@@ -523,6 +523,16 @@ msgid "Number of days to keep quotations before cancelling them."
 msgstr "Número de días para mantener las cotizaciones antes de cancelarlas."
 
 #. module: sale_ux
+#: model:ir.model.fields,help:sale_ux.field_res_config_settings__report_in_product_uom
+msgid "On the quotation PDF and the online quotation, lines sold in another unit (e.g. a packaging) show quantity and unit price in the product unit."
+msgstr "En el PDF del presupuesto y en el presupuesto online, las líneas vendidas en otra unidad (por ejemplo, un envase) muestran la cantidad y el precio unitario en la unidad del producto."
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
+msgid "On the quotation PDF and the online quotation, show quantity and unit price of lines sold in another unit (e.g. a packaging) in the product unit."
+msgstr "En el PDF del presupuesto y en el presupuesto online, mostrar la cantidad y el precio unitario de las líneas vendidas en otra unidad (por ejemplo, un envase) en la unidad del producto."
+
+#. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_product_product__only_packagings
 #: model:ir.model.fields,field_description:sale_ux.field_product_template__only_packagings
 msgid "Only Packagings"
@@ -581,6 +591,11 @@ msgstr "Precio"
 #: model:ir.model.fields,help:sale_ux.field_product_pricelist__price
 msgid "Price for product specified on the context"
 msgstr "Precio del producto especificado en el contexto"
+
+#. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_sale_order_line__price_unit_product_uom
+msgid "Price per Product Unit"
+msgstr "Precio unid. prod."
 
 #. module: sale_ux
 #: model:ir.model,name:sale_ux.model_product_pricelist
@@ -748,6 +763,11 @@ msgid "Show Product Image on quotation report"
 msgstr "Mostrar imagen del producto en las cotizaciones"
 
 #. module: sale_ux
+#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__report_in_product_uom
+msgid "Show Product Unit on Quotations"
+msgstr "Mostrar la unidad del producto en los presupuestos"
+
+#. module: sale_ux
 #: model:res.groups,name:sale_ux.group_reference_on_tree_and_main_form
 msgid "Show SO reference field on tree and main form views"
 msgstr "Mostrar campo de referencia SO en vista árbol y formulario"
@@ -908,6 +928,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_usability_tree
 msgid "Unit of Measure"
 msgstr "Unidad de Medida"
+
+#. module: sale_ux
+#: model:ir.model.fields,help:sale_ux.field_sale_order_line__price_unit_product_uom
+msgid "Unit price in the unit of the product, for instance per kg on a line sold by packaging, with the same tax criteria as the printed quotation. If you change it, the unit price of the line is recomputed."
+msgstr "Precio unitario en la unidad del producto, por ejemplo por kg en una línea vendida por envase, con el mismo criterio de impuestos que el presupuesto impreso. Si lo cambiás, se recalcula el precio unitario de la línea."
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_order_form
