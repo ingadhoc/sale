@@ -170,7 +170,7 @@ class SaleOrder(models.Model):
 
     def _create_invoices(self, final=False, grouped=False):
         invoices = super()._create_invoices(final=final, grouped=grouped)
-        precision = self.env["decimal.precision"].precision_get("Product Unit of Measure")
+        precision = self.env["decimal.precision"].precision_get("Product Unit")
         filtered_invoices = invoices.filtered(
             lambda i: (
                 float_is_zero(i.amount_total, precision_digits=precision)
