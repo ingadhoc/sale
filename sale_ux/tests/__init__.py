@@ -4,7 +4,9 @@
 ##############################################################################
 from . import test_crm_team
 from . import test_account_move
+from . import test_model_audit
 from . import test_partner_product_config
+from . import test_readme_features
 from . import test_sale_order
 from . import test_sale_order_line
 from . import test_settings

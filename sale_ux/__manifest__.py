@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Sale UX",
-    "version": "19.0.1.19.0",
+    "version": "20.0.1.0.0",
     "category": "Sales",
     "sequence": 14,
     "summary": "",
@@ -31,14 +31,10 @@
         "sale",
         "account_ux",
         "sale_management",
-        "base_bg",
     ],
     "data": [
-        "wizards/sale_global_discount_wizard_views.xml",
-        "wizards/sale_advance_payment_inv_views.xml",
         "wizards/sale_analytic_distribution_wizard_views.xml",
         "security/sale_ux_security.xml",
-        "security/ir.model.access.csv",
         "views/account_views.xml",
         "views/sale_order_views.xml",
         "views/sale_order_line_views.xml",
@@ -52,6 +48,7 @@
         "views/product_template_pricelist_views.xml",
         "data/ir_config_parameter_data.xml",
         "data/ir_cron.xml",
+        "security/ir.access.csv",
     ],
     "assets": {
         "web.assets_backend": [
@@ -59,7 +56,7 @@
         ],
     },
     "demo": [],
-    "installable": False,
+    "installable": True,
     "auto_install": False,
     "application": False,
 }

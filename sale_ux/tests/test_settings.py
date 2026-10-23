@@ -5,19 +5,11 @@ from .common import SaleUxCommon
 
 @tagged("post_install", "-at_install")
 class TestSaleUxSettings(SaleUxCommon):
-    def test_setting_show_customer_reference_field_is_stored(self):
-        """Test that 'Show Customer Reference' setting is stored properly"""
-        self.IrConfig.set_param("sale_ux.show_customer_reference", "True")
-
-        result = self.IrConfig.get_param("sale_ux.show_customer_reference")
-
-        self.assertEqual(result, "True")
-
     def test_setting_propagate_internal_notes_is_stored(self):
         """Test that internal notes propagation setting is stored"""
-        self.IrConfig.set_param("sale.propagate_internal_notes", "True")
+        self.IrConfig.set_str("sale.propagate_internal_notes", "True")
 
-        result = self.IrConfig.get_param("sale.propagate_internal_notes")
+        result = self.IrConfig.get_str("sale.propagate_internal_notes")
 
         self.assertEqual(result, "True")
 
@@ -45,49 +37,9 @@ class TestSaleUxSettings(SaleUxCommon):
 
     def test_setting_for_quotation_auto_cancellation_days_must_be_positive(self):
         """Test that quotation auto-cancellation days setting must be positive"""
-        self.IrConfig.set_param("sale_ux.days_to_keep_quotations", "-1")
+        self.IrConfig.set_str("sale_ux.days_to_keep_quotations", "-1")
 
-        result = self.IrConfig.get_param("sale_ux.days_to_keep_quotations")
+        result = self.IrConfig.get_str("sale_ux.days_to_keep_quotations")
 
         # Setting should be retrievable but should be validated elsewhere
         self.assertIsNotNone(result)
-
-    def test_setting_for_automatic_price_update_is_stored(self):
-        """Test that automatic price update setting is stored"""
-        self.IrConfig.set_param("sale_ux.update_prices_automatically", "True")
-
-        result = self.IrConfig.get_param("sale_ux.update_prices_automatically")
-
-        self.assertEqual(result, "True")
-
-    def test_setting_for_show_product_image_on_quotation_is_stored(self):
-        """Test that product image on quotation setting is stored"""
-        self.IrConfig.set_param("sale_ux.show_product_image_quotation", "True")
-
-        result = self.IrConfig.get_param("sale_ux.show_product_image_quotation")
-
-        self.assertEqual(result, "True")
-
-    def test_setting_for_allow_any_salesman_is_stored(self):
-        """Test that 'allow any salesman' setting is stored"""
-        self.IrConfig.set_param("sale_ux.allow_any_salesman", "True")
-
-        result = self.IrConfig.get_param("sale_ux.allow_any_salesman")
-
-        self.assertEqual(result, "True")
-
-    def test_setting_for_allow_any_team_member_is_stored(self):
-        """Test that 'allow any team member' setting is stored"""
-        self.IrConfig.set_param("sale_ux.allow_any_team_member", "True")
-
-        result = self.IrConfig.get_param("sale_ux.allow_any_team_member")
-
-        self.assertEqual(result, "True")
-
-    def test_setting_for_create_analytic_account_without_company_is_stored(self):
-        """Test that analytic account without company setting is stored"""
-        self.IrConfig.set_param("sale_ux.create_analytic_without_company", "True")
-
-        result = self.IrConfig.get_param("sale_ux.create_analytic_without_company")
-
-        self.assertEqual(result, "True")

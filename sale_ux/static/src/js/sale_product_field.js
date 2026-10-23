@@ -1,13 +1,13 @@
 /** @odoo-module **/
 
-import { SaleOrderLineProductField } from '@sale/js/sale_product_field';
+import { SaleOrderLineProductField } from '@sale/js/sale_product_field/sale_product_field';
 import { patch } from '@web/core/utils/patch';
 
 patch(SaleOrderLineProductField. prototype, {
     /**
      * Override to set first packaging as default UoM when only_packagings is True
      */
-    async _openProductConfigurator(edit = false, selectedComboItems = []) {
+    async _openProductConfigurator({ edit = false, selectedComboItems = [], data } = {}) {
         const saleOrderLine = this.props.record.data;
         if (saleOrderLine.product_template_id && !edit) {
             const productTemplate = await this.orm.read(
@@ -21,6 +21,6 @@ patch(SaleOrderLineProductField. prototype, {
                 });
             }
         }
-        return super._openProductConfigurator(edit, selectedComboItems);
+        return super._openProductConfigurator({ edit, selectedComboItems, data });
     },
 });

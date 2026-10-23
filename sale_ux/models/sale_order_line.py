@@ -3,7 +3,6 @@
 # directory
 ##############################################################################
 from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError
 
 
 class SaleOrderLine(models.Model):
@@ -12,8 +11,6 @@ class SaleOrderLine(models.Model):
     date_order = fields.Datetime("Order Date", related="order_id.date_order")
 
     team_id = fields.Many2one("crm.team", string="Sales Team", related="order_id.team_id")
-
-    categ_id = fields.Many2one("product.category", string="Product Category", related="product_id.categ_id")
 
     @api.depends("order_id.force_invoiced_status")
     def _compute_invoice_status(self):
@@ -41,13 +38,6 @@ class SaleOrderLine(models.Model):
             "search_default_partner_id": 1,
         }
         return action
-
-    @api.model_create_multi
-    def create(self, vals_list):
-        lines = super().create(vals_list)
-        if lines.filtered(lambda x: x.order_id and x.order_id.state == "done"):
-            raise ValidationError(_("You cannot add lines to blocked sale orders."))
-        return lines
 
     def _get_protected_fields(self):
         return super()._get_protected_fields() + ["discount"]
@@ -78,8 +68,8 @@ class SaleOrderLine(models.Model):
             line.allowed_uom_ids = line.product_id.uom_ids
         super(SaleOrderLine, self - lines)._compute_allowed_uom_ids()
 
-    def _get_product_catalog_lines_data(self, **kwargs):
-        res = super()._get_product_catalog_lines_data(**kwargs)
+    def _get_product_catalog_lines_data(self, parent_record, **kwargs):
+        res = super()._get_product_catalog_lines_data(parent_record, **kwargs)
         if (
             len(self) == 1
             and self.product_id.product_tmpl_id.only_packagings

@@ -26,6 +26,7 @@ class ProductProduct(models.Model):
         product_taxes,
         fiscal_position=None,
         product_taxes_after_fp=None,
+        document_tax_mode=None,
     ):
         """Modificamos para que como se obtienen los precios no tenga en cuenta en nada la fiscal position.
         Sin este cambio, en una venta con posicion fiscal que reemplace IVA 21 a exento (o no gravado), si se recalcula
@@ -39,4 +40,5 @@ class ProductProduct(models.Model):
             product_taxes,
             product_taxes_after_fp=product_taxes_after_fp,
             fiscal_position=fiscal_position,
+            document_tax_mode=document_tax_mode,
         )

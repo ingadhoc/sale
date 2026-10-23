@@ -1,5 +1,5 @@
 from odoo import Command, fields
-from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
+from odoo.addons.base.tests.common import DISABLED_MAIL_CREATE_CONTEXT
 from odoo.tests.common import TransactionCase
 
 
@@ -10,13 +10,14 @@ class SaleUxCommon(TransactionCase):
         cls.env = cls.env(
             context={
                 **cls.env.context,
-                **DISABLED_MAIL_CONTEXT,
+                **DISABLED_MAIL_CREATE_CONTEXT,
                 "tracking_disable": True,
+                "mail_notrack": True,
             }
         )
         cls.IrConfig = cls.env["ir.config_parameter"].sudo()
         cls.product_uom_unit = cls.env.ref("uom.product_uom_unit")
-        cls.product_uom_pack = cls.env.ref("uom.product_uom_dozen")
+        cls.product_uom_pack = cls.env.ref("uom.product_uom_pack_6")
         code_suffix = str(sum(ord(char) for char in cls.__name__))
 
         cls.receivable_account = cls.env["account.account"].create(

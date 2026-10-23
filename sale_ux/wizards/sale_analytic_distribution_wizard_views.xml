@@ -41,6 +41,8 @@
         <field name="model_id" ref="sale.model_sale_order"/>
         <field name="binding_model_id" ref="sale.model_sale_order"/>
         <field name="binding_view_types">list,form</field>
+        <!-- the wizard reads analytic plans: only the groups that can read them are offered the action -->
+        <field name="group_ids" eval="[Command.set([ref('analytic.group_analytic_accounting'), ref('account.group_account_user')])]"/>
         <field name="state">code</field>
         <field name="code">
 action = {

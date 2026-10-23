@@ -7,7 +7,6 @@ from datetime import timedelta
 from odoo import Command, _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 from odoo.tools import float_is_zero
-from odoo.tools.safe_eval import safe_eval
 
 
 class SaleOrder(models.Model):
@@ -63,10 +62,8 @@ class SaleOrder(models.Model):
 
     def _prepare_invoice(self):
         vals = super(SaleOrder, self)._prepare_invoice()
-        propagate_internal_notes = (
-            self.env["ir.config_parameter"].sudo().get_param("sale.propagate_internal_notes") == "True"
-        )
-        propagate_note = self.env["ir.config_parameter"].sudo().get_param("sale.propagate_note") == "True"
+        propagate_internal_notes = self.env["ir.config_parameter"].sudo().get_bool("sale.propagate_internal_notes")
+        propagate_note = self.env["ir.config_parameter"].sudo().get_bool("sale.propagate_note")
         if propagate_internal_notes and self.internal_notes:
             vals.update({"internal_notes": self.internal_notes})
         if "narration" in vals and not propagate_note:
@@ -78,32 +75,11 @@ class SaleOrder(models.Model):
         )
         if (
             not propagate_note
-            and self.env["ir.config_parameter"].sudo().get_param("account.use_invoice_terms")
+            and self.env["ir.config_parameter"].sudo().get_bool("account.use_invoice_terms")
             and company.invoice_terms
         ):
             vals["narration"] = company.invoice_terms
         return vals
-
-    @api.onchange("pricelist_id")
-    def _onchange_pricelist_id_show_update_prices(self):
-        super()._onchange_pricelist_id_show_update_prices()
-        update_prices_automatically = safe_eval(
-            self.env["ir.config_parameter"].sudo().get_param("sale_ux.update_prices_automatically", "False")
-        )
-        if self.order_line and update_prices_automatically:
-            # we need to user the same code as odoo in action_update_prices(),
-            # because the "message_post" method isn't available over an onchange trigger.
-            super()._recompute_prices()
-
-    @api.onchange("fiscal_position_id")
-    def _onchange_fiscal_position_id(self):
-        """
-        No utilizamos el método action_update_taxes() directamente porque no funciona
-        el message_post sin que se encuentre guardado el registro.
-        """
-        self.ensure_one()
-        lines_to_recompute = self.order_line.filtered(lambda line: not line.display_type)
-        lines_to_recompute._compute_tax_ids()
 
     def _get_orders_blocking_cancel(self):
         """Orders whose invoices prevent cancellation, in one search for the whole recordset."""
@@ -176,14 +152,25 @@ class SaleOrder(models.Model):
         return lines.filtered(lambda l: l.id not in lines_to_not_update_ids)
 
     def action_update_prices(self):
+        """Odoo 20 recomputes prices only when the pricelist changes and dropped this button. We keep it
+        (PO decision, task 76366) because in Argentina prices change daily with the exchange rate."""
         # avoiding execution for empty records
         if not self:
             return
-        super().action_update_prices()
+        self.ensure_one()
+        self._recompute_prices()
+        if self.pricelist_id:
+            message = _(
+                "Product prices have been recomputed according to pricelist %s.",
+                self.pricelist_id._get_html_link(),
+            )
+        else:
+            message = _("Product prices have been recomputed.")
+        self.message_post(body=message)
 
-    def _create_invoices(self, grouped=False, final=False, date=None):
-        invoices = super()._create_invoices(grouped=grouped, final=final, date=date)
-        precision = self.env["decimal.precision"].precision_get("Product Unit of Measure")
+    def _create_invoices(self, final=False, grouped=False):
+        invoices = super()._create_invoices(final=final, grouped=grouped)
+        precision = self.env["decimal.precision"].precision_get("Product Unit")
         filtered_invoices = invoices.filtered(
             lambda i: (
                 float_is_zero(i.amount_total, precision_digits=precision)
@@ -194,16 +181,10 @@ class SaleOrder(models.Model):
         filtered_invoices.mapped("invoice_line_ids").mapped(lambda line: line.write({"quantity": abs(line.quantity)}))
         return invoices
 
-    def action_preview_sale_order(self):
-        """Open sale Preview in a new Tab"""
-        res = super().action_preview_sale_order()
-        res.update({"target": "new"})
-        return res
-
     def _get_invoiceable_lines(self, final=False):
         """Remove if user allow to remove all notes for invoiceable lines"""
         dont_send_notes_to_invoices = (
-            self.env["ir.config_parameter"].sudo().get_param("sale_ux.dont_send_notes_to_invoices", "False") == "True"
+            self.env["ir.config_parameter"].sudo().get_bool("sale_ux.dont_send_notes_to_invoices")
         )
         res = super()._get_invoiceable_lines(final=final)
         if dont_send_notes_to_invoices:
@@ -211,32 +192,17 @@ class SaleOrder(models.Model):
 
         return res
 
-    def _prepare_analytic_account_data(self, prefix=None):
-        if (
-            self.env["ir.config_parameter"].sudo().get_param("sale_ux.analytic_account_without_company", "False")
-            == "True"
-        ):
-            self.ensure_one()
-            name = self.name
-            if prefix:
-                name = prefix + ": " + self.name
-            project_plan, _other_plans = self.env["account.analytic.plan"]._get_all_plans()
-            return {
-                "name": name,
-                "code": self.client_order_ref,
-                "company_id": False,
-                "plan_id": project_plan.id,
-                "partner_id": self.partner_id.id,
-            }
-        return super(SaleOrder, self)._prepare_analytic_account_data(prefix=prefix)
+    def _prepare_analytic_account_data(self, prefix=None, plan_id=None):
+        res = super()._prepare_analytic_account_data(prefix=prefix, plan_id=plan_id)
+        if self.env["ir.config_parameter"].sudo().get_bool("sale_ux.analytic_account_without_company"):
+            res["company_id"] = False
+        return res
 
     def _cron_clean_old_quotations(self, website=None):
-        cancel_old_quotations = bool(
-            self.env["ir.config_parameter"].sudo().get_param("sale_ux.cancel_old_quotations", False)
-        )
+        cancel_old_quotations = self.env["ir.config_parameter"].sudo().get_bool("sale_ux.cancel_old_quotations")
         if cancel_old_quotations or website:
             today = fields.Date.today()
-            days_to_keep = int(self.env["ir.config_parameter"].sudo().get_param("sale_ux.days_to_keep_quotations", 30))
+            days_to_keep = self.env["ir.config_parameter"].sudo().get_int("sale_ux.days_to_keep_quotations", 30)
             oldest_date = today - timedelta(days=days_to_keep)
             domain = [
                 ("state", "in", ["draft", "sent"]),
@@ -259,9 +225,7 @@ class SaleOrder(models.Model):
 
     def get_update_included_pdf_params(self):
         result = super().get_update_included_pdf_params()
-        auto_select_enabled = (
-            self.env["ir.config_parameter"].sudo().get_param("sale_ux.auto_select_all_documents", "False") == "True"
-        )
+        auto_select_enabled = self.env["ir.config_parameter"].sudo().get_bool("sale_ux.auto_select_all_documents")
         if not auto_select_enabled:
             return result
 

@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-15 19:25+0000\n"
-"PO-Revision-Date: 2026-01-13 22:10+0000\n"
+"POT-Creation-Date: 2026-10-14 15:56+0000\n"
+"PO-Revision-Date: 2026-10-14 15:56+0000\n"
 "Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
 "sale-19-0-sale_ux/es/>\n"
@@ -23,19 +23,126 @@ msgstr ""
 "X-Generator: Weblate 5.10.4\n"
 
 #. module: sale_ux
+#: model:ir.module.module,description:base.module_sale_ux
+msgid ""
+".. |company| replace:: ADHOC SA\n"
+"\n"
+".. |company_logo| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-logo.png\n"
+"   :alt: ADHOC SA\n"
+"   :target: https://www.adhoc.com.ar\n"
+"\n"
+".. |icon| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-icon.png\n"
+"\n"
+".. image:: https://img.shields.io/badge/license-AGPL--3-blue.png\n"
+"   :target: https://www.gnu.org/licenses/agpl\n"
+"   :alt: License: AGPL-3\n"
+"\n"
+"=======\n"
+"Sale UX\n"
+"=======\n"
+"\n"
+"Several Improvements to sales:\n"
+"\n"
+"#. Make sale quotations menu not visible.\n"
+"#. Add filters in the sale order view\n"
+"#. Make sale orders menu show all sale records (quotations, and confirmed ones). Make that, by default, links to sale orders shows \"sale\" data and not only \"quotation\" data.\n"
+"#. Add option in settings to show \"Customer Reference\" field on Sale Order tree view and in the main section of the form view.\n"
+"#. Add a menu item on Orders for \"Sale Order Lines\" and improve views with more fields.\n"
+"#. Allow cancel sales orders in locked state and unlock it after cancelling\n"
+"#. Fix in button \"Create invoice\" in sale orders, to create a refund invoice if the sale order amount it's zero and the line's quantities are negative (because of a return). Without this fix, when the OV is $0.00 and the refund is made, it proposes to make an FA instead of an NC.\n"
+"#. Block cancellation of a sale order if there is a related invoice in a state different from \"draft\" or \"cancel\".\n"
+"   Customer invoices (out_invoice) are excluded if they have been reversed.\n"
+"   Customer debit notes (out_debit) are excluded if they are fully paid.\n"
+"#. Apply those same cancellation checks to the \"Cancel\" action of the sale orders list view. The standard mass cancel wizard cancelled the orders without running them, so confirmed orders with posted invoices (or, with sale_stock_ux, done deliveries) could be cancelled from the list.\n"
+"#. In sale.order.form, we rename the field price_subtotal and price_total of the sale order lines to \"Subtotal\" and \"Total\" respectively.\n"
+"#. Add selection field to force \"Invoiced\" status of a sale order, available only for admin with tec features.\n"
+"#. Add options in settings to allow any user as salesman and sales teams member (portal or internal)\n"
+"#. Add a setting to create an analytic account without company when confirming the sale (requires enabling analytics accounting)\n"
+"#. Add the field \"Internal Notes\" in the sales order form and the setting to allow propagating the \"Internal Notes / terms & conditions\" to invoices.\n"
+"#. Do not use fiscal positions on prices. By default, when using fiscal position and taxes included on the price on sale orders, the price used on the sale line will be the price without the tax being replaced. We added the possibility to take that functionality, or not, with the setting \"deduct price-included taxes\" in fiscal positions. There are some issues where this is already discussed in odoo standard. For eg. https://github.com/odoo/odoo/issues/66875\n"
+"#. Keeps the \"Update Prices\" button on the sale order, visible to all users, and logs in the chatter that the prices were recomputed. Odoo 20 recomputes prices only when the pricelist changes, and here prices change daily with the exchange rate.\n"
+"#. Add a setting to choose the size (50, 100 or 150 px) of the product image shown on the quotation report. The image itself is shown with the Odoo company setting \"Display Product Images\".\n"
+"#. Add a setting for automatic cancellation of quotations\n"
+"#. Modifying the discount, adding lines and changing the price list of a blocked sales order is prevented. This error occurs when working in the same form view in more than one tab at the same time.\n"
+"#. Add setting to automatically select all available documents from PDF Quote Builder.\n"
+"#. Add the field \"Amount to Invoice\" and \"Un-invoiced\" in the sale order list view.\n"
+"#. When duplicating a Sale Order, a message is logged in the new order indicating the origin.\n"
+"#. Allows selecting default values to assign price lists by companies and by user with the field `specific_property_product_pricelist`. It also ensures that when creating a contact, if it is not defined, it will not be set for the company you are currently on (we consider this to be an Odoo bug).\n"
+"#. Add the field \"Un-invoiced\" (amount_uninvoiced) in the sale order to show the uninvoiced amount.\n"
+"#. Prevents writing in certain fields in blocked sales orders.\n"
+"#. Deleting price lists with confirmed sale orders is not permitted.\n"
+"#. Prevents deleting sale orders when they have associated invoices, preserving traceability.\n"
+"#. Add an action to assign an analytic account to sale order lines. Since v19 the analytic account is no longer a sale order header field: it lives in each line's analytic distribution, and the distribution widget does not allow creating analytic accounts inline. Select one or more sale orders in the list (or open one) and, in the actions menu, look for 'Set analytic account on lines'. A wizard lists the order lines (sections and notes excluded) with a checkbox per line plus a 'Select All' toggle, lets you pick or create an analytic account (the plan field feeds the quick-create), and assigns it at 100% to the selected lines.\n"
+"#. Add a \"Prices\" tab on the product form listing every pricelist (those with \"Show in products\" enabled) with the price it gives for that product. Each row has a button that opens the rules of that pricelist applying to the product, so the price can be edited without going to the pricelist. The list uses the domain of the pricing engine, so it also shows the global and category rules that set the price and are not loaded on the product, ordered most specific first. Creating a rule from there already comes with the pricelist and the product set.\n"
+"\n"
+"Installation\n"
+"============\n"
+"\n"
+"To install this module, you need to:\n"
+"\n"
+"#. Only need to install the module\n"
+"\n"
+"Configuration\n"
+"=============\n"
+"\n"
+"To configure this module, you need to:\n"
+"\n"
+"#. Nothing to configure\n"
+"\n"
+"Usage\n"
+"=====\n"
+"\n"
+"To use this module, you need to:\n"
+"\n"
+"#. To view Sale Orders Lines, go to: Sales/Sales/Sale Lines\n"
+"\n"
+".. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas\n"
+"   :alt: Try me on Runbot\n"
+"   :target: http://runbot.adhoc.com.ar/\n"
+"\n"
+"Bug Tracker\n"
+"===========\n"
+"\n"
+"Bugs are tracked on `GitHub Issues\n"
+"<https://github.com/ingadhoc/sale/issues>`_. In case of trouble, please\n"
+"check there if your issue has already been reported. If you spotted it first,\n"
+"help us smashing it by providing a detailed and welcomed feedback.\n"
+"\n"
+"Credits\n"
+"=======\n"
+"\n"
+"Images\n"
+"------\n"
+"\n"
+"* |company| |icon|\n"
+"\n"
+"Contributors\n"
+"------------\n"
+"\n"
+"Maintainer\n"
+"----------\n"
+"\n"
+"|company_logo|\n"
+"\n"
+"This module is maintained by the |company|.\n"
+"\n"
+"To contribute to this module, please visit https://www.adhoc.com.ar.\n"
+msgstr ""
+
+#. module: sale_ux
 #: model:ir.model.fields.selection,name:sale_ux.selection__res_config_settings__product_image_size__256_100
 msgid "100x100px"
-msgstr "100x100px"
+msgstr ""
 
 #. module: sale_ux
 #: model:ir.model.fields.selection,name:sale_ux.selection__res_config_settings__product_image_size__512_150
 msgid "150x150px"
-msgstr "150x150px"
+msgstr ""
 
 #. module: sale_ux
 #: model:ir.model.fields.selection,name:sale_ux.selection__res_config_settings__product_image_size__128_50
 msgid "50x50px"
-msgstr "50x50px"
+msgstr ""
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
@@ -46,6 +153,11 @@ msgstr "<span>Cancelar presupuestos mayores que</span>"
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
 msgid "<span>days.</span>"
 msgstr "<span>días.</span>"
+
+#. module: sale_ux
+#: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_portal_content
+msgid "<span>·</span>"
+msgstr ""
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
@@ -72,23 +184,23 @@ msgstr "Cuenta analítica"
 #. module: sale_ux
 #: model:ir.model,name:sale_ux.model_sale_order_analytic_wizard_line
 msgid "Analytic Account Wizard Line"
-msgstr ""
+msgstr "Línea del asistente de cuenta analítica"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard__plan_id
 msgid "Analytic Plan"
-msgstr ""
+msgstr "Plan analítico"
 
 #. module: sale_ux
 #: model:ir.model.fields,help:sale_ux.field_sale_order_analytic_wizard__analytic_account_id
 msgid "Analytic account that will be assigned (at 100%) to the selected lines."
-msgstr ""
+msgstr "Cuenta analítica que se asignará (al 100%) a las líneas seleccionadas."
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard_line__selected
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_analytic_wizard_form
 msgid "Apply"
-msgstr ""
+msgstr "Aplicar"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_res_partner__specific_property_product_pricelist
@@ -108,11 +220,6 @@ msgid "Automatically select all available documents from PDF Quote Builder."
 msgstr ""
 "Seleccione automáticamente todos los documentos disponibles del \"PDF Quote "
 "Builder\"."
-
-#. module: sale_ux
-#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
-msgid "Automatically update prices when change pricelist."
-msgstr "Actualizar precios automáticamente al cambiar la lista de precio."
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
@@ -150,12 +257,12 @@ msgstr "Cancelar presupuestos viejos"
 #. module: sale_ux
 #: model:ir.model,name:sale_ux.model_sale_mass_cancel_orders
 msgid "Cancel multiple quotations"
-msgstr ""
+msgstr "Cancelar varias cotizaciones"
 
 #. module: sale_ux
 #: model:ir.model.fields,help:sale_ux.field_sale_order_analytic_wizard__select_all
 msgid "Check or uncheck every line at once."
-msgstr ""
+msgstr "Marca o desmarca todas las líneas a la vez."
 
 #. module: sale_ux
 #: model:ir.actions.server,name:sale_ux.ir_cron_clean_old_quotations_ir_actions_server
@@ -176,16 +283,6 @@ msgstr "Entidad Comercial"
 #: model:ir.model,name:sale_ux.model_res_config_settings
 msgid "Config Settings"
 msgstr "Ajustes de configuración"
-
-#. module: sale_ux
-#: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
-msgid "Confirm"
-msgstr "Confirmar"
-
-#. module: sale_ux
-#: model:ir.actions.server,name:sale_ux.action_confirm_sale_order
-msgid "Confirm sale order"
-msgstr "Confirmar pedido de venta"
 
 #. module: sale_ux
 #: model:ir.model,name:sale_ux.model_res_partner
@@ -228,7 +325,7 @@ msgstr ""
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard_line__current_analytic
 msgid "Current Analytic"
-msgstr ""
+msgstr "Analítica actual"
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
@@ -258,18 +355,13 @@ msgstr "Deducir impuestos incluidos en el precio"
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_portal_content
-msgid "Delivery Date:"
-msgstr "Fecha de Entrega:"
+msgid "Delivery:"
+msgstr "Entrega:"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard_line__name
 msgid "Description"
-msgstr ""
-
-#. module: sale_ux
-#: model:ir.model.fields,field_description:sale_ux.field_sale_order_global_discount_wizard__amount
-msgid "Discount"
-msgstr "Descuento"
+msgstr "Descripción"
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
@@ -314,7 +406,7 @@ msgstr "Fecha de vencimiento"
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.product_template_only_form_view
 msgid "Edit pricelist rules"
-msgstr ""
+msgstr "Editar reglas de la lista de precios"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_res_partner__property_product_pricelist
@@ -348,11 +440,6 @@ msgid "Fully Invoiced"
 msgstr "Completamente facturado"
 
 #. module: sale_ux
-#: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
-msgid "Global Discount"
-msgstr "Descuento Global"
-
-#. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
 msgid "Hide cancelled lines"
 msgstr "Ocultar líneas canceladas"
@@ -378,11 +465,6 @@ msgid "ID"
 msgstr "Id"
 
 #. module: sale_ux
-#: model_terms:ir.ui.view,arch_db:sale_ux.report_saleorder
-msgid "Image"
-msgstr "Imagen"
-
-#. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__product_image_size
 msgid "Image Size on Report"
 msgstr "Tamaño de imagen en el reporte"
@@ -391,7 +473,7 @@ msgstr "Tamaño de imagen en el reporte"
 #. odoo-python
 #: code:addons/sale_ux/models/res_partner.py:0
 msgid "Import Template for Customers"
-msgstr ""
+msgstr "Plantilla de importación para clientes"
 
 #. module: sale_ux
 #. odoo-python
@@ -470,7 +552,7 @@ msgstr "Última actualización el"
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard__line_ids
 msgid "Lines"
-msgstr ""
+msgstr "Líneas"
 
 #. module: sale_ux
 #: model:ir.model.fields,help:sale_ux.field_res_partner__specific_property_product_pricelist
@@ -485,27 +567,13 @@ msgstr ""
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__move_internal_notes
-#, fuzzy
 msgid "Mover notas internas a transferencias de stock y facturas"
-msgstr "Mover notas internas a transferencias de stock y facturas"
+msgstr ""
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__move_note
-#, fuzzy
 msgid "Mover términos y condiciones a transferencias de stock y facturas"
-msgstr "Mover términos y condiciones a transferencias de stock y facturas"
-
-#. module: sale_ux
-#. odoo-python
-#: code:addons/sale_ux/models/product_template.py:0
-msgid "No products found with images to recompute."
-msgstr "No se encontraron productos con imágenes para recalcular."
-
-#. module: sale_ux
-#. odoo-python
-#: code:addons/sale_ux/models/product_template.py:0
-msgid "No products to process"
-msgstr "No hay productos para procesar"
+msgstr ""
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
@@ -545,12 +613,12 @@ msgstr "Solo usuarios con \"%s / %s\" pueden establecer Facturado manualmente"
 #. odoo-python
 #: code:addons/sale_ux/models/product_pricelist.py:0
 msgid "Open this pricelist from a product to edit its price."
-msgstr ""
+msgstr "Abra esta lista de precios desde un producto para editar su precio."
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard_line__order_id
 msgid "Order"
-msgstr ""
+msgstr "Orden"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_line__date_order
@@ -570,7 +638,7 @@ msgstr "Condiciones de pago"
 #. module: sale_ux
 #: model:ir.model.fields,help:sale_ux.field_sale_order_analytic_wizard__plan_id
 msgid "Plan used when creating a new analytic account from this wizard."
-msgstr ""
+msgstr "Plan que se usa al crear una cuenta analítica nueva desde este asistente."
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_product_pricelist__price
@@ -591,7 +659,7 @@ msgstr "Lista de precios"
 #. odoo-python
 #: code:addons/sale_ux/models/product_pricelist.py:0
 msgid "Pricelist Rules"
-msgstr ""
+msgstr "Reglas de la lista de precios"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_product_product__pricelist_ids
@@ -606,19 +674,21 @@ msgid "Product"
 msgstr "Producto"
 
 #. module: sale_ux
-#: model:ir.model.fields,field_description:sale_ux.field_sale_order_line__categ_id
-msgid "Product Category"
-msgstr "Categoría del producto"
-
-#. module: sale_ux
 #: model:ir.model,name:sale_ux.model_product_product
 msgid "Product Variant"
-msgstr "Variante de producto"
+msgstr "Variante del producto"
 
 #. module: sale_ux
-#: model_terms:ir.ui.view,arch_db:sale_ux.report_saleorder
-msgid "Product image"
-msgstr "Imagen del producto"
+#. odoo-python
+#: code:addons/sale_ux/models/sale_order.py:0
+msgid "Product prices have been recomputed according to pricelist %s."
+msgstr "Los precios de los productos se recalcularon según la lista de precios %s."
+
+#. module: sale_ux
+#. odoo-python
+#: code:addons/sale_ux/models/sale_order.py:0
+msgid "Product prices have been recomputed."
+msgstr "Los precios de los productos se recalcularon."
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_usability_tree
@@ -630,17 +700,6 @@ msgstr "Cant."
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_line_filter
 msgid "Quotations"
 msgstr "Presupuestos"
-
-#. module: sale_ux
-#: model:ir.model.fields,field_description:sale_ux.field_product_product__image_sale_order
-#: model:ir.model.fields,field_description:sale_ux.field_product_template__image_sale_order
-msgid "Report Image"
-msgstr "Imagen del reporte"
-
-#. module: sale_ux
-#: model:ir.ui.menu,name:sale_ux.menu_product_catalog_reporting
-msgid "Reporting"
-msgstr "Informes"
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
@@ -661,7 +720,7 @@ msgstr "Historial de ventas para %s"
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard_line__sale_line_id
 msgid "Sale Order Line"
-msgstr ""
+msgstr "Línea de la orden de venta"
 
 #. module: sale_ux
 #: model:ir.actions.act_window,name:sale_ux.action_sale_order_line_usability_tree
@@ -676,24 +735,24 @@ msgid "Sale Orders"
 msgstr "Pedidos de venta"
 
 #. module: sale_ux
-#: model:ir.model,name:sale_ux.model_sale_order_global_discount_wizard
-msgid "Sale order Global Discount Wizard"
-msgstr "Asistente de Descuento Global para Orden de Venta"
+#: model:ir.module.module,shortdesc:base.module_sale_ux
+msgid "Sale UX"
+msgstr ""
 
 #. module: sale_ux
 #: model:ir.model,name:sale_ux.model_sale_advance_payment_inv
 msgid "Sales Advance Payment Invoice"
-msgstr "Pago anticipado para factura de ventas"
+msgstr "Factura de anticipo de ventas"
 
 #. module: sale_ux
 #: model:ir.model,name:sale_ux.model_sale_order
 msgid "Sales Order"
-msgstr "Pedido de venta"
+msgstr "Orden de venta"
 
 #. module: sale_ux
 #: model:ir.model,name:sale_ux.model_sale_order_line
 msgid "Sales Order Line"
-msgstr "Línea de pedido de venta"
+msgstr "Línea de la orden de venta"
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sales_order_filter
@@ -714,38 +773,28 @@ msgstr "Comerciales"
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard__select_all
 msgid "Select All"
-msgstr ""
+msgstr "Seleccionar todo"
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_analytic_wizard_form
 msgid "Set Analytic Account on Lines"
-msgstr ""
+msgstr "Asignar cuenta analítica a las líneas"
 
 #. module: sale_ux
 #: model:ir.model,name:sale_ux.model_sale_order_analytic_wizard
 msgid "Set Analytic Account on Sale Order Lines"
-msgstr ""
+msgstr "Asignar cuenta analítica a las líneas de la orden de venta"
 
 #. module: sale_ux
 #: model:ir.actions.server,name:sale_ux.action_sale_order_set_analytic
 msgid "Set analytic account on lines"
-msgstr ""
+msgstr "Asignar cuenta analítica a las líneas"
 
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__group_delivery_date
 #: model:res.groups,name:sale_ux.group_delivery_date_on_report_online
 msgid "Show Delivery Date in Quotations report and online budget"
 msgstr "Mostrar fecha de entrega las  cotizaciones y presupuesto en línea."
-
-#. module: sale_ux
-#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__show_product_image_on_report
-msgid "Show Product Image"
-msgstr "Mostrar Imagen del Producto"
-
-#. module: sale_ux
-#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
-msgid "Show Product Image on quotation report"
-msgstr "Mostrar imagen del producto en las cotizaciones"
 
 #. module: sale_ux
 #: model:res.groups,name:sale_ux.group_reference_on_tree_and_main_form
@@ -778,8 +827,6 @@ msgid ""
 "Si marca esta opción y hay un valor definido en \"términos y condiciones\", "
 "el mismo se va a copiar en las facturas que se generen desde esta venta."
 msgstr ""
-"Si marca esta opción y hay un valor definido en \"términos y condiciones\", "
-"el mismo se va a copiar en las facturas que se generen desde esta venta."
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
@@ -787,8 +834,6 @@ msgid ""
 "Si marca esta opción y hay un valor definido en las \"notas internas\", el "
 "mismo se va a copiar en las facturas que se generen desde esta venta."
 msgstr ""
-"Si marca esta opción y hay un valor definido en las \"notas internas\", el "
-"mismo se va a copiar en las facturas que se generen desde esta venta."
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
@@ -804,12 +849,6 @@ msgstr "Estado"
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_order_form
 msgid "Subtotal"
 msgstr "Subtotal"
-
-#. module: sale_ux
-#. odoo-python
-#: code:addons/sale_ux/models/product_template.py:0
-msgid "Successfully processed product images"
-msgstr "Imágenes de productos procesadas correctamente"
 
 #. module: sale_ux
 #: model_terms:ir.ui.view,arch_db:sale_ux.sale_order_line_ux_form
@@ -896,7 +935,7 @@ msgstr "Saldo no facturado"
 #. odoo-python
 #: code:addons/sale_ux/models/sale_order.py:0
 msgid "Unable to cancel %s. You must first cancel related bills and pickings."
-msgstr ""
+msgstr "No se puede cancelar %s. Primero debe cancelar las facturas y los movimientos de stock relacionados."
 
 #. module: sale_ux
 #: model:ir.model.fields,help:sale_ux.field_sale_order__amount_uninvoiced
@@ -915,12 +954,6 @@ msgid "Update Prices"
 msgstr "Actualizar precios"
 
 #. module: sale_ux
-#: model:ir.model.fields,field_description:sale_ux.field_res_config_settings__update_prices_automatically
-#: model_terms:ir.ui.view,arch_db:sale_ux.res_config_settings_view_form_inherit
-msgid "Update Prices Automatically"
-msgstr "Actualizar precios automáticamente"
-
-#. module: sale_ux
 #: model:ir.model.fields,help:sale_ux.field_crm_team__member_ids
 msgid "Users assigned to this team."
 msgstr "Usuarios asignados a este equipo."
@@ -928,7 +961,7 @@ msgstr "Usuarios asignados a este equipo."
 #. module: sale_ux
 #: model:ir.model.fields,field_description:sale_ux.field_sale_order_analytic_wizard_line__wizard_id
 msgid "Wizard"
-msgstr ""
+msgstr "Asistente"
 
 #. module: sale_ux
 #. odoo-python
@@ -937,12 +970,6 @@ msgid "You can only set amount total if taxes are of type percentage"
 msgstr ""
 "Solo puede establecer el importe total si los impuestos son de tipo "
 "porcentaje"
-
-#. module: sale_ux
-#. odoo-python
-#: code:addons/sale_ux/models/sale_order_line.py:0
-msgid "You cannot add lines to blocked sale orders."
-msgstr "No puede agregar líneas a órdenes de venta bloqueadas."
 
 #. module: sale_ux
 #. odoo-python
@@ -966,23 +993,3 @@ msgstr "No puedes modificar pedidos de venta ya bloqueados."
 #: model_terms:ir.ui.view,arch_db:sale_ux.view_sale_order_global_discount_wizard_form
 msgid "or"
 msgstr "o"
-
-#~ msgid ""
-#~ "Unable to cancel this sale order. You must first cancel related bills and "
-#~ "pickings."
-#~ msgstr ""
-#~ "No se puede cancelar esta orden de venta. Primero debe cancelar las "
-#~ "facturas y transferencias relacionados."
-
-#~ msgid "Create a Customer"
-#~ msgstr "Crear un cliente"
-
-#~ msgid ""
-#~ "By default, Odoo only allows to choose users who have sales permission in "
-#~ "sales orders and only internal users in the sales' teams . This option "
-#~ "enables to choose, in both places, users of any type (internal or portal)"
-#~ msgstr ""
-#~ "Por defecto, Odoo sólo permite elegir usuarios que tengan permiso de "
-#~ "ventas en pedidos de venta y sólo usuarios internos en los equipos de "
-#~ "ventas. Esta opción permite elegir, en ambos lugares, usuarios de "
-#~ "cualquier tipo (interno o portal)."

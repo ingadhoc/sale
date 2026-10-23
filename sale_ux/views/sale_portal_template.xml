@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="sale_order_portal_content" inherit_id="sale.sale_order_portal_content">
-        <xpath expr="//section[@t-if='sale_order.payment_term_id']//span" position="before">
+        <!-- Odoo 20 removed the sale_info section: the payment term name goes before its note -->
+        <xpath expr="//div[@id='payment_terms']/div[@t-if='sale_order.payment_term_id']/span" position="before">
             <span t-field="sale_order.payment_term_id"/>
         </xpath>
-        <tbody id="sale_info_table" position="inside">
-            <tr groups="sale_ux.group_delivery_date_on_report_online">
-                <th class="ps-0 pb-0">Delivery Date:</th>
-                <td class="w-100 pb-0 text-wrap">
-                    <t t-if="sale_order.commitment_date">
-                        <span t-field="sale_order.commitment_date"/>
-                    </t>
-                    <t t-else="">
-                        <span t-field="sale_order.expected_date"/>
-                    </t>
-                </td>
-            </tr>
-        </tbody>
+        <!-- and tbody#sale_info_table: the delivery date goes in the header data line -->
+        <xpath expr="//div[@id='intro_row']//t[@t-if='sale_order.client_order_ref']" position="before">
+            <t groups="sale_ux.group_delivery_date_on_report_online" t-if="sale_order.commitment_date or sale_order.expected_date">
+                <span>·</span>
+                <span>Delivery:
+                    <span t-if="sale_order.commitment_date" t-field="sale_order.commitment_date" t-options='{"widget": "date"}'/>
+                    <span t-else="" t-field="sale_order.expected_date" t-options='{"widget": "date"}'/>
+                </span>
+            </t>
+        </xpath>
     </template>
 </odoo>

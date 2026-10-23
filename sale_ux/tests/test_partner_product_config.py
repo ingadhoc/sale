@@ -1,10 +1,6 @@
-import base64
-import io
-
 from odoo import Command
 from odoo.exceptions import ValidationError
 from odoo.tests import new_test_user, tagged
-from PIL import Image
 
 from .common import SaleUxCommon
 
@@ -16,7 +12,6 @@ class TestPartnerProductConfig(SaleUxCommon):
             {
                 "move_internal_notes": True,
                 "move_note": False,
-                "update_prices_automatically": True,
                 "days_to_keep_quotations": 15,
             }
         )
@@ -26,8 +21,7 @@ class TestPartnerProductConfig(SaleUxCommon):
 
         self.assertTrue(values["move_internal_notes"])
         self.assertFalse(values["move_note"])
-        self.assertTrue(values["update_prices_automatically"])
-        self.assertEqual(self.IrConfig.get_param("sale_ux.days_to_keep_quotations"), "15")
+        self.assertEqual(self.IrConfig.get_str("sale_ux.days_to_keep_quotations"), "15")
 
     def test_config_settings_days_to_keep_quotations_must_be_positive(self):
         with self.assertRaises(ValidationError):
@@ -77,47 +71,6 @@ class TestPartnerProductConfig(SaleUxCommon):
         template.only_packagings = True
 
         self.assertFalse(template._get_available_uoms())
-
-    def test_recompute_image_sale_order_without_products_returns_notification(self):
-        action = self.env["product.template"].action_recompute_image_sale_order()
-
-        self.assertEqual(action["type"], "ir.actions.client")
-        self.assertEqual(action["tag"], "display_notification")
-
-    def test_compute_image_sale_order_keeps_non_webp_image(self):
-        image = base64.b64encode(
-            b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01"
-            b"\x00\x00\x00\x01\x08\x02\x00\x00\x00\x90wS\xde"
-            b"\x00\x00\x00\x0cIDATx\x9cc\xf8\xff\xff?\x00\x05"
-            b"\xfe\x02\xfeA\xe2!\xbc\x00\x00\x00\x00IEND\xaeB`\x82"
-        )
-        template = self.env["product.template"].create(
-            {
-                "name": "Sale UX image product",
-                "type": "consu",
-                "image_1920": image,
-            }
-        )
-
-        template._compute_image_sale_order()
-
-        self.assertTrue(template.image_sale_order)
-
-    def test_compute_image_sale_order_converts_webp_to_jpeg(self):
-        image_stream = io.BytesIO()
-        Image.new("RGBA", (1, 1), (0, 128, 255, 128)).save(image_stream, format="WEBP")
-        self.IrConfig.set_param("sale_ux.product_image_size", "1920_50")
-        template = self.env["product.template"].new(
-            {
-                "name": "Sale UX webp image product",
-                "type": "consu",
-                "image_1920": base64.b64encode(image_stream.getvalue()),
-            }
-        )
-
-        template._compute_image_sale_order()
-
-        self.assertTrue(base64.b64decode(template.image_sale_order).startswith(b"\xff\xd8"))
 
     def test_pricelist_computes_contextual_product_price(self):
         pricelist = self.env["product.pricelist"].create(
@@ -201,32 +154,50 @@ class TestPartnerProductConfig(SaleUxCommon):
 
         self.assertEqual(arch.xpath("//form")[0].get("edit"), "false")
 
-    def test_fiscal_position_does_not_affect_prices_when_deduct_setting_false(self):
-        """Test that fiscal positions don't affect prices when deduct_included_tax=False"""
-        if "deduct_included_tax" not in self.env["account.fiscal.position"]._fields:
-            self.skipTest("deduct_included_tax is provided by an optional dependency")
-
-        fiscal_position = self.env["account.fiscal.position"].create(
+    def _create_price_included_tax_case(self):
+        """A 21% tax included in the price, replaced by an exempt tax through a fiscal position."""
+        tax = self.env["account.tax"].create(
             {
-                "name": "Test FP",
-                "auto_apply": False,
-                "deduct_included_tax": False,
+                "name": "Sale UX 21% included",
+                "amount": 21,
+                "amount_type": "percent",
+                "type_tax_use": "sale",
+                "price_include_override": "tax_included",
             }
         )
-        order = self._create_sale_order(
-            fiscal_position_id=fiscal_position.id,
-            partner_id=self.partner_a.id,
+        exempt = self.env["account.tax"].create(
+            {"name": "Sale UX exempt", "amount": 0, "amount_type": "percent", "type_tax_use": "sale"}
         )
-        original_price = order.order_line[0].price_unit
+        product = self.env["product.product"].create(
+            {
+                "name": "Sale UX tax included product",
+                "type": "consu",
+                "list_price": 121.0,
+                "taxes_id": [Command.set([tax.id])],
+            }
+        )
+        return tax, exempt, product
 
-        order._onchange_fiscal_position_id()
+    def _price_with_fiscal_position(self, deduct):
+        tax, exempt, product = self._create_price_included_tax_case()
+        fiscal_position = self.env["account.fiscal.position"].create(
+            {"name": "Sale UX FP %s" % deduct, "deduct_price_included_taxes": deduct}
+        )
+        exempt.write(
+            {"original_tax_ids": [Command.set([tax.id])], "fiscal_position_ids": [Command.set([fiscal_position.id])]}
+        )
+        order = self.env["sale.order"].create(
+            {
+                "partner_id": self.partner_a.id,
+                "fiscal_position_id": fiscal_position.id,
+                "order_line": [Command.create({"product_id": product.id, "product_uom_qty": 1})],
+            }
+        )
+        return order.order_line.price_unit
 
-        self.assertEqual(order.order_line[0].price_unit, original_price)
+    def test_fiscal_position_does_not_deduct_price_included_taxes_by_default(self):
+        """The price of the line is the final price of the product, not the price without the replaced tax."""
+        self.assertEqual(self._price_with_fiscal_position(deduct=False), 121.0)
 
-    def test_config_setting_for_pdf_auto_selection_is_stored(self):
-        """Test that PDF Quote Builder auto-selection setting is stored properly"""
-        self.IrConfig.set_param("sale_ux.pdf_quote_auto_select", "True")
-
-        result = self.IrConfig.get_param("sale_ux.pdf_quote_auto_select")
-
-        self.assertEqual(result, "True")
+    def test_fiscal_position_deducts_price_included_taxes_when_setting_is_on(self):
+        self.assertEqual(self._price_with_fiscal_position(deduct=True), 100.0)
