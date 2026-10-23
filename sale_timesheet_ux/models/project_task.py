@@ -1,4 +1,4 @@
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 
 
 class ProjectTask(models.Model):
@@ -13,8 +13,8 @@ class ProjectTask(models.Model):
     )
 
     @property
-    def SELF_READABLE_FIELDS(self):
-        return super().SELF_READABLE_FIELDS | {"order_id"}
+    def TASK_PORTAL_READABLE_FIELDS(self):
+        return super().TASK_PORTAL_READABLE_FIELDS | {"order_id"}
 
     def _get_timesheet(self):
         recs = super()._get_timesheet()
@@ -43,10 +43,14 @@ class ProjectTask(models.Model):
     @api.onchange("sale_line_id")
     def _onchange_sale_line_id(self):
         for line in self.timesheet_ids:
-            if line.so_line and not line.validated:
+            # "validated" is defined by timesheet_grid (Enterprise), which is not a dependency
+            if line.so_line and not ("validated" in line._fields and line.validated):
                 return {
                     "warning": {
-                        "title": "Confirmación",
-                        "message": "Tenga en cuenta que cambiar la linea de venta de la tarea recomputará las lineas de venta de las lineas de parte de hora NO validadas. ¿Está seguro de que desea cambiarla?",
+                        "title": _("Confirmation"),
+                        "message": _(
+                            "Please note that changing the sales order item of the task will recompute the sales "
+                            "order items of its non-validated timesheet lines. Are you sure you want to change it?"
+                        ),
                     }
                 }
