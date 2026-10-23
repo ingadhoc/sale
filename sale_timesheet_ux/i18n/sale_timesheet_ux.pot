@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-23 16:22+0000\n"
-"PO-Revision-Date: 2026-10-23 16:22+0000\n"
+"POT-Creation-Date: 2026-10-23 18:26+0000\n"
+"PO-Revision-Date: 2026-10-23 18:26+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -36,8 +36,8 @@ msgid ""
 "\n"
 "* When confirming a sale order with a product with Product Type = \"Service\" and Create on Order = \"Project & Task\", if the SO has project, then the system won't create a new project but use the project associated to the SO to create the task inside.\n"
 "* When confirming a sale order with a product with Product Type = \"Service\" and Create on Order = \"Project & Task\", the project and the task will remain related to the SO and the customer will remain related to the project (stays related in the backend even though is hidden by default) when \"Billable\" is turned off from the project settings (works both for a new proyect and task as for a new task in an existing proyect).\n"
-"* When (and only when) \"Billable\" is active can't be edited. Instead adds a button to change its value with an alert message to confirm the disabling of the \"Billable\" option in the project settings.\n"
-"* When the sales order item of a task is changed, a warning tells that the sales order items of its non-validated timesheets will be recomputed.\n"
+"* When (and only when) \"Billable\" is active can't be edited. Instead adds a button to change its value with an alert message to confirm the disabling of the \"Billable\" option in the project settings. The message also warns when the project is linked to products that create tasks in it, because they are unlinked.\n"
+"* When the sales order item of a task is changed and saved, a confirmation says how many of its timesheet entries will be recalculated (the ones not chosen by hand, validated or invoiced). It can be discarded.\n"
 "* A task without sales order item takes it from its parent task, its project or its milestone.\n"
 "* The sales order also lists the tasks linked to it through the \"Related Sales Order\" field of the task.\n"
 "* Se protegen las lineas de las ordenes de ventas que estan asociadas a los partes de horas en los siguientes casos (no se borran las horas imputadas a esa linea de la OV) (esta proteccion se habilita desde las configuraciones del parte de horas):\n"
@@ -126,6 +126,15 @@ msgid "Cancel"
 msgstr ""
 
 #. module: sale_timesheet_ux
+#. odoo-javascript
+#: code:addons/sale_timesheet_ux/static/src/views/project_task_form_controller.js:0
+msgid ""
+"Changing the sales order item of this task will recalculate the sales order "
+"item of its timesheet entries that were not chosen by hand, validated or "
+"invoiced (total: %s). Are you sure you want to continue?"
+msgstr ""
+
+#. module: sale_timesheet_ux
 #: model:ir.model,name:sale_timesheet_ux.model_res_config_settings
 msgid "Config Settings"
 msgstr ""
@@ -141,8 +150,8 @@ msgid "Confirmar cambio de valor de Allow Billable"
 msgstr ""
 
 #. module: sale_timesheet_ux
-#. odoo-python
-#: code:addons/sale_timesheet_ux/models/project_task.py:0
+#. odoo-javascript
+#: code:addons/sale_timesheet_ux/static/src/views/project_task_form_controller.js:0
 msgid "Confirmation"
 msgstr ""
 
@@ -173,6 +182,11 @@ msgid "Display Name"
 msgstr ""
 
 #. module: sale_timesheet_ux
+#: model:ir.model.fields,field_description:sale_timesheet_ux.field_allow_billable_wizard__has_linked_products
+msgid "Has Linked Products"
+msgstr ""
+
+#. module: sale_timesheet_ux
 #: model:ir.model.fields,field_description:sale_timesheet_ux.field_account_analytic_line__id
 #: model:ir.model.fields,field_description:sale_timesheet_ux.field_allow_billable_wizard__id
 #: model:ir.model.fields,field_description:sale_timesheet_ux.field_project_project__id
@@ -194,12 +208,10 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: sale_timesheet_ux
-#. odoo-python
-#: code:addons/sale_timesheet_ux/models/project_task.py:0
+#: model_terms:ir.ui.view,arch_db:sale_timesheet_ux.change_allow_billable_wizzard
 msgid ""
-"Please note that changing the sales order item of the task will recompute "
-"the sales order items of its non-validated timesheet lines. Are you sure you"
-" want to change it?"
+"Making this project non-billable will unlink it from any products that "
+"create tasks in it or use it as a template."
 msgstr ""
 
 #. module: sale_timesheet_ux

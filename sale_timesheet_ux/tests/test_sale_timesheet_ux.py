@@ -116,8 +116,29 @@ class TestSaleTimesheetUx(TestCommonSaleTimesheet):
         tasks = self.env["project.task"].with_user(portal).search([("order_id", "in", self.order.ids)])
         self.assertFalse(tasks)
 
-    def test_sale_line_change_warns_when_timesheets_exist(self):
-        self.assertFalse(self.task.timesheet_ids)
-        self.assertFalse(self.task._onchange_sale_line_id())
+    def test_count_timesheets_to_relink(self):
+        self.assertEqual(self.task.count_timesheets_to_relink(), 0)
         self._timesheet()
-        self.assertIn("warning", self.task._onchange_sale_line_id())
+        self._timesheet(so_line=self.line.id, is_so_line_edited=True)
+        billed = self._timesheet()
+        billed.reinvoice_move_id = self.order._create_invoices()
+        self.assertEqual(self.task.count_timesheets_to_relink(), 1)
+        self.env["ir.config_parameter"].set_bool(PROTECT_PARAM, True)
+        self.assertEqual(self.task.count_timesheets_to_relink(), 0)
+
+    def test_wizard_warns_when_products_are_linked(self):
+        def wizard():
+            action = self.project.change_allow_billable()
+            return self.env["allow.billable.wizard"].browse(action["res_id"])
+
+        self.assertFalse(wizard().has_linked_products)
+        self.env["product.product"].create(
+            {
+                "name": "Service in a fixed project",
+                "type": "service",
+                "service_type": "timesheet",
+                "service_tracking": "task_global_project",
+                "project_id": self.project.id,
+            }
+        )
+        self.assertTrue(wizard().has_linked_products)
