@@ -1,5 +1,4 @@
 from odoo import api, models
-
 from odoo.addons.project.models.project_task import CLOSED_STATES
 
 
