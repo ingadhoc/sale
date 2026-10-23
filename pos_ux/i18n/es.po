@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-22 19:36+0000\n"
+"POT-Creation-Date: 2026-10-23 18:55+0000\n"
 "PO-Revision-Date: 2026-10-22 19:36+0000\n"
 "Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
@@ -255,24 +255,6 @@ msgid "Invoiced"
 msgstr ""
 
 #. module: pos_ux
-#. odoo-python
-#: code:addons/pos_ux/models/pos_config.py:0
-msgid ""
-"No se puede completar la operación: falta definir cuenta intermediaria en "
-"los siguientes métodos de pago: %s"
-msgstr ""
-"No se puede completar la operación: falta definir cuenta intermediaria en "
-"los siguientes métodos de pago: %s"
-
-#. module: pos_ux
-#. odoo-python
-#: code:addons/pos_ux/models/pos_config.py:0
-msgid ""
-"No se puede completar la operación: falta definir la cuenta pendiente en los "
-"siguientes métodos de pago: %s"
-msgstr ""
-
-#. module: pos_ux
 #. odoo-javascript
 #: code:addons/pos_ux/static/src/overrides/screens/ticket_screen/ticket_screen.xml:0
 msgid "Not Invoiced"
@@ -329,3 +311,10 @@ msgstr "Usuario"
 #: model:ir.model.fields.selection,name:pos_ux.selection__pos_config__billing_behavior__invoice_required
 msgid "allways Invoice"
 msgstr "siempre factura"
+
+#~ msgid ""
+#~ "No se puede completar la operación: falta definir cuenta intermediaria en "
+#~ "los siguientes métodos de pago: %s"
+#~ msgstr ""
+#~ "No se puede completar la operación: falta definir cuenta intermediaria en "
+#~ "los siguientes métodos de pago: %s"
