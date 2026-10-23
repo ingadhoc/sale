@@ -21,11 +21,13 @@ msgstr ""
 msgid ""
 ".. |company| replace:: ADHOC SA\n"
 "\n"
-".. |company_logo| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-logo.png\n"
+".. |company_logo| image:: https://raw.githubusercontent.com/ingadhoc/"
+"maintainer-tools/master/resources/adhoc-logo.png\n"
 "   :alt: ADHOC SA\n"
 "   :target: https://www.adhoc.com.ar\n"
 "\n"
-".. |icon| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-icon.png\n"
+".. |icon| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-"
+"tools/master/resources/adhoc-icon.png\n"
 "\n"
 ".. image:: https://img.shields.io/badge/license-AGPL--3-blue.png\n"
 "   :target: https://www.gnu.org/licenses/agpl\n"
@@ -44,23 +46,30 @@ msgid ""
 "\n"
 "   c. **Always Invoice**: invoice is always issued\n"
 "\n"
-"2. **Adds the contingency mode** for when connection fails. While the session is\n"
-"   in contingency, the invoice PDF is not downloaded when validating a payment,\n"
+"2. **Adds the contingency mode** for when connection fails. While the "
+"session is\n"
+"   in contingency, the invoice PDF is not downloaded when validating a "
+"payment,\n"
 "   even if the \"Download Invoice\" setting of the point of sale is on.\n"
 "\n"
-"3. **Default order customer**: setting that pre-selects a partner on every POS\n"
-"   order that starts without one, including the empty order the POS reuses when\n"
+"3. **Default order customer**: setting that pre-selects a partner on every "
+"POS\n"
+"   order that starts without one, including the empty order the POS reuses "
+"when\n"
 "   it opens. Useful for B2C points of sale where most sales go to a generic\n"
-"   anonymous customer. It is not the \"Default Customer\" of the point of sale,\n"
+"   anonymous customer. It is not the \"Default Customer\" of the point of "
+"sale,\n"
 "   which Odoo uses for the session closing entries.\n"
 "\n"
 "4. **Block session close when there are paid orders without invoice**. Only\n"
 "   applies when the billing behavior is set to \"Always Invoice\". Use the\n"
-"   \"Generate invoices\" button in the session backend to invoice the pending\n"
+"   \"Generate invoices\" button in the session backend to invoice the "
+"pending\n"
 "   orders before closing the session.\n"
 "\n"
 "5. **Invoiced / Not Invoiced pill in the orders list**. Paid orders show a\n"
-"   badge in the ticket screen indicating whether they were already invoiced,\n"
+"   badge in the ticket screen indicating whether they were already "
+"invoiced,\n"
 "   so the cashier can tell at a glance which orders are still pending.\n"
 "\n"
 "\n"
@@ -86,7 +95,8 @@ msgid ""
 "\n"
 "#.\n"
 "\n"
-".. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas\n"
+".. image:: https://odoo-community.org/website/image/ir.attachment/"
+"5784_f2813bd/datas\n"
 "   :alt: Try me on Runbot\n"
 "   :target: http://runbot.adhoc.com.ar/\n"
 "\n"
@@ -95,7 +105,8 @@ msgid ""
 "\n"
 "Bugs are tracked on `GitHub Issues\n"
 "<https://github.com/ingadhoc/sale/issues>`_. In case of trouble, please\n"
-"check there if your issue has already been reported. If you spotted it first,\n"
+"check there if your issue has already been reported. If you spotted it "
+"first,\n"
 "help us smashing it by providing a detailed and welcomed feedback.\n"
 "\n"
 "Credits\n"
@@ -182,7 +193,6 @@ msgstr "Cliente por defecto del pedido"
 #. module: pos_ux
 #: model:ir.model.fields,field_description:pos_ux.field_pos_config__display_name
 #: model:ir.model.fields,field_description:pos_ux.field_pos_order__display_name
-#: model:ir.model.fields,field_description:pos_ux.field_pos_payment_method__display_name
 #: model:ir.model.fields,field_description:pos_ux.field_pos_session__display_name
 #: model:ir.model.fields,field_description:pos_ux.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:pos_ux.field_res_users__display_name
@@ -203,7 +213,6 @@ msgstr "Salir del modo contingencia"
 #. module: pos_ux
 #: model:ir.model.fields,field_description:pos_ux.field_pos_config__id
 #: model:ir.model.fields,field_description:pos_ux.field_pos_order__id
-#: model:ir.model.fields,field_description:pos_ux.field_pos_payment_method__id
 #: model:ir.model.fields,field_description:pos_ux.field_pos_session__id
 #: model:ir.model.fields,field_description:pos_ux.field_res_config_settings__id
 #: model:ir.model.fields,field_description:pos_ux.field_res_users__id
@@ -211,8 +220,8 @@ msgid "ID"
 msgstr "Id"
 
 #. module: pos_ux
-#: model:ir.model.fields,help:pos_ux.field_pos_config__default_partner_id
-#: model:ir.model.fields,help:pos_ux.field_res_config_settings__pos_default_partner_id
+#: model:ir.model.fields,help:pos_ux.field_pos_config__default_order_partner_id
+#: model:ir.model.fields,help:pos_ux.field_res_config_settings__pos_default_order_partner_id
 msgid ""
 "If set, every new POS order will start with this partner pre-selected. "
 "Useful for B2C points of sale where most sales go to a generic anonymous "
@@ -259,8 +268,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/pos_ux/models/pos_config.py:0
 msgid ""
-"No se puede completar la operación: falta definir la cuenta pendiente en los"
-" siguientes métodos de pago: %s"
+"No se puede completar la operación: falta definir la cuenta pendiente en los "
+"siguientes métodos de pago: %s"
 msgstr ""
 
 #. module: pos_ux
