@@ -70,8 +70,12 @@ class StockPicking(models.Model):
         operation types per product category), instead of relying on the
         single warehouse.pick_type_id/pack_type_id references, which only
         cover the default 3-step route and miss any extra custom ones.
-        Return/receipt pickings are excluded naturally, since their moves
-        never end up in a customer location.
+        Receipts are excluded up front: a picking that brings goods in is
+        never a leg of the delivery, even when the sale's procurement group
+        links it to the order (buy-to-order). They cannot be left to the
+        checks below, because the rule graph is reachability, not direction:
+        from the stock a receipt lands in, the warehouse's own outgoing rules
+        are always reachable.
 
         Some routes only create the next leg's stock.move once the current
         one is done (instead of upfront at sale confirmation), so rolling up
@@ -89,6 +93,8 @@ class StockPicking(models.Model):
         return is also caught) before even considering that fallback.
         """
         self.ensure_one()
+        if self.picking_type_id.code == "incoming":
+            return False
         moves = self.move_ids
         orig_moves = moves.browse(moves._rollup_move_origs())
         if orig_moves.filtered("origin_returned_move_id"):
