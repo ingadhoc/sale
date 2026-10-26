@@ -2,6 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
+from lxml import etree
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
@@ -74,3 +75,14 @@ class SaleOrderLine(models.Model):
                 )
                 total += sign * (converted_price_unit - line.price_unit)
         return total
+
+    @api.model
+    def _get_view(self, view_id=None, view_type="form", **options):
+        """Show the deferred date columns only when account_accountant defines them."""
+        arch, view = super()._get_view(view_id, view_type, **options)
+        if view_type == "form" and "deferred_start_date" in self.env["account.move.line"]._fields:
+            anchor = arch.find(".//field[@name='invoice_lines']/list/field[@name='product_id']")
+            if anchor is not None:
+                for name, string in (("deferred_end_date", "End Date"), ("deferred_start_date", "Start Date")):
+                    anchor.addnext(etree.Element("field", {"name": name, "string": string, "optional": "hide"}))
+        return arch, view
