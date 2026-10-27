@@ -85,8 +85,8 @@ class TestPriceChecker(AccountTestInvoicingHttpCommon):
                         0,
                         0,
                         {
-                            "compute_price": "percentage",
-                            "percent_price": 10.0,
+                            "compute_price": "discount",
+                            "price_discount": 10.0,
                             "applied_on": "3_global",
                         },
                     )
