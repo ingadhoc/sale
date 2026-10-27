@@ -74,7 +74,7 @@ class TestPriceChecker(AccountTestInvoicingHttpCommon):
         self.env.ref("base.group_user").sudo().write(
             {"implied_ids": [(4, self.env.ref("product.group_product_pricelist").id)]}
         )
-        self.env.registry.clear_cache("groups")
+        self.env.transaction.invalidate_ormcache("groups")
         pricelist = self.env["product.pricelist"].create(
             {
                 "name": "Price Checker 10% off",
