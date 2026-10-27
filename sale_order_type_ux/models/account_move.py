@@ -22,10 +22,15 @@ class AccountMove(models.Model):
         with the method behind the "Update Taxes" button, and only when the position
         actually changed, because it recomputes them from the product and discards the
         ones set by hand.
+
+        An order type that already has a fiscal position is left alone: it was chosen by
+        hand for that circuit, and the redetection only finds the auto applied ones.
         """
         for move in self:
             orders = move.invoice_line_ids.sale_line_ids.order_id
             if not orders or move.company_id in orders.company_id:
+                continue
+            if orders.type_id.fiscal_position_id:
                 continue
             old_fiscal_position = move.fiscal_position_id
             move.with_company(move.company_id)._compute_fiscal_position_id()
