@@ -10,12 +10,25 @@
         <th name="th_description" position="before">
             <th t-if="show_images" name="th_image" class="text-center" t-attf-style="width: {{column_width}}px;">Image</th>
         </th>
+<<<<<<< 2a0a148e6a2b9fde08ac9192e37ead07c562162e
         <td name="td_product_name" position="before">
             <td t-if="show_images" name="td_image" class="text-center" t-attf-style="width: {{column_width}}px;">
                 <img t-if="line.product_id.image_sale_order"
                      t-att-src="image_data_uri(line.product_id.image_sale_order)"
                      t-attf-style="display: block; margin: auto; width: auto; height: auto; max-width: {{display_size}}px; max-height: {{display_size}}px; object-fit: contain;"
                      alt="Product image"/>
+||||||| eb8eb92f0402efc1d7316b5aff55fe5a1ff665b8
+        <td name="td_name" position="before">
+            <td t-if="show_images" name="td_image" class="text-center" style="width: 60px;">
+                <span t-if="line.product_id.image_sale_order" t-field="line.product_id.image_sale_order" t-options='{"widget": "image", "class": "img img-fluid", "style": "max-width: 50px; max-height: 50px; display: block; margin: auto;"}'/>
+=======
+        <td name="td_name" position="before">
+            <td t-if="show_images" name="td_image" class="text-center" style="width: 60px;">
+                <img t-if="line.product_id.image_sale_order"
+                     t-att-src="image_data_uri(line.product_id.image_sale_order)"
+                     style="display: block; margin: auto; width: auto; height: auto; max-width: 50px; max-height: 50px; object-fit: contain;"
+                     alt="Product image"/>
+>>>>>>> 1680c1fb59e6cc360eb45d788fdfa949958634db
             </td>
         </td>
         <!-- Empty image-column cell so non-product rows keep the grid aligned -->
