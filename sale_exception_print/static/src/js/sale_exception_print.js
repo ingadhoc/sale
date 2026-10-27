@@ -1,28 +1,74 @@
-/** @odoo-module **/
-
 import { registry } from "@web/core/registry";
 
-registry.category("ir.actions.report handlers").add("sale_exception_check", async (action, options, env) => {
-    if (action.report_type === 'qweb-pdf' && action.context && action.context.active_model === 'sale.order') {
-        const activeIds = action.context.active_ids || [];
-        if (activeIds.length > 0) {
-            const result = await env.services.orm.call(
-                'sale.order',
-                'check_print_exceptions_for_action',
-                [activeIds]
-            );
+const BASE_EXCEPTION_ERROR = "odoo.addons.base_exception.exceptions.BaseExceptionError";
 
-            if (result && result.has_exceptions) {
-                // Reload the form first to show the exceptions
-                await env.services.action.doAction("soft_reload");
-                // Show the exception wizard instead of printing
-                await env.services.action.doAction(result.action);
-                // Return true to indicate we handled the action and stop further processing
-                return true;
+async function popUpPrintException(env, action) {
+    const controller = env.services.action.currentController;
+    const resId = controller?.currentState?.resId || (action.params?.recordIds || [])[0];
+    if (!resId) {
+        return;
+    }
+    const popupAction = await env.services.orm.call(
+        "sale.order",
+        "action_popup_exceptions",
+        [[resId]],
+        { context: { print_exceptions: true } }
+    );
+    if (!popupAction) {
+        return;
+    }
+    // Soft reload first, so the exceptions show up on the form view
+    if (controller) {
+        await env.services.action.restore(controller.jsId);
+    }
+    await env.services.action.doAction(popupAction, {
+        onClose: () =>
+            env.services.action.doAction({
+                type: "ir.actions.client",
+                tag: "soft_reload",
+            }),
+    });
+}
+
+function printExceptionErrorHandler(env, uncaughtError, originalError) {
+    if (originalError.exceptionName !== BASE_EXCEPTION_ERROR) {
+        return false;
+    }
+    let excData;
+    try {
+        excData = JSON.parse(originalError.data.message);
+    } catch {
+        return false;
+    }
+    if (!excData.print_exception) {
+        return false;
+    }
+    env.services.action.doAction({
+        type: "ir.actions.client",
+        tag: "popup_print_exception",
+        params: { recordIds: excData.record_ids || [] },
+    });
+    return true;
+}
+
+registry.category("actions").add("popup_print_exception", popUpPrintException);
+// Before base_exception's handler (sequence 0), which pops up without the print context
+registry
+    .category("error_handlers")
+    .add("sale_exception_print_error", printExceptionErrorHandler, { sequence: -1 });
+
+registry.category("ir.actions.report handlers").add(
+    "sale_exception_check",
+    async (action, options, env) => {
+        if (action.report_type === "qweb-pdf" && action.context?.active_model === "sale.order") {
+            const activeIds = action.context.active_ids || [];
+            if (activeIds.length > 0) {
+                // Raises BaseExceptionError and stops the download when a rule blocks it
+                await env.services.orm.call("sale.order", "detect_print_exceptions", [activeIds]);
             }
         }
-    }
-
-    // No exceptions or not applicable, let other handlers process it
-    return false;
-}, { sequence: 0 }); // High priority to run first
+        // No exceptions or not applicable, let other handlers process it
+        return false;
+    },
+    { sequence: 0 }
+);
