@@ -1,0 +1,76 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_product_uom_price
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-27 13:03+0000\n"
+"PO-Revision-Date: 2026-10-27 13:03+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: \n"
+
+#. module: sale_product_uom_price
+#: model:ir.model,name:sale_product_uom_price.model_res_config_settings
+msgid "Config Settings"
+msgstr "Ajustes de configuración"
+
+#. module: sale_product_uom_price
+#: model:ir.model.fields,field_description:sale_product_uom_price.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:sale_product_uom_price.field_sale_order_line__display_name
+msgid "Display Name"
+msgstr "Nombre"
+
+#. module: sale_product_uom_price
+#: model:ir.model.fields,field_description:sale_product_uom_price.field_res_config_settings__id
+#: model:ir.model.fields,field_description:sale_product_uom_price.field_sale_order_line__id
+msgid "ID"
+msgstr "Id"
+
+#. module: sale_product_uom_price
+#: model:ir.model.fields,help:sale_product_uom_price.field_res_config_settings__report_in_product_uom
+msgid ""
+"On the quotation PDF and the online quotation, lines sold in another unit "
+"(e.g. a packaging) show quantity and unit price in the product unit."
+msgstr "En el PDF del presupuesto y en el presupuesto online, las líneas vendidas en otra unidad (por ejemplo, un envase) muestran la cantidad y el precio unitario en la unidad del producto."
+
+#. module: sale_product_uom_price
+#: model_terms:ir.ui.view,arch_db:sale_product_uom_price.res_config_settings_view_form
+msgid ""
+"On the quotation PDF and the online quotation, show quantity and unit price "
+"of lines sold in another unit (e.g. a packaging) in the product unit."
+msgstr "En el PDF del presupuesto y en el presupuesto online, mostrar la cantidad y el precio unitario de las líneas vendidas en otra unidad (por ejemplo, un envase) en la unidad del producto."
+
+#. module: sale_product_uom_price
+#: model:ir.model.fields,field_description:sale_product_uom_price.field_sale_order_line__price_unit_product_uom_editable
+msgid "Price Unit Product Uom Editable"
+msgstr "Precio unid. prod. editable"
+
+#. module: sale_product_uom_price
+#: model:ir.model.fields,field_description:sale_product_uom_price.field_sale_order_line__price_unit_product_uom
+msgid "Price per Product Unit"
+msgstr "Precio unid. prod."
+
+#. module: sale_product_uom_price
+#: model:ir.model,name:sale_product_uom_price.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Línea de pedido de venta"
+
+#. module: sale_product_uom_price
+#: model:ir.model.fields,field_description:sale_product_uom_price.field_res_config_settings__report_in_product_uom
+msgid "Show Product Unit on Quotations"
+msgstr "Mostrar la unidad del producto en los presupuestos"
+
+#. module: sale_product_uom_price
+#: model:ir.model.fields,help:sale_product_uom_price.field_sale_order_line__price_unit_product_uom
+msgid ""
+"Unit price in the unit of the product, for instance per kg on a line sold by"
+" packaging, with the same tax criteria as the printed quotation. If you "
+"change it, the unit price of the line is recomputed."
+msgstr "Precio unitario en la unidad del producto, por ejemplo por kg en una línea vendida por envase, con el mismo criterio de impuestos que el presupuesto impreso. Si lo cambiás, se recalcula el precio unitario de la línea."
