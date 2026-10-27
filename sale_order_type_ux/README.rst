@@ -23,6 +23,7 @@ Sale Order Type Ux
 * Allows select journal from another company.
 * When the order type invoices in another company, the invoice gets the fiscal position
   of that company and its taxes, instead of keeping the ones of the company that sells.
+  Unless the order type already has a fiscal position, which is kept as it is.
 * Integration between Portal and Sale Order Type module:
 
  - New access record to sale type model for portal users
