@@ -27,11 +27,13 @@ msgstr ""
 msgid ""
 ".. |company| replace:: ADHOC SA\n"
 "\n"
-".. |company_logo| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-logo.png\n"
+".. |company_logo| image:: https://raw.githubusercontent.com/ingadhoc/"
+"maintainer-tools/master/resources/adhoc-logo.png\n"
 "   :alt: ADHOC SA\n"
 "   :target: https://www.adhoc.com.ar\n"
 "\n"
-".. |icon| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-icon.png\n"
+".. |icon| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-"
+"tools/master/resources/adhoc-icon.png\n"
 "\n"
 ".. image:: https://img.shields.io/badge/license-AGPL--3-blue.png\n"
 "   :target: https://www.gnu.org/licenses/agpl\n"
@@ -86,7 +88,8 @@ msgid ""
 "\n"
 "Bugs are tracked on `GitHub Issues\n"
 "<https://github.com/ingadhoc/sale/issues>`_. In case of trouble, please\n"
-"check there if your issue has already been reported. If you spotted it first,\n"
+"check there if your issue has already been reported. If you spotted it "
+"first,\n"
 "help us smashing it by providing a detailed and welcomed feedback.\n"
 "\n"
 "Credits\n"
@@ -111,6 +114,7 @@ msgid ""
 msgstr ""
 
 #. module: sale_price_checker
+#. odoo-javascript
 #: code:addons/sale_price_checker/static/src/price_checker.xml:0
 msgid "Barcode"
 msgstr "Código de barras"
@@ -140,10 +144,11 @@ msgid "ID"
 msgstr ""
 
 #. module: sale_price_checker
+#: model:ir.model.fields,help:sale_price_checker.field_product_product__show_in_price_checker
 #: model:ir.model.fields,help:sale_price_checker.field_product_template__show_in_price_checker
 msgid ""
-"If unchecked, this product will not appear when scanned in the public price"
-" checker."
+"If unchecked, this product will not appear when scanned in the public price "
+"checker."
 msgstr ""
 "Si se desmarca, este producto no aparecerá al ser escaneado en el "
 "verificador de precios público."
@@ -154,8 +159,9 @@ msgid "Open Price Checker"
 msgstr "Abrir el verificador de precios"
 
 #. module: sale_price_checker
-#: model_terms:ir.ui.view,arch_db:sale_price_checker.page
+#. odoo-javascript
 #: code:addons/sale_price_checker/static/src/price_checker.xml:0
+#: model_terms:ir.ui.view,arch_db:sale_price_checker.product_template_form_view_inherit
 msgid "Price Checker"
 msgstr "Verificador de Precios"
 
@@ -169,15 +175,16 @@ msgstr "Lista de precios del verificador"
 #. module: sale_price_checker
 #: model_terms:ir.ui.view,arch_db:sale_price_checker.res_config_settings_view_form_inherit
 msgid ""
-"Pricelist used by the public price checker (URL /price-checker/<company_id>)."
-" If empty, the product's Sales Price is used as a fallback."
+"Pricelist used by the public price checker (URL /price-checker/"
+"<company_id>). If empty, the product's Sales Price is used as a fallback."
 msgstr ""
-"Lista de precios usada por el verificador público (URL "
-"/price-checker/<company_id>). Si está vacía, se usa el Precio de Venta del "
-"producto como alternativa."
+"Lista de precios usada por el verificador público (URL /price-checker/"
+"<company_id>). Si está vacía, se usa el Precio de Venta del producto como "
+"alternativa."
 
 #. module: sale_price_checker
 #: model:ir.model.fields,help:sale_price_checker.field_res_company__price_checker_pricelist_id
+#: model:ir.model.fields,help:sale_price_checker.field_res_config_settings__price_checker_pricelist_id
 msgid ""
 "Pricelist used by the public price checker for this company. If empty, the "
 "product's Sales Price (lst_price) is used as a fallback."
@@ -192,6 +199,7 @@ msgid "Product"
 msgstr "Producto"
 
 #. module: sale_price_checker
+#. odoo-javascript
 #: code:addons/sale_price_checker/static/src/price_checker.xml:0
 msgid "Product not found"
 msgstr "Producto no encontrado"
@@ -199,9 +207,12 @@ msgstr "Producto no encontrado"
 #. module: sale_price_checker
 #: model:ir.module.module,summary:base.module_sale_price_checker
 msgid "Public web price checker by barcode for in-store kiosks"
-msgstr "Verificador de precios web público por código de barras para kioscos en tienda"
+msgstr ""
+"Verificador de precios web público por código de barras para kioscos en "
+"tienda"
 
 #. module: sale_price_checker
+#. odoo-javascript
 #: code:addons/sale_price_checker/static/src/price_checker.xml:0
 msgid "Recent searches"
 msgstr "Consultas recientes"
@@ -212,11 +223,13 @@ msgid "Sale Price Checker"
 msgstr "Verificador de precios de venta"
 
 #. module: sale_price_checker
+#. odoo-javascript
 #: code:addons/sale_price_checker/static/src/price_checker.xml:0
 msgid "Scan or type a barcode"
 msgstr "Escanee o tipee un código de barras"
 
 #. module: sale_price_checker
+#: model:ir.model.fields,field_description:sale_price_checker.field_product_product__show_in_price_checker
 #: model:ir.model.fields,field_description:sale_price_checker.field_product_template__show_in_price_checker
 msgid "Show in Price Checker"
 msgstr "Mostrar en el verificador de precios"
