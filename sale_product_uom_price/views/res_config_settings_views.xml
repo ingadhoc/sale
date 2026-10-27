@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.form.product.uom.price</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@name='quotation_order_setting_container']" position="inside">
+                <setting id="report_in_product_uom"
+                         help="On the quotation PDF and the online quotation, show quantity and unit price of lines sold in another unit (e.g. a packaging) in the product unit.">
+                    <field name="report_in_product_uom"/>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>
