@@ -3,3 +3,4 @@
 # directory
 ##############################################################################
 from . import test_downpayment_rounding
+from . import test_report_product_image
