@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-28 16:49+0000\n"
-"PO-Revision-Date: 2026-10-28 16:49+0000\n"
+"POT-Creation-Date: 2026-10-28 17:20+0000\n"
+"PO-Revision-Date: 2026-10-28 17:20+0000\n"
 "Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/sale-19-0-sale_order_lot_selection_ux/es/>\n"
 "Language: es\n"
@@ -40,7 +40,7 @@ msgid ""
 "===========================\n"
 "\n"
 "This extends the functionality of the \"Sales Order Batch Selection\" module.\n"
-"This module allows you to select lots with at least one unit available and allows you to view their available stock.\n"
+"This module shows, next to each lot of the lot selector of the sale order line, its available quantity and unit in the warehouse of the order.\n"
 "\n"
 "Installation\n"
 "============\n"
@@ -97,18 +97,11 @@ msgid ""
 msgstr ""
 
 #. module: sale_order_lot_selection_ux
-#: model:ir.model.fields,field_description:sale_order_lot_selection_ux.field_sale_order_line__available_lot_ids
-msgid "Available Lot"
-msgstr "Lote disponible"
-
-#. module: sale_order_lot_selection_ux
-#: model:ir.model.fields,field_description:sale_order_lot_selection_ux.field_sale_order_line__display_name
 #: model:ir.model.fields,field_description:sale_order_lot_selection_ux.field_stock_lot__display_name
 msgid "Display Name"
 msgstr "Mostrar nombre"
 
 #. module: sale_order_lot_selection_ux
-#: model:ir.model.fields,field_description:sale_order_lot_selection_ux.field_sale_order_line__id
 #: model:ir.model.fields,field_description:sale_order_lot_selection_ux.field_stock_lot__id
 msgid "ID"
 msgstr "Id"
@@ -127,8 +120,3 @@ msgstr "Lote/Número de Serie"
 #: model:ir.module.module,shortdesc:base.module_sale_order_lot_selection_ux
 msgid "Sale Order Lot Selection UX"
 msgstr "UX de selección de lotes en ventas"
-
-#. module: sale_order_lot_selection_ux
-#: model:ir.model,name:sale_order_lot_selection_ux.model_sale_order_line
-msgid "Sales Order Line"
-msgstr "Línea de la orden de venta"
