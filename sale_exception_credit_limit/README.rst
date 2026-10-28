@@ -15,7 +15,7 @@ Sale Exception Credit Limit
 ===========================
 
 #. It blocks the confirmation of a sale order when the customer goes over its credit limit, through a 'Credit Limit Exceeded' exception rule.
-#. It adds a 'Credit Taken' field on the partner that, unlike the native credit, also counts confirmed sale orders that are not invoiced yet and draft invoices, over the whole company tree.
+#. It adds a 'Credit Taken' field on the partner that, unlike the native credit, also counts confirmed sale orders that are not invoiced yet and draft invoices, over the whole company tree. Orders closed for invoicing are left out, as the native credit does.
 #. It adds a new group 'Config Credit Limit On partners'. Only users with this group can change the credit limit parameters of a partner, unless the partner is a child copying the limit of its parent.
 #. A credit limit equal to zero means that the partner has not credit limit. The precision of comparison depends on currency decimal places.
 #. It hides the native default credit limit on the accounting settings, so the limit is always the one set on each partner, and lets the 'Sales Credit Limit' setting be changed only on the root company. A child company follows its parent.
