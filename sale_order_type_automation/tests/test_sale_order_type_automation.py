@@ -5,7 +5,7 @@
 from odoo import Command
 from odoo.addons.sale.tests.common import TestSaleCommon
 from odoo.exceptions import ValidationError
-from odoo.tests import tagged
+from odoo.tests import Form, tagged
 
 
 @tagged("post_install", "-at_install")
@@ -158,3 +158,66 @@ class TestSaleOrderTypeAutomation(TestSaleCommon):
 
         self.assertEqual(self.sale_type.payment_atomation, "validate_payment")
         self.assertEqual(self.sale_type.payment_journal_id, self.payment_journal)
+
+    def test_sale_order_type_form_opens_with_payment_journal_domain(self):
+        self.assertIsInstance(self.sale_type.payment_journal_domain, list)
+
+        form = Form(self.sale_type)
+
+        self.assertEqual(form.payment_atomation, "none")
+
+    def _create_done_transaction(self, order):
+        provider = self.env["payment.provider"].search([("code", "=", "none")], limit=1) or self.env[
+            "payment.provider"
+        ].create({"name": "Dummy Provider", "code": "none"})
+        method = self.env["payment.method"].create(
+            {
+                "name": "Dummy Payment Method",
+                "code": "dummy",
+                "support_manual_capture": "partial",
+                "support_refund": "partial",
+                "provider_id": provider.id,
+            }
+        )
+        return self.env["payment.transaction"].create(
+            {
+                "provider_id": provider.id,
+                "payment_method_id": method.id,
+                "reference": "TEST-SOTA-%s" % order.id,
+                "amount": order.amount_total,
+                "currency_id": order.currency_id.id,
+                "partner_id": order.partner_id.id,
+                "sale_order_ids": [Command.set(order.ids)],
+                "state": "done",
+            }
+        )
+
+    def _set_invoice_automation(self):
+        self.sale_type.write(
+            {
+                "invoicing_atomation": "create_invoice",
+                "journal_id": self.invoice_journal.id,
+                "picking_atomation": "none",
+                "invoice_validate_domain": False,
+            }
+        )
+
+    def test_automation_skips_order_paid_online_when_company_invoices_automatically(self):
+        self._set_invoice_automation()
+        self.env.company.sale_automatic_invoice = True
+        order = self._create_order()
+        self._create_done_transaction(order)
+
+        order.action_confirm()
+
+        self.assertFalse(order.invoice_ids)
+
+    def test_automation_invoices_order_paid_online_when_company_does_not_invoice_automatically(self):
+        self._set_invoice_automation()
+        self.env.company.sale_automatic_invoice = False
+        order = self._create_order()
+        self._create_done_transaction(order)
+
+        order.action_confirm()
+
+        self.assertTrue(order.invoice_ids)
