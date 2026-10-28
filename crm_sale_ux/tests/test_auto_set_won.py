@@ -51,7 +51,7 @@ class TestCrmSaleUxAutoSetWon(TestCrmCommon):
         )
 
     def test_confirm_quotation_does_not_set_won_when_disabled(self):
-        self.env["ir.config_parameter"].sudo().set_param("crm_sale_ux.auto_won_on_sale_confirm", False)
+        self.env["ir.config_parameter"].sudo().set_bool("crm_sale_ux.auto_won_on_sale_confirm", False)
         opportunity = self._create_opportunity("Won setting disabled")
         stage_before = opportunity.stage_id
 
@@ -62,7 +62,7 @@ class TestCrmSaleUxAutoSetWon(TestCrmCommon):
         self.assertFalse(opportunity.stage_id.is_won)
 
     def test_confirm_quotation_sets_won_when_enabled(self):
-        self.env["ir.config_parameter"].sudo().set_param("crm_sale_ux.auto_won_on_sale_confirm", True)
+        self.env["ir.config_parameter"].sudo().set_bool("crm_sale_ux.auto_won_on_sale_confirm", True)
         opportunity = self._create_opportunity("Won setting enabled")
 
         quotation = self._create_quotation(opportunity)
