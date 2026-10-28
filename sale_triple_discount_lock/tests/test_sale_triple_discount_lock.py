@@ -77,7 +77,7 @@ class TestSaleTripleDiscountLock(common.TransactionCase):
         self.so_line1.discount3 = 8.0
         self.so_line2.discount2 = 20.0
         self.so_line2.discount3 = 3.0
-        self.order.action_update_prices()
+        self.order._recompute_prices()
         self.assertAlmostEqual(self.so_line1.discount2, 15.0)
         self.assertAlmostEqual(self.so_line1.discount3, 8.0)
         self.assertAlmostEqual(self.so_line2.discount2, 20.0)
@@ -90,9 +90,8 @@ class TestSaleTripleDiscountLock(common.TransactionCase):
                 "item_ids": [
                     Command.create(
                         {
-                            "applied_on": "3_global",
-                            "compute_price": "percentage",
-                            "percent_price": 10,
+                            "compute_price": "discount",
+                            "price_discount": 10,
                         }
                     )
                 ],
@@ -101,7 +100,7 @@ class TestSaleTripleDiscountLock(common.TransactionCase):
         self.so_line1.discount2 = 12.0
         self.so_line1.discount3 = 5.0
         self.order.pricelist_id = pricelist
-        self.order.action_update_prices()
+        self.order._recompute_prices()
         self.assertAlmostEqual(self.so_line1.discount1, 10.0)
         self.assertAlmostEqual(self.so_line1.discount2, 12.0)
         self.assertAlmostEqual(self.so_line1.discount3, 5.0)
@@ -120,9 +119,8 @@ class TestSaleTripleDiscountLock(common.TransactionCase):
                 "item_ids": [
                     Command.create(
                         {
-                            "applied_on": "3_global",
-                            "compute_price": "percentage",
-                            "percent_price": 20,
+                            "compute_price": "discount",
+                            "price_discount": 20,
                             "min_quantity": 50,
                         }
                     )
@@ -130,7 +128,7 @@ class TestSaleTripleDiscountLock(common.TransactionCase):
             }
         )
         self.order.pricelist_id = pricelist
-        self.order.action_update_prices()
+        self.order._recompute_prices()
         self.assertAlmostEqual(self.so_line1.discount1, 0.0)
         self.so_line1.discount2 = 15.0
         self.so_line1.discount3 = 10.0
