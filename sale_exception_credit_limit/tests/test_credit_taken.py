@@ -43,6 +43,19 @@ class TestCreditTaken(CreditLimitCommon):
             self.assertEqual(second_order.state, "draft")
             self.assert_invariants()
 
+        with self.subTest("cerrar la facturación del pedido libera el crédito"):
+            # invoicing_closed es nuevo en 20 y el crédito nativo lo excluye
+            first_order.action_close_invoicing()
+            self.partner.invalidate_recordset(["credit_with_confirmed_orders"])
+            self.assertEqual(self.partner.credit_with_confirmed_orders, 0.0)
+            second_order.invalidate_recordset(["partner_credit_warning"])
+            self.assertFalse(second_order.partner_credit_warning)
+            self.assert_invariants()
+            first_order.action_reopen_order()
+            self.partner.invalidate_recordset(["credit_with_confirmed_orders"])
+            self.assertEqual(self.partner.credit_with_confirmed_orders, 500.0)
+            second_order.invalidate_recordset(["partner_credit_warning"])
+
         with self.subTest("ignorando la excepción la misma orden sí se confirma"):
             # prueba que lo que frenó la confirmación fue la regla del módulo
             second_order.ignore_exception = True

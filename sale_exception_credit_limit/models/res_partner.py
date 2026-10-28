@@ -70,6 +70,9 @@ class ResPartner(models.Model):
                     # in the total amount, not just the invoiced part. This search helps avoid including fully invoiced orders.
                     ("invoice_status", "in", ["to invoice", "no"]),
                     ("order_id.state", "in", ["sale", "done"]),
+                    # 20 lets the user close an order for invoicing: Odoo stops
+                    # counting it as credit (sale/models/res_partner.py:114)
+                    ("order_id.invoicing_closed", "=", False),
                     # Filter by company hierarchy
                     ("order_id.company_id", "in", hierarchy_companies.ids),
                 ]
