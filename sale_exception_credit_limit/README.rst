@@ -14,15 +14,18 @@
 Sale Exception Credit Limit
 ===========================
 
-#. It adds a new group 'can modify credit limit', only users with this group are allowed to change credit limit on partners.
+#. It blocks the confirmation of a sale order when the customer goes over its credit limit, through a 'Credit Limit Exceeded' exception rule.
+#. It adds a 'Credit Taken' field on the partner that, unlike the native credit, also counts confirmed sale orders that are not invoiced yet and draft invoices, over the whole company tree.
+#. It adds a new group 'Config Credit Limit On partners'. Only users with this group can change the credit limit parameters of a partner, unless the partner is a child copying the limit of its parent.
 #. A credit limit equal to zero means that the partner has not credit limit. The precision of comparison depends on currency decimal places.
+#. It hides the native default credit limit on the accounting settings, so the limit is always the one set on each partner, and lets the 'Sales Credit Limit' setting be changed only on the root company. A child company follows its parent.
 
 Installation
 ============
 
 To install this module, you need to:
 
-#. Only need to install the module
+#. Only need to install the module. On installation it turns the 'Sales Credit Limit' setting on for every company.
 
 
 Configuration
@@ -30,7 +33,8 @@ Configuration
 
 To configure this module, you need to:
 
-#. Set 'can modify credit limit'=true or false, on user profile preferences.
+#. Add the users that may change credit limits to the 'Config Credit Limit On partners' group, on their user profile.
+#. Set the credit limit of each customer on its form, with 'Partner Limit' on.
 
 
 Usage
@@ -38,7 +42,7 @@ Usage
 
 To use this module, you need to:
 
-#. When you confirm a sale order, validate than the partner limit not overdo
+#. When you confirm a sale order, the credit taken by the customer, including this order, is checked against its credit limit. Over the limit, the order is not confirmed and the exception is shown.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
