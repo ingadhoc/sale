@@ -17,5 +17,5 @@ class ProductionLot(models.Model):
                 lambda x: x.location_id == location or x.location_id.location_id == location
             )
             qty = quants and sum(quants.mapped(lambda x: x.quantity - x.reserved_quantity)) or 0.0
-            name = rec.name + " (%s %s) " % (qty, quants and quants[0].product_uom_id.name or " ")
+            name = rec.name + " (%s %s) " % (qty, quants and quants[0].uom_id.name or " ")
             rec.display_name = name
