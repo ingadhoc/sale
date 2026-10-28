@@ -20,7 +20,7 @@ class TestDistributorStockAccess(TransactionCase):
                 "name": "Distribuidor test",
                 "login": "distributor_stock_access_test",
                 "company_id": cls.env.ref("base.main_company").id,
-                "groups_id": [
+                "group_ids": [
                     (
                         6,
                         0,
