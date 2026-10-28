@@ -25,14 +25,14 @@ class SaleOrderDiscount(models.TransientModel):
         if self.discount_type != "sol_discount":
             return super().action_apply_discount()
 
-        lines = self.sale_order_id.order_line
+        lines = self._get_discountable_order_lines()
         original = {line: (line.discount1, line.discount2, line.discount3) for line in lines}
 
         res = super().action_apply_discount()
 
         for line in lines:
             d1, d2, d3 = original[line]
-            line.with_context(sale_triple_discount_ux_skip_inverse=True).write(
+            line.write(
                 {
                     "discount1": d1,
                     "discount2": self.discount2 * 100 if self.apply_discount2 else d2,
