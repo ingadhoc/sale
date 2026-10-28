@@ -10,6 +10,8 @@ class TestSaleExceptionPrint(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        # Only the rules of this test decide, no matter what the database carries
+        cls.env["exception.rule"].search([]).write({"active": False})
         cls.partner = cls.env["res.partner"].create({"name": "Print Exception Partner"})
         cls.product = cls.env["product.product"].create(
             {
