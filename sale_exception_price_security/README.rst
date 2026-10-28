@@ -31,14 +31,25 @@ Configuration
 
 To configure this module, you need to:
 
-#. Nothing to configure
+#. Set the discount restrictions of each user in the *price_security* module.
+#. Nothing else to configure: the *Discount Restriction* rule is created active
+   and with *Block Send Quotation* ticked. It can be changed in
+   Sales > Configuration > Exception Rules.
 
 Usage
 =====
 
 To use this module, you need to:
 
-#. When you confirm sale order, validate that discount you set to each line of products are in the limit established in the user.
+#. Set a discount out of the range allowed to the user on a sale order line.
+   The line can still be edited: the error price_security raises on its own is
+   disabled here.
+#. Confirming, printing, sending or sharing that quotation is stopped by the
+   *Discount Restriction* exception instead. Ignoring the exception confirms
+   the order.
+#. The discount is not checked on section and note lines, on products flagged
+   as *Can modify prices*, or for users outside the price_security group that
+   restricts price visibility.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
