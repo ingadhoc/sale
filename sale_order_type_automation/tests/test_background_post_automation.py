@@ -169,7 +169,7 @@ class TestBackgroundPostAutomation(TestSaleCommon):
         self.assertTrue(any("ARCA timeout" in (m.body or "") for m in invoice.message_ids))
 
     def test_07_big_picking_batch_creates_invoices_for_background_post(self):
-        self.env["ir.config_parameter"].sudo().set_param("account_background_post.batch_size", "1")
+        self.env["ir.config_parameter"].sudo().set_int("account_background_post.batch_size", 1)
         orders = self._confirm_with_ready_pickings(count=2)
         pickings = orders.picking_ids
         self.assertEqual(len(pickings), 2)
@@ -183,7 +183,7 @@ class TestBackgroundPostAutomation(TestSaleCommon):
         self.assertTrue(all(invoices.mapped("background_post")))
 
     def test_08_single_picking_error_offers_to_validate_anyway(self):
-        self.env["ir.config_parameter"].sudo().set_param("account_background_post.batch_size", "20")
+        self.env["ir.config_parameter"].sudo().set_int("account_background_post.batch_size", 20)
         so = self._confirm_with_ready_pickings()
         picking = so.picking_ids
 
@@ -212,7 +212,7 @@ class TestBackgroundPostAutomation(TestSaleCommon):
         self.assertTrue(invoice.background_post)
 
     def test_10_big_picking_batch_tells_why_the_invoice_is_in_draft(self):
-        self.env["ir.config_parameter"].sudo().set_param("account_background_post.batch_size", "1")
+        self.env["ir.config_parameter"].sudo().set_int("account_background_post.batch_size", 1)
         orders = self._confirm_with_ready_pickings(count=2)
 
         orders.picking_ids.button_validate()
@@ -228,7 +228,7 @@ class TestBackgroundPostAutomation(TestSaleCommon):
             )
 
     def test_11_normal_picking_batch_does_not_log_the_batch_reason(self):
-        self.env["ir.config_parameter"].sudo().set_param("account_background_post.batch_size", "20")
+        self.env["ir.config_parameter"].sudo().set_int("account_background_post.batch_size", 20)
         so = self._confirm_with_ready_pickings()
 
         so.picking_ids.button_validate()
