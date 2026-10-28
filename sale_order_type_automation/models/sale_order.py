@@ -43,11 +43,7 @@ class SaleOrder(models.Model):
                 )
                 if so_domain and rec.filtered_domain(so_domain):
                     skip_validation = True
-            if (
-                rec.transaction_ids
-                and rec.company_id.sale_automatic_invoice
-                and any([True if transaction.state == "done" else False for transaction in rec.transaction_ids])
-            ):
+            if any(tx.state == "done" and tx.company_id.sale_automatic_invoice for tx in rec.transaction_ids):
                 continue
             # a list is returned but only one invoice should be returned
             # usamos final para que reste adelantos y tmb por ej
@@ -208,7 +204,7 @@ class SaleOrder(models.Model):
                 x.order_id.type_id.picking_atomation != "none"
                 and x.product_id.type == "service"
                 and x.product_id.service_type == "manual"
-                and x.product_id.expense_policy == "no"
+                and x.product_id.reinvoice_policy == "no"
             )
         ):
             order_line.qty_delivered = order_line.product_uom_qty
