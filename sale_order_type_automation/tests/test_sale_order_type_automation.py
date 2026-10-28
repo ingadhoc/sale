@@ -166,10 +166,10 @@ class TestSaleOrderTypeAutomation(TestSaleCommon):
 
         self.assertEqual(form.payment_atomation, "none")
 
-    def _create_done_transaction(self, order):
-        provider = self.env["payment.provider"].search([("code", "=", "none")], limit=1) or self.env[
-            "payment.provider"
-        ].create({"name": "Dummy Provider", "code": "none"})
+    def _create_done_transaction(self, order, company=None):
+        provider = self.env["payment.provider"].create(
+            {"name": "Dummy Provider", "code": "none", "company_id": (company or order.company_id).id}
+        )
         method = self.env["payment.method"].create(
             {
                 "name": "Dummy Payment Method",
@@ -221,3 +221,36 @@ class TestSaleOrderTypeAutomation(TestSaleCommon):
         order.action_confirm()
 
         self.assertTrue(order.invoice_ids)
+
+    def test_automation_follows_the_company_of_the_transaction(self):
+        self._set_invoice_automation()
+        other_company = self.env["res.company"].create({"name": "Sale Order Type Automation Other Company"})
+        self.env.company.sale_automatic_invoice = False
+        other_company.sale_automatic_invoice = True
+        order = self._create_order()
+        self._create_done_transaction(order, company=other_company)
+
+        order.action_confirm()
+
+        self.assertFalse(order.invoice_ids)
+
+    def test_picking_automation_with_a_service_line(self):
+        self.sale_type.write({"picking_atomation": "validate", "invoicing_atomation": "none"})
+        service = self.env["product.product"].create(
+            {
+                "name": "Sale Order Type Automation Service",
+                "type": "service",
+                "service_type": "manual",
+                "list_price": 50.0,
+            }
+        )
+        order = self._create_order()
+        order.write(
+            {"order_line": [Command.create({"product_id": service.id, "product_uom_qty": 2.0, "price_unit": 50.0})]}
+        )
+
+        order.action_confirm()
+
+        service_line = order.order_line.filtered(lambda line: line.product_id == service)
+        self.assertEqual(service_line.qty_delivered, 2.0)
+        self.assertEqual(set(order.picking_ids.mapped("state")), {"done"})
