@@ -45,7 +45,7 @@ class SaleOrder(models.Model):
                     skip_validation = True
             if (
                 rec.transaction_ids
-                and rec.env["ir.config_parameter"].sudo().get_param("sale.automatic_invoice")
+                and rec.company_id.sale_automatic_invoice
                 and any([True if transaction.state == "done" else False for transaction in rec.transaction_ids])
             ):
                 continue
