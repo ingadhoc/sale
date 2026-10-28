@@ -26,7 +26,7 @@ class TestForecastOtherSalesman(TransactionCase):
                 "login": login,
                 "company_id": self.env.company.id,
                 "company_ids": [Command.set([self.env.company.id])],
-                "groups_id": [
+                "group_ids": [
                     Command.link(self.env.ref("sales_team.group_sale_salesman").id),
                     Command.link(self.env.ref("stock.group_stock_user").id),
                 ],
@@ -43,26 +43,34 @@ class TestForecastOtherSalesman(TransactionCase):
             }
         )
         # Armado a mano y no con action_confirm: el caso no depende de excepciones ni de rutas.
-        group = self.env["procurement.group"].create({"name": order.name, "sale_id": order.id})
         picking = self.env["stock.picking"].create(
             {
                 "picking_type_id": self.warehouse.out_type_id.id,
                 "partner_id": self.partner.id,
                 "location_id": self.warehouse.lot_stock_id.id,
                 "location_dest_id": self.customer_location.id,
-                "group_id": group.id,
+            }
+        )
+        move_vals = {
+            "picking_id": picking.id,
+            "location_id": picking.location_id.id,
+            "location_dest_id": picking.location_dest_id.id,
+            "company_id": picking.company_id.id,
+        }
+        # picking.sale_id is computed from the moves' sale lines, so the picking needs one SO move.
+        self.env["stock.move"].create(
+            {
+                **move_vals,
+                "product_id": self.product_so.id,
+                "product_uom_qty": 3,
+                "sale_line_id": order.order_line.id,
             }
         )
         move = self.env["stock.move"].create(
             {
-                "name": self.product_manual.name,
-                "picking_id": picking.id,
+                **move_vals,
                 "product_id": self.product_manual.id,
                 "product_uom_qty": 2,
-                "location_id": picking.location_id.id,
-                "location_dest_id": picking.location_dest_id.id,
-                "company_id": picking.company_id.id,
-                "group_id": group.id,
             }
         )
         picking.action_confirm()
