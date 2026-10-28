@@ -29,17 +29,20 @@ Configuration
 
 To configure this module, you need to:
 
-#. Go to Sales settings
-#. Enable "Lock Discount 1"
+#. Go to Sales settings and enable "Discount per line", which is what shows the
+   discount columns on the sale order lines.
 
 Usage
 =====
 
 To use this module, you need to:
 
-#. Enable the "Lock Discount 1" setting
-#. Apply a pricelist discount and use Discount 2/3 on sale order lines
-#. Update prices or quantities and verify Discount 2/3 are preserved
+#. Open a sale order with a pricelist. Discount 1 is read only: it only shows
+   the discount that comes from the pricelist.
+#. Load Discount 2 and Discount 3 on the lines. Updating the prices or the
+   quantities keeps both of them.
+#. The "Discount" wizard, on the "On All Order Lines" option, also applies
+   Disc. 2 and Disc. 3 to every line of the order.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot

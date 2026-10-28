@@ -4,16 +4,98 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 19.0+e\n"
+"Project-Id-Version: Odoo Server 20.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-19 20:00+0000\n"
-"PO-Revision-Date: 2026-06-19 20:00+0000\n"
+"POT-Creation-Date: 2026-10-28 19:18+0000\n"
+"PO-Revision-Date: 2026-10-28 19:18+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: sale_triple_discount_lock
+#: model:ir.module.module,description:base.module_sale_triple_discount_lock
+msgid ""
+".. |company| replace:: ADHOC SA\n"
+"\n"
+".. |company_logo| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-logo.png\n"
+"   :alt: ADHOC SA\n"
+"   :target: https://www.adhoc.com.ar\n"
+"\n"
+".. |icon| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-icon.png\n"
+"\n"
+".. image:: https://img.shields.io/badge/license-AGPL--3-blue.png\n"
+"   :target: https://www.gnu.org/licenses/agpl\n"
+"   :alt: License: AGPL-3\n"
+"\n"
+"=========================\n"
+"Sale Triple Discount Lock\n"
+"=========================\n"
+"\n"
+"This module locks Discount 1 for pricelist usage and preserves Discount 2 and Discount 3\n"
+"when prices are recomputed.\n"
+"\n"
+"Installation\n"
+"============\n"
+"\n"
+"To install this module, you need to:\n"
+"\n"
+"#. Only need to install the module\n"
+"\n"
+"Configuration\n"
+"=============\n"
+"\n"
+"To configure this module, you need to:\n"
+"\n"
+"#. Go to Sales settings and enable \"Discount per line\", which is what shows the\n"
+"   discount columns on the sale order lines.\n"
+"\n"
+"Usage\n"
+"=====\n"
+"\n"
+"To use this module, you need to:\n"
+"\n"
+"#. Open a sale order with a pricelist. Discount 1 is read only: it only shows\n"
+"   the discount that comes from the pricelist.\n"
+"#. Load Discount 2 and Discount 3 on the lines. Updating the prices or the\n"
+"   quantities keeps both of them.\n"
+"#. The \"Discount\" wizard, on the \"On All Order Lines\" option, also applies\n"
+"   Disc. 2 and Disc. 3 to every line of the order.\n"
+"\n"
+".. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas\n"
+"   :alt: Try me on Runbot\n"
+"   :target: http://runbot.adhoc.com.ar/\n"
+"\n"
+"Bug Tracker\n"
+"===========\n"
+"\n"
+"Bugs are tracked on `GitHub Issues\n"
+"<https://github.com/ingadhoc/sale/issues>`_. In case of trouble, please\n"
+"check there if your issue has already been reported. If you spotted it first,\n"
+"help us smashing it by providing a detailed and welcomed feedback.\n"
+"\n"
+"Credits\n"
+"=======\n"
+"\n"
+"Images\n"
+"------\n"
+"\n"
+"* |company| |icon|\n"
+"\n"
+"Contributors\n"
+"------------\n"
+"\n"
+"Maintainer\n"
+"----------\n"
+"\n"
+"|company_logo|\n"
+"\n"
+"This module is maintained by the |company|.\n"
+"\n"
+"To contribute to this module, please visit https://www.adhoc.com.ar.\n"
+msgstr ""
 
 #. module: sale_triple_discount_lock
 #: model:ir.model.fields,field_description:sale_triple_discount_lock.field_sale_order_discount__apply_discount2
@@ -58,25 +140,30 @@ msgstr ""
 #. module: sale_triple_discount_lock
 #: model:ir.model.fields,field_description:sale_triple_discount_lock.field_sale_order__display_name
 #: model:ir.model.fields,field_description:sale_triple_discount_lock.field_sale_order_discount__display_name
-#: model:ir.model.fields,field_description:sale_triple_discount_lock.field_sale_order_line__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: sale_triple_discount_lock
 #: model:ir.model.fields,field_description:sale_triple_discount_lock.field_sale_order__id
 #: model:ir.model.fields,field_description:sale_triple_discount_lock.field_sale_order_discount__id
-#: model:ir.model.fields,field_description:sale_triple_discount_lock.field_sale_order_line__id
 msgid "ID"
+msgstr ""
+
+#. module: sale_triple_discount_lock
+#: model:ir.module.module,summary:base.module_sale_triple_discount_lock
+msgid ""
+"Lock Discount 1 for pricelist use only and preserve Discount 2/3 on "
+"recalculation"
+msgstr ""
+
+#. module: sale_triple_discount_lock
+#: model:ir.module.module,shortdesc:base.module_sale_triple_discount_lock
+msgid "Sale Triple Discount Lock"
 msgstr ""
 
 #. module: sale_triple_discount_lock
 #: model:ir.model,name:sale_triple_discount_lock.model_sale_order
 msgid "Sales Order"
-msgstr ""
-
-#. module: sale_triple_discount_lock
-#: model:ir.model,name:sale_triple_discount_lock.model_sale_order_line
-msgid "Sales Order Line"
 msgstr ""
 
 #. module: sale_triple_discount_lock
