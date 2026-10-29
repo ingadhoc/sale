@@ -11,24 +11,27 @@ class TestSaleTripleDiscountLock(common.TransactionCase):
         super().setUpClass()
         cls.env.user.group_ids += cls.env.ref("sale.group_discount_per_so_line")
         cls.partner = cls.env["res.partner"].create({"name": "Test Partner"})
-        products = cls.env["product.product"].search([], limit=2)
-        cls.product1 = products[0]
-        cls.product2 = products[1]
-        cls.product1.write(
-            {
-                "name": "Test Product 1",
-                "type": "service",
-                "invoice_policy": "order",
-                "list_price": 600.0,
-            }
-        )
-        cls.product2.write(
-            {
-                "name": "Test Product 2",
-                "type": "service",
-                "invoice_policy": "order",
-                "list_price": 60.0,
-            }
+        # Own products, not the first two of the base: in a database with several
+        # companies those belong to another one and the line fails _check_company.
+        cls.product1, cls.product2 = cls.env["product.product"].create(
+            [
+                {
+                    "name": "Test Product 1",
+                    "type": "service",
+                    "invoice_policy": "order",
+                    "list_price": 600.0,
+                    "company_id": False,
+                    "taxes_id": [(5, 0, 0)],
+                },
+                {
+                    "name": "Test Product 2",
+                    "type": "service",
+                    "invoice_policy": "order",
+                    "list_price": 60.0,
+                    "company_id": False,
+                    "taxes_id": [(5, 0, 0)],
+                },
+            ]
         )
         cls.tax = cls.env["account.tax"].create(
             {
