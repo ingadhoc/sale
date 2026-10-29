@@ -12,8 +12,8 @@ class AccountAnalyticLine(models.Model):
         El tema es que en facturado a precio fijo no esta el concepto de billeado o no
         """
         self.ensure_one()
-        protect_so_line = self._origin and self.env["ir.config_parameter"].sudo().get_param(
-            "sale_timesheet_ux.protect_so_line", ""
+        protect_so_line = self._origin and self.env["ir.config_parameter"].sudo().get_bool(
+            "sale_timesheet_ux.protect_so_line"
         )
         if protect_so_line and self.so_line:
             return False
