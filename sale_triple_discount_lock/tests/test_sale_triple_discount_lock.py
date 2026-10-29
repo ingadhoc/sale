@@ -159,3 +159,44 @@ class TestSaleTripleDiscountLock(common.TransactionCase):
         self.assertAlmostEqual(inv_line.discount2, 15.0)
         self.assertAlmostEqual(inv_line.discount3, 5.0)
         self.assertAlmostEqual(inv_line.discount, self.so_line1.discount, places=2)
+
+    def test_07_wizard_applies_discount_2_and_3(self):
+        """The wizard adds Disc. 2 and Disc. 3 and keeps Disc. 1."""
+        self.so_line1.discount1 = 5.0
+        wizard = self.env["sale.order.discount"].create(
+            {
+                "sale_order_id": self.order.id,
+                "discount_type": "sol_discount",
+                "discount_percentage": 0.0,
+                "apply_discount2": True,
+                "discount2": 0.10,
+                "apply_discount3": True,
+                "discount3": 0.20,
+            }
+        )
+        self.assertAlmostEqual(wizard.total_discount, 1.0 - 0.9 * 0.8)
+
+        wizard.action_apply_discount()
+
+        self.assertAlmostEqual(self.so_line1.discount1, 5.0)
+        self.assertAlmostEqual(self.so_line1.discount2, 10.0)
+        self.assertAlmostEqual(self.so_line1.discount3, 20.0)
+
+    def test_08_wizard_leaves_section_lines_alone(self):
+        """A section line is not a discountable line, so it keeps its zeros."""
+        section = self.env["sale.order.line"].create(
+            {"order_id": self.order.id, "name": "A section", "display_type": "line_section"}
+        )
+        self.env["sale.order.discount"].create(
+            {
+                "sale_order_id": self.order.id,
+                "discount_type": "sol_discount",
+                "discount_percentage": 0.0,
+                "apply_discount2": True,
+                "discount2": 0.10,
+            }
+        ).action_apply_discount()
+
+        self.assertAlmostEqual(self.so_line1.discount2, 10.0)
+        self.assertAlmostEqual(section.discount2, 0.0)
+        self.assertAlmostEqual(section.discount3, 0.0)
