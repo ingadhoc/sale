@@ -19,12 +19,12 @@
                 <field name="delivery_status" invisible="1"/>
             </xpath>
             <!-- agregamos boton de cancelar linea -->
-            <xpath expr="//field[@name='order_line']/list/field[@name='qty_delivered']" position="after">
+            <xpath expr="//field[@name='order_line']/list/column[field[@name='qty_delivered']]" position="after">
                 <field name="quantity_returned" column_invisible="parent.state not in ['sale', 'done']" readonly="qty_delivered_method != 'manual'"/>
                 <field name="delivery_status" column_invisible="True"/>
                 <button name="button_cancel_remaining"
                         type="object"
-                        title="Cancel remaining quanitity to be delivered. This will set line quantity equal to delivered qty and will cancel remaining moves"
+                        title="Cancel remaining quantity to be delivered. This will set line quantity equal to delivered qty and will cancel remaining moves"
                         icon="block"
                         confirm="This will set line quantity equal to delivery qty and will cancel remaining moves. This can not be undone. Are you sure you want to continue?"
                         invisible="delivery_status != 'to deliver'"
@@ -35,8 +35,7 @@
                 <field name="force_delivery_status" groups="base.group_no_one"/>
             </group>
 
-            <xpath expr="//page/field[@name='order_line']/list/field[@name='product_uom_qty']" position="after">
-                <field name="total_reserved_quantity" column_invisible="True"/>
+            <xpath expr="//page/field[@name='order_line']/list/column[@name='sol_qty']" position="after">
                 <field name="stock_by_location" force_save="1" column_invisible="1"/>
             </xpath>
         </field>
@@ -47,15 +46,10 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale_ux.view_sales_order_filter"/>
         <field name="arch" type="xml">
-            <field name="partner_id" position="after">
-                <field name="picking_ids" string="Pickings" filter_domain="[('picking_ids.group_id', '!=', False), ('picking_ids.name', 'ilike', self)]"/>
-            </field>
-            <filter domain="[('invoice_status','=','to invoice')]" position="before">
-                <separator/>
-                <filter name="with_returns" string="With Returns" domain="[('with_returns','=', True)]" help="Pedidos de venta con devoluciones facturables"/>
-                <filter name="to_deliver" string="To Deliver" domain="['|', '|', ('delivery_status','=', 'partial'), ('delivery_status','=', 'pending'), ('delivery_status','=', 'started')]" help="Sale orders that include lines not delivered."/>
+            <!-- "To Deliver" es el filtro nativo (is_unfulfilled), calculado con el estado de entrega del módulo -->
+            <filter name="to_fulfill" position="after">
                 <filter name="delivered" string="Fully Delivered" domain="[('delivery_status','=', 'full')]" help="Sale orders with all lines delivered."/>
-                <separator/>
+                <filter name="with_returns" string="With Returns" domain="[('with_returns','=', True)]" help="Sale orders with returns to be credited."/>
             </filter>
         </field>
     </record>
