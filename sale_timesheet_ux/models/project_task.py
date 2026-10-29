@@ -13,8 +13,8 @@ class ProjectTask(models.Model):
     )
 
     @property
-    def SELF_READABLE_FIELDS(self):
-        return super().SELF_READABLE_FIELDS | {"order_id"}
+    def TASK_PORTAL_READABLE_FIELDS(self):
+        return super().TASK_PORTAL_READABLE_FIELDS | {"order_id"}
 
     def _get_timesheet(self):
         recs = super()._get_timesheet()
