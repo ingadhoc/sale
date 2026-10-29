@@ -55,3 +55,4 @@ access_stock_reference_portal_distributor,stock.reference.portal.distributor,sto
 access_stock_warehouse_orderpoint_portal_distributor,stock.warehouse.orderpoint.portal.distributor,stock.warehouse.orderpoint,portal_sale_distributor.group_portal_backend_distributor,r,
 access_crm_tag_portal_distributor,crm.tag.portal.distributor,crm.tag,portal_sale_distributor.group_portal_backend_distributor,r,
 portal_res_partner_distributor_rule,res.partner: read access for distributor,res.partner,portal_sale_distributor.group_portal_backend_distributor,r,"[('id', 'in', user.company_ids.partner_id.ids)]"
+access_sale_report_distributor,Sales analysis (distribuidores),sale.report,portal_sale_distributor.group_portal_backend_distributor,r,"[('partner_id','child_of',[user.commercial_partner_id.id])]"
