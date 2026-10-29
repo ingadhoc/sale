@@ -1,4 +1,4 @@
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class ProjectTask(models.Model):
@@ -40,13 +40,14 @@ class ProjectTask(models.Model):
             if not task.sale_line_id or task.sale_line_id != sale_line:
                 task.sale_line_id = sale_line
 
-    @api.onchange("sale_line_id")
-    def _onchange_sale_line_id(self):
-        for line in self.timesheet_ids:
-            if line.so_line and not line.validated:
-                return {
-                    "warning": {
-                        "title": "Confirmación",
-                        "message": "Tenga en cuenta que cambiar la linea de venta de la tarea recomputará las lineas de venta de las lineas de parte de hora NO validadas. ¿Está seguro de que desea cambiarla?",
-                    }
-                }
+    def count_timesheets_to_relink(self):
+        """Timesheet lines whose sales order item is recalculated when the one of the task changes."""
+        self.ensure_one()
+        return len(
+            self.timesheet_ids.filtered(
+                # "validated" is defined by timesheet_grid (Enterprise), which is not a dependency
+                lambda t: not t.is_so_line_edited
+                and t._is_not_billed()
+                and not ("validated" in t._fields and t.validated)
+            )
+        )
