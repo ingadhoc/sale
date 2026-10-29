@@ -104,11 +104,14 @@ class ResPartner(models.Model):
                         )
                     draft_invoice_lines_amount += total
 
-                # Sum the credit for all companies, converting to the current company currency
+                # The standard credit already adds up the whole company hierarchy (it searches the journal items
+                # with company_id child_of root company), so it must be read only once for each root company.
+                # Reading it for each company would count the same balance once per company of the hierarchy.
+                # Sum the credit of all the root companies, converting to the current company currency
                 total_credit = 0.0
-                for company in rec.env["res.company"].search([]):
-                    credit = rec.sudo().with_company(company).credit
-                    total_credit += company.currency_id._convert(
+                for root_company in rec.env["res.company"].search([]).root_id:
+                    credit = rec.sudo().with_company(root_company).credit
+                    total_credit += root_company.currency_id._convert(
                         credit, company_id.currency_id, company_id, fields.Date.today()
                     )
 
