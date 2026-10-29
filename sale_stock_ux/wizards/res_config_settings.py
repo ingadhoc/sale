@@ -14,11 +14,9 @@ class ResConfigSettings(models.TransientModel):
 
     def get_values(self):
         res = super().get_values()
-        get_param = self.env["ir.config_parameter"].sudo().get_param
-        res.update(propagate_uom=get_param("stock.propagate_uom", "0") == "1")
+        res.update(propagate_uom=self.env["ir.config_parameter"].sudo().get_bool("stock.propagate_uom"))
         return res
 
     def set_values(self):
         super().set_values()
-        set_param = self.env["ir.config_parameter"].sudo().set_param
-        set_param("stock.propagate_uom", repr(1 if self.propagate_uom else 0))
+        self.env["ir.config_parameter"].sudo().set_bool("stock.propagate_uom", self.propagate_uom)

@@ -14,22 +14,24 @@ class TestForecastOtherSalesman(TransactionCase):
         self.product_so = self._make_product("Producto de la OV")
         self.product_manual = self._make_product("Producto agregado al remito")
         self.salesman_a = self._make_salesman("salesman_a_127167")
-        self.salesman_b = self._make_salesman("salesman_b_127167")
+        # En 20 "Usuario de inventario" lee todas las ventas (sale_stock/security/ir.access.csv), así que el
+        # error queda para el vendedor que no tiene ese grupo.
+        self.salesman_b = self._make_salesman("salesman_b_127167", stock_user=False)
 
     def _make_product(self, name):
         return self.env["product.product"].create({"name": name, "type": "consu", "is_storable": True})
 
-    def _make_salesman(self, login):
+    def _make_salesman(self, login, stock_user=True):
+        groups = [Command.link(self.env.ref("sales_team.group_sale_salesman").id)]
+        if stock_user:
+            groups.append(Command.link(self.env.ref("stock.group_stock_user").id))
         return self.env["res.users"].create(
             {
                 "name": login,
                 "login": login,
                 "company_id": self.env.company.id,
                 "company_ids": [Command.set([self.env.company.id])],
-                "group_ids": [
-                    Command.link(self.env.ref("sales_team.group_sale_salesman").id),
-                    Command.link(self.env.ref("stock.group_stock_user").id),
-                ],
+                "group_ids": groups,
             }
         )
 

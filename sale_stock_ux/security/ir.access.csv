@@ -1,3 +1,2 @@
 id,name,model_id,group_id/id,operation,domain
-access_stock_return_picking_wizard,access_stock_return_picking_wizard,stock.return.picking,base.group_user,cru,
 access_sale_order_cancel_remaining_wizard,access_sale_order_cancel_remaining_wizard,sale.order.cancel.remaining,base.group_user,cru,

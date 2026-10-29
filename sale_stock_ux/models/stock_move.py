@@ -46,10 +46,8 @@ class StockMove(models.Model):
         res = super()._get_new_picking_values()
         values = {}
         sale = self.mapped("sale_line_id.order_id")
-        propagate_internal_notes = (
-            self.env["ir.config_parameter"].sudo().get_param("sale.propagate_internal_notes") == "True"
-        )
-        propagate_note = self.env["ir.config_parameter"].sudo().get_param("sale.propagate_note") == "True"
+        propagate_internal_notes = self.env["ir.config_parameter"].sudo().get_bool("sale.propagate_internal_notes")
+        propagate_note = self.env["ir.config_parameter"].sudo().get_bool("sale.propagate_note")
         if propagate_internal_notes and sale.internal_notes:
             values["note"] = sale.internal_notes
         if propagate_note and sale.note:
