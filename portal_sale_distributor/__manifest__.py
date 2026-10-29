@@ -39,8 +39,7 @@
     ],
     "data": [
         "security/portal_sale_distributor_security.xml",
-        "security/res_partner_security.xml",
-        "security/ir.model.access.csv",
+        "security/ir.access.csv",
         "views/portal_my_account_views.xml",
         "views/portal_sale_views.xml",
         "views/sale_report_templates.xml",
