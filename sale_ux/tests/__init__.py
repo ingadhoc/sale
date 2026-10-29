@@ -4,3 +4,4 @@
 ##############################################################################
 from . import test_downpayment_rounding
 from . import test_report_product_image
+from . import test_locked_order_lines
