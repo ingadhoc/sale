@@ -6,9 +6,13 @@
         <field name="arch" type="xml">
             <form>
                 <field name="project_id" invisible="1"/>
+                <field name="has_linked_products" invisible="1"/>
                 <group>
                     <label for='project_id' string="Confirm Allow Billable Change"/>
-                    <p>Are you sure you want to change the 'Allow Billable' field to False for this project?</p>
+                    <div>
+                        <p>Are you sure you want to change the 'Allow Billable' field to False for this project?</p>
+                        <p invisible="not has_linked_products" class="text-warning">Making this project non-billable will unlink it from any products that create tasks in it or use it as a template.</p>
+                    </div>
                 </group>
                 <footer>
                     <button name="confirm_change" string="Yes, Change it" type="object" class="btn-primary"/>
