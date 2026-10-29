@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Portal Distributor Sale",
-    "version": "19.0.1.6.0",
+    "version": "20.0.1.0.0",
     "category": "Tools",
     "complexity": "easy",
     "author": "ADHOC SA, Odoo Community Association (OCA)",
@@ -50,6 +50,6 @@
             "portal_sale_distributor/static/src/js/user_menu_distributor.js",
         ],
     },
-    "installable": False,
+    "installable": True,
     "auto_install": False,
 }
