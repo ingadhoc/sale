@@ -2,28 +2,33 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo.tests import Form, TransactionCase, tagged
+from odoo.tests import TransactionCase, tagged
 
 
 @tagged("post_install", "-at_install")
 class TestReturnExchangeDemand(TransactionCase):
-    """Regresion ticket 120871.
+    """Devoluciones y cambios con el flujo de Odoo 20 (albarán de devolución y botón Exchange).
 
-    Sobre una OV entregada, una 1ra devolucion con reembolso deja
-    ``quantity_returned > 0``. El HACK de ``stock.move.create`` restaba esa
-    cantidad a TODO move nuevo con ``sale_line_id``, corrompiendo la demanda de
-    la 2da operacion (otra devolucion o una devolucion para cambio):
-    nacian con ``demanda = cantidad - quantity_returned`` en vez de la cantidad
-    pedida. El fix acota el descuento a entregas genuinas.
+    Regresión ticket 120871: una 2da devolución no debe nacer con su demanda
+    descontada por lo ya devuelto. Y un cambio (Exchange) vuelve a entregar lo
+    devuelto, así que lo entregado vuelve a subir.
     """
 
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.product = cls.env["product.product"].create(
-            {"name": "Test Return Product", "list_price": 100.0, "type": "consu", "is_storable": True}
+            {
+                "name": "Test Return Product",
+                "list_price": 100.0,
+                "type": "consu",
+                "is_storable": True,
+                "invoice_policy": "order",
+            }
         )
         cls.partner = cls.env["res.partner"].create({"name": "Test Return Partner", "customer_rank": 1})
+        warehouse = cls.env["stock.warehouse"].search([("company_id", "=", cls.env.company.id)], limit=1)
+        cls.env["stock.quant"]._update_available_quantity(cls.product, warehouse.lot_stock_id, 100.0)
         # evitar errores de reglas de excepcion en runbot
         if cls.env["sale.order"]._fields.get("ignore_exception"):
             cls.env["exception.rule"].search([("active", "=", True)]).write({"active": False})
@@ -39,66 +44,86 @@ class TestReturnExchangeDemand(TransactionCase):
         return order
 
     def _validate(self, picking):
+        picking.action_confirm()
+        picking.action_assign()
         for move in picking.move_ids:
             move.quantity = move.product_uom_qty
         picking.move_ids.picked = True
         picking._action_done()
 
-    def _return_wizard(self, picking, qty, to_refund):
-        wizard = Form(
-            self.env["stock.return.picking"].with_context(
-                active_id=picking.id, active_ids=picking.ids, active_model="stock.picking"
-            )
-        ).save()
-        wizard.product_return_moves.quantity = qty
-        wizard.product_return_moves.to_refund = to_refund
-        return wizard
+    def _return(self, picking, qty):
+        returned = self.env["stock.picking"].browse(picking.action_return()["res_id"])
+        returned.move_ids.product_uom_qty = qty
+        return returned
 
     def test_second_return_demand(self):
-        """1ra devolucion con reembolso (2u) + 2da devolucion (3u): la 2da debe
-        nacer con demanda 3, no 3 - 2."""
+        """1ra devolucion (2u) + 2da devolucion (3u): la 2da debe nacer con demanda 3, no 3 - 2."""
         order = self._new_order(qty=10)
         delivery = order.picking_ids
         self._validate(delivery)
 
-        # 1ra devolucion 2u con reembolso -> quantity_returned = 2
-        first = self._return_wizard(delivery, qty=2, to_refund=True)
-        first_pick = self.env["stock.picking"].browse(first.action_create_returns()["res_id"])
-        self._validate(first_pick)
+        self._validate(self._return(delivery, qty=2))
         self.assertEqual(order.order_line.quantity_returned, 2.0)
 
-        # 2da devolucion 3u sobre la misma entrega
-        second = self._return_wizard(delivery, qty=3, to_refund=True)
-        second_pick = self.env["stock.picking"].browse(second.action_create_returns()["res_id"])
+        second = self._return(delivery, qty=3)
+        self.assertEqual(second.move_ids.product_uom_qty, 3.0)
 
+    def test_return_then_exchange(self):
+        """Devolver 2u y cambiarlas: lo entregado baja y vuelve a subir."""
+        order = self._new_order(qty=10)
+        line = order.order_line
+        delivery = order.picking_ids
+        self._validate(delivery)
+
+        returned = self._return(delivery, qty=2)
+        self._validate(returned)
+        self.assertEqual(line.qty_delivered, 8.0)
+        self.assertEqual(line.quantity_returned, 2.0)
+
+        exchange = self.env["stock.picking"].browse(returned.action_exchange()["res_id"])
         self.assertEqual(
-            second_pick.move_ids.product_uom_qty,
-            3.0,
-            "La 2da devolucion debe pedir 3u; el hack la dejaba en 3 - quantity_returned.",
+            exchange.move_ids.product_uom_qty,
+            2.0,
+            "El cambio debe pedir 2u; el hack lo dejaba en 2 - quantity_returned.",
         )
+        self._validate(exchange)
+        self.assertEqual(line.qty_delivered, 10.0)
+        self.assertEqual(line.delivery_status, "full")
 
-    def test_return_then_exchange_demand(self):
-        """1ra devolucion con reembolso (2u) + devolucion para cambio (3u): los
-        moves de cambio deben nacer con demanda 3, no 3 - 2."""
+    def _increase_after_exchange(self, validate_exchange):
         order = self._new_order(qty=10)
+        line = order.order_line
         delivery = order.picking_ids
         self._validate(delivery)
+        returned = self._return(delivery, qty=2)
+        self._validate(returned)
+        exchange = self.env["stock.picking"].browse(returned.action_exchange()["res_id"])
+        if validate_exchange:
+            self._validate(exchange)
+        moves_before = line.move_ids
 
-        # 1ra devolucion 2u con reembolso -> quantity_returned = 2
-        first = self._return_wizard(delivery, qty=2, to_refund=True)
-        first_pick = self.env["stock.picking"].browse(first.action_create_returns()["res_id"])
-        self._validate(first_pick)
-        self.assertEqual(order.order_line.quantity_returned, 2.0)
+        line.product_uom_qty = 11
 
-        # devolucion para cambio 3u (to_refund debe quedar False para crear cambios)
-        exchange = self._return_wizard(delivery, qty=3, to_refund=False)
-        exchange.action_create_exchanges()
-
-        exchange_moves = order.order_line.move_ids.filtered(lambda m: m.is_exchange_move)
-        self.assertTrue(exchange_moves, "Deberian existir movimientos marcados como cambio.")
-        for move in exchange_moves:
-            self.assertEqual(
-                move.product_uom_qty,
-                3.0,
-                "Los movimientos de cambio deben pedir 3u; el hack los dejaba en 3 - quantity_returned.",
+        new_moves = line.move_ids - moves_before
+        if validate_exchange:
+            # Sin entregas pendientes la línea abre una entrega nueva por la unidad agregada.
+            self.assertEqual(len(new_moves), 1)
+            pending = new_moves
+        else:
+            # Con el cambio pendiente, Odoo suma la unidad a esa entrega.
+            pending = line.move_ids.filtered(
+                lambda m: m.state not in ("done", "cancel") and m.location_dest_id.usage == "customer"
             )
+        self.assertFalse(
+            line.move_ids.filtered(lambda m: m.state != "cancel" and m.location_id.usage == "customer")
+            - returned.move_ids,
+            "Subir la cantidad no debe crear una recepción desde el cliente.",
+        )
+        self.assertEqual(sum(pending.mapped("product_uom_qty")), 1.0 if validate_exchange else 3.0)
+
+    def test_increase_after_exchange_delivers(self):
+        """Subir la cantidad después de un cambio entrega la unidad nueva (no crea una recepción)."""
+        self._increase_after_exchange(validate_exchange=True)
+
+    def test_increase_with_pending_exchange_delivers(self):
+        self._increase_after_exchange(validate_exchange=False)

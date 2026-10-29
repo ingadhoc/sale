@@ -1,0 +1,93 @@
+from odoo import Command
+from odoo.tests import TransactionCase, tagged
+
+
+@tagged("post_install", "-at_install")
+class TestForecastOtherSalesman(TransactionCase):
+    """Ticket 127167: el pronosticado no debe romper por una OV de otro vendedor."""
+
+    def setUp(self):
+        super().setUp()
+        self.warehouse = self.env["stock.warehouse"].search([("company_id", "=", self.env.company.id)], limit=1)
+        self.customer_location = self.env.ref("stock.stock_location_customers")
+        self.partner = self.env["res.partner"].create({"name": "Cliente pronosticado", "customer_rank": 1})
+        self.product_so = self._make_product("Producto de la OV")
+        self.product_manual = self._make_product("Producto agregado al remito")
+        self.salesman_a = self._make_salesman("salesman_a_127167")
+        # En 20 "Usuario de inventario" lee todas las ventas (sale_stock/security/ir.access.csv), así que el
+        # error queda para el vendedor que no tiene ese grupo.
+        self.salesman_b = self._make_salesman("salesman_b_127167", stock_user=False)
+
+    def _make_product(self, name):
+        return self.env["product.product"].create({"name": name, "type": "consu", "is_storable": True})
+
+    def _make_salesman(self, login, stock_user=True):
+        groups = [Command.link(self.env.ref("sales_team.group_sale_salesman").id)]
+        if stock_user:
+            groups.append(Command.link(self.env.ref("stock.group_stock_user").id))
+        return self.env["res.users"].create(
+            {
+                "name": login,
+                "login": login,
+                "company_id": self.env.company.id,
+                "company_ids": [Command.set([self.env.company.id])],
+                "group_ids": groups,
+            }
+        )
+
+    def test_forecast_with_move_without_sale_line(self):
+        order = self.env["sale.order"].create(
+            {
+                "partner_id": self.partner.id,
+                "user_id": self.salesman_a.id,
+                "warehouse_id": self.warehouse.id,
+                "order_line": [Command.create({"product_id": self.product_so.id, "product_uom_qty": 3})],
+            }
+        )
+        # Armado a mano y no con action_confirm: el caso no depende de excepciones ni de rutas.
+        picking = self.env["stock.picking"].create(
+            {
+                "picking_type_id": self.warehouse.out_type_id.id,
+                "partner_id": self.partner.id,
+                "location_id": self.warehouse.lot_stock_id.id,
+                "location_dest_id": self.customer_location.id,
+            }
+        )
+        move_vals = {
+            "picking_id": picking.id,
+            "location_id": picking.location_id.id,
+            "location_dest_id": picking.location_dest_id.id,
+            "company_id": picking.company_id.id,
+        }
+        # picking.sale_id is computed from the moves' sale lines, so the picking needs one SO move.
+        self.env["stock.move"].create(
+            {
+                **move_vals,
+                "product_id": self.product_so.id,
+                "product_uom_qty": 3,
+                "sale_line_id": order.order_line.id,
+            }
+        )
+        move = self.env["stock.move"].create(
+            {
+                **move_vals,
+                "product_id": self.product_manual.id,
+                "product_uom_qty": 2,
+            }
+        )
+        picking.action_confirm()
+        self.assertEqual(picking.sale_id, order)
+        self.assertFalse(move.sale_line_id)
+
+        self.assertFalse(order.with_user(self.salesman_b).has_access("read"))
+
+        # La caché tiene la OV cargada como superusuario; sin invalidar no se ejerce la regla.
+        self.env.invalidate_all()
+        report = (
+            self.env["stock.forecasted_product_product"]
+            .with_user(self.salesman_b)
+            .with_context(warehouse=self.warehouse.id)
+        )
+        lines = report.get_report_values(docids=self.product_manual.ids)["docs"]["lines"]
+        self.assertEqual(len(lines), 1)
+        self.assertEqual(lines[0]["move_out"]["picking_id"]["sale_id"]["id"], order.id)

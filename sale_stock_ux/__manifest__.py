@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Sale Stock UX",
-    "version": "19.0.1.7.0",
+    "version": "20.0.1.0.0",
     "category": "Sales",
     "sequence": 14,
     "summary": "",
@@ -35,25 +35,21 @@
         "product_stock_by_location",
     ],
     "data": [
-        "security/ir.model.access.csv",
+        "security/ir.access.csv",
         "views/sale_order_views.xml",
         "views/sale_order_line_views.xml",
         "views/stock_move_views.xml",
         "wizards/sale_order_cancel_remaining.xml",
-        "wizards/stock_return_picking_views.xml",
         "wizards/res_config_settings_views.xml",
     ],
     "assets": {
-        "web.assets_qweb": [
-            "sale_stock_ux/static/src/xml/*.xml",
-        ],
         "web.assets_backend": [
             "sale_stock_ux/static/src/widgets/qty_at_date_widget.xml",
         ],
     },
     "demo": [],
     "test": [],
-    "installable": False,
+    "installable": True,
     "auto_install": ["sale_stock", "sale_ux", "stock_ux", "web"],
     "application": False,
 }

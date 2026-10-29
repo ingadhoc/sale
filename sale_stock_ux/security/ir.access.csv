@@ -1,0 +1,2 @@
+id,name,model_id,group_id/id,operation,domain
+access_sale_order_cancel_remaining_wizard,access_sale_order_cancel_remaining_wizard,sale.order.cancel.remaining,base.group_user,cru,

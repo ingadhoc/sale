@@ -16,20 +16,19 @@ Sale Stock UX
 
 Several Improvements to sales:
 
-#. Shows delivery status in the sale tree view..
-#. Add filter related to the delivery status for sale orders and sales order lines views.
-#. Add a filter name "Pickings" in sale order view to search by delivery order name.
-#. Add field "qty_to_deliver" in the sale lines view.G
+#. Shows delivery status in the sale tree view.
+#. Computes the native "To Deliver" filter (and its dashboard card) with the delivery status of the lines, which discounts returns and respects the forced delivery status. Adds "Fully Delivered" and "With Returns" filters on sale orders, and "To Deliver" and "Fully Delivered" filters on sales order lines.
+#. Add field "qty_to_deliver" in the sale lines view.
 #. Add new field on order lines called "quantity_returned" and also implement refunds for products with invoicing policy "ordered" taking into account the returned quantity.
 #. Block cancelation of sale order if there are pickings in 'done' state.
-#. Add button on sale lines to allow cancelling of remaining qty to be delivered.
+#. Add button on sale lines to allow cancelling of remaining qty to be delivered, and an action to cancel the remaining quantities of several sale orders at once.
 #. Block decreasing quantity on sale lines when there is a delivery linked.
 #. Integrate delivery status with returns logic.
 #. Propagate Internal Notes from SO to pickings.
-#. Add procurement group field on sale orders for technical features.
 #. Add selection field to force "Delivery" status of a sale order, available only for admin with tecH features.
 #. Add parameter in settings to propagate the UoM from the sale order to the picking.
 #. Add the information of the stock available by location in the forecast widget at the sale order line.
+#. Add a "Sale Order" smart button on stock moves linked to a sale order.
 
 IMPORTANT:
 ----------

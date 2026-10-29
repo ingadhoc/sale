@@ -7,64 +7,112 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 19.0+e\n"
+"Project-Id-Version: Odoo Server 20.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-17 20:25+0000\n"
-"PO-Revision-Date: 2025-12-13 16:10+0000\n"
-"Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
-"Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
-"sale-19-0-sale_stock_ux/es/>\n"
+"POT-Creation-Date: 2026-10-29 18:11+0000\n"
+"PO-Revision-Date: 2026-10-29 18:11+0000\n"
+"Last-Translator: Florencia Frigieri <ffp@adhoc.inc>\n"
+"Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-20-0/sale-20-0-sale_stock_ux/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
-"0) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0) ? 1 : 2);\n"
 "X-Generator: Weblate 5.10.4\n"
 
 #. module: sale_stock_ux
-#: model_terms:ir.ui.view,arch_db:sale_stock_ux.sale_order_cancel_remaining_form
+#: model:ir.module.module,description:base.module_sale_stock_ux
 msgid ""
-"'Do you want to cancel remaining quantities for this orders? This can´t be "
-"undone'"
+".. |company| replace:: ADHOC SA\n"
+"\n"
+".. |company_logo| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-logo.png\n"
+"   :alt: ADHOC SA\n"
+"   :target: https://www.adhoc.com.ar\n"
+"\n"
+".. |icon| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-icon.png\n"
+"\n"
+".. image:: https://img.shields.io/badge/license-AGPL--3-blue.png\n"
+"   :target: https://www.gnu.org/licenses/agpl\n"
+"   :alt: License: AGPL-3\n"
+"\n"
+"=============\n"
+"Sale Stock UX\n"
+"=============\n"
+"\n"
+"Several Improvements to sales:\n"
+"\n"
+"#. Shows delivery status in the sale tree view.\n"
+"#. Computes the native \"To Deliver\" filter (and its dashboard card) with the delivery status of the lines, which discounts returns and respects the forced delivery status. Adds \"Fully Delivered\" and \"With Returns\" filters on sale orders, and \"To Deliver\" and \"Fully Delivered\" filters on sales order lines.\n"
+"#. Add field \"qty_to_deliver\" in the sale lines view.\n"
+"#. Add new field on order lines called \"quantity_returned\" and also implement refunds for products with invoicing policy \"ordered\" taking into account the returned quantity.\n"
+"#. Block cancelation of sale order if there are pickings in 'done' state.\n"
+"#. Add button on sale lines to allow cancelling of remaining qty to be delivered, and an action to cancel the remaining quantities of several sale orders at once.\n"
+"#. Block decreasing quantity on sale lines when there is a delivery linked.\n"
+"#. Integrate delivery status with returns logic.\n"
+"#. Propagate Internal Notes from SO to pickings.\n"
+"#. Add selection field to force \"Delivery\" status of a sale order, available only for admin with tecH features.\n"
+"#. Add parameter in settings to propagate the UoM from the sale order to the picking.\n"
+"#. Add the information of the stock available by location in the forecast widget at the sale order line.\n"
+"#. Add a \"Sale Order\" smart button on stock moves linked to a sale order.\n"
+"\n"
+"IMPORTANT:\n"
+"----------\n"
+"* This module could break some warnings as the ones implemented by 'warning' module\n"
+"* If you dont disable warning and give a user availbility to see only 'true/false' on sale order stock, he can see stock if the warning is raised\n"
+"\n"
+"Installation\n"
+"============\n"
+"\n"
+"To install this module, you need to:\n"
+"\n"
+"#. Only need to install the module\n"
+"\n"
+"Configuration\n"
+"=============\n"
+"\n"
+"To configure this module, you need to:\n"
+"\n"
+"#. Nothing to configure\n"
+"\n"
+"Usage\n"
+"=====\n"
+"\n"
+"To use this module, you need to:\n"
+"\n"
+"#. If you want to add a product to the sales order line, the warning appears, if the stock of this product is less than the amount set.\n"
+"\n"
+".. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas\n"
+"   :alt: Try me on Runbot\n"
+"   :target: http://runbot.adhoc.com.ar/\n"
+"\n"
+"Bug Tracker\n"
+"===========\n"
+"\n"
+"Bugs are tracked on `GitHub Issues\n"
+"<https://github.com/ingadhoc/sale/issues>`_. In case of trouble, please\n"
+"check there if your issue has already been reported. If you spotted it first,\n"
+"help us smashing it by providing a detailed and welcomed feedback.\n"
+"\n"
+"Credits\n"
+"=======\n"
+"\n"
+"Images\n"
+"------\n"
+"\n"
+"* |company| |icon|\n"
+"\n"
+"Contributors\n"
+"------------\n"
+"\n"
+"Maintainer\n"
+"----------\n"
+"\n"
+"|company_logo|\n"
+"\n"
+"This module is maintained by the |company|.\n"
+"\n"
+"To contribute to this module, please visit https://www.adhoc.com.ar.\n"
 msgstr ""
-"¿Queres cancelar las cantidades remanentes para estas ordenes? Esto no puede "
-"deshacerse"
-
-#. module: sale_stock_ux
-#: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_stock_return_picking_form
-msgid ""
-"<b>Está marcado</b>: entonces <b>se va</b> a actualizar la OC/OV "
-"considerando que los productos devueltos no se van a volver a entregar, y "
-"por ende, permitiendo hacer una nota de crédito si los items ya fueron "
-"facturados, o tener en cuenta esta devolución al hacer la factura."
-msgstr ""
-"<b>Está marcado</b>: entonces <b>se va</b> a actualizar la OC/OV "
-"considerando que los productos devueltos no se van a volver a entregar, y "
-"por ende, permitiendo hacer una nota de crédito si los items ya fueron "
-"facturados, o tener en cuenta esta devolución al hacer la factura."
-
-#. module: sale_stock_ux
-#: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_stock_return_picking_form
-msgid ""
-"<b>Importante</b>: si está haciendo un movimiento inverso relacionado a un "
-"Pedido de Venta o de Compra, entonces debe prestar atención al campo "
-"<b>\"Para Abonar (actualizar OC/OV)\"</b>, donde, si:"
-msgstr ""
-"<b>Importante</b>: si está haciendo un movimiento inverso relacionado a un "
-"Pedido de Venta o de Compra, entonces debe prestar atención al campo "
-"<b>\"Para Abonar (actualizar OC/OV)\"</b>, donde, si:"
-
-#. module: sale_stock_ux
-#: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_stock_return_picking_form
-msgid ""
-"<b>No está marcado</b>: entonces <b>no se va</b> a actualizar la OC/OV. Esto "
-"es común, por ejemplo, si se devuelve mercadería defectuosa y se pretende "
-"hacer una nueva entrega de la misma."
-msgstr ""
-"<b>No está marcado</b>: entonces <b>no se va</b> a actualizar la OC/OV. Esto "
-"es común, por ejemplo, si se devuelve mercadería defectuosa y se pretende "
-"hacer una nueva entrega de la misma."
 
 #. module: sale_stock_ux
 #: model:ir.model.fields,field_description:sale_stock_ux.field_sale_order_line__all_qty_delivered
@@ -78,9 +126,9 @@ msgid ""
 "            Orange: Partially Delivered\n"
 "            Green: Fully Delivered"
 msgstr ""
-"Azul: no entregado/iniciado\n"
-"            Naranja: parcialmente entregado\n"
-"            Verde: totalmente entregado"
+"Azul: Sin entregar/Entrega en curso\n"
+"            Naranja: Entregado de forma parcial\n"
+"            Verde: Entregado"
 
 #. module: sale_stock_ux
 #: model_terms:ir.ui.view,arch_db:sale_stock_ux.sale_order_cancel_remaining_form
@@ -91,7 +139,8 @@ msgstr "Cancelar"
 #. odoo-python
 #: code:addons/sale_stock_ux/models/sale_order_line.py:0
 msgid ""
-"Cancel remaining call for line \"%s\" (id %s), line qty updated from %s to %s"
+"Cancel remaining call for line \"%s\" (id %s), line qty updated from %s to "
+"%s"
 msgstr ""
 "Cancelar remanente para linea \"%s\" (id %s), actualizada la cantidad de la "
 "linea desde %s a %s"
@@ -99,12 +148,11 @@ msgstr ""
 #. module: sale_stock_ux
 #: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_order_form
 msgid ""
-"Cancel remaining quanitity to be delivered. This will set line quantity "
-"equal to delivered qty and will cancel remaining moves"
+"Cancel remaining quantity to be delivered. This will set line quantity equal"
+" to delivered qty and will cancel remaining moves"
 msgstr ""
-"Cancelar cantidades pendientes de entregar. Al hacer click en el botón se "
-"ejecutará una acción que disminuirá la cantidad a vender igualándola con la "
-"cantidad entregada y cancelará los movimientos restantes."
+"Cancelar la cantidad remanente a entregar. La cantidad de la línea pasará a "
+"ser igual a la entregada y se cancelarán los movimientos pendientes"
 
 #. module: sale_stock_ux
 #: model:ir.model,name:sale_stock_ux.model_res_config_settings
@@ -130,19 +178,17 @@ msgstr "Creado en"
 #: model:ir.model.fields,field_description:sale_stock_ux.field_sale_order__delivery_status
 #: model:ir.model.fields,field_description:sale_stock_ux.field_sale_order_line__delivery_status
 msgid "Delivery Status"
-msgstr "Estado de entrega"
+msgstr "Estado de la entrega"
 
 #. module: sale_stock_ux
 #: model:ir.model.fields,field_description:sale_stock_ux.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:sale_stock_ux.field_sale_order__display_name
 #: model:ir.model.fields,field_description:sale_stock_ux.field_sale_order_cancel_remaining__display_name
 #: model:ir.model.fields,field_description:sale_stock_ux.field_sale_order_line__display_name
+#: model:ir.model.fields,field_description:sale_stock_ux.field_stock_forecasted_product_product__display_name
 #: model:ir.model.fields,field_description:sale_stock_ux.field_stock_move__display_name
-#: model:ir.model.fields,field_description:sale_stock_ux.field_stock_return_picking__display_name
-#: model:ir.model.fields,field_description:sale_stock_ux.field_stock_return_picking_line__display_name
-#: model:ir.model.fields,field_description:sale_stock_ux.field_stock_rule__display_name
 msgid "Display Name"
-msgstr "Nombre"
+msgstr "Mostrar nombre"
 
 #. module: sale_stock_ux
 #: model:ir.model.fields,help:sale_stock_ux.field_sale_order_line__all_qty_delivered
@@ -177,12 +223,10 @@ msgstr "Completamente Entregado"
 #: model:ir.model.fields,field_description:sale_stock_ux.field_sale_order__id
 #: model:ir.model.fields,field_description:sale_stock_ux.field_sale_order_cancel_remaining__id
 #: model:ir.model.fields,field_description:sale_stock_ux.field_sale_order_line__id
+#: model:ir.model.fields,field_description:sale_stock_ux.field_stock_forecasted_product_product__id
 #: model:ir.model.fields,field_description:sale_stock_ux.field_stock_move__id
-#: model:ir.model.fields,field_description:sale_stock_ux.field_stock_return_picking__id
-#: model:ir.model.fields,field_description:sale_stock_ux.field_stock_return_picking_line__id
-#: model:ir.model.fields,field_description:sale_stock_ux.field_stock_rule__id
 msgid "ID"
-msgstr "Id"
+msgstr "ID (identificación)"
 
 #. module: sale_stock_ux
 #: model:ir.model.fields,field_description:sale_stock_ux.field_stock_move__is_exchange_move
@@ -236,22 +280,7 @@ msgstr "Pedido de venta"
 #. odoo-python
 #: code:addons/sale_stock_ux/models/sale_order_line.py:0
 msgid "Ordered quantity decreased!"
-msgstr "La cantidad ordenada disminyó!"
-
-#. module: sale_stock_ux
-#: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_stock_return_picking_form
-msgid "Para Abonar (actualizar OC/OV)"
-msgstr "Para Abonar (actualizar OC/OV)"
-
-#. module: sale_stock_ux
-#: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_sales_order_filter
-msgid "Pedidos de venta con devoluciones facturables"
-msgstr "Pedidos de venta con devoluciones facturables"
-
-#. module: sale_stock_ux
-#: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_sales_order_filter
-msgid "Pickings"
-msgstr "Traslado/Transferencia"
+msgstr "La cantidad ordenada disminuyó!"
 
 #. module: sale_stock_ux
 #: model:ir.model.fields,field_description:sale_stock_ux.field_res_config_settings__propagate_uom
@@ -263,22 +292,6 @@ msgstr "Propagar unidad de medida"
 #: code:addons/sale_stock_ux/static/src/widgets/qty_at_date_widget.xml:0
 msgid "Quantity"
 msgstr "Cantidad"
-
-#. module: sale_stock_ux
-#. odoo-javascript
-#: code:addons/sale_stock_ux/static/src/xml/reserved_quantity.xml:0
-msgid "Reservado"
-msgstr "Reservado"
-
-#. module: sale_stock_ux
-#: model:ir.model,name:sale_stock_ux.model_stock_return_picking
-msgid "Return Picking"
-msgstr "Albarán de devolución"
-
-#. module: sale_stock_ux
-#: model:ir.model,name:sale_stock_ux.model_stock_return_picking_line
-msgid "Return Picking Line"
-msgstr "Línea de albarán de devolución"
 
 #. module: sale_stock_ux
 #: model:ir.model.fields,field_description:sale_stock_ux.field_sale_order_line__quantity_returned
@@ -302,9 +315,9 @@ msgid "Sale Order Line"
 msgstr "Línea de Orden de Venta"
 
 #. module: sale_stock_ux
-#: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_sales_order_filter
-msgid "Sale orders that include lines not delivered."
-msgstr "Ordenes de venta que incluyen líneas no entregadas."
+#: model:ir.module.module,shortdesc:base.module_sale_stock_ux
+msgid "Sale Stock UX"
+msgstr "Sale Stock UX"
 
 #. module: sale_stock_ux
 #: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_sales_order_filter
@@ -312,23 +325,19 @@ msgid "Sale orders with all lines delivered."
 msgstr "Pedidos de venta con todas las líneas entregadas."
 
 #. module: sale_stock_ux
+#: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_sales_order_filter
+msgid "Sale orders with returns to be credited."
+msgstr "Órdenes de venta con devoluciones para acreditar."
+
+#. module: sale_stock_ux
 #: model:ir.model,name:sale_stock_ux.model_sale_order
 msgid "Sales Order"
-msgstr "Pedido de venta"
+msgstr "Orden de venta"
 
 #. module: sale_stock_ux
 #: model:ir.model,name:sale_stock_ux.model_sale_order_line
 msgid "Sales Order Line"
-msgstr "Línea de pedido de venta"
-
-#. module: sale_stock_ux
-#: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_stock_return_picking_form
-msgid ""
-"Si la devolución no está ligada a una OC/OV entonces este campo no repercute "
-"en nada."
-msgstr ""
-"Si la devolución no está ligada a una OC/OV entonces este campo no repercute "
-"en nada."
+msgstr "Línea de la orden de venta"
 
 #. module: sale_stock_ux
 #: model:ir.model.fields,field_description:sale_stock_ux.field_sale_order_line__stock_by_location
@@ -341,15 +350,25 @@ msgid "Stock Move"
 msgstr "Movimiento de stock"
 
 #. module: sale_stock_ux
-#: model:ir.model,name:sale_stock_ux.model_stock_rule
-msgid "Stock Rule"
-msgstr "Regla de inventario"
+#: model:ir.model,name:sale_stock_ux.model_stock_forecasted_product_product
+msgid "Stock Replenishment Report"
+msgstr "Reporte de reabastecimiento de existencias"
 
 #. module: sale_stock_ux
 #. odoo-javascript
 #: code:addons/sale_stock_ux/static/src/widgets/qty_at_date_widget.xml:0
 msgid "Stock by Location"
 msgstr "Stock por Ubicación"
+
+#. module: sale_stock_ux
+#: model_terms:ir.ui.view,arch_db:sale_stock_ux.sale_order_cancel_remaining_form
+msgid ""
+"The quantity of every line still to deliver will be set to the delivered "
+"quantity and its pending moves will be cancelled. This cannot be undone."
+msgstr ""
+"La cantidad de cada línea pendiente de entrega pasará a ser igual a la "
+"cantidad entregada y se cancelarán sus movimientos pendientes. Esta acción "
+"no se puede deshacer."
 
 #. module: sale_stock_ux
 #: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_order_form
@@ -363,15 +382,9 @@ msgstr ""
 
 #. module: sale_stock_ux
 #: model:ir.model.fields.selection,name:sale_stock_ux.selection__sale_order_line__delivery_status__to_deliver
-#: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_sales_order_filter
 #: model_terms:ir.ui.view,arch_db:sale_stock_ux.view_sales_order_line_filter
 msgid "To Deliver"
 msgstr "A entregar"
-
-#. module: sale_stock_ux
-#: model:ir.model.fields,field_description:sale_stock_ux.field_sale_order_line__total_reserved_quantity
-msgid "Total Reserved Quantity"
-msgstr "Cantidad Total Reservada"
 
 #. module: sale_stock_ux
 #. odoo-python
@@ -400,21 +413,10 @@ msgstr "Con devoluciones"
 
 #. module: sale_stock_ux
 #. odoo-python
-#: code:addons/sale_stock_ux/wizards/stock_return_picking.py:0
-msgid "You cannot create exchanges for return lines marked to refund."
-msgstr ""
-"No se pueden crear intercambios para líneas de devolución marcadas para "
-"reembolso."
-
-#. module: sale_stock_ux
-#. odoo-python
 #: code:addons/sale_stock_ux/models/sale_order_line.py:0
 msgid ""
-"¡Está reduciendo la cantidad pedida! Recomendamos usar el botón para "
-"cancelar remanente y luego setear la cantidad deseada."
+"You are decreasing the ordered quantity! We recommend using the cancel "
+"remaining button and then setting the desired quantity."
 msgstr ""
 "¡Está reduciendo la cantidad pedida! Recomendamos usar el botón para "
-"cancelar remanente y luego setear la cantidad deseada."
-
-#~ msgid "No stock available"
-#~ msgstr "Sin stock disponible"
+"cancelar remanente y luego establecer la cantidad deseada."

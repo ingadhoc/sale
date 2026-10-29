@@ -37,6 +37,20 @@ class SaleOrder(models.Model):
         for order in self:
             order.with_returns = any(line.quantity_returned for line in order.order_line)
 
+    def _search_is_unfulfilled(self, operator, value):
+        """El filtro nativo "To Deliver" (y la tarjeta del tablero) compara lo entregado
+        contra lo pedido, así que una venta entregada con una devolución acreditada queda
+        como pendiente. Usamos el estado de entrega de las líneas, que descuenta las
+        devoluciones y respeta el estado forzado de la venta."""
+        if operator not in {"=", "!="}:
+            return NotImplemented
+        if (operator == "=" and value) or (operator == "!=" and not value):
+            effective_operator = "any"
+        else:
+            effective_operator = "not any"
+        line_domain = [("delivery_status", "=", "to deliver"), ("product_id.type", "!=", "service")]
+        return [("state", "=", "sale"), ("order_line", effective_operator, line_domain)]
+
     def _check_cancel_allowed(self):
         delivered = self.filtered(lambda order: order.picking_ids.filtered(lambda x: x.state == "done"))
         if delivered:
