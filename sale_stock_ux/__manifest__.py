@@ -35,7 +35,7 @@
         "product_stock_by_location",
     ],
     "data": [
-        "security/ir.model.access.csv",
+        "security/ir.access.csv",
         "views/sale_order_views.xml",
         "views/sale_order_line_views.xml",
         "views/stock_move_views.xml",
