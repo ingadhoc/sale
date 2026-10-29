@@ -116,6 +116,36 @@ class TestSaleOrderTypeAutomation(TestSaleCommon):
         self.assertEqual(order.state, "sale")
         self.assertTrue(order.locked)
 
+    def test_action_confirm_applies_each_order_type_when_confirming_together(self):
+        """Confirming orders of different types together runs the automation of each one."""
+        self.sale_type.write(
+            {
+                "invoicing_atomation": "create_invoice",
+                "picking_atomation": "none",
+                "set_done_on_confirmation": True,
+                "invoice_validate_domain": False,
+            }
+        )
+        other_type = self.sale_type.copy(
+            {
+                "name": "Test Sale Order Type Automation Other",
+                "invoicing_atomation": "none",
+                "picking_atomation": "none",
+                "set_done_on_confirmation": False,
+            }
+        )
+        order_with_automation = self._create_order()
+        order_without_automation = self._create_order(type_id=other_type.id)
+        orders = order_with_automation | order_without_automation
+
+        orders.action_confirm()
+
+        self.assertEqual(set(orders.mapped("state")), {"sale"})
+        self.assertTrue(order_with_automation.invoice_ids)
+        self.assertTrue(order_with_automation.locked)
+        self.assertFalse(order_without_automation.invoice_ids)
+        self.assertFalse(order_without_automation.locked)
+
     def test_validate_payment_automation_requires_payment_journal(self):
         with self.assertRaises(ValidationError):
             self.sale_type.write(

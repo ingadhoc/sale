@@ -247,8 +247,7 @@ class SaleOrder(models.Model):
             # because it's needed to return actions if exists
             picking_action = self.run_picking_automation()
             self.sudo().run_invoicing_atomation()
-            if self.type_id.set_done_on_confirmation:
-                self.action_lock()
+            self.filtered(lambda order: order.type_id.set_done_on_confirmation).action_lock()
             if isinstance(picking_action, dict) and isinstance(res, dict) and res.get("type") == "ir.actions.client":
                 params = dict(res.get("params") or {})
                 params["next"] = picking_action
