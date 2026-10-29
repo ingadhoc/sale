@@ -89,3 +89,41 @@ class TestReturnExchangeDemand(TransactionCase):
         self._validate(exchange)
         self.assertEqual(line.qty_delivered, 10.0)
         self.assertEqual(line.delivery_status, "full")
+
+    def _increase_after_exchange(self, validate_exchange):
+        order = self._new_order(qty=10)
+        line = order.order_line
+        delivery = order.picking_ids
+        self._validate(delivery)
+        returned = self._return(delivery, qty=2)
+        self._validate(returned)
+        exchange = self.env["stock.picking"].browse(returned.action_exchange()["res_id"])
+        if validate_exchange:
+            self._validate(exchange)
+        moves_before = line.move_ids
+
+        line.product_uom_qty = 11
+
+        new_moves = line.move_ids - moves_before
+        if validate_exchange:
+            # Sin entregas pendientes la línea abre una entrega nueva por la unidad agregada.
+            self.assertEqual(len(new_moves), 1)
+            pending = new_moves
+        else:
+            # Con el cambio pendiente, Odoo suma la unidad a esa entrega.
+            pending = line.move_ids.filtered(
+                lambda m: m.state not in ("done", "cancel") and m.location_dest_id.usage == "customer"
+            )
+        self.assertFalse(
+            line.move_ids.filtered(lambda m: m.state != "cancel" and m.location_id.usage == "customer")
+            - returned.move_ids,
+            "Subir la cantidad no debe crear una recepción desde el cliente.",
+        )
+        self.assertEqual(sum(pending.mapped("product_uom_qty")), 1.0 if validate_exchange else 3.0)
+
+    def test_increase_after_exchange_delivers(self):
+        """Subir la cantidad después de un cambio entrega la unidad nueva (no crea una recepción)."""
+        self._increase_after_exchange(validate_exchange=True)
+
+    def test_increase_with_pending_exchange_delivers(self):
+        self._increase_after_exchange(validate_exchange=False)

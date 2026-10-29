@@ -57,8 +57,26 @@ class SaleOrderLine(models.Model):
         # asi que no deberia restar en ese caso
         # Para suscripciones: NO restar quantity_returned (ya está en qty_delivered)
         if not self._check_is_recurring_invoice():
-            product_qty = product_qty - self.quantity_returned
+            # Lo que se volvió a entregar con el "Exchange" de Odoo 20 ya lo compensa _get_qty_procurement:
+            # restarlo otra vez deja la demanda en negativo y Odoo crea una recepción en vez de una entrega.
+            product_qty = product_qty - max(self.quantity_returned - self._get_exchange_qty(), 0.0)
         return super()._create_procurements(product_qty, procurement_uom, values)
+
+    def _get_exchange_qty(self):
+        """Cantidad que el "Exchange" de Odoo 20 vuelve a entregar: el albarán de salida que es
+        devolución de una devolución (``return_id``)."""
+        self.ensure_one()
+        exchange_moves = self.move_ids.filtered(
+            lambda m: m.state != "cancel" and m.location_dest_id.usage == "customer" and m.picking_id.return_id
+        )
+        return sum(
+            move.uom_id._compute_quantity(
+                move.quantity if move.state == "done" else move.product_uom_qty,
+                self.product_uom_id,
+                rounding_method="HALF-UP",
+            )
+            for move in exchange_moves
+        )
 
     @api.depends("qty_delivered", "quantity_returned")
     def _compute_all_qty_delivered(self):
