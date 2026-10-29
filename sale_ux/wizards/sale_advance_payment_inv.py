@@ -59,6 +59,11 @@ class SaleAdvancePaymentInvWizard(models.TransientModel):
         else:
             self.amount_total = self.amount
 
+    def _create_invoices(self, sale_orders):
+        # In batch, queue the per-invoice notifications instead of sending them by SMTP inside the request
+        wizard = self.with_context(mail_notify_force_send=False) if len(sale_orders) > 1 else self
+        return super(SaleAdvancePaymentInvWizard, wizard)._create_invoices(sale_orders)
+
     def _create_invoice(self, order, so_line, amount):
         invoice = super()._create_invoice(order=order, so_line=so_line, amount=amount)
         propagate_internal_notes = (
