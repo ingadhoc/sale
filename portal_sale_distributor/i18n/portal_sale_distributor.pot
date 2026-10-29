@@ -4,16 +4,98 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 19.0+e\n"
+"Project-Id-Version: Odoo Server 20.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-17 20:24+0000\n"
-"PO-Revision-Date: 2026-07-17 20:24+0000\n"
+"POT-Creation-Date: 2026-10-29 18:34+0000\n"
+"PO-Revision-Date: 2026-10-29 18:34+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: portal_sale_distributor
+#: model:ir.module.module,description:base.module_portal_sale_distributor
+msgid ""
+".. |company| replace:: ADHOC SA\n"
+"\n"
+".. |company_logo| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-logo.png\n"
+"   :alt: ADHOC SA\n"
+"   :target: https://www.adhoc.com.ar\n"
+"\n"
+".. |icon| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-icon.png\n"
+"\n"
+".. image:: https://img.shields.io/badge/license-AGPL--3-blue.png\n"
+"   :target: https://www.gnu.org/licenses/agpl\n"
+"   :alt: License: AGPL-3\n"
+"\n"
+"=======================\n"
+"Portal Distributor Sale\n"
+"=======================\n"
+"\n"
+"This module add an new group to use portal with only sale orders in backend.\n"
+"\n"
+"#. This module activate the option to manager discounts in sales.\n"
+"\n"
+"Installation\n"
+"============\n"
+"\n"
+"To install this module, you need to:\n"
+"\n"
+"#. Just install this module.\n"
+"\n"
+"Configuration\n"
+"=============\n"
+"\n"
+"To configure this module, you need to:\n"
+"\n"
+"#. Add users to the \"Portal - Distributor\" group.\n"
+"\n"
+"Usage\n"
+"=====\n"
+"\n"
+"To use this module, you need to:\n"
+"\n"
+"#. Log in with a user with the portal distributor group.\n"
+"\n"
+".. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas\n"
+"   :alt: Try me on Runbot\n"
+"   :target: http://runbot.adhoc.com.ar/\n"
+"\n"
+"Bug Tracker\n"
+"===========\n"
+"\n"
+"Bugs are tracked on `GitHub Issues\n"
+"<https://github.com/ingadhoc/sale/issues>`_. In case of trouble, please\n"
+"check there if your issue has already been reported. If you spotted it first,\n"
+"help us smashing it by providing a detailed and welcomed feedback.\n"
+"\n"
+"Credits\n"
+"=======\n"
+"\n"
+"Images\n"
+"------\n"
+"\n"
+"* |company| |icon|\n"
+"\n"
+"Contributors\n"
+"------------\n"
+"\n"
+"Maintainer\n"
+"----------\n"
+"\n"
+"|company_logo|\n"
+"\n"
+"This module is maintained by the |company|.\n"
+"\n"
+"To contribute to this module, please visit https://www.adhoc.com.ar.\n"
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_product_document__attached_on_sale
+msgid "Accessible"
+msgstr ""
 
 #. module: portal_sale_distributor
 #: model:ir.model,name:portal_sale_distributor.model_ir_actions_act_window
@@ -26,6 +108,11 @@ msgid "Add shipping"
 msgstr ""
 
 #. module: portal_sale_distributor
+#: model:res.groups.privilege,description:portal_sale_distributor.privilege_portal_sale_distributor
+msgid "Advanced sale distributor permissions"
+msgstr ""
+
+#. module: portal_sale_distributor
 #. odoo-python
 #: code:addons/portal_sale_distributor/controllers/portal_account.py:0
 msgid "All"
@@ -35,12 +122,10 @@ msgstr ""
 #: model:ir.model.fields,help:portal_sale_distributor.field_product_document__attached_on_sale
 msgid ""
 "Allows you to share the document with your customers within a sale.\n"
-"Leave it empty if you don't want to share this document with sales customer.\n"
-"On quote: the document will be sent to and accessible by customers at any time.\n"
+"From Quotation: the document will be sent to and accessible by customers at any time.\n"
 "e.g. this option can be useful to share Product description files.\n"
-"On order confirmation: the document will be sent to and accessible by customers.\n"
-"e.g. this option can be useful to share User Manual or digital content bought on ecommerce. \n"
-"Inside quote: The document will be included in the pdf of the quotation and sale order between the header pages and the quote table. "
+"On Order Confirmation: the document will be sent to and accessible by customers.\n"
+"e.g. this option can be useful to share User Manual or digital content bought on ecommerce. "
 msgstr ""
 
 #. module: portal_sale_distributor
@@ -78,12 +163,12 @@ msgstr ""
 
 #. module: portal_sale_distributor
 #: model:ir.model.fields,field_description:portal_sale_distributor.field_ir_actions_act_window__display_name
-#: model:ir.model.fields,field_description:portal_sale_distributor.field_ir_rule__display_name
 #: model:ir.model.fields,field_description:portal_sale_distributor.field_mail_thread__display_name
 #: model:ir.model.fields,field_description:portal_sale_distributor.field_product_catalog_mixin__display_name
 #: model:ir.model.fields,field_description:portal_sale_distributor.field_product_document__display_name
 #: model:ir.model.fields,field_description:portal_sale_distributor.field_product_pricelist_item__display_name
 #: model:ir.model.fields,field_description:portal_sale_distributor.field_product_product__display_name
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_product_template__display_name
 #: model:ir.model.fields,field_description:portal_sale_distributor.field_quotation_document__display_name
 #: model:ir.model.fields,field_description:portal_sale_distributor.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:portal_sale_distributor.field_res_partner__display_name
@@ -106,18 +191,19 @@ msgid "Email Thread"
 msgstr ""
 
 #. module: portal_sale_distributor
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_product_template__message_partner_ids
 #: model:ir.model.fields,field_description:portal_sale_distributor.field_sale_order__message_partner_ids
 msgid "Followers (Partners)"
 msgstr ""
 
 #. module: portal_sale_distributor
 #: model:ir.model.fields,field_description:portal_sale_distributor.field_ir_actions_act_window__id
-#: model:ir.model.fields,field_description:portal_sale_distributor.field_ir_rule__id
 #: model:ir.model.fields,field_description:portal_sale_distributor.field_mail_thread__id
 #: model:ir.model.fields,field_description:portal_sale_distributor.field_product_catalog_mixin__id
 #: model:ir.model.fields,field_description:portal_sale_distributor.field_product_document__id
 #: model:ir.model.fields,field_description:portal_sale_distributor.field_product_pricelist_item__id
 #: model:ir.model.fields,field_description:portal_sale_distributor.field_product_product__id
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_product_template__id
 #: model:ir.model.fields,field_description:portal_sale_distributor.field_quotation_document__id
 #: model:ir.model.fields,field_description:portal_sale_distributor.field_res_config_settings__id
 #: model:ir.model.fields,field_description:portal_sale_distributor.field_res_partner__id
@@ -155,6 +241,11 @@ msgid "Next Activity Deadline"
 msgstr ""
 
 #. module: portal_sale_distributor
+#: model:res.groups.privilege,placeholder:portal_sale_distributor.privilege_portal_sale_distributor
+msgid "No"
+msgstr ""
+
+#. module: portal_sale_distributor
 #. odoo-python
 #: code:addons/portal_sale_distributor/controllers/portal_account.py:0
 msgid "Open"
@@ -173,6 +264,11 @@ msgid "Pedido confirmado por %s"
 msgstr ""
 
 #. module: portal_sale_distributor
+#: model:ir.module.module,shortdesc:base.module_portal_sale_distributor
+msgid "Portal Distributor Sale"
+msgstr ""
+
+#. module: portal_sale_distributor
 #: model:res.groups,name:portal_sale_distributor.group_portal_backend_distributor
 #: model:res.groups.privilege,name:portal_sale_distributor.privilege_portal_sale_distributor
 msgid "Portal Sale Distributor"
@@ -186,6 +282,11 @@ msgstr ""
 #. module: portal_sale_distributor
 #: model:ir.model,name:portal_sale_distributor.model_product_pricelist_item
 msgid "Pricelist Rule"
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model:ir.model,name:portal_sale_distributor.model_product_template
+msgid "Product"
 msgstr ""
 
 #. module: portal_sale_distributor
@@ -214,16 +315,6 @@ msgid "Quotation's Headers & Footers"
 msgstr ""
 
 #. module: portal_sale_distributor
-#: model:ir.model,name:portal_sale_distributor.model_ir_rule
-msgid "Record Rule"
-msgstr ""
-
-#. module: portal_sale_distributor
-#: model:ir.model.fields,field_description:portal_sale_distributor.field_product_document__attached_on_sale
-msgid "Sale : Visible at"
-msgstr ""
-
-#. module: portal_sale_distributor
 #: model:ir.ui.menu,name:portal_sale_distributor.order_lines
 msgid "Sale Order Lines"
 msgstr ""
@@ -241,6 +332,11 @@ msgstr ""
 #. module: portal_sale_distributor
 #: model:ir.model,name:portal_sale_distributor.model_sale_order_line
 msgid "Sales Order Line"
+msgstr ""
+
+#. module: portal_sale_distributor
+#: model:ir.model.fields,field_description:portal_sale_distributor.field_sale_order__tag_ids
+msgid "Tags"
 msgstr ""
 
 #. module: portal_sale_distributor
