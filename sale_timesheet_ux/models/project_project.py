@@ -1,4 +1,4 @@
-from odoo import _, models
+from odoo import _, api, models
 
 
 class ProjectProject(models.Model):
@@ -16,6 +16,12 @@ class ProjectProject(models.Model):
                     for task in rec.task_ids:
                         task.order_id = task.sale_order_id
         return res
+
+    @api.onchange("partner_id")
+    def _onchange_partner_id(self):
+        # Billable is only switched off with the "Deactivate Billable" button
+        if self.partner_id:
+            super()._onchange_partner_id()
 
     def _compute_partner_id(self):
         for project in self:

@@ -8,6 +8,13 @@ class AllowBillableWizard(models.TransientModel):
     project_id = fields.Many2one(
         "project.project", string="Project", default=lambda self: self.default_get_project_id()
     )
+    has_linked_products = fields.Boolean(compute="_compute_has_linked_products")
+
+    @api.depends("project_id")
+    def _compute_has_linked_products(self):
+        for wizard in self:
+            project = wizard.project_id
+            wizard.has_linked_products = bool(project and project._fetch_linked_products(project.ids, limit=1))
 
     @api.model
     def default_get_project_id(self):

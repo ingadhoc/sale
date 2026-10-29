@@ -16,6 +16,11 @@
         "wizards/project_change_biillable_views.xml",
     ],
     "demo": [],
+    "assets": {
+        "web.assets_backend": [
+            "sale_timesheet_ux/static/src/**/*",
+        ],
+    },
     "application": False,
     "installable": True,
 }
