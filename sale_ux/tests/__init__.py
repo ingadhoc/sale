@@ -14,3 +14,4 @@ from . import test_product_pricelist
 from . import test_batch_invoice_notifications
 from . import test_downpayment_currency_rate
 from . import test_report_product_image
+from . import test_locked_order_lines

@@ -3,7 +3,6 @@
 # directory
 ##############################################################################
 from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError
 
 
 class SaleOrderLine(models.Model):
@@ -41,13 +40,6 @@ class SaleOrderLine(models.Model):
             "search_default_partner_id": 1,
         }
         return action
-
-    @api.model_create_multi
-    def create(self, vals_list):
-        lines = super().create(vals_list)
-        if lines.filtered(lambda x: x.order_id and x.order_id.state == "done"):
-            raise ValidationError(_("You cannot add lines to blocked sale orders."))
-        return lines
 
     def _get_protected_fields(self):
         return super()._get_protected_fields() + ["discount"]
