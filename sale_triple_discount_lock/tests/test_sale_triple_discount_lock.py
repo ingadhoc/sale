@@ -200,3 +200,18 @@ class TestSaleTripleDiscountLock(common.TransactionCase):
         self.assertAlmostEqual(self.so_line1.discount2, 10.0)
         self.assertAlmostEqual(section.discount2, 0.0)
         self.assertAlmostEqual(section.discount3, 0.0)
+
+    def test_09_discount1_is_readonly_on_the_order_views(self):
+        """The lock itself: discount1 cannot be typed in, on the list or the form."""
+        from lxml import etree
+
+        arch = etree.fromstring(self.env["sale.order"].get_view(view_type="form")["arch"])
+        for container in ("list", "form"):
+            nodes = arch.xpath(f"//field[@name='order_line']//{container}//field[@name='discount1']")
+            self.assertTrue(nodes, f"discount1 is not in the order line {container}")
+            for node in nodes:
+                self.assertEqual(
+                    node.get("readonly"),
+                    "True",
+                    f"discount1 is editable in the order line {container}",
+                )
