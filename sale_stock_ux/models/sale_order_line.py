@@ -15,14 +15,14 @@ class SaleOrderLine(models.Model):
         string="All Delivered",
         compute="_compute_all_qty_delivered",
         help="Everything delivered without discounting the returns",
-        digits="Product Unit of Measure",
+        digits="Product Unit",
     )
 
     quantity_returned = fields.Float(
         string="Returned Quantity",
         compute="_compute_quantity_returned",
         copy=False,
-        digits="Product Unit of Measure",
+        digits="Product Unit",
     )
 
     delivery_status = fields.Selection(
@@ -37,8 +37,6 @@ class SaleOrderLine(models.Model):
         copy=False,
         default="no",
     )
-
-    total_reserved_quantity = fields.Float(compute="_compute_total_reserved_quantity")
 
     stock_by_location = fields.Text(compute="_compute_stock_by_location")
 
@@ -62,27 +60,6 @@ class SaleOrderLine(models.Model):
             product_qty = product_qty - self.quantity_returned
         return super()._create_procurements(product_qty, procurement_uom, values)
 
-    @api.depends("product_id", "product_uom_qty")
-    def _compute_total_reserved_quantity(self):
-        # Batched: one grouped query per distinct warehouse stock location instead
-        # of a stock.quant search per line (avoids an N+1 on the order form load).
-        self.total_reserved_quantity = 0.0
-        lines = self.filtered(lambda line: line.product_id and line.order_id.warehouse_id.lot_stock_id)
-        for root_location, root_lines in lines.grouped(lambda line: line.order_id.warehouse_id.lot_stock_id).items():
-            reserved_by_product = {
-                product.id: reserved
-                for product, reserved in self.env["stock.quant"]._read_group(
-                    domain=[
-                        ("product_id", "in", root_lines.product_id.ids),
-                        ("location_id", "child_of", root_location.id),
-                    ],
-                    groupby=["product_id"],
-                    aggregates=["reserved_quantity:sum"],
-                )
-            }
-            for line in root_lines:
-                line.total_reserved_quantity = reserved_by_product.get(line.product_id.id, 0.0)
-
     @api.depends("qty_delivered", "quantity_returned")
     def _compute_all_qty_delivered(self):
         for rec in self:
@@ -93,10 +70,10 @@ class SaleOrderLine(models.Model):
         outgoing_moves, incoming_moves = self._get_outgoing_incoming_moves(strict=False)
         for move in outgoing_moves.filtered(lambda m: m.is_exchange_move):
             qty_to_compute = move.quantity if move.state == "done" else move.product_uom_qty
-            qty -= move.product_uom._compute_quantity(qty_to_compute, self.product_uom_id, rounding_method="HALF-UP")
+            qty -= move.uom_id._compute_quantity(qty_to_compute, self.product_uom_id, rounding_method="HALF-UP")
         for move in incoming_moves.filtered(lambda m: m.is_exchange_move):
             qty_to_compute = move.quantity if move.state == "done" else move.product_uom_qty
-            qty += move.product_uom._compute_quantity(qty_to_compute, self.product_uom_id, rounding_method="HALF-UP")
+            qty += move.uom_id._compute_quantity(qty_to_compute, self.product_uom_id, rounding_method="HALF-UP")
         return qty
 
     @api.depends()
@@ -106,17 +83,17 @@ class SaleOrderLine(models.Model):
             if line.qty_delivered_method == "stock_move":
                 outgoing_moves, incoming_moves = line._get_outgoing_incoming_moves()
                 for move in outgoing_moves.filtered(lambda m: m.is_exchange_move and m.state == "done"):
-                    line.qty_delivered -= move.product_uom._compute_quantity(
+                    line.qty_delivered -= move.uom_id._compute_quantity(
                         move.quantity, line.product_uom_id, rounding_method="HALF-UP"
                     )
                 for move in incoming_moves.filtered(lambda m: m.is_exchange_move and m.state == "done"):
-                    line.qty_delivered += move.product_uom._compute_quantity(
+                    line.qty_delivered += move.uom_id._compute_quantity(
                         move.quantity, line.product_uom_id, rounding_method="HALF-UP"
                     )
 
     @api.depends("order_id.state", "qty_delivered", "product_uom_qty", "order_id.force_delivery_status")
     def _compute_delivery_status(self):
-        precision = self.env["decimal.precision"].precision_get("Product Unit of Measure")
+        precision = self.env["decimal.precision"].precision_get("Product Unit")
         for line in self:
             if line.state not in ("sale", "done"):
                 line.delivery_status = "no"
@@ -199,10 +176,9 @@ class SaleOrderLine(models.Model):
         ):
             warning_mess = {
                 "title": _("Ordered quantity decreased!"),
-                "message": (
-                    "¡Está reduciendo la cantidad pedida! Recomendamos usar"
-                    " el botón para cancelar remanente y"
-                    " luego setear la cantidad deseada."
+                "message": _(
+                    "You are decreasing the ordered quantity! We recommend using the"
+                    " cancel remaining button and then setting the desired quantity."
                 ),
             }
             self.product_uom_qty = self._origin.product_uom_qty
@@ -212,9 +188,9 @@ class SaleOrderLine(models.Model):
     @api.depends(
         "qty_delivered_method",
         "move_ids.state",
-        "move_ids.scrap_id",
+        "move_ids.is_scrap",
         "move_ids.product_uom_qty",
-        "move_ids.product_uom",
+        "move_ids.uom_id",
     )
     def _compute_quantity_returned(self):
         for order_line in self:
@@ -223,14 +199,12 @@ class SaleOrderLine(models.Model):
             if order_line.qty_delivered_method == "stock_move":
                 return_moves = order_line.mapped("move_ids").filtered(
                     lambda r: (
-                        r.state == "done" and not r.scrap_id and r.location_dest_id.usage != "customer" and r.to_refund
+                        r.state == "done" and not r.is_scrap and r.location_dest_id.usage != "customer" and r.to_refund
                     )
                 )
                 # In multi-step deliveries, we need to avoid counting the same return multiple times
                 for move in return_moves.filtered(lambda m: m.location_id.usage == "customer"):
-                    quantity_returned += move.product_uom._compute_quantity(
-                        move.product_uom_qty, order_line.product_uom_id
-                    )
+                    quantity_returned += move.uom_id._compute_quantity(move.product_uom_qty, order_line.product_uom_id)
                 bom_enable = "bom_ids" in self.env["product.template"]._fields
                 if bom_enable:
                     boms = return_moves.mapped("bom_line_id.bom_id")
@@ -367,7 +341,7 @@ class SaleOrderLine(models.Model):
     )
     def _compute_invoice_status(self):
         super()._compute_invoice_status()
-        precision = self.env["decimal.precision"].precision_get("Product Unit of Measure")
+        precision = self.env["decimal.precision"].precision_get("Product Unit")
         for line in self:
             if not line.order_id.force_invoiced_status:
                 net_qty = line.product_uom_qty - line.quantity_returned

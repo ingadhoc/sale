@@ -6,9 +6,9 @@
         <field name="arch" type="xml">
             <form>
                 <field name="sale_order_line_ids" invisible="1"/>
-                <div>
-                    'Do you want to cancel remaining quantities for this orders? This can´t be undone'
-                </div>
+                <p>
+                    The quantity of every line still to deliver will be set to the delivered quantity and its pending moves will be cancelled. This cannot be undone.
+                </p>
                 <footer>
                     <button string="Confirm" name="action_confirm" type="object" class="btn-primary"/>
                     <button string="Cancel" class="btn btn-default" special="cancel"/>

@@ -66,16 +66,9 @@ class TestInvoiceStatusReturn(AccountTestInvoicingCommon):
         picking._action_done()
 
     def _make_return(self, picking, quantity):
-        wizard = (
-            self.env["stock.return.picking"]
-            .with_context(active_id=picking.id, active_ids=picking.ids, active_model="stock.picking")
-            .create({})
-        )
-        for line in wizard.product_return_moves:
-            line.to_refund = True
-            line.quantity = quantity
-        action = wizard.action_create_returns()
-        returned = self.env["stock.picking"].browse(action["res_id"])
+        # En 20 la devolución es un albarán en borrador (sin asistente) y devuelve "para abonar" por defecto.
+        returned = self.env["stock.picking"].browse(picking.action_return()["res_id"])
+        returned.move_ids.product_uom_qty = quantity
         self._validate(returned)
         return returned
 
