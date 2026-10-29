@@ -30,6 +30,7 @@ Configuration
 To configure this module, you need to:
 
 #. Go to Sales / Configuration / Settings / Quotations & Orders and set "Restrict sales?" as per your needs.
+#. If you choose "Depends on the amount", set "Restrict Amounts Greater Than" with the amount from which the restriction applies.
 
 
 Usage
@@ -37,7 +38,8 @@ Usage
 
 To use this module, you need to:
 
-#. Before a sales order is confirmed, it validates that the partner is approved.
+#. Before a sales order is confirmed, it validates that the commercial partner of the order is approved.
+#. With "Depends on the amount", the order is only blocked when its total reaches the configured amount.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
