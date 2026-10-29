@@ -356,6 +356,9 @@ class SaleOrder(models.Model):
         return ["partner_id", "partner_invoice_id", "partner_shipping_id", "pricelist_id"]
 
     def write(self, vals):
+        # Lines created directly (down payments, delivery costs, extra moves) are still allowed.
+        if any(command[0] == Command.CREATE for command in vals.get("order_line", [])) and any(self.mapped("locked")):
+            raise UserError(_("You cannot add lines to blocked sale orders."))
         # Prevent writing on locked SOs.
         protected_fields = self._get_protected_fields()
         if any(order.lock_sale_order() for order in self) and any(f in vals for f in protected_fields):
