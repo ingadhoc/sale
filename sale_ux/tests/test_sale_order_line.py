@@ -82,4 +82,7 @@ class TestSaleOrderLine(SaleUxCommon):
         line.discount = 10.0
         line._compute_discount()
 
-        self.assertEqual(line.discount, 10.0)
+        # Not assertEqual: with sale_triple_discount installed the discount is
+        # the multiplicative aggregate of discount1, 2 and 3, so a manual 10%
+        # comes back as 9.999999999999998.
+        self.assertAlmostEqual(line.discount, 10.0)
