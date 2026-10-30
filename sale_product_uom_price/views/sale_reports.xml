@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <template id="report_saleorder" inherit_id="sale.report_saleorder_document">
+        <!-- Lines sold in another unit (e.g. a packaging) shown in the product unit -->
+        <td name="td_product_quantity" position="before">
+            <t t-set="uom_vals" t-value="line._get_report_product_uom_values()"/>
+        </td>
+        <xpath expr="//td[@name='td_product_quantity']/span[@t-field='line.product_uom_qty']" position="attributes">
+            <attribute name="t-if">not uom_vals</attribute>
+        </xpath>
+        <xpath expr="//td[@name='td_product_quantity']/span[@t-field='line.product_uom_id']" position="attributes">
+            <attribute name="t-if">not uom_vals</attribute>
+        </xpath>
+        <xpath expr="//td[@name='td_product_quantity']/span[hasclass('text-muted')]" position="attributes">
+            <attribute name="t-if" add="not uom_vals" separator=" and "/>
+        </xpath>
+        <td name="td_product_quantity" position="inside">
+            <t t-if="uom_vals">
+                <span t-out="uom_vals['qty']" t-options="{'widget': 'float', 'decimal_precision': 'Product Unit'}" class="text-nowrap"/>
+                <span t-out="uom_vals['uom'].name"/>
+                <span class="text-muted small">
+                    <br/><span t-field="line.product_uom_qty"/> <span t-field="line.product_uom_id"/>
+                </span>
+            </t>
+        </td>
+        <!-- By attribute and not by position: another module can add a span to this cell -->
+        <xpath expr="//td[@name='td_product_priceunit']/span[@t-out]" position="attributes">
+            <attribute name="t-if" add="not uom_vals" separator=" and "/>
+        </xpath>
+        <xpath expr="//td[@name='td_product_priceunit']/span[@t-field='line.price_unit']" position="attributes">
+            <attribute name="t-elif" add="not uom_vals" separator=" and "/>
+        </xpath>
+        <td name="td_product_priceunit" position="inside">
+            <span
+                t-if="uom_vals and not collapse_prices"
+                t-out="(1 - line.discount / 100.0) * uom_vals['price_unit'] if line.discount &lt; 0 else uom_vals['price_unit']"
+                t-options="uom_vals['price_options']"
+            />
+        </td>
+    </template>
+</odoo>
