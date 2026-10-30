@@ -5,7 +5,6 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.fields import Domain
-from odoo.tools.safe_eval import safe_eval
 
 
 class SaleOrderType(models.Model):
@@ -72,7 +71,7 @@ class SaleOrderType(models.Model):
         'If you set "Validate No Force", then'
         " Validate without forcing availabilty",
     )
-    payment_journal_domain = fields.Binary(compute="_compute_payment_journal_domain")
+    payment_journal_domain = fields.Json(compute="_compute_payment_journal_domain")
     payment_journal_id = fields.Many2one(
         "account.journal",
         "Payment Journal",
@@ -111,7 +110,7 @@ class SaleOrderType(models.Model):
     @api.depends("invoice_company_id")
     def _compute_payment_journal_domain(self):
         for rec in self:
-            rec.payment_journal_domain = (
+            rec.payment_journal_domain = list(
                 Domain(rec.env["account.journal"]._check_company_domain(rec.invoice_company_id))
                 & Domain("type", "in", ["cash", "bank"])
                 # both directions are required: invoices are paid with an inbound payment
@@ -136,8 +135,7 @@ class SaleOrderType(models.Model):
 
     @api.depends()
     def _compute_auto_done_setting(self):
-        default = self.env["ir.config_parameter"].sudo().get_param("sale.auto_done_setting", "False")
-        self.auto_done_setting = safe_eval(default)
+        self.auto_done_setting = self.env["ir.config_parameter"].sudo().get_bool("sale.auto_done_setting", False)
 
     @api.constrains("invoicing_atomation", "company_id", "invoice_company_id", "journal_id")
     def _check_invoicing_journal_required(self):
