@@ -91,10 +91,19 @@ class SaleOrder(models.Model):
                 # projects by reinvoiced_sale_order_id, restricted to salesmen. Hiding the button
                 # drops the modifier, so the field is no longer added to the view nor read.
                 + arch.xpath("//button[@name='action_view_milestone']")
-                # sale.order.margin carries no groups, unlike its line level counterparts. The
-                # whole block, or the label and the percentage are left behind.
-                + arch.xpath("//label[@for='margin']/..")
             )
+
+            # sale_margin's line fields carry groups="base.group_user" and still reach the
+            # view in 20, so loading an order raises AccessError for a distributor. Hiding
+            # them is not enough: they have to leave the arch so they are not read. In 19 the
+            # one without groups was sale.order.margin and hiding its label was enough; in 20
+            # that label is gone and the core restricts the field.
+            for node in arch.xpath(
+                "//field[@name='order_line']//field[@name='margin']"
+                " | //field[@name='order_line']//field[@name='margin_percent']"
+                " | //field[@name='order_line']//field[@name='purchase_price']"
+            ):
+                node.getparent().remove(node)
             for node in invisible_fields:
                 node.set("invisible", "1")
                 node.set("force_save", "1")
