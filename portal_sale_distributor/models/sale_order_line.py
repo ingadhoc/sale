@@ -37,3 +37,11 @@ class SaleOrderLine(models.Model):
     def _compute_purchase_price(self):
         self = self.sudo()
         super()._compute_purchase_price()
+
+    def _compute_margin(self):
+        self = self.sudo()
+        super()._compute_margin()
+
+    def _compute_margin_percent(self):
+        self = self.sudo()
+        super()._compute_margin_percent()
