@@ -1,0 +1,58 @@
+id,name,model_id,group_id/id,operation,domain
+portal_sale_order_user_rule,Portal Distributor same partner Quotations/Sales Orders,sale.order,portal_sale_distributor.group_portal_backend_distributor,crud,"[('partner_id','child_of',[user.commercial_partner_id.id])]"
+portal_sale_order_line_user_rule,Portal Distributor same partner Quotations/Sales Orders,sale.order.line,portal_sale_distributor.group_portal_backend_distributor,crud,"[('order_id.partner_id','child_of',[user.commercial_partner_id.id])]"
+portal_stock_warehouse_rule,Warehouses (distribuidores),stock.warehouse,portal_sale_distributor.group_portal_backend_distributor,r,"['|', ('company_id', '=', False), ('company_id', 'in', user.company_ids.ids)]"
+access_procurement_rule,procurement.rule.flow,stock.rule,portal_sale_distributor.group_portal_backend_distributor,r,
+access_stock_location_user,stock.location.user,stock.location,portal_sale_distributor.group_portal_backend_distributor,u,
+portal_stock_location_rule,Ubicaciones (distribuidores),stock.location,portal_sale_distributor.group_portal_backend_distributor,r,"['|', ('company_id', '=', False), ('company_id', 'in', user.company_ids.ids)]"
+access_stock_quant_all,stock.quant all users,stock.quant,portal_sale_distributor.group_portal_backend_distributor,ru,
+access_stock_route,stock.route,stock.route,portal_sale_distributor.group_portal_backend_distributor,ru,
+access_stock_move,stock.stock.move.portal.distributor,stock.move,portal_sale_distributor.group_portal_backend_distributor,u,
+portal_stock_move_rule,Movimientos de stock (distribuidores),stock.move,portal_sale_distributor.group_portal_backend_distributor,r,"['|', ('company_id', '=', False), ('company_id', 'in', user.company_ids.ids)]"
+access_stock_picking,stock.stock.picking.portal.distributor,stock.picking,portal_sale_distributor.group_portal_backend_distributor,cru,
+access_product_product,product.product.portal.distributor,product.product,portal_sale_distributor.group_portal_backend_distributor,r,
+portal_product_template_public_rule,Public product template (distribuidores) ,product.template,portal_sale_distributor.group_portal_backend_distributor,r,"[(1 ,'=', 1)]"
+access_product_category,product.category.portal.distributor,product.category,portal_sale_distributor.group_portal_backend_distributor,ru,
+access_product_uom,product.uom.portal.distributor,uom.uom,portal_sale_distributor.group_portal_backend_distributor,ru,
+access_product_pricelist_item,product.pricelist.item.portal.distributor,product.pricelist.item,portal_sale_distributor.group_portal_backend_distributor,ru,
+access_ir_sequence,ir_sequence.distributor,ir.sequence,portal_sale_distributor.group_portal_backend_distributor,r,
+access_stock_move_line_portal_distributor,account.stock.move.line.portal.ditributor,stock.move.line,portal_sale_distributor.group_portal_backend_distributor,c,
+portal_stock_move_line_rule,Movimientos detallados (distribuidores),stock.move.line,portal_sale_distributor.group_portal_backend_distributor,r,"['|', ('company_id', '=', False), ('company_id', 'in', user.company_ids.ids)]"
+access_sale_exception_distributor,sale.exception.distributor.portal.distributor,exception.rule,portal_sale_distributor.group_portal_backend_distributor,r,
+access_delivery_carrier_distributor,delivery.carrier.distributor,delivery.carrier,portal_sale_distributor.group_portal_backend_distributor,r,
+access_delivery_carrier_price_rule_distributor,delivery.carrier.price.rule.distributor,delivery.price.rule,portal_sale_distributor.group_portal_backend_distributor,r,
+access_tax_group_distributor,tax.group.portal_distributor,account.tax.group,portal_sale_distributor.group_portal_backend_distributor,r,
+portal_stock_picking_type_rule,Tipos de operación (distribuidores),stock.picking.type,portal_sale_distributor.group_portal_backend_distributor,r,"['|', ('company_id', '=', False), ('company_id', 'in', user.company_ids.ids)]"
+access_crm_portal_distributor,crm.portal.ditributor,crm.team,portal_sale_distributor.group_portal_backend_distributor,r,
+access_crm_member_portal_distributor,crm.member.portal.ditributor,crm.team.member,portal_sale_distributor.group_portal_backend_distributor,r,
+access_product_pricelist,product.pricelist.portal.distributor,product.pricelist,portal_sale_distributor.group_portal_backend_distributor,ru,
+access_tax_portal_distributor,account.tax.distributor,account.tax,portal_sale_distributor.group_portal_backend_distributor,r,
+access_fiscal_position_distributor,account.fiscal.position.distributor,account.fiscal.position,portal_sale_distributor.group_portal_backend_distributor,r,
+access_sale_quote_template_subcription,sale.quote.template.distributor,sale.order.template,portal_sale_distributor.group_portal_backend_distributor,r,
+access_sale_quote_line_subcription,sale.quote.line.distributor,sale.order.template.line,portal_sale_distributor.group_portal_backend_distributor,r,
+access_template_attribute_value_portal_distributor,product_template_attribute_value.distributor,product.template.attribute.value,portal_sale_distributor.group_portal_backend_distributor,r,
+access_product_attribute_custom_value_portal_distributor,product_attribute_custom_value.distributor,product.attribute.custom.value,portal_sale_distributor.group_portal_backend_distributor,cru,
+access_mail_activity,mail_activity-.portal,mail.activity,portal_sale_distributor.group_portal_backend_distributor,r,
+access_product_template_attribute_line,product_template_attribute_line.portal,product.template.attribute.line,portal_sale_distributor.group_portal_backend_distributor,r,
+access_stock_putaway_rule,stock_putaway_rule.portal,stock.putaway.rule,portal_sale_distributor.group_portal_backend_distributor,r,
+access_account_tax_repartition_line,account_tax_repartition_line.portal,account.tax.repartition.line,portal_sale_distributor.group_portal_backend_distributor,r,
+access_account_account_tag,account_account_tag.portal,account.account.tag,portal_sale_distributor.group_portal_backend_distributor,r,
+access_stock_lot,stock_lot.portal,stock.lot,portal_sale_distributor.group_portal_backend_distributor,r,
+access_product_supplierinfo_distributor,product.supplierinfo.portal.distributor,product.supplierinfo,portal_sale_distributor.group_portal_backend_distributor,r,
+access_product_attribute_distributor,product.attribute.distributor,product.attribute,portal_sale_distributor.group_portal_backend_distributor,r,
+access_choose_delivery_carrier_distributor,choose.delivery.carrier.distributor,choose.delivery.carrier,portal_sale_distributor.group_portal_backend_distributor,cr,
+access_ir_actions_report_distributor,ir.actions.report.access.distributor,ir.actions.report,portal_sale_distributor.group_portal_backend_distributor,r,
+access_quotation_document_portal_distributor,sale.pdf.quote.builder.access.distributor,quotation.document,portal_sale_distributor.group_portal_backend_distributor,r,
+access_mail_scheduled_message_portal_distributor,mail.scheduled.message.access.distributor,mail.scheduled.message,portal_sale_distributor.group_portal_backend_distributor,r,
+access_product_document_portal_distributor,product.document.user.access.distributor,product.document,portal_sale_distributor.group_portal_backend_distributor,r,
+access_product_attribute_portal_distributor,product.attribute.portal.distributor,product.attribute.value,portal_sale_distributor.group_portal_backend_distributor,r,
+access_sale_exception_confirm_portal_distributor,sale.exception.portal.distributor,sale.exception.confirm,portal_sale_distributor.group_portal_backend_distributor,cr,
+access_sale_order_spreadsheet_portal_distributor,sale.order.spreadsheet.portal.distributor,sale.order.spreadsheet,portal_sale_distributor.group_portal_backend_distributor,r,
+access_product_tag_portal_distributor,product.tag.portal.distributor,product.tag,portal_sale_distributor.group_portal_backend_distributor,r,
+access_product_combo_portal_distributor,product.combo.portal.distributor,product.combo,portal_sale_distributor.group_portal_backend_distributor,r,
+access_product_combo_item_portal_distributor,product.combo.item.portal.distributor,product.combo.item,portal_sale_distributor.group_portal_backend_distributor,r,
+access_stock_reference_portal_distributor,stock.reference.portal.distributor,stock.reference,portal_sale_distributor.group_portal_backend_distributor,r,
+access_stock_warehouse_orderpoint_portal_distributor,stock.warehouse.orderpoint.portal.distributor,stock.warehouse.orderpoint,portal_sale_distributor.group_portal_backend_distributor,r,
+access_crm_tag_portal_distributor,crm.tag.portal.distributor,crm.tag,portal_sale_distributor.group_portal_backend_distributor,r,
+portal_res_partner_distributor_rule,res.partner: read access for distributor,res.partner,portal_sale_distributor.group_portal_backend_distributor,r,"[('id', 'in', user.company_ids.partner_id.ids)]"
+access_sale_report_distributor,Sales analysis (distribuidores),sale.report,portal_sale_distributor.group_portal_backend_distributor,r,"[('partner_id','child_of',[user.commercial_partner_id.id])]"

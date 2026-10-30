@@ -91,10 +91,26 @@ class SaleOrder(models.Model):
                 # projects by reinvoiced_sale_order_id, restricted to salesmen. Hiding the button
                 # drops the modifier, so the field is no longer added to the view nor read.
                 + arch.xpath("//button[@name='action_view_milestone']")
-                # sale.order.margin carries no groups, unlike its line level counterparts. The
-                # whole block, or the label and the percentage are left behind.
-                + arch.xpath("//label[@for='margin']/..")
             )
+
+            # sale_margin's line fields carry groups="base.group_user" and still reach the
+            # view in 20, so loading an order raises AccessError for a distributor. Hiding
+            # them is not enough: they have to leave the arch so they are not read. In 19 the
+            # one without groups was sale.order.margin and hiding its label was enough; in 20
+            # that label is gone and the core restricts the field.
+            # Same for sale_purchase's button: purchase_order_count is restricted to
+            # purchase.group_purchase_user and its invisible modifier reads it. And for
+            # extra_total_fields, new in 20: sale_margin extends its compute reading
+            # order.margin, so it raises for a distributor. In 19 that totals block did not
+            # exist, so dropping it is what keeps the 19 behaviour.
+            for node in arch.xpath(
+                "//field[@name='order_line']//field[@name='margin']"
+                " | //field[@name='order_line']//field[@name='margin_percent']"
+                " | //field[@name='order_line']//field[@name='purchase_price']"
+                " | //field[@name='purchase_order_count']/ancestor::button[1]"
+                " | //field[@name='extra_total_fields']"
+            ):
+                node.getparent().remove(node)
             for node in invisible_fields:
                 node.set("invisible", "1")
                 node.set("force_save", "1")
@@ -112,6 +128,12 @@ class SaleOrder(models.Model):
     def action_update_prices(self):
         self = self.sudo()
         super().action_update_prices()
+
+    def _compute_margin(self):
+        # sale_margin's margin is stored and restricted to internal users since 20: recomputing
+        # it as a distributor (any line change) would raise. Same workaround as purchase_price.
+        self = self.sudo()
+        super()._compute_margin()
 
     def _message_get_suggested_recipients_batch(self, **kwargs):
         # to keep odoobot out of the suggestions, mail reads base.partner_root.email_normalized
