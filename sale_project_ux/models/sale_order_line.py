@@ -6,10 +6,7 @@ class SaleOrderLine(models.Model):
 
     def _timesheet_create_project_prepare_values(self):
         """Generate project values"""
-        if (
-            self.env["ir.config_parameter"].sudo().get_param("sale_ux.analytic_account_without_company", "False")
-            == "True"
-        ):
+        if self.env["ir.config_parameter"].sudo().get_bool("sale_ux.analytic_account_without_company"):
             return {
                 "name": "%s - %s" % (self.order_id.client_order_ref, self.order_id.name)
                 if self.order_id.client_order_ref
