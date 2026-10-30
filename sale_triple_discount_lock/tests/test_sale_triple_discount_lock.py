@@ -11,24 +11,27 @@ class TestSaleTripleDiscountLock(common.TransactionCase):
         super().setUpClass()
         cls.env.user.group_ids += cls.env.ref("sale.group_discount_per_so_line")
         cls.partner = cls.env["res.partner"].create({"name": "Test Partner"})
-        products = cls.env["product.product"].search([], limit=2)
-        cls.product1 = products[0]
-        cls.product2 = products[1]
-        cls.product1.write(
-            {
-                "name": "Test Product 1",
-                "type": "service",
-                "invoice_policy": "order",
-                "list_price": 600.0,
-            }
-        )
-        cls.product2.write(
-            {
-                "name": "Test Product 2",
-                "type": "service",
-                "invoice_policy": "order",
-                "list_price": 60.0,
-            }
+        # Own products, not the first two of the base: in a database with several
+        # companies those belong to another one and the line fails _check_company.
+        cls.product1, cls.product2 = cls.env["product.product"].create(
+            [
+                {
+                    "name": "Test Product 1",
+                    "type": "service",
+                    "invoice_policy": "order",
+                    "list_price": 600.0,
+                    "company_id": False,
+                    "taxes_id": [(5, 0, 0)],
+                },
+                {
+                    "name": "Test Product 2",
+                    "type": "service",
+                    "invoice_policy": "order",
+                    "list_price": 60.0,
+                    "company_id": False,
+                    "taxes_id": [(5, 0, 0)],
+                },
+            ]
         )
         cls.tax = cls.env["account.tax"].create(
             {
@@ -77,7 +80,7 @@ class TestSaleTripleDiscountLock(common.TransactionCase):
         self.so_line1.discount3 = 8.0
         self.so_line2.discount2 = 20.0
         self.so_line2.discount3 = 3.0
-        self.order.action_update_prices()
+        self.order._recompute_prices()
         self.assertAlmostEqual(self.so_line1.discount2, 15.0)
         self.assertAlmostEqual(self.so_line1.discount3, 8.0)
         self.assertAlmostEqual(self.so_line2.discount2, 20.0)
@@ -90,9 +93,8 @@ class TestSaleTripleDiscountLock(common.TransactionCase):
                 "item_ids": [
                     Command.create(
                         {
-                            "applied_on": "3_global",
-                            "compute_price": "percentage",
-                            "percent_price": 10,
+                            "compute_price": "discount",
+                            "price_discount": 10,
                         }
                     )
                 ],
@@ -101,7 +103,7 @@ class TestSaleTripleDiscountLock(common.TransactionCase):
         self.so_line1.discount2 = 12.0
         self.so_line1.discount3 = 5.0
         self.order.pricelist_id = pricelist
-        self.order.action_update_prices()
+        self.order._recompute_prices()
         self.assertAlmostEqual(self.so_line1.discount1, 10.0)
         self.assertAlmostEqual(self.so_line1.discount2, 12.0)
         self.assertAlmostEqual(self.so_line1.discount3, 5.0)
@@ -120,9 +122,8 @@ class TestSaleTripleDiscountLock(common.TransactionCase):
                 "item_ids": [
                     Command.create(
                         {
-                            "applied_on": "3_global",
-                            "compute_price": "percentage",
-                            "percent_price": 20,
+                            "compute_price": "discount",
+                            "price_discount": 20,
                             "min_quantity": 50,
                         }
                     )
@@ -130,7 +131,7 @@ class TestSaleTripleDiscountLock(common.TransactionCase):
             }
         )
         self.order.pricelist_id = pricelist
-        self.order.action_update_prices()
+        self.order._recompute_prices()
         self.assertAlmostEqual(self.so_line1.discount1, 0.0)
         self.so_line1.discount2 = 15.0
         self.so_line1.discount3 = 10.0
@@ -158,3 +159,59 @@ class TestSaleTripleDiscountLock(common.TransactionCase):
         self.assertAlmostEqual(inv_line.discount2, 15.0)
         self.assertAlmostEqual(inv_line.discount3, 5.0)
         self.assertAlmostEqual(inv_line.discount, self.so_line1.discount, places=2)
+
+    def test_07_wizard_applies_discount_2_and_3(self):
+        """The wizard adds Disc. 2 and Disc. 3 and keeps Disc. 1."""
+        self.so_line1.discount1 = 5.0
+        wizard = self.env["sale.order.discount"].create(
+            {
+                "sale_order_id": self.order.id,
+                "discount_type": "sol_discount",
+                "discount_percentage": 0.0,
+                "apply_discount2": True,
+                "discount2": 0.10,
+                "apply_discount3": True,
+                "discount3": 0.20,
+            }
+        )
+        self.assertAlmostEqual(wizard.total_discount, 1.0 - 0.9 * 0.8)
+
+        wizard.action_apply_discount()
+
+        self.assertAlmostEqual(self.so_line1.discount1, 5.0)
+        self.assertAlmostEqual(self.so_line1.discount2, 10.0)
+        self.assertAlmostEqual(self.so_line1.discount3, 20.0)
+
+    def test_08_wizard_leaves_section_lines_alone(self):
+        """A section line is not a discountable line, so it keeps its zeros."""
+        section = self.env["sale.order.line"].create(
+            {"order_id": self.order.id, "name": "A section", "display_type": "line_section"}
+        )
+        self.env["sale.order.discount"].create(
+            {
+                "sale_order_id": self.order.id,
+                "discount_type": "sol_discount",
+                "discount_percentage": 0.0,
+                "apply_discount2": True,
+                "discount2": 0.10,
+            }
+        ).action_apply_discount()
+
+        self.assertAlmostEqual(self.so_line1.discount2, 10.0)
+        self.assertAlmostEqual(section.discount2, 0.0)
+        self.assertAlmostEqual(section.discount3, 0.0)
+
+    def test_09_discount1_is_readonly_on_the_order_views(self):
+        """The lock itself: discount1 cannot be typed in, on the list or the form."""
+        from lxml import etree
+
+        arch = etree.fromstring(self.env["sale.order"].get_view(view_type="form")["arch"])
+        for container in ("list", "form"):
+            nodes = arch.xpath(f"//field[@name='order_line']//{container}//field[@name='discount1']")
+            self.assertTrue(nodes, f"discount1 is not in the order line {container}")
+            for node in nodes:
+                self.assertEqual(
+                    node.get("readonly"),
+                    "True",
+                    f"discount1 is editable in the order line {container}",
+                )
