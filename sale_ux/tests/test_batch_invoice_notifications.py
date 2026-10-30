@@ -3,12 +3,12 @@
 # directory
 ##############################################################################
 from odoo import Command
-from odoo.addons.account.tests.common import AccountTestInvoicingCommon
+from odoo.addons.sale.tests.common import TestSaleCommon
 from odoo.tests import new_test_user, tagged
 
 
 @tagged("post_install", "-at_install")
-class TestBatchInvoiceNotifications(AccountTestInvoicingCommon):
+class TestBatchInvoiceNotifications(TestSaleCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
