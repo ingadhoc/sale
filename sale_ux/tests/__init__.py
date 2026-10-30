@@ -12,3 +12,4 @@ from . import test_sale_order_line
 from . import test_settings
 from . import test_wizards
 from . import test_sale_order_unlink
+from . import test_batch_invoice_notifications
