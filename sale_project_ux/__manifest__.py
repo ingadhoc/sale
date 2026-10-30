@@ -30,7 +30,6 @@
     "depends": [
         "sale_project",
         "sale_ux",
-        "industry_fsm",
     ],
     "data": [],
     "demo": [],
