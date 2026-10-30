@@ -16,13 +16,17 @@ Sales Timesheet UX
 
 * When confirming a sale order with a product with Product Type = "Service" and Create on Order = "Project & Task", if the SO has project, then the system won't create a new project but use the project associated to the SO to create the task inside.
 * When confirming a sale order with a product with Product Type = "Service" and Create on Order = "Project & Task", the project and the task will remain related to the SO and the customer will remain related to the project (stays related in the backend even though is hidden by default) when "Billable" is turned off from the project settings (works both for a new proyect and task as for a new task in an existing proyect).
-* When (and only when) "Billable" is active can't be edited. Instead adds a button to change its value with an alert message to confirm the disabling of the "Billable" option in the project settings.
-* Se protegen las lineas de las ordenes de ventas que estan asociadas a los partes de horas en los siguientes casos (no se borran las horas imputadas a esa linea de la OV) (esta proteccion se habilita desde las configuraciones del parte de horas):
-   1) Si a un proyecto se le desmarga el facturable en su configuración: si un proyecto esta como facturable, y tiene tareas con partes de horas asociados a ordenes de venta, al destildarle el facturable la orden de venta seguira teniendo cargadas las horas imputadas en esa tarea.
-   2) Se elimina el partner, la cuenta analitica o el item de la orden de venta del proyecto.
-   3) Se elimina el partner, la cuenta analitica, el item de la orden de venta o el proyecto de la tarea.
-   4) Se elimina el partner, el proyecto, el item de la orden de venta o la cuenta analítica del ticket.
-   5) Si se edita manualmente el item de la orden de venta en un parte de horas, entonces se guardará el valor seleccionado de manera manual y no el que trae por defecto el parte de horas.
+* When (and only when) "Billable" is active can't be edited. Instead adds a button to change its value with an alert message to confirm the disabling of the "Billable" option in the project settings. The message also warns when the project is linked to products that create tasks in it, because they are unlinked. Removing the customer of the project does not switch "Billable" off.
+* When the sales order item of a task is changed and saved, a confirmation says how many of its timesheet entries will be recalculated (the ones not chosen by hand, validated or invoiced). It can be discarded.
+* A task without sales order item takes it from its parent task, its project or its milestone.
+* The sales order also lists the tasks linked to it through the "Related Sales Order" field of the task.
+* Sales order lines linked to timesheets are protected: the hours logged on the sales order line are not removed (this protection is enabled from the timesheet settings, "Protect SO Line on Timesheets?"). It applies in these cases:
+
+  1) When "Billable" is turned off in a project: if a billable project has tasks with timesheets linked to sales orders, the sales order keeps the hours logged on those tasks.
+  2) When the partner, the analytic account or the sales order item is removed from the project.
+  3) When the partner, the analytic account, the sales order item or the project is removed from the task.
+  4) When the partner, the project, the sales order item or the analytic account is removed from the ticket.
+  5) When the sales order item is edited by hand in a timesheet, the value chosen by hand is kept instead of the default one.
 
 Installation
 ============
