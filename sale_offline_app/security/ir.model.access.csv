@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_offline_order_salesman,sale.offline.order salesman,model_sale_offline_order,sales_team.group_sale_salesman,1,0,0,0
+access_sale_offline_order_manager,sale.offline.order manager,model_sale_offline_order,sales_team.group_sale_manager,1,0,0,1
+access_sale_offline_order_error_salesman,sale.offline.order.error salesman,model_sale_offline_order_error,sales_team.group_sale_salesman,1,0,0,0
+access_sale_offline_order_error_manager,sale.offline.order.error manager,model_sale_offline_order_error,sales_team.group_sale_manager,1,0,0,1
+access_res_users_offline_pin_wizard,res.users.offline.pin.wizard,model_res_users_offline_pin_wizard,base.group_user,1,1,1,0
