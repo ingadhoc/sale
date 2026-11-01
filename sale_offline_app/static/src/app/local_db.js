@@ -45,8 +45,25 @@ export class LocalDB {
         return record?.value;
     }
 
+    /** Values of several meta keys at once, as a key → value object. */
+    async getMetas(keys) {
+        const store = this.db.transaction("meta").objectStore("meta");
+        const records = await Promise.all(keys.map((key) => requestToPromise(store.get(key))));
+        return Object.fromEntries(keys.map((key, i) => [key, records[i]?.value]));
+    }
+
     setMeta(key, value) {
         return this.put("meta", { key, value });
+    }
+
+    /** Write several meta keys in a single transaction. */
+    setMetas(values) {
+        const transaction = this.db.transaction("meta", "readwrite");
+        const store = transaction.objectStore("meta");
+        for (const [key, value] of Object.entries(values)) {
+            store.put({ key, value });
+        }
+        return transactionToPromise(transaction);
     }
 
     put(store, value) {

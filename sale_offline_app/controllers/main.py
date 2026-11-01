@@ -1,7 +1,7 @@
 import hashlib
 import json
 import re
-from datetime import date, datetime, timedelta
+from datetime import date, timedelta
 
 from dateutil.relativedelta import relativedelta
 from odoo import fields, http
@@ -9,6 +9,8 @@ from odoo.addons.base.models.res_users import INDEX_SIZE, KEY_CRYPT_CONTEXT
 from odoo.http import request
 from odoo.tools import SQL, file_open, html2plaintext
 from werkzeug.exceptions import Forbidden, Unauthorized
+
+from ..models.sale_offline_order import parse_device_date
 
 APP_PATH = "/preventa"
 BUNDLE = "sale_offline_app.assets"
@@ -23,6 +25,7 @@ MAX_ORDERS_PER_REQUEST = 200
 UUID_RE = re.compile(r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$")
 # Loaded on demand by web/core/barcode when the browser lacks BarcodeDetector.
 LAZY_URLS = ["/web/static/lib/zxing-library/zxing-library.js"]
+ICON_SIZES = ("192x192", "512x512")
 
 
 class SaleOfflineApp(http.Controller):
@@ -31,7 +34,7 @@ class SaleOfflineApp(http.Controller):
 
     def _precache_urls(self):
         return [APP_PATH, f"{APP_PATH}/manifest.webmanifest", *self._asset_urls(), *LAZY_URLS] + [
-            f"/web/static/img/odoo-icon-{size}.png" for size in ("192x192", "512x512")
+            f"/web/static/img/odoo-icon-{size}.png" for size in ICON_SIZES
         ]
 
     def _session_info(self):
@@ -69,7 +72,7 @@ class SaleOfflineApp(http.Controller):
             ],
             "icons": [
                 {"src": f"/web/static/img/odoo-icon-{size}.png", "sizes": size, "type": "image/png"}
-                for size in ("192x192", "512x512")
+                for size in ICON_SIZES
             ],
         }
         return request.make_json_response(manifest, {"Content-Type": "application/manifest+json"})
@@ -146,10 +149,11 @@ class SaleOfflineApp(http.Controller):
             [("parent_id", "=", False), ("company_id", "in", [False, *user.company_ids.ids])]
         )
         warehouse = self._warehouse(user)
-        products = request.env["product.product"].search([("sale_ok", "=", True)])
-        free_qty = {
-            product.id: product.free_qty for product in products.with_context(warehouse_id=warehouse.id, bin_size=True)
-        }
+        products = (
+            request.env["product.product"]
+            .search([("sale_ok", "=", True)])
+            .with_context(warehouse_id=warehouse.id, bin_size=True)
+        )
         categories = request.env["product.category"].search([("id", "parent_of", products.categ_id.ids)])
         fiscal_position_model = request.env["account.fiscal.position"]
         fiscal_position_by_partner = {
@@ -179,10 +183,7 @@ class SaleOfflineApp(http.Controller):
             },
             "partners": [self._partner_data(partner, fiscal_position_by_partner[partner.id]) for partner in partners],
             "warehouse": {"id": warehouse.id, "name": warehouse.name} if warehouse else False,
-            "products": [
-                self._product_data(product, taxes_by_product[product.id], free_qty[product.id])
-                for product in products.with_context(bin_size=True)
-            ],
+            "products": [self._product_data(product, taxes_by_product[product.id]) for product in products],
             "categories": [
                 {"id": category.id, "name": category.name, "parent_id": category.parent_id.id or False}
                 for category in categories
@@ -274,7 +275,7 @@ class SaleOfflineApp(http.Controller):
         elif not isinstance(order.get("lines"), list) or not order["lines"]:
             return None, "no lines"
         try:
-            datetime.fromisoformat(order["created_on_device"].replace("Z", "+00:00"))
+            parse_device_date(order["created_on_device"])
         except (KeyError, AttributeError, ValueError):
             return None, "invalid created_on_device"
         values = {"uuid": uuid, "payload": order}
@@ -295,9 +296,14 @@ class SaleOfflineApp(http.Controller):
             ],
             order="date_deadline, id",
         )
+        # One recordset per model, so related reads are prefetched for all visits at once.
+        records = {}
+        for res_model in set(activities.mapped("res_model")):
+            res_ids = activities.filtered(lambda a, m=res_model: a.res_model == m).mapped("res_id")
+            records[res_model] = {record.id: record for record in request.env[res_model].browse(res_ids)}
         result = []
         for activity in activities:
-            record = request.env[activity.res_model].browse(activity.res_id)
+            record = records[activity.res_model][activity.res_id]
             if activity.res_model == "res.partner":
                 partner = record
             elif "partner_id" in record._fields:
@@ -419,7 +425,7 @@ class SaleOfflineApp(http.Controller):
             "fiscal_position_name": fiscal_position.name or False,
         }
 
-    def _product_data(self, product, taxes, free_qty):
+    def _product_data(self, product, taxes):
         return {
             "id": product.id,
             "display_name": product.display_name,
@@ -428,7 +434,7 @@ class SaleOfflineApp(http.Controller):
             "lst_price": product.lst_price,
             "standard_price": product.standard_price,
             # Snapshot at sync time: it does not follow what is sold during the day.
-            "free_qty": free_qty if product.is_storable else False,
+            "free_qty": product.free_qty if product.is_storable else False,
             "product_tmpl_id": product.product_tmpl_id.id,
             "uom_id": product.uom_id.name,
             "taxes_id": taxes.ids,

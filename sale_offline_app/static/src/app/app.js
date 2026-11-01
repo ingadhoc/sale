@@ -10,6 +10,7 @@ import { OrderBuilder } from "./order_builder";
 import { KEY_EXPIRY_WARNING_DAYS } from "./preventa_service";
 import { OrderDetail } from "./order_detail";
 import { OrdersScreen } from "./orders_screen";
+import { localDate, partnerTitle } from "./utils";
 import { PartnerDetail } from "./partner_detail";
 import { PartnerList } from "./partner_list";
 import { SettingsScreen } from "./settings_screen";
@@ -69,7 +70,7 @@ export class PreventaApp extends Component {
     }
 
     get tiles() {
-        const today = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+        const today = localDate();
         const pendingVisits = this.data.activities.filter(
             (activity) =>
                 activity.date_deadline <= today &&
@@ -122,7 +123,7 @@ export class PreventaApp extends Component {
 
     get title() {
         if (this.partner) {
-            return this.partner.ref ? `${this.partner.ref} - ${this.partner.name}` : this.partner.name;
+            return partnerTitle(this.partner);
         }
         if (this.detailOrder) {
             return this.detailOrder.partner_name;

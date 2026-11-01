@@ -1,5 +1,6 @@
-import { Component, useState } from "@odoo/owl";
+import { Component } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
+import { formatDate, mapsUrl } from "./utils";
 
 const STATE_LABELS = {
     ready: "Listo para enviar",
@@ -14,7 +15,7 @@ export class OrderDetail extends Component {
 
     setup() {
         this.preventa = useService("preventa");
-        this.data = useState(this.preventa.state);
+        this.formatDate = formatDate;
     }
 
     get order() {
@@ -39,7 +40,7 @@ export class OrderDetail extends Component {
 
     get mapsUrl() {
         const location = this.order.location;
-        return location && `https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}`;
+        return location && mapsUrl(`${location.latitude},${location.longitude}`);
     }
 
     get canRepeat() {
@@ -48,9 +49,5 @@ export class OrderDetail extends Component {
 
     lineTotal(line) {
         return line.price_total ?? line.price_unit * line.quantity;
-    }
-
-    formatDate(iso) {
-        return iso ? new Date(iso).toLocaleString("es-AR", { hourCycle: "h23" }) : "";
     }
 }

@@ -1,4 +1,5 @@
 import { Component } from "@odoo/owl";
+import { mapsUrl } from "./utils";
 
 export class PartnerDetail extends Component {
     static template = "sale_offline_app.PartnerDetail";
@@ -9,7 +10,7 @@ export class PartnerDetail extends Component {
         if (!lat && !lng) {
             return false;
         }
-        return `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+        return mapsUrl(`${lat},${lng}`);
     }
 
     get phoneUrl() {

@@ -1,8 +1,6 @@
 import { Component, useState } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
 
-const MAX_PIN_LENGTH = 6;
-
 export class LockScreen extends Component {
     static template = "sale_offline_app.LockScreen";
     static props = {};
@@ -25,9 +23,6 @@ export class LockScreen extends Component {
         this.state.error = false;
         if (key === "⌫") {
             this.state.typed = this.state.typed.slice(0, -1);
-            return;
-        }
-        if (this.state.typed.length >= MAX_PIN_LENGTH) {
             return;
         }
         this.state.typed += key;

@@ -9,6 +9,11 @@ from odoo.tools import SQL
 _logger = logging.getLogger(__name__)
 
 
+def parse_device_date(value):
+    """Datetime sent by the device (ISO 8601, possibly ending in "Z")."""
+    return datetime.fromisoformat(value.replace("Z", "+00:00"))
+
+
 class SaleOfflineOrder(models.Model):
     """Raw inbox of orders sent by the offline app.
 
@@ -27,7 +32,7 @@ class SaleOfflineOrder(models.Model):
     # Only for records that never become a sale order (a no-purchase visit).
     processed_date = fields.Datetime(readonly=True, copy=False)
 
-    payload_text = fields.Text(string="Payload (JSON)", compute="_compute_payload_fields")
+    payload_text = fields.Text(string="Payload (JSON)", compute="_compute_payload_text")
     kind = fields.Selection([("order", "Order"), ("no_purchase", "No purchase")], compute="_compute_payload_fields")
     reason = fields.Char(string="No purchase reason", compute="_compute_payload_fields")
     partner_name = fields.Char(string="Customer", compute="_compute_payload_fields")
@@ -51,12 +56,16 @@ class SaleOfflineOrder(models.Model):
     def _compute_payload_fields(self):
         for record in self:
             payload = record.payload or {}
-            record.payload_text = json.dumps(payload, indent=2, ensure_ascii=False) if payload else False
             record.partner_name = payload.get("partner_name")
             record.kind = payload.get("kind") or "order"
             record.reason = payload.get("reason")
             record.amount_total = payload.get("amount_total") or 0.0
             record.line_count = len(payload.get("lines") or [])
+
+    @api.depends("payload")
+    def _compute_payload_text(self):
+        for record in self:
+            record.payload_text = json.dumps(record.payload, indent=2, ensure_ascii=False) if record.payload else False
 
     @api.depends("sale_order_ids", "error_ids", "processed_date")
     def _compute_conversion(self):
@@ -133,7 +142,7 @@ class SaleOfflineOrder(models.Model):
         self.ensure_one()
         payload = self.payload or {}
         user = self.create_uid
-        created = datetime.fromisoformat(payload["created_on_device"].replace("Z", "+00:00"))
+        created = parse_device_date(payload["created_on_device"])
         values = {
             "offline_order_id": self.id,
             "partner_id": payload["partner_id"],
@@ -159,20 +168,20 @@ class SaleOfflineOrder(models.Model):
             values["fiscal_position_id"] = payload["fiscal_position_id"]
         order = self.env["sale.order"].with_user(user).with_company(user.company_id).create(values)
         order.action_confirm()
-        # Done activities are archived: never close the same visit twice.
-        activity = self.env["mail.activity"].with_user(user).browse(payload.get("activity_id") or []).exists()
-        if activity := activity.filtered("active"):
-            activity.action_feedback(feedback=self.env._("Order %s taken from the offline app", order.name))
+        self._close_activity(user, payload, self.env._("Order %s taken from the offline app", order.name))
         return order
+
+    def _close_activity(self, user, payload, feedback):
+        activity = self.env["mail.activity"].with_user(user).browse(payload.get("activity_id") or []).exists()
+        # Done activities are archived: never close the same visit twice.
+        if activity := activity.filtered("active"):
+            activity.action_feedback(feedback=feedback)
 
     def _close_visit_without_order(self):
         """Mark the visit as done with the reason given by the salesperson."""
         self.ensure_one()
         payload = self.payload or {}
-        activity = self.env["mail.activity"].with_user(self.create_uid).browse(payload.get("activity_id") or [])
-        # Done activities are archived: never close the same visit twice.
-        if activity := activity.exists().filtered("active"):
-            activity.action_feedback(feedback=self.env._("No purchase: %s", payload.get("reason")))
+        self._close_activity(self.create_uid, payload, self.env._("No purchase: %s", payload.get("reason")))
         self.processed_date = fields.Datetime.now()
 
     @api.model

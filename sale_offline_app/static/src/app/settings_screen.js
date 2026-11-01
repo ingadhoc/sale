@@ -1,6 +1,8 @@
 import { Component, useState } from "@odoo/owl";
 import { isDisplayStandalone } from "@web/core/browser/feature_detection";
+import { humanSize } from "@web/core/utils/binary";
 import { useService } from "@web/core/utils/hooks";
+import { formatDate } from "./utils";
 
 /** Everything about syncing, linking and leaving the app. */
 export class SettingsScreen extends Component {
@@ -13,6 +15,7 @@ export class SettingsScreen extends Component {
         // Odoo's pwa service keeps the browser install prompt (beforeinstallprompt).
         this.pwa = useState(useService("pwa"));
         this.isInstalled = isDisplayStandalone();
+        this.formatDate = formatDate;
     }
 
     get visitDays() {
@@ -20,22 +23,8 @@ export class SettingsScreen extends Component {
         return days.map((day) => day.split("-").reverse().join("/")).join(", ");
     }
 
-    formatDate(iso) {
-        return iso ? new Date(iso).toLocaleString("es-AR", { hourCycle: "h23" }) : "";
-    }
-
     formatBytes(bytes) {
-        if (!bytes && bytes !== 0) {
-            return "?";
-        }
-        const units = ["B", "KB", "MB", "GB", "TB"];
-        let value = bytes;
-        let unit = 0;
-        while (value >= 1024 && unit < units.length - 1) {
-            value /= 1024;
-            unit++;
-        }
-        return `${value.toFixed(1)} ${units[unit]}`;
+        return !bytes && bytes !== 0 ? "?" : humanSize(bytes);
     }
 
     onToggleAutoSend(ev) {

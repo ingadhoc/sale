@@ -49,8 +49,12 @@ export class OrderBuilder extends Component {
     }
 
     async changeQuantity(line, delta) {
+        await this.setLineQuantity(line, Math.max(line.quantity + delta, 0));
+    }
+
+    async setLineQuantity(line, quantity) {
         const product = { id: line.product_id, display_name: line.name, lst_price: line.price_unit };
-        await this.preventa.setQuantity(this.props.partner, product, Math.max(line.quantity + delta, 0));
+        await this.preventa.setQuantity(this.props.partner, product, quantity);
     }
 
     get suggestions() {
@@ -127,7 +131,7 @@ export class OrderBuilder extends Component {
     }
 
     async removeLine(line) {
-        await this.preventa.removeLine(this.order, line.product_id);
+        await this.setLineQuantity(line, 0);
     }
 
     closeOrder() {

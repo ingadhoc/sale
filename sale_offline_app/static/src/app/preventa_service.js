@@ -1,8 +1,10 @@
 import { markRaw, reactive } from "@odoo/owl";
 import { accountTaxHelpers } from "@account/helpers/account_tax";
 import { browser } from "@web/core/browser/browser";
+import { normalize as normalizeText } from "@web/core/l10n/utils";
 import { registry } from "@web/core/registry";
 import { roundPrecision } from "@web/core/utils/numbers";
+import { deepCopy } from "@web/core/utils/objects";
 import { LocalDB } from "./local_db";
 import { PricelistEngine } from "./pricelist";
 
@@ -15,16 +17,29 @@ const AUTO_SEND_RETRY_MS = 60000;
 // Back from background after this long counts as reopening the app (PWAs resumed
 // from the recent apps list do not reload).
 const RELOCK_AFTER_MS = 5 * 60 * 1000;
-const EXPIRY_WARNING_DAYS = 7;
-export const KEY_EXPIRY_WARNING_DAYS = EXPIRY_WARNING_DAYS;
+export const KEY_EXPIRY_WARNING_DAYS = 7;
+const META_KEYS = [
+    "link",
+    "lastSync",
+    "autoSend",
+    "pin",
+    "currency",
+    "company",
+    "taxes",
+    "fiscalPositions",
+    "activities",
+    "categories",
+    "history",
+    "pricelists",
+    "pricelistItems",
+    "warehouse",
+    "discountEnabled",
+    "dataVersion",
+];
 const AUTH_EXPIRED_MESSAGE = "La vinculación con Odoo venció o fue revocada.";
 
 function normalize(text) {
-    return (text || "")
-        .toString()
-        .normalize("NFD")
-        .replace(/[̀-ͯ]/g, "")
-        .toLowerCase();
+    return normalizeText((text || "").toString());
 }
 
 export const preventaService = {
@@ -225,10 +240,7 @@ export const preventaService = {
 
         /** Price and discount of an order line, as Odoo would put them on the sale order line. */
         function linePrice(product, partner, quantity) {
-            if (!partner?.pricelist_id) {
-                return { price: product.lst_price, discount: 0 };
-            }
-            if (!discountEnabled) {
+            if (!discountEnabled || !partner?.pricelist_id) {
                 return { price: unitPrice(product, partner, quantity), discount: 0 };
             }
             const { price, discount } = pricing.getPriceWithDiscount(partner.pricelist_id, product, quantity);
@@ -256,41 +268,29 @@ export const preventaService = {
         }
 
         async function loadLocal() {
-            state.link = (await db.getMeta("link")) || null;
-            state.lastSync = (await db.getMeta("lastSync")) || null;
-            state.autoSend = Boolean(await db.getMeta("autoSend"));
-            state.pin = (await db.getMeta("pin")) || false;
-            state.currency = (await db.getMeta("currency")) || state.currency;
-            const [company, taxes, positions, activities, categories, history, pricelists, pricelistItems] =
-                await Promise.all([
-                    db.getMeta("company"),
-                    db.getMeta("taxes"),
-                    db.getMeta("fiscalPositions"),
-                    db.getMeta("activities"),
-                    db.getMeta("categories"),
-                    db.getMeta("history"),
-                    db.getMeta("pricelists"),
-                    db.getMeta("pricelistItems"),
-                ]);
-            state.warehouse = (await db.getMeta("warehouse")) || false;
-            discountEnabled = Boolean(await db.getMeta("discountEnabled"));
-            state.activities = markRaw(activities || []);
-            state.categories = markRaw(categories || []);
-            state.history = markRaw(history || []);
-            const [partners, products, orders] = await Promise.all([
-                db.getAll("partners"),
-                db.getAll("products"),
-                db.getAll("orders"),
+            const [meta, [partners, products, orders]] = await Promise.all([
+                db.getMetas(META_KEYS),
+                Promise.all([db.getAll("partners"), db.getAll("products"), db.getAll("orders")]),
             ]);
+            state.link = meta.link || null;
+            state.lastSync = meta.lastSync || null;
+            state.autoSend = Boolean(meta.autoSend);
+            state.pin = meta.pin || false;
+            state.currency = meta.currency || state.currency;
+            state.warehouse = meta.warehouse || false;
+            discountEnabled = Boolean(meta.discountEnabled);
+            state.activities = markRaw(meta.activities || []);
+            state.categories = markRaw(meta.categories || []);
+            state.history = markRaw(meta.history || []);
             partners.sort((a, b) => a.name.localeCompare(b.name));
             // Catalog arrays are raw: proxying thousands of records makes search slow.
             state.partners = markRaw(partners);
             state.products = markRaw(products);
             state.orders = Object.fromEntries(orders.map((order) => [order.uuid, order]));
             buildIndex();
-            buildFiscal(company, taxes || [], positions || []);
-            buildPricing(pricelists || [], pricelistItems || []);
-            state.needsSync = Boolean(state.link) && (await db.getMeta("dataVersion")) !== DATA_VERSION;
+            buildFiscal(meta.company, meta.taxes || [], meta.fiscalPositions || []);
+            buildPricing(meta.pricelists || [], meta.pricelistItems || []);
+            state.needsSync = Boolean(state.link) && meta.dataVersion !== DATA_VERSION;
         }
 
         async function readLinkFromUrl() {
@@ -344,8 +344,25 @@ export const preventaService = {
                 const data = await response.json();
                 const downloaded = performance.now();
                 data.partners.sort((a, b) => a.name.localeCompare(b.name));
-                await db.replaceAll("partners", data.partners);
-                await db.replaceAll("products", data.products);
+                await Promise.all([
+                    db.replaceAll("partners", data.partners),
+                    db.replaceAll("products", data.products),
+                    db.setMetas({
+                        currency: data.currency,
+                        pin: data.pin || false,
+                        company: data.company,
+                        taxes: data.taxes,
+                        fiscalPositions: data.fiscal_positions,
+                        activities: data.activities,
+                        categories: data.categories,
+                        history: data.history,
+                        pricelists: data.pricelists,
+                        pricelistItems: data.pricelist_items,
+                        warehouse: data.warehouse,
+                        discountEnabled: data.discount_enabled,
+                        dataVersion: DATA_VERSION,
+                    }),
+                ]);
                 const lastSync = {
                     date: new Date().toISOString(),
                     partners: data.partners.length,
@@ -355,20 +372,7 @@ export const preventaService = {
                     downloadMs: Math.round(downloaded - started),
                     storeMs: Math.round(performance.now() - downloaded),
                 };
-                await db.setMeta("currency", data.currency);
-                await db.setMeta("pin", data.pin || false);
-                await db.setMeta("company", data.company);
-                await db.setMeta("taxes", data.taxes);
-                await db.setMeta("fiscalPositions", data.fiscal_positions);
-                await db.setMeta("activities", data.activities);
-                await db.setMeta("categories", data.categories);
-                await db.setMeta("history", data.history);
-                await db.setMeta("pricelists", data.pricelists);
-                await db.setMeta("pricelistItems", data.pricelist_items);
-                await db.setMeta("warehouse", data.warehouse);
-                await db.setMeta("discountEnabled", data.discount_enabled);
                 await db.setMeta("lastSync", lastSync);
-                await db.setMeta("dataVersion", DATA_VERSION);
                 state.partners = markRaw(data.partners);
                 state.products = markRaw(data.products);
                 state.activities = markRaw(data.activities);
@@ -478,7 +482,7 @@ export const preventaService = {
             for (const draft of getOrdersByState("draft")) {
                 const partner = partners.get(draft.partner_id);
                 if (partner) {
-                    await saveDraft(JSON.parse(JSON.stringify(draft)), partner);
+                    await saveDraft(deepCopy(draft), partner);
                 }
             }
         }
@@ -489,7 +493,7 @@ export const preventaService = {
             if (!current && !(quantity > 0)) {
                 return;
             }
-            const order = current ? JSON.parse(JSON.stringify(current)) : newDraft(partner, activityId);
+            const order = current ? deepCopy(current) : newDraft(partner, activityId);
             if (activityId && !order.activity_id) {
                 order.activity_id = activityId;
             }
@@ -514,7 +518,7 @@ export const preventaService = {
         /** Discount in % on a line of the customer's draft. */
         async function setDiscount(partner, productId, discount) {
             const current = getDraftOrder(partner);
-            const order = current && JSON.parse(JSON.stringify(current));
+            const order = current && deepCopy(current);
             const line = order?.lines.find((l) => l.product_id === productId);
             if (!line) {
                 return;
@@ -572,9 +576,7 @@ export const preventaService = {
                 lines: [],
                 location: await getLocation(),
             });
-            if (state.autoSend) {
-                sendOrders({ silent: true });
-            }
+            autoSend();
         }
 
         // Number Odoo gave to an order sent from this device, once it came back in the history.
@@ -601,7 +603,7 @@ export const preventaService = {
         }
 
         async function saveOrder(order) {
-            await db.put("orders", JSON.parse(JSON.stringify(order)));
+            await db.put("orders", deepCopy(order));
             state.orders[order.uuid] = order;
         }
 
@@ -659,9 +661,7 @@ export const preventaService = {
                 location: await getLocation(),
             });
             await saveOrder(order);
-            if (state.autoSend) {
-                sendOrders({ silent: true });
-            }
+            autoSend();
         }
 
         function buildPayload(order) {
@@ -751,19 +751,16 @@ export const preventaService = {
             }
         }
 
-        async function setAutoSend(value) {
-            state.autoSend = value;
-            await db.setMeta("autoSend", value);
-            if (value) {
+        function autoSend() {
+            if (state.autoSend) {
                 sendOrders({ silent: true });
             }
         }
 
-        async function removeLine(order, productId) {
-            if (order.state !== "draft") {
-                return;
-            }
-            await saveOrder({ ...order, lines: order.lines.filter((line) => line.product_id !== productId) });
+        async function setAutoSend(value) {
+            state.autoSend = value;
+            await db.setMeta("autoSend", value);
+            autoSend();
         }
 
         async function resetLocal() {
@@ -899,16 +896,10 @@ export const preventaService = {
 
         browser.addEventListener("online", () => {
             state.online = true;
-            if (state.autoSend) {
-                sendOrders({ silent: true });
-            }
+            autoSend();
         });
         // navigator.onLine is not reliable (captive portals, weak signal): keep retrying.
-        browser.setInterval(() => {
-            if (state.autoSend) {
-                sendOrders({ silent: true });
-            }
-        }, AUTO_SEND_RETRY_MS);
+        browser.setInterval(autoSend, AUTO_SEND_RETRY_MS);
         browser.addEventListener("offline", () => (state.online = false));
 
         await loadLocal();
@@ -928,9 +919,7 @@ export const preventaService = {
         if (justLinked || (state.needsSync && browser.navigator.onLine)) {
             sync();
         }
-        if (state.autoSend) {
-            sendOrders({ silent: true });
-        }
+        autoSend();
 
         return {
             state,
@@ -946,7 +935,6 @@ export const preventaService = {
             computeLines,
             priceIncluded,
             closeOrder,
-            removeLine,
             logout,
             unlock,
             daysToExpiry,
@@ -956,7 +944,6 @@ export const preventaService = {
             getActivityOrder,
             setQuantity,
             setDiscount,
-            unitPrice,
             getLineQuantity,
             repeatOrder,
             registerNoPurchase,

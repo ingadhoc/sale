@@ -1,14 +1,9 @@
 import { Component, useState } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
+import { localDate, mapsUrl, partnerTitle } from "./utils";
 
 const WEEKDAYS = ["dom", "lun", "mar", "mié", "jue", "vie", "sáb"];
 const OVERDUE = "overdue";
-
-function localDate(offsetDays = 0) {
-    const now = new Date();
-    now.setDate(now.getDate() + offsetDays);
-    return new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
-}
 
 export class ActivitiesScreen extends Component {
     static template = "sale_offline_app.ActivitiesScreen";
@@ -100,7 +95,7 @@ export class ActivitiesScreen extends Component {
         if (!item.partner) {
             return "Cliente no disponible";
         }
-        return item.partner.ref ? `${item.partner.ref} - ${item.partner.name}` : item.partner.name;
+        return partnerTitle(item.partner);
     }
 
     subtitle(item) {
@@ -123,6 +118,6 @@ export class ActivitiesScreen extends Component {
             lat || lng
                 ? `${lat},${lng}`
                 : [partner.street, partner.city, partner.state_id, partner.country_id].filter(Boolean).join(", ");
-        return query && `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+        return mapsUrl(query);
     }
 }

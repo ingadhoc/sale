@@ -12,8 +12,9 @@
             No hay productos en el celular. Sincronizá desde Configuración.
         </div>
         <t t-elif="state.query">
-            <div t-if="!results.length" class="p-4 text-center text-muted">Sin resultados.</div>
-            <CatalogProduct t-foreach="results" t-as="product" t-key="product.id"
+            <t t-set="found" t-value="results"/>
+            <div t-if="!found.length" class="p-4 text-center text-muted">Sin resultados.</div>
+            <CatalogProduct t-foreach="found" t-as="product" t-key="product.id"
                 product="product" partner="props.partner" activityId="props.activityId"/>
         </t>
         <t t-else="">
@@ -23,9 +24,10 @@
                 product="product" partner="props.partner" activityId="props.activityId"/>
         </t>
         <div t-if="props.partner" class="o_preventa_cart_bar d-flex align-items-center justify-content-between gap-2 px-3 py-2 text-white">
-            <t t-if="summary">
-                <span><t t-esc="summary.count"/> artículo(s)</span>
-                <span class="fs-5 fw-bold">Total <t t-esc="summary.total"/></span>
+            <t t-set="cart" t-value="summary"/>
+            <t t-if="cart">
+                <span><t t-esc="cart.count"/> artículo(s)</span>
+                <span class="fs-5 fw-bold">Total <t t-esc="cart.total"/></span>
                 <button t-if="props.onShowOrder" type="button" class="btn btn-light btn-sm" t-on-click="props.onShowOrder">Ver pedido</button>
             </t>
             <span t-else="" class="small">Todavía no cargaste artículos.</span>

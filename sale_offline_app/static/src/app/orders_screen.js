@@ -1,5 +1,6 @@
 import { Component, useState } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
+import { formatDate } from "./utils";
 
 /**
  * Two views of the same orders:
@@ -13,6 +14,7 @@ export class OrdersScreen extends Component {
     setup() {
         this.preventa = useService("preventa");
         this.data = useState(this.preventa.state);
+        this.formatDate = formatDate;
     }
 
     /** Ids of the customers matching the search (code, VAT or name), or false without one. */
@@ -55,10 +57,6 @@ export class OrdersScreen extends Component {
 
     get readyCount() {
         return this.preventa.getOrdersByState("ready", this.data.orders).length;
-    }
-
-    formatDate(iso) {
-        return iso ? new Date(iso).toLocaleString("es-AR", { hourCycle: "h23" }) : "";
     }
 
     orderInfo(order) {
