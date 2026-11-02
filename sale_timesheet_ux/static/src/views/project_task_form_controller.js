@@ -3,9 +3,24 @@ import { _t } from "@web/core/l10n/translation";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { ProjectTaskFormController } from "@project/views/project_task_form/project_task_form_controller";
 
+const saleLineChanged = (record) =>
+    Boolean(record?.resId) &&
+    "sale_line_id" in record._changes &&
+    record._changes.sale_line_id?.id !== record._values.sale_line_id?.id;
+
 patch(ProjectTaskFormController.prototype, {
+    async beforeUnload(ev) {
+        if (saleLineChanged(this.model.root)) {
+            // the confirmation cannot be asked while the page unloads: do not save, let the browser ask
+            ev.preventDefault();
+            ev.returnValue = "Unsaved changes";
+            return;
+        }
+        return super.beforeUnload(...arguments);
+    },
+
     async onWillSaveRecord(record, changes) {
-        if (record.resId && "sale_line_id" in record._changes) {
+        if (saleLineChanged(record)) {
             const count = await record.model.orm.call(record.resModel, "count_timesheets_to_relink", [[record.resId]]);
             if (count) {
                 const confirmed = await new Promise((resolve) => {
@@ -21,7 +36,7 @@ patch(ProjectTaskFormController.prototype, {
                 });
                 if (!confirmed) {
                     // not awaited: the save in progress holds the mutex of the model
-                    record.discard();
+                    record.update({ sale_line_id: record._values.sale_line_id });
                     return false;
                 }
             }
