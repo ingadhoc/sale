@@ -1,0 +1,2 @@
+id,name,model_id,group_id/id,operation,domain
+access_allow_billable_wizard,access_allow_billable_wizard,allow.billable.wizard,base.group_user,cru,
