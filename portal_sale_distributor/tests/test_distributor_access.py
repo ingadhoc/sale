@@ -55,3 +55,20 @@ class TestDistributorAccess(TransactionCase):
             # ir-access dropped, re-added as a row of ir.access.csv. has_access is what
             # answers this: reading display_name returns a value either way.
             self.assertTrue(self.company.partner_id.with_user(self.distributor).has_access("read"))
+
+    def test_distributor_pickings(self):
+        """La fila de `stock.picking` sin dominio anulaba el filtro de portal de
+        remitos: en la 20 los permisos de los grupos se suman con `Domain.OR`."""
+        picking_type = self.env.ref("stock.picking_type_out")
+        Picking = self.env["stock.picking"]
+        own = Picking.create({"partner_id": self.distributor.partner_id.id, "picking_type_id": picking_type.id})
+        outsider = Picking.create({"partner_id": self.outsider.id, "picking_type_id": picking_type.id})
+        company_own = Picking.create({"partner_id": self.commercial.id, "picking_type_id": picking_type.id})
+        with self.subTest("lee su propio remito"):
+            self.assertTrue(own.with_user(self.distributor).has_access("read"))
+        with self.subTest("lee el remito de su contacto comercial"):
+            self.assertTrue(company_own.with_user(self.distributor).has_access("read"))
+        with self.subTest("no lee el remito de un contacto ajeno"):
+            self.assertFalse(outsider.with_user(self.distributor).has_access("read"))
+        with self.subTest("no modifica el remito de un contacto ajeno"):
+            self.assertFalse(outsider.with_user(self.distributor).has_access("write"))
