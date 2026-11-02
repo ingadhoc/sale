@@ -88,6 +88,25 @@ class SaleOrderLine(models.Model):
             res["uomDisplayName"] = self.product_uom_id.display_name
         return res
 
+    @api.depends("invoice_lines.amount_currency")
+    def _compute_qty_invoiced(self):
+        super()._compute_qty_invoiced()
+        # Odoo sums the company-currency balance, which does not net to zero when the down payment
+        # was invoiced and deducted at different rates: check it in the order currency instead.
+        for line in self.filtered("is_downpayment"):
+            amount = 0.0
+            for invoice_line in line._get_invoice_lines():
+                move = invoice_line.move_id
+                if move.state == "cancel" and move.payment_state != "invoicing_legacy":
+                    continue
+                amount += invoice_line.currency_id._convert(
+                    invoice_line.amount_currency,
+                    line.currency_id,
+                    invoice_line.company_id,
+                    move.invoice_date or move.date or fields.Date.context_today(line),
+                )
+            line.qty_invoiced = 0 if line.currency_id.is_zero(amount) else 1
+
     def _get_downpayment_line_price_unit(self, invoices):
         """Core sums the down payment invoice lines without converting currencies.
 
