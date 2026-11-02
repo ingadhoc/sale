@@ -9,7 +9,7 @@ access_stock_quant_all,stock.quant all users,stock.quant,portal_sale_distributor
 access_stock_route,stock.route,stock.route,portal_sale_distributor.group_portal_backend_distributor,ru,
 access_stock_move,stock.stock.move.portal.distributor,stock.move,portal_sale_distributor.group_portal_backend_distributor,u,
 portal_stock_move_rule,Movimientos de stock (distribuidores),stock.move,portal_sale_distributor.group_portal_backend_distributor,r,"['|', ('company_id', '=', False), ('company_id', 'in', user.company_ids.ids)]"
-access_stock_picking,stock.stock.picking.portal.distributor,stock.picking,portal_sale_distributor.group_portal_backend_distributor,cru,
+access_stock_picking,stock.stock.picking.portal.distributor,stock.picking,portal_sale_distributor.group_portal_backend_distributor,cru,"['|', ('partner_id', 'child_of', [user.commercial_partner_id.id]), ('sale_id.partner_id', 'child_of', [user.commercial_partner_id.id])]"
 access_product_product,product.product.portal.distributor,product.product,portal_sale_distributor.group_portal_backend_distributor,r,
 portal_product_template_public_rule,Public product template (distribuidores) ,product.template,portal_sale_distributor.group_portal_backend_distributor,r,"[(1 ,'=', 1)]"
 access_product_category,product.category.portal.distributor,product.category,portal_sale_distributor.group_portal_backend_distributor,ru,
