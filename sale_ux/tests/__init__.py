@@ -3,6 +3,7 @@
 # directory
 ##############################################################################
 from . import test_crm_team
+from . import test_line_numbers
 from . import test_account_move
 from . import test_model_audit
 from . import test_partner_product_config
