@@ -46,6 +46,10 @@ Usage
 
 To use this module, you need to:
 
+#. Create a sale order with that type and a service product invoiced on ordered
+   quantity: the line is invoiced on the ordered quantity, while the rest of the
+   lines keep following the delivered one.
+
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
    :target: http://runbot.adhoc.com.ar/
