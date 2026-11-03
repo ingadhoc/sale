@@ -49,7 +49,7 @@ class StockPicking(models.Model):
         return super(StockPicking, self).action_assign()
 
     def _check_sale_paid(self):
-        precision = self.env["decimal.precision"].precision_get("Product Unit of Measure")
+        precision = self.env["decimal.precision"].precision_get("Product Unit")
         invoice_status = (
             self.sale_id.mapped("order_line.invoice_lines.move_id")
             .filtered(lambda x: x.move_type == "out_invoice" and x.state != "cancel")
