@@ -117,3 +117,25 @@ class SaleOrderLine(models.Model):
                 )
                 total += sign * (converted_price_unit - line.price_unit)
         return total
+
+    def _compute_line_number_offset(self):
+        """Number only the lines that are not sections, subsections or notes.
+
+        Odoo 20 numbers every row when the company setting "Line Numbers" is on, sections and notes
+        included. In 19 our module `sale_order_line_number` numbered only the lines without
+        `display_type`, so the numbers of the lines are kept as they were.
+        """
+        sale_order_lines = set(self)
+        for order, lines in self.grouped("order_id").items():
+            lines.line_number_offset = 0
+            if not order.show_sol_numbers:
+                continue
+            line_count = 0
+            for line in order.order_line.sorted("sequence"):
+                if line in sale_order_lines:
+                    line.line_number_offset = line_count
+                if line.display_type or (
+                    line.parent_id.collapse_composition or line.parent_id.parent_id.collapse_composition
+                ):
+                    continue
+                line_count += 1
