@@ -60,6 +60,7 @@ class SaleOrder(models.Model):
         "order_line.is_downpayment",
         "order_line.quantity_returned",
         "order_line.invoice_lines.parent_state",
+        "order_line.invoice_lines.quantity",
     )
     def _compute_gathering_balance(self):
         orders_gathering = self.filtered(
@@ -79,14 +80,12 @@ class SaleOrder(models.Model):
         for order in orders_gathering:
             lines = order._get_gathering_lines()
             total_downpayment_amount = 0
+            # only the posted original advance counts: canje deductions go with a negative quantity,
+            # and a multi-tax down payment has one positive line per tax group
             for line in lines.filtered(
                 lambda l: l.is_downpayment
                 and not l.display_type
-                and any(
-                    il.parent_state != "cancel"
-                    for il in l.sudo().invoice_lines
-                    if len(il.move_id.invoice_line_ids.sale_line_ids.filtered("is_downpayment")) == 1
-                )
+                and any(il.parent_state == "posted" and il.quantity > 0 for il in l.sudo().invoice_lines)
             ):
                 total_downpayment_amount += line.tax_id.with_context(round=False).compute_all(
                     line.price_unit,
