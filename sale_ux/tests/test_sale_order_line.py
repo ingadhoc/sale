@@ -75,6 +75,10 @@ class TestSaleOrderLine(SaleUxCommon):
         order.web_read({"order_line": {"fields": {"allowed_uom_ids": {}}}})
 
     def test_confirmed_order_keeps_manual_discount(self):
+        if "discount1" in self.env["sale.order.line"]._fields:
+            # sale_ux hands the discount over to sale_triple_discount, so it
+            # does not keep a manual value: see _compute_discount.
+            self.skipTest("sale_triple_discount owns the discount")
         order = self._create_sale_order()
         order.action_confirm()
         line = order.order_line[0]
