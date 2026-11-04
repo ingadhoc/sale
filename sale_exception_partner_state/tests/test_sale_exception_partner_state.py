@@ -47,6 +47,14 @@ class TestSaleExceptionPartnerState(TransactionCase):
     def _confirm(self, order):
         order.action_confirm()
 
+    def test_without_configuration_nothing_is_restricted(self):
+        self.company.restrict_sales = False
+        self.partner.partner_state = "potential"
+        order = self._create_order(self.partner)
+        self._confirm(order)
+        self.assertEqual(order.state, "sale")
+        self.assertFalse(order.exception_ids)
+
     def test_restrict_yes_blocks_unapproved_partner(self):
         self.company.restrict_sales = "yes"
         self.partner.partner_state = "potential"
