@@ -35,6 +35,8 @@ class TestDistributorWarehouse(TransactionCase):
             }
         )
         cls.salesman.property_warehouse_id = cls.default_warehouse
+        # el que la empresa fija en el tipo de pedido: sin sucursal, lo alcanza cualquiera
+        cls.type_warehouse = cls._create_warehouse("Almacén del tipo", "WHTY", cls.env["res.store"], 90)
         cls.distributor = cls._create_distributor(cls.store)
         cls.distributor.partner_id.user_id = cls.salesman
         cls.env["exception.rule"].search([("model", "in", ("sale.order", "sale.order.line"))]).write({"active": False})
@@ -46,7 +48,7 @@ class TestDistributorWarehouse(TransactionCase):
                 "name": name,
                 "code": code,
                 "company_id": cls.company.id,
-                "store_id": store.id,
+                "store_id": store.id if store else False,
                 "sequence": sequence,
             }
         )
@@ -76,6 +78,19 @@ class TestDistributorWarehouse(TransactionCase):
 
     def _create_order(self, user):
         return self.env["sale.order"].with_user(user).create({"partner_id": user.partner_id.commercial_partner_id.id})
+
+    def _create_order_type(self, name, warehouse):
+        if "type_id" not in self.env["sale.order"]._fields:
+            self.skipTest("sale_order_type no está instalado")
+        return self.env["sale.order.type"].create(
+            {"name": name, "company_id": self.company.id, "warehouse_id": warehouse.id if warehouse else False}
+        )
+
+    def _create_order_with_type(self, order_type):
+        self.distributor.partner_id.commercial_partner_id.sale_type = order_type
+        order = self._create_order(self.distributor)
+        self.assertEqual(order.type_id, order_type)
+        return order
 
     def test_warehouse_comes_from_distributor_store(self):
         order = self._create_order(self.distributor)
@@ -114,3 +129,35 @@ class TestDistributorWarehouse(TransactionCase):
         order = self._create_order(self.distributor)
         self.assertNotEqual(order.warehouse_id, self.child_warehouse)
         self.assertEqual(order.warehouse_id, self.store_warehouse)
+
+    def test_order_type_warehouse_wins(self):
+        """El almacén del tipo de pedido es configuración explícita de la empresa y gana
+        sobre el de la sucursal, como pasaba antes de que existiera este módulo
+        (ticket 131959)."""
+        order = self._create_order_with_type(self._create_order_type("Con almacén", self.type_warehouse))
+        self.assertEqual(order.warehouse_id, self.type_warehouse)
+
+    def test_order_type_without_warehouse_keeps_distributor_warehouse(self):
+        """Un tipo de pedido sin almacén no define nada: sigue mandando la sucursal del
+        distribuidor."""
+        order = self._create_order_with_type(self._create_order_type("Sin almacén", None))
+        self.assertEqual(order.warehouse_id, self.store_warehouse)
+
+    def test_order_type_warehouse_out_of_reach_is_ignored(self):
+        """Un almacén de una sucursal que el distribuidor no tiene lo dejaría sin poder leer
+        su propio pedido: ahí manda la sucursal y no el tipo."""
+        warehouse = self._create_warehouse("Almacén ajeno", "WHAJ", self.salesman_store, 90)
+        order = self._create_order_with_type(self._create_order_type("Con almacén ajeno", warehouse))
+        self.assertEqual(order.warehouse_id, self.store_warehouse)
+
+    def test_order_type_warehouse_of_child_store_wins(self):
+        """El almacén de una sucursal hija sí lo alcanza, igual que la regla de registro."""
+        order = self._create_order_with_type(self._create_order_type("Con almacén hijo", self.child_warehouse))
+        self.assertEqual(order.warehouse_id, self.child_warehouse)
+
+    def test_changing_the_order_type_recomputes_the_warehouse(self):
+        """El tipo dispara el cómputo: cambiarlo en un pedido en borrador mueve el almacén."""
+        order = self._create_order_with_type(self._create_order_type("Sin almacén", None))
+        self.assertEqual(order.warehouse_id, self.store_warehouse)
+        order.type_id = self._create_order_type("Con almacén", self.type_warehouse)
+        self.assertEqual(order.warehouse_id, self.type_warehouse)
