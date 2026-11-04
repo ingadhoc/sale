@@ -16,7 +16,7 @@ Sale Stock Product Pack UX
 
 This module acts as a bridge between ``sale_stock_ux`` and ``sale_stock_product_pack`` modules.
 
-It fixes the calculation of ``quantity_returned`` field for product pack parent lines to ensure proper credit note generation when returning packed products.
+It fixes the calculation of the ``quantity_returned`` field for product pack parent lines, so the delivery status of a pack takes into account the returns of its components.
 
 Installation
 ============
