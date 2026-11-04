@@ -16,7 +16,7 @@ Sale Order Type Invoice Policy Pack
 
 This module adjusts the invoicing policy for product packs when the sale order type has a "delivery" policy.
 
-For packs, it calculates qty_to_invoice as product_uom_qty - qty_invoiced, but only if all components of the pack are fully delivered (qty_delivered >= product_uom_qty for each component). If not all components are delivered, qty_to_invoice is set to 0.0.
+For a pack line it computes qty_to_invoice from the components instead of from the pack line itself. For each component it works out how many whole packs were delivered (qty_delivered divided by the quantity of that component per pack), keeps the lowest of those figures and subtracts the quantity already invoiced. A partially delivered pack is therefore invoiced in proportion to its least delivered component.
 
 Installation
 ============
@@ -36,6 +36,10 @@ Usage
 =====
 
 To use this module, you need to:
+
+#. Set the invoicing policy of the sale order type to "Delivered quantities"
+#. Confirm a sale order with a pack product and deliver part of its components
+#. The quantity to invoice of the pack line follows the least delivered component
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
