@@ -1,2 +1,0 @@
-id,name,model_id,group_id/id,operation,domain
-access_project_task_portal_distributor,project.task.portal.distributor,project.task,portal_sale_distributor.group_portal_backend_distributor,r,"[] if not user.has_group('base.group_portal') else [(0, '=', 1)]"

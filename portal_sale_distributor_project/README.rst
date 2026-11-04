@@ -16,7 +16,6 @@ Portal Distributor Sale with Project
 
 This module integrate portal sale distributor using sale_project.
 
-#. Add a model access rule so portal distributor users can read project tasks.
 #. Extend the groups of the task fields sale_project adds to the sale order
    (tasks_ids, tasks_count and closed_task_count), which are restricted to
    project users. Without this the product catalog can not be opened, because
