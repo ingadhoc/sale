@@ -29,9 +29,7 @@
         "sale_project",
         "portal_sale_distributor",
     ],
-    "data": [
-        "security/ir.access.csv",
-    ],
+    "data": [],
     "installable": True,
     "auto_install": True,
 }
