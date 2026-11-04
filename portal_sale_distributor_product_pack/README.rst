@@ -16,7 +16,7 @@ Portal Distributor Sale with Product Pack
 
 This module integrate portal sale distributor using product pack.
 
-#. Add a model access rule in order to able portal distributor users to add products that are packs in sale orders.
+#. Add a read access on product pack lines for the portal distributor group, so its users can change the product or the quantity of a sale order line that is a pack and keep its component lines.
 
 Installation
 ============
@@ -38,7 +38,7 @@ Usage
 To use this module, you need to:
 
 #. Log in with a user with the portal distributor group.
-#. Go to My Addresses.
+#. Create a sale order, add a product that is a pack and change its quantity.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
