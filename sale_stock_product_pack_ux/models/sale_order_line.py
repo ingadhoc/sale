@@ -7,9 +7,9 @@ class SaleOrderLine(models.Model):
     @api.depends(
         "pack_child_line_ids.qty_delivered_method",
         "pack_child_line_ids.move_ids.state",
-        "pack_child_line_ids.move_ids.scrap_id",
+        "pack_child_line_ids.move_ids.is_scrap",
         "pack_child_line_ids.move_ids.product_uom_qty",
-        "pack_child_line_ids.move_ids.product_uom",
+        "pack_child_line_ids.move_ids.uom_id",
     )
     def _compute_quantity_returned(self):
         res = super()._compute_quantity_returned()
