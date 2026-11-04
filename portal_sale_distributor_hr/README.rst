@@ -18,14 +18,14 @@ This module integrate Portal Sale Distributor using Employees.
 
 #. If you want to log in with a portal distributor user without this module you will have a warning:
    'Only employees can access this database. Please contact the administrator', and you will not be able to log in.
-#. So, this module add a model access rule in order to able portal distributor users to log in in the database if hr is installed.
+#. So, this module gives portal distributor users read access to departments (``hr.department``) in order to able them to log in in the database if hr is installed.
 
 Installation
 ============
 
 To install this module, you need to:
 
-#. Just install this module.
+#. Nothing to do: this module is installed automatically when both 'Employees' (hr) and 'Portal Sale Distributor' are installed.
 
 Configuration
 =============
