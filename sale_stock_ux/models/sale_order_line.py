@@ -5,7 +5,7 @@
 from collections import defaultdict
 
 from odoo import _, api, fields, models
-from odoo.tools.float_utils import float_compare, float_is_zero
+from odoo.tools.float_utils import float_compare
 
 
 class SaleOrderLine(models.Model):
@@ -284,106 +284,6 @@ class SaleOrderLine(models.Model):
                         else:
                             quantity_returned = 0.0
             order_line.quantity_returned = quantity_returned
-
-    @api.depends("quantity_returned")
-    def _compute_qty_to_invoice(self):
-        """
-        Modificamos la funcion original para que si el producto es segun lo
-        pedido, para que funcione el reembolo hacemos que la cantidad a
-        facturar reste la cantidad devuelta.
-        NOTA: solo lo hacemos si policy "order" porque en policy "delivered"
-        odoo ya lo descuenta a la cantidad entregada y automáticamente lo
-        termina facturando
-        """
-        super()._compute_qty_to_invoice()
-        for line in self:
-            # igual que por defecto, si no en estos estados, no hay a facturar
-            if line.order_id.state not in ["sale", "done"]:
-                continue
-            if line.product_id.invoice_policy == "order":
-                line.qty_to_invoice = line.product_uom_qty - line.quantity_returned - line.qty_invoiced
-
-    @api.depends(
-        "discount",
-        "price_total",
-        "product_uom_qty",
-        "qty_delivered",
-        "qty_invoiced_posted",
-        "quantity_returned",
-    )
-    def _compute_amount_to_invoice(self):
-        """
-        El calculo original usa la cantidad pedida sin restar las devoluciones,
-        asi que una linea devuelta y acreditada queda facturada por completo
-        pero con saldo pendiente. Usamos la misma cantidad neta que el estado.
-        Con politica "segun lo entregado" no hace falta: qty_delivered ya viene
-        neto de devoluciones.
-        """
-        super()._compute_amount_to_invoice()
-        for line in self:
-            if not line.product_uom_qty or not line.quantity_returned:
-                continue
-            if line.product_id.invoice_policy == "delivery":
-                continue
-            qty_to_invoice = line.product_uom_qty - line.quantity_returned - line.qty_invoiced_posted
-            line.amount_to_invoice = line.price_total / line.product_uom_qty * qty_to_invoice
-
-    @api.depends(
-        "state",
-        "product_id",
-        "untaxed_amount_invoiced",
-        "qty_delivered",
-        "product_uom_qty",
-        "price_unit",
-        "quantity_returned",
-    )
-    def _compute_untaxed_amount_to_invoice(self):
-        """Mismo criterio que _compute_amount_to_invoice, sin impuestos."""
-        super()._compute_untaxed_amount_to_invoice()
-        for line in self:
-            if not line.product_uom_qty or not line.quantity_returned:
-                continue
-            if line.product_id.invoice_policy == "delivery":
-                continue
-            returned_amount = line.price_subtotal / line.product_uom_qty * line.quantity_returned
-            line.untaxed_amount_to_invoice = max(line.untaxed_amount_to_invoice - returned_amount, 0.0)
-
-    @api.depends(
-        "order_id.force_invoiced_status",
-        "state",
-        "product_uom_qty",
-        "qty_delivered",
-        "qty_to_invoice",
-        "qty_invoiced",
-        "quantity_returned",
-    )
-    def _compute_invoice_status(self):
-        super()._compute_invoice_status()
-        precision = self.env["decimal.precision"].precision_get("Product Unit")
-        for line in self:
-            if not line.order_id.force_invoiced_status:
-                net_qty = line.product_uom_qty - line.quantity_returned
-                if not float_is_zero(line.qty_to_invoice, precision_digits=precision):
-                    line.invoice_status = "to invoice"
-                elif (
-                    line.state == "sale"
-                    and line.product_id.invoice_policy == "order"
-                    and line.product_uom_qty >= 0.0
-                    and float_compare(line.qty_delivered, line.product_uom_qty, precision_digits=precision) == 1
-                ):
-                    line.invoice_status = "upselling"
-                elif float_compare(line.qty_invoiced, net_qty, precision_digits=precision) >= 0 and (
-                    # Sin devolución mantenemos la semántica nativa (una línea de
-                    # cantidad 0 queda "invoiced"). Con devolución solo es "invoiced"
-                    # si quedó una cantidad neta positiva a facturar; si se devolvió
-                    # todo (neto 0), no hay nada que facturar y cae a "no", igual que
-                    # el core de Odoo. Ver ticket 123997.
-                    float_is_zero(line.quantity_returned, precision_digits=precision)
-                    or float_compare(net_qty, 0.0, precision_digits=precision) > 0
-                ):
-                    line.invoice_status = "invoiced"
-                else:
-                    line.invoice_status = "no"
 
     @api.depends("product_template_id")
     def _compute_stock_by_location(self):

@@ -4,15 +4,13 @@ from odoo.tests import tagged
 
 @tagged("post_install", "-at_install")
 class TestInvoiceStatusReturn(AccountTestInvoicingCommon):
-    """Estado y saldo pendiente de la OV tras devoluciones (ticket 123997).
+    """Facturación de las devoluciones en 20: la de Odoo, sin descontar lo devuelto.
 
-    En ``sale_stock_ux`` una devolución PARCIAL totalmente facturada debe
-    quedar "invoiced" (lo entregado neto se facturó), pero una devolución
-    TOTAL debe caer a "no" (no queda nada por facturar), igual que el core de
-    Odoo. Antes del fix la devolución total quedaba erróneamente "invoiced".
-
-    El monto pendiente (``amount_to_invoice``) tiene que acompañar a ese
-    estado: una línea "invoiced" no puede dejar saldo sin facturar.
+    Con política "según lo pedido", lo devuelto ya no se resta de lo que se
+    factura: un cambio (Exchange) no deja una nota de crédito pendiente, y una
+    devolución sin reposición se abona a mano. Con "según lo entregado", Odoo
+    descuenta la devolución de lo entregado y pide la nota de crédito, como
+    siempre.
     """
 
     @classmethod
@@ -45,12 +43,13 @@ class TestInvoiceStatusReturn(AccountTestInvoicingCommon):
         if cls.env["sale.order"]._fields.get("ignore_exception"):
             cls.env["exception.rule"].sudo().search([("active", "=", True)]).write({"active": False})
 
-    def _create_order(self, qty):
+    def _create_order(self, qty, product=None):
+        product = product or self.product
         order = self.env["sale.order"].create(
             {
                 "partner_id": self.partner.id,
                 "warehouse_id": self.warehouse.id,
-                "order_line": [(0, 0, {"product_id": self.product.id, "product_uom_qty": qty, "price_unit": 100.0})],
+                "order_line": [(0, 0, {"product_id": product.id, "product_uom_qty": qty, "price_unit": 100.0})],
             }
         )
         order.action_confirm()
@@ -77,67 +76,48 @@ class TestInvoiceStatusReturn(AccountTestInvoicingCommon):
         invoices.action_post()
         return invoices
 
-    def test_total_return_is_nothing_to_invoice(self):
-        """Devolución total: tras la nota de crédito el estado es "no"."""
-        order = self._create_order(1.0)
-        line = order.order_line
-        delivery = order.picking_ids
-        self._validate(delivery)
-        self._invoice(order)
-        self.assertEqual(line.invoice_status, "invoiced", "Entregado y facturado debe ser 'invoiced'")
-
-        # Devolvemos TODO -> queda pendiente la nota de crédito.
-        self._make_return(delivery, quantity=1.0)
-        self.assertEqual(line.invoice_status, "to invoice", "Con la NC pendiente debe ser 'to invoice'")
-
-        # Emitimos la nota de crédito -> no queda nada por facturar.
-        self._invoice(order)
-        self.assertEqual(line.invoice_status, "no", "Devolución total facturada debe quedar 'no' (nada que facturar)")
-
-    def test_partial_return_stays_invoiced(self):
-        """Devolución parcial: tras la nota de crédito sigue "invoiced"."""
+    def test_partial_return_keeps_ordered_billed(self):
+        """Según lo pedido: devolver 1 de 2 no deja nada a facturar ni a acreditar."""
         order = self._create_order(2.0)
         line = order.order_line
         delivery = order.picking_ids
         self._validate(delivery)
         self._invoice(order)
-        self.assertEqual(line.invoice_status, "invoiced")
 
         self._make_return(delivery, quantity=1.0)
+
+        self.assertEqual(line.quantity_returned, 1.0)
+        self.assertEqual(line.qty_to_invoice, 0.0)
+        self.assertEqual(line.invoice_status, "invoiced")
+        self.assertAlmostEqual(line.amount_to_invoice, 0.0, places=2)
+
+    def test_exchange_leaves_nothing_to_invoice(self):
+        """Según lo pedido: devolver 2 de 10 y cambiarlas no deja una nota de crédito pendiente."""
+        order = self._create_order(10.0)
+        line = order.order_line
+        delivery = order.picking_ids
+        self._validate(delivery)
+        self._invoice(order)
+
+        returned = self._make_return(delivery, quantity=2.0)
+        exchange = self.env["stock.picking"].browse(returned.action_exchange()["res_id"])
+        self._validate(exchange)
+
+        self.assertEqual(line.qty_delivered, 10.0)
+        self.assertEqual(line.qty_to_invoice, 0.0)
+        self.assertEqual(line.invoice_status, "invoiced")
+        self.assertAlmostEqual(line.amount_to_invoice, 0.0, places=2)
+
+    def test_delivered_policy_return_asks_credit_note(self):
+        """Según lo entregado: la devolución queda a acreditar, como en Odoo."""
+        product = self.product.copy({"invoice_policy": "delivery"})
+        order = self._create_order(2.0, product=product)
+        line = order.order_line
+        delivery = order.picking_ids
+        self._validate(delivery)
+        self._invoice(order)
+
+        self._make_return(delivery, quantity=1.0)
+
+        self.assertEqual(line.qty_to_invoice, -1.0)
         self.assertEqual(line.invoice_status, "to invoice")
-
-        self._invoice(order)
-        self.assertEqual(line.invoice_status, "invoiced", "Devolución parcial facturada neta debe quedar 'invoiced'")
-
-    def test_no_return_full_invoice_stays_invoiced(self):
-        """Sin devolución: entregado y facturado queda "invoiced" (no regresión)."""
-        order = self._create_order(3.0)
-        line = order.order_line
-        self._validate(order.picking_ids)
-        self._invoice(order)
-        self.assertEqual(line.invoice_status, "invoiced")
-
-    def test_partial_return_leaves_no_amount_to_invoice(self):
-        """Devolución parcial: tras la nota de crédito no queda saldo pendiente."""
-        order = self._create_order(2.0)
-        line = order.order_line
-        delivery = order.picking_ids
-        self._validate(delivery)
-        self._invoice(order)
-        self._make_return(delivery, quantity=1.0)
-        self._invoice(order)
-
-        self.assertEqual(line.invoice_status, "invoiced")
-        self.assertAlmostEqual(line.amount_to_invoice, 0.0, places=2)
-        self.assertAlmostEqual(line.untaxed_amount_to_invoice, 0.0, places=2)
-        self.assertAlmostEqual(order.amount_to_invoice, 0.0, places=2)
-
-    def test_no_return_keeps_core_amount_to_invoice(self):
-        """Sin devolución el monto pendiente sigue siendo el del core."""
-        order = self._create_order(3.0)
-        line = order.order_line
-        self.assertAlmostEqual(line.amount_to_invoice, line.price_total, places=2)
-
-        self._validate(order.picking_ids)
-        self._invoice(order)
-        self.assertAlmostEqual(line.amount_to_invoice, 0.0, places=2)
