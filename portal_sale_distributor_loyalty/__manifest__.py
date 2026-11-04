@@ -30,7 +30,7 @@
         "portal_sale_distributor",
     ],
     "data": [
-        "security/ir.model.access.csv",
+        'security/ir.access.csv',
     ],
     "installable": True,
     "auto_install": True,
