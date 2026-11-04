@@ -16,9 +16,9 @@ Portal Distributor Sale with Employees
 
 This module integrate Portal Sale Distributor using Employees.
 
-#. If you want to log in with a portal distributor user without this module you will have a warning:
-   'Only employees can access this database. Please contact the administrator', and you will not be able to log in.
-#. So, this module gives portal distributor users read access to departments (``hr.department``) in order to able them to log in in the database if hr is installed.
+#. If hr is installed and a portal distributor user logs in without this module, the menus cannot be loaded
+   (the Employees app reads departments to decide which menus to show) and the user only sees a blank screen.
+#. So, this module gives portal distributor users read access to departments (``hr.department``) in order to able them to use the database if hr is installed.
 
 Installation
 ============
