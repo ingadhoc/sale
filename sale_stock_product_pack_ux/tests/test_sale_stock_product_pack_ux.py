@@ -32,7 +32,7 @@ class TestSaleStockProductPackUx(TestSaleProductPackBase):
                     "product_id": move.product_id.id,
                     "product_uom_qty": qty,
                     "quantity": qty,
-                    "product_uom": move.product_uom.id,
+                    "uom_id": move.uom_id.id,
                     "picking_id": return_picking.id,
                     "location_id": move.location_dest_id.id,
                     "location_dest_id": move.location_id.id,
