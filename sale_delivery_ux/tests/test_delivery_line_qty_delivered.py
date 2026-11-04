@@ -27,19 +27,31 @@ class TestDeliveryLineQtyDelivered(TransactionCase):
                 "product_id": cls.env.ref("delivery.product_product_delivery").id,
             }
         )
+        # fixed_price lives on the delivery product, so each carrier needs its own
+        cls.free_carrier = cls.env["delivery.carrier"].create(
+            {
+                "name": "Test free carrier",
+                "delivery_type": "fixed",
+                "fixed_price": 0.0,
+                "product_id": cls.env.ref("delivery.product_product_delivery")
+                .copy({"name": "Test free delivery product"})
+                .id,
+            }
+        )
         cls.partner = cls.env["res.partner"].create({"name": "Test customer"})
         # active exception rules keep the order in draft on confirmation, so no picking is created
         if cls.env["sale.order"]._fields.get("ignore_exception"):
             cls.env["exception.rule"].sudo().search([("active", "=", True)]).write({"active": False})
 
-    def _create_sale_order(self):
+    def _create_sale_order(self, carrier=None):
+        carrier = carrier or self.carrier
         order = self.env["sale.order"].create(
             {
                 "partner_id": self.partner.id,
                 "order_line": [(0, 0, {"product_id": self.product.id, "product_uom_qty": 5})],
             }
         )
-        order.set_delivery_line(self.carrier, self.carrier.fixed_price)
+        order.set_delivery_line(carrier, carrier.fixed_price)
         order.action_confirm()
         self.assertTrue(order.picking_ids, "the order was confirmed without creating any picking")
         return order
@@ -98,3 +110,22 @@ class TestDeliveryLineQtyDelivered(TransactionCase):
 
         self.assertEqual(self._delivery_line(internal_order).qty_delivered, 0.0)
         self.assertEqual(self._delivery_line(outgoing_order).qty_delivered, 1.0)
+
+    def test_zero_price_delivery_line_has_no_qty(self):
+        self.warehouse.delivery_steps = "ship_only"
+        order = self._create_sale_order(self.free_carrier)
+        delivery_line = self._delivery_line(order)
+
+        self.assertEqual(delivery_line.product_uom_qty, 0.0)
+        self.assertEqual(delivery_line.qty_to_invoice, 0.0)
+
+    def test_zero_price_delivery_line_on_locked_order(self):
+        self.warehouse.delivery_steps = "ship_only"
+        order = self._create_sale_order()
+        order.locked = True
+
+        # protected fields keep a locked order from changing the quantity, and
+        # the module lifts that guard for the zero cost delivery line
+        order.set_delivery_line(self.free_carrier, self.free_carrier.fixed_price)
+
+        self.assertEqual(self._delivery_line(order).product_uom_qty, 0.0)
