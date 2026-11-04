@@ -6,9 +6,9 @@
 
 .. |icon| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-icon.png
 
-.. image:: https://img.shields.io/badge/license-AGPL--3-blue.png
-   :target: https://www.gnu.org/licenses/agpl
-   :alt: License: AGPL-3
+.. image:: https://img.shields.io/badge/license-LGPL--3-blue.png
+   :target: https://www.gnu.org/licenses/lgpl
+   :alt: License: LGPL-3
 
 =========================================
 Portal Distributor Sale with Subscription
@@ -16,7 +16,7 @@ Portal Distributor Sale with Subscription
 
 This module integrate portal sale distributor using Subscription.
 
-#. Add a model access right to able portal distributor users to create sale orders.
+#. Add a read access right on subscription plans for portal distributor users, so they can create sale orders.
 
 Installation
 ============
