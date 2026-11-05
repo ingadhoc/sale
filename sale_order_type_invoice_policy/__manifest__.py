@@ -27,8 +27,7 @@
     "depends": [
         "account",
         "sale_order_type_ux",
-        # agregamos esta depenencia para permitir reembolsar las devoluciones
-        # y para no tener que hacer modulos puente
+        # agregamos esta depenencia para no tener que hacer modulos puente
         "sale_stock_ux",
     ],
     "demo": [

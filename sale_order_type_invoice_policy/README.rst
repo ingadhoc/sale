@@ -21,7 +21,7 @@ Add to sale order type invoice policy field with possible values:
 #. Prepaid- Block Delivery: They cannot deliver products until the invoice for the total has been created and is fully paid.
 #. Ordered quantities: overwrites product behaviour so that all lines are considered as "ordered quantities" no matter product configuration, once order is confirmed all products should be invoiced.
 #. Delivered quantities: overwrites product behaviour so that all lines are invoiced on the delivered quantity, no matter product configuration.
-#. Returns are taken into account: for the prepaid and "Ordered quantities" policies, the quantity returned (field added by sale_stock_ux) is subtracted from the quantity to invoice, so a return can be refunded.
+#. Returns are invoiced as Odoo does: the returned quantity is not subtracted from the quantity to invoice, so an exchange leaves nothing pending and a return without replacement is credited by hand.
 
 Installation
 ============
