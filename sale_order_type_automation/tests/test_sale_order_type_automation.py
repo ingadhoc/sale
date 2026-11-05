@@ -5,7 +5,7 @@
 from odoo import Command
 from odoo.addons.sale.tests.common import TestSaleCommon
 from odoo.exceptions import ValidationError
-from odoo.tests import tagged
+from odoo.tests import Form, tagged
 
 
 @tagged("post_install", "-at_install")
@@ -116,6 +116,36 @@ class TestSaleOrderTypeAutomation(TestSaleCommon):
         self.assertEqual(order.state, "sale")
         self.assertTrue(order.locked)
 
+    def test_action_confirm_applies_each_order_type_when_confirming_together(self):
+        """Confirming orders of different types together runs the automation of each one."""
+        self.sale_type.write(
+            {
+                "invoicing_atomation": "create_invoice",
+                "picking_atomation": "none",
+                "set_done_on_confirmation": True,
+                "invoice_validate_domain": False,
+            }
+        )
+        other_type = self.sale_type.copy(
+            {
+                "name": "Test Sale Order Type Automation Other",
+                "invoicing_atomation": "none",
+                "picking_atomation": "none",
+                "set_done_on_confirmation": False,
+            }
+        )
+        order_with_automation = self._create_order()
+        order_without_automation = self._create_order(type_id=other_type.id)
+        orders = order_with_automation | order_without_automation
+
+        orders.action_confirm()
+
+        self.assertEqual(set(orders.mapped("state")), {"sale"})
+        self.assertTrue(order_with_automation.invoice_ids)
+        self.assertTrue(order_with_automation.locked)
+        self.assertFalse(order_without_automation.invoice_ids)
+        self.assertFalse(order_without_automation.locked)
+
     def test_validate_payment_automation_requires_payment_journal(self):
         with self.assertRaises(ValidationError):
             self.sale_type.write(
@@ -158,3 +188,99 @@ class TestSaleOrderTypeAutomation(TestSaleCommon):
 
         self.assertEqual(self.sale_type.payment_atomation, "validate_payment")
         self.assertEqual(self.sale_type.payment_journal_id, self.payment_journal)
+
+    def test_sale_order_type_form_opens_with_payment_journal_domain(self):
+        self.assertIsInstance(self.sale_type.payment_journal_domain, list)
+
+        form = Form(self.sale_type)
+
+        self.assertEqual(form.payment_atomation, "none")
+
+    def _create_done_transaction(self, order, company=None):
+        provider = self.env["payment.provider"].create(
+            {"name": "Dummy Provider", "code": "none", "company_id": (company or order.company_id).id}
+        )
+        method = self.env["payment.method"].create(
+            {
+                "name": "Dummy Payment Method",
+                "code": "dummy",
+                "support_manual_capture": "partial",
+                "support_refund": "partial",
+                "provider_id": provider.id,
+            }
+        )
+        return self.env["payment.transaction"].create(
+            {
+                "provider_id": provider.id,
+                "payment_method_id": method.id,
+                "reference": "TEST-SOTA-%s" % order.id,
+                "amount": order.amount_total,
+                "currency_id": order.currency_id.id,
+                "partner_id": order.partner_id.id,
+                "sale_order_ids": [Command.set(order.ids)],
+                "state": "done",
+            }
+        )
+
+    def _set_invoice_automation(self):
+        self.sale_type.write(
+            {
+                "invoicing_atomation": "create_invoice",
+                "journal_id": self.invoice_journal.id,
+                "picking_atomation": "none",
+                "invoice_validate_domain": False,
+            }
+        )
+
+    def test_automation_skips_order_paid_online_when_company_invoices_automatically(self):
+        self._set_invoice_automation()
+        self.env.company.sale_automatic_invoice = True
+        order = self._create_order()
+        self._create_done_transaction(order)
+
+        order.action_confirm()
+
+        self.assertFalse(order.invoice_ids)
+
+    def test_automation_invoices_order_paid_online_when_company_does_not_invoice_automatically(self):
+        self._set_invoice_automation()
+        self.env.company.sale_automatic_invoice = False
+        order = self._create_order()
+        self._create_done_transaction(order)
+
+        order.action_confirm()
+
+        self.assertTrue(order.invoice_ids)
+
+    def test_automation_follows_the_company_of_the_transaction(self):
+        self._set_invoice_automation()
+        other_company = self.env["res.company"].create({"name": "Sale Order Type Automation Other Company"})
+        self.env.company.sale_automatic_invoice = False
+        other_company.sale_automatic_invoice = True
+        order = self._create_order()
+        self._create_done_transaction(order, company=other_company)
+
+        order.action_confirm()
+
+        self.assertFalse(order.invoice_ids)
+
+    def test_picking_automation_with_a_service_line(self):
+        self.sale_type.write({"picking_atomation": "validate", "invoicing_atomation": "none"})
+        service = self.env["product.product"].create(
+            {
+                "name": "Sale Order Type Automation Service",
+                "type": "service",
+                "service_type": "manual",
+                "list_price": 50.0,
+            }
+        )
+        order = self._create_order()
+        order.write(
+            {"order_line": [Command.create({"product_id": service.id, "product_uom_qty": 2.0, "price_unit": 50.0})]}
+        )
+
+        order.action_confirm()
+
+        service_line = order.order_line.filtered(lambda line: line.product_id == service)
+        self.assertEqual(service_line.qty_delivered, 2.0)
+        self.assertEqual(set(order.picking_ids.mapped("state")), {"done"})
