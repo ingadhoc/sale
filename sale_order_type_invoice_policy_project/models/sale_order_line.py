@@ -19,4 +19,4 @@ class SaleOrderLine(models.Model):
                 and sol.product_id.service_policy == "ordered_prepaid"
             )
         ):
-            line.qty_to_invoice = line.product_uom_qty - line.quantity_returned - line.qty_invoiced
+            line.qty_to_invoice = line.product_uom_qty - line.qty_invoiced
