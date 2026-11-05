@@ -400,10 +400,13 @@ class TestAuditAnalyticWizard(SaleUxAuditCommon):
         )
 
     def test_salesman_without_analytic_accounting_is_not_offered_the_action(self):
+        # Other modules may enable analytic accounting for every internal user.
+        analytic_group = self.env.ref("analytic.group_analytic_accounting")
+        self.env.ref("base.group_user").implied_ids -= analytic_group
         salesman = new_test_user(self.env, login="audit_plain_salesman", groups="sales_team.group_sale_salesman")
         action = self.env.ref("sale_ux.action_sale_order_set_analytic")
 
-        self.assertFalse(action.group_ids & salesman.group_ids)
+        self.assertFalse(action.group_ids & salesman.all_group_ids)
         with self.assertRaises(AccessError):
             self.env["account.analytic.plan"].with_user(salesman).search([])
 
