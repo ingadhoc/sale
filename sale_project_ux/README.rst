@@ -28,7 +28,7 @@ Configuration
 
 To configure this module, you need to:
 
-#. Nothing to configure
+#. Go to Sales > Configuration > Settings and enable "Crear proyecto y cuenta analitica sin compañia" (added by sale_ux)
 
 Usage
 =====
