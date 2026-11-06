@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Priority above sale_management's own view: this one anchors on the element that
+         view adds to the quantity cell, so it has to be applied after it -->
+    <template id="sale_order_portal_content" inherit_id="sale.sale_order_portal_content" priority="20">
+        <!-- Lines sold in another unit (e.g. a packaging) shown in the product unit -->
+        <td name="td_product_quantity" position="before">
+            <t t-set="uom_vals" t-value="not line._can_be_edited_on_portal() and line._get_report_product_uom_values()"/>
+        </td>
+        <xpath expr="//td[@name='td_product_quantity']/t[@t-call='sale_management.sale_order_portal_optional_product_quantity']" position="attributes">
+            <attribute name="t-if">not uom_vals</attribute>
+        </xpath>
+        <td name="td_product_quantity" position="inside">
+            <div t-if="uom_vals">
+                <span t-out="uom_vals['qty']" t-options="{'widget': 'float', 'decimal_precision': 'Product Unit'}"/>
+                <span t-out="uom_vals['uom'].name"/>
+                <div class="text-muted small">
+                    <span t-field="line.product_uom_qty"/> <span t-field="line.product_uom_id"/>
+                </div>
+            </div>
+        </td>
+        <xpath expr="//td[@name='td_product_priceunit']/t[@t-if='not collapse_prices']" position="attributes">
+            <attribute name="t-if" add="not uom_vals" separator=" and "/>
+        </xpath>
+        <td name="td_product_priceunit" position="inside">
+            <t t-if="uom_vals and not collapse_prices">
+                <div
+                    t-if="line.discount &gt;= 0"
+                    t-out="uom_vals['price_unit']"
+                    t-options="uom_vals['price_options']"
+                    t-att-style="line.discount and 'text-decoration: line-through' or None"
+                    t-att-class="(line.discount and 'text-danger' or '') + ' text-end'"
+                />
+                <div t-if="line.discount">
+                    <t t-out="(1 - line.discount / 100.0) * uom_vals['price_unit']" t-options="uom_vals['price_options']"/>
+                </div>
+            </t>
+        </td>
+    </template>
+</odoo>
