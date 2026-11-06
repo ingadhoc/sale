@@ -7,19 +7,17 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 19.0+e\n"
+"Project-Id-Version: Odoo Server 20.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-11 21:14+0000\n"
-"PO-Revision-Date: 2025-12-13 16:10+0000\n"
+"POT-Creation-Date: 2026-11-06 19:39+0000\n"
+"PO-Revision-Date: 2026-11-06 19:39+0000\n"
 "Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
-"Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
-"sale-19-0-sale_gathering_index/es/>\n"
+"Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-20-0/sale-20-0-sale_gathering_index/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
-"0) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0) ? 1 : 2);\n"
 "X-Generator: Weblate 5.10.4\n"
 
 #. module: sale_gathering_index
@@ -36,6 +34,81 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_gathering_index.report_saleorder_document_gathering
 msgid "% | <strong>Coef:</strong>"
 msgstr "% | <strong>Coef:</strong>"
+
+#. module: sale_gathering_index
+#: model:ir.module.module,description:base.module_sale_gathering_index
+msgid ""
+".. |company| replace:: ADHOC SA\n"
+"\n"
+".. |company_logo| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-logo.png\n"
+"   :alt: ADHOC SA\n"
+"   :target: https://www.adhoc.com.ar\n"
+"\n"
+".. |icon| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-icon.png\n"
+"\n"
+".. image:: https://img.shields.io/badge/license-AGPL--3-blue.png\n"
+"   :target: https://www.gnu.org/licenses/agpl\n"
+"   :alt: License: AGPL-3\n"
+"\n"
+"====================\n"
+"Sale Gathering Index\n"
+"====================\n"
+"\n"
+"#.\n"
+"\n"
+"Installation\n"
+"============\n"
+"\n"
+"To install this module, you need to:\n"
+"\n"
+"#. Only need to install the module.\n"
+"\n"
+"Configuration\n"
+"=============\n"
+"\n"
+"To configure this module, you need to:\n"
+"\n"
+"#. Nothing to configure.\n"
+"\n"
+"Usage\n"
+"=====\n"
+"\n"
+"To use this module, you need to:\n"
+"\n"
+"#. Just use.\n"
+"\n"
+".. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas\n"
+"   :alt: Try me on Runbot\n"
+"   :target: http://runbot.adhoc.com.ar/\n"
+"\n"
+"Bug Tracker\n"
+"===========\n"
+"\n"
+"Bugs are tracked on `GitHub Issues\n"
+"<https://github.com/ingadhoc/sale/issues>`_. In case of trouble, please\n"
+"check there if your issue has already been reported. If you spotted it first,\n"
+"help us smashing it by providing a detailed and welcomed feedback.\n"
+"\n"
+"Credits\n"
+"=======\n"
+"\n"
+"Images\n"
+"------\n"
+"\n"
+"* |company| |icon|\n"
+"\n"
+"Contributors\n"
+"------------\n"
+"\n"
+"Maintainer\n"
+"----------\n"
+"\n"
+"|company_logo|\n"
+"\n"
+"This module is maintained by the |company|.\n"
+"\n"
+"To contribute to this module, please visit https://www.adhoc.com.ar.\n"
+msgstr ""
 
 #. module: sale_gathering_index
 #: model_terms:ir.ui.view,arch_db:sale_gathering_index.sale_gathering_totals
@@ -86,12 +159,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_gathering_index.field_sale_order__display_name
 #: model:ir.model.fields,field_description:sale_gathering_index.field_sale_order_line__display_name
 msgid "Display Name"
-msgstr "Nombre"
+msgstr "Mostrar nombre"
 
 #. module: sale_gathering_index
 #: model:ir.model.fields,field_description:sale_gathering_index.field_sale_order_line__gathering_base_price_unit
 msgid "Gathering Base Price"
-msgstr ""
+msgstr "Precio base de acopio"
 
 #. module: sale_gathering_index
 #: model:ir.model.fields,field_description:sale_gathering_index.field_sale_order__id
@@ -126,6 +199,9 @@ msgid ""
 "baseline the index is measured against, so a price agreed below the list "
 "price does not show up as a price variation."
 msgstr ""
+"Precio de lista del producto cuando se confirmó el acopio. Es la base contra "
+"la que se mide el índice, así que un precio acordado por debajo del precio "
+"de lista no aparece como una variación de precio."
 
 #. module: sale_gathering_index
 #: model:ir.model.fields,help:sale_gathering_index.field_sale_order__indexed_gathering_amount
@@ -137,20 +213,25 @@ msgstr ""
 "calculado en este acopio"
 
 #. module: sale_gathering_index
+#: model:ir.module.module,shortdesc:base.module_sale_gathering_index
+msgid "Sale Gathering Index"
+msgstr "Índice de acopio de ventas"
+
+#. module: sale_gathering_index
 #: model:ir.model,name:sale_gathering_index.model_sale_order
 msgid "Sales Order"
-msgstr "Pedido de venta"
+msgstr "Orden de venta"
 
 #. module: sale_gathering_index
 #: model:ir.model,name:sale_gathering_index.model_sale_order_line
 msgid "Sales Order Line"
-msgstr "Línea de pedido de venta"
+msgstr "Línea de la orden de venta"
 
 #. module: sale_gathering_index
 #: model:ir.model.fields,help:sale_gathering_index.field_sale_order__index
 msgid ""
-"Variación de precio promedio de los productos acopiados. El mismo se calcula "
-"ponderando por cantidades acopiadas."
+"Variación de precio promedio de los productos acopiados. El mismo se calcula"
+" ponderando por cantidades acopiadas."
 msgstr ""
 "Variación de precio promedio de los productos acopiados. El mismo se calcula "
 "ponderando por cantidades acopiadas."
