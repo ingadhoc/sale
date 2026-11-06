@@ -74,3 +74,22 @@ class TestSaleGatheringIndexOrderLine(SaleGatheringIndexCommon):
 
         with self.assertRaises(UserError):
             regular_lines.write({"name": "Updated description"})
+
+    def test_cannot_change_description_through_the_label(self):
+        # in 20 the interface edits the line description through `label`, not `name`
+        order = self._confirm_gathering_order(
+            lines=[
+                Command.create(
+                    {
+                        "product_id": self.product_a.id,
+                        "product_uom_qty": 2.0,
+                        "price_unit": 100.0,
+                        "tax_ids": [Command.clear()],
+                    }
+                ),
+            ]
+        )
+        regular_lines = order.order_line.filtered(lambda line: not line.is_downpayment and not line.display_type)
+
+        with self.assertRaises(UserError):
+            regular_lines.write({"label": "Updated description"})
