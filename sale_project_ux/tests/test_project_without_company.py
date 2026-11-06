@@ -63,6 +63,7 @@ class TestProjectWithoutCompany(TransactionCase):
         existing = self.env["project.project"].create(
             {"name": "Existing project", "allow_billable": True, "account_id": account.id}
         )
+        accounts_before = self.env["account.analytic.account"].search([])
         # Confirm an order that points to the existing project
         order = self._confirm_order(project=existing)
         project = order.order_line.project_id
@@ -73,6 +74,8 @@ class TestProjectWithoutCompany(TransactionCase):
         self.assertTrue(project.account_id)
         self.assertNotEqual(project.account_id, account)
         self.assertFalse(project.account_id.company_id)
+        new_accounts = self.env["account.analytic.account"].search([]) - accounts_before
+        self.assertEqual(new_accounts, project.account_id, "No analytic account may be left unused")
         # The existing project and its account keep their company
         self.assertEqual(existing.company_id, self.env.company)
         self.assertEqual(account.company_id, self.env.company)
