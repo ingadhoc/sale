@@ -1,6 +1,5 @@
 from odoo import Command, _, api, fields, models
 from odoo.exceptions import ValidationError
-from odoo.tools import str2bool
 
 
 class SaleOrder(models.Model):
@@ -217,20 +216,18 @@ class SaleOrder(models.Model):
     def _get_protected_fields(self):
         return super()._get_protected_fields() + ["is_gathering"]
 
-    def _create_invoices(self, grouped=False, final=False, date=None):
+    def _create_invoices(self, final=False, grouped=False):
         if self.env.context.get("invoice_gathering"):
-            split_invoice_and_credit_note = str2bool(
-                self.env["ir.config_parameter"]
-                .sudo()
-                .get_param("sale_gathering.split_invoice_and_credit_note", "False")
+            split_invoice_and_credit_note = (
+                self.env["ir.config_parameter"].sudo().get_bool("sale_gathering.split_invoice_and_credit_note")
             )
             if split_invoice_and_credit_note:
-                downpayment_invoice = super()._create_invoices(final=True, grouped=grouped, date=date)
+                downpayment_invoice = super()._create_invoices(final=True, grouped=grouped)
 
                 downpayment_invoice.invoice_line_ids.filtered(lambda x: not x.is_downpayment).unlink()
                 # usamos final=True aca tambien porque si no en los casos de devoluciones no funcionaba crear la
                 # factura por los productos devueltos
-                products_invoice = super()._create_invoices(final=True, grouped=grouped, date=date)
+                products_invoice = super()._create_invoices(final=True, grouped=grouped)
                 # cuando borramos las lineas de anticipo borramos tmb la linea de seccion que crea odoo
                 # lo podemos hacer porque en realidad en "_get_invoiceable_lines" en acopios, solo estamos mandando a facturas
                 # líneas normales (nunca notas ni secciones)
@@ -250,13 +247,13 @@ class SaleOrder(models.Model):
                     invoices.write({"ref": "Devolución Canje"})
                 invoices = invoices.sorted(lambda m: 0 if m.move_type == "out_invoice" else 1)
             else:
-                invoices = super()._create_invoices(final=True, grouped=grouped, date=date)
+                invoices = super()._create_invoices(final=True, grouped=grouped)
             return invoices
-        return super()._create_invoices(grouped=grouped, final=final, date=date)
+        return super()._create_invoices(grouped=grouped, final=final)
 
-    def _create_account_invoices(self, invoice_vals_list, final):
+    def _create_account_invoices(self, invoice_vals_list):
         """Actualizacion de importes de acopio cuando facturas involucra acopios"""
-        invoices = super()._create_account_invoices(invoice_vals_list, final)
+        invoices = super()._create_account_invoices(invoice_vals_list)
         if self.env.context.get("invoice_gathering"):
             for invoice in invoices:
                 downpayment_lines = invoice.invoice_line_ids.filtered("is_downpayment")

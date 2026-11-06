@@ -50,5 +50,12 @@ class AccountMove(models.Model):
                 limit=1,
             )
             if credit_notes:
-                move._reconcile_reversed_moves(credit_notes, False)
+                # `_reconcile_reversed_moves` is gone in 20: `_post` reconciles the reversal inline,
+                # with the same grouping replayed here
+                lines = (move.line_ids + credit_notes.line_ids).filtered(
+                    lambda line: not line.reconciled and line.is_account_reconcile
+                )
+                self.env["account.move.line"]._reconcile_plan(
+                    list(lines.grouped(lambda line: (line.account_id, line.currency_id, line.tax_line_id)).values())
+                )
         return result

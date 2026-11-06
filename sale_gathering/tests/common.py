@@ -1,5 +1,5 @@
 from odoo import Command
-from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
+from odoo.addons.base.tests.common import DISABLED_MAIL_CREATE_CONTEXT
 from odoo.tests.common import TransactionCase
 
 
@@ -10,7 +10,7 @@ class SaleGatheringCommon(TransactionCase):
         cls.env = cls.env(
             context={
                 **cls.env.context,
-                **DISABLED_MAIL_CONTEXT,
+                **DISABLED_MAIL_CREATE_CONTEXT,
                 "tracking_disable": True,
             }
         )
