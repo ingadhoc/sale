@@ -47,6 +47,7 @@ Several Improvements to sales:
 #. Prevents deleting sale orders when they have associated invoices, preserving traceability.
 #. Add an action to assign an analytic account to sale order lines. Since v19 the analytic account is no longer a sale order header field: it lives in each line's analytic distribution, and the distribution widget does not allow creating analytic accounts inline. Select one or more sale orders in the list (or open one) and, in the actions menu, look for 'Set analytic account on lines'. A wizard lists the order lines (sections and notes excluded) with a checkbox per line plus a 'Select All' toggle, lets you pick or create an analytic account (the plan field feeds the quick-create), and assigns it at 100% to the selected lines.
 #. Add a "Prices" tab on the product form listing every pricelist (those with "Show in products" enabled) with the price it gives for that product. Each row has a button that opens the rules of that pricelist applying to the product, so the price can be edited without going to the pricelist. The list uses the domain of the pricing engine, so it also shows the global and category rules that set the price and are not loaded on the product, ordered most specific first. Creating a rule from there already comes with the pricelist and the product set.
+#. With the company setting "Line Numbers" on, number only the lines with a product: sections, subsections and notes get no number, as in 19. It applies to the order form, the quotation report and the online quotation.
 
 Installation
 ============

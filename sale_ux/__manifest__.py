@@ -53,6 +53,7 @@
     "assets": {
         "web.assets_backend": [
             "sale_ux/static/src/js/sale_product_field.js",
+            "sale_ux/static/src/scss/sale_line_number.scss",
         ],
     },
     "demo": [],
