@@ -2,16 +2,21 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
+from odoo import Command
 from odoo.exceptions import ValidationError
+from odoo.tests import tagged
 from odoo.tests.common import TransactionCase
 
 
+@tagged("post_install", "-at_install")
 class TestSaleOrderTypePickingType(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.company = cls.env.company
-        cls.warehouse = cls.env["stock.warehouse"].search([("company_id", "=", cls.company.id)], limit=1)
+        cls.warehouse = cls.env["stock.warehouse"].search(
+            [("company_id", "=", cls.company.id)], order="sequence, id", limit=1
+        )
         cls.other_warehouse = cls.env["stock.warehouse"].create(
             {"name": "Second warehouse", "code": "WH2", "company_id": cls.company.id}
         )
@@ -37,7 +42,7 @@ class TestSaleOrderTypePickingType(TransactionCase):
             }
         )
 
-    def _create_order(self, sale_type):
+    def _create_order(self, sale_type, warehouse=None):
         order = self.env["sale.order"].create(
             {
                 "partner_id": self.partner.id,
@@ -48,6 +53,8 @@ class TestSaleOrderTypePickingType(TransactionCase):
                 ],
             }
         )
+        if warehouse:
+            order.warehouse_id = warehouse
         # launch the procurement without action_confirm, that other modules hook into,
         # and without the exception rules of base_exception on the test partner
         order = order.with_context(check_exception=False)
@@ -93,3 +100,24 @@ class TestSaleOrderTypePickingType(TransactionCase):
         pick.button_validate()
         delivery = order.picking_ids - pick
         self.assertEqual(delivery.picking_type_id, self.second_picking_type)
+
+    def test_06_order_with_another_warehouse_keeps_the_standard(self):
+        order = self._create_order(self.sale_type, self.other_warehouse)
+        moves = order.order_line.move_ids
+        self.assertTrue(moves)
+        self.assertEqual(moves.picking_type_id, self.other_warehouse.out_type_id)
+
+    def test_07_resupply_from_the_type_warehouse_keeps_its_operation_type(self):
+        self.other_warehouse.resupply_wh_ids = [Command.set(self.warehouse.ids)]
+        resupply_route = self.env["stock.route"].search(
+            [("supplier_wh_id", "=", self.warehouse.id), ("supplied_wh_id", "=", self.other_warehouse.id)]
+        )
+        self.assertTrue(resupply_route)
+        mto_route = self.other_warehouse.mto_pull_id.route_id
+        mto_route.active = True
+        self.product.route_ids = [Command.set((resupply_route | mto_route).ids)]
+        order = self._create_order(self.sale_type, self.other_warehouse)
+        picking_types = order.order_line.move_ids.picking_type_id
+        self.assertIn(self.warehouse.out_type_id, picking_types)
+        self.assertIn(self.other_warehouse.out_type_id, picking_types)
+        self.assertNotIn(self.second_picking_type, picking_types)
