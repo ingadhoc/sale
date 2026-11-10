@@ -54,6 +54,10 @@
         "web.assets_backend": [
             "sale_ux/static/src/js/sale_product_field.js",
             "sale_ux/static/src/scss/sale_line_number.scss",
+            "sale_ux/static/src/views/sale_template_dropdown.xml",
+        ],
+        "web.assets_tests": [
+            "sale_ux/static/tests/tours/*.js",
         ],
     },
     "demo": [],

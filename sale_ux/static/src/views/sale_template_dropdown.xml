@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+    <!--
+        With quotation templates, the core turns the whole "New" button into a dropdown: one click opens the menu and
+        nothing is created. We split it in two: "New" creates a quotation right away and the caret opens the menu.
+        Without templates the core keeps its plain button, and so do we.
+    -->
+    <t t-inherit="sale_management.SaleTemplateDropdown" t-inherit-mode="extension">
+        <xpath expr="//Dropdown" position="replace">
+            <div t-else="" class="btn-group o_sale_ux_new_split">
+                <button
+                    type="button"
+                    t-att-class="this.props.newButtonClasses"
+                    t-att-disabled="this.props.isDisabled"
+                    t-att-data-hotkey="this.props.hotkey"
+                    t-on-click.stop="() => this.createQuotation()"
+                    data-bounce-button=""
+                >
+                    New
+                </button>
+                <Dropdown>
+                    <button
+                        type="button"
+                        t-attf-class="{{ this.props.newButtonClasses.split(' ').filter((c) => c.startsWith('btn')).join(' ') }} o-dropdown-caret dropdown-toggle-split o_sale_ux_new_toggle"
+                        t-att-disabled="this.props.isDisabled"
+                        title="Quotation templates"
+                        aria-label="Quotation templates"
+                    />
+                    <t t-set-slot="content">
+                        <DropdownItem
+                            tag="'button'"
+                            class="'btn btn-link'"
+                            onSelected="() => this.createQuotation()"
+                        >
+                            New Quotation
+                        </DropdownItem>
+                        <div role="separator" class="dropdown-divider"/>
+                        <t t-foreach="this.state.quotationTemplates" t-as="template" t-key="template.id">
+                            <DropdownItem
+                                tag="'button'"
+                                class="'btn btn-link o-dropdown-item-indent o_sale_management_template d-flex align-items-center pe-0'"
+                                onSelected="() => this.createQuotation({ additionalContext: { default_sale_order_template_id: template.id } })"
+                            >
+                                <span class="text-truncate" style="max-width: 400px;" t-out="template.name"/>
+                                <div class="btn-group o_template_icon_group ms-auto d-flex ps-1" t-if="this.state.canManageTemplates">
+                                    <i role="button" t-on-click.stop="() => this.onEditClick(template.id)" class="oi oi-filled btn btn-link fs-3" data-icon="edit"/>
+                                    <i role="button" t-on-click.stop="() => this.onDeleteClick(template.id)" class="oi oi-filled btn text-danger fs-3" data-icon="delete"/>
+                                </div>
+                            </DropdownItem>
+                        </t>
+                    </t>
+                </Dropdown>
+            </div>
+        </xpath>
+    </t>
+</templates>
