@@ -16,6 +16,12 @@ Sale Gathering Automation
 
 #. Bridge module between sale_gathering and sale_order_type_automation so that the invoice is created in 0 discounting the gathering from the automation.
 
+#. On a gathering order, confirming it creates the gathering invoice for the gathered amount, and validates it unless the sale type's draft invoice domain matches.
+
+#. The Create Invoice button runs the invoicing automation instead of opening the down payment wizard, and opens the resulting invoice.
+
+#. Changing a quantity on a gathering order runs the picking automation of its sale type. The invoicing automation is not run on save, because on gathering it is too invasive.
+
 Installation
 ============
 
@@ -35,7 +41,9 @@ Usage
 
 To use this module, you need to:
 
-#. Just use.
+#. Set the sale type of the gathering order with an invoicing automation, a picking automation, or both.
+
+#. Confirm the order and pay its gathering invoice. From then on, every withdrawal runs the automations of the sale type.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
