@@ -71,7 +71,7 @@ class SaleOrderLine(models.Model):
             and x.initial_qty_gathered == 0
             and not x.display_type
             and not x.is_downpayment
-            and x.name
+            and x.product_id
         ):
             line = line.with_company(line.company_id)
             price = line._get_display_price()
@@ -80,4 +80,6 @@ class SaleOrderLine(models.Model):
                 product_taxes=line.product_id.taxes_id.filtered(lambda tax: tax.company_id == line.env.company),
                 fiscal_position=line.order_id.fiscal_position_id,
             )
-            line.name += _("\n(Current price: $%s | Coef: %s)") % (price_unit, round(line.order_id.coef, 4))
+            # in 20 `name` holds only the sales description, so it is empty on a product without one
+            hint = _("(Current price: $%s | Coef: %s)") % (price_unit, round(line.order_id.coef, 4))
+            line.name = f"{line.name}\n{hint}" if line.name else hint
