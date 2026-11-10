@@ -12,7 +12,12 @@ class StockRule(models.Model):
         """Operation type of the sale order type, only for the step that goes to the customer."""
         if self.picking_type_id.code != "outgoing":
             return self.env["stock.picking.type"]
-        return sale_lines.order_id.type_id.picking_type_id[:1]
+        picking_type = sale_lines.order_id.type_id.picking_type_id[:1]
+        # skip resupply rules of other warehouses and orders whose warehouse was changed
+        warehouse = picking_type.warehouse_id
+        if warehouse != self.picking_type_id.warehouse_id or warehouse != sale_lines.order_id.warehouse_id[:1]:
+            return self.env["stock.picking.type"]
+        return picking_type
 
     def _get_stock_move_values(
         self, product_id, product_qty, product_uom, location_dest_id, name, origin, company_id, values
