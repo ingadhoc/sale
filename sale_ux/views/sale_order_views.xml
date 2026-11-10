@@ -48,10 +48,22 @@
             <!-- <field name="analytic_account_id" position="attributes">
                 <attribute name="domain">['|',('partner_id','=',False), ('commercial_partner_id','=',commercial_partner_id)]</attribute>
             </field> -->
+            <!-- Odoo 20 only recomputes prices when the pricelist changes: we keep the button for everyone (PO decision).
+                 Same look and place as "Update Validity" (sale_order_validity): a link next to the pricelist.
+                 The core hides that row without the pricelist group or without an active pricelist, so in those cases the
+                 button goes in a row of its own. portal_sale_distributor hides the 3 of them. -->
+            <field name="pricelist_id" options="{'no_open': True, 'no_create': True}" position="after">
+                <button name="action_update_prices" type="object" string="Update Prices" icon="refresh"
+                    class="btn-link mb-1 px-0" invisible="state not in ['draft', 'sent']"/>
+            </field>
             <group name="order_details" position="inside">
-                <!-- Odoo 20 only recomputes prices when the pricelist changes: we keep the button for everyone (PO decision) -->
-                <div>
-                  <button name="action_update_prices" type="object" string=" Update Prices" icon="refresh" invisible="state not in ['draft', 'sent']"/>
+                <div class="o_row" groups="product.group_product_pricelist" invisible="has_active_pricelist">
+                    <button name="action_update_prices" type="object" string="Update Prices" icon="refresh"
+                        class="btn-link mb-1 px-0" invisible="state not in ['draft', 'sent']"/>
+                </div>
+                <div class="o_row" groups="!product.group_product_pricelist">
+                    <button name="action_update_prices" type="object" string="Update Prices" icon="refresh"
+                        class="btn-link mb-1 px-0" invisible="state not in ['draft', 'sent']"/>
                 </div>
             </group>
             <xpath expr="//field[@name='order_line']/list//field[@name='discount']" position="after">
