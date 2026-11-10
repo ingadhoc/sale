@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Sale Gathering Automation",
-    "version": "19.0.1.2.0",
+    "version": "20.0.1.0.0",
     "category": "Sales & Stock",
     "sequence": 14,
     "summary": "",
@@ -33,7 +33,7 @@
     "data": [
         "views/sale_order_views.xml",
     ],
-    "installable": False,
+    "installable": True,
     "auto_install": True,
     "application": False,
 }
