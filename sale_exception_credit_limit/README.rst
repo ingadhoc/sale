@@ -39,6 +39,7 @@ Usage
 To use this module, you need to:
 
 #. When you confirm a sale order, validate than the partner limit not overdo
+#. 'Credit Taken' adds up the customer debt, the draft customer invoices and what is still pending to invoice on confirmed sale orders. Orders closed with a forced invoicing status are left out, and a returned quantity never leaves more pending than there was.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
