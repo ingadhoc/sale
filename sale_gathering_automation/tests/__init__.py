@@ -4,3 +4,4 @@
 ##############################################################################
 
 from . import test_gathering_invoice_validate_domain
+from . import test_sale_gathering_automation
