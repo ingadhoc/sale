@@ -5,3 +5,4 @@
 from . import test_credit_taken
 from . import test_credit_config_rights
 from . import test_company_hierarchy
+from . import test_credit_taken_sale_orders
