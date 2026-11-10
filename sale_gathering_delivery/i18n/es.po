@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 19.0+e\n"
+"Project-Id-Version: Odoo Server 20.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-19 19:49+0000\n"
-"PO-Revision-Date: 2026-03-18 20:06+0000\n"
+"POT-Creation-Date: 2026-11-10 16:47+0000\n"
+"PO-Revision-Date: 2026-11-10 16:47+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -17,11 +17,80 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #. module: sale_gathering_delivery
+#: model:ir.module.module,description:base.module_sale_gathering_delivery
+msgid ""
+".. |company| replace:: ADHOC SA\n"
+"\n"
+".. |company_logo| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-logo.png\n"
+"   :alt: ADHOC SA\n"
+"   :target: https://www.adhoc.com.ar\n"
+"\n"
+".. |icon| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-icon.png\n"
+"\n"
+".. image:: https://img.shields.io/badge/license-AGPL--3-blue.png\n"
+"   :target: https://www.gnu.org/licenses/agpl\n"
+"   :alt: License: AGPL-3\n"
+"\n"
+"========================\n"
+"Sale Gathering Delivery\n"
+"========================\n"
+"\n"
+"Excludes delivery lines from gathering calculations (balance, amount, index and coefficient).\n"
+"\n"
+"A delivery line is charged, not gathered:\n"
+"\n"
+"* On a gathering order, delivery lines are left out of the gathered lines. When the\n"
+"  order is confirmed they keep their quantity instead of moving it to the initial\n"
+"  gathered quantity, and their amount stays out of the gathered amount and of the\n"
+"  balance.\n"
+"* The gathering down payment invoice (fixed amount) also carries the delivery lines,\n"
+"  so the customer pays the freight together with the gathering instead of getting a\n"
+"  separate invoice for it.\n"
+"* An invoice whose only lines are the down payment and the delivery lines of a\n"
+"  gathering order still counts as a down payment invoice.\n"
+"\n"
+"Auto-installs when both sale_gathering and delivery are installed.\n"
+"\n"
+"Bug Tracker\n"
+"===========\n"
+"\n"
+"Bugs are tracked on `GitHub Issues\n"
+"<https://github.com/ingadhoc/sale/issues>`_. In case of trouble, please\n"
+"check there if your issue has already been reported. If you spotted it first,\n"
+"help us smashing it by providing a detailed and welcomed feedback.\n"
+"\n"
+"Credits\n"
+"=======\n"
+"\n"
+"Images\n"
+"------\n"
+"\n"
+"* ADHOC SA: `Icon <https://github.com/ingadhoc/maintainer-tools/blob/master/resources/adhoc-icon.png>`_.\n"
+"\n"
+"Contributors\n"
+"------------\n"
+"\n"
+"Maintainer\n"
+"----------\n"
+"\n"
+"|company_logo|\n"
+"\n"
+"This module is maintained by ADHOC SA.\n"
+"\n"
+"To contribute to this module, please visit https://www.adhoc.com.ar.\n"
+msgstr ""
+
+#. module: sale_gathering_delivery
 #: model:ir.model.fields,field_description:sale_gathering_delivery.field_account_move__display_name
 #: model:ir.model.fields,field_description:sale_gathering_delivery.field_sale_advance_payment_inv__display_name
 #: model:ir.model.fields,field_description:sale_gathering_delivery.field_sale_order__display_name
 msgid "Display Name"
-msgstr "Nombre a mostrar"
+msgstr "Mostrar nombre"
+
+#. module: sale_gathering_delivery
+#: model:ir.module.module,summary:base.module_sale_gathering_delivery
+msgid "Exclude delivery lines from gathering calculations"
+msgstr "Excluye las líneas de envío de los cálculos de acopio"
 
 #. module: sale_gathering_delivery
 #: model:ir.model.fields,field_description:sale_gathering_delivery.field_account_move__id
@@ -36,11 +105,16 @@ msgid "Journal Entry"
 msgstr "Asiento contable"
 
 #. module: sale_gathering_delivery
+#: model:ir.module.module,shortdesc:base.module_sale_gathering_delivery
+msgid "Sale Gathering Delivery"
+msgstr "Acopio de Ventas con Envío"
+
+#. module: sale_gathering_delivery
 #: model:ir.model,name:sale_gathering_delivery.model_sale_advance_payment_inv
 msgid "Sales Advance Payment Invoice"
-msgstr "Factura de pago anticipado de ventas"
+msgstr "Factura de anticipo de ventas"
 
 #. module: sale_gathering_delivery
 #: model:ir.model,name:sale_gathering_delivery.model_sale_order
 msgid "Sales Order"
-msgstr "Pedido de venta"
+msgstr "Orden de venta"
