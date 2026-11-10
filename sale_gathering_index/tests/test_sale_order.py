@@ -102,3 +102,25 @@ class TestSaleGatheringIndexOrder(SaleGatheringIndexCommon):
         self.assertAlmostEqual(order.index, 1.0)
         self.assertAlmostEqual(order.gathering_balance_indexed, 300.0)
         self.assertAlmostEqual(order.indexed_withdrawn_amount, 100.0)
+
+    def test_the_redeemed_line_shows_the_current_price_and_the_coef(self):
+        """The hint goes on the description even when the product has no sales description.
+
+        In 20 the line `name` holds only the sales description, so on a product without one it
+        starts out empty; the product name travels in `label`.
+        """
+        order = self._confirm_gathering_order()
+        self.product_a.list_price = 200.0
+
+        redeemed = self.env["sale.order.line"].create(
+            {
+                "order_id": order.id,
+                "product_id": self.product_b.id,
+                "product_uom_qty": 0.0,
+                "tax_ids": [Command.clear()],
+            }
+        )
+
+        self.assertFalse(self.product_b.description_sale, "El caso es un producto sin descripción de venta")
+        self.assertIn("Current price", redeemed.name)
+        self.assertIn("Coef", redeemed.name)
