@@ -14,7 +14,17 @@
 Sale Gathering Index
 ====================
 
-#.
+#. Indexes a gathering order: it measures how much the list prices of the gathered products moved since the order was confirmed, and prices what the customer redeems with that index.
+
+#. The index is the weighted price variation of the gathered products, and the coefficient is that index plus one. The order also shows the gathering balance, the gathered amount and the withdrawn amount updated by the index.
+
+#. The baseline of each line is the list price stored when the order was confirmed, so a price agreed below the list price does not show up as a price variation.
+
+#. A product redeemed after the confirmation takes its current price divided by the coefficient, and its description carries the current price and the coefficient used.
+
+#. The gathering report prints the index and the coefficient of the order.
+
+#. On a confirmed gathering order, an already gathered product cannot be added twice, the quantity of an added product cannot be raised and the description of a line cannot be changed.
 
 Installation
 ============
@@ -35,7 +45,11 @@ Usage
 
 To use this module, you need to:
 
-#. Just use.
+#. Confirm the gathering order as usual. The list price of every gathered line is stored as the baseline of the index.
+
+#. As the prices of those products move, the index and the coefficient of the order follow them, weighted by the gathered quantities.
+
+#. Add a line to redeem a product: its price is the current one divided by the coefficient, which is what the customer paid for in advance.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
