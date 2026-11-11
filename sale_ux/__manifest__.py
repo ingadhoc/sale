@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Sale UX",
-    "version": "20.0.1.0.0",
+    "version": "20.0.1.1.0",
     "category": "Sales",
     "sequence": 14,
     "summary": "",
@@ -53,6 +53,7 @@
     "assets": {
         "web.assets_backend": [
             "sale_ux/static/src/js/sale_product_field.js",
+            "sale_ux/static/src/scss/sale_line_number.scss",
         ],
     },
     "demo": [],

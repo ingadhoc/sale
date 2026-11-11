@@ -1,0 +1,22 @@
+// Odoo 20 numbers every row of the order lines, sections and notes included. In 19 only the lines
+// without `display_type` had a number (module `sale_order_line_number`), so the rows below skip
+// the counter and do not show it.
+.o_field_widget[name="order_line"] {
+    tr.o_data_row {
+        &.o_is_line_section,
+        &.o_is_line_subsection,
+        &.o_is_line_note {
+            counter-increment: none;
+        }
+    }
+
+    &:has(.o_line_number) tr.o_data_row {
+        &.o_is_line_section,
+        &.o_is_line_subsection:not(.o_hide_composition),
+        &.o_is_line_note:not(.o_hide_composition) {
+            td.o_handle_cell + td::before {
+                content: none;
+            }
+        }
+    }
+}

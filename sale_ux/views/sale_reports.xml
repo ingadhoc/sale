@@ -48,5 +48,14 @@
                 t-options="uom_vals['price_options']"
             />
         </td>
+        <!-- Odoo 20 numbers sections and notes too; in 19 only the lines without display_type had a number -->
+        <xpath expr="//tr[@name='tr_section']/td[@name='td_section_line_no']/span" position="replace"/>
+        <xpath expr="//tr[@name='tr_section']/td[@name='td_section_line_no']/t[@t-set='line_counter']" position="replace"/>
+        <xpath expr="//tr[@name='tr_note']/td[@name='td_note_line_no']/span" position="replace"/>
+        <xpath expr="//tr[@name='tr_note']/td[@name='td_note_line_no']/t[@t-set='line_counter']" position="replace"/>
+        <!-- the summary rows of a section with "Collapse Composition" are its only representation here: no number either,
+             so the numbers match the form, where that section does not count -->
+        <xpath expr="//tr[@name='tr_section_group']/td[@name='td_section_line_no']/span" position="replace"/>
+        <xpath expr="//tr[@name='tr_section_group']/td[@name='td_section_line_no']/t[@t-set='line_counter']" position="replace"/>
     </template>
 </odoo>
