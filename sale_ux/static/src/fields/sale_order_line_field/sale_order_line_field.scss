@@ -1,0 +1,6 @@
+// The pager above the lines of the sale order (see sale_order_line_field.xml). The core flex column puts the
+// control panel last with `order: 2`; this one keeps the default order, so it stays on top, at the right.
+.o_sale_order_line_o2m > div > .o_sale_ux_pager_top {
+    align-self: flex-end;
+    margin-bottom: map-get($spacers, 2);
+}

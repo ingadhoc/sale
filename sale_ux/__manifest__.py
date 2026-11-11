@@ -53,6 +53,10 @@
     "assets": {
         "web.assets_backend": [
             "sale_ux/static/src/js/sale_product_field.js",
+            "sale_ux/static/src/fields/sale_order_line_field/*",
+        ],
+        "web.assets_tests": [
+            "sale_ux/static/tests/tours/*.js",
         ],
     },
     "demo": [],
