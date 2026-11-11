@@ -67,10 +67,7 @@
                 <span class="ms-1">(<span t-field="line.product_uom_qty" t-options="{'min_precision': 0}"/> <span t-field="line.product_uom_id"/>)</span>
             </span>
         </xpath>
-        <xpath expr="//div[hasclass('d-lg-none')]//t[@t-if='line.price_unit']" position="attributes">
-            <attribute name="t-if" add="not uom_vals" separator=" and "/>
-        </xpath>
-        <xpath expr="//div[hasclass('d-lg-none')]//t[@t-if='line.price_unit and not uom_vals']" position="after">
+        <xpath expr="//div[hasclass('d-lg-none')]//t[@t-if='line.price_unit']" position="after">
             <t t-if="uom_vals and line.price_unit">
                 <span>×</span>
                 <span t-if="line.discount">
@@ -87,6 +84,9 @@
                     </t>
                 </span>
             </t>
+        </xpath>
+        <xpath expr="//div[hasclass('d-lg-none')]//t[@t-if='line.price_unit']" position="attributes">
+            <attribute name="t-if" add="not uom_vals" separator=" and "/>
         </xpath>
     </template>
 
