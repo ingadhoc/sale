@@ -101,6 +101,27 @@ class TestSaleOrderTypeAutomation(TestSaleCommon):
         if "l10n_latam_document_type_id" in invoice._fields and invoice.l10n_latam_use_documents:
             self.assertTrue(invoice.l10n_latam_document_type_id, "a posted invoice needs its document type")
 
+    def test_action_confirm_logs_why_filtered_invoice_stays_draft(self):
+        self.sale_type.write(
+            {
+                "invoicing_atomation": "validate_invoice",
+                "journal_id": self.invoice_journal.id,
+                "picking_atomation": "none",
+                "invoice_validate_domain": "[('amount_total', '>', 50)]",
+            }
+        )
+        order = self._create_order()
+
+        order.action_confirm()
+
+        invoice = order.invoice_ids
+        self.assertEqual(len(invoice), 1)
+        self.assertEqual(invoice.state, "draft")
+        self.assertTrue(
+            any("no se validó" in str(body) for body in invoice.message_ids.mapped("body")),
+            "the invoice left in draft by the filter has to say why",
+        )
+
     def test_action_confirm_sets_order_done_when_configured(self):
         self.sale_type.write(
             {
