@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-04 12:06+0000\n"
-"PO-Revision-Date: 2026-11-04 12:06+0000\n"
+"POT-Creation-Date: 2026-11-11 18:44+0000\n"
+"PO-Revision-Date: 2026-11-11 18:44+0000\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -35,7 +35,7 @@ msgid ""
 "\n"
 "This module integrate portal sale distributor using MRP.\n"
 "\n"
-"#. Add a model access rule in order to able portal distributor users to add products in sale orders.\n"
+"#. Let the portal distributor users open and use sale orders with kit products without reading the bills of materials: the stock fields of the order lines (quantity to deliver, availability, expected date) are computed as superuser for them.\n"
 "\n"
 "Installation\n"
 "============\n"
@@ -93,6 +93,21 @@ msgid ""
 msgstr ""
 
 #. module: portal_sale_distributor_mrp
+#: model:ir.model.fields,field_description:portal_sale_distributor_mrp.field_sale_order_line__display_name
+msgid "Display Name"
+msgstr "Mostrar nombre"
+
+#. module: portal_sale_distributor_mrp
+#: model:ir.model.fields,field_description:portal_sale_distributor_mrp.field_sale_order_line__id
+msgid "ID"
+msgstr ""
+
+#. module: portal_sale_distributor_mrp
 #: model:ir.module.module,shortdesc:base.module_portal_sale_distributor_mrp
 msgid "Portal Distributor MRP"
 msgstr "Portal Distribuidor MRP"
+
+#. module: portal_sale_distributor_mrp
+#: model:ir.model,name:portal_sale_distributor_mrp.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Línea de la orden de venta"

@@ -28,11 +28,10 @@
     "depends": [
         "mrp",
         "portal_sale_distributor",
+        "sale_mrp",
     ],
     "demo": [],
-    "data": [
-        "security/ir.access.csv",
-    ],
+    "data": [],
     "installable": True,
     "auto_install": True,
 }
