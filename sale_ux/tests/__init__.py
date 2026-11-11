@@ -14,3 +14,5 @@ from . import test_wizards
 from . import test_sale_order_unlink
 from . import test_batch_invoice_notifications
 from . import test_downpayment_currency_rate
+from . import test_price_unit_product_uom
+from . import test_report_product_uom

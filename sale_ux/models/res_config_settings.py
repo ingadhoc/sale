@@ -58,6 +58,12 @@ class ResConfigSettings(models.TransientModel):
         "Show Delivery Date in Quotations report and online budget",
         implied_group="sale_ux.group_delivery_date_on_report_online",
     )
+    report_in_product_uom = fields.Boolean(
+        string="Show Product Unit on Quotations",
+        config_parameter="sale_ux.report_in_product_uom",
+        help="On the quotation PDF and the online quotation, lines sold in another unit (e.g. a packaging) "
+        "show quantity and unit price in the product unit.",
+    )
 
     def get_values(self):
         res = super(ResConfigSettings, self).get_values()
