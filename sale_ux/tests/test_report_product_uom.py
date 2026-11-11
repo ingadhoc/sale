@@ -70,3 +70,15 @@ class TestReportProductUom(ProductUomPriceCommon):
         html = self._render_pdf_html(order)
 
         self.assertIn("145.40", html)
+
+    def test_portal_shows_product_unit_on_both_layouts(self):
+        """The online quotation has a table and a small screen block: neither shows the box price."""
+        self.IrConfig.set_bool(self.setting, True)
+        order = self._create_order(self.uom_box_15, 5.0, 67.83)
+        currency = order.currency_id
+        price = f"{currency.symbol}\xa04.522" if currency.position == "before" else f"4.522\xa0{currency.symbol}"
+
+        html = str(self.env["ir.qweb"]._render("sale.sale_order_portal_content", {"sale_order": order}))
+
+        self.assertEqual(html.count(price), 2)
+        self.assertNotIn("67.83", html)
