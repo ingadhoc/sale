@@ -24,7 +24,7 @@ class SaleOrderLine(models.Model):
         "packaging, with the same tax criteria as the printed quotation. If you change it, the "
         "unit price of the line is recomputed.",
     )
-    price_unit_product_uom_editable = fields.Boolean(compute="_compute_price_unit_product_uom")
+    price_unit_product_uom_editable = fields.Boolean(compute="_compute_price_unit_product_uom_editable")
 
     @api.depends("order_id.force_invoiced_status")
     def _compute_invoice_status(self):
@@ -178,8 +178,6 @@ class SaleOrderLine(models.Model):
         digits = self._get_product_uom_price_digits()
         for line in self:
             product_uom = line._get_report_product_uom()
-            # A price of zero is a valid price, so what tells the column apart is the UoM
-            line.price_unit_product_uom_editable = bool(product_uom) and line.qty_invoiced <= 0
             line.price_unit_product_uom = (
                 float_round(
                     line.product_uom_id._compute_price(line._get_report_price_unit(), product_uom),
@@ -188,6 +186,13 @@ class SaleOrderLine(models.Model):
                 if product_uom
                 else 0.0
             )
+
+    # Own compute: the form always reads it, and the price may need taxes computed
+    @api.depends("display_type", "product_uom_id", "product_id.uom_id", "qty_invoiced")
+    def _compute_price_unit_product_uom_editable(self):
+        for line in self:
+            # A price of zero is a valid price, so what tells the column apart is the UoM
+            line.price_unit_product_uom_editable = bool(line._get_report_product_uom()) and line.qty_invoiced <= 0
 
     @api.onchange("price_unit_product_uom")
     def _onchange_price_unit_product_uom(self):
