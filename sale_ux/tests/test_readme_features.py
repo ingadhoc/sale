@@ -71,6 +71,19 @@ class TestReadmeFeatures(SaleUxCommon):
         for name in ("team_id", "categ_id", "qty_invoiced", "salesman_id"):
             self.assertIn('name="%s"' % name, arch)
 
+    def test_sale_order_lines_list_shows_the_product_to_every_user(self):
+        """In 20 the description of a line with product keeps only the extra text, so the list needs the product."""
+        view = self.env.ref("sale_ux.sale_order_line_usability_tree")
+
+        arch = self._arch("sale.order.line", "list", self.salesman, view_id=view.id)
+        columns = {name: tag for tag, name in re.findall(r'(<field name="(\w+)"[^>]*>)', arch)}
+
+        # a plain salesman, with no debug mode, sees the product and the customer, and can hide the description
+        self.assertIn('optional="show"', columns["product_id"])
+        self.assertIn('optional="show"', columns["order_partner_id"])
+        self.assertIn('optional="hide"', columns["name"])
+        self.assertLess(arch.index('name="product_id"'), arch.index('name="name"'))
+
     def test_order_form_renames_line_subtotal_and_total(self):
         arch = self._arch("sale.order", "form")
 

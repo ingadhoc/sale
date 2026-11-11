@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="sale_ux.SaleOrderLineOne2Many" t-inherit="web.X2ManyField" t-inherit-mode="primary">
+        <xpath expr="//div[hasclass('o_x2m_control_panel')]" position="before">
+            <div
+                t-if="this.props.record.data[this.props.name].count > this.props.record.data[this.props.name].limit"
+                class="o_cp_pager o_sale_ux_pager_top"
+                role="search"
+            >
+                <Pager t-props="this.pagerProps"/>
+            </div>
+        </xpath>
+    </t>
+</templates>
