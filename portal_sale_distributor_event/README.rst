@@ -17,6 +17,7 @@ Portal Distributor Sale with Event
 This module integrate portal sale distributor using Event.
 
 #. Add a model access rule in order to able portal distributor users to add events products in sale orders.
+#. If website_event is installed, the distributor only sees the events published on the website and their tickets, as it was in Odoo 19. Without website_event it sees all of them.
 
 Installation
 ============
