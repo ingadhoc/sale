@@ -42,14 +42,12 @@
                     t-att-style="line.discount and 'text-decoration: line-through' or None"
                     t-att-class="(line.discount and 'text-muted' or '')"
                 >
-                    <t t-call="sale_ux.portal_product_uom_price">
-                        <t t-set="price" t-value="uom_vals['price_unit']"/>
-                    </t>
+                    <t t-set="price" t-value="uom_vals['price_unit']"/>
+                    <t t-call="sale_ux.portal_product_uom_price"/>
                 </span>
                 <span t-if="line.discount" class="ms-2">
-                    <t t-call="sale_ux.portal_product_uom_price">
-                        <t t-set="price" t-value="(1 - line.discount / 100.0) * uom_vals['price_unit']"/>
-                    </t>
+                    <t t-set="price" t-value="(1 - line.discount / 100.0) * uom_vals['price_unit']"/>
+                    <t t-call="sale_ux.portal_product_uom_price"/>
                 </span>
             </t>
         </td>
@@ -71,17 +69,15 @@
             <t t-if="uom_vals and line.price_unit">
                 <span>×</span>
                 <span t-if="line.discount">
-                    <t t-call="sale_ux.portal_product_uom_price">
-                        <t t-set="price" t-value="(1 - line.discount / 100.0) * uom_vals['price_unit']"/>
-                    </t>
+                    <t t-set="price" t-value="(1 - line.discount / 100.0) * uom_vals['price_unit']"/>
+                    <t t-call="sale_ux.portal_product_uom_price"/>
                 </span>
                 <span
                     t-if="line.discount &gt;= 0"
                     t-att-class="line.discount &gt; 0 and 'text-decoration-line-through opacity-50' or ''"
                 >
-                    <t t-call="sale_ux.portal_product_uom_price">
-                        <t t-set="price" t-value="uom_vals['price_unit']"/>
-                    </t>
+                    <t t-set="price" t-value="uom_vals['price_unit']"/>
+                    <t t-call="sale_ux.portal_product_uom_price"/>
                 </span>
             </t>
         </xpath>
@@ -93,8 +89,6 @@
     <!-- The monetary widget rounds to the currency decimals, so the symbol goes around a float -->
     <template id="portal_product_uom_price">
         <t t-set="currency" t-value="line.currency_id"/>
-        <t t-if="currency.position == 'before'"><t t-out="currency.symbol"/>&#160;</t>
-        <t t-out="price" t-options="uom_vals['price_options']"/>
-        <t t-if="currency.position == 'after'">&#160;<t t-out="currency.symbol"/></t>
+        <t t-if="currency.position == 'before'"><t t-out="currency.symbol"/>&#160;</t><t t-out="price" t-options="uom_vals['price_options']"/><t t-if="currency.position == 'after'">&#160;<t t-out="currency.symbol"/></t>
     </template>
 </odoo>
