@@ -39,15 +39,62 @@
             <t t-if="uom_vals and not collapse_prices">
                 <span
                     t-if="line.discount &gt;= 0"
-                    t-out="uom_vals['price_unit']"
-                    t-options="uom_vals['price_options']"
                     t-att-style="line.discount and 'text-decoration: line-through' or None"
                     t-att-class="(line.discount and 'text-muted' or '')"
-                />
+                >
+                    <t t-call="sale_ux.portal_product_uom_price">
+                        <t t-set="price" t-value="uom_vals['price_unit']"/>
+                    </t>
+                </span>
                 <span t-if="line.discount" class="ms-2">
-                    <t t-out="(1 - line.discount / 100.0) * uom_vals['price_unit']" t-options="uom_vals['price_options']"/>
+                    <t t-call="sale_ux.portal_product_uom_price">
+                        <t t-set="price" t-value="(1 - line.discount / 100.0) * uom_vals['price_unit']"/>
+                    </t>
                 </span>
             </t>
         </td>
+        <!-- Same on the small screen block. Set out of span_qty_uom, that sale_management wraps in a t-else -->
+        <xpath expr="//div[hasclass('d-lg-none')]//t[@t-if='line.price_unit']/.." position="before">
+            <t t-set="uom_vals" t-value="not line._can_be_edited_on_portal() and line._get_report_product_uom_values()"/>
+        </xpath>
+        <xpath expr="//div[hasclass('d-lg-none')]//span[@name='span_qty_uom']" position="attributes">
+            <attribute name="t-if">not uom_vals</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('d-lg-none')]//span[@name='span_qty_uom']" position="after">
+            <span t-if="uom_vals">
+                <span t-out="uom_vals['qty']" t-options="{'widget': 'float', 'decimal_precision': 'Product Unit'}"/>
+                <span class="ms-1" t-out="uom_vals['uom'].name"/>
+                <span class="ms-1">(<span t-field="line.product_uom_qty" t-options="{'min_precision': 0}"/> <span t-field="line.product_uom_id"/>)</span>
+            </span>
+        </xpath>
+        <xpath expr="//div[hasclass('d-lg-none')]//t[@t-if='line.price_unit']" position="attributes">
+            <attribute name="t-if" add="not uom_vals" separator=" and "/>
+        </xpath>
+        <xpath expr="//div[hasclass('d-lg-none')]//t[@t-if='line.price_unit and not uom_vals']" position="after">
+            <t t-if="uom_vals and line.price_unit">
+                <span>×</span>
+                <span t-if="line.discount">
+                    <t t-call="sale_ux.portal_product_uom_price">
+                        <t t-set="price" t-value="(1 - line.discount / 100.0) * uom_vals['price_unit']"/>
+                    </t>
+                </span>
+                <span
+                    t-if="line.discount &gt;= 0"
+                    t-att-class="line.discount &gt; 0 and 'text-decoration-line-through opacity-50' or ''"
+                >
+                    <t t-call="sale_ux.portal_product_uom_price">
+                        <t t-set="price" t-value="uom_vals['price_unit']"/>
+                    </t>
+                </span>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- The monetary widget rounds to the currency decimals, so the symbol goes around a float -->
+    <template id="portal_product_uom_price">
+        <t t-set="currency" t-value="line.currency_id"/>
+        <t t-if="currency.position == 'before'"><t t-out="currency.symbol"/>&#160;</t>
+        <t t-out="price" t-options="uom_vals['price_options']"/>
+        <t t-if="currency.position == 'after'">&#160;<t t-out="currency.symbol"/></t>
     </template>
 </odoo>
