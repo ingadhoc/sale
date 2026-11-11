@@ -79,3 +79,23 @@ class TestProjectWithoutCompany(TransactionCase):
         # The existing project and its account keep their company
         self.assertEqual(existing.company_id, self.env.company)
         self.assertEqual(account.company_id, self.env.company)
+
+    def test_product_with_project_template(self):
+        """With the setting set, a project created from a template has no company
+        and uses the analytic account of the order."""
+        self.IrConfig.set_bool("sale_ux.analytic_account_without_company", True)
+        template = self.env["project.project"].create({"name": "Project template", "is_template": True})
+        self.product.project_template_id = template
+        accounts_before = self.env["account.analytic.account"].search([])
+        # Confirm an order whose product creates its project from the template
+        order = self._confirm_order()
+        project = order.order_line.project_id
+        self.assertEqual(order.state, "sale")
+        self.assertEqual(len(project), 1, "Confirming the order must create one project")
+        self.assertNotEqual(project, template)
+        # No company on the project nor on its account, and no account left unused
+        self.assertFalse(project.company_id)
+        self.assertTrue(project.account_id)
+        self.assertFalse(project.account_id.company_id)
+        new_accounts = self.env["account.analytic.account"].search([]) - accounts_before
+        self.assertEqual(new_accounts, project.account_id, "No analytic account may be left unused")
