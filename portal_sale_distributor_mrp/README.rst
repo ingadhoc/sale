@@ -16,7 +16,7 @@ Portal Distributor Sale with MRP
 
 This module integrate portal sale distributor using MRP.
 
-#. Add a model access rule in order to able portal distributor users to add products in sale orders.
+#. Let the portal distributor users open and use sale orders with kit products without reading the bills of materials: the stock fields of the order lines (quantity to deliver, availability, expected date) are computed as superuser for them.
 
 Installation
 ============
