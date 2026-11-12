@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-04 14:41+0000\n"
-"PO-Revision-Date: 2026-11-04 14:41+0000\n"
+"POT-Creation-Date: 2026-11-11 18:23+0000\n"
+"PO-Revision-Date: 2026-11-11 18:23+0000\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -36,6 +36,7 @@ msgid ""
 "This module integrate portal sale distributor using Event.\n"
 "\n"
 "#. Add a model access rule in order to able portal distributor users to add events products in sale orders.\n"
+"#. If website_event is installed, the distributor only sees the events published on the website and their tickets, as it was in Odoo 19. Without website_event it sees all of them.\n"
 "\n"
 "Installation\n"
 "============\n"
@@ -93,6 +94,37 @@ msgid ""
 msgstr ""
 
 #. module: portal_sale_distributor_event
+#: model:ir.model.fields,field_description:portal_sale_distributor_event.field_event_event__display_name
+msgid "Display Name"
+msgstr "Mostrar nombre"
+
+#. module: portal_sale_distributor_event
+#: model:ir.model,name:portal_sale_distributor_event.model_event_event
+msgid "Event"
+msgstr "Evento"
+
+#. module: portal_sale_distributor_event
+#: model:ir.model.fields,field_description:portal_sale_distributor_event.field_event_event__id
+msgid "ID"
+msgstr ""
+
+#. module: portal_sale_distributor_event
 #: model:ir.module.module,shortdesc:base.module_portal_sale_distributor_event
 msgid "Portal Distributor Event"
 msgstr "Portal Distribuidor Eventos"
+
+#. module: portal_sale_distributor_event
+#: model:ir.model.fields,field_description:portal_sale_distributor_event.field_event_event__portal_distributor_visible
+msgid "Portal Distributor Visible"
+msgstr "Visible para el distribuidor del portal"
+
+#. module: portal_sale_distributor_event
+#: model:ir.model.fields,help:portal_sale_distributor_event.field_event_event__portal_distributor_visible
+msgid ""
+"Technical field used by the access of the portal distributor group. With "
+"website_event installed only the events published on the website are "
+"visible, as it was in 19.0; without it, all of them."
+msgstr ""
+"Campo técnico que usa el permiso del grupo distribuidor del portal. Con "
+"website_event instalado solo son visibles los eventos publicados en el sitio "
+"web, como era en 19.0; sin él, todos."

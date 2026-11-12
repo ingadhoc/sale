@@ -17,3 +17,5 @@ from . import test_batch_invoice_notifications
 from . import test_downpayment_currency_rate
 from . import test_price_unit_product_uom
 from . import test_report_product_uom
+from . import test_product_pricelist
+from . import test_new_split_button

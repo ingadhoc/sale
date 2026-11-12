@@ -105,7 +105,28 @@ class TestReadmeFeatures(SaleUxCommon):
                 self.assertIn(f'name="{column}"', arch, f"{column} is missing in {xmlid}")
 
     def test_update_prices_button_is_visible_to_salesman_without_pricelists(self):
-        self.assertIn('name="action_update_prices"', self._arch("sale.order", "form", self.salesman))
+        arch = self._arch("sale.order", "form", self.salesman)
+
+        # without the pricelist group the core hides the pricelist row, so the button goes in a row of its
+        # own (1). With the group there is one next to the pricelist and the fallback of an order without
+        # active pricelists (2). The group is implied when pricelists are enabled in the settings.
+        expected = 2 if self.salesman.has_group("product.group_product_pricelist") else 1
+        self.assertEqual(arch.count('name="action_update_prices"'), expected)
+
+    def test_update_prices_button_is_a_link_and_sits_next_to_the_pricelist(self):
+        user = self._user_with_group("readme_pricelist_button_user", "product.group_product_pricelist")
+
+        arch = self._arch("sale.order", "form", user)
+        buttons = re.findall(r'<button name="action_update_prices"[^>]*>', arch)
+
+        # one next to the pricelist and the fallback for an order without active pricelists
+        self.assertEqual(len(buttons), 2)
+        for button in buttons:
+            # the same look as the "Update Validity" link of sale_order_validity
+            self.assertIn('class="btn-link mb-1 px-0"', button)
+        pricelist = arch.index('name="pricelist_id"')
+        self.assertLess(pricelist, arch.index(buttons[0]))
+        self.assertLess(arch.index(buttons[0]), arch.index('name="payment_term_id"'))
 
     def test_effective_pricelist_is_readonly_in_the_partner_form(self):
         user = self._user_with_group("readme_pricelist_user", "product.group_product_pricelist")

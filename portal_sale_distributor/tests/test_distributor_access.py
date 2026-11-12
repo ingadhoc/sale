@@ -56,6 +56,12 @@ class TestDistributorAccess(TransactionCase):
             # answers this: reading display_name returns a value either way.
             self.assertTrue(self.company.partner_id.with_user(self.distributor).has_access("read"))
 
+    def test_distributor_does_not_see_the_update_prices_button(self):
+        """El botón de `sale_ux` está en tres lugares del formulario: el distribuidor no ve ninguno."""
+        arch = self.env["sale.order"].with_user(self.distributor).get_view(view_type="form")["arch"]
+
+        self.assertNotIn("action_update_prices", arch)
+
     def test_distributor_pickings(self):
         """La fila de `stock.picking` sin dominio anulaba el filtro de portal de
         remitos: en la 20 los permisos de los grupos se suman con `Domain.OR`."""
