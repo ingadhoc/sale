@@ -1,3 +1,5 @@
+from lxml import etree
+from odoo import Command
 from odoo.tests import tagged
 
 from .common import SaleUxCommon
@@ -58,3 +60,48 @@ class TestProductPricelist(SaleUxCommon):
             self.shown_pricelist.with_context(pricelist_product_id=variant.id).price,
             42.0,
         )
+
+    def test_view_cache_is_not_shared_between_groups(self):
+        """The readonly form built for salesmen must not leak to sales managers
+        through the view cache, nor the other way around."""
+        salesman = self.env["res.users"].create(
+            {
+                "name": "Sale UX Salesman",
+                "login": "sale_ux_salesman",
+                "group_ids": [
+                    Command.set(
+                        [
+                            self.env.ref("base.group_user").id,
+                            self.env.ref("sales_team.group_sale_salesman").id,
+                        ]
+                    )
+                ],
+            }
+        )
+        manager = self.env["res.users"].create(
+            {
+                "name": "Sale UX Sales Manager",
+                "login": "sale_ux_sales_manager",
+                "group_ids": [
+                    Command.set(
+                        [
+                            self.env.ref("base.group_user").id,
+                            self.env.ref("sales_team.group_sale_manager").id,
+                        ]
+                    )
+                ],
+            }
+        )
+        for first, second in ((salesman, manager), (manager, salesman)):
+            with self.subTest(opened_first_by=first.login):
+                self.env.registry.clear_cache("templates")
+                for user in (first, second):
+                    arch = etree.fromstring(
+                        self.env["product.pricelist"].with_user(user).get_view(view_type="form")["arch"]
+                    )
+                    readonly = any(node.get("edit") == "false" for node in arch.xpath("//form"))
+                    self.assertEqual(
+                        readonly,
+                        user == salesman,
+                        f"{user.login} got the form of the other group because {first.login} opened it first",
+                    )
