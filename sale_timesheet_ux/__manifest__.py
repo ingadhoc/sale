@@ -1,7 +1,7 @@
 {
     "name": "Sales Timesheet UX",
     "summary": "",
-    "version": "19.0.1.1.0",
+    "version": "20.0.1.0.0",
     "website": "www.adhoc.com.ar",
     "license": "AGPL-3",
     "author": "ADHOC SA",
@@ -10,12 +10,17 @@
         "sale_timesheet",
     ],
     "data": [
-        "security/ir.model.access.csv",
+        "security/ir.access.csv",
         "views/project_inherit.xml",
         "wizards/res_config_settings_views.xml",
         "wizards/project_change_biillable_views.xml",
     ],
     "demo": [],
+    "assets": {
+        "web.assets_backend": [
+            "sale_timesheet_ux/static/src/**/*",
+        ],
+    },
     "application": False,
-    "installable": False,
+    "installable": True,
 }
