@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Sale UX",
-    "version": "19.0.1.21.0",
+    "version": "19.0.1.22.0",
     "category": "Sales",
     "sequence": 14,
     "summary": "",
@@ -45,6 +45,8 @@
         "views/sale_reports.xml",
         "views/sale_portal_template.xml",
         "views/res_partner_view.xml",
+        "views/sale_order_line_lost_reason_views.xml",
+        "views/sale_report_views.xml",
         "views/res_config_settings_views.xml",
         "views/account_fiscal_position_views.xml",
         "views/product_template_views.xml",

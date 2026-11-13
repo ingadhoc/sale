@@ -63,6 +63,10 @@ class ResConfigSettings(models.TransientModel):
         "Show Delivery Date in Quotations report and online budget",
         implied_group="sale_ux.group_delivery_date_on_report_online",
     )
+    group_lost_qty = fields.Boolean(
+        "Register unsold quantities",
+        implied_group="sale_ux.group_lost_qty",
+    )
 
     def get_values(self):
         res = super(ResConfigSettings, self).get_values()
