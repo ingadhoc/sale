@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Portal Distributor MRP",
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "category": "Tools",
     "complexity": "easy",
     "author": "ADHOC SA",
@@ -28,11 +28,10 @@
     "depends": [
         "mrp",
         "portal_sale_distributor",
+        "sale_mrp",
     ],
     "demo": [],
-    "data": [
-        "security/ir.model.access.csv",
-    ],
-    "installable": False,
+    "data": [],
+    "installable": True,
     "auto_install": True,
 }
