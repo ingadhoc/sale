@@ -7,7 +7,8 @@ from odoo.exceptions import UserError
 
 
 class StockPicking(models.Model):
-    _inherit = "stock.picking"
+    _name = "stock.picking"
+    _inherit = ["stock.picking", "purchase.order.number.mixin"]
 
     require_purchase_order_number = fields.Boolean(
         string="Sale Require Origin",
@@ -33,6 +34,22 @@ class StockPicking(models.Model):
     def _inverse_purchase_order_number(self):
         for rec in self:
             rec.manual_purchase_order_number = rec.purchase_order_number
+
+    def _l10n_cl_purchase_order_reference_applies(self):
+        # on a backorder l10n_cl_edi_stock copies the references over, to keep an edit the
+        # user made on the original picking; a done picking may already have its DTE
+        return self.picking_type_code == "outgoing" and self.state not in ("done", "cancel") and not self.backorder_id
+
+    def _l10n_cl_purchase_order_reference_date(self):
+        if self.sale_id.date_order:
+            return fields.Date.context_today(self, self.sale_id.date_order)
+        return super()._l10n_cl_purchase_order_reference_date()
+
+    def _l10n_cl_update_purchase_order_reference(self, references):
+        # only the one built from client_order_ref by l10n_cl_edi_stock, never a value the user typed
+        references.filtered(
+            lambda ref: ref.origin_doc_number == self.sale_id.client_order_ref
+        ).origin_doc_number = self.purchase_order_number
 
     def _action_done(self):
         picking_missing_po_number = self.filtered(

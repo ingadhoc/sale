@@ -38,4 +38,5 @@ class SaleOrder(models.Model):
             origins = move.invoice_origin.split(", ")
             po_numbers = [origin_map.get(o) for o in origins if origin_map.get(o)]
             move.purchase_order_number = ", ".join(po_numbers)
+        moves._set_l10n_cl_purchase_order_reference()
         return moves

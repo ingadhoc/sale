@@ -22,7 +22,7 @@
     "version": "19.0.1.0.0",
     "category": "Sales",
     "sequence": 14,
-    "summary": "",
+    "summary": "Require the customer purchase order number, printed and reported in AR, UY and CL",
     "author": "ADHOC SA",
     "website": "www.adhoc.com.ar",
     "license": "AGPL-3",
