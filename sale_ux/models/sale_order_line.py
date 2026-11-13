@@ -3,6 +3,8 @@
 # directory
 ##############################################################################
 from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
+from odoo.tools.float_utils import float_compare, float_is_zero
 
 
 class SaleOrderLine(models.Model):
@@ -13,6 +15,115 @@ class SaleOrderLine(models.Model):
     team_id = fields.Many2one("crm.team", string="Sales Team", related="order_id.team_id")
 
     categ_id = fields.Many2one("product.category", string="Product Category", related="product_id.categ_id")
+
+    is_sold = fields.Boolean(
+        string="Sold",
+        default=True,
+        copy=False,
+        help="Uncheck to record that the customer did not buy this line. The whole quantity moves to "
+        "'Unsold Quantity' and the line is neither delivered nor invoiced.",
+    )
+
+    lost_qty = fields.Float(
+        string="Unsold Quantity",
+        digits="Product Unit of Measure",
+        copy=False,
+        help="Quantity quoted to the customer but not sold, in the unit of measure of the line.",
+    )
+
+    lost_reason_id = fields.Many2one(
+        "sale.order.line.lost.reason",
+        string="Unsold Reason",
+        ondelete="restrict",
+        copy=False,
+    )
+
+    lost_amount = fields.Monetary(
+        string="Unsold Amount",
+        compute="_compute_lost_amount",
+        store=True,
+        currency_field="currency_id",
+    )
+
+    lost_qty_enabled = fields.Boolean(compute="_compute_lost_qty_enabled")
+
+    def _compute_lost_qty_enabled(self):
+        # only here to switch view elements: "groups" cannot express an AND of two groups
+        self.lost_qty_enabled = self.env.user.has_group("sale_ux.group_lost_qty")
+
+    @api.depends("lost_qty", "price_unit", "discount")
+    def _compute_lost_amount(self):
+        for line in self:
+            line.lost_amount = line.price_unit * line.lost_qty * (1 - (line.discount or 0.0) / 100.0)
+
+    @api.constrains("lost_qty", "lost_reason_id")
+    def _check_lost_reason(self):
+        precision = self.env["decimal.precision"].precision_get("Product Unit of Measure")
+        for line in self:
+            if float_compare(line.lost_qty, 0.0, precision_digits=precision) > 0 and not line.lost_reason_id:
+                raise ValidationError(
+                    _('You must set an unsold reason for line "%s", which has an unsold quantity.', line.name)
+                )
+
+    def _balance_lost_qty_vals(self, vals):
+        """Keep the quoted total (ordered + unsold) when one of the two sides is written.
+
+        The onchange below does this for the form; this does it for every other path
+        (the editable list, an import, the API), where no onchange runs.
+        """
+        self.ensure_one()
+        precision = self.env["decimal.precision"].precision_get("Product Unit of Measure")
+        line_vals = dict(vals)
+        quoted_qty = self.product_uom_qty + self.lost_qty
+        if "lost_qty" in vals:
+            line_vals["product_uom_qty"] = max(quoted_qty - vals["lost_qty"], 0.0)
+            if float_is_zero(vals["lost_qty"], precision_digits=precision):
+                line_vals.setdefault("lost_reason_id", False)
+            line_vals["is_sold"] = not float_is_zero(line_vals["product_uom_qty"], precision_digits=precision)
+        elif vals["is_sold"]:
+            line_vals["product_uom_qty"] = quoted_qty
+            line_vals["lost_qty"] = 0.0
+            line_vals.setdefault("lost_reason_id", False)
+        else:
+            line_vals["lost_qty"] = quoted_qty
+            line_vals["product_uom_qty"] = 0.0
+        return line_vals
+
+    def write(self, vals):
+        balance = ("is_sold" in vals or "lost_qty" in vals) and not self.env.context.get("skip_lost_qty_balance")
+        if not balance:
+            return super().write(vals)
+        for line in self:
+            super(SaleOrderLine, line).write(line._balance_lost_qty_vals(vals))
+        return True
+
+    @api.onchange("is_sold")
+    def _onchange_is_sold(self):
+        """Move the whole quantity to (or back from) the unsold column."""
+        for line in self:
+            if line.is_sold:
+                line.product_uom_qty += line.lost_qty
+                line.lost_qty = 0.0
+                line.lost_reason_id = False
+            else:
+                line.lost_qty += line.product_uom_qty
+                line.product_uom_qty = 0.0
+
+    @api.onchange("lost_qty")
+    def _onchange_lost_qty(self):
+        """A partial loss is taken out of the ordered quantity, which never goes negative.
+
+        The quoted total (ordered + unsold) is taken from the saved line so that editing the
+        unsold quantity several times before saving keeps giving the same result.
+        """
+        precision = self.env["decimal.precision"].precision_get("Product Unit of Measure")
+        for line in self:
+            quoted_qty = line._origin.product_uom_qty + line._origin.lost_qty
+            line.product_uom_qty = max(quoted_qty - line.lost_qty, 0.0)
+            if float_is_zero(line.lost_qty, precision_digits=precision):
+                line.lost_reason_id = False
+            # keep both controls coherent: nothing left to deliver means the line is not sold
+            line.is_sold = not float_is_zero(line.product_uom_qty, precision_digits=precision)
 
     @api.depends("order_id.force_invoiced_status")
     def _compute_invoice_status(self):

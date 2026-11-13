@@ -352,3 +352,8 @@ class SaleOrder(models.Model):
             if product.product_tmpl_id.only_packagings and product.uom_ids:
                 res[product.id]["uomDisplayName"] = product.uom_ids[0].display_name
         return res
+
+    def _get_order_lines_to_report(self):
+        """Unsold lines are internal information: they show up neither on the printed
+        quotation nor on the portal. This hook feeds both."""
+        return super()._get_order_lines_to_report().filtered("is_sold")

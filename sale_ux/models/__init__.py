@@ -3,6 +3,7 @@
 # directory
 ##############################################################################
 from . import sale_order
+from . import sale_order_line_lost_reason
 from . import sale_order_line
 from . import account_move
 from . import analytic_account
@@ -13,3 +14,4 @@ from . import product_pricelist
 from . import account_fiscal_position
 from . import res_partner
 from . import crm_team
+from . import sale_report
