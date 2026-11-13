@@ -75,13 +75,18 @@ class SaleOrderLine(models.Model):
         for line in self.invoice_lines:
             if line.move_id.state != "posted" or line.move_id in invoices:
                 continue
+            sign = 1 if line.move_id.move_type == "out_invoice" else -1
+            price_unit = line.price_unit
             if line.currency_id and self.currency_id and line.currency_id != self.currency_id:
-                sign = 1 if line.move_id.move_type == "out_invoice" else -1
-                converted_price_unit = line.currency_id._convert(
+                price_unit = line.currency_id._convert(
                     line.price_unit,
                     self.currency_id,
                     line.company_id,
                     line.move_id.invoice_date or line.move_id.date or fields.Date.context_today(self),
                 )
-                total += sign * (converted_price_unit - line.price_unit)
+                total += sign * (price_unit - line.price_unit)
+            if line.discount:
+                # Odoo adds up the gross price_unit: take the discount off so the order deducts
+                # what the down payment invoice really charged
+                total -= sign * price_unit * line.discount / 100.0
         return total
