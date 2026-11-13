@@ -70,16 +70,15 @@ class SaleOrder(models.Model):
                 else:
                     invoices_to_validate = invoices
                     invoices_not_validated = rec.env["account.move"]
-                if not invoices_to_validate:
-                    continue
-                if rec.env.context.get("background_post_defer"):
-                    invoices_to_validate = invoices_to_validate.with_context(force_background_post=True)
-                try:
-                    invoices_to_validate.sudo().action_post()
-                except Exception as error:
-                    rec._handle_invoicing_automation_error(invoices, error)
-                else:
-                    rec._log_background_post_defer(invoices_to_validate)
+                if invoices_to_validate:
+                    if rec.env.context.get("background_post_defer"):
+                        invoices_to_validate = invoices_to_validate.with_context(force_background_post=True)
+                    try:
+                        invoices_to_validate.sudo().action_post()
+                    except Exception as error:
+                        rec._handle_invoicing_automation_error(invoices, error)
+                    else:
+                        rec._log_background_post_defer(invoices_to_validate)
                 # Post message for invoices that were not validated due to domain filter
                 if invoices_not_validated:
                     domain_message = _(
