@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="sale_offline_app.NoPurchaseDialog">
+        <Dialog title="'No compra'" size="'md'">
+            <p class="mb-2">¿Por qué <b t-esc="props.partnerName"/> no compró?</p>
+            <textarea class="form-control" rows="3" maxlength="500" placeholder="Motivo" t-model="state.reason"/>
+            <small class="text-muted">La visita queda cerrada con este motivo al enviar.</small>
+            <t t-set-slot="footer">
+                <button type="button" class="btn btn-danger" t-att-disabled="!state.reason.trim()" t-on-click="confirm">
+                    Registrar no compra
+                </button>
+                <button type="button" class="btn btn-secondary" t-on-click="props.close">Cancelar</button>
+            </t>
+        </Dialog>
+    </t>
+</templates>

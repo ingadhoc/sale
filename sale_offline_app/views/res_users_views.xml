@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_users_form" model="ir.ui.view">
+        <field name="name">res.users.form.offline.app</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <group name="other_preferences" position="inside">
+                <field name="offline_app_pin" password="True" groups="base.group_erp_manager"/>
+            </group>
+        </field>
+    </record>
+
+    <record id="view_users_form_simple_modif" model="ir.ui.view">
+        <field name="name">res.users.preferences.offline.app</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+        <field name="arch" type="xml">
+            <div name="api_keys" position="before">
+                <div name="offline_app_pin" class="d-flex mt-3">
+                    <div class="col-7 col-sm-6 col-lg-3 d-flex flex-column">
+                        <span class="o_form_label">Offline Sales App PIN</span>
+                        <span class="text-muted">Screen lock of the offline sales app.</span>
+                    </div>
+                    <button name="action_set_offline_app_pin" type="object" string="Set PIN"
+                        class="btn btn-secondary h-100 my-auto"/>
+                </div>
+            </div>
+        </field>
+    </record>
+</odoo>

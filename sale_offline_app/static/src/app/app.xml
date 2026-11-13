@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="sale_offline_app.App">
+        <LockScreen t-if="data.locked"/>
+        <div t-else="" class="o_preventa d-flex flex-column h-100">
+            <header class="o_preventa_header d-flex align-items-center gap-2 px-2 py-2 text-white">
+                <button t-if="data.link and canGoBack" type="button" class="btn btn-link text-white px-1" t-on-click="back">
+                    <i class="fa fa-arrow-left fa-lg"/>
+                </button>
+                <div class="flex-grow-1 text-truncate fs-5 fw-bold ps-1" t-esc="title"/>
+                <i t-if="data.syncing or data.sending" class="fa fa-refresh fa-spin" title="Sincronizando"/>
+                <i t-attf-class="fa fa-circle {{ data.online ? 'text-success' : 'text-secondary' }}"
+                    t-att-title="data.online ? 'En línea' : 'Sin conexión'"/>
+            </header>
+
+            <div t-if="data.updateAvailable" class="alert alert-info rounded-0 m-0 d-flex align-items-center justify-content-between">
+                <span>Hay una versión nueva de la app.</span>
+                <button type="button" class="btn btn-primary btn-sm" t-on-click="() => preventa.applyUpdate()">Actualizar</button>
+            </div>
+            <div t-if="data.authExpired" class="alert alert-danger rounded-0 m-0">
+                <div>La vinculación de este celular con Odoo venció o fue revocada. Volvé a vincularlo: los pedidos guardados no se pierden.</div>
+                <button type="button" class="btn btn-danger w-100 mt-2" t-att-disabled="!data.online" t-on-click="() => preventa.linkDevice()">
+                    <i class="fa fa-link me-2"/>Volver a vincular
+                </button>
+            </div>
+            <div t-elif="expiryWarning" class="alert alert-warning rounded-0 m-0 d-flex align-items-center justify-content-between gap-2">
+                <span t-esc="expiryWarning"/>
+                <button type="button" class="btn btn-warning btn-sm text-nowrap" t-att-disabled="!data.online" t-on-click="() => preventa.linkDevice()">Renovar</button>
+            </div>
+            <div t-if="data.error" class="alert alert-danger rounded-0 m-0" t-esc="data.error"/>
+            <div t-if="data.needsSync and !data.syncing" class="alert alert-warning rounded-0 m-0">
+                La app se actualizó: sincronizá con conexión desde Configuración para actualizar los datos.
+            </div>
+
+            <main class="flex-grow-1 overflow-auto">
+                <div t-if="!data.link" class="p-4 text-center">
+                    <p class="fs-5">Este celular todavía no está vinculado a Odoo.</p>
+                    <p class="text-muted">Necesitás conexión y tu usuario de Odoo.</p>
+                    <button type="button" class="btn btn-primary btn-lg w-100" t-att-disabled="!data.online"
+                        t-on-click="() => preventa.linkDevice()">Ingresar con Odoo</button>
+                </div>
+                <t t-elif="partner">
+                    <ul class="nav nav-tabs nav-fill">
+                        <li class="nav-item">
+                            <a href="#" t-attf-class="nav-link {{ state.tab === 'order' ? 'active' : '' }}"
+                                t-on-click.prevent="() => this.state.tab = 'order'">Pedido</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" t-attf-class="nav-link {{ state.tab === 'catalog' ? 'active' : '' }}"
+                                t-on-click.prevent="() => this.state.tab = 'catalog'">Catálogo</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" t-attf-class="nav-link {{ state.tab === 'data' ? 'active' : '' }}"
+                                t-on-click.prevent="() => this.state.tab = 'data'">Cliente</a>
+                        </li>
+                    </ul>
+                    <OrderBuilder t-if="state.tab === 'order'" partner="partner" activityId="state.activityId"/>
+                    <CatalogScreen t-elif="state.tab === 'catalog'" partner="partner" activityId="state.activityId"
+                        onShowOrder="() => this.state.tab = 'order'"/>
+                    <PartnerDetail t-else="" partner="partner"/>
+                </t>
+                <OrderDetail t-elif="detailOrder" order="detailOrder" fromHistory="state.detail.fromHistory"
+                    onRepeat.bind="repeatOrder"/>
+                <div t-elif="state.screen === 'home'" class="o_preventa_home h-100">
+                    <div class="o_preventa_menu px-3 py-4">
+                        <button t-foreach="tiles" t-as="tile" t-key="tile.screen" type="button"
+                            class="o_preventa_app btn d-flex flex-column align-items-center gap-2 p-1 border-0"
+                            t-on-click="() => this.goTo(tile.screen)">
+                            <span class="o_preventa_app_icon position-relative d-flex align-items-center justify-content-center"
+                                t-attf-style="background-color: {{ tile.color }}">
+                                <i t-attf-class="fa {{ tile.icon }}"/>
+                                <span t-if="tile.count" class="o_preventa_app_badge position-absolute badge rounded-pill text-bg-danger"
+                                    t-esc="tile.count"/>
+                            </span>
+                            <span class="o_preventa_app_caption" t-esc="tile.label"/>
+                        </button>
+                    </div>
+                    <div t-if="showInstall" t-attf-class="o_preventa_install p-3 bg-white border {{ data.justLinked ? 'border-primary border-2' : '' }}">
+                        <div t-if="data.justLinked" class="fw-bold mb-1">
+                            <i class="fa fa-check text-success me-1"/>Celular vinculado.
+                        </div>
+                        <div class="small mb-2">
+                            Instalá la app para abrirla desde el escritorio del celular, aunque no haya señal.
+                        </div>
+                        <button t-if="pwa.isAvailable" type="button" class="btn btn-primary w-100" t-on-click="installApp">
+                            <i class="fa fa-mobile me-2"/>Instalar en el celular
+                        </button>
+                        <div t-else="" class="small text-muted">
+                            En Chrome: menú <b>⋮</b> → <b>Agregar a la pantalla principal</b> (o <b>Instalar app</b>).
+                            Si ya la instalaste, abrila desde su ícono.
+                        </div>
+                    </div>
+                </div>
+                <ActivitiesScreen t-elif="state.screen === 'activities'" onStart.bind="startActivity"/>
+                <PartnerList t-elif="state.screen === 'partners'" onSelect.bind="openPartner"/>
+                <CatalogScreen t-elif="state.screen === 'catalog'"/>
+                <OrdersScreen t-elif="state.screen === 'orders' or state.screen === 'send'" mode="state.screen"
+                    onOpenOrder.bind="openOrder" onOpenHistory.bind="openHistory"/>
+                <SettingsScreen t-elif="state.screen === 'settings'" onLogout.bind="logout"/>
+            </main>
+        </div>
+        <MainComponentsContainer/>
+    </t>
+</templates>
