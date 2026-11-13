@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Portal Distributor Sale with L10n AR Tax",
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "category": "Tools",
     "complexity": "easy",
     "author": "ADHOC SA",
@@ -31,8 +31,8 @@
     ],
     "demo": [],
     "data": [
-        "security/ir.model.access.csv",
+        "security/ir.access.csv",
     ],
-    "installable": False,
+    "installable": True,
     "auto_install": True,
 }
