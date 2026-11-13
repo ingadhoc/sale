@@ -48,6 +48,17 @@ msgid "Company"
 msgstr ""
 
 #. module: sale_order_type_automation
+#. odoo-python
+#: code:addons/sale_order_type_automation/models/sale_order.py:0
+msgid "Confirm anyway"
+msgstr "Confirmar de todos modos"
+
+#. module: sale_order_type_automation
+#: model:ir.actions.server,name:sale_order_type_automation.action_sale_order_confirm_force_background_post
+msgid "Confirm anyway (validate invoice in background)"
+msgstr "Confirmar de todos modos (validar la factura en segundo plano)"
+
+#. module: sale_order_type_automation
 #: model:ir.model.fields.selection,name:sale_order_type_automation.selection__sale_order_type__invoicing_atomation__create_invoice
 msgid "Create Invoice"
 msgstr "Crear factura"
@@ -122,6 +133,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type__journal_id
 msgid "Invoice Journal"
 msgstr "Diario de facturación"
+
+#. module: sale_order_type_automation
+#. odoo-python
+#: code:addons/sale_order_type_automation/models/stock_picking.py:0
+msgid "Invoices to be validated in the background"
+msgstr "Facturas a validar en segundo plano"
 
 #. module: sale_order_type_automation
 #: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type__invoicing_atomation
@@ -242,6 +259,16 @@ msgstr ""
 "* %s\n"
 
 #. module: sale_order_type_automation
+#. odoo-python
+#: code:addons/sale_order_type_automation/models/sale_order.py:0
+msgid ""
+"The invoice was left in draft to be validated by the background post "
+"process, %s."
+msgstr ""
+"La factura quedó en borrador para que la valide el proceso de validación en "
+"segundo plano, porque %s."
+
+#. module: sale_order_type_automation
 #: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type__invoice_validate_domain
 msgid ""
 "This invoice filter allows you to create some invoices in draft form without"
@@ -251,6 +278,17 @@ msgstr ""
 "Este filtro de factura permite crear algunas facturas en estado borrador sin"
 " validarlas automáticamente. Por lo tanto, si se cumple la condición, la "
 "factura permanece en estado borrador."
+
+#. module: sale_order_type_automation
+#. odoo-python
+#: code:addons/sale_order_type_automation/models/sale_order.py:0
+msgid ""
+"This invoice was left in draft to be validated by the background post "
+"process, %(reason)s. The error, if there was one, is logged on %(order)s."
+msgstr ""
+"Esta factura quedó en borrador para que la valide el proceso de validación "
+"en segundo plano, porque %(reason)s. El error, si hubo alguno, quedó "
+"registrado en %(order)s."
 
 #. module: sale_order_type_automation
 #: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type__sale_order_filter_domain
@@ -315,12 +353,76 @@ msgstr "Validar pago"
 #. module: sale_order_type_automation
 #. odoo-python
 #: code:addons/sale_order_type_automation/models/sale_order.py:0
+msgid "Validate anyway"
+msgstr "Validar de todos modos"
+
+#. module: sale_order_type_automation
+#: model:ir.actions.server,name:sale_order_type_automation.action_picking_validate_force_background_post
+msgid "Validate anyway (validate invoice in background)"
+msgstr "Validar de todos modos (validar la factura en segundo plano)"
+
+#. module: sale_order_type_automation
+#. odoo-python
+#: code:addons/sale_order_type_automation/models/sale_order.py:0
 msgid ""
 "We couldn't validate the automatically created invoices (ids %s), you will "
 "need to validate them manually. This is what we get: %s"
 msgstr ""
 "No pudimos validar las facturas creadas automáticamente (ids %s), "
 "necesitarás validarlos manualmente. Esto es lo que obtenemos: %s"
+
+#. module: sale_order_type_automation
+#. odoo-python
+#: code:addons/sale_order_type_automation/models/account_move.py:0
+msgid ""
+"We tried to validate this invoice on the background but got an error, logged "
+"on %(orders)s."
+msgstr ""
+"Intentamos validar esta factura en segundo plano pero recibimos un error, "
+"registrado en %(orders)s."
+
+#. module: sale_order_type_automation
+#. odoo-python
+#: code:addons/sale_order_type_automation/models/sale_order.py:0
+msgid ""
+"You can confirm the order anyway. The invoice will be created and validated "
+"later on by the background post process."
+msgstr ""
+"Puede confirmar el pedido de todos modos. La factura se creará y se validará "
+"más tarde mediante el proceso de validación en segundo plano."
+
+#. module: sale_order_type_automation
+#. odoo-python
+#: code:addons/sale_order_type_automation/models/sale_order.py:0
+msgid ""
+"You can validate the transfer anyway. The invoice will be created and "
+"validated later on by the background post process."
+msgstr ""
+"Puede validar el traslado de todos modos. La factura se creará y se validará "
+"más tarde mediante el proceso de validación en segundo plano."
+
+#. module: sale_order_type_automation
+#. odoo-python
+#: code:addons/sale_order_type_automation/models/stock_picking.py:0
+msgid ""
+"You validated %(count)s transfers at once, so their invoices were created "
+"and left to be validated by the background post process."
+msgstr ""
+"Validó %(count)s traslados a la vez, por lo que sus facturas se crearon y "
+"quedaron pendientes de validación por el proceso de validación en segundo "
+"plano."
+
+#. module: sale_order_type_automation
+#. odoo-python
+#: code:addons/sale_order_type_automation/models/sale_order.py:0
+msgid "its validation failed and the operation was run again anyway"
+msgstr "su validación falló y la operación se volvió a ejecutar de todos modos"
+
+#. module: sale_order_type_automation
+#. odoo-python
+#: code:addons/sale_order_type_automation/models/sale_order.py:0
+msgid "more than %s transfers were validated at once"
+msgstr "se validaron más de %s traslados a la vez"
 
 #. module: sale_order_type_automation
 #: model:ir.model,name:sale_order_type_automation.model_stock_picking
