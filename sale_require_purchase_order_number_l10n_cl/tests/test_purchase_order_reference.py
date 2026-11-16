@@ -3,17 +3,37 @@
 # directory
 ##############################################################################
 from odoo import Command
-from odoo.addons.l10n_cl_edi_stock.tests.common import TestL10nClEdiStockCommon
+from odoo.addons.stock_account.tests.test_anglo_saxon_valuation_reconciliation_common import (
+    ValuationReconciliationTestCommon,
+)
 from odoo.tests import Form, tagged
 
 
 @tagged("post_install", "-at_install")
-class TestPurchaseOrderReference(TestL10nClEdiStockCommon):
+class TestPurchaseOrderReference(ValuationReconciliationTestCommon):
+    # not on TestL10nClEdiStockCommon: it writes fields of modules that are not dependencies
     @classmethod
+    @ValuationReconciliationTestCommon.setup_country("cl")
     def setUpClass(cls):
         super().setUpClass()
+        cls.env.user.group_ids |= cls.env.ref("sales_team.group_sale_salesman")
+        cls.env.company.l10n_cl_dte_service_provider = "SIITEST"
+        cls.warehouse = cls.company_data["default_warehouse"]
+        cls.chilean_partner_a = cls.env["res.partner"].create(
+            {
+                "name": "Chilean Partner A",
+                "is_company": True,
+                "country_id": cls.env.ref("base.cl").id,
+                "company_id": cls.env.company.id,
+                "l10n_latam_identification_type_id": cls.env.ref("l10n_cl.it_RUT").id,
+                "l10n_cl_sii_taxpayer_type": "1",
+                "vat": "76086428-5",
+            }
+        )
         cls.purchase_order_doc_type = cls.env.ref("l10n_cl.dc_odc")
-        cls.product = cls.product_with_taxes_a
+        cls.product = cls.env["product.product"].create(
+            {"name": "Purchase order product", "is_storable": True, "list_price": 100.0}
+        )
         cls.env["stock.quant"]._update_available_quantity(cls.product, cls.warehouse.lot_stock_id, 1000)
 
     def _confirm_order(self, purchase_order_number, client_order_ref=False, partner=None):
