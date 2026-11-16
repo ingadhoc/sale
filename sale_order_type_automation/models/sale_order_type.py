@@ -135,7 +135,8 @@ class SaleOrderType(models.Model):
 
     @api.depends()
     def _compute_auto_done_setting(self):
-        self.auto_done_setting = self.env["ir.config_parameter"].sudo().get_bool("sale.auto_done_setting", False)
+        # in Odoo 20 locking on confirmation is a feature group, not a config parameter
+        self.auto_done_setting = self.env["res.groups"]._is_feature_enabled("sale.group_auto_done_setting")
 
     @api.constrains("invoicing_atomation", "company_id", "invoice_company_id", "journal_id")
     def _check_invoicing_journal_required(self):

@@ -122,6 +122,14 @@ class TestSaleOrderTypeAutomation(TestSaleCommon):
             "the invoice left in draft by the filter has to say why",
         )
 
+    def test_set_done_on_confirmation_is_hidden_when_sales_lock_on_confirmation(self):
+        self.assertFalse(self.sale_type.auto_done_setting)
+
+        self.env.ref("base.group_user").sudo()._apply_group(self.env.ref("sale.group_auto_done_setting"))
+        self.sale_type.invalidate_recordset(["auto_done_setting"])
+
+        self.assertTrue(self.sale_type.auto_done_setting)
+
     def test_action_confirm_sets_order_done_when_configured(self):
         self.sale_type.write(
             {
