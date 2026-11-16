@@ -6,6 +6,7 @@ from odoo import Command
 from odoo.addons.sale.tests.common import TestSaleCommon
 from odoo.exceptions import ValidationError
 from odoo.tests import Form, tagged
+from odoo.tools.safe_eval import safe_eval
 
 
 @tagged("post_install", "-at_install")
@@ -129,6 +130,37 @@ class TestSaleOrderTypeAutomation(TestSaleCommon):
         self.sale_type.invalidate_recordset(["auto_done_setting"])
 
         self.assertTrue(self.sale_type.auto_done_setting)
+
+    def test_domain_eval_context_converts_to_utc_from_the_user_timezone(self):
+        order = self._create_order().with_context(tz="America/Argentina/Buenos_Aires")
+        expression = (
+            "datetime.datetime.combine(datetime.date(2026, 1, 1), datetime.time(0, 0, 0))"
+            ".to_utc().strftime('%Y-%m-%d %H:%M:%S')"
+        )
+
+        value = safe_eval(expression, order._get_domain_eval_context())
+
+        self.assertEqual(value, "2026-01-01 03:00:00")
+
+    def test_order_filter_with_relative_datetime_is_evaluated_when_confirming(self):
+        self.sale_type.write(
+            {
+                "invoicing_atomation": "validate_invoice",
+                "journal_id": self.invoice_journal.id,
+                "picking_atomation": "none",
+                "sale_order_filter_domain": (
+                    "[('date_order', '>=', datetime.datetime.combine("
+                    "context_today() - relativedelta(days=1), datetime.time(0, 0, 0))"
+                    ".to_utc().strftime('%Y-%m-%d %H:%M:%S'))]"
+                ),
+            }
+        )
+        order = self._create_order()
+
+        order.action_confirm()
+
+        self.assertEqual(order.state, "sale")
+        self.assertEqual(order.invoice_ids.state, "draft", "the order matches the filter, so it is not posted")
 
     def test_action_confirm_sets_order_done_when_configured(self):
         self.sale_type.write(
