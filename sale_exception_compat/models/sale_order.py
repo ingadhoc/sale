@@ -1,3 +1,4 @@
+from markupsafe import Markup
 from odoo import models
 from odoo.tools import config
 
@@ -25,6 +26,24 @@ class SaleOrder(models.Model):
         if self.detect_exceptions():
             return self._exception_blocked_confirmation()
         return super().action_confirm()
+
+    def _validate_order(self):
+        # Portal signature and eCommerce write on the order right before this
+        # call and the rollback would discard those writes: leave the blocked
+        # orders unconfirmed instead, as OCA/sale-workflow#4600 does.
+        self.detect_exceptions()
+        blocked = self.filtered(lambda o: o._must_raise_exception_after_detection())
+        for order in blocked:
+            order.message_post(
+                body=Markup("{}{}").format(
+                    self.env._("The order was not confirmed because of these exceptions:"),
+                    Markup(order.exceptions_summary or ""),
+                ),
+                subtype_xmlid="mail.mt_note",
+            )
+        to_confirm = self - blocked
+        if to_confirm:
+            return super(SaleOrder, to_confirm)._validate_order()
 
     def _register_hook(self):
         # Exceptions must be detected before any other module runs its own
