@@ -7,8 +7,7 @@ from odoo.exceptions import UserError
 
 
 class AccountInvoice(models.Model):
-    _name = "account.move"
-    _inherit = ["account.move", "purchase.order.number.mixin"]
+    _inherit = "account.move"
 
     purchase_order_number = fields.Char()
 
@@ -22,9 +21,3 @@ class AccountInvoice(models.Model):
         )
         if invoices_missing_po_number:
             raise UserError(_("You cannot confirm invoice without a" " Purchase Order Number for this partner"))
-
-    def _l10n_cl_purchase_order_reference_applies(self):
-        return self.is_sale_document() and self.state == "draft"
-
-    def _l10n_cl_purchase_order_reference_date(self):
-        return self.invoice_date or super()._l10n_cl_purchase_order_reference_date()
