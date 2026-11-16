@@ -2,12 +2,14 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
+import datetime
 import logging
+from types import SimpleNamespace
 
+import pytz
 from odoo import _, fields, models
 from odoo.exceptions import RedirectWarning, UserError
 from odoo.tools.safe_eval import (
-    datetime as safe_eval_datetime,
     dateutil as safe_eval_dateutil,
     safe_eval,
 )
@@ -17,6 +19,38 @@ _logger = logging.getLogger(__name__)
 
 class SaleOrder(models.Model):
     _inherit = "sale.order"
+
+    def _get_domain_eval_context(self):
+        """Context to evaluate the saved domains of the order type.
+
+        The domain editor writes dates and times as
+        `datetime.datetime.combine(...).to_utc()`. `to_utc` only exists in the
+        browser (py_date.js), so here it converts from the user's timezone.
+        """
+        self.ensure_one()
+        tz = pytz.timezone(self.env.context.get("tz") or self.env.user.tz or "UTC")
+
+        class UserDatetime(datetime.datetime):
+            @classmethod
+            def combine(cls, date, time, tzinfo=None):
+                value = datetime.datetime.combine(date, time, tzinfo)
+                return cls(*value.timetuple()[:6], value.microsecond, value.tzinfo)
+
+            def to_utc(self):
+                naive = datetime.datetime(*self.timetuple()[:6], self.microsecond)
+                return tz.localize(naive).astimezone(pytz.utc).replace(tzinfo=None)
+
+        return {
+            "datetime": SimpleNamespace(
+                datetime=UserDatetime,
+                date=datetime.date,
+                time=datetime.time,
+                timedelta=datetime.timedelta,
+                timezone=datetime.timezone,
+            ),
+            "context_today": lambda: fields.Date.context_today(self),
+            "relativedelta": safe_eval_dateutil.relativedelta.relativedelta,
+        }
 
     def run_invoicing_atomation(self):
         for rec in self.filtered(
@@ -30,11 +64,7 @@ class SaleOrder(models.Model):
             # we take into account if there are any transaction finish from the e-commerce
             #  and not continue with the automation in this case
             # Check sale order exclusion domain: create invoice but skip validation
-            eval_ctx = {
-                "datetime": safe_eval_datetime,
-                "context_today": lambda: fields.Date.context_today(rec),
-                "relativedelta": safe_eval_dateutil.relativedelta.relativedelta,
-            }
+            eval_ctx = rec._get_domain_eval_context()
             skip_validation = False
             # the filters only decide when the invoice is posted right here
             validates_here = rec.type_id.invoicing_atomation == "validate_invoice" and not rec.type_id.background_post
