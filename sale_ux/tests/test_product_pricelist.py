@@ -105,3 +105,32 @@ class TestProductPricelist(SaleUxCommon):
                         user == salesman,
                         f"{user.login} got the form of the other group because {first.login} opened it first",
                     )
+
+    def test_template_price_compute_delegates_unknown_base_to_variant(self):
+        """Bases that are not template fields (e.g. "partner" from product_customerinfo)
+        are resolved on the variant instead of failing with KeyError on the template."""
+        variant = self.pricelist_product.product_variant_id
+        self.assertTrue(variant)
+        product_model = type(self.env["product.product"])
+        calls = []
+
+        def _price_compute(records, price_type, *args, **kwargs):
+            calls.append(price_type)
+            return {rec.id: 77.0 for rec in records}
+
+        self.patch(product_model, "_price_compute", _price_compute)
+        prices = self.pricelist_product._price_compute("partner")
+        self.assertEqual(prices[self.pricelist_product.id], 77.0)
+        self.assertEqual(calls, ["partner"])
+
+    def test_template_price_compute_unknown_base_without_variant_falls_back_to_list_price(self):
+        """A template without active variants cannot delegate: it falls back to list_price."""
+        self.pricelist_product.product_variant_ids.write({"active": False})
+        self.assertFalse(self.pricelist_product.product_variant_id)
+        prices = self.pricelist_product._price_compute("partner")
+        self.assertEqual(prices[self.pricelist_product.id], 100.0)
+
+    def test_template_price_compute_keeps_standard_bases(self):
+        """Bases that are template fields keep the standard behavior."""
+        prices = self.pricelist_product._price_compute("list_price")
+        self.assertEqual(prices[self.pricelist_product.id], 100.0)

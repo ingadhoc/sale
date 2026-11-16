@@ -33,6 +33,20 @@ class ProductTemplate(models.Model):
             rec.pricelist_ids = rec.pricelist_ids.search([("show_products", "=", True)])
             rec.pricelist_ids.with_context(pricelist_template_id=rec.id)._compute_price()
 
+    def _price_compute(self, price_type, uom=False, currency=False, company=None, date=False):
+        # Pricelist rules can be based on prices added by other modules (e.g. "partner" from
+        # product_customerinfo), which only resolve them on product.product. As the pricelist
+        # is computed on the template (pricelist_ids), delegate those bases to the first variant
+        # instead of failing with KeyError on the template.
+        if price_type in self._fields:
+            return super()._price_compute(price_type, uom, currency, company, date=date)
+        prices = super()._price_compute("list_price", uom, currency, company, date=date)
+        for template in self:
+            variant = template.product_variant_id
+            if variant:
+                prices[template.id] = variant._price_compute(price_type, uom, currency, company, date=date)[variant.id]
+        return prices
+
     @api.model
     def get_import_templates(self):
         if self.env.context.get("sale_multi_pricelist_product_template"):
