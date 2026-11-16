@@ -122,6 +122,39 @@ class TestSaleOrderTypeAutomation(TestSaleCommon):
             "the invoice left in draft by the filter has to say why",
         )
 
+    def test_order_filter_is_not_evaluated_when_only_creating_the_invoice(self):
+        self.sale_type.write(
+            {
+                "invoicing_atomation": "create_invoice",
+                "journal_id": self.invoice_journal.id,
+                "picking_atomation": "none",
+                "sale_order_filter_domain": "[('field_removed_in_a_new_version', '=', True)]",
+            }
+        )
+        order = self._create_order()
+
+        order.action_confirm()
+
+        self.assertEqual(order.state, "sale")
+        self.assertEqual(set(order.invoice_ids.mapped("state")), {"draft"})
+
+    def test_order_filter_keeps_the_invoice_in_draft_when_validating(self):
+        self.sale_type.write(
+            {
+                "invoicing_atomation": "validate_invoice",
+                "journal_id": self.invoice_journal.id,
+                "picking_atomation": "none",
+                "sale_order_filter_domain": "[('amount_total', '>', 50)]",
+            }
+        )
+        order = self._create_order()
+
+        order.action_confirm()
+
+        invoice = order.invoice_ids
+        self.assertEqual(invoice.state, "draft")
+        self.assertTrue(any("no se validó" in str(body) for body in invoice.message_ids.mapped("body")))
+
     def test_action_confirm_sets_order_done_when_configured(self):
         self.sale_type.write(
             {

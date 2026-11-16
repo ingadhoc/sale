@@ -36,7 +36,9 @@ class SaleOrder(models.Model):
                 "relativedelta": safe_eval_dateutil.relativedelta.relativedelta,
             }
             skip_validation = False
-            if rec.type_id.sale_order_filter_domain:
+            # the filters only decide when the invoice is posted right here
+            validates_here = rec.type_id.invoicing_atomation == "validate_invoice" and not rec.type_id.background_post
+            if validates_here and rec.type_id.sale_order_filter_domain:
                 so_domain = safe_eval(
                     rec.type_id.sale_order_filter_domain,
                     eval_ctx,
