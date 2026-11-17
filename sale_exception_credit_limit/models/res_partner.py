@@ -104,11 +104,13 @@ class ResPartner(models.Model):
                         )
                     draft_invoice_lines_amount += total
 
-                # Sum the credit for all companies, converting to the current company currency
+                # The standard credit already adds up the whole hierarchy, so read it once for each root company
+                # sudo: the user record rule limits the companies to the checked ones and the amount would differ
+                # from the sale order warning, which runs with sudo
                 total_credit = 0.0
-                for company in rec.env["res.company"].search([]):
-                    credit = rec.sudo().with_company(company).credit
-                    total_credit += company.currency_id._convert(
+                for root_company in rec.env["res.company"].sudo().search([]).root_id:
+                    credit = rec.sudo().with_company(root_company).credit
+                    total_credit += root_company.currency_id._convert(
                         credit, company_id.currency_id, company_id, fields.Date.today()
                     )
 
