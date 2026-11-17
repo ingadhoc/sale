@@ -63,12 +63,14 @@ class TestProjectWithoutCompany(TransactionCase):
         existing = self.env["project.project"].create(
             {"name": "Existing project", "allow_billable": True, "account_id": account.id}
         )
-        accounts_before = self.env["account.analytic.account"].search([])
         # Confirm an order that points to the existing project
         order = self._confirm_order(project=existing)
-        project = order.order_line.project_id
         self.assertEqual(order.state, "sale")
-        self.assertEqual(len(project), 1, "Confirming the order must create one project")
+        # Other modules (e.g. sale_timesheet_ux) reuse the project of the order instead of creating one,
+        # so the project is created from the values the order line prepares for it
+        accounts_before = self.env["account.analytic.account"].search([])
+        values = order.order_line._timesheet_create_project_prepare_values()
+        project = self.env["project.project"].create(values)
         # The new project has no company, and neither has its own account
         self.assertFalse(project.company_id)
         self.assertTrue(project.account_id)
