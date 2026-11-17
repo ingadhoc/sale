@@ -214,6 +214,7 @@ class SaleOrderLine(models.Model):
         "move_ids.state",
         "move_ids.scrap_id",
         "move_ids.product_uom_qty",
+        "move_ids.quantity",
         "move_ids.product_uom",
     )
     def _compute_quantity_returned(self):
@@ -226,11 +227,23 @@ class SaleOrderLine(models.Model):
                         r.state == "done" and not r.scrap_id and r.location_dest_id.usage != "customer" and r.to_refund
                     )
                 )
+                # A return of a refunded customer return sends the goods back, so it cancels that
+                # return out, the same way native qty_delivered counts it as delivered again.
+                redelivery_moves = order_line.mapped("move_ids").filtered(
+                    lambda r: (
+                        r.state == "done"
+                        and not r.scrap_id
+                        and r.location_dest_id.usage == "customer"
+                        and r.to_refund
+                        and r.origin_returned_move_id.to_refund
+                        and r.origin_returned_move_id.location_id.usage == "customer"
+                    )
+                )
                 # In multi-step deliveries, we need to avoid counting the same return multiple times
                 for move in return_moves.filtered(lambda m: m.location_id.usage == "customer"):
-                    quantity_returned += move.product_uom._compute_quantity(
-                        move.product_uom_qty, order_line.product_uom_id
-                    )
+                    quantity_returned += move.product_uom._compute_quantity(move.quantity, order_line.product_uom_id)
+                for move in redelivery_moves:
+                    quantity_returned -= move.product_uom._compute_quantity(move.quantity, order_line.product_uom_id)
                 bom_enable = "bom_ids" in self.env["product.template"]._fields
                 if bom_enable:
                     boms = return_moves.mapped("bom_line_id.bom_id")
@@ -265,21 +278,15 @@ class SaleOrderLine(models.Model):
                             else:
                                 quantity_returned = 0.0
                             continue
+                        # _compute_kit_quantities returns incoming minus outgoing: returns minus redeliveries
                         filters = {
-                            "outgoing_moves": lambda m: (
-                                m.location_dest_id.usage == "customer"
-                                and (not m.origin_returned_move_id or (m.origin_returned_move_id and m.to_refund))
-                            ),
-                            "incoming_moves": lambda m: (
-                                m.location_dest_id.usage != "customer"
-                                and m.location_id.usage == "customer"
-                                and m.to_refund
-                            ),
+                            "outgoing_moves": lambda m: m in redelivery_moves,
+                            "incoming_moves": lambda m: m in return_moves and m.location_id.usage == "customer",
                         }
                         order_qty = order_line.product_uom_id._compute_quantity(
                             order_line.product_uom_qty, relevant_bom.product_uom_id
                         )
-                        quantity_returned = return_moves._compute_kit_quantities(
+                        quantity_returned = (return_moves | redelivery_moves)._compute_kit_quantities(
                             order_line.product_id, order_qty, relevant_bom, filters
                         )
 
@@ -291,7 +298,8 @@ class SaleOrderLine(models.Model):
                             quantity_returned = order_line.product_uom_qty
                         else:
                             quantity_returned = 0.0
-            order_line.quantity_returned = quantity_returned
+            # Redelivering more than was returned is an over-delivery, not a negative return
+            order_line.quantity_returned = max(quantity_returned, 0.0)
 
     @api.depends("quantity_returned")
     def _compute_qty_to_invoice(self):
