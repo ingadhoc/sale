@@ -7,9 +7,26 @@ class TestExtraHourCost(TransactionCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.today = fields.Date.today()
+        cls.user = cls.env["res.users"].create(
+            {
+                "name": "Extra Hours User",
+                "login": "extra_hours_user",
+                "group_ids": [
+                    fields.Command.set(
+                        [
+                            cls.env.ref("base.group_user").id,
+                            cls.env.ref("hr.group_hr_user").id,
+                            cls.env.ref("project.group_project_manager").id,
+                            cls.env.ref("hr_timesheet.group_hr_timesheet_user").id,
+                        ]
+                    )
+                ],
+            }
+        )
         cls.employee = cls.env["hr.employee"].create(
             {
                 "name": "Extra Hours Employee",
+                "user_id": cls.user.id,
                 "hourly_cost": 100.0,
                 "day_extra_hour_coef": 20.0,
                 "night_extra_hour_coef": 50.0,
@@ -45,15 +62,19 @@ class TestExtraHourCost(TransactionCase):
         )
 
     def _timesheet(self, project, **values):
-        return self.env["account.analytic.line"].create(
-            {
-                "name": "Work",
-                "project_id": project.id,
-                "employee_id": self.employee.id,
-                "unit_amount": 2.0,
-                "date": self.today,
-                **values,
-            }
+        return (
+            self.env["account.analytic.line"]
+            .with_user(self.user)
+            .create(
+                {
+                    "name": "Work",
+                    "project_id": project.id,
+                    "employee_id": self.employee.id,
+                    "unit_amount": 2.0,
+                    "date": self.today,
+                    **values,
+                }
+            )
         )
 
     def test_fixed_rate_cost_follows_extra_hour_type(self):
