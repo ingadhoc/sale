@@ -128,10 +128,30 @@ class ResPartner(models.Model):
                         )
                     draft_invoice_lines_amount += total
 
+<<<<<<< 00360168edeaf41d349459ff1356758a6baa39e1
                 # The standard credit already adds up the whole company hierarchy (it searches the journal items
                 # with company_id child_of root company), so it must be read only once. Reading it for each company
                 # would count the same balance once per company of the hierarchy.
                 # No currency conversion needed as all companies in a hierarchy share the same currency
                 total_credit = rec.sudo().with_company(company_id.root_id).credit
+||||||| 7a69c669daed9f20ec458dae51a629e13ca79f7e
+                # Sum the credit for all companies, converting to the current company currency
+                total_credit = 0.0
+                for company in rec.env["res.company"].search([]):
+                    credit = rec.sudo().with_company(company).credit
+                    total_credit += company.currency_id._convert(
+                        credit, company_id.currency_id, company_id, fields.Date.today()
+                    )
+=======
+                # The standard credit already adds up the whole hierarchy, so read it once for each root company
+                # sudo: the user record rule limits the companies to the checked ones and the amount would differ
+                # from the sale order warning, which runs with sudo
+                total_credit = 0.0
+                for root_company in rec.env["res.company"].sudo().search([]).root_id:
+                    credit = rec.sudo().with_company(root_company).credit
+                    total_credit += root_company.currency_id._convert(
+                        credit, company_id.currency_id, company_id, fields.Date.today()
+                    )
+>>>>>>> 8b8e9eff15f7ebea48368d0ea78fdadf062d67ab
 
                 rec.credit_with_confirmed_orders = to_invoice_amount + draft_invoice_lines_amount + total_credit
