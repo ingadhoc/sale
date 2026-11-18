@@ -65,6 +65,31 @@
             <xpath expr="//field[@name='order_line']/list//field[@name='discount']" position="after">
                 <button name="action_sale_history" type="object" icon="fa-history" title="Sale History"/>
             </xpath>
+
+            <!-- Unsold quantity: only editable while the order is still a quotation -->
+            <xpath expr="//field[@name='order_line']/list//field[@name='product_uom_qty']" position="before">
+                <field name="is_sold" groups="sale_ux.group_lost_qty" widget="boolean_toggle"
+                       readonly="parent.state not in ['draft', 'sent']"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list//field[@name='product_uom_qty']" position="after">
+                <field name="lost_qty" groups="sale_ux.group_lost_qty"
+                       readonly="parent.state not in ['draft', 'sent']"/>
+                <field name="lost_reason_id" groups="sale_ux.group_lost_qty" optional="show"
+                       required="lost_qty &gt; 0"
+                       readonly="parent.state not in ['draft', 'sent']"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form//div[@name='ordered_qty']" position="after">
+                <label for="is_sold" groups="sale_ux.group_lost_qty"/>
+                <div name="is_sold" groups="sale_ux.group_lost_qty">
+                    <field name="is_sold" readonly="parent.state not in ['draft', 'sent']"/>
+                </div>
+                <label for="lost_qty" groups="sale_ux.group_lost_qty"/>
+                <div name="lost_qty" groups="sale_ux.group_lost_qty" class="o_row">
+                    <field name="lost_qty" readonly="parent.state not in ['draft', 'sent']"/>
+                    <field name="lost_reason_id" required="lost_qty &gt; 0"
+                           readonly="parent.state not in ['draft', 'sent']"/>
+                </div>
+            </xpath>
         </field>
     </record>
 

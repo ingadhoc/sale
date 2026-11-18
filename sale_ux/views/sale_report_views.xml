@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_order_product_search" model="ir.ui.view">
+        <field name="name">sale.report.search.lost.qty</field>
+        <field name="model">sale.report</field>
+        <field name="inherit_id" ref="sale.view_order_product_search"/>
+        <field name="arch" type="xml">
+            <filter name="Quotations" position="before">
+                <filter name="partial_sales" string="Partial Sales" domain="[('lost_qty', '&gt;', 0)]"
+                        groups="sale_ux.group_lost_qty"
+                        help="Lines with a quantity quoted and not sold"/>
+                <separator groups="sale_ux.group_lost_qty"/>
+            </filter>
+            <filter name="status" position="before">
+                <filter name="lost_reason" string="Unsold Reason" context="{'group_by': 'lost_reason_id'}"
+                        groups="sale_ux.group_lost_qty"/>
+            </filter>
+        </field>
+    </record>
+
+    <record id="view_order_product_pivot" model="ir.ui.view">
+        <field name="name">sale.report.pivot.lost.qty</field>
+        <field name="model">sale.report</field>
+        <field name="inherit_id" ref="sale.view_order_product_pivot"/>
+        <field name="arch" type="xml">
+            <field name="product_uom_qty" position="after">
+                <field name="lost_qty" type="measure" groups="sale_ux.group_lost_qty"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

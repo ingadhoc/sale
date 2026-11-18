@@ -6,9 +6,14 @@
         <field name="arch" type="xml">
             <form>
                 <field name="sale_order_line_ids" invisible="1"/>
+                <field name="lost_qty_enabled" invisible="1"/>
                 <div>
                     'Do you want to cancel remaining quantities for this orders? This can´t be undone'
                 </div>
+                <group invisible="not lost_qty_enabled">
+                    <field name="lost_reason_id" required="lost_qty_enabled"
+                           help="The cancelled quantity is recorded as unsold with this reason."/>
+                </group>
                 <footer>
                     <button string="Confirm" name="action_confirm" type="object" class="btn-primary"/>
                     <button string="Cancel" class="btn btn-default" special="cancel"/>
