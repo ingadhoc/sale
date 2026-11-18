@@ -7,19 +7,17 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 19.0+e\n"
+"Project-Id-Version: Odoo Server 20.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-28 16:18+0000\n"
-"PO-Revision-Date: 2025-12-13 16:10+0000\n"
+"POT-Creation-Date: 2026-11-06 19:43+0000\n"
+"PO-Revision-Date: 2026-11-06 19:43+0000\n"
 "Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
-"Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
-"sale-19-0-sale_gathering/es/>\n"
+"Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-20-0/sale-20-0-sale_gathering/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
-"0) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0) ? 1 : 2);\n"
 "X-Generator: Weblate 5.10.4\n"
 
 #. module: sale_gathering
@@ -30,6 +28,81 @@ msgid ""
 msgstr ""
 "(object.state in ('draft', 'sent') and 'Presupuesto - %s' % (object.name)) "
 "or 'Pedido - %s' % (object.name)"
+
+#. module: sale_gathering
+#: model:ir.module.module,description:base.module_sale_gathering
+msgid ""
+".. |company| replace:: ADHOC SA\n"
+"\n"
+".. |company_logo| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-logo.png\n"
+"   :alt: ADHOC SA\n"
+"   :target: https://www.adhoc.com.ar\n"
+"\n"
+".. |icon| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-icon.png\n"
+"\n"
+".. image:: https://img.shields.io/badge/license-AGPL--3-blue.png\n"
+"   :target: https://www.gnu.org/licenses/agpl\n"
+"   :alt: License: AGPL-3\n"
+"\n"
+"==============\n"
+"Sale Gathering\n"
+"==============\n"
+"\n"
+"#. This module incorporate the logic to handel Gathering with pick some SO and chosse some products to keep the prices acrros the time.\n"
+"\n"
+"Installation\n"
+"============\n"
+"\n"
+"To install this module, you need to:\n"
+"\n"
+"#. Only need to install the module.\n"
+"\n"
+"Configuration\n"
+"=============\n"
+"\n"
+"To configure this module, you need to:\n"
+"\n"
+"#. Nothing to configure.\n"
+"\n"
+"Usage\n"
+"=====\n"
+"\n"
+"To use this module, you need to:\n"
+"\n"
+"#. Just use.\n"
+"\n"
+".. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas\n"
+"   :alt: Try me on Runbot\n"
+"   :target: http://runbot.adhoc.com.ar/\n"
+"\n"
+"Bug Tracker\n"
+"===========\n"
+"\n"
+"Bugs are tracked on `GitHub Issues\n"
+"<https://github.com/ingadhoc/sale/issues>`_. In case of trouble, please\n"
+"check there if your issue has already been reported. If you spotted it first,\n"
+"help us smashing it by providing a detailed and welcomed feedback.\n"
+"\n"
+"Credits\n"
+"=======\n"
+"\n"
+"Images\n"
+"------\n"
+"\n"
+"* |company| |icon|\n"
+"\n"
+"Contributors\n"
+"------------\n"
+"\n"
+"Maintainer\n"
+"----------\n"
+"\n"
+"|company_logo|\n"
+"\n"
+"This module is maintained by the |company|.\n"
+"\n"
+"To contribute to this module, please visit https://www.adhoc.com.ar.\n"
+msgstr ""
 
 #. module: sale_gathering
 #: model_terms:ir.ui.view,arch_db:sale_gathering.view_order_form
@@ -54,12 +127,13 @@ msgstr "<strong>Monto retirado:</strong>"
 #. module: sale_gathering
 #: model:ir.model.fields,help:sale_gathering.field_sale_advance_payment_inv__advance_payment_method
 msgid ""
-"A standard invoice is issued with all the order lines ready for invoicing,"
-"according to their invoicing policy (based on ordered or delivered quantity)."
+"A standard invoice is issued with all the order lines ready for "
+"invoicing,according to their invoicing policy (based on ordered or delivered"
+" quantity)."
 msgstr ""
-"Se emite una factura estándar con todas las líneas de pedido listos para la "
-"facturación, de acuerdo con su política de facturación (basada en la "
-"cantidad pedida o entregada)."
+"Se emite una factura estándar con todas las líneas de orden listas para la "
+"facturación, de acuerdo con su política de facturación (según la cantidad "
+"pedida o entregada)."
 
 #. module: sale_gathering
 #: model:res.groups,name:sale_gathering.group_allow_redeemed_product_discounts
@@ -113,14 +187,14 @@ msgstr "Los descuentos no pueden añadirse a los anticipos."
 #: model:ir.model.fields,field_description:sale_gathering.field_sale_order__display_name
 #: model:ir.model.fields,field_description:sale_gathering.field_sale_order_line__display_name
 msgid "Display Name"
-msgstr "Nombre"
+msgstr "Mostrar nombre"
 
 #. module: sale_gathering
 #: model:ir.model.fields,help:sale_gathering.field_sale_order__withdrawn_amount
 msgid ""
-"El monto retirado (o solicitado) se calcula en base a la columna cantidad de "
-"las lineas de ventas, no necesariamente tienen que estar entregadas/"
-"facturadas esas lineas de venta."
+"El monto retirado (o solicitado) se calcula en base a la columna cantidad de"
+" las lineas de ventas, no necesariamente tienen que estar "
+"entregadas/facturadas esas lineas de venta."
 msgstr ""
 "El monto retirado (o solicitado) se calcula en base a la columna cantidad de "
 "las líneas de ventas, no necesariamente tienen que estar entregadas/"
@@ -207,19 +281,24 @@ msgid "Quantity Invoiced"
 msgstr "Cantidad facturada"
 
 #. module: sale_gathering
+#: model:ir.module.module,shortdesc:base.module_sale_gathering
+msgid "Sale Gathering"
+msgstr "Acopio de ventas"
+
+#. module: sale_gathering
 #: model:ir.model,name:sale_gathering.model_sale_advance_payment_inv
 msgid "Sales Advance Payment Invoice"
-msgstr "Pago anticipado para factura de ventas"
+msgstr "Factura de anticipo de ventas"
 
 #. module: sale_gathering
 #: model:ir.model,name:sale_gathering.model_sale_order
 msgid "Sales Order"
-msgstr "Pedido de venta"
+msgstr "Orden de venta"
 
 #. module: sale_gathering
 #: model:ir.model,name:sale_gathering.model_sale_order_line
 msgid "Sales Order Line"
-msgstr "Línea de pedido de venta"
+msgstr "Línea de la orden de venta"
 
 #. module: sale_gathering
 #. odoo-python
@@ -245,12 +324,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/sale_gathering/wizards/sale_advance_payment_inv.py:0
 msgid ""
-"These gathering sales already have their gathering invoice, a second one "
-"cannot be created: %s.\n"
+"These gathering sales already have their gathering invoice, a second one cannot be created: %s.\n"
 "\n"
-"If you do not see it on the order, it belongs to another company: enable "
-"every company in the company selector to review it."
+"If you do not see it on the order, it belongs to another company: enable every company in the company selector to review it."
 msgstr ""
+"Estos acopios ya tienen su factura de acopio y no se puede crear una segunda: %s.\n"
+"\n"
+"Si no se ve en el pedido, es de otra compañía: hay que habilitar todas las compañías en el selector para poder revisarla."
 
 #. module: sale_gathering
 #: model:ir.model.fields,field_description:sale_gathering.field_sale_order__withdrawn_amount
@@ -268,8 +348,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/sale_gathering/models/sale_order_line.py:0
 msgid ""
-"You cannot modify the discount of the gathering lines once the sale has been "
-"confirmed.\n"
+"You cannot modify the discount of the gathering lines once the sale has been"
+" confirmed.\n"
 msgstr ""
 "No puede modificar el descuento de las líneas de acopio una vez confirmada "
 "la venta.\n"
