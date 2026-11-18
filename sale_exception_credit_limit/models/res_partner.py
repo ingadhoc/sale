@@ -73,6 +73,10 @@ class ResPartner(models.Model):
                     # Filter by company hierarchy
                     ("order_id.company_id", "in", hierarchy_companies.ids),
                 ]
+                # An order with a forced invoicing status is already closed for the user, so it must stop
+                # taking credit. sale_ux leaves its amount_to_invoice on 0 for the same reason.
+                if rec.env["sale.order"]._fields.get("force_invoiced_status"):
+                    domain.append(("order_id.force_invoiced_status", "=", False))
                 order_lines = rec.env["sale.order.line"].sudo().search(domain)
 
                 # Sum the amounts from all approved sale orders for order lines that are not yet invoiced
@@ -83,7 +87,12 @@ class ResPartner(models.Model):
                     # while not_invoiced considers all lines regardless of delivery or readiness.
                     not_invoiced = line.product_uom_qty - line.qty_invoiced
                     if rec.env["sale.order.line"]._fields.get("quantity_returned"):
-                        not_invoiced -= line.quantity_returned
+                        # quantity_returned is always positive: apply it in the direction of the line and clamp,
+                        # so a return brings the pending quantity closer to zero but never past it.
+                        if line.product_uom_qty >= 0:
+                            not_invoiced = max(not_invoiced - line.quantity_returned, 0.0)
+                        else:
+                            not_invoiced = min(not_invoiced + line.quantity_returned, 0.0)
                     price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
                     taxes = line.tax_ids.compute_all(
                         price,
