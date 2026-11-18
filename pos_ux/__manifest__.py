@@ -1,6 +1,6 @@
 {
     "name": "Point of Sale UX",
-    "version": "19.0.1.4.0",
+    "version": "19.0.1.4.1",
     "category": "Point of Sale",
     "author": "ADHOC SA",
     "depends": [

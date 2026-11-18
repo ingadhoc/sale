@@ -45,6 +45,14 @@ Point of Sale UX
    badge in the ticket screen indicating whether they were already invoiced,
    so the cashier can tell at a glance which orders are still pending.
 
+10. **Closing difference of bank payment methods in the sale details report**.
+    Standard writes the difference move reference translated to the language of
+    the user that closes the session, but looks it up with a literal in English,
+    so a session closed in any other language reports a zero difference for
+    every bank payment method with "Identify Customer" enabled. This module
+    looks the move up in every installed language, which also fixes the report
+    for sessions closed before installing it.
+
 
 Installation
 ============

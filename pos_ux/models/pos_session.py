@@ -46,3 +46,19 @@ class PosSession(models.Model):
     @api.model
     def _load_pos_data_fields(self, config_id):
         return super()._load_pos_data_fields(config_id) + ["invoice_contingency"]
+
+    def _closing_diff_move_refs(self, payment_method):
+        """Every reference the closing difference move could have been saved under.
+
+        The reference is translated when the move is created, so the language of
+        the user that closed the session is unknown at read time.
+        """
+        self.ensure_one()
+        langs = {code for code, dummy in self.env["res.lang"].get_installed()}
+        langs.add("en_US")
+        return sorted(
+            {
+                self.with_context(lang=lang)._get_diff_account_move_ref(payment_method.with_context(lang=lang))
+                for lang in langs
+            }
+        )
