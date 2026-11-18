@@ -1,0 +1,2 @@
+id,name,model_id,group_id/id,operation,domain
+access_l10n_ar_tax_rule_portal_distributor,access_l10n_ar_tax_rule_portal_distributor,account.fiscal.position.l10n_ar_tax,portal_sale_distributor.group_portal_backend_distributor,r,
