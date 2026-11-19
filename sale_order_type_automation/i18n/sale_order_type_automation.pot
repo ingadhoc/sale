@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-28 14:31+0000\n"
-"PO-Revision-Date: 2026-10-28 14:31+0000\n"
+"POT-Creation-Date: 2026-11-27 13:22+0000\n"
+"PO-Revision-Date: 2026-11-27 13:22+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -142,7 +142,7 @@ msgstr ""
 
 #. module: sale_order_type_automation
 #: model_terms:ir.ui.view,arch_db:sale_order_type_automation.sot_sale_order_type_form_view
-msgid "Automations"
+msgid "Automation"
 msgstr ""
 
 #. module: sale_order_type_automation
@@ -290,7 +290,13 @@ msgid ""
 "*None: no invoice is created\n"
 "*Create Invoice: create invoice for 'Invoiceable lines' (regarding product configuration and delivery status)\n"
 "*Validate Invoice: create invoice and validate it\n"
-"*Try to Validate Invoice: create invoice and try to validate it, if there is a validation error, do not raise it, just log it on SO and Invoice chatter (invoice will be in draft state till someone validate it. This option is not recommended because it is less intuiteve for user. Should only be use if it is common that you are facing errors on invoice validation."
+"*Try to Validate Invoice: create invoice and try to validate it, if there is a validation error, do not raise it, just log it on SO and Invoice chatter (invoice will be in draft state till someone validate it. This option is not recommended because it is less intuiteve for user. Should only be use if it is common that you are facing errors on invoice validation.\n"
+"With an automation, Company, Invoice Company and Invoice Journal become required."
+msgstr ""
+
+#. module: sale_order_type_automation
+#: model_terms:ir.ui.view,arch_db:sale_order_type_automation.sot_sale_order_type_form_view
+msgid "Payment"
 msgstr ""
 
 #. module: sale_order_type_automation
@@ -329,6 +335,11 @@ msgid ""
 "Pickings are generated automatically upon sale confirmation.\n"
 "If you set \"Validate\", then they will be also confirmed automatically.\n"
 "If you set \"Validate No Force\", then Validate without forcing availabilty"
+msgstr ""
+
+#. module: sale_order_type_automation
+#: model_terms:ir.ui.view,arch_db:sale_order_type_automation.sot_sale_order_type_form_view
+msgid "Required with «Validate Payment»"
 msgstr ""
 
 #. module: sale_order_type_automation
@@ -478,6 +489,11 @@ msgstr ""
 msgid ""
 "We tried to validate this invoice on the background but got an error, logged"
 " on %(orders)s."
+msgstr ""
+
+#. module: sale_order_type_automation
+#: model_terms:ir.ui.view,arch_db:sale_order_type_automation.sot_sale_order_type_form_view
+msgid "Whether the payment is registered automatically and in which journal."
 msgstr ""
 
 #. module: sale_order_type_automation
