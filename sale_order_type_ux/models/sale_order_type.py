@@ -60,6 +60,10 @@ class SaleOrderTypology(models.Model):
     journal_id = fields.Many2one(
         "account.journal", string="Invoice Journal", domain="journal_domain", check_company=False
     )
+    company_not_active = fields.Boolean(
+        compute="_compute_company_not_active",
+        help="The company or the invoice company of the type is not active in the company selector.",
+    )
 
     @api.depends("warehouse_id")
     def _compute_picking_type_id(self):
@@ -83,6 +87,12 @@ class SaleOrderTypology(models.Model):
     def _compute_invoice_company_id(self):
         for rec in self:
             rec.invoice_company_id = rec.company_id
+
+    @api.depends("company_id", "invoice_company_id")
+    @api.depends_context("allowed_company_ids")
+    def _compute_company_not_active(self):
+        for rec in self:
+            rec.company_not_active = bool((rec.company_id | rec.invoice_company_id) - self.env.companies)
 
     @api.depends("invoice_company_id")
     def _compute_journal_domain(self):

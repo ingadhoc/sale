@@ -4,39 +4,66 @@
         <field name="model">sale.order.type</field>
         <field name="inherit_id" ref="sale_order_type.sot_sale_order_type_form_view"/>
         <field name="arch" type="xml">
-            <xpath expr="//group" position="attributes">
-                <attribute name="string">Predefined fields</attribute>
-            </xpath>
-            <xpath expr="//field[@name='description']" position="attributes">
-                <attribute name="placeholder">Notes</attribute>
-                <attribute name="colspan">2</attribute>
-            </xpath>
-            <xpath expr="//field[@name='company_id'][2]" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </xpath>
-            <xpath expr="//field[@name='warehouse_id'][2]" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </xpath>
-            <xpath expr="//field[@name='pricelist_id']" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </xpath>
-            <field name="journal_id" position="before">
-                <field name="invoice_company_id" options="{'no_create': True}"/>
+            <field name="name" position="attributes">
+                <attribute name="placeholder">e.g. Counter sale</attribute>
             </field>
-            <xpath expr="//field[@name='sequence_id']" position="before">
-                <field name="company_id" options="{'no_create': True}"/>
-                <field name="warehouse_id" options="{'no_create': True}"/>
-                <field name="picking_type_id" options="{'no_create': True}" invisible="not warehouse_id"/>
-                <field name="pricelist_id" options="{'no_create': True}"/>
+            <xpath expr="//sheet/group[group]" position="replace">
+                <group name="grp_row_general">
+                    <group name="grp_general" string="General">
+                        <div class="text-muted" colspan="2">Company, team and numbering of the order.</div>
+                        <label for="company_id"/>
+                        <div>
+                            <field name="company_id" options="{'no_create': True}"/>
+                            <div class="text-muted small">It goes first: it defines which warehouses, journals, pricelists and teams can be chosen.</div>
+                        </div>
+                        <field name="team_id"/>
+                        <field name="user_id"/>
+                        <field name="sequence_id"/>
+                        <field name="quotation_validity_days"/>
+                    </group>
+                    <group name="grp_commercial" string="Commercial terms">
+                        <div class="text-muted" colspan="2">Price and terms offered to the customer.</div>
+                        <field name="pricelist_id" options="{'no_create': True}"/>
+                        <field name="payment_term_id"/>
+                        <field name="incoterm_id"/>
+                    </group>
+                </group>
+                <group name="grp_row_delivery">
+                    <group name="grp_delivery" string="Delivery">
+                        <div class="text-muted" colspan="2">From where and how the sold goods are delivered.</div>
+                        <field name="warehouse_id" options="{'no_create': True}"/>
+                        <label for="picking_type_id" invisible="not warehouse_id"/>
+                        <div invisible="not warehouse_id">
+                            <field name="picking_type_id" options="{'no_create': True}"/>
+                            <div class="text-muted small">Only deliveries of this warehouse. If you change the warehouse, it is cleared.</div>
+                        </div>
+                        <field name="picking_policy"/>
+                        <field name="route_ids" groups="stock.group_adv_location"/>
+                    </group>
+                    <group name="grp_invoicing" string="Invoicing">
+                        <div class="text-muted" colspan="2">Who invoices, with which journal, with which fiscal data and when.</div>
+                        <label for="invoice_company_id"/>
+                        <div>
+                            <field name="invoice_company_id" options="{'no_create': True}"/>
+                            <div class="text-muted small">It takes the Company; you can choose a child company.</div>
+                        </div>
+                        <label for="journal_id"/>
+                        <div>
+                            <field name="journal_id" readonly="company_not_active"/>
+                            <div class="text-muted small">Only sale journals of the invoice company.</div>
+                        </div>
+                        <div class="alert alert-warning mb-0" role="alert" colspan="2" invisible="not company_not_active">
+                            The company of this type is not active in your company selector, so its journals cannot be loaded. Activate it in the selector (top right) to choose one.
+                        </div>
+                        <field name="fiscal_position_id" options="{'no_create': True}"/>
+                        <field name="analytic_distribution" widget="analytic_distribution" groups="analytic.group_analytic_accounting"/>
+                    </group>
+                </group>
             </xpath>
-
-             <field name="payment_term_id" position="after">
-                <field name="fiscal_position_id" options="{'no_create': True}"/>
-            </field>
-
-            <group position="before">
-                <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible="active"/>
-            </group>
+            <xpath expr="//sheet/group[field[@name='description']]" position="replace">
+                <separator string="Notes"/>
+                <field name="description" nolabel="1" placeholder="Internal notes about this sale order type"/>
+            </xpath>
         </field>
     </record>
 
