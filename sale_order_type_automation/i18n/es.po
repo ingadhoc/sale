@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-28 14:31+0000\n"
-"PO-Revision-Date: 2026-10-28 14:31+0000\n"
+"POT-Creation-Date: 2026-11-19 14:09+0000\n"
+"PO-Revision-Date: 2026-11-19 14:09+0000\n"
 "Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/sale-19-0-sale_order_type_automation/es/>\n"
 "Language: es\n"
@@ -147,8 +147,13 @@ msgstr "Configuración automática"
 
 #. module: sale_order_type_automation
 #: model_terms:ir.ui.view,arch_db:sale_order_type_automation.sot_sale_order_type_form_view
-msgid "Automations"
-msgstr "Automatizaciones"
+msgid "Automation"
+msgstr "Automatización"
+
+#. module: sale_order_type_automation
+#: model_terms:ir.ui.view,arch_db:sale_order_type_automation.sot_sale_order_type_form_view
+msgid "Automation and controls"
+msgstr "Automatización y controles"
 
 #. module: sale_order_type_automation
 #: model:ir.model.fields,help:sale_order_type_automation.field_sale_order_type__journal_id
@@ -317,6 +322,11 @@ msgstr ""
 "*Intente validar la factura: cree la factura e intente validarla; si hay un error de validación, no lo genere, simplemente regístrelo en OV y en la conversación de facturas, la factura estará en estado de borrador hasta que alguien la valide. Esta opción es No se recomienda porque es menos intuitivo para el usuario. Solo debe usarse si es común que se produzcan errores en la validación de facturas"
 
 #. module: sale_order_type_automation
+#: model_terms:ir.ui.view,arch_db:sale_order_type_automation.sot_sale_order_type_form_view
+msgid "Payment"
+msgstr "Cobro"
+
+#. module: sale_order_type_automation
 #: model:ir.model.fields,field_description:sale_order_type_automation.field_sale_order_type__payment_atomation
 msgid "Payment Atomation"
 msgstr "Automatización de pagos"
@@ -356,6 +366,11 @@ msgstr ""
 "Las entregas se generan automáticamente tras la confirmación de la venta.\n"
 "Si configura \"Validar\", también se confirmarán automáticamente.\n"
 "Si configura \"Validar sin forzar\", entonces Validar sin forzar la disponibilidad"
+
+#. module: sale_order_type_automation
+#: model_terms:ir.ui.view,arch_db:sale_order_type_automation.sot_sale_order_type_form_view
+msgid "Required with «Validate Payment»."
+msgstr "Obligatorio con «Validar pago»."
 
 #. module: sale_order_type_automation
 #: model:ir.module.module,shortdesc:base.module_sale_order_type_automation
@@ -532,6 +547,20 @@ msgid ""
 msgstr ""
 "Intentamos validar esta factura en segundo plano, pero se produjo un error, "
 "registrado en %(orders)s."
+
+#. module: sale_order_type_automation
+#: model_terms:ir.ui.view,arch_db:sale_order_type_automation.sot_sale_order_type_form_view
+msgid "Whether the payment is registered automatically and in which journal."
+msgstr "Si el pago se registra solo y en qué diario."
+
+#. module: sale_order_type_automation
+#: model_terms:ir.ui.view,arch_db:sale_order_type_automation.sot_sale_order_type_form_view
+msgid ""
+"With automation, Company, Invoice Company and Invoice Journal become "
+"required."
+msgstr ""
+"Con automatización, Empresa, Empresa de facturación y Diario de facturación "
+"pasan a ser obligatorios."
 
 #. module: sale_order_type_automation
 #. odoo-python

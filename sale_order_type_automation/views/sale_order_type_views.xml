@@ -5,25 +5,44 @@
         <field name="model">sale.order.type</field>
         <field name="inherit_id" ref="sale_order_type_ux.sale_order_type_form_view"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='company_id'][@options]" position="attributes">
+            <field name="company_id" position="attributes">
                 <attribute name="required">invoicing_atomation != 'none'</attribute>
-            </xpath>
-            <xpath expr="//field[@name='invoice_company_id']" position="attributes">
+            </field>
+            <field name="invoice_company_id" position="attributes">
                 <attribute name="required">invoicing_atomation != 'none'</attribute>
-            </xpath>
-            <xpath expr="//field[@name='journal_id']" position="attributes">
+            </field>
+            <field name="journal_id" position="attributes">
                 <attribute name="required">invoicing_atomation != 'none'</attribute>
-            </xpath>
-            <group position="inside">
-                <group string="Automations">
-                    <field name="picking_atomation"/>
+            </field>
+            <group name="grp_delivery" position="inside">
+                <separator name="grp_delivery_automation" string="Automation and controls" colspan="2"/>
+                <field name="picking_atomation"/>
+            </group>
+            <group name="grp_invoicing" position="inside">
+                <separator name="grp_invoicing_automation" string="Automation" colspan="2"/>
+                <label for="invoicing_atomation"/>
+                <div>
                     <field name="invoicing_atomation"/>
-                    <field name="background_post" invisible="invoicing_atomation != 'validate_invoice'"/>
-                    <field name="invoice_validate_domain" widget="domain" options="{'model': 'account.move', 'allow_expressions': True, 'no_create': True, 'in_dialog': False, 'foldable': True}" invisible="invoicing_atomation != 'validate_invoice' or background_post"/>
-                    <field name="sale_order_filter_domain" widget="domain" options="{'model': 'sale.order', 'allow_expressions': True, 'no_create': True, 'in_dialog': False, 'foldable': True}" invisible="invoicing_atomation != 'validate_invoice' or background_post"/>
-                    <field name="payment_atomation"/>
-                    <field name="payment_journal_id" required="payment_atomation != 'none'" options="{'no_create': True}"/>
-                    <field name="set_done_on_confirmation" invisible="auto_done_setting"/>
+                    <div class="text-muted small" invisible="invoicing_atomation == 'none'">With automation, Company, Invoice Company and Invoice Journal become required.</div>
+                </div>
+                <field name="background_post" widget="boolean_toggle" invisible="invoicing_atomation != 'validate_invoice'"/>
+                <field name="invoice_validate_domain" widget="domain" options="{'model': 'account.move', 'allow_expressions': True, 'no_create': True, 'in_dialog': False, 'foldable': True}" invisible="invoicing_atomation != 'validate_invoice' or background_post"/>
+                <field name="sale_order_filter_domain" widget="domain" options="{'model': 'sale.order', 'allow_expressions': True, 'no_create': True, 'in_dialog': False, 'foldable': True}" invisible="invoicing_atomation != 'validate_invoice' or background_post"/>
+            </group>
+            <group name="grp_row_delivery" position="after">
+                <group name="grp_row_payment">
+                    <group name="grp_payment" string="Payment">
+                        <div class="text-muted" colspan="2">Whether the payment is registered automatically and in which journal.</div>
+                        <separator name="grp_payment_automation" string="Automation" colspan="2"/>
+                        <field name="payment_atomation"/>
+                        <label for="payment_journal_id"/>
+                        <div>
+                            <field name="payment_journal_id" required="payment_atomation != 'none'" options="{'no_create': True}"/>
+                            <div class="text-muted small">Required with «Validate Payment».</div>
+                        </div>
+                        <field name="set_done_on_confirmation" widget="boolean_toggle" invisible="auto_done_setting"/>
+                    </group>
+                    <group/>
                 </group>
             </group>
         </field>
