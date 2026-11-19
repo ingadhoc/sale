@@ -39,7 +39,8 @@ class SaleOrderType(models.Model):
         "Invoice chatter (invoice will be in draft state till someone validate"
         " it. This option is not recommended because it is less intuiteve for "
         "user. Should only be use if it is common that you are facing errors "
-        "on invoice validation.",
+        "on invoice validation.\n"
+        "With an automation, Company, Invoice Company and Invoice Journal become required.",
     )
     background_post = fields.Boolean(
         string="Validate Invoice in Background",
