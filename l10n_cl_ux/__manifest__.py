@@ -18,7 +18,7 @@
 #
 ##############################################################################
 {
-    "name": "Sale Require Purchase Order Number - Chile",
+    "name": "Chilean Localization UX",
     "version": "19.0.1.0.0",
     "category": "Sales",
     "summary": "Send the customer purchase order number to SII as an ODC reference",

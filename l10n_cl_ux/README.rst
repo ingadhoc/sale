@@ -10,9 +10,9 @@
    :target: https://www.gnu.org/licenses/agpl
    :alt: License: AGPL-3
 
-===========================================
-Sale Require Purchase Order Number - Chile
-===========================================
+=======================
+Chilean Localization UX
+=======================
 
 In Chile the customer purchase order travels to SII as an ODC cross reference
 (``l10n_cl.edi.reference``) of the delivery guide and of the invoice, and is printed

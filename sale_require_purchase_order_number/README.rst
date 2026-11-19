@@ -31,7 +31,7 @@ of the box depends on the country:
   the invoice and on the delivery slip PDF.
 * **Uruguay** (``l10n_uy_ux``): sent to DGI in the ``CompraID`` tag of the CFE,
   replacing the value taken from ``ref``.
-* **Chile** (``sale_require_purchase_order_number_l10n_cl``, installed on its own
+* **Chile** (``l10n_cl_ux``, installed on its own
   with ``l10n_cl_edi_stock``): sent to SII as an ODC cross reference of the invoice
   and of the delivery guide, and printed on both PDFs in the references table.
   Without it that cross reference is built from "Your Reference"

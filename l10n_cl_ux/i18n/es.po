@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* sale_require_purchase_order_number_l10n_cl
+# 	* l10n_cl_ux
 #
 msgid ""
 msgstr ""
@@ -12,8 +12,8 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: sale_require_purchase_order_number_l10n_cl
+#. module: l10n_cl_ux
 #. odoo-python
-#: code:addons/sale_require_purchase_order_number_l10n_cl/models/sale_order.py:0
+#: code:addons/l10n_cl_ux/models/sale_order.py:0
 msgid "Cross Reference To Purchase Order"
 msgstr "Referencia Cruzada a la Orden de Compra"
