@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- The header partner replaces the company name, address and tax id on
+         every layout through this single template. -->
+    <template id="company_address_list" inherit_id="web.company_address_list">
+        <xpath expr="//ul[@name='company_address_list']" position="replace">
+            <t t-if="report_header_sale_type and report_header_sale_type.report_partner_id">
+                <ul class="list-unstyled" name="company_address_list">
+                    <li>
+                        <span t-field="report_header_sale_type.report_partner_id" t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": true}'/>
+                    </li>
+                    <li t-if="forced_vat or report_header_sale_type.report_partner_id.vat">
+                        <span t-field="company.country_id.vat_label">Tax ID</span>:
+                        <span t-out="forced_vat or report_header_sale_type.report_partner_id.vat"/>
+                    </li>
+                </ul>
+            </t>
+            <t t-else="">$0</t>
+        </xpath>
+    </template>
+
+    <!-- The logo has no shared template upstream, so each layout is patched. -->
+
+    <template id="external_layout_standard" inherit_id="web.external_layout_standard">
+        <xpath expr="//img[@t-att-src]" position="attributes">
+            <attribute name="t-if">report_header_logo or company.logo</attribute>
+            <attribute name="t-att-src">image_data_uri(report_header_logo or company.logo)</attribute>
+        </xpath>
+    </template>
+
+    <template id="external_layout_wave" inherit_id="web.external_layout_wave">
+        <xpath expr="//img[@t-att-src]" position="attributes">
+            <attribute name="t-if">report_header_logo or company.logo</attribute>
+            <attribute name="t-att-src">image_data_uri(report_header_logo or company.logo)</attribute>
+        </xpath>
+    </template>
+
+    <template id="external_layout_bubble" inherit_id="web.external_layout_bubble">
+        <xpath expr="//img[@t-att-src]" position="attributes">
+            <attribute name="t-if">report_header_logo or company.logo</attribute>
+            <attribute name="t-att-src">image_data_uri(report_header_logo or company.logo)</attribute>
+        </xpath>
+    </template>
+
+    <template id="external_layout_folder" inherit_id="web.external_layout_folder">
+        <xpath expr="//img[@t-att-src]" position="attributes">
+            <attribute name="t-if">report_header_logo or company.logo</attribute>
+            <attribute name="t-att-src">image_data_uri(report_header_logo or company.logo)</attribute>
+        </xpath>
+    </template>
+
+    <template id="external_layout_center" inherit_id="web.external_layout_center">
+        <xpath expr="//img[@t-att-src]" position="attributes">
+            <attribute name="t-if">report_header_logo or company.logo</attribute>
+            <attribute name="t-att-src">image_data_uri(report_header_logo or company.logo)</attribute>
+        </xpath>
+    </template>
+
+    <template id="external_layout_dual" inherit_id="web.external_layout_dual">
+        <xpath expr="//img[@t-att-src]" position="attributes">
+            <attribute name="t-if">report_header_logo or company.logo</attribute>
+            <attribute name="t-att-src">image_data_uri(report_header_logo or company.logo)</attribute>
+        </xpath>
+    </template>
+
+    <template id="external_layout_lines" inherit_id="web.external_layout_lines">
+        <xpath expr="//img[@t-att-src]" position="attributes">
+            <attribute name="t-if">report_header_logo or company.logo</attribute>
+            <attribute name="t-att-src">image_data_uri(report_header_logo or company.logo)</attribute>
+        </xpath>
+    </template>
+
+    <template id="external_layout_compact" inherit_id="web.external_layout_compact">
+        <xpath expr="//img[@t-att-src]" position="attributes">
+            <attribute name="t-if">report_header_logo or company.logo</attribute>
+            <attribute name="t-att-src">image_data_uri(report_header_logo or company.logo)</attribute>
+        </xpath>
+    </template>
+
+</odoo>
