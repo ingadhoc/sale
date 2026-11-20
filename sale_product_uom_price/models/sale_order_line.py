@@ -169,6 +169,22 @@ class SaleOrderLine(models.Model):
         for line in self:
             line.price_unit = line._rounded_price_unit()
 
+    def _prepare_invoice_line(self, **optional_values):
+        """Invoice in the unit of the product, so the invoice states the same price per product
+        unit as the order and the two documents add up to the same amounts."""
+        vals = super()._prepare_invoice_line(**optional_values)
+        product_uom = not self.is_downpayment and self._price_in_product_uom() and self._get_report_product_uom()
+        if not product_uom or vals.get("display_type") != "product":
+            return vals
+        vals.update(
+            {
+                "product_uom_id": product_uom.id,
+                "quantity": self.product_uom_id._compute_quantity(vals["quantity"], product_uom, round=False),
+                "price_unit": self._get_product_uom_price(product_uom),
+            }
+        )
+        return vals
+
     def _get_report_product_uom_values(self):
         """Quantity and unit price in the product UoM for customer documents.
 

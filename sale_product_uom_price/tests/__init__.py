@@ -4,3 +4,4 @@
 ##############################################################################
 from . import test_report_product_uom
 from . import test_price_unit_product_uom
+from . import test_invoice_product_uom
