@@ -37,15 +37,16 @@ class TestReportProductUom(ProductUomPriceCommon):
         self.assertAlmostEqual(values["qty"] * values["price_unit"], order.order_line.price_subtotal)
 
     def test_report_shows_product_unit_and_closes_with_subtotal(self):
-        """67.83 per 15 kg box is 4.522 per kg: 75 kg x 4.522 = 339.15, the line subtotal."""
+        """67.83 per 15 kg box is 4.52 per kg once rounded, and the price of the line follows it:
+        75 kg x 4.52 = 339.00, the line subtotal."""
         self.IrConfig.set_param(self.setting, "True")
         order = self._create_order(self.uom_box_15, 5.0, 67.83)
 
         html = self._render_pdf_html(order)
 
         self.assertIn("75.00", html)
-        self.assertIn("4.522", html)
-        self.assertIn("339.15", html)
+        self.assertIn("4.52", html)
+        self.assertIn("339.00", html)
         self.assertNotIn("67.83", html)
 
     def test_report_with_discount(self):
