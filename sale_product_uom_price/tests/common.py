@@ -39,13 +39,18 @@ class ProductUomPriceCommon(TransactionCase):
         cls.uom_box_15 = cls.env["uom.uom"].create(
             {"name": "Box 15 kg", "relative_factor": 15.0, "relative_uom_id": cls.uom_kg.id}
         )
+        # A packaging that does not divide a price into whole cents, as the ones of a customer
+        # buying welding consumables by the drum
+        cls.uom_box_13_6 = cls.env["uom.uom"].create(
+            {"name": "Box 13.6 kg", "relative_factor": 13.6, "relative_uom_id": cls.uom_kg.id}
+        )
         cls.product_kg = cls.env["product.product"].create(
             {
                 "name": "Welding wire",
                 "type": "consu",
                 "list_price": 7.27,
                 "uom_id": cls.uom_kg.id,
-                "uom_ids": [Command.set([cls.uom_box_20.id, cls.uom_box_15.id])],
+                "uom_ids": [Command.set([cls.uom_box_20.id, cls.uom_box_15.id, cls.uom_box_13_6.id])],
                 "taxes_id": [Command.clear()],
             }
         )
@@ -56,23 +61,38 @@ class ProductUomPriceCommon(TransactionCase):
         cls.partner = cls.env["res.partner"].create({"name": "Product UoM Price Customer", "lang": "en_US"})
 
     @classmethod
-    def _create_order(cls, uom, qty, price_unit, discount=0.0):
+    def _add_pricelist_rule(cls, price_round):
+        """A formula rule that rounds the price, which is the usual way of keeping a price list
+        on whole cents. The rounding lands on the price of the packaging, which is the unit of
+        the line."""
+        return cls.env["product.pricelist.item"].create(
+            {
+                "pricelist_id": cls.pricelist.id,
+                "applied_on": "0_product_variant",
+                "product_id": cls.product_kg.id,
+                "compute_price": "formula",
+                "base": "list_price",
+                "price_round": price_round,
+            }
+        )
+
+    @classmethod
+    def _create_order(cls, uom, qty, price_unit=None, discount=0.0):
+        """`price_unit` of None leaves the price to the pricelist."""
+        line_vals = {
+            "product_id": cls.product_kg.id,
+            "product_uom_id": uom.id,
+            "product_uom_qty": qty,
+            "discount": discount,
+            "tax_ids": [Command.clear()],
+        }
+        if price_unit is not None:
+            line_vals["price_unit"] = price_unit
         return cls.env["sale.order"].create(
             {
                 "partner_id": cls.partner.id,
                 "company_id": cls.company.id,
                 "pricelist_id": cls.pricelist.id,
-                "order_line": [
-                    Command.create(
-                        {
-                            "product_id": cls.product_kg.id,
-                            "product_uom_id": uom.id,
-                            "product_uom_qty": qty,
-                            "price_unit": price_unit,
-                            "discount": discount,
-                            "tax_ids": [Command.clear()],
-                        }
-                    )
-                ],
+                "order_line": [Command.create(line_vals)],
             }
         )

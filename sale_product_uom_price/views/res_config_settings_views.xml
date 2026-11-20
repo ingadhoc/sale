@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <xpath expr="//block[@name='quotation_order_setting_container']" position="inside">
                 <setting id="report_in_product_uom"
-                         help="On the quotation PDF and the online quotation, show quantity and unit price of lines sold in another unit (e.g. a packaging) in the product unit.">
+                         help="Show quantity and unit price of lines sold in another unit (e.g. a packaging) in the product unit: on the quotation PDF, on the online quotation, and on the invoices of those lines.">
                     <field name="report_in_product_uom"/>
                 </setting>
             </xpath>
