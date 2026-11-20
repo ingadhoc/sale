@@ -3,7 +3,7 @@
 # directory
 ##############################################################################
 from odoo import api, fields, models
-from odoo.tools import float_round
+from odoo.tools import float_compare, float_round
 
 PRICE_IN_PRODUCT_UOM_PARAM = "sale_product_uom_price.report_in_product_uom"
 SKIP_ROUNDING_CONTEXT = "skip_price_unit_product_uom_rounding"
@@ -168,6 +168,38 @@ class SaleOrderLine(models.Model):
         """So a price typed by hand lands on the rounding while the salesperson is on the line."""
         for line in self:
             line.price_unit = line._rounded_price_unit()
+
+    def _invoice_qty_in_product_uom(self, qty, product_uom):
+        """Quantity in the unit of the product, when it converts into the decimals an invoice
+        line states a quantity with. False when it does not: rounded there, the invoice would no
+        longer add up to the order and the order would keep a fraction left to invoice."""
+        self.ensure_one()
+        product_qty = self.product_uom_id._compute_quantity(qty, product_uom, round=False)
+        digits = self.env["decimal.precision"].precision_get("Product Unit")
+        if float_compare(product_qty, float_round(product_qty, precision_digits=digits), precision_digits=digits + 4):
+            return False
+        return product_qty
+
+    def _prepare_invoice_line(self, **optional_values):
+        """Invoice in the unit of the product, so the invoice states the same price per product
+        unit as the order and the two documents add up to the same amounts."""
+        vals = super()._prepare_invoice_line(**optional_values)
+        product_uom = not self.is_downpayment and self._price_in_product_uom() and self._get_report_product_uom()
+        if not product_uom or vals.get("display_type") != "product":
+            return vals
+        quantity = self._invoice_qty_in_product_uom(vals["quantity"], product_uom)
+        if quantity is False:
+            return vals
+        vals.update(
+            {
+                "product_uom_id": product_uom.id,
+                "quantity": quantity,
+                # From the price of the line and not from the report price: the invoice line
+                # carries the taxes of the order line and would charge them a second time
+                "price_unit": self.product_uom_id._compute_price(self.price_unit, product_uom),
+            }
+        )
+        return vals
 
     def _get_report_product_uom_values(self):
         """Quantity and unit price in the product UoM for customer documents.

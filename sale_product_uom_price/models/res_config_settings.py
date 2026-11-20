@@ -9,8 +9,8 @@ class ResConfigSettings(models.TransientModel):
     _inherit = "res.config.settings"
 
     report_in_product_uom = fields.Boolean(
-        string="Show Product Unit on Quotations",
+        string="Show Product Unit on Quotations & Invoices",
         config_parameter="sale_product_uom_price.report_in_product_uom",
         help="On the quotation PDF and the online quotation, lines sold in another unit (e.g. a packaging) "
-        "show quantity and unit price in the product unit.",
+        "show quantity and unit price in the product unit, and their invoices are issued in that unit.",
     )

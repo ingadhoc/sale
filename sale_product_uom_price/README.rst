@@ -34,8 +34,8 @@ Configuration
 To configure this module, you need to:
 
 #. Nothing to configure for the column on the order lines.
-#. For the printed quotation, enable "Show Product Unit on Quotations" in Sales / Configuration /
-   Settings.
+#. For the printed quotation and the invoices, enable "Show Product Unit on Quotations &
+   Invoices" in Sales / Configuration / Settings.
 
 Usage
 =====
@@ -54,6 +54,12 @@ Usage
    the printed document multiply into the subtotal of the line. A price list that rounds its
    prices rounds the price of the packaging, and the division to the product unit used to bring
    the extra decimals back.
+#. With the setting enabled those lines are also invoiced in the unit of the product: the invoice
+   line carries the quantity and the price per product unit, so the invoice states the same price
+   the quotation printed and both documents add up to the same amounts. The order goes on counting
+   what it has invoiced in its own unit. A quantity that does not convert into the decimals an
+   invoice line states a quantity with, such as 7 bags of 1/3 kg, is invoiced in the unit of the
+   line instead: rounded there, the invoice would no longer add up to the order.
 #. Without the setting the unit price of the line rules, and the price per product unit carries
    four decimals so that quantity x unit price still matches the subtotal.
 
