@@ -49,9 +49,13 @@ Usage
    changing the quantity does not bring back the price of the pricelist.
 #. With the setting enabled, the quotation PDF and the online quotation show those lines in the
    unit of the product: quantity and unit price in kg, with the line unit as a secondary detail.
-   The total of the line does not change.
-#. Prices carry four decimals, as the report does, so quantity x unit price matches the subtotal
-   of the line.
+#. With the setting enabled that price is also the one that rules: it is rounded to the decimals
+   of "Product Price" and the unit price of the line follows it, so the quantity and the price of
+   the printed document multiply into the subtotal of the line. A price list that rounds its
+   prices rounds the price of the packaging, and the division to the product unit used to bring
+   the extra decimals back.
+#. Without the setting the unit price of the line rules, and the price per product unit carries
+   four decimals so that quantity x unit price still matches the subtotal.
 
 For a localization that prints the price with taxes, implement
 ``_get_report_price_unit()`` on ``sale.order.line``: the inverse used when the column is edited is
