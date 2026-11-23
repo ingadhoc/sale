@@ -1,0 +1,36 @@
+import { Component } from "@odoo/owl";
+import { mapsUrl } from "./utils";
+
+export class PartnerDetail extends Component {
+    static template = "sale_offline_app.PartnerDetail";
+    static props = { partner: Object };
+
+    get mapsUrl() {
+        const { partner_latitude: lat, partner_longitude: lng } = this.props.partner;
+        if (!lat && !lng) {
+            return false;
+        }
+        return mapsUrl(`${lat},${lng}`);
+    }
+
+    get phoneUrl() {
+        const phone = (this.props.partner.phone || "").replace(/[^\d+]/g, "");
+        return phone && `tel:${phone}`;
+    }
+
+    get rows() {
+        const p = this.props.partner;
+        return [
+            ["Referencia", p.ref],
+            ["CUIT / Documento", p.vat],
+            ["Dirección", [p.street, p.street2].filter(Boolean).join(", ")],
+            ["Ciudad", [p.zip, p.city].filter(Boolean).join(" ")],
+            ["Provincia", p.state_id],
+            ["País", p.country_id],
+            ["Teléfono", p.phone],
+            ["Email", p.email],
+            ["Lista de precios", p.property_product_pricelist],
+            ["Posición fiscal", p.fiscal_position_name],
+        ].filter(([, value]) => value);
+    }
+}
