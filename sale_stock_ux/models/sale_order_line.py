@@ -102,15 +102,17 @@ class SaleOrderLine(models.Model):
         super()._compute_qty_delivered()
         for line in self:
             if line.qty_delivered_method == "stock_move":
-                outgoing_moves, incoming_moves = line._get_outgoing_incoming_moves()
-                for move in outgoing_moves.filtered(lambda m: m.is_exchange_move and m.state == "done"):
-                    line.qty_delivered -= move.product_uom._compute_quantity(
-                        move.quantity, line.product_uom, rounding_method="HALF-UP"
-                    )
-                for move in incoming_moves.filtered(lambda m: m.is_exchange_move and m.state == "done"):
-                    line.qty_delivered += move.product_uom._compute_quantity(
-                        move.quantity, line.product_uom, rounding_method="HALF-UP"
-                    )
+                all_moves = line.move_ids.filtered(
+                    lambda m: m.state == "done" and not m.scrapped and m.is_exchange_move
+                )
+                for move in all_moves:
+                    if move.location_id._is_outgoing():
+                        # Exchange return (customer returns items, to_refund=False):
+                        # core excluded it from incoming_moves; subtract it here
+                        # because stock physically came back.
+                        line.qty_delivered -= move.product_uom._compute_quantity(
+                            move.quantity, line.product_uom, rounding_method="HALF-UP"
+                        )
 
     @api.depends("order_id.state", "qty_delivered", "product_uom_qty", "order_id.force_delivery_status")
     def _compute_delivery_status(self):
