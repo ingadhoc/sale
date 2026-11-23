@@ -58,6 +58,13 @@
                 <setting id="group_delivery_date" help="Shows the delivery date field in the budget report and in the online budget." title="Shows the delivery date field in the budget report and in the online budget.">
                     <field name="group_delivery_date"/>
                 </setting>
+                <setting id="group_lost_qty"
+                         help="Adds a 'Sold' checkbox, an 'Unsold Quantity' column and its reason on quotation lines, to record what was quoted and not sold. Internal information: it is not shown on the printed quotation nor on the portal.">
+                    <field name="group_lost_qty"/>
+                    <div class="mt8" invisible="not group_lost_qty">
+                        <button name="%(sale_ux.action_sale_order_line_lost_reason)d" type="action" string="Unsold Reasons" class="btn-link" icon="oi-arrow-right"/>
+                    </div>
+                </setting>
             </xpath>
         </field>
     </record>

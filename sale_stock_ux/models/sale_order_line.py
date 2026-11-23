@@ -134,6 +134,17 @@ class SaleOrderLine(models.Model):
                 delivery_status = "no"
             line.delivery_status = delivery_status
 
+    def action_open_cancel_remaining(self):
+        """Open the cancel remaining wizard restricted to these lines, to ask for the unsold reason."""
+        return {
+            "type": "ir.actions.act_window",
+            "name": _("Cancel remaining quantities"),
+            "res_model": "sale.order.cancel.remaining",
+            "view_mode": "form",
+            "target": "new",
+            "context": {**self.env.context, "default_sale_order_line_ids": [(6, 0, self.ids)]},
+        }
+
     def button_cancel_remaining(self):
         # la cancelación de kits no está bien resuelta ya que odoo solo computa
         # la cantidad entregada cuando todo el kit se entregó. Cuestión que,
@@ -145,10 +156,14 @@ class SaleOrderLine(models.Model):
             orders_to_relock.with_context(tracking_disable=True).write({"locked": False})
 
         pack_enable = "pack_ok" in self.env["product.template"]._fields
+        lost_reason_id = self.env.context.get("cancel_lost_reason_id")
+        precision = self.env["decimal.precision"].precision_get("Product Unit of Measure")
         for rec in self.filtered("product_id"):
             # For product pack compatibility to cancel all of componept in case the product parent is cancel
             if pack_enable and rec.product_id.pack_ok and rec.pack_type == "detailed" and rec.pack_child_line_ids:
-                rec.pack_child_line_ids.with_context(cancel_from_order=True).button_cancel_remaining()
+                rec.pack_child_line_ids.with_context(
+                    cancel_from_order=True, cancel_lost_reason_id=lost_reason_id
+                ).button_cancel_remaining()
             old_product_uom_qty = rec.product_uom_qty
 
             # Resetear printed=False en pickings asociados para evitar contra-entregas
@@ -171,6 +186,13 @@ class SaleOrderLine(models.Model):
             rec.with_context(skip_locked_order_line_check=True).product_uom_qty = (
                 rec.qty_delivered + rec.quantity_returned
             )
+            # what was cancelled is recorded as quoted and not sold, with its reason
+            cancelled_qty = old_product_uom_qty - rec.product_uom_qty
+            if lost_reason_id and float_compare(cancelled_qty, 0.0, precision_digits=precision) > 0:
+                # the quantity was already taken off the line above, so it must not be rebalanced
+                rec.with_context(skip_locked_order_line_check=True, skip_lost_qty_balance=True).write(
+                    {"lost_qty": rec.lost_qty + cancelled_qty, "lost_reason_id": lost_reason_id}
+                )
             rec.order_id.message_post(
                 body=_('Cancel remaining call for line "%s" (id %s), line qty updated from %s to %s')
                 % (rec.name, rec.id, old_product_uom_qty, rec.product_uom_qty)
