@@ -4,3 +4,4 @@
 ##############################################################################
 from . import test_distributor_stock_access
 from . import test_distributor_access
+from . import test_distributor_confirm
