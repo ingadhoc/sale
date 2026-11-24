@@ -170,3 +170,36 @@ class TestPriceUnitPerProductUom(ProductUomPriceCommon):
         line = self._create_order(self.uom_kg, 75.0, 4.5223).order_line
 
         self.assertAlmostEqual(line.price_unit, 4.5223)
+
+    def test_an_open_quotation_is_rounded_on_update(self):
+        """67.83 per 15 kg box is 4.522 per kg, a price the printed quotation cannot state: the
+        update brings the quotation onto 67.80, which is a whole 4.52 per kg."""
+        self.IrConfig.set_param(self.setting, "")
+        quotation = self._create_order(self.uom_box_15, 5.0, 67.83)
+        self.IrConfig.set_param(self.setting, "True")
+
+        self.env["sale.order.line"]._round_open_quotations_price_unit_product_uom()
+
+        self.assertAlmostEqual(quotation.order_line.price_unit, 67.80)
+        self.assertAlmostEqual(quotation.order_line.price_unit_product_uom, 4.52)
+
+    def test_the_printed_quotation_closes_after_the_update(self):
+        self.IrConfig.set_param(self.setting, "")
+        quotation = self._create_order(self.uom_box_15, 5.0, 67.83)
+        self.IrConfig.set_param(self.setting, "True")
+
+        self.env["sale.order.line"]._round_open_quotations_price_unit_product_uom()
+        values = quotation.order_line._get_report_product_uom_values()
+
+        self.assertAlmostEqual(values["qty"] * values["price_unit"], quotation.order_line.price_subtotal)
+
+    def test_a_confirmed_order_is_not_rounded_on_update(self):
+        """Its price was agreed with the customer, so the update leaves it as it is."""
+        self.IrConfig.set_param(self.setting, "")
+        order = self._create_order(self.uom_box_15, 5.0, 67.83)
+        order.action_confirm()
+        self.IrConfig.set_param(self.setting, "True")
+
+        self.env["sale.order.line"]._round_open_quotations_price_unit_product_uom()
+
+        self.assertAlmostEqual(order.order_line.price_unit, 67.83)
