@@ -121,3 +121,43 @@ class TestSaleOrderTypePickingType(TransactionCase):
         self.assertIn(self.warehouse.out_type_id, picking_types)
         self.assertIn(self.other_warehouse.out_type_id, picking_types)
         self.assertNotIn(self.second_picking_type, picking_types)
+
+    def test_08_two_steps_delivery_validated_by_a_stock_user(self):
+        stock_user = (
+            self.env["res.users"]
+            .with_context(no_reset_password=True)
+            .create(
+                {
+                    "name": "Stock only user",
+                    "login": "stock_only_user_sale_type",
+                    "group_ids": [Command.set(self.env.ref("stock.group_stock_user").ids)],
+                }
+            )
+        )
+        self.warehouse.delivery_steps = "pick_ship"
+        self.env["stock.quant"]._update_available_quantity(self.product, self.warehouse.lot_stock_id, 10)
+        order = self._create_order(self.sale_type)
+        pick = order.picking_ids.with_user(stock_user)
+        pick.action_assign()
+        pick.move_ids.quantity = 1
+        pick.button_validate()
+        delivery = order.picking_ids - pick
+        self.assertEqual(delivery.picking_type_id, self.second_picking_type)
+
+    def test_09_order_confirmed_as_superuser_by_the_public_user(self):
+        # the ecommerce checkout confirms the order with the public user in sudo mode
+        public_user = self.env.ref("base.public_user")
+        order = self.env["sale.order"].create(
+            {
+                "partner_id": self.partner.id,
+                "company_id": self.company.id,
+                "type_id": self.sale_type.id,
+                "order_line": [
+                    (0, 0, {"product_id": self.product.id, "product_uom_qty": 1.0}),
+                ],
+            }
+        )
+        order = order.with_user(public_user).sudo().with_context(check_exception=False)
+        order.write({"state": "sale"})
+        order.order_line._action_launch_stock_rule()
+        self.assertEqual(order.order_line.move_ids.picking_type_id, self.second_picking_type)
