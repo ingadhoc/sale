@@ -89,6 +89,8 @@ class TestReturnExchangeDemand(TransactionCase):
         self._validate(exchange)
         self.assertEqual(line.qty_delivered, 10.0)
         self.assertEqual(line.delivery_status, "full")
+        self.assertEqual(line.quantity_returned, 0.0, "Lo cambiado no queda como devuelto.")
+        self.assertFalse(order.with_returns)
 
     def _increase_after_exchange(self, validate_exchange):
         order = self._new_order(qty=10)
@@ -162,3 +164,18 @@ class TestReturnExchangeDemand(TransactionCase):
         self.assertEqual(line.product_uom_qty, 4.0)
         self.assertEqual(line.qty_to_invoice, 4.0)
         self.assertEqual(line.delivery_status, "full")
+
+    def test_return_from_old_exchange_counts(self):
+        """Una devolución hecha desde una reposición de 19 (marcada como cambio) resta de lo entregado."""
+        order = self._new_order(qty=10)
+        line = order.order_line
+        delivery = order.picking_ids
+        self._validate(delivery)
+        delivery.move_ids.is_exchange_move = True
+        returned = self._return(delivery, qty=3)
+        self.assertFalse(returned.move_ids.is_exchange_move, "La devolución de 20 no hereda la marca de cambio.")
+        self._validate(returned)
+        returned.move_ids.is_exchange_move = True
+        delivery.move_ids.is_exchange_move = False
+        line._compute_qty_delivered()
+        self.assertEqual(line.qty_delivered, 7.0)

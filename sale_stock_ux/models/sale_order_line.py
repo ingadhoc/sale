@@ -35,13 +35,10 @@ class SaleOrderLine(models.Model):
 
     def _get_qty_procurement(self, previous_product_uom_qty=False):
         qty = super()._get_qty_procurement(previous_product_uom_qty=previous_product_uom_qty)
-        outgoing_moves, incoming_moves = self._get_outgoing_incoming_moves(strict=False)
+        outgoing_moves = self._get_outgoing_incoming_moves(strict=False)[0]
         for move in outgoing_moves.filtered(lambda m: m.is_exchange_move):
             qty_to_compute = move.quantity if move.state == "done" else move.product_uom_qty
             qty -= move.uom_id._compute_quantity(qty_to_compute, self.product_uom_id, rounding_method="HALF-UP")
-        for move in incoming_moves.filtered(lambda m: m.is_exchange_move):
-            qty_to_compute = move.quantity if move.state == "done" else move.product_uom_qty
-            qty += move.uom_id._compute_quantity(qty_to_compute, self.product_uom_id, rounding_method="HALF-UP")
         return qty
 
     @api.depends()
@@ -49,13 +46,9 @@ class SaleOrderLine(models.Model):
         super()._compute_qty_delivered()
         for line in self:
             if line.qty_delivered_method == "stock_move":
-                outgoing_moves, incoming_moves = line._get_outgoing_incoming_moves()
+                outgoing_moves = line._get_outgoing_incoming_moves()[0]
                 for move in outgoing_moves.filtered(lambda m: m.is_exchange_move and m.state == "done"):
                     line.qty_delivered -= move.uom_id._compute_quantity(
-                        move.quantity, line.product_uom_id, rounding_method="HALF-UP"
-                    )
-                for move in incoming_moves.filtered(lambda m: m.is_exchange_move and m.state == "done"):
-                    line.qty_delivered += move.uom_id._compute_quantity(
                         move.quantity, line.product_uom_id, rounding_method="HALF-UP"
                     )
 
@@ -188,6 +181,13 @@ class SaleOrderLine(models.Model):
                 # In multi-step deliveries, we need to avoid counting the same return multiple times
                 for move in return_moves.filtered(lambda m: m.location_id.usage == "customer"):
                     quantity_returned += move.uom_id._compute_quantity(move.product_uom_qty, order_line.product_uom_id)
+                # An Exchange delivers the returned products again: they are no longer returned
+                exchange_moves = order_line.move_ids.filtered(
+                    lambda m: m.state == "done" and m.location_dest_id.usage == "customer" and m.picking_id.return_id
+                )
+                for move in exchange_moves:
+                    quantity_returned -= move.uom_id._compute_quantity(move.product_uom_qty, order_line.product_uom_id)
+                quantity_returned = max(quantity_returned, 0.0)
                 bom_enable = "bom_ids" in self.env["product.template"]._fields
                 if bom_enable:
                     boms = return_moves.mapped("bom_line_id.bom_id")
