@@ -7,6 +7,13 @@ from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
 from odoo.tests.common import TransactionCase
 
 
+def disable_exception_rules(env):
+    """A base with sale_exception installed refuses to confirm an order that trips one of its
+    rules, and does it silently: the order stays a quotation. These tests need it confirmed."""
+    if "exception.rule" in env:
+        env["exception.rule"].sudo().search([("active", "=", True)]).active = False
+
+
 class ProductUomPriceCommon(TransactionCase):
     """A customer, a product sold by weight and two packagings of it."""
 
@@ -57,6 +64,7 @@ class ProductUomPriceCommon(TransactionCase):
         # An explicit language, activated here in case the base only has another one installed:
         # the report renders with the language of the customer, and without a known one the
         # decimal separator of the base decides whether a price reads 7.27 or 7,27
+        disable_exception_rules(cls.env)
         cls.env["res.lang"]._activate_lang("en_US")
         cls.partner = cls.env["res.partner"].create({"name": "Product UoM Price Customer", "lang": "en_US"})
 

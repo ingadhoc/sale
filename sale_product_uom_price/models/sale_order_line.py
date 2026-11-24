@@ -121,6 +121,18 @@ class SaleOrderLine(models.Model):
                 vals["technical_price_unit"] = price_unit
             line.with_context(**{SKIP_ROUNDING_CONTEXT: True}).write(vals)
 
+    @api.model
+    def _round_open_quotations_price_unit_product_uom(self):
+        """Bring the quotations still open onto a whole price per product unit. A quotation
+        entered before the setting rounded it keeps a unit price the rounded price per product
+        unit no longer multiplies into, so the printed document does not add up to the subtotal.
+        A confirmed order is left alone: its price is the one agreed with the customer."""
+        if not self._price_in_product_uom():
+            return
+        self.search(
+            [("state", "in", ("draft", "sent")), ("display_type", "=", False), ("qty_invoiced", "<=", 0)]
+        )._round_price_unit_product_uom()
+
     @api.model_create_multi
     def create(self, vals_list):
         lines = super().create(vals_list)

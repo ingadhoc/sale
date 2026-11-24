@@ -8,6 +8,8 @@ from odoo import Command
 from odoo.addons.sale.tests.common import TestSaleCommon
 from odoo.tests import tagged
 
+from .common import disable_exception_rules
+
 
 @tagged("post_install", "-at_install")
 class TestInvoiceProductUom(TestSaleCommon):
@@ -28,10 +30,7 @@ class TestInvoiceProductUom(TestSaleCommon):
         cls.uom_bag_third = cls.env["uom.uom"].create(
             {"name": "Bag 1/3 kg", "relative_factor": 1 / 3, "relative_uom_id": cls.uom_kg.id}
         )
-        # A base with sale_exception installed refuses to confirm an order that trips a rule, and
-        # does it silently: the order stays a quotation, so there is nothing left to invoice
-        if "exception.rule" in cls.env:
-            cls.env["exception.rule"].sudo().search([("active", "=", True)]).active = False
+        disable_exception_rules(cls.env)
         cls.product_kg = cls.env["product.product"].create(
             {
                 "name": "Welding wire",
@@ -126,6 +125,8 @@ class TestInvoiceProductUom(TestSaleCommon):
     def test_the_invoice_adds_up_for_a_price_with_extra_decimals(self):
         """A price entered before the setting rounded it: 67.83 per 15 kg box is 4.522 per kg,
         and 75 kg at 4.522 are the 339.15 of the order."""
+        # The order is entered before the setting, whatever the base carries
+        self.env["ir.config_parameter"].sudo().set_param(self.setting, "")
         order = self._create_order(self.uom_box_15, 5.0, 67.83)
         order.action_confirm()
         self.env["ir.config_parameter"].sudo().set_param(self.setting, "True")
