@@ -4,3 +4,151 @@ msgstr ""
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "Language: es\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#. module: sale_exception_ux
+#: model:ir.module.module,description:base.module_sale_exception_ux
+msgid ""
+".. |company| replace:: ADHOC SA\n"
+"\n"
+".. |company_logo| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-logo.png\n"
+"   :alt: ADHOC SA\n"
+"   :target: https://www.adhoc.com.ar\n"
+"\n"
+".. |icon| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-icon.png\n"
+"\n"
+".. image:: https://img.shields.io/badge/license-AGPL--3-blue.png\n"
+"   :target: https://www.gnu.org/licenses/agpl\n"
+"   :alt: License: AGPL-3\n"
+"\n"
+"=================\n"
+"Sale Exception UX\n"
+"=================\n"
+"\n"
+"* Hides the exception field from the sale order list view by making it optional=\"hide\"\n"
+"* Restricts the ability to ignore exceptions to only sales managers\n"
+"* Turns the \"Ignore Exceptions\" button of the alert into \"Ignore Exceptions and\n"
+"  Confirm\": it checks every rule again and, when none of the failing ones is\n"
+"  blocking, ignores them and confirms the order in the same step\n"
+"\n"
+"  Ignoring used to only set the flag, and a flagged order was left out of every\n"
+"  later detection: a rule that turned blocking afterwards was never evaluated\n"
+"  again and the order confirmed without any warning.\n"
+"\n"
+"Installation\n"
+"============\n"
+"\n"
+"To install this module, you need to:\n"
+"\n"
+"#. Only need to install the module.\n"
+"\n"
+"Configuration\n"
+"=============\n"
+"\n"
+"To configure this module, you need to:\n"
+"\n"
+"#. Nothing to configure\n"
+"\n"
+"Usage\n"
+"=====\n"
+"\n"
+"To use this module:\n"
+"\n"
+"#. The exception field in the sale order list view will be hidden by default.\n"
+"#. Only users with sales manager or exception rule manager permissions can ignore exceptions.\n"
+"#. \"Ignore Exceptions and Confirm\" re-checks the rules: if a blocking one fails,\n"
+"   the order is neither ignored nor confirmed and the blocking exceptions are\n"
+"   listed; otherwise the order is ignored and confirmed at once. A confirmed\n"
+"   order is only ignored.\n"
+"#. On upgrade, the flag is cleared from the quotations that carry it and were\n"
+"   never confirmed, so they stop skipping the blocking rules.\n"
+"\n"
+".. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas\n"
+"   :alt: Try me on Runbot\n"
+"   :target: http://runbot.adhoc.com.ar/\n"
+"\n"
+"Bug Tracker\n"
+"===========\n"
+"\n"
+"Bugs are tracked on `GitHub Issues\n"
+"<https://github.com/ingadhoc/sale/issues>`_. In case of trouble, please\n"
+"check there if your issue has already been reported. If you spotted it first,\n"
+"help us smashing it by providing a detailed and welcomed feedback.\n"
+"\n"
+"Credits\n"
+"=======\n"
+"\n"
+"Images\n"
+"------\n"
+"\n"
+"* |company| |icon|\n"
+"\n"
+"Contributors\n"
+"------------\n"
+"\n"
+"Maintainer\n"
+"----------\n"
+"\n"
+"|company_logo|\n"
+"\n"
+"This module is maintained by the |company|.\n"
+"\n"
+"To contribute to this module, please visit https://www.adhoc.com.ar.\n"
+msgstr ""
+
+#. module: sale_exception_ux
+#: model_terms:ir.ui.view,arch_db:sale_exception_ux.view_sale_exception_confirm_form
+msgid ""
+"Click here to check the exceptions again and, if none of them is blocking, "
+"ignore them and confirm this Sale Order."
+msgstr ""
+"Haga clic aquí para volver a revisar las excepciones y, si ninguna es "
+"bloqueante, ignorarlas y confirmar esta orden de venta."
+
+#. module: sale_exception_ux
+#: model:ir.model.fields,field_description:sale_exception_ux.field_base_exception_method__display_name
+#: model:ir.model.fields,field_description:sale_exception_ux.field_sale_exception_confirm__display_name
+#: model:ir.model.fields,field_description:sale_exception_ux.field_sale_order__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: sale_exception_ux
+#: model:ir.model,name:sale_exception_ux.model_base_exception_method
+msgid "Exception Rule Methods"
+msgstr "Métodos de la Regla de Excepción"
+
+#. module: sale_exception_ux
+#: model:ir.model.fields,field_description:sale_exception_ux.field_base_exception_method__id
+#: model:ir.model.fields,field_description:sale_exception_ux.field_sale_exception_confirm__id
+#: model:ir.model.fields,field_description:sale_exception_ux.field_sale_order__id
+msgid "ID"
+msgstr ""
+
+#. module: sale_exception_ux
+#: model_terms:ir.ui.view,arch_db:sale_exception_ux.view_sale_exception_confirm_form
+msgid "Ignore Exceptions and Confirm"
+msgstr "Ignorar excepciones y confirmar"
+
+#. module: sale_exception_ux
+#: model:ir.module.module,shortdesc:base.module_sale_exception_ux
+msgid "Sale Exception UX"
+msgstr ""
+
+#. module: sale_exception_ux
+#: model:ir.model,name:sale_exception_ux.model_sale_exception_confirm
+msgid "Sale exception confirm wizard"
+msgstr "Asistente de confirmación de excepción de venta"
+
+#. module: sale_exception_ux
+#: model:ir.model,name:sale_exception_ux.model_sale_order
+msgid "Sales Order"
+msgstr "Orden de venta"
+
+#. module: sale_exception_ux
+#. odoo-python
+#: code:addons/sale_exception_ux/models/sale_order.py:0
+msgid ""
+"These exceptions are blocking and can not be ignored:\n"
+"%(exceptions)s"
+msgstr ""
+"Estas excepciones son bloqueantes y no se pueden ignorar:\n"
+"%(exceptions)s"
