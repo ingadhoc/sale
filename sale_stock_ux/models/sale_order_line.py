@@ -11,13 +11,6 @@ from odoo.tools.float_utils import float_compare
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
-    all_qty_delivered = fields.Float(
-        string="All Delivered",
-        compute="_compute_all_qty_delivered",
-        help="Everything delivered without discounting the returns",
-        digits="Product Unit",
-    )
-
     quantity_returned = fields.Float(
         string="Returned Quantity",
         compute="_compute_quantity_returned",
@@ -39,49 +32,6 @@ class SaleOrderLine(models.Model):
     )
 
     stock_by_location = fields.Text(compute="_compute_stock_by_location")
-
-    def _check_is_recurring_invoice(self):
-        self.ensure_one()
-        if (
-            self.order_id._fields.get("is_subscription")
-            and self.order_id.is_subscription
-            and self._fields.get("recurring_invoice")
-            and self.recurring_invoice
-        ):
-            return self.recurring_invoice
-        return False
-
-    def _create_procurements(self, product_qty, procurement_uom, values):
-        self.ensure_one()
-        # cancelar remanente seta la cantidad como entregada menos devuelta
-        # asi que no deberia restar en ese caso
-        # Para suscripciones: NO restar quantity_returned (ya está en qty_delivered)
-        if not self._check_is_recurring_invoice():
-            # Lo que se volvió a entregar con el "Exchange" de Odoo 20 ya lo compensa _get_qty_procurement:
-            # restarlo otra vez deja la demanda en negativo y Odoo crea una recepción en vez de una entrega.
-            product_qty = product_qty - max(self.quantity_returned - self._get_exchange_qty(), 0.0)
-        return super()._create_procurements(product_qty, procurement_uom, values)
-
-    def _get_exchange_qty(self):
-        """Cantidad que el "Exchange" de Odoo 20 vuelve a entregar: el albarán de salida que es
-        devolución de una devolución (``return_id``)."""
-        self.ensure_one()
-        exchange_moves = self.move_ids.filtered(
-            lambda m: m.state != "cancel" and m.location_dest_id.usage == "customer" and m.picking_id.return_id
-        )
-        return sum(
-            move.uom_id._compute_quantity(
-                move.quantity if move.state == "done" else move.product_uom_qty,
-                self.product_uom_id,
-                rounding_method="HALF-UP",
-            )
-            for move in exchange_moves
-        )
-
-    @api.depends("qty_delivered", "quantity_returned")
-    def _compute_all_qty_delivered(self):
-        for rec in self:
-            rec.all_qty_delivered = rec.qty_delivered + rec.quantity_returned
 
     def _get_qty_procurement(self, previous_product_uom_qty=False):
         qty = super()._get_qty_procurement(previous_product_uom_qty=previous_product_uom_qty)
@@ -121,9 +71,9 @@ class SaleOrderLine(models.Model):
                 line.delivery_status = line.order_id.force_delivery_status
                 continue
 
-            if float_compare(line.all_qty_delivered, line.product_uom_qty, precision_digits=precision) == -1:
+            if float_compare(line.qty_delivered, line.product_uom_qty, precision_digits=precision) == -1:
                 delivery_status = "to deliver"
-            elif float_compare(line.all_qty_delivered, line.product_uom_qty, precision_digits=precision) >= 0:
+            elif float_compare(line.qty_delivered, line.product_uom_qty, precision_digits=precision) >= 0:
                 delivery_status = "full"
             else:
                 delivery_status = "no"
@@ -163,9 +113,7 @@ class SaleOrderLine(models.Model):
             #         'You can not cancel remianing qty to deliver because '
             #         'there are more product invoiced than the delivered. '
             #         'You should correct invoice or ask for a refund'))
-            rec.with_context(skip_locked_order_line_check=True).product_uom_qty = (
-                rec.qty_delivered + rec.quantity_returned
-            )
+            rec.with_context(skip_locked_order_line_check=True).product_uom_qty = rec.qty_delivered
             rec.order_id.message_post(
                 body=_('Cancel remaining call for line "%s" (id %s), line qty updated from %s to %s')
                 % (rec.name, rec.id, old_product_uom_qty, rec.product_uom_qty)

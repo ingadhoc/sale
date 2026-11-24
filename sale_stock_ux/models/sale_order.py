@@ -38,10 +38,8 @@ class SaleOrder(models.Model):
             order.with_returns = any(line.quantity_returned for line in order.order_line)
 
     def _search_is_unfulfilled(self, operator, value):
-        """El filtro nativo "To Deliver" (y la tarjeta del tablero) compara lo entregado
-        contra lo pedido, así que una venta entregada con una devolución acreditada queda
-        como pendiente. Usamos el estado de entrega de las líneas, que descuenta las
-        devoluciones y respeta el estado forzado de la venta."""
+        """El filtro nativo "To Deliver" (y la tarjeta del tablero) usa el estado de entrega
+        de las líneas, para respetar el estado forzado de la venta."""
         if operator not in {"=", "!="}:
             return NotImplemented
         if (operator == "=" and value) or (operator == "!=" and not value):

@@ -4,7 +4,7 @@ from odoo.tests import TransactionCase, tagged
 @tagged("post_install", "-at_install")
 class TestToDeliverFilter(TransactionCase):
     """El filtro nativo "To Deliver" (is_unfulfilled) y la tarjeta del tablero usan el estado
-    de entrega del módulo: descuentan las devoluciones y respetan el estado forzado."""
+    de entrega del módulo: respetan el estado forzado."""
 
     @classmethod
     def setUpClass(cls):
@@ -45,8 +45,8 @@ class TestToDeliverFilter(TransactionCase):
         self._validate(order.picking_ids, qty=4)
         self.assertTrue(self._to_deliver(order))
 
-    def test_return_with_credit_note_is_not_to_deliver(self):
-        """Entregar 10 y devolver 2 para abonar: la venta no está para entregar (el nativo la mostraba)."""
+    def test_return_is_to_deliver_until_cancel_remaining(self):
+        """Entregar 10 y devolver 2: como en Odoo, la venta queda para entregar hasta cancelar el remanente."""
         order = self._new_order()
         delivery = order.picking_ids
         self._validate(delivery)
@@ -54,6 +54,8 @@ class TestToDeliverFilter(TransactionCase):
         returned.move_ids.product_uom_qty = 2
         self._validate(returned)
         self.assertEqual(order.order_line.qty_delivered, 8.0)
+        self.assertTrue(self._to_deliver(order))
+        order.order_line.button_cancel_remaining()
         self.assertFalse(self._to_deliver(order))
 
     def test_forced_delivered_is_not_to_deliver(self):
