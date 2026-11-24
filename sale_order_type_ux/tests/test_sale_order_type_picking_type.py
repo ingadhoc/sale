@@ -101,6 +101,24 @@ class TestSaleOrderTypePickingType(TransactionCase):
         delivery = order.picking_ids - pick
         self.assertEqual(delivery.picking_type_id, self.second_picking_type)
 
+    def test_05b_two_steps_delivery_validated_by_a_stock_user(self):
+        stock_user = self.env["res.users"].create(
+            {
+                "name": "Stock only user",
+                "login": "stock_only_user_sale_type",
+                "group_ids": [Command.set(self.env.ref("stock.group_stock_user").ids)],
+            }
+        )
+        self.warehouse.delivery_steps = "pick_ship"
+        self.env["stock.quant"]._update_available_quantity(self.product, self.warehouse.lot_stock_id, 10)
+        order = self._create_order(self.sale_type)
+        pick = order.picking_ids.with_user(stock_user)
+        pick.action_assign()
+        pick.move_ids.quantity = 1
+        pick.button_validate()
+        delivery = order.picking_ids - pick
+        self.assertEqual(delivery.picking_type_id, self.second_picking_type)
+
     def test_06_order_with_another_warehouse_keeps_the_standard(self):
         order = self._create_order(self.sale_type, self.other_warehouse)
         moves = order.order_line.move_ids
