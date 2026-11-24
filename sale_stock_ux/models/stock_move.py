@@ -25,14 +25,6 @@ class StockMove(models.Model):
         unidad secundaria en la creación de movimientos de stock a partir de una
         orden de venta (borramos ``secondary_uom_qty`` para que se recalcule
         desde ``product_uom_qty``).
-
-        La cantidad devuelta (``quantity_returned``) NO se resta acá: eso lo hace
-        ``sale.order.line._create_procurements`` (que además excluye
-        suscripciones vía ``_check_is_recurring_invoice``). Restarla también acá
-        duplicaba el descuento y, al subir la cantidad pedida luego de una
-        devolución total, dejaba la demanda en negativo -> Odoo invertía el
-        movimiento y creaba una recepción (IN) en lugar de una entrega (OUT).
-        Mismo criterio que 18.0, donde esta resta está deshabilitada.
         """
         for vals in vals_list:
             if vals.get("sale_line_id") and vals.get("secondary_uom_qty"):

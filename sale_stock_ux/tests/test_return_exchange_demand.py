@@ -89,6 +89,8 @@ class TestReturnExchangeDemand(TransactionCase):
         self._validate(exchange)
         self.assertEqual(line.qty_delivered, 10.0)
         self.assertEqual(line.delivery_status, "full")
+        self.assertEqual(line.quantity_returned, 0.0, "Lo cambiado no queda como devuelto.")
+        self.assertFalse(order.with_returns)
 
     def _increase_after_exchange(self, validate_exchange):
         order = self._new_order(qty=10)
@@ -127,3 +129,54 @@ class TestReturnExchangeDemand(TransactionCase):
 
     def test_increase_with_pending_exchange_delivers(self):
         self._increase_after_exchange(validate_exchange=False)
+
+    def test_cancel_remaining_keeps_pending_exchange(self):
+        """Cancelar remanente con un cambio sin entregar no baja lo que el cambio va a entregar."""
+        order = self._new_order(qty=10)
+        line = order.order_line
+        delivery = order.picking_ids
+        self._validate(delivery)
+        returned = self._return(delivery, qty=6)
+        self._validate(returned)
+        exchange = self.env["stock.picking"].browse(returned.action_exchange()["res_id"])
+        moves_before = line.move_ids
+
+        line.button_cancel_remaining()
+
+        self.assertEqual(line.product_uom_qty, 10.0)
+        self.assertFalse(
+            line.move_ids - moves_before, "No debe crear una recepción por lo que el cambio va a entregar."
+        )
+        self._validate(exchange)
+        self.assertEqual(line.qty_delivered, 10.0)
+        self.assertEqual(line.qty_to_invoice, 10.0)
+
+    def test_cancel_remaining_after_return(self):
+        """Sin cambio, cancelar remanente deja la cantidad en lo entregado."""
+        order = self._new_order(qty=10)
+        line = order.order_line
+        delivery = order.picking_ids
+        self._validate(delivery)
+        self._validate(self._return(delivery, qty=6))
+
+        line.button_cancel_remaining()
+
+        self.assertEqual(line.product_uom_qty, 4.0)
+        self.assertEqual(line.qty_to_invoice, 4.0)
+        self.assertEqual(line.delivery_status, "full")
+        self.assertIn(self.product.name, order.message_ids[0].body)
+
+    def test_return_from_old_exchange_counts(self):
+        """Una devolución hecha desde una reposición de 19 (marcada como cambio) resta de lo entregado."""
+        order = self._new_order(qty=10)
+        line = order.order_line
+        delivery = order.picking_ids
+        self._validate(delivery)
+        delivery.move_ids.is_exchange_move = True
+        returned = self._return(delivery, qty=3)
+        self.assertFalse(returned.move_ids.is_exchange_move, "La devolución de 20 no hereda la marca de cambio.")
+        self._validate(returned)
+        returned.move_ids.is_exchange_move = True
+        delivery.move_ids.is_exchange_move = False
+        line._compute_qty_delivered()
+        self.assertEqual(line.qty_delivered, 7.0)

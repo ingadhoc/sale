@@ -11,13 +11,6 @@ from odoo.tools.float_utils import float_compare
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
-    all_qty_delivered = fields.Float(
-        string="All Delivered",
-        compute="_compute_all_qty_delivered",
-        help="Everything delivered without discounting the returns",
-        digits="Product Unit",
-    )
-
     quantity_returned = fields.Float(
         string="Returned Quantity",
         compute="_compute_quantity_returned",
@@ -40,58 +33,12 @@ class SaleOrderLine(models.Model):
 
     stock_by_location = fields.Text(compute="_compute_stock_by_location")
 
-    def _check_is_recurring_invoice(self):
-        self.ensure_one()
-        if (
-            self.order_id._fields.get("is_subscription")
-            and self.order_id.is_subscription
-            and self._fields.get("recurring_invoice")
-            and self.recurring_invoice
-        ):
-            return self.recurring_invoice
-        return False
-
-    def _create_procurements(self, product_qty, procurement_uom, values):
-        self.ensure_one()
-        # cancelar remanente seta la cantidad como entregada menos devuelta
-        # asi que no deberia restar en ese caso
-        # Para suscripciones: NO restar quantity_returned (ya está en qty_delivered)
-        if not self._check_is_recurring_invoice():
-            # Lo que se volvió a entregar con el "Exchange" de Odoo 20 ya lo compensa _get_qty_procurement:
-            # restarlo otra vez deja la demanda en negativo y Odoo crea una recepción en vez de una entrega.
-            product_qty = product_qty - max(self.quantity_returned - self._get_exchange_qty(), 0.0)
-        return super()._create_procurements(product_qty, procurement_uom, values)
-
-    def _get_exchange_qty(self):
-        """Cantidad que el "Exchange" de Odoo 20 vuelve a entregar: el albarán de salida que es
-        devolución de una devolución (``return_id``)."""
-        self.ensure_one()
-        exchange_moves = self.move_ids.filtered(
-            lambda m: m.state != "cancel" and m.location_dest_id.usage == "customer" and m.picking_id.return_id
-        )
-        return sum(
-            move.uom_id._compute_quantity(
-                move.quantity if move.state == "done" else move.product_uom_qty,
-                self.product_uom_id,
-                rounding_method="HALF-UP",
-            )
-            for move in exchange_moves
-        )
-
-    @api.depends("qty_delivered", "quantity_returned")
-    def _compute_all_qty_delivered(self):
-        for rec in self:
-            rec.all_qty_delivered = rec.qty_delivered + rec.quantity_returned
-
     def _get_qty_procurement(self, previous_product_uom_qty=False):
         qty = super()._get_qty_procurement(previous_product_uom_qty=previous_product_uom_qty)
-        outgoing_moves, incoming_moves = self._get_outgoing_incoming_moves(strict=False)
+        outgoing_moves = self._get_outgoing_incoming_moves(strict=False)[0]
         for move in outgoing_moves.filtered(lambda m: m.is_exchange_move):
             qty_to_compute = move.quantity if move.state == "done" else move.product_uom_qty
             qty -= move.uom_id._compute_quantity(qty_to_compute, self.product_uom_id, rounding_method="HALF-UP")
-        for move in incoming_moves.filtered(lambda m: m.is_exchange_move):
-            qty_to_compute = move.quantity if move.state == "done" else move.product_uom_qty
-            qty += move.uom_id._compute_quantity(qty_to_compute, self.product_uom_id, rounding_method="HALF-UP")
         return qty
 
     @api.depends()
@@ -99,13 +46,9 @@ class SaleOrderLine(models.Model):
         super()._compute_qty_delivered()
         for line in self:
             if line.qty_delivered_method == "stock_move":
-                outgoing_moves, incoming_moves = line._get_outgoing_incoming_moves()
+                outgoing_moves = line._get_outgoing_incoming_moves()[0]
                 for move in outgoing_moves.filtered(lambda m: m.is_exchange_move and m.state == "done"):
                     line.qty_delivered -= move.uom_id._compute_quantity(
-                        move.quantity, line.product_uom_id, rounding_method="HALF-UP"
-                    )
-                for move in incoming_moves.filtered(lambda m: m.is_exchange_move and m.state == "done"):
-                    line.qty_delivered += move.uom_id._compute_quantity(
                         move.quantity, line.product_uom_id, rounding_method="HALF-UP"
                     )
 
@@ -121,9 +64,9 @@ class SaleOrderLine(models.Model):
                 line.delivery_status = line.order_id.force_delivery_status
                 continue
 
-            if float_compare(line.all_qty_delivered, line.product_uom_qty, precision_digits=precision) == -1:
+            if float_compare(line.qty_delivered, line.product_uom_qty, precision_digits=precision) == -1:
                 delivery_status = "to deliver"
-            elif float_compare(line.all_qty_delivered, line.product_uom_qty, precision_digits=precision) >= 0:
+            elif float_compare(line.qty_delivered, line.product_uom_qty, precision_digits=precision) >= 0:
                 delivery_status = "full"
             else:
                 delivery_status = "no"
@@ -140,6 +83,7 @@ class SaleOrderLine(models.Model):
             orders_to_relock.with_context(tracking_disable=True).write({"locked": False})
 
         pack_enable = "pack_ok" in self.env["product.template"]._fields
+        precision = self.env["decimal.precision"].precision_get("Product Unit")
         for rec in self.filtered("product_id"):
             # For product pack compatibility to cancel all of componept in case the product parent is cancel
             if pack_enable and rec.product_id.pack_ok and rec.pack_type == "detailed" and rec.pack_child_line_ids:
@@ -163,17 +107,31 @@ class SaleOrderLine(models.Model):
             #         'You can not cancel remianing qty to deliver because '
             #         'there are more product invoiced than the delivered. '
             #         'You should correct invoice or ask for a refund'))
-            rec.with_context(skip_locked_order_line_check=True).product_uom_qty = (
-                rec.qty_delivered + rec.quantity_returned
-            )
+            new_qty = rec.qty_delivered + rec._get_pending_exchange_qty()
+            if not float_compare(new_qty, old_product_uom_qty, precision_digits=precision):
+                continue
+            rec.with_context(skip_locked_order_line_check=True).product_uom_qty = new_qty
             rec.order_id.message_post(
                 body=_('Cancel remaining call for line "%s" (id %s), line qty updated from %s to %s')
-                % (rec.name, rec.id, old_product_uom_qty, rec.product_uom_qty)
+                % (rec.label, rec.id, old_product_uom_qty, rec.product_uom_qty)
             )
 
         # Volver a bloquear las órdenes que estaban bloqueadas sin generar mensaje
         if orders_to_relock:
             orders_to_relock.with_context(tracking_disable=True).write({"locked": True})
+
+    def _get_pending_exchange_qty(self):
+        """Quantity still on its way to the customer to replace a return (Exchange)."""
+        self.ensure_one()
+        moves = self.move_ids.filtered(
+            lambda m: (
+                m.state not in ("done", "cancel")
+                and m.location_dest_id.usage == "customer"
+                and m.picking_id.return_id
+                and m.product_id == self.product_id
+            )
+        )
+        return sum(m.uom_id._compute_quantity(m.product_uom_qty, self.product_uom_id) for m in moves)
 
     @api.onchange("product_uom_qty")
     def _onchange_product_uom_qty(self):
@@ -223,6 +181,13 @@ class SaleOrderLine(models.Model):
                 # In multi-step deliveries, we need to avoid counting the same return multiple times
                 for move in return_moves.filtered(lambda m: m.location_id.usage == "customer"):
                     quantity_returned += move.uom_id._compute_quantity(move.product_uom_qty, order_line.product_uom_id)
+                # An Exchange delivers the returned products again: they are no longer returned
+                exchange_moves = order_line.move_ids.filtered(
+                    lambda m: m.state == "done" and m.location_dest_id.usage == "customer" and m.picking_id.return_id
+                )
+                for move in exchange_moves:
+                    quantity_returned -= move.uom_id._compute_quantity(move.product_uom_qty, order_line.product_uom_id)
+                quantity_returned = max(quantity_returned, 0.0)
                 bom_enable = "bom_ids" in self.env["product.template"]._fields
                 if bom_enable:
                     boms = return_moves.mapped("bom_line_id.bom_id")
@@ -269,7 +234,7 @@ class SaleOrderLine(models.Model):
                             ),
                         }
                         order_qty = order_line.product_uom_id._compute_quantity(
-                            order_line.product_uom_qty, relevant_bom.product_uom_id
+                            order_line.product_uom_qty, relevant_bom.uom_id
                         )
                         quantity_returned = return_moves._compute_kit_quantities(
                             order_line.product_id, order_qty, relevant_bom, filters
