@@ -43,7 +43,14 @@ class TestInvoiceProductUom(TestSaleCommon):
     def _invoice_order(self, uom, qty=5.0, price_unit=98.87):
         order = self._create_order(uom, qty, price_unit)
         order.action_confirm()
-        return order, order._create_invoices().invoice_line_ids
+        return order, self._invoice_lines(order)
+
+    def _invoice_lines(self, order):
+        """A line whose invoicing policy is set by the order type has nothing to invoice until it
+        is delivered, so the delivery is stated before invoicing."""
+        for line in order.order_line.filtered(lambda line: not line.qty_to_invoice):
+            line.qty_delivered = line.product_uom_qty
+        return order._create_invoices().invoice_line_ids
 
     def _create_order(self, uom, qty, price_unit):
         return self.env["sale.order"].create(
@@ -126,7 +133,7 @@ class TestInvoiceProductUom(TestSaleCommon):
         order.action_confirm()
         self.env["ir.config_parameter"].sudo().set_param(self.setting, "True")
 
-        invoice_line = order._create_invoices().invoice_line_ids
+        invoice_line = self._invoice_lines(order)
 
         self.assertEqual(invoice_line.product_uom_id, self.uom_kg)
         self.assertAlmostEqual(invoice_line.quantity, 75.0)
