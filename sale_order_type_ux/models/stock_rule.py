@@ -13,7 +13,7 @@ class StockRule(models.Model):
         if self.picking_type_id.code != "outgoing":
             return self.env["stock.picking.type"]
         # stock users without sales rights can't read sale.order.type
-        picking_type = sale_lines.order_id.sudo().type_id.picking_type_id[:1].sudo(False)
+        picking_type = sale_lines.order_id.sudo().type_id.picking_type_id[:1].with_env(self.env)
         # skip resupply rules of other warehouses and orders whose warehouse was changed
         warehouse = picking_type.warehouse_id
         if warehouse != self.picking_type_id.warehouse_id or warehouse != sale_lines.order_id.warehouse_id[:1]:
