@@ -28,14 +28,17 @@ Configuration
 
 To configure this module, you need to:
 
-#. Nothing to configure
+#. Go to Sales > Configuration > Exception Rules and tick *Block Send Quotation*
+   on the rules that must also block printing a quotation.
 
 Usage
 =====
 
 To use this module, you need to:
 
-#. Before printing a quotation, it checks that the partner limit not exceeded.
+#. Before printing, sending, sharing or previewing a quotation, the rules marked
+   as *Block Send Quotation* are checked, and the exceptions pop up instead of
+   the action. Ignoring them from that popup only ignores them for printing.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
