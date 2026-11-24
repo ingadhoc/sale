@@ -113,7 +113,7 @@ class SaleOrderLine(models.Model):
             rec.with_context(skip_locked_order_line_check=True).product_uom_qty = new_qty
             rec.order_id.message_post(
                 body=_('Cancel remaining call for line "%s" (id %s), line qty updated from %s to %s')
-                % (rec.name, rec.id, old_product_uom_qty, rec.product_uom_qty)
+                % (rec.label, rec.id, old_product_uom_qty, rec.product_uom_qty)
             )
 
         # Volver a bloquear las órdenes que estaban bloqueadas sin generar mensaje

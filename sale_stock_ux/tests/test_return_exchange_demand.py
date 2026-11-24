@@ -164,6 +164,7 @@ class TestReturnExchangeDemand(TransactionCase):
         self.assertEqual(line.product_uom_qty, 4.0)
         self.assertEqual(line.qty_to_invoice, 4.0)
         self.assertEqual(line.delivery_status, "full")
+        self.assertIn(self.product.name, order.message_ids[0].body)
 
     def test_return_from_old_exchange_counts(self):
         """Una devolución hecha desde una reposición de 19 (marcada como cambio) resta de lo entregado."""
