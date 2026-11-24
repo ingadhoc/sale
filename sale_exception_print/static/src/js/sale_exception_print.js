@@ -2,6 +2,27 @@ import { registry } from "@web/core/registry";
 
 const BASE_EXCEPTION_ERROR = "odoo.addons.base_exception.exceptions.BaseExceptionError";
 
+function printExceptionData(error) {
+    if (error?.exceptionName !== BASE_EXCEPTION_ERROR) {
+        return null;
+    }
+    let excData;
+    try {
+        excData = JSON.parse(error.data.message);
+    } catch {
+        return null;
+    }
+    return excData.print_exception ? excData : null;
+}
+
+function openPrintExceptionPopup(env, recordIds) {
+    return env.services.action.doAction({
+        type: "ir.actions.client",
+        tag: "popup_print_exception",
+        params: { recordIds: recordIds || [] },
+    });
+}
+
 async function popUpPrintException(env, action) {
     const controller = env.services.action.currentController;
     const resId = controller?.currentState?.resId || (action.params?.recordIds || [])[0];
@@ -21,33 +42,15 @@ async function popUpPrintException(env, action) {
     if (controller) {
         await env.services.action.restore(controller.jsId);
     }
-    await env.services.action.doAction(popupAction, {
-        onClose: () =>
-            env.services.action.doAction({
-                type: "ir.actions.client",
-                tag: "soft_reload",
-            }),
-    });
+    // No reload on close: it would destroy the form model while it reloads itself
+    await env.services.action.doAction(popupAction);
 }
 
 function printExceptionErrorHandler(env, uncaughtError, originalError) {
-    if (originalError.exceptionName !== BASE_EXCEPTION_ERROR) {
+    if (!printExceptionData(originalError)) {
         return false;
     }
-    let excData;
-    try {
-        excData = JSON.parse(originalError.data.message);
-    } catch {
-        return false;
-    }
-    if (!excData.print_exception) {
-        return false;
-    }
-    env.services.action.doAction({
-        type: "ir.actions.client",
-        tag: "popup_print_exception",
-        params: { recordIds: excData.record_ids || [] },
-    });
+    openPrintExceptionPopup(env, printExceptionData(originalError).record_ids);
     return true;
 }
 
@@ -63,8 +66,19 @@ registry.category("ir.actions.report handlers").add(
         if (action.report_type === "qweb-pdf" && action.context?.active_model === "sale.order") {
             const activeIds = action.context.active_ids || [];
             if (activeIds.length > 0) {
-                // Raises BaseExceptionError and stops the download when a rule blocks it
-                await env.services.orm.call("sale.order", "detect_print_exceptions", [activeIds]);
+                try {
+                    await env.services.orm.call("sale.order", "detect_print_exceptions", [
+                        activeIds,
+                    ]);
+                } catch (error) {
+                    const excData = printExceptionData(error);
+                    if (!excData) {
+                        throw error;
+                    }
+                    // Handled here, so the report action ends before the popup opens
+                    openPrintExceptionPopup(env, excData.record_ids);
+                    return true;
+                }
             }
         }
         // No exceptions or not applicable, let other handlers process it
