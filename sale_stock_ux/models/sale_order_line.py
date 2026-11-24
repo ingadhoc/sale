@@ -90,6 +90,7 @@ class SaleOrderLine(models.Model):
             orders_to_relock.with_context(tracking_disable=True).write({"locked": False})
 
         pack_enable = "pack_ok" in self.env["product.template"]._fields
+        precision = self.env["decimal.precision"].precision_get("Product Unit")
         for rec in self.filtered("product_id"):
             # For product pack compatibility to cancel all of componept in case the product parent is cancel
             if pack_enable and rec.product_id.pack_ok and rec.pack_type == "detailed" and rec.pack_child_line_ids:
@@ -113,7 +114,10 @@ class SaleOrderLine(models.Model):
             #         'You can not cancel remianing qty to deliver because '
             #         'there are more product invoiced than the delivered. '
             #         'You should correct invoice or ask for a refund'))
-            rec.with_context(skip_locked_order_line_check=True).product_uom_qty = rec.qty_delivered
+            new_qty = rec.qty_delivered + rec._get_pending_exchange_qty()
+            if not float_compare(new_qty, old_product_uom_qty, precision_digits=precision):
+                continue
+            rec.with_context(skip_locked_order_line_check=True).product_uom_qty = new_qty
             rec.order_id.message_post(
                 body=_('Cancel remaining call for line "%s" (id %s), line qty updated from %s to %s')
                 % (rec.name, rec.id, old_product_uom_qty, rec.product_uom_qty)
@@ -122,6 +126,19 @@ class SaleOrderLine(models.Model):
         # Volver a bloquear las órdenes que estaban bloqueadas sin generar mensaje
         if orders_to_relock:
             orders_to_relock.with_context(tracking_disable=True).write({"locked": True})
+
+    def _get_pending_exchange_qty(self):
+        """Quantity still on its way to the customer to replace a return (Exchange)."""
+        self.ensure_one()
+        moves = self.move_ids.filtered(
+            lambda m: (
+                m.state not in ("done", "cancel")
+                and m.location_dest_id.usage == "customer"
+                and m.picking_id.return_id
+                and m.product_id == self.product_id
+            )
+        )
+        return sum(m.uom_id._compute_quantity(m.product_uom_qty, self.product_uom_id) for m in moves)
 
     @api.onchange("product_uom_qty")
     def _onchange_product_uom_qty(self):

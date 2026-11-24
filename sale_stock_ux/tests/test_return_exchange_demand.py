@@ -127,3 +127,38 @@ class TestReturnExchangeDemand(TransactionCase):
 
     def test_increase_with_pending_exchange_delivers(self):
         self._increase_after_exchange(validate_exchange=False)
+
+    def test_cancel_remaining_keeps_pending_exchange(self):
+        """Cancelar remanente con un cambio sin entregar no baja lo que el cambio va a entregar."""
+        order = self._new_order(qty=10)
+        line = order.order_line
+        delivery = order.picking_ids
+        self._validate(delivery)
+        returned = self._return(delivery, qty=6)
+        self._validate(returned)
+        exchange = self.env["stock.picking"].browse(returned.action_exchange()["res_id"])
+        moves_before = line.move_ids
+
+        line.button_cancel_remaining()
+
+        self.assertEqual(line.product_uom_qty, 10.0)
+        self.assertFalse(
+            line.move_ids - moves_before, "No debe crear una recepción por lo que el cambio va a entregar."
+        )
+        self._validate(exchange)
+        self.assertEqual(line.qty_delivered, 10.0)
+        self.assertEqual(line.qty_to_invoice, 10.0)
+
+    def test_cancel_remaining_after_return(self):
+        """Sin cambio, cancelar remanente deja la cantidad en lo entregado."""
+        order = self._new_order(qty=10)
+        line = order.order_line
+        delivery = order.picking_ids
+        self._validate(delivery)
+        self._validate(self._return(delivery, qty=6))
+
+        line.button_cancel_remaining()
+
+        self.assertEqual(line.product_uom_qty, 4.0)
+        self.assertEqual(line.qty_to_invoice, 4.0)
+        self.assertEqual(line.delivery_status, "full")
