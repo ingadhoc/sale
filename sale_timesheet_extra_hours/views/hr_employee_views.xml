@@ -4,7 +4,7 @@
     <record id="view_employee_form_inherit" model="ir.ui.view">
         <field name="name">view.employee.form.inherit.hr.employee.extra.hour</field>
         <field name="model">hr.employee</field>
-        <field name="inherit_id" ref="hr_hourly_cost.view_employee_form"/>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
         <field name="priority" eval="50"/>
         <field name="arch" type="xml">
             <xpath expr="//div[@name='hourly_cost']" position="after">
