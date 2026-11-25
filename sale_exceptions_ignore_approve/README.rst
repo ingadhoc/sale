@@ -16,6 +16,14 @@ Sale Exceptions Ingore Approve Directly
 
 When Ignoring a sale Exception, approve directly the sale order
 
+The "Ignore Exceptions" button of the alert becomes "Ignore Exceptions and
+Confirm": it checks every rule again and, when none of the failing ones is
+blocking, ignores them and confirms the order in the same step.
+
+Ignoring used to only set the flag, and a flagged order was left out of every
+later detection: a rule that turned blocking afterwards was never evaluated
+again and the order confirmed without any warning.
+
 Installation
 ============
 
@@ -36,6 +44,12 @@ Usage
 To use this module, you need to:
 
 #. When Ignoring a sale Exception, approve directly the sale order.
+#. "Ignore Exceptions and Confirm" re-checks the rules: if a blocking one fails,
+   the order is neither ignored nor confirmed and the blocking exceptions are
+   listed; otherwise the order is ignored and confirmed at once. A confirmed
+   order is only ignored.
+#. On upgrade, the flag is cleared from the quotations that carry it and were
+   never confirmed, so they stop skipping the blocking rules.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
