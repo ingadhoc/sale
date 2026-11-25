@@ -15,16 +15,20 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
-                    <div class="oe_button_box" name="button_box">
-                        <button name="action_open_payment_option_wizard" type="object" string="Add Payment Option" class="oe_highlight"/>
-                    </div>
                     <group>
                         <field name="name"/>
                     </group>
+                    <!-- The same list as the quotation, without the amounts: a template has no order to apply them to. -->
                     <field name="payment_option_ids">
-                        <list create="false" editable="bottom">
+                        <list editable="bottom" decoration-danger="option_percentage_invalid">
                             <field name="sequence" widget="handle"/>
-                            <field name="options_json_rendered" string="Details"/>
+                            <field name="option_number"/>
+                            <field name="card_installment_id"/>
+                            <field name="percentage" widget="percentage"/>
+                            <field name="surcharge"/>
+                            <field name="installment_qty"/>
+                            <field name="option_percentage_total" widget="percentage" optional="hide"/>
+                            <field name="option_percentage_invalid" column_invisible="1"/>
                         </list>
                     </field>
                 </sheet>

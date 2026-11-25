@@ -43,38 +43,33 @@
                                 <th class="text-end">Installment quantity</th>
                             </tr>
                         </thead>
-                        <t t-set="op_index" t-value="1"/>
-                        <t t-foreach="doc.payment_option_ids" t-as="opt">
+                        <t t-foreach="doc.payment_option_ids._grouped_by_option()" t-as="opt">
                             <t>
                                 <tr>
                                     <td colspan="7" style="border-top:1px solid #111827"></td>
                                 </tr>
                             </t>
                             <tbody>
-                                <t t-set="subtotal" t-value="0"/>
-                                <t t-set="rowspan" t-value="len(opt.options_json) if opt.options_json else 1"/>
-                                <t t-foreach="opt.options_json" t-as="item">
+                                <t t-foreach="opt" t-as="row">
                                     <tr>
-                                        <td class="text-start" t-if="item_index == 0" t-att-rowspan="rowspan"><t t-out="op_index"/></td>
-                                        <td class="text-start" t-if="item_index != 0" style="display:none"></td> <!-- The following hidden cell is used to keep table alignment when using rowspan for the index column. -->
-                                        <td class="text-start"><t t-out="item.get('percentage')"/>%</td>
+                                        <td class="text-start" t-if="row_index == 0" t-att-rowspan="len(opt)"><t t-out="opt[0].option_number"/></td>
+                                        <td class="text-start" t-if="row_index != 0" style="display:none"></td> <!-- The following hidden cell is used to keep table alignment when using rowspan for the index column. -->
+                                        <td class="text-start"><t t-out="row.percentage * 100"/>%</td>
                                         <!-- The plan name is free text: without breaking it, a long one widens this
                                              column past the right margin. Dropping text-nowrap alone is not enough. -->
-                                        <td class="text-end" style="word-break: break-word; overflow-wrap: anywhere;"><t t-out="item.get('card_installment')"/></td>
-                                        <td class="text-end"><t t-out="item.get('surcharge')"/>%</td>
-                                        <td class="text-end"><span t-out="item.get('subtotal')" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/></td>
-                                        <td class="text-end"><span t-out="item.get('total_per_installment')" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/></td>
-                                        <td class="text-end"><t t-out="item.get('installment_qty')"/></td>
+                                        <td class="text-end" style="word-break: break-word; overflow-wrap: anywhere;"><t t-out="row.card_installment_id.display_name"/></td>
+                                        <td class="text-end"><t t-out="row.surcharge"/>%</td>
+                                        <td class="text-end"><span t-out="row.amount_subtotal" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/></td>
+                                        <td class="text-end"><span t-out="row.amount_per_installment" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/></td>
+                                        <td class="text-end"><t t-out="row.installment_qty"/></td>
                                     </tr>
-                                    <t t-set="subtotal" t-value="subtotal + item.get('subtotal')"/>
                                 </t>
                                 <tr class="fw-bold">
                                     <td colspan="4" class="text-end">Total</td>
-                                    <td class="text-end"><span t-out="subtotal" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/></td>
+                                    <td class="text-end"><span t-out="sum(opt.mapped('amount_subtotal'))" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/></td>
                                     <td></td>
                                     <td></td>
                                 </tr>
-                                <t t-set="op_index" t-value="op_index + 1"/>
                             </tbody>
                         </t>
                     </table>

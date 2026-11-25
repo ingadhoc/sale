@@ -20,7 +20,7 @@
 {
     "name": "Sale Payment Options",
     "summary": "Manage and display payment options on quotations and sales orders.",
-    "version": "19.0.1.5.0",
+    "version": "19.0.2.0.0",
     "category": "Sales",
     "author": "ADHOC SA",
     "website": "www.adhoc.com.ar",
@@ -31,16 +31,10 @@
         "views/res_config_settings_views.xml",
         "views/sale_order_views.xml",
         "views/sale_payment_option_template_views.xml",
-        "wizard/sale_payment_option_wizard_views.xml",
         "report/sale_order_payment_options_report.xml",
         "report/ir_actions_report.xml",
     ],
     "installable": True,
     "application": False,
     "auto_install": False,
-    "assets": {
-        "web.assets_backend": [
-            "sale_payment_options/static/src/css/sale_payment_options.css",
-        ],
-    },
 }
