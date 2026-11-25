@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 19:25+0000\n"
-"PO-Revision-Date: 2025-12-13 16:10+0000\n"
+"POT-Creation-Date: 2026-11-25 14:52+0000\n"
+"PO-Revision-Date: 2026-11-25 14:52+0000\n"
 "Last-Translator: Nicolas Col <nco@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/sale-19-0/"
 "sale-19-0-sale_payment_options/es/>\n"
@@ -26,6 +26,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_payment_options.report_saleorder_payment_options_document
 msgid "% OV"
 msgstr "% OV"
+
+#. module: sale_payment_options
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option__percentage
+msgid "% of Order"
+msgstr "% del pedido"
 
 #. module: sale_payment_options
 #. odoo-python
@@ -45,6 +50,8 @@ msgid ""
 "(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or "
 "'Order - %s' % (object.name)"
 msgstr ""
+"(object.state in ('draft', 'sent') and 'Presupuesto - %s' % (object.name)) "
+"or 'Pedido - %s' % (object.name)"
 
 #. module: sale_payment_options
 #: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_template__active
@@ -52,15 +59,9 @@ msgid "Active"
 msgstr "Activo"
 
 #. module: sale_payment_options
-#: model_terms:ir.ui.view,arch_db:sale_payment_options.view_order_form_inherit_payment_options
-#: model_terms:ir.ui.view,arch_db:sale_payment_options.view_sale_payment_option_template_form
-msgid "Add Payment Option"
-msgstr "Agregar opción de pago"
-
-#. module: sale_payment_options
-#: model_terms:ir.ui.view,arch_db:sale_payment_options.view_sale_payment_option_wizard_form
-msgid "Cancel"
-msgstr "Cancelar"
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option__amount_per_installment
+msgid "Amount per Installment"
+msgstr "Monto por cuota"
 
 #. module: sale_payment_options
 #: model:ir.model,name:sale_payment_options.model_res_company
@@ -71,11 +72,6 @@ msgstr "Compañías"
 #: model:ir.model,name:sale_payment_options.model_res_config_settings
 msgid "Config Settings"
 msgstr "Ajustes de configuración"
-
-#. module: sale_payment_options
-#: model_terms:ir.ui.view,arch_db:sale_payment_options.view_sale_payment_option_wizard_form
-msgid "Confirm"
-msgstr "Confirmar"
 
 #. module: sale_payment_options
 #: model_terms:ir.actions.act_window,help:sale_payment_options.action_sale_payment_option_template
@@ -109,13 +105,6 @@ msgid "Currency"
 msgstr "Moneda"
 
 #. module: sale_payment_options
-#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option__options_json_rendered
-#: model_terms:ir.ui.view,arch_db:sale_payment_options.view_order_form_inherit_payment_options
-#: model_terms:ir.ui.view,arch_db:sale_payment_options.view_sale_payment_option_template_form
-msgid "Details"
-msgstr "Detalles"
-
-#. module: sale_payment_options
 #: model:ir.model.fields,field_description:sale_payment_options.field_res_company__sale_payment_options_by_line
 #: model:ir.model.fields,field_description:sale_payment_options.field_res_config_settings__sale_payment_options_by_line
 msgid "Discriminate Payment Options by Sale Line"
@@ -134,18 +123,14 @@ msgid "Display Name"
 msgstr "Nombre"
 
 #. module: sale_payment_options
-#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard_line__installment_qty
-msgid "Divisor"
-msgstr "Divisor"
-
-#. module: sale_payment_options
-#: model:ir.model.fields,help:sale_payment_options.field_sale_payment_option_wizard_line__surcharge_coefficient
+#. odoo-python
+#: code:addons/sale_payment_options/models/sale_payment_option.py:0
 msgid ""
-"Factor a aplicar sobre el monto total para calcular el cargo financiero. Por "
-"ejemplo el formato para el recargo de un 6% se aplica con el valor 1.06."
+"Every payment option has to add up to 100%% of the order:\n"
+"%s"
 msgstr ""
-"Factor a aplicar sobre el monto total para calcular el cargo financiero. Por "
-"ejemplo, el formato para el recargo de un 6% se aplica con el valor 1.06."
+"Cada opción de pago tiene que sumar el 100%% del pedido:\n"
+"%s"
 
 #. module: sale_payment_options
 #: model:ir.model.fields,field_description:sale_payment_options.field_res_company__id
@@ -158,11 +143,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard_line__id
 msgid "ID"
 msgstr "Id"
-
-#. module: sale_payment_options
-#: model_terms:ir.ui.view,arch_db:sale_payment_options.view_sale_payment_option_wizard_form
-msgid "Installment"
-msgstr "Cuota"
 
 #. module: sale_payment_options
 #: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard_line__card_installment_id
@@ -178,6 +158,11 @@ msgstr "Plan de cuotas"
 #: model_terms:ir.ui.view,arch_db:sale_payment_options.report_saleorder_payment_options_document
 msgid "Installment quantity"
 msgstr "Cantidad de cuotas"
+
+#. module: sale_payment_options
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option__installment_qty
+msgid "Installments"
+msgstr "Cuotas"
 
 #. module: sale_payment_options
 #. odoo-python
@@ -219,19 +204,20 @@ msgid "Op."
 msgstr "Op."
 
 #. module: sale_payment_options
-#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option__options_json
-msgid "Options Json"
-msgstr "Opciones Json"
+#. odoo-python
+#: code:addons/sale_payment_options/models/sale_payment_option.py:0
+msgid "Option %(number)s adds up to %(total)s%%"
+msgstr "La opción %(number)s suma %(total)s%%"
 
 #. module: sale_payment_options
-#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard__total
-msgid "Order Total"
-msgstr "Total del pedido"
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option__option_percentage_invalid
+msgid "Option Percentage Invalid"
+msgstr "Porcentaje de la opción inválido"
 
 #. module: sale_payment_options
-#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard__line_ids
-msgid "Payment Lines"
-msgstr "Líneas de pago"
+#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option__option_percentage_total
+msgid "Option Total %"
+msgstr "% total de la opción"
 
 #. module: sale_payment_options
 #: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_template__payment_option_ids
@@ -263,11 +249,6 @@ msgstr "Opciones de pago"
 #: model_terms:ir.ui.view,arch_db:sale_payment_options.res_config_settings_view_form
 msgid "Payment Options Display"
 msgstr "Visualización de opciones de pago"
-
-#. module: sale_payment_options
-#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard_line__percentage
-msgid "Percentage"
-msgstr "Porcentaje"
 
 #. module: sale_payment_options
 #: model:ir.model.fields,help:sale_payment_options.field_res_company__sale_payment_options_by_line
@@ -303,16 +284,6 @@ msgid "Sale payment option template"
 msgstr "Plantilla de opción de pago de venta"
 
 #. module: sale_payment_options
-#: model:ir.model,name:sale_payment_options.model_sale_payment_option_wizard
-msgid "Sale payment option wizard"
-msgstr "Asistente de opción de pago de venta"
-
-#. module: sale_payment_options
-#: model:ir.model,name:sale_payment_options.model_sale_payment_option_wizard_line
-msgid "Sale payment option wizard line"
-msgstr "Línea de asistente de opción de pago de venta"
-
-#. module: sale_payment_options
 #: model:ir.model,name:sale_payment_options.model_sale_order
 #: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard__sale_order_id
 msgid "Sales Order"
@@ -338,11 +309,6 @@ msgstr "Subtotal"
 #: model_terms:ir.ui.view,arch_db:sale_payment_options.report_saleorder_payment_options_document
 msgid "Surcharge"
 msgstr "Recargo"
-
-#. module: sale_payment_options
-#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard_line__surcharge_coefficient
-msgid "Surcharge Coefficient"
-msgstr "Coeficiente de recargo"
 
 #. module: sale_payment_options
 #. odoo-python
@@ -378,16 +344,15 @@ msgid "Total"
 msgstr "Total"
 
 #. module: sale_payment_options
-#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard_line__total_per_installment
-msgid "Total per Installment"
-msgstr "Total por cuota"
-
-#. module: sale_payment_options
 #: model_terms:ir.ui.view,arch_db:sale_payment_options.report_saleorder_payment_options_document
 msgid "Total per installment"
 msgstr "Total por cuota"
 
 #. module: sale_payment_options
-#: model:ir.model.fields,field_description:sale_payment_options.field_sale_payment_option_wizard_line__wizard_id
-msgid "Wizard"
-msgstr "Asistente"
+#: model:ir.model.fields,help:sale_payment_options.field_sale_payment_option__option_percentage_total
+msgid ""
+"What the whole option adds up to. An option that is not at 100% cannot be "
+"saved."
+msgstr ""
+"Cuánto suma la opción entera. Una opción que no está al 100% no se puede "
+"guardar."
