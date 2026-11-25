@@ -13,3 +13,27 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Language: es\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#. module: sale_exceptions_ignore_approve
+#: model_terms:ir.ui.view,arch_db:sale_exceptions_ignore_approve.view_sale_exception_confirm_form
+msgid ""
+"Click here to check the exceptions again and, if none of them is blocking, "
+"ignore them and confirm this Sale Order."
+msgstr ""
+"Haga clic aquí para volver a revisar las excepciones y, si ninguna es "
+"bloqueante, ignorarlas y confirmar esta orden de venta."
+
+#. module: sale_exceptions_ignore_approve
+#: model_terms:ir.ui.view,arch_db:sale_exceptions_ignore_approve.view_sale_exception_confirm_form
+msgid "Ignore Exceptions and Confirm"
+msgstr "Ignorar excepciones y confirmar"
+
+#. module: sale_exceptions_ignore_approve
+#. odoo-python
+#: code:addons/sale_exceptions_ignore_approve/models/sale_order.py:0
+msgid ""
+"These exceptions are blocking and can not be ignored:\n"
+"%(exceptions)s"
+msgstr ""
+"Estas excepciones son bloqueantes y no se pueden ignorar:\n"
+"%(exceptions)s"
