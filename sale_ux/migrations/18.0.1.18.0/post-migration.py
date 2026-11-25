@@ -7,8 +7,12 @@ _logger = logging.getLogger(__name__)
 
 def migrate(cr, version):
     env = api.Environment(cr, SUPERUSER_ID, {})
-    product_ids = env["product.template"].search([("image_128", "!=", False), ("image_sale_order", "=", False)])
+    ProductTemplate = env["product.template"]
+    product_ids = ProductTemplate.search([("image_128", "!=", False), ("image_sale_order", "=", False)]).ids
     for i in range(0, len(product_ids), 100):
-        product_chunk = product_ids[i : i + 100]
+        # Browse each chunk on its own so prefetch stays inside it, and drop
+        # the cache after writing: images are heavy and would pile up in memory.
+        product_chunk = ProductTemplate.browse(product_ids[i : i + 100])
         product_chunk._compute_image_sale_order()
-        _logger.info("Recomputed image_sale_order for %d products", i + 100)
+        env.invalidate_all()
+        _logger.info("Recomputed image_sale_order for %d products", min(i + 100, len(product_ids)))
