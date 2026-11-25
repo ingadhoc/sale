@@ -10,10 +10,9 @@ class SaleOrderLine(models.Model):
 
         Every entry is the list of segments of that payment option, so an option split
         across plans (e.g. 50% in 3 installments + 50% in 6) keeps its segments together.
-        Surcharge and installment quantity are read from ``options_json`` so the printed
-        amounts match the option as it was quoted. Installments are always computed on
-        the line amount taxes included, no matter how the report prints the line, because
-        they are what the customer is going to pay, just like the order wide table.
+        Installments are always computed on the line amount taxes included, no matter how the
+        report prints the line, because they are what the customer is going to pay, just like
+        the order wide table.
         """
         self.ensure_one()
         base_amount = self.price_total
@@ -21,21 +20,19 @@ class SaleOrderLine(models.Model):
             return []
 
         options = []
-        for option in self.order_id.payment_option_ids:
+        for option in self.order_id.payment_option_ids._grouped_by_option():
             segments = []
-            for item in option.options_json or []:
-                installment_qty = item.get("installment_qty") or 0
-                percentage = item.get("percentage") or 0.0
-                if not installment_qty or not percentage:
+            for row in option:
+                if not row.installment_qty or not row.percentage:
                     continue
-                surcharge_coefficient = 1.0 + (item.get("surcharge") or 0.0) / 100.0
-                amount = base_amount * percentage / 100.0 * surcharge_coefficient
+                surcharge_coefficient = row.card_installment_id.surcharge_coefficient
+                amount = base_amount * row.percentage * surcharge_coefficient
                 segments.append(
                     {
-                        "percentage": percentage,
-                        "installment_qty": installment_qty,
-                        "amount_per_installment": amount / installment_qty,
-                        "card_installment": item.get("card_installment") or "",
+                        "percentage": row.percentage * 100,
+                        "installment_qty": row.installment_qty,
+                        "amount_per_installment": amount / row.installment_qty,
+                        "card_installment": row.card_installment_id.display_name or "",
                     }
                 )
             if segments:

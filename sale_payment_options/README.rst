@@ -16,14 +16,11 @@ Sale Payment Options
 
 Allows defining and displaying multiple payment options on quotations and sales orders.
 
-- Configure several payment options per sales order.
-- Edit payment options only through a wizard.
-- Reusable payment option templates.
-- Visual display of payment options in the order.
-- Automatic recalculation if the order total changes.
-- Each payment option can have multiple installment plans.
+- Configure several payment options per sales order, in an editable list inside the quotation.
+- Reusable payment option templates, loaded like the quotation templates of Odoo.
+- Automatic recalculation while the order is edited, without waiting for a save.
+- Each payment option can combine several installment plans.
 - Payment options are printed from their own report action, with tables, subtotals, and totals.
-- Handles missing or malformed data gracefully in reports.
 - Optionally, print the installment amounts per sale order line instead of the order-wide table.
 
 Installation
@@ -69,11 +66,15 @@ The totals summary of the order is always printed, with the payment options belo
 Usage
 =====
 
-#. Open a sales order and go to the "Payment Options" tab.
-#. Click "Edit Payment Options" to use the wizard.
-#. Select a template or add payment lines manually.
-#. Save to apply the payment options to the order.
-#. The summary appears in the order (read-only).
+#. Open a sales order and go to the *Payment Options* tab.
+#. Add a row, pick its installment plan, and the row is a payment option of its own at 100%
+   of the order.
+#. To combine plans in one option (50% on debit and 50% in six installments), give two rows
+   the same *Op.* number and split the percentages between them. Every option has to add up
+   to 100%: while it does not, its rows are shown in red and the quotation cannot be saved.
+#. Or pick a *Payment Option Template*, which replaces the loaded options. As with the
+   quotation templates of Odoo, nothing is written until the quotation is saved: discarding
+   it leaves the options it had.
 #. Print with *Quotation / Order (Payment Options)* to get them on the PDF, as a table
    with installment details and totals, or discriminated by line if the setting above is
    enabled.

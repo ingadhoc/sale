@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class SalePaymentOptionTemplate(models.Model):
@@ -10,14 +10,8 @@ class SalePaymentOptionTemplate(models.Model):
     payment_option_ids = fields.One2many("sale.payment.option", "payment_option_template_id")
     active = fields.Boolean(default=True)
 
-    def action_open_payment_option_wizard(self):
-        self.ensure_one()
-        return {
-            "type": "ir.actions.act_window",
-            "res_model": "sale.payment.option.wizard",
-            "view_mode": "form",
-            "target": "new",
-            "context": {
-                "default_payment_option_template_id": self.id,
-            },
-        }
+    @api.constrains("payment_option_ids")
+    def _check_payment_options_percentages(self):
+        """Also on the template, so deleting part of an option does not leave the rest under 100%."""
+        for template in self:
+            template.payment_option_ids._check_payment_options_percentages()
