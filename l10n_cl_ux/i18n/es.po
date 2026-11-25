@@ -1,0 +1,19 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_cl_ux
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_cl_ux
+#. odoo-python
+#: code:addons/l10n_cl_ux/models/sale_order.py:0
+msgid "Cross Reference To Purchase Order"
+msgstr "Referencia Cruzada a la Orden de Compra"
