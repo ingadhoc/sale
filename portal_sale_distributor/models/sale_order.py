@@ -131,14 +131,9 @@ class SaleOrder(models.Model):
         return key + (self.env.user.has_group("portal_sale_distributor.group_portal_backend_distributor"),)
 
     def action_update_prices(self):
-        self = self.sudo()
-        super().action_update_prices()
-
-    def _compute_margin(self):
-        # sale_margin's margin is stored and restricted to internal users since 20: recomputing
-        # it as a distributor (any line change) would raise. Same workaround as purchase_price.
-        self = self.sudo()
-        super()._compute_margin()
+        # the sudo must not reach orders the user can not modify: the method is public
+        self.check_access("write")
+        return super(SaleOrder, self.sudo()).action_update_prices()
 
     def _message_get_suggested_recipients_batch(self, **kwargs):
         # to keep odoobot out of the suggestions, mail reads base.partner_root.email_normalized

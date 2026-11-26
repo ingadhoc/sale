@@ -2,7 +2,11 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
+from odoo import Command
+from odoo.exceptions import AccessError
 from odoo.tests.common import TransactionCase
+
+from ..models.sale_order import SaleOrder
 
 
 class TestDistributorAccess(TransactionCase):
@@ -39,6 +43,9 @@ class TestDistributorAccess(TransactionCase):
         cls.distributor.partner_id.parent_id = cls.commercial
         cls.order_in = cls.env["sale.order"].create({"partner_id": cls.child.id})
         cls.order_out = cls.env["sale.order"].create({"partner_id": cls.outsider.id})
+        cls.product = cls.env["product.product"].create(
+            {"name": "Distributor access product", "type": "consu", "list_price": 100}
+        )
 
     def test_distributor_accesses(self):
         orders = self.env["sale.order"].with_user(self.distributor)
@@ -78,3 +85,46 @@ class TestDistributorAccess(TransactionCase):
             self.assertFalse(outsider.with_user(self.distributor).has_access("read"))
         with self.subTest("no modifica el remito de un contacto ajeno"):
             self.assertFalse(outsider.with_user(self.distributor).has_access("write"))
+
+    def _order_with_line(self, partner):
+        return self.env["sale.order"].create(
+            {
+                "partner_id": partner.id,
+                "order_line": [Command.create({"product_id": self.product.id, "price_unit": 77})],
+            }
+        )
+
+    def test_distributor_can_not_update_prices_of_an_outsider_order(self):
+        """`action_update_prices` pasa a sudo: antes tiene que chequear que el distribuidor puede
+        modificar la orden, porque es público y se llama por RPC aunque el botón no se vea."""
+        self.env["exception.rule"].search([]).write({"active": False})
+        order = self._order_with_line(self.outsider)
+        order.action_confirm()
+        # straight to this module's override: sale_margin_ux, when installed, reads the lines as
+        # the user before reaching it and would raise on its own, hiding the case
+        with self.assertRaises(AccessError):
+            SaleOrder.action_update_prices(order.with_user(self.distributor))
+        self.assertEqual(order.order_line.price_unit, 77)
+
+    def test_distributor_can_not_add_lines_to_an_outsider_order(self):
+        """El `create` de líneas corre en sudo y salteaba la fila de `sale.order.line` de `ir.access`."""
+        with self.assertRaises(AccessError):
+            self.env["sale.order.line"].with_user(self.distributor).create(
+                [{"order_id": self.order_out.id, "product_id": self.product.id}]
+            )
+        self.assertFalse(self.order_out.order_line)
+
+    def test_distributor_works_on_its_own_order(self):
+        """Los computados de `sale_margin` que se guardan están restringidos a usuarios internos, y el
+        ORM ya los calcula como superusuario: el distribuidor crea, edita y actualiza precios igual."""
+        order = self._order_with_line(self.child).with_user(self.distributor)
+        with self.subTest("edita una línea"):
+            order.order_line.product_uom_qty = 3
+            order.order_line.flush_recordset()
+            self.assertEqual(order.order_line.product_uom_qty, 3)
+        with self.subTest("agrega una línea"):
+            order.write({"order_line": [Command.create({"product_id": self.product.id})]})
+            self.assertEqual(len(order.order_line), 2)
+        with self.subTest("actualiza los precios"):
+            order.action_update_prices()
+            self.assertEqual(order.sudo().order_line.mapped("price_unit"), [100, 100])
