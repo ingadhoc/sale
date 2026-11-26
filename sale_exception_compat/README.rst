@@ -45,6 +45,10 @@ To use this module, you need to:
 
 #. Confirm a sales order that matches an exception rule: the exception popup
    shows up and everything the confirmation did is rolled back.
+#. When the confirmation does not come from the Confirm button (field
+   service, payments, automations, crons), it is also rolled back and the
+   caller gets an error with the names of the exception rules, as in
+   ``base_exception``.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
