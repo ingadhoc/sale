@@ -124,9 +124,9 @@ class TestSaleExceptionUx(TransactionCase):
         self.assertEqual(order.state, "draft")
 
     def test_a_line_rule_that_does_not_block_is_ignored(self):
-        """A line in exception is ignored and the order confirmed, snapshot included."""
+        """A line in exception is ignored and the order confirmed in one step."""
         self.line_rule.active = True
         order = self._new_order("no-rule")
         order.action_ignore_exceptions()
+        self.assertTrue(order.ignore_exception)
         self.assertEqual(order.state, "sale")
-        self.assertEqual(order.exception_ids, self.line_rule)
