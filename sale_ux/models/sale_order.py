@@ -28,6 +28,12 @@ class SaleOrder(models.Model):
     payment_term_id = fields.Many2one(
         tracking=True,
     )
+    partner_invoice_id = fields.Many2one(
+        tracking=True,
+    )
+    partner_shipping_id = fields.Many2one(
+        tracking=True,
+    )
     force_invoiced_status = fields.Selection(
         [("no", "Nothing to Invoice"), ("invoiced", "Fully Invoiced")],
         tracking=True,
