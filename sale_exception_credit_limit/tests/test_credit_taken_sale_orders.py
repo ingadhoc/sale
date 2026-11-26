@@ -146,3 +146,10 @@ class TestCreditTakenSaleOrders(AccountTestInvoicingCommon):
         self.assertEqual(line.quantity_returned, 4.0)
         # Pendiente real: -4. Antes del fix la devolución lo llevaba a -8 y descontaba 800.
         self.assertEqual(self._credit_taken(), 0.0)
+
+    def test_draft_credit_note_subtracts_from_credit_taken(self):
+        """A draft credit note is credit about to be given back, not more debt"""
+        credit_note = self.init_invoice("out_refund", partner=self.partner, amounts=[400.0])
+
+        self.assertEqual(credit_note.state, "draft")
+        self.assertEqual(self._credit_taken(), -credit_note.amount_total)
