@@ -1,0 +1,163 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_order_type_report_partner
+# 
+# Translators:
+# ADHOC - Bot <transbot@adhoc.com.ar>, 2026
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 20.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-26 12:55+0000\n"
+"PO-Revision-Date: 2026-11-26 12:55+0000\n"
+"Last-Translator: ADHOC - Bot <transbot@adhoc.com.ar>, 2026\n"
+"Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+
+#. module: sale_order_type_report_partner
+#: model:ir.module.module,description:base.module_sale_order_type_report_partner
+msgid ""
+".. |company| replace:: ADHOC SA\n"
+"\n"
+".. |company_logo| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-logo.png\n"
+"   :alt: ADHOC SA\n"
+"   :target: https://www.adhoc.com.ar\n"
+"\n"
+".. |icon| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-icon.png\n"
+"\n"
+".. image:: https://img.shields.io/badge/license-AGPL--3-blue.png\n"
+"   :target: https://www.gnu.org/licenses/agpl\n"
+"   :alt: License: AGPL-3\n"
+"\n"
+"==============================\n"
+"Sale Order Type Report Partner\n"
+"==============================\n"
+"\n"
+"Prints the sale order report header with the data of a partner chosen on the\n"
+"sale order type, instead of the data of the company.\n"
+"\n"
+"It is meant for companies that sell under more than one commercial brand with a\n"
+"single legal entity: the brand changes with the order type, the invoicing\n"
+"company does not.\n"
+"\n"
+"The module has no dependency on any localization, so the behaviour is the same\n"
+"on every country.\n"
+"\n"
+"Installation\n"
+"============\n"
+"\n"
+"To install this module, you need to:\n"
+"\n"
+"#. Just install this module\n"
+"\n"
+"Configuration\n"
+"=============\n"
+"\n"
+"To configure this module, you need to:\n"
+"\n"
+"#. Go to Sales / Configuration / Sale Order Types\n"
+"#. Open the type you want to print with another header\n"
+"#. Set the \"Report Partner\" field with the partner of that brand\n"
+"#. Load the brand logo on the image of that partner\n"
+"\n"
+"Usage\n"
+"=====\n"
+"\n"
+"To use this module, you need to:\n"
+"\n"
+"#. Create a sales order and set the configured type on it\n"
+"#. Print the quotation or the order\n"
+"\n"
+"The header of the report shows the name, the address, the phone and the tax id\n"
+"of the report partner, and its image as the logo. Everything else on the\n"
+"report, and every other report, is left untouched. A type without a report\n"
+"partner keeps printing the company data.\n"
+"\n"
+".. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas\n"
+"   :alt: Try me on Runbot\n"
+"   :target: http://runbot.adhoc.com.ar/\n"
+"\n"
+"Known issues / Roadmap\n"
+"======================\n"
+"\n"
+"* Only the sale order report reads the field. The invoice and the delivery\n"
+"  reports keep printing the company data.\n"
+"* The logo is swapped with one inheritance per report layout, because the\n"
+"  layouts of ``web`` render ``company.logo`` inline and share no template for\n"
+"  it. A new layout added by Odoo needs its own inheritance here.\n"
+"\n"
+"Bug Tracker\n"
+"===========\n"
+"\n"
+"Bugs are tracked on `GitHub Issues\n"
+"<https://github.com/ingadhoc/sale/issues>`_. In case of trouble, please\n"
+"check there if your issue has already been reported. If you spotted it first,\n"
+"help us smashing it by providing a detailed and welcomed feedback.\n"
+"\n"
+"Credits\n"
+"=======\n"
+"\n"
+"Images\n"
+"------\n"
+"\n"
+"* |company| |icon|\n"
+"\n"
+"Contributors\n"
+"------------\n"
+"\n"
+"Maintainer\n"
+"----------\n"
+"\n"
+"|company_logo|\n"
+"\n"
+"This module is maintained by the |company|.\n"
+"\n"
+"To contribute to this module, please visit https://www.adhoc.com.ar.\n"
+msgstr ""
+
+#. module: sale_order_type_report_partner
+#: model:ir.model.fields,field_description:sale_order_type_report_partner.field_sale_order_type__display_name
+msgid "Display Name"
+msgstr "Mostrar nombre"
+
+#. module: sale_order_type_report_partner
+#: model:ir.model.fields,field_description:sale_order_type_report_partner.field_sale_order_type__id
+msgid "ID"
+msgstr "ID"
+
+#. module: sale_order_type_report_partner
+#: model:ir.model.fields,help:sale_order_type_report_partner.field_sale_order_type__report_partner_id
+msgid ""
+"Partner whose name, address, tax id and image are printed on the sale order "
+"report header, instead of the company ones. Useful when several commercial "
+"brands share the same legal entity."
+msgstr ""
+"Contacto cuyo nombre, dirección, identificación fiscal e imagen se imprimen en "
+"el encabezado del reporte del pedido de venta, en lugar de los de la compañía. "
+"Sirve cuando varias marcas comerciales comparten la misma razón social."
+
+#. module: sale_order_type_report_partner
+#: model:ir.model.fields,field_description:sale_order_type_report_partner.field_sale_order_type__report_partner_id
+msgid "Report Partner"
+msgstr "Contacto para Encabezado"
+
+#. module: sale_order_type_report_partner
+#: model:ir.module.module,shortdesc:base.module_sale_order_type_report_partner
+msgid "Sale Order Type Report Partner"
+msgstr "Contacto para encabezado por tipo de pedido de venta"
+
+#. module: sale_order_type_report_partner
+#: model_terms:ir.ui.view,arch_db:sale_order_type_report_partner.company_address_list
+msgid "Tax ID"
+msgstr "Número de identificación fiscal"
+
+#. module: sale_order_type_report_partner
+#: model:ir.model,name:sale_order_type_report_partner.model_sale_order_type
+msgid "Type of sale order"
+msgstr "Tipo de pedido de venta"
