@@ -57,3 +57,4 @@ access_product_combo_item_portal_distributor,product.combo.item.portal.distribut
 access_stock_reference_portal_distributor,stock.reference.portal.distributor,stock.model_stock_reference,group_portal_backend_distributor,1,0,0,0
 access_stock_warehouse_orderpoint_portal_distributor,stock.warehouse.orderpoint.portal.distributor,stock.model_stock_warehouse_orderpoint,group_portal_backend_distributor,1,0,0,0
 access_crm_tag_portal_distributor,crm.tag.portal.distributor,sales_team.model_crm_tag,group_portal_backend_distributor,1,0,0,0
+access_res_partner_category_portal_distributor,res.partner.category.portal.distributor,base.model_res_partner_category,group_portal_backend_distributor,1,0,0,0
