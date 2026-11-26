@@ -1,4 +1,6 @@
 from odoo import models
+from odoo.exceptions import ValidationError
+from odoo.http import request
 from odoo.tools import config
 
 
@@ -17,9 +19,23 @@ class SaleOrder(models.Model):
         # Orders created in the transaction we just rolled back are gone.
         for sale in self.exists():
             sale.write({"exception_ids": [(6, 0, exception_map.get(sale.id, []))]})
+        # Any caller other than the confirm button would keep running on the
+        # rolled-back transaction, so it has to stop here.
+        if not self._called_from_confirm_button():
+            exception_ids = {rule_id for rule_ids in exception_map.values() for rule_id in rule_ids}
+            raise ValidationError("\n".join(self.env["exception.rule"].browse(exception_ids).mapped("name")))
         if not self.env.company.sale_exception_show_popup:
             return
         return self._popup_exceptions()
+
+    def _called_from_confirm_button(self):
+        # Tests have no request and expect the popup flow.
+        if config["test_enable"]:
+            return True
+        return bool(request) and (request.params.get("model"), request.params.get("method")) == (
+            self._name,
+            "action_confirm",
+        )
 
     def action_confirm(self):
         if self.detect_exceptions():
