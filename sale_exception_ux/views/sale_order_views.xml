@@ -29,7 +29,7 @@
         <field name="arch" type="xml">
             <xpath expr="//button[@name='action_ignore_exceptions']" position="attributes">
                 <attribute name="groups">base_exception.group_exception_rule_manager,sales_team.group_sale_manager</attribute>
-                <attribute name="string">Ignore Exceptions and Confirm</attribute>
+                <attribute name="string">Ignore and Confirm</attribute>
                 <attribute
                     name="help"
                 >Click here to check the exceptions again and, if none of them is blocking, ignore them and confirm this Sale Order.</attribute>

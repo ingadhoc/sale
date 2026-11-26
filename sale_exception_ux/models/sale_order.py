@@ -2,6 +2,8 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
+from collections import defaultdict
+
 from odoo import Command, models
 from odoo.exceptions import UserError
 
@@ -15,14 +17,25 @@ class SaleOrder(models.Model):
         ``exception_ids`` holds the result of the last detection, and an order
         with ``ignore_exception`` is left out of every detection that follows,
         so neither of them tells whether a blocking rule fails today.
+
+        Every rule is evaluated before anything is written. base_exception
+        stores what it detects on the order lines through a second database
+        connection, which would wait forever on an order this very transaction
+        had already written, and the request would never reach its commit.
         """
         orders = self.with_context(recheck_ignored_exceptions=True)
+        to_remove = defaultdict(self.browse)
+        to_add = defaultdict(self.browse)
         for records in (orders, orders.order_line):
             __, rules_to_remove, rules_to_add = records._get_exceptions()
             for rule_id, rule_orders in rules_to_remove.items():
-                rule_orders.exception_ids = [Command.unlink(rule_id)]
+                to_remove[rule_id] |= rule_orders
             for rule_id, rule_orders in rules_to_add.items():
-                rule_orders.exception_ids = [Command.link(rule_id)]
+                to_add[rule_id] |= rule_orders
+        for rule_id, rule_orders in to_remove.items():
+            rule_orders.exception_ids = [Command.unlink(rule_id)]
+        for rule_id, rule_orders in to_add.items():
+            rule_orders.exception_ids = [Command.link(rule_id)]
         return self.exception_ids
 
     def action_ignore_exceptions(self):

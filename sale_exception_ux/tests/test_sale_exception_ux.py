@@ -31,6 +31,16 @@ class TestSaleExceptionUx(TransactionCase):
                 "sequence": 10,
             }
         )
+        cls.line_rule = cls.env["exception.rule"].create(
+            {
+                "name": "Needs more than one unit",
+                "model": "sale.order.line",
+                "exception_type": "by_py_code",
+                "code": "failed = self.product_uom_qty < 2",
+                "sequence": 20,
+                "active": False,
+            }
+        )
 
     def _new_order(self, client_order_ref):
         return self.env["sale.order"].create(
@@ -103,3 +113,20 @@ class TestSaleExceptionUx(TransactionCase):
         wizard.action_confirm()
         self.assertTrue(order.ignore_exception)
         self.assertEqual(order.state, "sale")
+
+    def test_a_blocking_line_rule_stops_the_button(self):
+        """The rules of the lines decide too, not only the ones of the order."""
+        order = self._new_order("no-rule")
+        self.line_rule.write({"active": True, "is_blocking": True})
+        with self.assertRaises(UserError) as error:
+            order.action_ignore_exceptions()
+        self.assertIn(self.line_rule.name, str(error.exception))
+        self.assertEqual(order.state, "draft")
+
+    def test_a_line_rule_that_does_not_block_is_ignored(self):
+        """A line in exception is ignored and the order confirmed, snapshot included."""
+        self.line_rule.active = True
+        order = self._new_order("no-rule")
+        order.action_ignore_exceptions()
+        self.assertEqual(order.state, "sale")
+        self.assertEqual(order.exception_ids, self.line_rule)
