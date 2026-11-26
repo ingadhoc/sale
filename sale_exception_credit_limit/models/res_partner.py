@@ -135,6 +135,10 @@ class ResPartner(models.Model):
                         total = line.move_id.currency_id._convert(
                             taxes["total_included"], company_id.currency_id, company_id, fields.Date.today()
                         )
+                    # A draft credit note is credit the customer is about to get back, not debt:
+                    # it must subtract, the way the posted one already does through credit.
+                    if line.move_id.move_type == "out_refund":
+                        total = -total
                     draft_invoice_lines_amount += total
 
                 # The standard credit already adds up the whole company hierarchy (it searches the journal items
