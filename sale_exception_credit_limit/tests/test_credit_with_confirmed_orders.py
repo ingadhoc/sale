@@ -37,3 +37,10 @@ class TestCreditWithConfirmedOrders(AccountTestInvoicingCommon):
 
     def test_credit_taken_is_the_same_from_any_company_of_the_hierarchy(self):
         self.assertEqual(self._credit_taken(self.branch), self.expected)
+
+    def test_draft_credit_note_subtracts_from_credit_taken(self):
+        """A draft credit note is credit about to be given back, not more debt"""
+        credit_note = self.init_invoice("out_refund", partner=self.partner, amounts=[400.0])
+
+        self.assertEqual(credit_note.state, "draft")
+        self.assertEqual(self._credit_taken(self.root_company), self.expected - credit_note.amount_total)
