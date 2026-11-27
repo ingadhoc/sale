@@ -4,3 +4,4 @@
 ##############################################################################
 from . import test_distributor_stock_access
 from . import test_distributor_partner_access
+from . import test_distributor_pricelist_access
