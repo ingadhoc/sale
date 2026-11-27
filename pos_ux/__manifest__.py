@@ -1,12 +1,13 @@
 {
     "name": "Point of Sale UX",
-    "version": "19.0.1.4.1",
+    "version": "19.0.1.5.0",
     "category": "Point of Sale",
     "author": "ADHOC SA",
     "depends": [
         "point_of_sale",
     ],
     "data": [
+        "data/ir_cron.xml",
         "views/pos_session_view.xml",
         "views/res_config_settings_view.xml",
     ],

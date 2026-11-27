@@ -11,6 +11,10 @@ patch(Navbar.prototype, {
         this.orm = useService("orm");
     },
 
+    async updateRegister() {
+        this.pos.askFullReload();
+    },
+
     async setContingencyMode(){
         let confirmText = this.pos.session.invoice_contingency ? _t('End contingecy'):  _t('Set contingecy');
         let reason = _t('If you enter the contingency mode, invoices will never be created.');

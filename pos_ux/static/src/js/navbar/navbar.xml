@@ -12,6 +12,11 @@
                 </span>
             </div>
         </xpath>
+        <xpath expr="//DropdownItem[contains(@onSelected, 'reloadProducts')]" position="after">
+            <DropdownItem t-if="!this.pos.data.network.offline" onSelected="() => this.updateRegister()">
+                Update Register
+            </DropdownItem>
+        </xpath>
     </t>
 
 </templates>
