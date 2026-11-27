@@ -21,6 +21,11 @@ class SaleOrder(models.Model):
     )
 
     def action_confirm_distributor(self):
+        # the distributor gets a chatter message instead of the exception popup, so the
+        # detection must not roll back: with this key detect_exceptions() returns the
+        # rules that apply, as it did before the base_exception refactor, instead of
+        # raising BaseExceptionError and undoing the message.
+        self = self.with_context(base_exception_no_rollback={self._name: self.ids})
         if self.detect_exceptions() != []:
             self.sudo().message_post(
                 body=_(
