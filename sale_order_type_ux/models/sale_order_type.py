@@ -82,17 +82,25 @@ class SaleOrderTypology(models.Model):
     @api.depends("company_id")
     def _compute_invoice_company_id(self):
         for rec in self:
-            rec.invoice_company_id = rec.company_id
+            # without company we fall back to the journal company, the same value the 19.0.1.1.0 migration backfills
+            rec.invoice_company_id = rec.company_id or rec.journal_id.company_id
 
     @api.depends("invoice_company_id")
     def _compute_journal_domain(self):
         for rec in self:
-            rec.journal_domain = Domain(
-                rec.env["account.journal"]._check_company_domain(rec.invoice_company_id)
-            ) & Domain("type", "=", "sale")
+            domain = Domain("type", "=", "sale")
+            if rec.invoice_company_id:
+                domain &= Domain(rec.env["account.journal"]._check_company_domain(rec.invoice_company_id))
+            rec.journal_domain = domain
 
     @api.constrains("invoice_company_id", "journal_id")
     def _check_journal_company(self):
         for rec in self:
             if rec.journal_id and rec.journal_id not in rec.env["account.journal"].search(rec.journal_domain):
-                raise ValidationError("The selected 'Invoice Journal' does not belong to the selected invoice company.")
+                raise ValidationError(
+                    self.env._(
+                        "The journal '%s' of the sale order type '%s' does not belong to its invoice company.",
+                        rec.journal_id.display_name,
+                        rec.display_name,
+                    )
+                )
