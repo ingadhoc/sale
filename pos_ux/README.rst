@@ -54,6 +54,24 @@ Point of Sale UX
     for sessions closed before installing it.
 
 
+11. **Update of an open register after a database update**. When the database
+    is updated with registers open, they keep running the screen they loaded
+    before the update and may get stuck. This module adds:
+
+    a. An "Update Register" item in the register menu, next to "Reload Data",
+       that does a full reload (local data, cache and service worker), so the
+       register comes back with the last version.
+
+    b. A check of the POS files stamp (the ``unique`` of the
+       ``point_of_sale.assets_prod`` bundle) on startup, on reconnection, when
+       closing the register, and whenever the ``ir.cron`` of this module
+       notices the stamp changed and tells the open registers through the bus.
+       An outdated register shows a sticky warning and reloads on its own once
+       it stays free for a minute.
+
+    Neither of them reloads when there are paid orders that did not reach the
+    server, or without connection: the reload deletes the local data.
+
 Installation
 ============
 

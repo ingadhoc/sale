@@ -1,5 +1,11 @@
-from odoo import fields, models
+import hashlib
+import re
+
+from odoo import api, fields, models
 from odoo.exceptions import UserError
+
+POS_ASSETS_BUNDLE = "point_of_sale.assets_prod"
+ASSETS_VERSION_PARAM = "pos_ux.notified_assets_version"
 
 
 class PosConfig(models.Model):
@@ -59,3 +65,36 @@ class PosConfig(models.Model):
                     )
                 )
         return super().open_ui()
+
+    @api.model
+    def get_pos_assets_version(self):
+        """Stamp of the POS screen files, as served right now by the server.
+
+        It changes whenever the assets bundle is rebuilt (any module update that
+        touches the POS), unlike the Odoo version, which stays on "19.0".
+        """
+        links = self.env["ir.qweb"]._get_asset_links(POS_ASSETS_BUNDLE, css=False, js=True)
+        for link in links:
+            # The stamp is the unique of /web/assets/<unique>/<bundle>.min.js, the
+            # same one the register reads from the script tag it is running.
+            match = re.match(r"/web/assets/([^/]+)/", link)
+            if match and POS_ASSETS_BUNDLE in link:
+                return match.group(1)
+        return hashlib.sha1("|".join(links).encode()).hexdigest()[:16]
+
+    @api.model
+    def notify_outdated_pos_sessions(self):
+        """Tell every open register that the POS files changed (cron)."""
+        param = self.env["ir.config_parameter"].sudo()
+        version = self.get_pos_assets_version()
+        previous = param.get_param(ASSETS_VERSION_PARAM)
+        if previous == version:
+            return False
+        param.set_param(ASSETS_VERSION_PARAM, version)
+        if not previous:
+            # First run: nothing to compare against, so nobody is outdated yet.
+            return False
+        configs = self.env["pos.session"].search([("state", "!=", "closed")]).config_id
+        for config in configs:
+            config._notify("POS_UX_ASSETS_VERSION", {"version": version})
+        return bool(configs)

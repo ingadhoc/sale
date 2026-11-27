@@ -245,3 +245,89 @@ msgstr "Usuario"
 #: model:ir.model.fields.selection,name:pos_ux.selection__pos_config__billing_behavior__invoice_required
 msgid "allways Invoice"
 msgstr "siempre factura"
+
+#. module: pos_ux
+#. odoo-javascript
+#: code:addons/pos_ux/static/src/overrides/services/pos_store.js:0
+msgid ""
+"There are %s paid orders that did not reach the server. Check the internet "
+"connection and try again: updating now would lose them."
+msgstr ""
+"Hay %s ventas cobradas que no llegaron al servidor. Revise la conexión a "
+"internet y vuelva a intentar: actualizar ahora las perdería."
+
+#. module: pos_ux
+#. odoo-javascript
+#: code:addons/pos_ux/static/src/overrides/services/pos_store.js:0
+msgid ""
+"There is a paid order that did not reach the server. Check the internet "
+"connection and try again: updating now would lose it."
+msgstr ""
+"Hay una venta cobrada que no llegó al servidor. Revise la conexión a "
+"internet y vuelva a intentar: actualizar ahora la perdería."
+
+#. module: pos_ux
+#. odoo-javascript
+#: code:addons/pos_ux/static/src/overrides/services/pos_store.js:0
+msgid "A new version of the register is available."
+msgstr "Hay una versión nueva de la caja."
+
+#. module: pos_ux
+#. odoo-javascript
+#: code:addons/pos_ux/static/src/overrides/services/pos_store.js:0
+msgid "No connection"
+msgstr "Sin conexión"
+
+#. module: pos_ux
+#. odoo-javascript
+#: code:addons/pos_ux/static/src/overrides/services/pos_store.js:0
+msgid "Outdated register"
+msgstr "Caja desactualizada"
+
+#. module: pos_ux
+#: model:ir.actions.server,name:pos_ux.ir_cron_notify_outdated_pos_sessions_ir_actions_server
+msgid "POS: notify open registers when the POS files change"
+msgstr "POS: avisar a las cajas abiertas cuando cambian los archivos del POS"
+
+#. module: pos_ux
+#. odoo-javascript
+#: code:addons/pos_ux/static/src/overrides/services/pos_store.js:0
+msgid "Paid orders not sent yet"
+msgstr "Ventas cobradas sin subir"
+
+#. module: pos_ux
+#. odoo-javascript
+#: code:addons/pos_ux/static/src/overrides/services/pos_store.js:0
+msgid ""
+"The register cannot be updated without internet connection, because the "
+"update deletes the data that lets it work offline."
+msgstr ""
+"No se puede actualizar la caja sin conexión a internet, porque la "
+"actualización borra los datos que le permiten trabajar sin conexión."
+
+#. module: pos_ux
+#. odoo-javascript
+#: code:addons/pos_ux/static/src/overrides/services/pos_store.js:0
+msgid ""
+"The register is going to be reloaded with the last version. It may take a "
+"few minutes."
+msgstr ""
+"Se va a recargar la caja con la última versión. Puede tardar unos minutos."
+
+#. module: pos_ux
+#. odoo-javascript
+#: code:addons/pos_ux/static/src/overrides/services/pos_store.js:0
+msgid "Update"
+msgstr "Actualizar"
+
+#. module: pos_ux
+#. odoo-javascript
+#: code:addons/pos_ux/static/src/js/navbar/navbar.xml:0
+msgid "Update Register"
+msgstr "Actualizar caja"
+
+#. module: pos_ux
+#. odoo-javascript
+#: code:addons/pos_ux/static/src/overrides/services/pos_store.js:0
+msgid "Update register"
+msgstr "Actualizar caja"
