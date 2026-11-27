@@ -6,14 +6,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-13 15:52+0000\n"
-"PO-Revision-Date: 2026-08-13 15:52+0000\n"
+"POT-Creation-Date: 2026-11-27 15:43+0000\n"
+"PO-Revision-Date: 2026-11-27 15:43+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: pos_ux
+#. odoo-javascript
+#: code:addons/pos_ux/static/src/overrides/services/pos_store.js:0
+msgid "A new version of the register is available."
+msgstr ""
 
 #. module: pos_ux
 #: model:ir.model.fields,field_description:pos_ux.field_pos_config__billing_behavior
@@ -89,6 +95,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_ux.field_pos_order__display_name
 #: model:ir.model.fields,field_description:pos_ux.field_pos_payment_method__display_name
 #: model:ir.model.fields,field_description:pos_ux.field_pos_session__display_name
+#: model:ir.model.fields,field_description:pos_ux.field_report_point_of_sale_report_saledetails__display_name
 #: model:ir.model.fields,field_description:pos_ux.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:pos_ux.field_res_users__display_name
 msgid "Display Name"
@@ -117,6 +124,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_ux.field_pos_order__id
 #: model:ir.model.fields,field_description:pos_ux.field_pos_payment_method__id
 #: model:ir.model.fields,field_description:pos_ux.field_pos_session__id
+#: model:ir.model.fields,field_description:pos_ux.field_report_point_of_sale_report_saledetails__id
 #: model:ir.model.fields,field_description:pos_ux.field_res_config_settings__id
 #: model:ir.model.fields,field_description:pos_ux.field_res_users__id
 msgid "ID"
@@ -159,6 +167,12 @@ msgid "Invoiced"
 msgstr ""
 
 #. module: pos_ux
+#. odoo-javascript
+#: code:addons/pos_ux/static/src/overrides/services/pos_store.js:0
+msgid "No connection"
+msgstr ""
+
+#. module: pos_ux
 #. odoo-python
 #: code:addons/pos_ux/models/pos_config.py:0
 msgid ""
@@ -181,8 +195,30 @@ msgid "Not Invoiced"
 msgstr ""
 
 #. module: pos_ux
+#. odoo-javascript
+#: code:addons/pos_ux/static/src/overrides/services/pos_store.js:0
+msgid "Outdated register"
+msgstr ""
+
+#. module: pos_ux
+#: model:ir.actions.server,name:pos_ux.ir_cron_notify_outdated_pos_sessions_ir_actions_server
+msgid "POS: notify open registers when the POS files change"
+msgstr ""
+
+#. module: pos_ux
+#. odoo-javascript
+#: code:addons/pos_ux/static/src/overrides/services/pos_store.js:0
+msgid "Paid orders not sent yet"
+msgstr ""
+
+#. module: pos_ux
 #: model:ir.model,name:pos_ux.model_pos_config
 msgid "Point of Sale Configuration"
+msgstr ""
+
+#. module: pos_ux
+#: model:ir.model,name:pos_ux.model_report_point_of_sale_report_saledetails
+msgid "Point of Sale Details"
 msgstr ""
 
 #. module: pos_ux
@@ -220,6 +256,56 @@ msgstr ""
 #. module: pos_ux
 #: model_terms:ir.ui.view,arch_db:pos_ux.view_pos_session_form
 msgid "Set contingency mode"
+msgstr ""
+
+#. module: pos_ux
+#. odoo-javascript
+#: code:addons/pos_ux/static/src/overrides/services/pos_store.js:0
+msgid ""
+"The register cannot be updated without internet connection, because the "
+"update deletes the data that lets it work offline."
+msgstr ""
+
+#. module: pos_ux
+#. odoo-javascript
+#: code:addons/pos_ux/static/src/overrides/services/pos_store.js:0
+msgid ""
+"The register is going to be reloaded with the last version. It may take a "
+"few minutes."
+msgstr ""
+
+#. module: pos_ux
+#. odoo-javascript
+#: code:addons/pos_ux/static/src/overrides/services/pos_store.js:0
+msgid ""
+"There are %s paid orders that did not reach the server. Check the internet "
+"connection and try again: updating now would lose them."
+msgstr ""
+
+#. module: pos_ux
+#. odoo-javascript
+#: code:addons/pos_ux/static/src/overrides/services/pos_store.js:0
+msgid ""
+"There is a paid order that did not reach the server. Check the internet "
+"connection and try again: updating now would lose it."
+msgstr ""
+
+#. module: pos_ux
+#. odoo-javascript
+#: code:addons/pos_ux/static/src/overrides/services/pos_store.js:0
+msgid "Update"
+msgstr ""
+
+#. module: pos_ux
+#. odoo-javascript
+#: code:addons/pos_ux/static/src/js/navbar/navbar.xml:0
+msgid "Update Register"
+msgstr ""
+
+#. module: pos_ux
+#. odoo-javascript
+#: code:addons/pos_ux/static/src/overrides/services/pos_store.js:0
+msgid "Update register"
 msgstr ""
 
 #. module: pos_ux
