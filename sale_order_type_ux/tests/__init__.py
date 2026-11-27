@@ -3,3 +3,4 @@
 # directory
 ##############################################################################
 from . import test_sale_order_type_picking_type
+from . import test_sale_order_type_invoice_company
