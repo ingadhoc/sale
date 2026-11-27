@@ -90,3 +90,24 @@ class TestSaleOrderTypeUx(SaleOrderTypeUxCommon):
             order.type_id = self.type_a
             order._onchange_team_id()
             self.assertEqual(order.team_id, self.sales_team)
+
+    def test_company_not_active_follows_the_company_selector(self):
+        """The warning shows only when a company of the type is out of the selector."""
+        self.type_a.company_id = self.company
+        self.type_a.invoice_company_id = self.other_company
+        allowed = self.company | self.other_company
+
+        with self.subTest("las dos empresas activas"):
+            sale_type = self.type_a.with_context(allowed_company_ids=allowed.ids)
+            self.assertFalse(sale_type.company_not_active)
+
+        with self.subTest("la empresa de facturación fuera del selector"):
+            sale_type = self.type_a.with_context(allowed_company_ids=self.company.ids)
+            self.assertTrue(sale_type.company_not_active)
+
+    def test_form_view_keeps_the_blocks_in_order(self):
+        """The form loads with every installed extension and keeps the blocks in order."""
+        arch = self.env["sale.order.type"].get_views([(False, "form")])["views"]["form"]["arch"]
+        blocks = ["grp_general", "grp_commercial", "grp_delivery", "grp_invoicing"]
+        positions = [arch.index(f'name="{block}"') for block in blocks]
+        self.assertEqual(positions, sorted(positions))

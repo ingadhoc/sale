@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-27 16:16+0000\n"
-"PO-Revision-Date: 2026-10-27 16:16+0000\n"
+"POT-Creation-Date: 2026-11-27 13:20+0000\n"
+"PO-Revision-Date: 2026-11-27 13:20+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -41,6 +41,11 @@ msgid ""
 "* Set in Invoice view form the field \"Sale Type\" readonly to states different than \"draft\".\n"
 "* Add fiscal position on sale types.\n"
 "* Allows select journal from another company.\n"
+"* Add an operation type on sale types, limited to the delivery operation types of the\n"
+"  warehouse of the type. The deliveries of the orders with that type use it, so it is\n"
+"  possible to choose, for instance, the delivery slip book from the sale order type.\n"
+"  With deliveries in two or three steps only the last step, the one that goes to the\n"
+"  customer, uses it. If it is empty the behaviour is the usual one.\n"
 "* When the order type invoices in another company, the invoice gets the fiscal position\n"
 "  of that company and its taxes, instead of keeping the ones of the company that sells.\n"
 "  Unless the order type already has a fiscal position, which is kept as it is.\n"
@@ -112,8 +117,17 @@ msgstr ""
 
 #. module: sale_order_type_ux
 #: model_terms:ir.ui.view,arch_db:sale_order_type_ux.sale_order_type_form_view
+msgid "Analytic Distribution"
+msgstr ""
+
+#. module: sale_order_type_ux
 #: model_terms:ir.ui.view,arch_db:sale_order_type_ux.sale_order_type_search_view
 msgid "Archived"
+msgstr ""
+
+#. module: sale_order_type_ux
+#: model_terms:ir.ui.view,arch_db:sale_order_type_ux.sale_order_type_form_view
+msgid "Commercial terms"
 msgstr ""
 
 #. module: sale_order_type_ux
@@ -122,14 +136,30 @@ msgid "Company"
 msgstr ""
 
 #. module: sale_order_type_ux
+#: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__company_not_active
+msgid "Company Not Active"
+msgstr ""
+
+#. module: sale_order_type_ux
+#: model_terms:ir.ui.view,arch_db:sale_order_type_ux.sale_order_type_form_view
+msgid "Company and numbering of the order."
+msgstr ""
+
+#. module: sale_order_type_ux
 #: model:sale.order.type,name:sale_order_type_ux.default_sale_order_type
 msgid "Default"
+msgstr ""
+
+#. module: sale_order_type_ux
+#: model_terms:ir.ui.view,arch_db:sale_order_type_ux.sale_order_type_form_view
+msgid "Delivery"
 msgstr ""
 
 #. module: sale_order_type_ux
 #: model:ir.model.fields,field_description:sale_order_type_ux.field_account_move__display_name
 #: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order__display_name
 #: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__display_name
+#: model:ir.model.fields,field_description:sale_order_type_ux.field_stock_rule__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -139,9 +169,20 @@ msgid "Fiscal Position"
 msgstr ""
 
 #. module: sale_order_type_ux
+#: model_terms:ir.ui.view,arch_db:sale_order_type_ux.sale_order_type_form_view
+msgid "From where and how the sold goods are delivered."
+msgstr ""
+
+#. module: sale_order_type_ux
+#: model_terms:ir.ui.view,arch_db:sale_order_type_ux.sale_order_type_form_view
+msgid "General"
+msgstr ""
+
+#. module: sale_order_type_ux
 #: model:ir.model.fields,field_description:sale_order_type_ux.field_account_move__id
 #: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order__id
 #: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__id
+#: model:ir.model.fields,field_description:sale_order_type_ux.field_stock_rule__id
 msgid "ID"
 msgstr ""
 
@@ -153,6 +194,11 @@ msgid ""
 msgstr ""
 
 #. module: sale_order_type_ux
+#: model_terms:ir.ui.view,arch_db:sale_order_type_ux.sale_order_type_form_view
+msgid "Internal notes about this sale order type"
+msgstr ""
+
+#. module: sale_order_type_ux
 #: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__invoice_company_id
 msgid "Invoice Company"
 msgstr ""
@@ -160,6 +206,24 @@ msgstr ""
 #. module: sale_order_type_ux
 #: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__journal_id
 msgid "Invoice Journal"
+msgstr ""
+
+#. module: sale_order_type_ux
+#: model_terms:ir.ui.view,arch_db:sale_order_type_ux.sale_order_type_form_view
+msgid "Invoicing"
+msgstr ""
+
+#. module: sale_order_type_ux
+#: model:ir.model.fields,help:sale_order_type_ux.field_sale_order_type__company_id
+msgid ""
+"It goes first: it defines which warehouses, journals, pricelists and teams "
+"can be chosen. This field will not be considered for sales coming from "
+"eCommerce. You should configure it directly in Settings > Website."
+msgstr ""
+
+#. module: sale_order_type_ux
+#: model:ir.model.fields,help:sale_order_type_ux.field_sale_order_type__invoice_company_id
+msgid "It takes the Company; you can choose a child company."
 msgstr ""
 
 #. module: sale_order_type_ux
@@ -178,8 +242,16 @@ msgid "Notes"
 msgstr ""
 
 #. module: sale_order_type_ux
-#: model_terms:ir.ui.view,arch_db:sale_order_type_ux.sale_order_type_form_view
-msgid "Predefined fields"
+#: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__picking_type_id
+msgid "Operation Type"
+msgstr ""
+
+#. module: sale_order_type_ux
+#: model:ir.model.fields,help:sale_order_type_ux.field_sale_order_type__picking_type_id
+msgid ""
+"Operation type used for the deliveries of the orders with this type. Leave "
+"it empty to use the one configured on the warehouse rules. If the warehouse "
+"changes, it is cleared."
 msgstr ""
 
 #. module: sale_order_type_ux
@@ -203,12 +275,49 @@ msgid "Sales Team"
 msgstr ""
 
 #. module: sale_order_type_ux
+#: model_terms:ir.ui.view,arch_db:sale_order_type_ux.sale_order_type_form_view
+msgid "Select a delivery of this warehouse"
+msgstr ""
+
+#. module: sale_order_type_ux
+#: model_terms:ir.ui.view,arch_db:sale_order_type_ux.sale_order_type_form_view
+msgid "Select a journal of the invoice company"
+msgstr ""
+
+#. module: sale_order_type_ux
 #: model:ir.model.fields,help:sale_order_type_ux.field_sale_order_type__active
 msgid "Set active to false to hide the type of sale without removing it."
 msgstr ""
 
 #. module: sale_order_type_ux
-#: model:ir.model.fields,help:sale_order_type_ux.field_sale_order_type__company_id
+#: model:ir.model,name:sale_order_type_ux.model_stock_rule
+msgid "Stock Rule"
+msgstr ""
+
+#. module: sale_order_type_ux
+#: model_terms:ir.ui.view,arch_db:sale_order_type_ux.sale_order_type_form_view
+msgid ""
+"The company of this type is not active in your company selector, so its "
+"journals cannot be loaded. Activate it in the selector (top right) to choose"
+" one."
+msgstr ""
+
+#. module: sale_order_type_ux
+#: model:ir.model.fields,help:sale_order_type_ux.field_sale_order_type__company_not_active
+msgid ""
+"The company or the invoice company of the type is not active in the company "
+"selector."
+msgstr ""
+
+#. module: sale_order_type_ux
+#. odoo-python
+#: code:addons/sale_order_type_ux/models/sale_order_type.py:0
+msgid ""
+"The operation type '%s' does not belong to the warehouse of this sale order "
+"type."
+msgstr ""
+
+#. module: sale_order_type_ux
 #: model:ir.model.fields,help:sale_order_type_ux.field_sale_order_type__pricelist_id
 #: model:ir.model.fields,help:sale_order_type_ux.field_sale_order_type__team_id
 #: model:ir.model.fields,help:sale_order_type_ux.field_sale_order_type__warehouse_id
@@ -230,4 +339,19 @@ msgstr ""
 #. module: sale_order_type_ux
 #: model:ir.model.fields,field_description:sale_order_type_ux.field_sale_order_type__warehouse_id
 msgid "Warehouse"
+msgstr ""
+
+#. module: sale_order_type_ux
+#: model_terms:ir.ui.view,arch_db:sale_order_type_ux.sale_order_type_form_view
+msgid "Who invoices, with which journal, with which fiscal data and when."
+msgstr ""
+
+#. module: sale_order_type_ux
+#: model_terms:ir.ui.view,arch_db:sale_order_type_ux.sale_order_type_form_view
+msgid "Who sells, at what price and with which terms."
+msgstr ""
+
+#. module: sale_order_type_ux
+#: model_terms:ir.ui.view,arch_db:sale_order_type_ux.sale_order_type_form_view
+msgid "e.g. Counter sale"
 msgstr ""

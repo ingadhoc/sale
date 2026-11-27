@@ -28,8 +28,22 @@ class SaleOrderTypology(models.Model):
         help="This field will not be considered for sales coming from eCommerce. You should configure it directly in Settings > Website."
     )
 
+    picking_type_id = fields.Many2one(
+        "stock.picking.type",
+        string="Operation Type",
+        check_company=True,
+        compute="_compute_picking_type_id",
+        store=True,
+        readonly=False,
+        domain="[('code', '=', 'outgoing'), ('warehouse_id', '=', warehouse_id)]",
+        help="Operation type used for the deliveries of the orders with this type. "
+        "Leave it empty to use the one configured on the warehouse rules. "
+        "If the warehouse changes, it is cleared.",
+    )
+
     company_id = fields.Many2one(
-        help="This field will not be considered for sales coming from eCommerce. You should configure it directly in Settings > Website."
+        help="It goes first: it defines which warehouses, journals, pricelists and teams can be chosen. "
+        "This field will not be considered for sales coming from eCommerce. You should configure it directly in Settings > Website."
     )
 
     pricelist_id = fields.Many2one(
@@ -39,6 +53,7 @@ class SaleOrderTypology(models.Model):
         "res.company",
         string="Invoice Company",
         domain="[('id', 'child_of', company_id)]",
+        help="It takes the Company; you can choose a child company.",
         compute="_compute_invoice_company_id",
         store=True,
         readonly=False,
@@ -48,11 +63,39 @@ class SaleOrderTypology(models.Model):
     journal_id = fields.Many2one(
         "account.journal", string="Invoice Journal", domain="journal_domain", check_company=False
     )
+    company_not_active = fields.Boolean(
+        compute="_compute_company_not_active",
+        help="The company or the invoice company of the type is not active in the company selector.",
+    )
+
+    @api.depends("warehouse_id")
+    def _compute_picking_type_id(self):
+        """Clear the operation type when it does not belong to the warehouse anymore."""
+        for rec in self:
+            if rec.picking_type_id.warehouse_id != rec.warehouse_id:
+                rec.picking_type_id = False
+
+    @api.constrains("warehouse_id", "picking_type_id")
+    def _check_picking_type_warehouse(self):
+        for rec in self:
+            if rec.picking_type_id and rec.picking_type_id.warehouse_id != rec.warehouse_id:
+                raise ValidationError(
+                    self.env._(
+                        "The operation type '%s' does not belong to the warehouse of this sale order type.",
+                        rec.picking_type_id.display_name,
+                    )
+                )
 
     @api.depends("company_id")
     def _compute_invoice_company_id(self):
         for rec in self:
             rec.invoice_company_id = rec.company_id
+
+    @api.depends("company_id", "invoice_company_id")
+    @api.depends_context("allowed_company_ids")
+    def _compute_company_not_active(self):
+        for rec in self:
+            rec.company_not_active = bool((rec.company_id | rec.invoice_company_id) - self.env.companies)
 
     @api.depends("invoice_company_id")
     def _compute_journal_domain(self):
